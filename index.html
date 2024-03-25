@@ -1,6 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Alan</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+        .close-button {
+            cursor: pointer;
+            float: right;
+            padding: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            margin-bottom: 20px; /* Optional: for spacing */
+        }
+        #mainContent {
+        padding-left: 20px; /* Adjust this value as needed */
+    }
+    </style>
+    <script type="text/javascript">
+        function checkPassword() {
+            var encodedPassword = "NjYyMDIz";
+            var passwordEntered = prompt("Enter password:", "");
+            var encodedInput = btoa(passwordEntered);
+            if (encodedInput === encodedPassword) {
+                document.getElementById('mainContent').classList.remove('hidden');
+            } else {
+                document.body.innerHTML = 'Access denied.';
+            }
+        }
+
+        function closeContent() {
+            document.getElementById('mainContent').classList.add('hidden');
+        }
+
+        window.onload = function() {
+            document.getElementById('mainContent').classList.add('hidden');
+            checkPassword();
+        }
+    </script>
+</head>
+<body>
+    <div id="mainContent" class="hidden">
+        <!-- Close Button -->
+        <button class="close-button" onclick="closeContent()">X</button>
+        <!-- Your secure content goes here -->
+        <p><strong>*Experimental*</strong> Alan is an Artificial Intelligence assistant for students and those who only occasionally see eye or ear cases. Give symptoms & signs clearly for best results. Avoid identifying names or details. By design, Alan is concise and keeps on topic. Good luck! <em>Arclight Project, University of St Andrews, UK. 2024</em></p>
+    </div>
+</body>
+
+<body onload="checkPassword();">
     <link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/favicons/apple-icon-72x72.png">
@@ -30,7 +80,6 @@
             display: flex;
             flex-direction: column;
             body { font-family: "Calibri Light", Arial, sans-serif;}
-
         }
         .chatbot-header {
             text-align: center;
@@ -61,14 +110,12 @@
             font-style: italic; /* Keeps the italic style */
         }
 
-
-/* Assuming grey-text class is defined somewhere else in your CSS */
 .grey-text {
-    color: grey; /* Ensures the text color is grey */
+    color: grey; 
 }
 
 .chatbot-container {
-    margin-top: 0; /* Add this line if necessary */
+    margin-top: 0; 
     flex-grow: 1;
     display: flex;
     justify-content: center;
@@ -83,7 +130,6 @@ flowise-fullchatbot {
     </style>
 </head>
 <body>
-
     <div class="chatbot-header" style="background-color: black; color: black;">
         <!-- Styles remain the same as your original snippet -->
         <style>
@@ -106,7 +152,6 @@ flowise-fullchatbot {
         </div>
     </div>
     
-    
     <div class="chatbot-container">
         <flowise-fullchatbot></flowise-fullchatbot>
     </div>
@@ -118,8 +163,6 @@ flowise-fullchatbot {
             https://medicine.st-andrews.ac.uk/arclight/    
         </a>
     </div>
-    
-    
 
 <script type="module">
     import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
