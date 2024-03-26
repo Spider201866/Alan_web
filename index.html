@@ -38,7 +38,30 @@
         #mainContent {
             padding-left: 20px; /* Adjust this value as needed */
         }
+    
+        /* Media queries for smaller screens */
+        @media (max-width: 768px) {
+            .close-button {
+                padding: 8px; /* Slightly smaller padding for smaller screens */
+            }
+            #mainContent {
+                padding-left: 10px; /* Reduce padding for smaller screens */
+            }
+            /* Any other adjustments for elements that might cause layout issues */
+        }
+    
+        /* Even smaller devices, like smaller iPhones */
+        @media (max-width: 480px) {
+            .close-button {
+                padding: 5px; /* Further reduce padding for very small screens */
+            }
+            #mainContent {
+                padding-left: 5px; /* Further reduce padding for very small screens */
+            }
+            /* Additional adjustments for smaller iPhones */
+        }
     </style>
+    
     <script type="text/javascript">
         function checkPassword() {
             var encodedPassword = "NjYyMDIz";
@@ -61,6 +84,7 @@
         }
     </script>
 </head>
+
 <body>
     <div id="mainContent" class="hidden">
         <!-- Close Button -->
