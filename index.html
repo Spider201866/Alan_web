@@ -1,7 +1,12 @@
+<!-- WJW 26/03/2024 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alan</title>
+
     <link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/favicons/apple-icon-72x72.png">
@@ -11,65 +16,39 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/favicons/apple-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/favicons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicons/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+
     <link rel="manifest" href="/favicons/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/favicons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            font-family: "Calibri Light", Arial, sans-serif; /* Corrected placement */
-        }
-        .hidden {
-            display: none;
-        }
-        .close-button {
-            cursor: pointer;
-            float: right;
-            padding: 10px;
-            background-color: red;
-            color: white;
-            border: none;
-            margin-bottom: 20px; /* Optional: for spacing */
-        }
-        #mainContent {
-            padding-left: 20px; /* Adjust this value as needed */
-        }
-    
-        /* Media queries for smaller screens */
-        @media (max-width: 768px) {
-            .close-button {
-                padding: 8px; /* Slightly smaller padding for smaller screens */
-            }
-            #mainContent {
-                padding-left: 10px; /* Reduce padding for smaller screens */
-            }
-            /* Any other adjustments for elements that might cause layout issues */
-        }
-    
-        /* Even smaller devices, like smaller iPhones */
-        @media (max-width: 480px) {
-            .close-button {
-                padding: 5px; /* Further reduce padding for very small screens */
-            }
-            #mainContent {
-                padding-left: 5px; /* Further reduce padding for very small screens */
-            }
-            /* Additional adjustments for smaller iPhones */
-        }
+        body,
+        html {margin: 0; padding: 0; height: 100%; display: flex; flex-direction: column; font-family: "Calibri Light", Arial, sans-serif;}
+        .hidden { display: none; }
+        .close-button { cursor: pointer; float: right; padding: 10px; background-color: red; color: white; border: none; margin-bottom: 20px; }
+        #mainContent { padding-left: 20px; }
+        @media (max-width: 768px) { .close-button { padding: 8px; } #mainContent { padding-left: 10px; } } @media (max-width: 480px) { .close-button { padding: 5px; } #mainContent { padding-left: 5px; } }
+        .chatbot-header .red { color: red; }
+        .chatbot-header .black { color: black; }
+        .chatbot-header .white, .chatbot-header { color: white; }
+        .chatbot-header .grey, .divider { color: grey; }
+        .grey-text { color: grey; }
+        .tooltip-item { cursor: pointer; }
+        body, html { margin: 0; padding: 0; height: 100%; display: flex; flex-direction: column; body { font-family: "Calibri Light", Arial, sans-serif; } }
+        .chatbot-header { text-align: center; width: 100%; padding-top: 0px; }
+        .chatbot-title { font-size: 30px; font-weight: bold; color: #000; text-align: center; padding-top: 15px; font-family: "Century Gothic", Arial, sans-serif; }
+        .chatbot-subtitle { font-size: 13px; color: #000; padding: 3px 20px; }
+        .chatbot-version { font-size: 12px; color: #000; padding-top: 0; padding-bottom: 20px; text-align: center; width: 100%; font-style: italic; }
+        .grey-text { color: grey; }
+        .chatbot-container { margin-top: 0; flex-grow: 1; display: flex; justify-content: center; align-items: center; }
+        flowise-fullchatbot { margin-top: 0; padding-top: 0; }
     </style>
-    
+
     <script type="text/javascript">
         function checkPassword() {
             var encodedPassword = "NjYyMDIz";
@@ -81,160 +60,96 @@
                 document.body.innerHTML = 'Access denied.';
             }
         }
-
         function closeContent() {
             document.getElementById('mainContent').classList.add('hidden');
         }
-
-        window.onload = function() {
+        window.onload = function () {
             document.getElementById('mainContent').classList.add('hidden');
             checkPassword();
         }
     </script>
+
 </head>
 
 <body>
     <div id="mainContent" class="hidden">
-        <!-- Close Button -->
         <button class="close-button" onclick="closeContent()">X</button>
-        <!-- Your secure content goes here -->
-        <p><strong>*Experimental*</strong> Artificial Intelligence assistant for students and those who only occasionally see eye or ear cases. Give symptoms & signs clearly for best results. Avoid identifying names or details. By design, concise and keeps on topic. Good luck! <em>Arclight Project, University of St Andrews, UK. 2024</em></p>
+        <p><strong>*Experimental*</strong> Artificial Intelligence assistant for students and those who only
+            occasionally see eye or ear cases. Give symptoms & signs clearly for best results. Avoid identifying names
+            or details. Keep audio messages to &lt;30 sec. By design, concise and keeps on topic. Good luck! <em>Arclight Project, University of St
+                Andrews, UK. 2024</em></p>
     </div>
-</body>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            body { font-family: "Calibri Light", Arial, sans-serif;}
-        }
-        .chatbot-header {
-            text-align: center;
-            width: 100%;
-            padding-top: 0px; /* Adjusted padding at the top */
-        }
-         .chatbot-title {
-                font-size: 30px;
-                font-weight: bold;
-                color: #000;
-                text-align: center;
-                padding-top: 15px;
-                font-family: "Century Gothic", Arial, sans-serif; /* Primary font with fallbacks */
-            }
-
-        .chatbot-subtitle {
-            font-size: 13px; /* Slightly smaller than the title */
-            color: #000;
-            padding: 3px 20px; /* Space between the title and subtitle */
-        }
-                .chatbot-version {
-            font-size: 12px; /* Adjust the font size as needed */
-            color: #000; /* Assuming this is defined elsewhere as grey-text */
-            padding-top: 0; /* Explicitly no padding at the top */
-            padding-bottom: 20px; /* Adds 20px padding below the version text */
-            text-align: center; /* Ensures the text is centered */
-            width: 100%; /* Ensures the div takes the full width */
-            font-style: italic; /* Keeps the italic style */
-        }
-
-.grey-text {
-    color: grey; 
-}
-
-.chatbot-container {
-    margin-top: 0; 
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-flowise-fullchatbot {
-            margin-top: 0; /* Remove any default margin above the chatbot */
-            padding-top: 0; /* Remove any default padding above the chatbot */
-        }
-        
-    </style>
-</head>
-<body>
     <div class="chatbot-header" style="background-color: black; color: black;">
-        <!-- Styles remain the same as your original snippet -->
-        <style>
-            .chatbot-header .red { color: red; }
-            .chatbot-header .black { color: black; }
-            .chatbot-header .white, .chatbot-header { color: white; }
-            .chatbot-header .grey, .divider { color: grey; }
-            .grey-text { color: grey; }
-            .tooltip-item { cursor: pointer; }
-        </style>
-        
+
         <div class="chatbot-title">
             <span class="red">Al</span><span class="white">an</span>
         </div>
         <div class="chatbot-subtitle grey-text" style="font-style: italic; font-size: 11px;">Eyes & Ears</div>
-        <div class="chatbot-subtitle" style="color: grey; padding-bottom: 20px;"> <!-- Added inline padding-bottom here -->
-            <span class="tooltip-item" title="Tell Alan about the problem & onset">Good History</span> <span class="divider">|</span> 
-            <span class="tooltip-item" title="What you see&#10;Vision & Pupils&#10;Hearing">Examine Well</span> <span class="divider">|</span> 
-            <span class="tooltip-item" title="Front of eye, fundal reflex, back of eye&#10;All around ear, canal, drum">Use Arclight</span> 
+        <div class="chatbot-subtitle" style="color: grey; padding-bottom: 20px;">
+            <span class="tooltip-item" title="Tell Alan about the problem & onset">Good History</span> <span
+                class="divider">|</span>
+            <span class="tooltip-item" title="What you see&#10;Vision & Pupils&#10;Hearing">Examine Well</span> <span
+                class="divider">|</span>
+            <span class="tooltip-item"
+                title="Front of eye, fundal reflex, back of eye&#10;All around ear, canal, drum">Use Arclight</span>
         </div>
     </div>
-    
     <div class="chatbot-container">
         <flowise-fullchatbot></flowise-fullchatbot>
     </div>
-    
     <div class="chatbot-version grey-text" style="font-style: italic;">
-        *Alan can make mistakes. Use clinical judgement. 25/03/24 wjw
+        *Alan can make mistakes. Use clinical judgement. 28/03/24 wjw
         <br>
         <a href="https://medicine.st-andrews.ac.uk/arclight/" target="_blank" style="color: #0000FF;">
-            https://medicine.st-andrews.ac.uk/arclight/    
+            https://medicine.st-andrews.ac.uk/arclight/
         </a>
     </div>
+    
 
-<script type="module">
-    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
-    Chatbot.initFull({
-        chatflowid: "f913ced7-8844-4393-82e7-de804bb2cb8e",
-        apiHost: "https://flowiseai-railway-production-cfe0.up.railway.app",
-        theme: {
-            "button": {
-                "backgroundColor": "#36454F",
-                "right": 30,
-                "bottom": 20,
-                "size": "medium",
-                "iconColor": "white",
-                "customIconSrc": "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg"
-            },
-            "chatWindow": {
-                "welcomeMessage": false,
-                "backgroundColor": "#ffffff",
-                "height": "auto",
-                "width": "auto",
-                "fontSize": 14,
-                "poweredByTextColor": "#ffffff",
-                "botMessage": {
-                "backgroundColor": "#cccccc",
-                "textColor": "#000000",
-                "showAvatar": false,
-                "avatarSrc": "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/parroticon.png"
+    <script type="module">
+        import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+        Chatbot.initFull({
+            chatflowid: "f913ced7-8844-4393-82e7-de804bb2cb8e",
+            apiHost: "https://flowiseai-railway-production-cfe0.up.railway.app",
+            theme: {
+                "button": {
+                    "backgroundColor": "#36454F",
+                    "right": 30,
+                    "bottom": 20,
+                    "size": "medium",
+                    "iconColor": "white",
+                    "customIconSrc": "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg"
                 },
-                "userMessage": {
-                "backgroundColor": "#4d9afe",
-                "textColor": "#000000",
-                "showAvatar": false,
-                "avatarSrc": "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png"
-                },
-                "textInput": {
-                "placeholder": "Message Alan...",
-                "backgroundColor": "#ffffff",
-                "textColor": "#303235",
-                "sendButtonColor": "#f73b3b"
+                "chatWindow": {
+                    "welcomeMessage": false,
+                    "backgroundColor": "#ffffff",
+                    "height": "auto",
+                    "width": "auto",
+                    "fontSize": 14,
+                    "poweredByTextColor": "#ffffff",
+                    "botMessage": {
+                        "backgroundColor": "#cccccc",
+                        "textColor": "#000000",
+                        "showAvatar": false,
+                        "avatarSrc": "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/parroticon.png"
+                    },
+                    "userMessage": {
+                        "backgroundColor": "#4d9afe",
+                        "textColor": "#000000",
+                        "showAvatar": false,
+                        "avatarSrc": "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png"
+                    },
+                    "textInput": {
+                        "placeholder": "Message Alan...",
+                        "backgroundColor": "#ffffff",
+                        "textColor": "#303235",
+                        "sendButtonColor": "#f73b3b"
+                    }
                 }
             }
-            }
-    })
-</script>
+        })
+    </script>
+
 </body>
+
 </html>
