@@ -82,7 +82,7 @@
     </div>
     <!-- Condition name displayed here -->
     <div class="detected-condition"></div>
-    <img id="condition-image" src="" alt="Condition" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />
+    <img id="condition-image" alt="" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />
     <p id="condition-description"></p> <!-- Add this line -->    
     <div class="chatbot-version grey-text" style="font-style: italic;">
         *Alan can make mistakes. Use clinical judgement. 28/03/24 wjw
@@ -173,6 +173,7 @@
                         const conditionElement = document.querySelector('.detected-condition');
                         if (conditionElement) {
                           conditionElement.textContent = matchingObject.text;
+                          conditionElement.style.visibility = 'visible'; // Make it visible
                         }
 
                         // Update image
@@ -180,8 +181,10 @@
                         if (conditionImage) {
                           conditionImage.src = `./conditions/${matchingObject.imageName}`;
                           conditionImage.alt = matchingObject.condition;
+                          conditionImage.style.visibility = 'visible'; // Make it visible
                         }
                       }
+
                     }
                     lastCompleteMessage = ''; // Reset for next message
                   }
