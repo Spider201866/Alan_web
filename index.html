@@ -9,198 +9,12 @@
     />
     <title>Alan</title>
 
-    <link
-      rel="apple-touch-icon"
-      sizes="57x57"
-      href="/favicons/apple-icon-57x57.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="60x60"
-      href="/favicons/apple-icon-60x60.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="72x72"
-      href="/favicons/apple-icon-72x72.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="76x76"
-      href="/favicons/apple-icon-76x76.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="114x114"
-      href="/favicons/apple-icon-114x114.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="120x120"
-      href="/favicons/apple-icon-120x120.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="144x144"
-      href="/favicons/apple-icon-144x144.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="152x152"
-      href="/favicons/apple-icon-152x152.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/favicons/apple-icon-180x180.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="/favicons/android-icon-192x192.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/favicons/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="96x96"
-      href="/favicons/favicon-96x96.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/favicons/favicon-16x16.png"
-    />
+    <script type="module">
+      import { faviconAndMetaSetup } from './faviconAndMeta.js';
+      faviconAndMetaSetup();
+    </script>
 
-    <link rel="manifest" href="/favicons/manifest.json" />
-    <meta name="msapplication-TileColor" content="#ffffff" />
-    <meta
-      name="msapplication-TileImage"
-      content="/favicons/ms-icon-144x144.png"
-    />
-    <meta name="theme-color" content="#ffffff" />
-
-    <style>
-      body,
-      html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        font-family: "Calibri Light", Arial, sans-serif;
-      }
-      .hidden {
-        display: none;
-      }
-      .close-button {
-        cursor: pointer;
-        float: right;
-        padding: 10px;
-        background-color: red;
-        color: white;
-        border: none;
-        margin-bottom: 20px;
-      }
-      #mainContent {
-        padding-left: 20px;
-      }
-      @media (max-width: 768px) {
-        .close-button {
-          padding: 8px;
-        }
-        #mainContent {
-          padding-left: 10px;
-        }
-      }
-      @media (max-width: 480px) {
-        .close-button {
-          padding: 5px;
-        }
-        #mainContent {
-          padding-left: 5px;
-        }
-      }
-      .chatbot-header .red {
-        color: red;
-      }
-      .chatbot-header .black {
-        color: black;
-      }
-      .chatbot-header .white,
-      .chatbot-header {
-        color: white;
-      }
-      .chatbot-header .grey,
-      .divider {
-        color: grey;
-      }
-      .grey-text {
-        color: grey;
-      }
-      .tooltip-item {
-        cursor: pointer;
-      }
-      body,
-      html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        body {
-          font-family: "Calibri Light", Arial, sans-serif;
-        }
-      }
-      .chatbot-header {
-        text-align: center;
-        width: 100%;
-        padding-top: 0px;
-      }
-      .chatbot-title {
-        font-size: 30px;
-        font-weight: bold;
-        color: #000;
-        text-align: center;
-        padding-top: 15px;
-        font-family: "Century Gothic", Arial, sans-serif;
-      }
-      .chatbot-subtitle {
-        font-size: 13px;
-        color: #000;
-        padding: 3px 20px;
-      }
-      .chatbot-version {
-        font-size: 12px;
-        color: #000;
-        padding-top: 0;
-        padding-bottom: 20px;
-        text-align: center;
-        width: 100%;
-        font-style: italic;
-      }
-      .grey-text {
-        color: grey;
-      }
-      .chatbot-container {
-        margin-top: 0;
-        flex-grow: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      flowise-fullchatbot {
-        margin-top: 0;
-        padding-top: 0;
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 
     <script type="text/javascript">
       function checkPassword() {
@@ -267,9 +81,9 @@
     </div>
     </div>
     <!-- Condition name displayed here -->
-    <div class="detected-condition" style="color: rgb(0, 0, 0); text-align: center;"></div>
-    <!-- Image displayed here -->
+    <div class="detected-condition"></div>
     <img id="condition-image" src="" alt="Condition" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />
+    <p id="condition-description"></p> <!-- Add this line -->    
     <div class="chatbot-version grey-text" style="font-style: italic;">
         *Alan can make mistakes. Use clinical judgement. 28/03/24 wjw
         <br>
@@ -325,62 +139,67 @@
       });
     </script>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        setTimeout(() => {
-          const shadowHost = document.querySelector("flowise-fullchatbot");
-          if (shadowHost) {
-            const shadowRoot = shadowHost.shadowRoot;
-            if (shadowRoot) {
-              let messageBuffer = "";
-              let lastCompleteMessage = "";
+<script type="module">
+  import { imagesWithText } from './imagesWithText.js'; // Make sure the path is correct
 
-              const observer = new MutationObserver((mutations) => {
-                mutations.forEach((mutation) => {
-                  mutation.addedNodes.forEach((node) => {
-                    if (node.nodeType === Node.ELEMENT_NODE) {
-                      messageBuffer += node.textContent; // Accumulate the text content
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+      const shadowHost = document.querySelector("flowise-fullchatbot");
+      if (shadowHost) {
+        const shadowRoot = shadowHost.shadowRoot;
+        if (shadowRoot) {
+          let messageBuffer = "";
+          let lastCompleteMessage = "";
 
-                      if (messageBuffer.includes("Good luck!")) {
-                        lastCompleteMessage = messageBuffer.trim();
-                        messageBuffer = ""; // Clear the message buffer after logging
+          const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+              mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                  messageBuffer += node.textContent; // Accumulate text content
+
+                  if (messageBuffer.includes("Good luck!")) {
+                    lastCompleteMessage = messageBuffer.trim();
+                    messageBuffer = ""; // Clear buffer after logging
+
+                    const conditionMatch = lastCompleteMessage.match(/On balance, (.*?) is/);
+                    if (conditionMatch && conditionMatch[1]) {
+                      const condition = conditionMatch[1].replace(/ is$/, '').trim();
+
+                      // Find the corresponding object in imagesWithText array
+                      const matchingObject = imagesWithText.find(item => item.condition.toLowerCase() === condition.toLowerCase());
+                      
+                      if (matchingObject) {
+                        // Update condition text
+                        const conditionElement = document.querySelector('.detected-condition');
+                        if (conditionElement) {
+                          conditionElement.textContent = matchingObject.text;
+                        }
+
+                        // Update image
+                        const conditionImage = document.getElementById('condition-image');
+                        if (conditionImage) {
+                          conditionImage.src = `./conditions/${matchingObject.imageName}`;
+                          conditionImage.alt = matchingObject.condition;
+                        }
                       }
                     }
-                  });
-                });
-
-                if (lastCompleteMessage) {
-        const conditionMatch = lastCompleteMessage.match(/On balance, (.*?) is/);
-        if (conditionMatch && conditionMatch[1]) {
-            const condition = conditionMatch[1].replace(/ is$/, '').trim();
-            const conditionElement = document.querySelector('.detected-condition');
-            if (conditionElement) {
-                conditionElement.textContent = condition;
-            }
-
-            // Convert the condition name to match the image file name format
-            const imageName = condition.toLowerCase().replace(/\s+/g, '_') + '.jpg';
-            // Update the src of the image element
-            const conditionImage = document.getElementById('condition-image');
-            if (conditionImage) {
-                conditionImage.src = `./conditions/${imageName}`;
-                conditionImage.alt = condition;
-            }
-        }
-        lastCompleteMessage = ''; 
-    }
+                    lastCompleteMessage = ''; // Reset for next message
+                  }
+                }
               });
+            });
+          });
 
-              observer.observe(shadowRoot, { childList: true, subtree: true });
-              console.log("Observer attached to shadow DOM.");
-            } else {
-              console.error("Unable to access shadow root.");
-            }
-          } else {
-            console.error("Shadow host not found.");
-          }
-        }, 1000);
-      });
-    </script>
+          observer.observe(shadowRoot, { childList: true, subtree: true });
+        } else {
+          console.error("Unable to access shadow root.");
+        }
+      } else {
+        console.error("Shadow host not found.");
+      }
+    }, 1000);
+  });
+</script>
+
   </body>
 </html>
