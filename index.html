@@ -27,23 +27,31 @@
           document.body.innerHTML = "Access denied.";
         }
       }
+    
       function closeContent() {
-        document.getElementById("mainContent").classList.add("hidden");
+    document.getElementById("mainContent").classList.add("hidden");
+    // After hiding the box, wait 0.5 seconds then flip the title
+    setTimeout(function() {
+      var chatbotTitle = document.querySelector('.chatbot-title');
+      if (chatbotTitle) {
+        chatbotTitle.classList.add('flip-horizontally');
       }
-      window.onload = function () {
-        document.getElementById("mainContent").classList.add("hidden");
-        checkPassword();
-      };
+    }, 500); // Wait for 0.5 seconds
+  }
+  
+  window.onload = function () {
+    document.getElementById("mainContent").classList.add("hidden");
+    checkPassword();
+    setTimeout(closeContent, 6000); // Automatically close the content after 6 seconds
+  };
     </script>
+    
   </head>
 
   <body>
     <div id="mainContent" class="hidden">
-      <button class="close-button" onclick="closeContent()">X</button>
-      <p>
-        <strong>*Experimental*</strong> concise AI assistant for occasional users. Give symptoms & signs clearly, avoid identifying names or details, keep audio messages to &lt;30 sec. Good luck!
+        <strong>*Experimental*</strong> concise hybrid AI assistant for occasional users. Give symptoms & signs clearly, avoid identifying names or details, keep audio messages &lt;30 sec. Good luck!
         <em>University of St Andrews, UK.</em>
-      </p>
     </div>
     <div class="chatbot-header" style="background-color: black; color: black">
       <div class="chatbot-title">
@@ -109,7 +117,7 @@
             backgroundColor: "#ffffff",
             height: "auto",
             width: "auto",
-            fontSize: 14,
+            fontSize: 13,
             poweredByTextColor: "#ffffff",
             botMessage: {
               backgroundColor: "#cccccc",
