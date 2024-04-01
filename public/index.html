@@ -49,37 +49,34 @@
   </head>
 
   <body>
-    <div id="mainContent" class="hidden">
-        <strong>*Experimental*</strong> concise hybrid AI assistant for occasional users. Give symptoms & signs clearly, avoid identifying names or details, keep audio messages &lt;30 sec. Good luck!
-        <em>University of St Andrews, UK.</em>
-    </div>
-    <div class="chatbot-header" style="background-color: black; color: black">
-      <div class="chatbot-title">
-        <span class="red">Al</span><span class="white">an</span>
+      <div id="mainContent" class="hidden">
+          <strong>*Experimental*</strong> concise hybrid AI assistant for occasional users. Give symptoms & signs clearly, avoid identifying names or details, keep audio messages &lt;30 sec. Good luck!
+          <em>University of St Andrews, UK.</em>
       </div>
-      <div
-        class="chatbot-subtitle grey-text"
-        style="font-style: italic; font-size: 11px"
-      >
-        Eyes & Ears
+      <div class="chatbot-header" style="background-color: black; color: white;">
+          <div class="chatbot-title">
+              <span class="red">Al</span><span class="white">an</span>
+          </div>
+          <div class="chatbot-subtitle grey-text" style="font-style: italic; font-size: 11px">
+              Eyes & Ears
+          </div>
+          <div class="chatbot-subtitle" style="color: grey; padding-bottom: 20px">
+              <span class="tooltip-item" title="Tell Alan about the problem & onset">Good History</span>
+              <span class="divider">|</span>
+              <span class="tooltip-item" title="What you see&#10;Vision & Pupils&#10;Hearing">Examine Well</span>
+              <span class="divider">|</span>
+              <span class="tooltip-item" title="Front of eye, fundal reflex, back of eye&#10;All around ear, canal, drum">Use Arclight</span>
+          </div>
       </div>
-      <div class="chatbot-subtitle" style="color: grey; padding-bottom: 20px">
-        <span class="tooltip-item" title="Tell Alan about the problem & onset"
-          >Good History</span
-        >
-        <span class="divider">|</span>
-        <span
-          class="tooltip-item"
-          title="What you see&#10;Vision & Pupils&#10;Hearing"
-          >Examine Well</span
-        >
-        <span class="divider">|</span>
-        <span
-          class="tooltip-item"
-          title="Front of eye, fundal reflex, back of eye&#10;All around ear, canal, drum"
-          >Use Arclight</span
-        >
-      </div>
+  
+      <div class="content-wrapper" style="display: flex; flex-direction: column; justify-content: space-around; min-height: 50vh;">
+        <div class="logo-and-text-container" style="text-align: center;">
+          <img src="./triangle.png" alt="Logo" id="logo-image" style="max-width: 100px; display: block; margin: 0 auto;">
+          <p id="main-text" class="centered-content">How can I help?</p>
+          <p id="sub-text" class="grey-text">Give case or ask question...</p>
+        </div>
+      </div>      
+
     </div>
     <div class="chatbot-container">
       <flowise-fullchatbot></flowise-fullchatbot>
@@ -101,11 +98,11 @@
         apiHost: "https://flowiseai-railway-production-cfe0.up.railway.app",
         theme: {
           button: {
-            backgroundColor: "#36454F",
+            backgroundColor: "#ffffff",
             right: 30,
             bottom: 20,
             size: "medium",
-            iconColor: "white",
+            iconColor: "black",
             customIconSrc:
               "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
           },
@@ -204,6 +201,32 @@
       }
     }, 1000);
   });
+</script>
+
+<script type="module">
+  document.addEventListener('DOMContentLoaded', () => {
+  const hideElements = () => {
+    const logoImage = document.getElementById('logo-image');
+    const mainText = document.getElementById('main-text');
+    const subText = document.getElementById('sub-text');
+    
+    if (logoImage) logoImage.remove();
+    if (mainText) mainText.remove();
+    if (subText) subText.remove();
+    
+    // After removing the elements, also remove these event listeners to prevent this function from running unnecessarily in the future
+    document.removeEventListener('keydown', hideElements);
+    document.removeEventListener('click', hideElements);
+  };
+
+  // Listen for any key press
+  document.addEventListener('keydown', hideElements);
+
+  // Listen for any click
+  document.addEventListener('click', hideElements);
+});
+
+
 </script>
 
   </body>

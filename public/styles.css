@@ -80,6 +80,20 @@ html {
 .grey-text {
   color: grey;
 }
+
+.centered-content {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 16px; 
+}
+
+.grey-text {
+  color: grey;
+  font-size: 16px; 
+}
+
+
 .chatbot-container {
   margin-top: 0;
   flex-grow: 1;
