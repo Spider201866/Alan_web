@@ -13,7 +13,7 @@ html {
 #mainContent {
   position: relative;
   padding: 0px 10px 0px 10px; /* Increase right padding to avoid overlap */
-  font-size: 13px;
+  font-size: 14px;
 }
 
 @keyframes smoothFlip360 {
@@ -69,7 +69,7 @@ html {
   padding: 3px 20px;
 }
 .chatbot-version {
-  font-size: 10px;
+  font-size: 11px;
   color: grey;
   padding-top: 0;
   padding-bottom: 20px;
