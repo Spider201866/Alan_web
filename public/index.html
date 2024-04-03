@@ -16,6 +16,8 @@
 
     <link rel="stylesheet" href="styles.css">
 
+
+
     <script type="text/javascript">
       function checkPassword() {
         var encodedPassword = "NjYyMDIz";
@@ -29,22 +31,46 @@
       }
     
       function closeContent() {
-    document.getElementById("mainContent").classList.add("hidden");
-    // After hiding the box, wait 0.5 seconds then flip the title
-    setTimeout(function() {
-      var chatbotTitle = document.querySelector('.chatbot-title');
-      if (chatbotTitle) {
-        chatbotTitle.classList.add('flip-horizontally');
+        document.getElementById("mainContent").classList.add("hidden");
+        setTimeout(function() {
+          var chatbotTitle = document.querySelector('.chatbot-title');
+          if (chatbotTitle) {
+            chatbotTitle.classList.add('flip-horizontally');
+            // Call highlightPhases here, ensuring it doesn't interfere with the title or other initial content
+            setTimeout(highlightPhases, 2000); // Call shortly after flipping the title for visual continuity
+          }
+        }, 500); // Wait for 0.5 seconds after hiding the main content
       }
-    }, 500); // Wait for 0.5 seconds
-  }
-  
-  window.onload = function () {
-    document.getElementById("mainContent").classList.add("hidden");
-    checkPassword();
-    setTimeout(closeContent, 6000); // Automatically close the content after 6 seconds
-  };
+    
+      window.onload = function () {
+        document.getElementById("mainContent").classList.add("hidden");
+        checkPassword();
+        setTimeout(closeContent, 6000); // Automatically close the content after 6 seconds
+      };
+    
+      function highlightPhases() {
+        const goodHistory = document.getElementById('good-history');
+        const examineWell = document.getElementById('examine-well');
+        const useArclight = document.getElementById('use-arclight');
+        
+        // Start highlighting sequence after checks and initial animations
+        goodHistory.style.color = 'red';
+        setTimeout(() => {
+          goodHistory.style.color = 'black';
+          
+          examineWell.style.color = 'red';
+          setTimeout(() => {
+            examineWell.style.color = 'black';
+            
+            useArclight.style.color = 'red';
+            setTimeout(() => {
+              useArclight.style.color = 'black';
+            }, 1000);
+          }, 1000);
+        }, 1000);
+      }
     </script>
+    
     
   </head>
 
@@ -66,7 +92,11 @@
       <div class="content-wrapper" style="display: flex; flex-direction: column; justify-content: space-around; min-height: 20vh;">
         <div class="logo-and-text-container" style="text-align: center; line-height: 1.0;">
           <img src="./triangle.png" alt="Logo" id="logo-image" style="max-width: 100px; display: block; margin: 0 auto; margin-bottom: 5px;">
-           <p id="additional-text" class="centered-content" style="font-size: 18px;">Good History  |  Examine Well  |  Use Arclight</p>
+          <p id="additional-text" class="centered-content" style="font-size: 18px;">
+            <span id="good-history">Good History</span>  |  
+            <span id="examine-well">Examine Well</span>  |  
+            <span id="use-arclight">Use Arclight</span>
+          </p>          
            <p id="sub-text" class="grey-text" style="font-size: 18px;">Give case or ask question...</p>
         </div>
       </div>
