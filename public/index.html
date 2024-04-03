@@ -80,153 +80,43 @@
     <div class="chatbot-container">
       <flowise-fullchatbot></flowise-fullchatbot>
     </div>
-    </div>
-    <!-- Condition name displayed here -->
-    <div class="detected-condition"></div>
-    <img id="condition-image" alt="" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" />
-    <p id="condition-description"></p> <!-- Add this line -->    
-    <div class="chatbot-version">
-        *Alan can make mistakes. Use clinical judgement. 4/24
-        <br>
-    </div>    
 
-    <script type="module">
-      import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@v1.7/dist/web.js";
-      Chatbot.initFull({
-        chatflowid: "f913ced7-8844-4393-82e7-de804bb2cb8e",
-        apiHost: "https://flowiseai-railway-production-cfe0.up.railway.app",
-        theme: {
-          button: {
-            backgroundColor: "#ffffff",
-            right: 30,
-            bottom: 20,
-            size: "medium",
-            iconColor: "black",
-            customIconSrc:
-              "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
-          },
-          chatWindow: {
-            welcomeMessage: false,
-            backgroundColor: "#ffffff",
-            height: "auto",
-            width: "auto",
-            fontSize: 14,
-            poweredByTextColor: "#D3D3D3",
-            botMessage: {
-              backgroundColor: "#ece0d1",
-              textColor: "#000000",
-              showAvatar: false,
-              avatarSrc:
-                "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/parroticon.png",
-            },
-            userMessage: {
-              backgroundColor: "#d1ddec",
-              textColor: "#000000",
-              showAvatar: false,
-              avatarSrc:
-                "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png",
-            },
-            textInput: {
-              placeholder: "Message Alan...",
-              backgroundColor: "#ffffff",
-              textColor: "#303235",
-              sendButtonColor: "#f73b3b",
-            },
-          },
-        },
-      });
-    </script>
-
-<script type="module">
-  import { imagesWithText } from './imagesWithText.js'; // Make sure the path is correct
-
-  document.addEventListener("DOMContentLoaded", () => {
-    setTimeout(() => {
-      const shadowHost = document.querySelector("flowise-fullchatbot");
-      if (shadowHost) {
-        const shadowRoot = shadowHost.shadowRoot;
-        if (shadowRoot) {
-          let messageBuffer = "";
-          let lastCompleteMessage = "";
-
-          const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-              mutation.addedNodes.forEach((node) => {
-                if (node.nodeType === Node.ELEMENT_NODE) {
-                  messageBuffer += node.textContent; // Accumulate text content
-
-                  if (messageBuffer.includes("Good luck!")) {
-                    lastCompleteMessage = messageBuffer.trim();
-                    messageBuffer = ""; // Clear buffer after logging
-
-                    const conditionMatch = lastCompleteMessage.match(/On balance, (.*?) is/);
-                    if (conditionMatch && conditionMatch[1]) {
-                      const condition = conditionMatch[1].replace(/ is$/, '').trim();
-
-                      // Find the corresponding object in imagesWithText array
-                      const matchingObject = imagesWithText.find(item => item.condition.toLowerCase() === condition.toLowerCase());
-                      
-                      if (matchingObject) {
-                        // Update condition text
-                        const conditionElement = document.querySelector('.detected-condition');
-                        if (conditionElement) {
-                          conditionElement.textContent = matchingObject.text;
-                          conditionElement.style.visibility = 'visible'; // Make it visible
-                        }
-
-                        // Update image
-                        const conditionImage = document.getElementById('condition-image');
-                        if (conditionImage) {
-                          conditionImage.src = `./conditions/${matchingObject.imageName}`;
-                          conditionImage.alt = matchingObject.condition;
-                          conditionImage.style.visibility = 'visible'; // Make it visible
-                        }
-                      }
-
-                    }
-                    lastCompleteMessage = ''; // Reset for next message
-                  }
-                }
-              });
-            });
-          });
-
-          observer.observe(shadowRoot, { childList: true, subtree: true });
-        } else {
-          console.error("Unable to access shadow root.");
-        }
-      } else {
-        console.error("Shadow host not found.");
+    <div>     
+      <!-- Condition name displayed here -->
+      <div class="detected-condition"></div>
+      
+      <!-- Thumbnail image with onclick functionality for zoom -->
+      <img id="condition-image" alt="" style="max-width: 100%; height: 200px; display: block; margin: 0 auto; cursor: pointer;" onclick="toggleZoom(this)" />
+      
+      <p id="condition-description"></p> <!-- Add this line -->
+      
+      <div class="chatbot-version">
+          *Alan can make mistakes. Use clinical judgement. 4/24
+          <br>
+      </div>
+  </div>
+  
+  <script>
+      function toggleZoom(image) {
+          // Check if the image is already zoomed
+          if (image.style.height === '200px') {
+              // If not zoomed, enlarge to fit the screen
+              image.style.height = 'auto'; // Reset height to auto for natural aspect ratio
+              image.style.maxWidth = 'none'; // Allow image to exceed the max-width of 100%
+              image.style.cursor = 'zoom-out'; // Change cursor for zoom-out
+          } else {
+              // If zoomed, revert to thumbnail size
+              image.style.height = '200px'; // Thumbnail height
+              image.style.maxWidth = '100%'; // Ensure image does not exceed container width
+              image.style.cursor = 'zoom-in'; // Change cursor for zoom-in
+          }
       }
-    }, 1000);
-  });
-</script>
-
-<script type="module">
-  document.addEventListener('DOMContentLoaded', () => {
-  const hideElements = () => {
-    const logoImage = document.getElementById('logo-image');
-    const mainText = document.getElementById('main-text');
-    const subText = document.getElementById('sub-text');
+  </script>
     
-    if (logoImage) logoImage.remove();
-    if (mainText) mainText.remove();
-    if (subText) subText.remove();
-    
-    // After removing the elements, also remove these event listeners to prevent this function from running unnecessarily in the future
-    document.removeEventListener('keydown', hideElements);
-    document.removeEventListener('click', hideElements);
-  };
 
-  // Listen for any key press
-  document.addEventListener('keydown', hideElements);
+    <script type="module">  import { initChatbot } from './chatbot-module.js'; initChatbot();</script>
 
-  // Listen for any click
-  document.addEventListener('click', hideElements);
-});
-
-
-</script>
+<script type="module" src="listener-module.js"></script>
 
   </body>
 </html>
