@@ -20,7 +20,7 @@ const initChatbot = () => {
         backgroundColor: "#ffffff",
         height: "auto",
         width: "auto",
-        fontSize: 14,
+        fontSize: 15,
         poweredByTextColor: "#D3D3D3",
         botMessage: {
           backgroundColor: "#ece0d1",

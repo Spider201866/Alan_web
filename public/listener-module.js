@@ -58,18 +58,19 @@ const initChatbotListeners = () => {
 const initHideElementsListener = () => {
   const hideElements = () => {
     const logoImage = document.getElementById('logo-image');
-    const mainText = document.getElementById('main-text');
+    const mainText = document.getElementById('main-text'); 
     const subText = document.getElementById('sub-text');
+    const additionalText = document.getElementById('additional-text'); 
     if (logoImage) logoImage.remove();
     if (mainText) mainText.remove();
     if (subText) subText.remove();
+    if (additionalText) additionalText.remove(); 
     document.removeEventListener('keydown', hideElements);
     document.removeEventListener('click', hideElements);
   };
   document.addEventListener('keydown', hideElements);
   document.addEventListener('click', hideElements);
 };
-
 document.addEventListener("DOMContentLoaded", () => {
   initChatbotListeners();
   initHideElementsListener();

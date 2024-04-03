@@ -31,7 +31,7 @@ html {
 
 
 .chatbot-header .red {
-  color: red;
+  color: #F44336FF;
 }
 .chatbot-header .black {
   color: black;
@@ -78,7 +78,7 @@ html {
   font-style: italic;
 }
 .grey-text {
-  color: grey;
+  color: rgb(162, 162, 162);
 }
 
 .centered-content {
