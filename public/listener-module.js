@@ -61,10 +61,19 @@ const initHideElementsListener = () => {
     const mainText = document.getElementById('main-text'); 
     const subText = document.getElementById('sub-text');
     const additionalText = document.getElementById('additional-text'); 
+    const contentWrapper = document.querySelector('.content-wrapper'); // Assuming this is the parent container
+
     if (logoImage) logoImage.remove();
     if (mainText) mainText.remove();
     if (subText) subText.remove();
-    if (additionalText) additionalText.remove(); 
+    if (additionalText) additionalText.remove();
+
+    // After removing elements, adjust the parent container's styling as needed
+    if (contentWrapper) {
+      contentWrapper.style.minHeight = '0'; // Remove minimum height if set
+      // Additional style adjustments can be added here
+    }
+    
     document.removeEventListener('keydown', hideElements);
     document.removeEventListener('click', hideElements);
   };
