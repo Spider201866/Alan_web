@@ -56,7 +56,13 @@ const initChatbotListeners = () => {
 };
 
 const initHideElementsListener = () => {
-  const hideElements = () => {
+  const hideElements = (event) => {
+    // Check if the event target or any of its parents have the 'language-selector' class
+    // This prevents the hide function from executing when the dropdown is interacted with
+    if (event.target.closest('.language-selector')) {
+      return; // Do nothing if the click is inside the language selector
+    }
+
     const logoImage = document.getElementById('logo-image');
     const mainText = document.getElementById('main-text'); 
     const subText = document.getElementById('sub-text');
@@ -73,14 +79,20 @@ const initHideElementsListener = () => {
       contentWrapper.style.minHeight = '0'; // Remove minimum height if set
       // Additional style adjustments can be added here
     }
-    
+
+    // Remove event listeners to prevent the function from executing again
     document.removeEventListener('keydown', hideElements);
     document.removeEventListener('click', hideElements);
   };
+
+  // Attach the hideElements function to both click and keydown events
   document.addEventListener('keydown', hideElements);
   document.addEventListener('click', hideElements);
 };
+
 document.addEventListener("DOMContentLoaded", () => {
+  // Assuming initChatbotListeners is defined elsewhere and needs to be initialized too
   initChatbotListeners();
   initHideElementsListener();
 });
+
