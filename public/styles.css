@@ -194,6 +194,38 @@ button {
   color: white;
 }
 
+
+
+.buttons-container {
+  text-align: center;
+  padding-top: 5px;
+}
+
+.button {
+  background-color: #2196F3FF; /* Default blue background */
+  color: white;
+  border: none;
+  border-radius: 9px;
+  padding: 8px 10px;
+  margin: 4px;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.button.green {
+  background-color: #4ec94e; /* Faint green for Ear Drum/Canal */
+}
+
+.button.grey {
+  background-color: rgb(181, 181, 181); /* Grey for Videos and Tools */
+}
+
+
+
+
+
+
+
 p {
   margin: 20px 0;
 }
