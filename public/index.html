@@ -1,142 +1,77 @@
-<!-- WJW 08/04/2024 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <title>Alan</title>
-
-    <script type="module"> import { faviconAndMetaSetup } from './faviconAndMeta.js'; faviconAndMetaSetup();</script>
-
-    <link rel="stylesheet" href="styles.css">
-
-    <script type="module" src="closer.js"></script>
-    
-  </head>
-
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splash Screen</title>
     <style>
-      #mainContent { text-align: center; }
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Light grey background */
+        }
+        .splash-screen {
+            display: flex;
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Center-align children horizontally */
+            justify-content: center; /* Center-align children vertically */
+            text-align: center;
+            height: 100vh; /* Take full height of the viewport */
+            padding: 20px;
+        }
+        .splash-screen img, .splash-screen p {
+            transition: transform 3s ease-in-out;
+            margin: 20px 0; /* Add more space between elements */
+        }
+        .splash-screen img {
+            max-width: 100%; /* Ensure image is not larger than its container */
+            height: auto; /* Maintain aspect ratio */
+        }
+        .splash-screen p {
+            font-size: calc(10px + 1vmin); /* Responsive font size */
+            font-weight: bold;
+            font-style: italic;
+        }
     </style>
-    <div id="mainContent" class="hidden">
-      <strong>*Experimental*</strong> AI assistant. Write clearly, avoid identifying details, keep audio &lt;30s. Good luck!
+</head>
+<body>
+    <div class="splash-screen">
+        <img id="logo1" src="./Q.png" alt="Q Logo" style="width: 20%;">
+        <img id="logo2" src="./AP.png" alt="AP Logo" style="width: 40%;">
+        <p>Eye & Ear Assistant</p>
     </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Check if the splash screen has already been shown in the current session
+        if (!sessionStorage.getItem('splashShown')) {
+          sessionStorage.setItem('splashShown', 'true'); // Mark splash as shown
+          
+          // Initialize zoom and rotate values
+          const logo1 = document.getElementById('logo1');
+          const logo2 = document.getElementById('logo2');
+          logo1.style.transform = 'scale(0.8)';
+          logo2.style.transform = 'rotateX(-90deg)';
     
-
-    <div class="chatbot-header">
-      <div class="flex-spacer"></div> <!-- Invisible spacer to balance the language selector -->
-      <div>
-          <div class="chatbot-title">
-              <span class="red">Al</span><span class="white">an</span>
-          </div>
-          <div class="chatbot-subtitle">
-              Eyes & Ears
-          </div>
-      </div>
-      <div class="language-selector">
-        <select class="language-dropdown">
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-          <option value="es">Español</option>
-          <option value="pt">Português</option>
-          <option value="ar">العربية</option> <!-- Arabic -->
-          <option value="sw">Kiswahili</option> <!-- Swahili -->
-          <option value="cy">Cymraeg</option> <!-- Welsh -->
-          <option value="ny">Chichewa</option> <!-- For Malawi -->
-          <option value="rw">Kinyarwanda</option> <!-- For Rwanda -->
-          <option value="lg">Luganda</option> <!-- For Uganda -->
-      </select>
-      
-      </div>
-      <div class="flex-spacer"></div> <!-- Second spacer for symmetry; can be hidden if not needed -->
-  </div>
-  
-  <div class="buttons-container">
-    <button class="button">Front of Eye</button>
-    <button class="button">Fundal Reflex</button>
-    <button class="button">Back of Eye</button>
-    <button class="button green">Ear Drum/Canal</button> <!-- Green button -->
-    <button class="button grey">Videos</button> <!-- Grey button -->
-    <button class="button grey">Tools</button> <!-- Grey button -->
-</div>
-
-
-
-
-
-  
-      <div class="content-wrapper" style="display: flex; flex-direction: column; justify-content: flex-start; min-height: 20vh; font-weight: bold;">
-        <div class="logo-and-text-container" style="text-align: center; line-height: 1.0; padding-top: 20px;">
-          <img src="./triangle.png" alt="Logo" id="logo-image" style="max-width: 100px; display: block; margin: 0 auto; margin-bottom: 5px;"> <!-- Adjust margin-bottom if necessary -->
-          <p id="additional-text" class="grey-text" style="font-size: 15px; color: grey; margin-top: -5px;"> <!-- Adjust margin-top to reduce space -->
-            <span id="good-history">Good History</span>  |  
-            <span id="examine-well">Examine Well</span>  |  
-            <span id="use-arclight">Use Arclight</span>
-          </p>          
-          <p id="sub-text" class="centered-content" style="font-size: 16px; color: black; font-weight: 900; padding-bottom: 5px;">How can I help you today?</p>
-        </div>
-      </div>      
-           
-</div>
-
-    </div>
-    <div class="chatbot-container">
-      <flowise-fullchatbot></flowise-fullchatbot>
-    </div>
-
-    <div>     
-      <!-- Condition name displayed here -->
-      <div class="detected-condition"></div>
-      
-      <!-- Thumbnail image with onclick functionality for zoom -->
-      <img id="condition-image" alt="" style="max-width: 100%; height: 120px; display: block; margin: 0 auto; cursor: pointer;" onclick="toggleZoom(this)" /> 
-      <p id="condition-description"></p> <!-- Add this line -->
-      <div class="chatbot-version">*Alan can make mistakes. Use clinical judgement. 4/24 <br>
-      </div>
-  </div>
-  
-  <script>
-      function toggleZoom(image) {
-          // Check if the image is already zoomed
-          if (image.style.height === '200px') {
-              // If not zoomed, enlarge to fit the screen
-              image.style.height = 'auto'; // Reset height to auto for natural aspect ratio
-              image.style.maxWidth = 'none'; // Allow image to exceed the max-width of 100%
-              image.style.cursor = 'zoom-out'; // Change cursor for zoom-out
-          } else {
-              // If zoomed, revert to thumbnail size
-              image.style.height = '200px'; // Thumbnail height
-              image.style.maxWidth = '100%'; // Ensure image does not exceed container width
-              image.style.cursor = 'zoom-in'; // Change cursor for zoom-in
-          }
-      }
-  </script>
+          // Start animations
+          setTimeout(() => {
+              logo1.style.transform = 'scale(1)';
+              logo2.style.transform = 'rotateX(0deg)';
+          }, 100);
     
-    <script type="module">  import { initChatbot } from './chatbot-module.js'; initChatbot();</script>
-
-<script type="module" src="listener-module.js"></script>
-
-<script type="module">
-  import { translations } from './language.js';
-
-  document.addEventListener('DOMContentLoaded', function() {
-    const dropdown = document.querySelector('.language-dropdown');
+          // Redirect after animations and a pause
+          setTimeout(() => {
+              window.location.href = 'home.html'; // Redirects to the main content page
+          }, 4500); // Adjust to match total animation duration plus any additional pause
+        } else {
+          // If splash shown, redirect immediately to home.html
+          window.location.href = 'home.html';
+        }
+      });
+    </script>
     
-    dropdown.addEventListener('change', function() {
-      const lang = this.value;
-      document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
-      document.getElementById('good-history').textContent = translations[lang].goodHistory;
-      document.getElementById('examine-well').textContent = translations[lang].examineWell;
-      document.getElementById('use-arclight').textContent = translations[lang].useArclight;
-      document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
-      document.querySelector('.chatbot-version').textContent = translations[lang].alanMistakes;
-    });
-  });
-</script>
-
-
-  </body>
+</body>
 </html>
