@@ -197,7 +197,9 @@ button {
 
 
 .buttons-container {
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center items horizontally */
   padding-top: 5px;
 }
 
@@ -205,11 +207,17 @@ button {
   background-color: #2196F3FF; /* Default blue background */
   color: white;
   border: none;
-  border-radius: 9px;
-  padding: 8px 10px;
+  border-radius: 10px;
+  padding: 7px 10px;
   margin: 4px;
   cursor: pointer;
   font-size: 10px;
+}
+
+.buttons-container::after {
+  content: "";
+  width: 100%;
+  order: 2; /* Adjust this to change the wrapping point */
 }
 
 .button.green {
@@ -218,12 +226,8 @@ button {
 
 .button.grey {
   background-color: rgb(181, 181, 181); /* Grey for Videos and Tools */
+  order: 3; /* Ensure these buttons come after the forced break */
 }
-
-
-
-
-
 
 
 p {
