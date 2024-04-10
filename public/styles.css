@@ -196,38 +196,71 @@ button {
 
 
 
-.buttons-container {
+
+.menu-icon {
+  cursor: pointer;
+  font-size: 25px; /* Adjust size as needed */
+  color: white; /* Make the icon white */
+  position: fixed; /* Change to fixed to ensure visibility across the page */
+  top: 20px;
+  left: 20px;
+  z-index: 1000; /* Ensure a high z-index to bring it in front of other content */
+}
+.menu-icon.active {
+  color: black; /* Change icon color to black when active */
+}
+
+
+.side-menu {
+  position: fixed;
+  left: -250px; /* Start off-screen */
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #d8d6d6;
+  box-shadow: 2px 0px 5px rgba(0,0,0,0.5);
+  transition: left 0.5s ease;
+  padding-top: 60px; /* Give some space at the top */
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* Center items horizontally */
-  padding-top: 5px;
+  flex-direction: column;
+  align-items: center;
+  z-index: 500; /* Ensure the menu is also in front, but behind the icon */
+}
+
+.button, .button.green, .button.grey {
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: white; /* Adjusted for visibility */
 }
 
 .button {
   background-color: #2196F3FF; /* Default blue background */
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 7px 10px;
-  margin: 4px;
-  cursor: pointer;
-  font-size: 10px;
-}
-
-.buttons-container::after {
-  content: "";
-  width: 100%;
-  order: 2; /* Adjust this to change the wrapping point */
 }
 
 .button.green {
-  background-color: #4ec94e; /* Faint green for Ear Drum/Canal */
+  background-color: #4ec94e; /* Faint green */
 }
 
 .button.grey {
-  background-color: rgb(181, 181, 181); /* Grey for Videos and Tools */
-  order: 3; /* Ensure these buttons come after the forced break */
+  background-color: rgb(181, 181, 181); /* Grey */
 }
+.button.red {
+  background-color: #ff0000; /* Red background for the Instructions button */
+  color: white; /* White text color for better readability */
+  border: 2px solid black; /* Adds a thin black border around the button */
+}
+
+
+
+
+
+
+
+
 
 
 p {

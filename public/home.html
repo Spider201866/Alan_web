@@ -54,16 +54,24 @@
       <div class="flex-spacer"></div> <!-- Second spacer for symmetry; can be hidden if not needed -->
   </div>
   
-  <div class="buttons-container">
-    <button class="button">Front of Eye</button>
-    <button class="button">Fundal Reflex</button>
-    <button class="button">Back of Eye</button>
-    <button class="button green">Ear Drum/Canal</button> <!-- Green button -->
-    <button class="button grey">Videos</button> <!-- Grey button -->
-    <button class="button grey">Tools</button> <!-- Grey button -->
-</div>
 
+  <div class="menu-icon">&#9776;</div> <!-- Burger Menu Icon -->
+  <div class="side-menu">
+      <button class="button red">Instructions</button> <!-- New Instructions button with red background -->
+      <button class="button">Front of Eye</button>
+      <button class="button">Fundal Reflex</button>
+      <button class="button">Back of Eye</button>
+      <button class="button green">Ear Drum/Canal</button>
+      <button class="button grey">Videos</button>
+      <button class="button grey">Atoms</button>
+      <button class="button grey">Tools</button>
+      <button class="button grey">Arclight Project</button>
+      <button class="button grey">Web Links</button>
+      <button class="button grey">About</button>
+  </div>
   
+  
+
       <div class="content-wrapper" style="display: flex; flex-direction: column; justify-content: flex-start; min-height: 20vh; font-weight: bold;">
         <div class="logo-and-text-container" style="text-align: center; line-height: 1.0; padding-top: 20px;">
           <img src="./triangle.png" alt="Logo" id="logo-image" style="max-width: 100px; display: block; margin: 0 auto; margin-bottom: 5px;"> <!-- Adjust margin-bottom if necessary -->
@@ -131,6 +139,23 @@
       document.querySelector('.chatbot-version').textContent = translations[lang].alanMistakes;
     });
   });
+
+  document.querySelector('.menu-icon').addEventListener('click', function() {
+  var tray = document.querySelector('.side-menu');
+  // Toggle the side menu visibility
+  if (tray.style.left === '-250px' || tray.style.left === '') {
+    tray.style.left = '0'; // Slide in
+    this.classList.add('active'); // Add the 'active' class to change the icon color to black
+  } else {
+    tray.style.left = '-250px'; // Slide out
+    this.classList.remove('active'); // Remove the 'active' class to revert the icon color back to white
+  }
+});
+
+
+
+
+
 </script>
 
 
