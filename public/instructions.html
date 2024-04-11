@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructions</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .app-bar {
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .icon-button {
+            background: none;
+            border: none;
+            color: white;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .content {
+            padding: 20px;
+            background-color: #e0e0e0; /* Initial color */
+        }
+
+        .toggle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .footer {
+            background-color: #ddd;
+            padding: 10px 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .text-section {
+            margin-bottom: 20px;
+        }
+
+        .text-section p {
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="app-bar">
+        <button onclick="goBack()" class="icon-button">&#x2190;</button>
+        <h1 class="title">Instructions</h1>
+    </div>
+    <div class="content" id="content">
+        <div class="toggle-container">
+            <label class="switch">
+                <input type="checkbox" id="featureSwitch">
+                <span class="slider"></span>
+            </label>
+            <span id="featureText">Vision & Pupils</span>
+        </div>
+        <div class="text-section">
+            <p><strong>Tell Alan about your patient's:</strong></p>
+            <ul>
+                <li>Problem & Onset</li>
+                <li>What You See</li>
+                <li>Age, Sex, Medication</li>
+            </ul>
+        </div>
+        <div class="text-section">
+            <p><strong>Too little:</strong></p>
+            <p id="tooLittle">Example content will toggle based on switch state.</p>
+        </div>
+        <div class="text-section">
+            <p><strong>Just right:</strong></p>
+            <p id="justRight">Example content will toggle based on switch state.</p>
+        </div>
+        <div class="text-section">
+            <p><strong>Too much:</strong></p>
+            <p id="tooMuch">Example content will toggle based on switch state.</p>
+        </div>
+ 
+    </div>
+    <div id="linksModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p>Links to various resources:</p>
+            <ul>
+                <li><a href="https://www.youtube.com/watch?v=OgDjOazTt1o" target="_blank">1) Neurology | David Nicholl, Birmingham, UK</a></li>
+                <!-- Additional links -->
+            </ul>
+        </div>
+    </div>
+    <div class="footer">
+        <button onclick="alert('Link to Videos')">Videos</button>
+        <button onclick="alert('Link to Arclight Project')">Arclight Project</button>
+        <button onclick="showLinks()">Links</button>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function showLinks() {
+            document.getElementById('linksModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('linksModal').style.display = 'none';
+        }
+
+        document.getElementById('featureSwitch').addEventListener('change', function() {
+            var content = document.getElementById('content');
+            var featureText = document.getElementById('featureText');
+            var tooLittle = document.getElementById('tooLittle');
+            var justRight = document.getElementById('justRight');
+            var tooMuch = document.getElementById('tooMuch');
+            if (this.checked) {
+                content.style.backgroundColor = 'green';
+                featureText.textContent = 'Hearing';
+                tooLittle.textContent = 'Man red ear what?';
+                justRight.textContent = 'Man 25yr, red ear 3 day. No meds or ear prob before. Bad pain, ear discharging lots. With arclight I see a red drum. Hearing muffled in bad ear but OK in other ear.';
+                tooMuch.textContent = 'This man com into clinics today. He, driver in th building, a red ears now he thinks the food eaten; Is looking at ear I see discharge. It red edges you know? He wan help; he tall man ears watery worried about hearing and pain he says. wat is dis…';
+            } else {
+                content.style.backgroundColor = 'blue';
+                featureText.textContent = 'Vision & Pupils';
+                tooLittle.textContent = 'Man red eye what?';
+                justRight.textContent = 'Man 25yr, red eye 3 day. No meds or eye prob before. Bad pain, eye waters. With arclight I see big white cornea patch. Pupils OK. Vision 6/12 in poor eye, 6/6 in other.';
+                tooMuch.textContent = 'This man com into clinics today. He, driver in th building, a red eyes now he thinks the food eaten; Is looking at eye I see watering. It red edges you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is dis…';
+            }
+        });
+    </script>
+</body>
+</html>

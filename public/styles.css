@@ -68,40 +68,49 @@ html {
   text-align: center; /* Ensures text is centered */
 }
 
-/* Language Selector Styling */
 .language-selector {
-  position: absolute; /* Positions the selector independently of the centering */
-  right: 30px; /* Aligns to the right, matching header padding */
-  top: 50%; /* Aligns center with the header's vertical center */
-  transform: translateY(-50%); /* Centers vertically */
+  position: absolute;
+  right: 23px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  z-index: 1000;  /* Ensures it appears above most other content */
 }
 
-/* Dropdown Styling */
 .language-dropdown {
-  padding: 5px 0px;
+  appearance: none;
   background-color: black;
-  color: rgb(110, 110, 254);
-  font-size: 10px;
-  border: 1px solid #000000; /* Subtle grey border */
+  color: rgb(62, 62, 255);
+  font-size: 12px;
+  border: 1px solid #000000;
   border-radius: 10px;
-  appearance: none; /* Removes default styling */
-  text-align: center; /* Centers text on some browsers */
-  text-align-last: center; /* Specifically for the selected item in the dropdown */
-  -moz-text-align-last: center; /* Firefox specific */
-  display: block;
-  width: 100%; /* Ensures dropdown takes full width of its container */
+  padding: 10px 5px 7px 10px; /* Even smaller right padding */
+  background-image: url('./lang.jpg');
+  background-repeat: no-repeat;
+  background-position: right 1px center; /* Adjust this if necessary */
+  background-size: 25px 25px;
+  width: 93px;
+  text-align: left;
 }
+
+
+
+
 
 .language-dropdown:focus {
-  outline: none; /* Removes the default focus outline */
-  border: 1px solid #000000; /* Keeps the border subtle grey even when focused */
+  outline: none;
+  border: 1px solid #000000;
 }
 
 .language-dropdown option {
-  background-color: white;
-  color: black;
-  text-align: center; /* Center align text for options - works in some browsers */
+  background-color: white; /* Ensures a consistent background color */
+  color: black; /* Text color for better contrast */
+  padding-left: 5px; /* Reduces the left padding */
+  text-align: left; /* Aligns the text to the left */
 }
+
+
 
 
 
@@ -199,16 +208,17 @@ button {
 
 .menu-icon {
   cursor: pointer;
-  font-size: 25px; /* Adjust size as needed */
-  color: white; /* Make the icon white */
-  position: fixed; /* Change to fixed to ensure visibility across the page */
-  top: 20px;
+  font-size: 25px;  /* Icon's approximate height based on the font-size */
+  color: white;
+  position: fixed;
+  top: calc(42px - 12.5px); /* Precisely centers the icon vertically */
   left: 20px;
-  z-index: 1000; /* Ensure a high z-index to bring it in front of other content */
+  z-index: 1000;
 }
 .menu-icon.active {
-  color: black; /* Change icon color to black when active */
+  color: black;  /* Change icon color to black when active */
 }
+
 
 
 .side-menu {

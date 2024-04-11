@@ -46,7 +46,7 @@
           <option value="sw">Kiswahili</option> <!-- Swahili -->
           <option value="cy">Cymraeg</option> <!-- Welsh -->
           <option value="ny">Chichewa</option> <!-- For Malawi -->
-          <option value="rw">Kinyarwanda</option> <!-- For Rwanda -->
+          <option value="rw">Kinwanda</option> <!-- For Rwanda -->
           <option value="lg">Luganda</option> <!-- For Uganda -->
       </select>
       
@@ -57,7 +57,7 @@
 
   <div class="menu-icon">&#9776;</div> <!-- Burger Menu Icon -->
   <div class="side-menu">
-      <button class="button red">Instructions</button> <!-- New Instructions button with red background -->
+      <button id="instructions-button" class="button red">Instructions</button>
       <button class="button">Front of Eye</button>
       <button class="button">Fundal Reflex</button>
       <button class="button">Back of Eye</button>
@@ -69,6 +69,7 @@
       <button class="button grey">Web Links</button>
       <button class="button grey">About</button>
   </div>
+  
   
   
 
@@ -151,11 +152,14 @@
     this.classList.remove('active'); // Remove the 'active' class to revert the icon color back to white
   }
 });
-
-
-
-
-
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var instructionsButton = document.getElementById('instructions-button');
+      instructionsButton.addEventListener('click', function() {
+          window.location.href = 'instructions.html'; // Redirect to instructions.html
+      });
+  });
 </script>
 
 
