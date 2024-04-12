@@ -24,6 +24,7 @@
     <div id="mainContent" class="hidden">
     </div>
     
+
     <div class="chatbot-header">
       <div class="flex-spacer"></div> <!-- Invisible spacer to balance the language selector -->
       <div>
@@ -53,19 +54,36 @@
   </div>
   
 
-  <div class="menu-icon">&#9776;</div> <!-- Burger Menu Icon -->
-  <div class="side-menu">
-      <button id="instructions-button" class="button red">Instructions</button>
-      <button class="button red">Job Role</button>
-      <button class="button">Front of Eye</button>
-      <button class="button">Fundal Reflex</button>
-      <button class="button">Back of Eye</button>
-      <button class="button green">Ear Drum/Canal</button>
-      <button class="button grey">Videos</button>
-      <button class="button grey">Atoms</button>
-      <button class="button grey">Tools</button>
-      <button class="button grey">Arclight Project</button>
-      <button class="button grey">Web Links</button>
+  <div class="menu-icon">&#9776;</div> <!-- 3 lines Menu Icon -->
+  <div class="side-menu" style="display: flex; flex-wrap: wrap; align-items: center;">
+  
+      <!-- Grouped Instructions and Job Role buttons for side-by-side display -->
+      <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for the first two buttons -->
+          <button id="instructions-button" class="button red" style="margin-right: 10px;">Instructions</button>
+          <button class="button red">Job Role</button>
+      </div>
+  
+      <!-- Grouping Front of Eye, Fundal Reflex, and Back of Eye buttons for same line display -->
+      <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for eye-related buttons -->
+          <button class="button" style="margin-right: 10px;">Front of Eye</button>
+          <button class="button" style="margin-right: 10px;">Fundal Reflex</button>
+          <button class="button">Back of Eye</button>
+      </div>
+  
+      <!-- Grouping Videos, Atoms, Tools buttons for same line display -->
+      <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for informational buttons -->
+          <button class="button grey" style="margin-right: 10px;">Videos</button>
+          <button class="button grey" style="margin-right: 10px;">Atoms</button>
+          <button class="button grey">Tools</button>
+      </div>
+  
+      <!-- Grouping Arclight Project and Web Links buttons for same line display -->
+      <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for project-related buttons -->
+          <button class="button grey" style="margin-right: 10px;">Arclight Project</button>
+          <button class="button grey">Web Links</button>
+      </div>
+  
+      <!-- Remaining button -->
       <button class="button grey">About</button>
   </div>
   
@@ -143,11 +161,11 @@
   document.querySelector('.menu-icon').addEventListener('click', function() {
   var tray = document.querySelector('.side-menu');
   // Toggle the side menu visibility
-  if (tray.style.left === '-250px' || tray.style.left === '') {
+  if (tray.style.left === '-370px' || tray.style.left === '') {
     tray.style.left = '0'; // Slide in
     this.classList.add('active'); // Add the 'active' class to change the icon color to black
   } else {
-    tray.style.left = '-250px'; // Slide out
+    tray.style.left = '-370px'; // Slide out
     this.classList.remove('active'); // Remove the 'active' class to revert the icon color back to white
   }
 });
