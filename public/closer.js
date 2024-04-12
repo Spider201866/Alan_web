@@ -1,7 +1,7 @@
 window.onload = function () {
         document.getElementById("mainContent").classList.add("hidden");
         checkPassword();
-        setTimeout(closeContent, 6000); // Automatically close the content after 6 seconds
+        setTimeout(closeContent, 2000); // Automatically close the content after 6 seconds
     
         // Scroll to the top of the page to ensure the title "Alan" is visible
         window.scrollTo(0, 0);
