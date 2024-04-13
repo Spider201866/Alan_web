@@ -68,6 +68,8 @@ html {
   text-align: center; /* Ensures text is centered */
 }
 
+
+
 .language-selector {
   position: absolute;
   right: 23px;
@@ -85,10 +87,10 @@ html {
   font-size: 12px;
   border: 1px solid #000000;
   border-radius: 10px;
-  padding: 10px 5px 7px 10px; /* Even smaller right padding */
+  padding: 10px 0px 7px 10px; /* Even smaller right padding */
   background-image: url('./lang.jpg');
   background-repeat: no-repeat;
-  background-position: right 1px center; /* Adjust this if necessary */
+  background-position: right -1px center; /* Adjust this if necessary */
   background-size: 25px 25px;
   width: 93px;
   text-align: left;
@@ -130,7 +132,7 @@ html {
 }
 
 .chatbot-version {
-  font-size: 12px;
+  font-size: 13px;
   color: grey;
   padding-top: 0;
   padding-bottom: 20px;

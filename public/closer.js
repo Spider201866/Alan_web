@@ -25,7 +25,7 @@ window.onload = function () {
           if (chatbotTitle) {
             chatbotTitle.classList.add('flip-horizontally');
             // Call highlightPhases here, ensuring it doesn't interfere with the title or other initial content
-            setTimeout(highlightPhases, 2000); // Call shortly after flipping the title for visual continuity
+            setTimeout(highlightPhases, 6000); // Call shortly after flipping the title for visual continuity
           }
         }, 500); // Wait for 0.5 seconds after hiding the main content
       }
