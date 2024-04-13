@@ -1,7 +1,7 @@
 window.onload = function () {
         document.getElementById("mainContent").classList.add("hidden");
         checkPassword();
-        setTimeout(closeContent, 2000); // Automatically close the content after 6 seconds
+        setTimeout(closeContent, 1000); // Automatically close the content after 6 seconds
     
         // Scroll to the top of the page to ensure the title "Alan" is visible
         window.scrollTo(0, 0);
@@ -9,7 +9,7 @@ window.onload = function () {
     
       function checkPassword() {
         var encodedPassword = "NjYyMDIz";
-        var passwordEntered = prompt("Enter password:", "");
+        var passwordEntered = prompt("Login:", "");
         var encodedInput = btoa(passwordEntered);
         if (encodedInput === encodedPassword) {
           document.getElementById("mainContent").classList.remove("hidden");
@@ -25,7 +25,7 @@ window.onload = function () {
           if (chatbotTitle) {
             chatbotTitle.classList.add('flip-horizontally');
             // Call highlightPhases here, ensuring it doesn't interfere with the title or other initial content
-            setTimeout(highlightPhases, 6000); // Call shortly after flipping the title for visual continuity
+            setTimeout(highlightPhases, 2000); // Call shortly after flipping the title for visual continuity
           }
         }, 500); // Wait for 0.5 seconds after hiding the main content
       }

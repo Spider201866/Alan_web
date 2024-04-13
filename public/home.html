@@ -57,10 +57,30 @@
   <div class="menu-icon">&#9776;</div> <!-- 3 lines Menu Icon -->
   <div class="side-menu" style="display: flex; flex-wrap: wrap; align-items: center;">
   
-      <!-- Grouped Instructions and Job Role buttons for side-by-side display -->
-      <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for the first two buttons -->
-          <button id="instructions-button" class="button red" style="margin-right: 10px;">Instructions</button>
-          <button class="button red">Job Role</button>
+    <div style="display: flex; margin-bottom: 10px;">
+      <div>
+          <p id="instructions-label" class="button-label">Read me!</p>
+          <button id="instructions-button" class="button red pulse">Instructions</button>
+      </div>
+      <div style="margin-left: 10px;">
+          <p id="job-role-label" class="button-label">Choose</p>
+          <button id="job-role-button" class="button red pulse">Job Role</button>
+          <div id="job-role-dropdown" class="dropdown-content hidden">
+              <a href="#" onclick="updateJobRole('Health worker')">Health worker</a>
+              <a href="#" onclick="updateJobRole('Nurse')">Nurse</a>
+              <a href="#" onclick="updateJobRole('Ophthalmic clinical officer')">Ophthalmic clinical officer</a>
+              <a href="#" onclick="updateJobRole('Medical student')">Medical student</a>
+              <a href="#" onclick="updateJobRole('General practitioner')">General practitioner</a>
+              <a href="#" onclick="updateJobRole('Hospital doctor')">Hospital doctor</a>
+              <a href="#" onclick="updateJobRole('Ophthalmologist')">Ophthalmologist</a>
+              <a href="#" onclick="updateJobRole('Optometrist')">Optometrist</a>
+              <a href="#" onclick="updateJobRole('Orthoptist')">Orthoptist</a>
+              <a href="#" onclick="updateJobRole('ENT specialist')">ENT specialist</a>
+              <a href="#" onclick="updateJobRole('Pharmacist')">Pharmacist</a>
+              <a href="#" onclick="updateJobRole('Audiologist')">Audiologist</a>
+              <a href="#" onclick="updateJobRole('Ear care practitioner')">Ear care practitioner</a>
+            </div>
+          </div>
       </div>
   
       <!-- Grouping Front of Eye, Fundal Reflex, and Back of Eye buttons for same line display -->
@@ -172,12 +192,76 @@
 </script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-      var instructionsButton = document.getElementById('instructions-button');
-      instructionsButton.addEventListener('click', function() {
+      var jobRoleButton = document.getElementById("job-role-button");
+      var jobRoleDropdown = document.getElementById("job-role-dropdown");
+      var jobRoleLabel = document.getElementById("job-role-label");
+      var instructionsButton = document.getElementById("instructions-button");
+      var instructionsLabel = document.getElementById("instructions-label");
+  
+      // Restore state from localStorage
+      if (localStorage.getItem("selectedJobRole")) {
+          jobRoleButton.textContent = localStorage.getItem("selectedJobRole");
+      }
+      if (localStorage.getItem("instructionsClicked")) {
+          instructionsButton.classList.remove("pulse");
+          instructionsLabel.style.display = "none";
+      }
+      if (localStorage.getItem("jobRoleClicked")) {
+          jobRoleButton.classList.remove("pulse");
+          jobRoleLabel.style.display = "none";
+      }
+  
+      // Event listeners for job role dropdown interactions
+      jobRoleButton.addEventListener("click", function() {
+          jobRoleDropdown.style.display = jobRoleDropdown.style.display === "block" ? "none" : "block";
+          // Update UI and localStorage when clicked
+          if (!localStorage.getItem("jobRoleClicked")) {
+              jobRoleLabel.style.display = "none";
+              this.classList.remove("pulse");
+              localStorage.setItem("jobRoleClicked", true);
+          }
+      });
+  
+      // Set job role from dropdown
+      Array.from(jobRoleDropdown.getElementsByTagName('a')).forEach(function(link) {
+          link.onclick = function() {
+              updateJobRole(this.textContent);
+          }
+      });
+  
+      // Event listener for instructions button
+      instructionsButton.addEventListener("click", function() {
+          if (!localStorage.getItem("instructionsClicked")) {
+              instructionsLabel.style.display = "none";
+              this.classList.remove("pulse");
+              localStorage.setItem("instructionsClicked", true);
+          }
           window.location.href = 'instructions.html'; // Redirect to instructions.html
       });
+  
+      // Handle clicking outside dropdowns to close them
+      window.onclick = function(event) {
+          if (!event.target.matches('#job-role-button')) {
+              Array.from(document.getElementsByClassName("dropdown-content")).forEach(function(dropdown) {
+                  if (dropdown.style.display === "block") {
+                      dropdown.style.display = "none";
+                  }
+              });
+          }
+      };
   });
-</script>
+  
+  // Update job role function
+  function updateJobRole(role) {
+      document.getElementById("job-role-button").textContent = role;
+      document.getElementById("job-role-dropdown").style.display = "none";
+      localStorage.setItem("selectedJobRole", role); // Save the selected job role to localStorage
+  }
+  </script>
+  
+  
+  
+  
 
 
   </body>

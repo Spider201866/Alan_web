@@ -1,127 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Splash Screen</title>
-    <style>
-      body,
-      html {
-        height: 100%;
-        margin: 0;
-        padding: 0; /* Ensures no padding interferes with the dimensions */
-        overflow: hidden; /* Prevents scrolling on the whole page */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        box-sizing: border-box; /* Includes padding and border in the element's dimensions */
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Splash Screen</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0; /* Ensures no padding interferes with the dimensions */
+      overflow: hidden; /* Prevents scrolling on the whole page */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      box-sizing: border-box; /* Includes padding and border in the element's dimensions */
+    }
 
-      .splash-screen {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        height: 100vh; /* Takes up exactly the height of the viewport */
-        width: 100vw; /* Takes up exactly the width of the viewport */
-        padding: 20px;
-        box-sizing: border-box; /* Padding is included in the dimensions */
-      }
-      .splash-screen img,
-      .splash-screen p {
-        transition: transform 3s ease-in-out;
-        margin: 20px 0;
-      }
-      .splash-screen img {
-        width: 20vw;
-        max-width: 100px;
-        height: auto;
-      }
-      #logo2 {
-        width: 40vw;
-        max-width: 200px;
-      }
-      .splash-screen p {
-        font-size: calc(10px + 1vmin);
-        font-weight: bold;
-        font-style: italic;
-      }
-      .instruction-screen {
-        padding: 40px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        background-color: white;
-        text-align: center;
-        overflow: auto; /* Allows scrolling inside the div if content is too large */
-        box-sizing: border-box; /* Padding is included in the dimensions */
-      }
-      .instruction-screen p {
-        font-size: 16px;
-        margin: 20px;
-        color: #333;
-      }
-      button {
-        padding: 10px 20px;
-        font-size: 16px;
-        color: white;
-        background-color: #007bff;
-        border: none;
-        border-radius: 15px; /* Rounded corners */
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="splash-screen">
-      <img id="logo1" src="./Q.png" alt="Q Logo" />
-      <img id="logo2" src="./AP.png" alt="AP Logo" />
-      <p>Eye & Ear Assistant</p>
-    </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        if (!sessionStorage.getItem("splashShown")) {
-          sessionStorage.setItem("splashShown", "true");
+    .hidden {
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s 0.5s, opacity 0.5s linear;
+    }
 
-          const logo1 = document.getElementById("logo1");
-          const logo2 = document.getElementById("logo2");
-          logo1.style.transform = "scale(0.8)";
-          logo2.style.transform = "rotateX(-90deg)";
+    .visible {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 0.5s linear;
+    }
 
-          setTimeout(() => {
-            logo1.style.transform = "scale(1)";
-            logo2.style.transform = "rotateX(0deg)";
-          }, 100);
+    .splash-screen, .instruction-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
 
-          setTimeout(() => {
-            // Transition to instruction screen
-            document.body.innerHTML +=
-              '<div class="instruction-screen">' +
-              '<img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: 20px;">' + // Logo insertion
-              "<p><strong>*Experimental*</strong></p>" + // Line for 'Experimental'
-              "<p>Alan is an AI assistant for students and those who only occasionally see eye or ear cases.</p>" + // Additional info line
-              "<p>Write or speak clearly, avoid identifying names or other details, keep audio messages <30s.</p>" + // Instructions line
-              "<p>Good luck!<br><br><br><br></p>" + // Good luck message with two line spaces
-              '<button onclick="proceedToHome()">Accept</button>' +
-              "</div>";
-          }, 4500);
-        } else {
-          window.location.href = "home.html";
-        }
-      });
+    .splash-screen img, .splash-screen p {
+      transition: transform 3s ease-in-out;
+      margin: 20px 0;
+    }
 
-      function proceedToHome() {
+    .splash-screen img {
+      width: 30vw;
+      max-width: 150px;
+      height: auto;
+      margin-bottom: 60px;
+    }
+
+    #logo2 {
+      width: 50vw;
+      max-width: 300px;
+      margin-bottom: 60px;
+    }
+
+    .splash-screen p {
+      font-size: calc(12px + 1vmin);
+      font-weight: bold;
+      font-style: italic;
+      margin-top: 60px;
+    }
+
+    .instruction-screen {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      overflow: auto; /* Allows scrolling inside the div if content is too large */
+      box-sizing: border-box; /* Padding is included in the dimensions */
+    }
+
+    .instruction-screen p {
+      font-size: 16px;
+      margin: 20px;
+      color: #333;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 15px; /* Rounded corners */
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="splash-screen visible">
+    <img id="logo1" src="./Q.png" alt="Q Logo" />
+    <img id="logo2" src="./AP.png" alt="AP Logo" />
+    <p>Eye & Ear AI Assistant</p>
+  </div>
+  <div class="instruction-screen hidden">
+    <img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: 20px;">
+    <p><strong>*Experimental*</strong></p>
+    <p>Alan is an AI assistant for students and those who only occasionally see eye or ear cases.</p>
+    <p>Write or speak clearly, avoid identifying names or other details, keep audio messages <30s.</p>
+    <p>Good luck!<br><br><br><br></p>
+    <button onclick="proceedToHome()">Accept</button>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (!sessionStorage.getItem("splashShown")) {
+        sessionStorage.setItem("splashShown", "true");
+
+        const logo1 = document.getElementById("logo1");
+        const logo2 = document.getElementById("logo2");
+        logo1.style.transform = "scale(0.8)";
+        logo2.style.transform = "rotateX(-90deg)";
+
+        setTimeout(() => {
+          logo1.style.transform = "scale(1)";
+          logo2.style.transform = "rotateX(0deg)";
+        }, 100);
+
+        setTimeout(() => {
+          const splashScreen = document.querySelector('.splash-screen');
+          const instructionScreen = document.querySelector('.instruction-screen');
+          splashScreen.classList.remove('visible');
+          splashScreen.classList.add('hidden');
+          instructionScreen.classList.remove('hidden');
+          instructionScreen.classList.add('visible');
+        }, 6000);
+      } else {
         window.location.href = "home.html";
       }
-    </script>
-  </body>
+    });
+
+    function proceedToHome() {
+      window.location.href = "home.html";
+    }
+  </script>
+</body>
 </html>

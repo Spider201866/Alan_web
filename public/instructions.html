@@ -8,7 +8,7 @@
         body, html {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: "Calibri Light", Arial, sans-serif;
             background-color: #f4f4f4;
         }
 
@@ -81,7 +81,7 @@
         }
 
         input:checked + .slider {
-            background-color: #2196F3;
+            background-color: #76c1ff;
         }
 
         input:checked + .slider:before {
@@ -190,22 +190,7 @@
             <p id="tooMuch">Example content will toggle based on switch state.</p>
         </div>
  
-    </div>
-    <div id="linksModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <p>Links to various resources:</p>
-            <ul>
-                <li><a href="https://www.youtube.com/watch?v=OgDjOazTt1o" target="_blank">1) Neurology | David Nicholl, Birmingham, UK</a></li>
-                <!-- Additional links -->
-            </ul>
-        </div>
-    </div>
-    <div class="footer">
-        <button onclick="alert('Link to Videos')">Videos</button>
-        <button onclick="alert('Link to Arclight Project')">Arclight Project</button>
-        <button onclick="showLinks()">Links</button>
-    </div>
+    
     <script>
         function goBack() {
             window.history.back();
