@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Links</title>
+<style>
+  body {
+    font-family: "Calibri Light", Arial, sans-serif;
+    background-color: white; /* White background for the page */
+    color: black; /* Black text color for the page */
+    margin: 0;
+    padding: 0;
+  }
+  #appBar {
+    background-color: black; /* Black background for the app bar */
+    color: white; /* White text color for the app bar */
+    padding: 20px 20px; /* Padding inside the app bar */
+  }
+  #pageTitle {
+    text-align: center;
+    margin: 0; /* No margin for the title to center it in the app bar */
+    font-size: 24px;
+  }
+  #backArrow {
+    color: white; /* White back arrow */
+    font-size: 32px; /* Increased size of back arrow */
+    font-weight: bold; /* Makes the arrow thicker */
+    position: absolute;
+    top: 10px; /* Positioning of back arrow */
+    left: 20px;
+    cursor: pointer;
+  }
+  #links {
+    padding: 20px;
+    display: block; /* Changed from none to block to display it */
+  }
+  #links a {
+    display: block;
+    margin-bottom: 10px;
+    color: black; /* Ensure links are black */
+    text-decoration: none; /* No underline */
+  }
+</style>
+</head>
+<body>
+
+<div id="appBar">
+    <div id="backArrow" onclick="history.back()">&#x2190;</div> <!-- Back arrow -->
+    <h1 id="pageTitle">Web Links</h1> <!-- Page Title -->
+</div>
+
+<div id="links">
+    <a href="https://www.youtube.com/watch?v=OgDjOazTt1o">1) Neurology | David Nicholl, Birmingham, UK</a>
+    <a href="https://www.youtube.com/watch?v=QsD5T4m7ynQ&feature=youtu.be">2) Cat / Paediatric Eye Examination</a>
+    <a href="https://www.youtube.com/watch?v=y04qoQE43T8">3) Arclight in Rwanda | German Rotary Club</a>
+    <a href="https://www.youtube.com/watch?v=dBp6boMB0Lo">4) How to use Arclight | Dr Md. Yeamli Khan, Bangladesh</a>
+    <a href="https://www.youtube.com/watch?v=eYgDzum3z4c">5) Arclight In Africa | The Fred Hollows Foundation, Australia</a>
+    <a href="https://youtu.be/RDpTy8X_pVI">6) Arclight in 60 Seconds | University of St Andrews</a>
+    <a href="https://www.afro.who.int/sites/default/files/2018-06/WEB-2835-OMS-Afro-PrimaryEyeCaretrainingmanual-20180406.pdf">7) WHO</a>
+</div>
+
+</body>
+</html>

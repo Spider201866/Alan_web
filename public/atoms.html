@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atoms</title>
+<style>
+  body {
+    font-family: "Calibri Light", Arial, sans-serif;
+    background-color: white; /* White background for the page */
+    color: black; /* Black text color for the page */
+    margin: 0;
+    padding: 0;
+  }
+  #appBar {
+    background-color: black; /* Black background for the app bar */
+    color: white; /* White text color for the app bar */
+    padding: 20px 20px; /* Padding inside the app bar */
+  }
+  #pageTitle {
+    text-align: center;
+    margin: 0; /* No margin for the title to center it in the app bar */
+    font-size: 24px;
+  }
+  #backArrow {
+    color: white; /* White back arrow */
+    font-size: 32px; /* Increased size of back arrow */
+    font-weight: bold; /* Makes the arrow thicker */
+    position: absolute;
+    top: 10px; /* Positioning of back arrow */
+    left: 20px;
+    cursor: pointer;
+  }
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto; /* Centers the image */
+  }
+</style>
+</head>
+<body>
+
+<div id="appBar">
+    <div id="backArrow" onclick="history.back()">&#x2190;</div>
+    <h1 id="pageTitle" style="text-align: center;">Atoms</h1>
+</div>
+
+<div>
+    <img src="atomsblue.jpg" alt="Blue Atoms Image" style="touch-action: manipulation; /* allows user to pinch and zoom */">
+</div>
+
+</body>
+</html>

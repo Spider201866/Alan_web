@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eye Exam</title>
+<style>
+  body {
+    font-family: "Calibri Light", Arial, sans-serif;
+    background-color: white; /* White background for the page */
+    color: black; /* Black text color for the page */
+    margin: 0;
+    padding: 0;
+  }
+  #appBar {
+    background-color: black; /* Black background for the app bar */
+    color: white; /* White text color for the app bar */
+    padding: 20px 20px; /* Padding inside the app bar */
+  }
+  #pageTitle {
+    text-align: center;
+    margin: 0; /* No margin for the title to center it in the app bar */
+    font-size: 24px;
+  }
+  #backArrow {
+    color: white; /* White back arrow */
+    font-size: 32px; /* Increased size of back arrow */
+    font-weight: bold; /* Makes the arrow thicker */
+    position: absolute;
+    top: 10px; /* Positioning of back arrow */
+    left: 20px;
+    cursor: pointer;
+  }
+  img {
+    display: block;
+    height: 90vh; /* Sets the image height to fill the screen vertically */
+    width: auto; /* Maintains the aspect ratio */
+    margin: auto; /* Centers the image horizontally */
+    max-width: none; /* Overrules any max-width settings */
+  }
+</style>
+</head>
+<body>
+
+<div id="appBar">
+    <div id="backArrow" onclick="history.back()">&#x2190;</div> <!-- Back arrow to navigate to the previous page -->
+    <h1 id="pageTitle" style="text-align: center;">Eye Exam Techniques</h1> <!-- Page title -->
+</div>
+
+<div>
+    <img src="howtouseeye.png" alt="How to Use Eye Examination Equipment" style="touch-action: manipulation;"> <!-- Image with pinch and zoom enabled -->
+</div>
+
+</body>
+</html>

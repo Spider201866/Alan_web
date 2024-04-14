@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Alan</title>
+<style>
+  body {
+    font-family: "Calibri Light", Arial, sans-serif;
+    background-color: white; /* White background for the page */
+    color: black; /* Black text color for the page */
+    margin: 0;
+    padding: 0;
+  }
+  #appBar {
+    background-color: black; /* Black background for the app bar */
+    color: white; /* White text color for the app bar */
+    padding: 20px 20px; /* Padding inside the app bar */
+  }
+  #pageTitle {
+    text-align: center;
+    margin: 0; /* No margin for the title to center it in the app bar */
+    font-size: 24px;
+  }
+  #backArrow {
+    color: white; /* White back arrow */
+    font-size: 32px; /* Increased size of back arrow */
+    font-weight: bold; /* Makes the arrow thicker */
+    position: absolute;
+    top: 10px; /* Positioning of back arrow */
+    left: 20px;
+    cursor: pointer;
+  }
+  #aboutAlan {
+    padding: 30px 30px;
+  }
+
+
+  .highlight {
+    color: red; /* Color for highlighted terms */
+  }
+  .bullet-point {
+    list-style-type: disc; /* Adds bullet points */
+    margin-left: 20px; /* Indent bullet points */
+  }
+  /* Specific lines that should remain black */
+  #aboutAlan p:not(.highlight),
+  #aboutAlan li:not(.highlight) {
+    color: black;
+  }
+  /* Add space after specific paragraphs */
+  #aboutAlan p.space-after,
+  #aboutAlan li.space-after {
+    margin-bottom: 24px; /* This equals approximately 1.5 lines of space */
+  }
+</style>
+</head>
+<body>
+
+    <div id="appBar">
+        <div id="backArrow" onclick="history.back()">&#x2190;</div> <!-- Back arrow -->
+        <h1 id="pageTitle">About Alan</h1> <!-- Page Title -->
+    </div>
+
+    <div id="aboutAlan">
+        <p class="space-after">Alan is a <strong>hybrid AI: LLM Agent</strong> (GPT-4, Claude-3, Gemini 1.5)<strong>/Symbolic</strong></p>
+        <ul>
+          <li class="highlight bullet-point">Expert LMIC eye & ear base – tropical/hot climate</li>
+          <li class="highlight bullet-point">Dialogue – negates errors</li>
+          <li class="highlight bullet-point space-after">Arclight aware</li>
+        </ul>
+        <p><strong>Explainable</strong> – verified facts/rules, images/notes; (error rate, bias)</p>
+        <p><strong>Efficient</strong> – concise, focused, plain language</p>
+        <p><strong>Encouraging</strong> – empathy, practical, teacher</p>
+        <p><strong>Easy-to-use</strong> – app, voice, vision</p>
+    </div>
+
+</body>
+</html>

@@ -54,6 +54,7 @@
   </div>
   
 
+
   <div class="menu-icon">&#9776;</div> <!-- 3 lines Menu Icon -->
   <div class="side-menu" style="display: flex; flex-wrap: wrap; align-items: center;">
   
@@ -85,30 +86,55 @@
   
       <!-- Grouping Front of Eye, Fundal Reflex, and Back of Eye buttons for same line display -->
       <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for eye-related buttons -->
-          <button class="button" style="margin-right: 10px;">Front of Eye</button>
-          <button class="button" style="margin-right: 10px;">Fundal Reflex</button>
-          <button class="button">Back of Eye</button>
+        <button class="button" style="margin-right: 10px;" onclick="window.location.href='eye.html';">How to examine the Eye</button>
+
       </div>
   
+      <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for eye-related buttons -->
+        <button class="button green" style="margin-right: 10px;">How to examine the Ear</button>
+       </div>
+
       <!-- Grouping Videos, Atoms, Tools buttons for same line display -->
       <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for informational buttons -->
+        <a href="https://www.youtube.com/@arclightproject" style="text-decoration: none;">
           <button class="button grey" style="margin-right: 10px;">Videos</button>
-          <button class="button grey" style="margin-right: 10px;">Atoms</button>
+      </a>      
+      <button class="button grey" style="margin-right: 10px;" onclick="window.location.href='atoms.html';">Atoms</button>
+
           <button class="button grey">Tools</button>
       </div>
   
       <!-- Grouping Arclight Project and Web Links buttons for same line display -->
       <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for project-related buttons -->
+        <a href="https://medicine.st-andrews.ac.uk/arclight/" style="text-decoration: none;">
           <button class="button grey" style="margin-right: 10px;">Arclight Project</button>
-          <button class="button grey">Web Links</button>
+      </a>
+      
+          <!-- Button to toggle the display of links -->
+          <button class="button grey" onclick="window.location.href='weblinks.html';">Web Links</button>
+
+
+<script>
+function toggleLinks() {
+    var linksDiv = document.getElementById('links');
+    if (linksDiv.style.display === 'none') {
+        linksDiv.style.display = 'block';
+    } else {
+        linksDiv.style.display = 'none';
+    }
+}
+</script>
+
       </div>
   
-      <!-- Remaining button -->
-      <button class="button grey">About</button>
+      <!-- Assuming this is part of your existing HTML file -->
+<button class="button grey" onclick="location.href='aboutalan.html';">About Alan</button>
+
   </div>
   
   
   
+
 
       <div class="content-wrapper" style="display: flex; flex-direction: column; justify-content: flex-start; min-height: 20vh; font-weight: bold;">
         <div class="logo-and-text-container" style="text-align: center; line-height: 1.0; padding-top: 20px;">
