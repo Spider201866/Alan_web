@@ -32,8 +32,11 @@
     cursor: pointer;
     padding-right: 20px; /* Added padding for visual spacing */
   }
+  #content p { /* Specifically target paragraphs within the content area */
+    font-size: 15px; /* Set font size to 15px for paragraphs */
+  }
   #aboutAlan {
-    padding: 30px 30px;
+    padding: 20px 20px;
   }
   .highlight {
     color: red; /* Color for highlighted terms */
@@ -80,7 +83,7 @@
         </div>
         
         
-
+        <div id="aboutAlan">
         <p>Alan is a hybrid eye & ear focused artificial intelligence: a layered LLM agent (model agnostic - runs on GPT-4, Claude-3, Gemini 1.5) with symbolic logic. Smart. Serious. State of the art. <br><br> A custom knowledge base is tailored to 13 different roles such as LMIC health workers and general practitioners. The concise conversational (agentic) back-and-forth process iterates towards the final diagnosis and management. Use of the arclight is embedded into the system.<br></p>
         <ul>
           <li class="highlight bullet-point">Expert LMIC eye & ear base – tropical/hot climate</li>
@@ -94,6 +97,7 @@
         <p><strong>Easy-to-use</strong> – app, voice, vision</p>
 
         <p> <br><br> wjw 14/4/24</p>
+        </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
