@@ -13,33 +13,39 @@
     padding: 0;
   }
   #appBar {
+    display: flex; /* Using flexbox to align items within the app bar */
+    align-items: center; /* Center items vertically within the app bar */
     background-color: black; /* Black background for the app bar */
     color: white; /* White text color for the app bar */
-    padding: 20px 20px; /* Padding inside the app bar */
+    padding: 10px 20px; /* Adjusted padding for consistent height */
   }
   #pageTitle {
     text-align: center;
-    margin: 0; /* No margin for the title to center it in the app bar */
-    font-size: 24px;
+    margin: 0 auto; /* Center title and auto margins to help center it within flex container */
+    font-size: 24px; /* Font size for page title */
   }
   #backArrow {
     color: white; /* White back arrow */
-    font-size: 32px; /* Increased size of back arrow */
+    font-size: 32px; /* Size of back arrow */
     font-weight: bold; /* Makes the arrow thicker */
-    position: absolute;
-    top: 10px; /* Positioning of back arrow */
-    left: 20px;
+    position: relative; /* Adjusted to work within flexbox layout */
     cursor: pointer;
+    padding-right: 20px; /* Right padding for visual balance */
   }
   #links {
     padding: 20px;
-    display: block; /* Changed from none to block to display it */
+    display: block; /* Display links */
   }
   #links a {
     display: block;
     margin-bottom: 10px;
-    color: black; /* Ensure links are black */
+    color: #0037ff; /* Faint blue color for links */
     text-decoration: none; /* No underline */
+  }
+  #linkIntro {
+    text-align: center;
+    margin-top: 20px; /* Top margin for spacing */
+    margin-bottom: 20px; /* Bottom margin for spacing */
   }
 </style>
 </head>
@@ -48,6 +54,10 @@
 <div id="appBar">
     <div id="backArrow" onclick="history.back()">&#x2190;</div> <!-- Back arrow -->
     <h1 id="pageTitle">Web Links</h1> <!-- Page Title -->
+</div>
+
+<div id="linkIntro">
+    <p>Here are some interesting links...</p>
 </div>
 
 <div id="links">

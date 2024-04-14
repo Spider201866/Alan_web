@@ -9,222 +9,231 @@
             margin: 0;
             padding: 0;
             font-family: "Calibri Light", Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: white;
         }
-
-        .app-bar {
+        #appBar {
+            display: flex;
+            align-items: center;
             background-color: black;
             color: white;
             padding: 10px 20px;
-            text-align: center;
-            position: relative;
         }
-
-        .icon-button {
-            background: none;
-            border: none;
+        #pageTitle {
+            text-align: center;
+            margin: 0 auto;
+            font-size: 24px;
+        }
+        #backArrow {
             color: white;
-            position: absolute;
-            left: 10px;
-            top: 10px;
-            font-size: 25px;
-            cursor: pointer;
-        }
-
-        .content {
-            padding: 20px;
-            background-color: #e0e0e0; /* Initial color */
-        }
-
-        .toggle-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .switch {
+            font-size: 32px;
+            font-weight: bold;
             position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
             cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
+            padding-right: 20px;
         }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
+        #content {
+    padding: 25px;
+    background-color: #d0dbff;  
         }
-
-        input:checked + .slider {
-            background-color: #76c1ff;
+        .infoText, .redText, .italicText, .boldText, .justify {
+            margin-bottom: 15px;
         }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
+        .redText {
+            color: red;
         }
-
-        .footer {
-            background-color: #ddd;
-            padding: 10px 20px;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+        .italicText {
+            font-style: italic;
         }
-
-        .footer button {
-            background-color: #4CAF50; /* Green */
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto; /* 15% from the top and centered */
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
+        .boldText {
             font-weight: bold;
         }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
+        .justify {
+            text-align: justify;
+        }
+        #switchLabel {
             cursor: pointer;
+            padding: 5px 20px;
+            border: 1px solid #ccc;
+            background-color: #e0e0e0;
+            position: absolute;
+            top: 33px;
+            right: 20px;
         }
+        #additionalExamples p {
+    margin-bottom: 10px; /* Keeps space between each segment for clear separation */
+    font-size: 14px; /* Smaller font size */
+    color: #333; /* Slightly dark grey */
+}
 
-        .text-section {
-            margin-bottom: 20px;
-        }
+#additionalExamples strong {
+    display: block; /* Ensures the label is on its own line */
+    font-weight: bold; /* Makes the label bold */
+    margin-bottom: -10px; /* No space between the label and the description */
+    line-height: 1.2; /* Reduces the line height to tighten spacing */
+}
 
-        .text-section p {
-            margin: 0;
-            padding: 0;
-        }
+#additionalExamples span {
+    display: block; /* Ensures the description starts on a new line below the label */
+    margin-left: 20px; /* Indents the description for better readability */
+    margin-top: 0px; /* No additional space at the top */
+    line-height: 1.2; /* Consistent line height with label for uniform appearance */
+}
+
+
+.infoText {
+    padding-left: 60px; /* Shifts the entire list to the right */
+    color: black; /* Default text color for the list including bullet points */
+}
+
+.infoText li {
+    line-height: 1.5; /* Adjusts line height for better spacing */
+    margin-bottom: 2px; /* Minimal space between list items */
+}
+
+.listText {
+    display: block; /* Makes the span a block element inside the li */
+    margin-left: 10px; /* Creates space from the bullet point */
+    color: red; /* Changes the text color to red */
+}
+hr {
+    border: none; /* Removes the default border */
+    height: 2px; /* Sets the height of the line */
+    background-color: #ccc; /* Sets the color of the line */
+    margin-top: 30px; /* Adds 30px space above the line */
+    margin-bottom: 30px; /* Adds 30px space below the line */
+}
+
+
+
+
+/* Positioning container for the switch */
+#switchContainer {
+    position: absolute;
+    top: 100px; /* Adjust top positioning as necessary */
+    right: 80px; /* Increase right padding to move the switch inward */
+    text-align: center;
+}
+
+/* Adjusting the space between labels and the switch */
+#switchContainer label {
+    display: block;
+    color: black;
+    margin: 10px 0; /* Increase margin for more space around the labels */
+}
+
+/* Existing switch and slider styling - do not change */
+.switch {
+  position: relative;
+  display: block;
+  width: 34px;
+  height: 60px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #7797ff;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  top: 4px; /* Keep the button centered vertically */
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #75eb75; /* Faint green background when toggled */
+}
+
+input:checked + .slider:before {
+  transform: translateY(26px); /* Move the button to the bottom on toggle */
+  
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
 
     </style>
 </head>
 <body>
-    <div class="app-bar">
-        <button onclick="goBack()" class="icon-button">&#x2190;</button>
-        <h1 class="title">Instructions</h1>
+    <div id="appBar">
+        <div id="backArrow" onclick="history.back()">&#x2190;</div>
+        <h1 id="pageTitle">Instructions</h1>
     </div>
-    <div class="content" id="content">
-        <div class="toggle-container">
+    <div id="content">
+
+        <div id="switchContainer" style="position: absolute; top: 100px; right: 20px; text-align: center;">
+            <label style="color: black;">Eye</label>
             <label class="switch">
-                <input type="checkbox" id="featureSwitch">
-                <span class="slider"></span>
+                <input type="checkbox" id="switch" onchange="toggleContent()">
+                <span class="slider round"></span>
             </label>
-            <span id="featureText">Vision & Pupils</span>
+            <label style="color: black;">Ear</label>
         </div>
-        <div class="text-section">
-            <p><strong>Tell Alan about your patient's:</strong></p>
-            <ul>
-                <li>Problem & Onset</li>
-                <li>What You See</li>
-                <li>Vision & pupils</li>
-                <li>Age, Sex, Medication</li>
-            </ul>
+        
+        <p class="boldText">Tell Alan about your patient's:</p>
+<ul class="infoText">
+    <li><span class="listText">problem & onset</span></li>
+    <li><span class="listText">what you see</span></li>
+    <li><span class="listText" id="dynamicContent">vision & pupils</span></li>
+    <li><span class="listText">age, sex, medication</span></li>
+</ul>
+
+<p id="useArclight"><strong>Use Arclight:</strong> <strong><em>front, fundal reflex, back of eye.</em></strong></p>
+
+
+        <hr> <!-- Horizontal line added here -->
+        
+        <div class="justify" id="additionalExamples">
+            <p><strong>Too little</strong><br><span id="tooLittle">man red eye what?</span></p>
+            <p><strong>Just right</strong><br><span id="justRight">Man 25yr, red eye 3 day. No meds or eye prob before. Bad pain, eye waters. With arclight I see big white cornea patch. Pupils OK. Vision 6/12 in poor eye, 6/6 in other.</span></p>
+            <p><strong>Too much</strong><br><span id="tooMuch">This man com into clinics today. He, driver in th building, a red eyes now he thinks the food eaten; Is looking at eye I see watering. It red edges you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is dis…</span></p>
         </div>
-        <div class="text-section">
-            <p><strong>Too little:</strong></p>
-            <p id="tooLittle">Example content will toggle based on switch state.</p>
-        </div>
-        <div class="text-section">
-            <p><strong>Just right:</strong></p>
-            <p id="justRight">Example content will toggle based on switch state.</p>
-        </div>
-        <div class="text-section">
-            <p><strong>Too much:</strong></p>
-            <p id="tooMuch">Example content will toggle based on switch state.</p>
-        </div>
- 
-    
+        
+        
+
     <script>
-        function goBack() {
-            window.history.back();
-        }
+function toggleContent() {
+    var isChecked = document.getElementById('switch').checked;
 
-        function showLinks() {
-            document.getElementById('linksModal').style.display = 'block';
-        }
+    // Update the background color of the body based on the switch state
+    document.getElementById('content').style.backgroundColor = isChecked ? '#d4fad4' : '#d0dbff'; // Faint green when checked, faint blue otherwise
 
-        function closeModal() {
-            document.getElementById('linksModal').style.display = 'none';
-        }
+    var useArclightText = isChecked ? 'all around ear, canal, drum.' : 'front, fundal reflex, back of eye.';
+    document.getElementById('useArclight').innerHTML = '<strong>Use Arclight:</strong> <strong><em>' + useArclightText + '</em></strong>';
 
-        document.getElementById('featureSwitch').addEventListener('change', function() {
-            var content = document.getElementById('content');
-            var featureText = document.getElementById('featureText');
-            var tooLittle = document.getElementById('tooLittle');
-            var justRight = document.getElementById('justRight');
-            var tooMuch = document.getElementById('tooMuch');
-            if (this.checked) {
-                content.style.backgroundColor = 'green';
-                featureText.textContent = 'Hearing';
-                tooLittle.textContent = 'Man red ear what?';
-                justRight.textContent = 'Man 25yr, red ear 3 day. No meds or ear prob before. Bad pain, ear discharging lots. With arclight I see a red drum. Hearing muffled in bad ear but OK in other ear.';
-                tooMuch.textContent = 'This man com into clinics today. He, driver in th building, a red ears now he thinks the food eaten; Is looking at ear I see discharge. It red edges you know? He wan help; he tall man ears watery worried about hearing and pain he says. wat is dis…';
-            } else {
-                content.style.backgroundColor = 'blue';
-                featureText.textContent = 'Vision & Pupils';
-                tooLittle.textContent = 'Man red eye what?';
-                justRight.textContent = 'Man 25yr, red eye 3 day. No meds or eye prob before. Bad pain, eye waters. With arclight I see big white cornea patch. Pupils OK. Vision 6/12 in poor eye, 6/6 in other.';
-                tooMuch.textContent = 'This man com into clinics today. He, driver in th building, a red eyes now he thinks the food eaten; Is looking at eye I see watering. It red edges you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is dis…';
-            }
-        });
+    document.getElementById('dynamicContent').textContent = isChecked ? 'hearing' : 'vision & pupils';
+    document.getElementById('tooLittle').textContent = isChecked ? 'man red ear what?' : 'man red eye what?';
+    document.getElementById('justRight').textContent = isChecked ?
+        'Man 25yr, red ear 3 day. No meds or ear prob before. Bad pain, ear discharging lots. With arclight I see a red drum. Hearing muffled in bad ear but OK in other ear.' :
+        'Man 25yr, red eye 3 day. No meds or eye prob before. Bad pain, eye waters. With arclight I see big white cornea patch. Pupils OK. Vision 6/12 in poor eye, 6/6 in other.';
+    document.getElementById('tooMuch').textContent = isChecked ?
+        'This man com into clinics today. He, driver in the building, a red ears now he thinks the food eaten; Is looking at ear I see discharge. It red edges you know? He wan help; he tall man ears watery worried about hearing and pain he says. wat is dis…' :
+        'This man com into clinics today. He, driver in the building, a red eyes now he thinks the food eaten; Is looking at eye I see watering. It red edges you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is dis…';
+}
     </script>
 </body>
 </html>

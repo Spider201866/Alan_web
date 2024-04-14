@@ -13,29 +13,28 @@
     padding: 0;
   }
   #appBar {
+    display: flex; /* Using flexbox to align items within the app bar */
+    align-items: center; /* Center items vertically within the app bar */
     background-color: black; /* Black background for the app bar */
     color: white; /* White text color for the app bar */
-    padding: 20px 20px; /* Padding inside the app bar */
+    padding: 10px 20px; /* Adjusted padding */
   }
   #pageTitle {
     text-align: center;
-    margin: 0; /* No margin for the title to center it in the app bar */
+    margin: 0 auto; /* Center title and auto margins to help center it within flex container */
     font-size: 24px;
   }
   #backArrow {
     color: white; /* White back arrow */
     font-size: 32px; /* Increased size of back arrow */
     font-weight: bold; /* Makes the arrow thicker */
-    position: absolute;
-    top: 10px; /* Positioning of back arrow */
-    left: 20px;
+    position: relative; /* Changed from absolute to relative */
     cursor: pointer;
+    padding-right: 20px; /* Added padding for visual spacing */
   }
   #aboutAlan {
     padding: 30px 30px;
   }
-
-
   .highlight {
     color: red; /* Color for highlighted terms */
   }
@@ -43,16 +42,28 @@
     list-style-type: disc; /* Adds bullet points */
     margin-left: 20px; /* Indent bullet points */
   }
-  /* Specific lines that should remain black */
   #aboutAlan p:not(.highlight),
   #aboutAlan li:not(.highlight) {
     color: black;
   }
-  /* Add space after specific paragraphs */
   #aboutAlan p.space-after,
   #aboutAlan li.space-after {
     margin-bottom: 24px; /* This equals approximately 1.5 lines of space */
   }
+
+  @keyframes smoothFlip360 {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(180deg);
+    }
+}
+
+.flip-horizontally {
+    animation: smoothFlip360 1.5s ease-out forwards;
+}
+
 </style>
 </head>
 <body>
@@ -63,17 +74,37 @@
     </div>
 
     <div id="aboutAlan">
-        <p class="space-after">Alan is a <strong>hybrid AI: LLM Agent</strong> (GPT-4, Claude-3, Gemini 1.5)<strong>/Symbolic</strong></p>
+
+        <div style="text-align: center; margin: 0px;">
+            <img src="bigredt.png" alt="Big Red T Logo" id="logoImage" style="max-width: 120px; height: auto;">
+        </div>
+        
+        
+
+        <p>Alan is a hybrid eye & ear focused artificial intelligence: a layered LLM agent (model agnostic - runs on GPT-4, Claude-3, Gemini 1.5) and a symbolic logic part. Smart. Serious. State of the art. <br><br> A custom knowledge base is tailored to 13 different roles such as LMIC health workers and general practitioners. The concise conversational (agentic) back-and-forth process iterates towards the final diagnosis and management. Use of the arclight is embedded into the system.<br></p>
         <ul>
           <li class="highlight bullet-point">Expert LMIC eye & ear base – tropical/hot climate</li>
           <li class="highlight bullet-point">Dialogue – negates errors</li>
           <li class="highlight bullet-point space-after">Arclight aware</li>
         </ul>
+    
         <p><strong>Explainable</strong> – verified facts/rules, images/notes; (error rate, bias)</p>
         <p><strong>Efficient</strong> – concise, focused, plain language</p>
         <p><strong>Encouraging</strong> – empathy, practical, teacher</p>
         <p><strong>Easy-to-use</strong> – app, voice, vision</p>
-    </div>
 
+        <p> <br><br> wjw 14/4/24</p>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var logoImage = document.getElementById('logoImage');
+                if (logoImage) {
+                    logoImage.classList.add('flip-horizontally');  // Apply the horizontal flip animation class
+                }
+            }, 1000);  // Delay of 1 second
+        });
+        </script>
+        
 </body>
 </html>

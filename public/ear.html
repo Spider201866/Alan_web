@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Atoms</title>
+<title>Eye Exam</title>
 <style>
   body {
     font-family: "Calibri Light", Arial, sans-serif;
@@ -34,21 +34,22 @@
   }
   img {
     display: block;
-    max-width: 100%; /* Ensures the image is responsive */
-    height: auto; /* Maintains the aspect ratio */
-    margin: 0 auto; /* Centers the image horizontally */
+    height: 90vh; /* Sets the image height to fill the screen vertically */
+    width: auto; /* Maintains the aspect ratio */
+    margin: auto; /* Centers the image horizontally */
+    max-width: none; /* Overrules any max-width settings */
   }
 </style>
 </head>
 <body>
 
 <div id="appBar">
-    <div id="backArrow" onclick="history.back()">&#x2190;</div> <!-- Back arrow -->
-    <h1 id="pageTitle">Atoms</h1> <!-- Page Title -->
+    <div id="backArrow" onclick="history.back()">&#x2190;</div> <!-- Back arrow to navigate to the previous page -->
+    <h1 id="pageTitle" style="text-align: center;">How to examine the ear</h1> <!-- Page title -->
 </div>
 
 <div>
-    <img src="atomsblue.jpg" alt="Blue Atoms Image" style="touch-action: manipulation;"> <!-- Image with pinch and zoom enabled -->
+    <img src="howtouseeye.png" alt="How to Use Eye Examination Equipment" style="touch-action: manipulation;"> <!-- Image with pinch and zoom enabled -->
 </div>
 
 </body>
