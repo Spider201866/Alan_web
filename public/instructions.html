@@ -75,7 +75,7 @@
 
 #additionalExamples span {
     display: block; /* Ensures the description starts on a new line below the label */
-    margin-left: 20px; /* Indents the description for better readability */
+    margin-left: 10px; /* Indents the description for better readability */
     margin-top: 0px; /* No additional space at the top */
     line-height: 1.2; /* Consistent line height with label for uniform appearance */
 }
@@ -220,6 +220,11 @@ input:checked + .slider:before {
             <p><strong>Too little</strong><br><span id="tooLittle">man red eye what?</span></p>
             <p><strong>Just right</strong><br><span id="justRight">Man 25yr, red eye 3 day. No meds or eye prob before. Bad pain, eye waters. With arclight I see big white cornea patch. Pupils OK. Vision 6/12 in poor eye, 6/6 in other.</span></p>
             <p><strong>Too much</strong><br><span id="tooMuch">This man com into clinics today. He, driver in th building, a red eyes now he thinks the food eaten; Is looking at eye I see watering. It red edges you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is dis…</span></p>
+
+            <p id="additionalQuery" style="margin-top: 30px;">
+                Alan also answers eye teaching/learning queries: What is Iritis?, How do I see the retina?
+            </p>
+
         </div>
         
         
@@ -238,10 +243,18 @@ function toggleContent() {
     document.getElementById('tooLittle').textContent = isChecked ? 'man red ear what?' : 'man red eye what?';
     document.getElementById('justRight').textContent = isChecked ?
         'Man 25yr, red ear 3 day. No meds or ear prob before. Bad pain, ear discharging lots. With arclight I see a red drum. Hearing muffled in bad ear but OK in other ear.' :
-        'Man 25yr, red eye 3 day. No meds or eye prob before. Bad pain, eye waters. With arclight I see big white cornea patch. Pupils OK. Vision 6/12 in poor eye, 6/6 in other.';
+        'Man 25yr, red eye 3 day. No meds or eye prob before. Bad pain, eye waters. With arclight I see big white cornea patch. Pupils OK. Vision 6/12 in poor eye, 6/6.';
     document.getElementById('tooMuch').textContent = isChecked ?
         'This man com into clinics today. He, driver in the building, a red ears now he thinks the food eaten; Is looking at ear I see discharge. It red edges you know? He wan help; he tall man ears watery worried about hearing and pain he says. wat is dis…' :
-        'This man com into clinics today. He, driver in the building, a red eyes now he thinks the food eaten; Is looking at eye I see watering. It red edges you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is dis…';
+        'This man com into clinics today. He, driver in the building, a red eye now he thinks the food eaten; Is looking at eye I see watering. It red edges you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is dis…';
+
+        document.getElementById('additionalQuery').innerHTML = isChecked ?
+    '<span style="color: green; font-size: 15px; margin: -10px;">Alan also answers ear teaching/learning queries: What is Otitis Media, How do I clean an ear? </span>' :
+    '<span style="color: blue; font-size: 15px; margin: -10px;">Alan also answers eye teaching/learning queries: What is Iritis?, How do I see the retina? </span>';
+
+
+
+
 }
     </script>
 </body>
