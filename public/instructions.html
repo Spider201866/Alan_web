@@ -199,8 +199,9 @@ input:checked + .slider:before {
         
         <p style="margin-bottom: 20px; font-size: 15px;">
             Alan is an AI assistant for students and those who only occasionally see eye or ear cases.
-            Write or speak clearly, avoid identifying names or other details, keep audio messages less than 30 seconds. Good luck!
+            Write or speak clearly, avoid identifying names or other details, keep audio messages &lt;30 seconds. Good luck!
         </p>
+        
 
         <p class="boldText">Tell Alan about your patient's:</p>
 <ul class="infoText">
@@ -221,9 +222,12 @@ input:checked + .slider:before {
             <p><strong>Just right</strong><br><span id="justRight">Man 25yr, red eye 3 day. No meds or eye prob before. Bad pain, eye waters. With arclight I see big white cornea patch. Pupils OK. Vision 6/12 in poor eye, 6/6 in other.</span></p>
             <p><strong>Too much</strong><br><span id="tooMuch">This man com into clinics today. He, driver in th building, a red eyes now he thinks the food eaten; Is looking at eye I see watering. It red edges you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is dis…</span></p>
 
-            <p id="additionalQuery" style="margin-top: 30px;">
+            <p id="additionalQuery" style="padding-top: 15px; color: blue; font-size: 15px;">
                 Alan also answers eye teaching/learning queries: What is Iritis?, How do I see the retina?
             </p>
+            
+            
+            
 
         </div>
         
@@ -249,8 +253,8 @@ function toggleContent() {
         'This man com into clinics today. He, driver in the building, a red eye now he thinks the food eaten; Is looking at eye I see watering. It red edges you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is dis…';
 
         document.getElementById('additionalQuery').innerHTML = isChecked ?
-    '<span style="color: green; font-size: 15px; margin: -10px;">Alan also answers ear teaching/learning queries: What is Otitis Media, How do I clean an ear? </span>' :
-    '<span style="color: blue; font-size: 15px; margin: -10px;">Alan also answers eye teaching/learning queries: What is Iritis?, How do I see the retina? </span>';
+    '<span style="color: green; font-size: 15px;">Alan also answers ear teaching/learning queries: What is Otitis Media, How do I clean an ear? </span>' :
+    '<span style="color: blue; font-size: 15px;">Alan also answers eye teaching/learning queries: What is Iritis?, How do I see the retina? </span>';
 
 
 
