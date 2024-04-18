@@ -366,3 +366,19 @@ button {
 p {
   margin: 20px 0;
 }
+
+
+#displayed-job-role {
+  font-size: 8px;
+  color: grey;
+  text-align: right;
+  flex-grow: 1; /* Ensures it uses available space to align right */
+}
+
+/* Ensure this class has the necessary specificity to override default styles */
+.button.inactive-button {
+  background-color: grey;
+  color: white;
+  animation: none;
+}
+

@@ -1,146 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Splash Screen</title>
-  <style>
-    body, html {
-      height: 100%;
-      margin: 0;
-      padding: 0; /* Ensures no padding interferes with the dimensions */
-      overflow: hidden; /* Prevents scrolling on the whole page */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "Calibri Light", Arial, sans-serif;
-      background-color: #f0f0f0;
-      box-sizing: border-box; /* Includes padding and border in the element's dimensions */
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Splash Screen</title>
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        padding: 0; /* Ensures no padding interferes with the dimensions */
+        overflow: hidden; /* Prevents scrolling on the whole page */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Calibri Light", Arial, sans-serif;
+        background-color: #f0f0f0;
+        box-sizing: border-box; /* Includes padding and border in the element's dimensions */
+      }
 
-    .hidden {
-      visibility: hidden;
-      opacity: 0;
-      transition: visibility 0s 0.5s, opacity 0.5s linear;
-    }
+      .hidden {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s 0.5s, opacity 0.5s linear;
+      }
 
-    .visible {
-      visibility: visible;
-      opacity: 1;
-      transition: opacity 0.5s linear;
-    }
+      .visible {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.5s linear;
+      }
 
-    .splash-screen, .instruction-screen {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
+      .splash-screen,
+      .instruction-screen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
 
-    .splash-screen img, .splash-screen p {
-      transition: transform 3s ease-in-out;
-      margin: 20px 0;
-    }
+      .splash-screen img,
+      .splash-screen p {
+        transition: transform 3s ease-in-out;
+        margin: 20px 0;
+      }
 
-    .splash-screen img {
-      width: 30vw;
-      max-width: 150px;
-      height: auto;
-      margin-bottom: 60px;
-    }
+      .splash-screen img {
+        width: 30vw;
+        max-width: 150px;
+        height: auto;
+        margin-bottom: 60px;
+      }
 
-    #logo2 {
-      width: 50vw;
-      max-width: 300px;
-      margin-bottom: 60px;
-    }
+      #logo2 {
+        width: 50vw;
+        max-width: 300px;
+        margin-bottom: 60px;
+      }
 
-    .splash-screen p {
-      font-size: calc(12px + 1vmin);
-      font-weight: bold;
-      font-style: italic;
-      margin-top: 60px;
-    }
+      .splash-screen p {
+        font-size: calc(12px + 1vmin);
+        font-weight: bold;
+        font-style: italic;
+        margin-top: 60px;
+      }
 
-    .instruction-screen {
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: white;
-      overflow: auto; /* Allows scrolling inside the div if content is too large */
-      box-sizing: border-box; /* Padding is included in the dimensions */
-    }
+      .instruction-screen {
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        overflow: auto; /* Allows scrolling inside the div if content is too large */
+        box-sizing: border-box; /* Padding is included in the dimensions */
+      }
 
-    .instruction-screen p {
-      font-size: 16px;
-      margin: 20px;
-      color: #333;
-    }
+      .instruction-screen p {
+        font-size: 16px;
+        margin: 20px;
+        color: #333;
+      }
 
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      color: white;
-      background-color: #007bff;
-      border: none;
-      border-radius: 15px; /* Rounded corners */
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <div class="splash-screen visible">
-    <img id="logo1" src="./Q.png" alt="Q Logo" />
-    <img id="logo2" src="./AP.png" alt="AP Logo" />
-    <p>Eye & Ear AI Assistant</p>
-  </div>
-  <div class="instruction-screen hidden">
-    <img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: 20px;">
-    <p><strong>*Experimental*</strong></p>
-    <p>Alan is an AI assistant for students and those who only occasionally see eye or ear cases.</p>
-    <p>Write or speak clearly, avoid identifying names or other details, keep audio messages <30s.</p>
-    <p>Good luck!<br><br><br><br></p>
-    <button onclick="proceedToHome()">Accept</button>
-  </div>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      if (!sessionStorage.getItem("splashShown")) {
-        sessionStorage.setItem("splashShown", "true");
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 15px; /* Rounded corners */
+        cursor: pointer;
+      }
+      select {
+        padding: 10px 25px;
+        font-size: 16px;
+        color: grey;
+        background-color: white;
+        border: 1px solid grey;
+        cursor: pointer;
+        appearance: none; /* Removes default system styling */
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>'); /* Custom dropdown icon */
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 25px;
+        border-radius: 15px;
+        overflow: hidden; /* Prevents content from overflowing */
+        width: auto; /* Lets the dropdown adjust based on content */
+        min-width: 240px; /* Ensures it doesn’t get too narrow */
+      }
 
-        const logo1 = document.getElementById("logo1");
-        const logo2 = document.getElementById("logo2");
-        logo1.style.transform = "scale(0.8)";
-        logo2.style.transform = "rotateX(-90deg)";
+      button:disabled {
+        background-color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="splash-screen visible">
+      <img id="logo1" src="./Q.png" alt="Q Logo" />
+      <img id="logo2" src="./AP.png" alt="AP Logo" />
+      <p>Eye & Ear AI Assistant</p>
+    </div>
 
-        setTimeout(() => {
-          logo1.style.transform = "scale(1)";
-          logo2.style.transform = "rotateX(0deg)";
-        }, 100);
+    <!-- Instruction screen with dropdown -->
+    <div class="instruction-screen hidden">
+      <img
+        src="bigredt.png"
+        alt="Big Red T Logo"
+        style="max-width: 120px; height: auto; margin-bottom: 20px"
+      />
+      <p><strong>*Experimental*</strong></p>
+      <p>
+        Alan is an AI assistant for students and those who only occasionally see
+        eye or ear cases.
+      </p>
+      <p>
+        Write or speak clearly, avoid identifying names or other details, keep
+        audio messages &lt;30s.
+      </p>
+      <p>Good luck!</p>
 
-        setTimeout(() => {
-          const splashScreen = document.querySelector('.splash-screen');
-          const instructionScreen = document.querySelector('.instruction-screen');
-          splashScreen.classList.remove('visible');
-          splashScreen.classList.add('hidden');
-          instructionScreen.classList.remove('hidden');
-          instructionScreen.classList.add('visible');
-        }, 6000);
-      } else {
+      <select id="job-role-select" class="job-role-dropdown">
+        <option value="" disabled selected hidden>Choose Role</option>
+        <option value="Health worker">Health worker</option>
+        <option value="Nurse">Nurse</option>
+        <option value="Ophthalmic clinical officer">
+          Ophthalmic clinical officer
+        </option>
+        <option value="Medical student">Medical student</option>
+        <option value="General practitioner">General practitioner</option>
+        <option value="Hospital doctor">Hospital doctor</option>
+        <option value="Ophthalmologist">Ophthalmologist</option>
+        <option value="Optometrist">Optometrist</option>
+        <option value="Orthoptist">Orthoptist</option>
+        <option value="ENT specialist">ENT specialist</option>
+        <option value="Pharmacist">Pharmacist</option>
+        <option value="Audiologist">Audiologist</option>
+        <option value="Ear care practitioner">Ear care practitioner</option>
+      </select>
+
+      <br /><br /><br />
+      <button onclick="proceedToHome()" id="acceptButton" disabled>
+        Accept
+      </button>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const selectElement = document.getElementById("job-role-select");
+        const acceptButton = document.getElementById("acceptButton");
+
+        selectElement.addEventListener("change", function () {
+          if (this.value !== "") {
+            acceptButton.disabled = false;
+            this.style.color = "blue"; // Change text color to blue when a role is selected
+          } else {
+            acceptButton.disabled = true;
+            this.style.color = "grey"; // Revert to grey if selection is cleared
+          }
+        });
+
+        if (!sessionStorage.getItem("splashShown")) {
+          sessionStorage.setItem("splashShown", "true");
+
+          const logo1 = document.getElementById("logo1");
+          const logo2 = document.getElementById("logo2");
+          logo1.style.transform = "scale(0.8)";
+          logo2.style.transform = "rotateX(-90deg)";
+
+          setTimeout(() => {
+            logo1.style.transform = "scale(1)";
+            logo2.style.transform = "rotateX(0deg)";
+          }, 100);
+
+          setTimeout(() => {
+            const splashScreen = document.querySelector(".splash-screen");
+            const instructionScreen = document.querySelector(
+              ".instruction-screen"
+            );
+            splashScreen.classList.remove("visible");
+            splashScreen.classList.add("hidden");
+            instructionScreen.classList.remove("hidden");
+            instructionScreen.classList.add("visible");
+          }, 6000);
+        } else {
+          window.location.href = "home.html";
+        }
+      });
+
+      function proceedToHome() {
         window.location.href = "home.html";
       }
-    });
+      function updateJobRole(role) {
+        document.getElementById("job-role-button").textContent = role;
+        document.getElementById("job-role-dropdown").style.display = "none";
+        localStorage.setItem("selectedJobRole", role); // Save the selected job role to localStorage
+      }
 
-    function proceedToHome() {
-      window.location.href = "home.html";
-    }
-  </script>
-</body>
+      // Make sure the job role is updated when an item in the dropdown is clicked
+      Array.from(document.querySelectorAll("#job-role-dropdown a")).forEach(
+        (item) => {
+          item.addEventListener("click", function () {
+            updateJobRole(this.textContent);
+          });
+        }
+      );
+
+
+      
+    </script>
+  </body>
 </html>
