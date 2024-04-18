@@ -18,7 +18,34 @@
         background-color: #f0f0f0;
         box-sizing: border-box; /* Includes padding and border in the element's dimensions */
       }
+      .splash-screen img, .splash-screen p {
+        transition: transform 3s ease-in-out;
+        margin: 20px 0;
+    }
 
+    .splash-screen img {
+        width: 30vw;
+        max-width: 150px;
+        height: auto;
+        margin-bottom: 60px;
+        transform-origin: center;
+        -webkit-transform-origin: center;
+    }
+
+    @keyframes zoomEffect {
+        from {
+            transform: scale(0.8);
+            -webkit-transform: scale(0.8);
+        }
+        to {
+            transform: scale(1);
+            -webkit-transform: scale(1);
+        }
+    }
+
+    .splash-screen.visible img {
+        animation: zoomEffect 3s ease-in-out forwards;
+    }
       .hidden {
         visibility: hidden;
         opacity: 0;
@@ -99,7 +126,7 @@
       }
       select {
         padding: 10px 25px;
-        font-size: 16px;
+        font-size: 14px;
         color: grey;
         background-color: white;
         border: 1px solid grey;
@@ -112,7 +139,7 @@
         border-radius: 15px;
         overflow: hidden; /* Prevents content from overflowing */
         width: auto; /* Lets the dropdown adjust based on content */
-        min-width: 240px; /* Ensures it doesn’t get too narrow */
+        min-width: 230px; /* Ensures it doesn’t get too narrow */
       }
 
       button:disabled {
