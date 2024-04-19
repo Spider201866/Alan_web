@@ -64,7 +64,7 @@
   
     <div style="display: flex; margin-bottom: 10px;">
       <div>
-          <button id="instructions-button" class="button red pulse">How to use Alan</button>
+          <button id="instructions-button" class="button red pulse">Diagnose with Alan: How to use</button>
       </div>
       
       </div>
@@ -89,6 +89,7 @@
           <button class="button grey">Tools</button>
       </div>
   
+
       <!-- Grouping Arclight Project and Web Links buttons for same line display -->
       <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for project-related buttons -->
         <a href="https://medicine.st-andrews.ac.uk/arclight/" style="text-decoration: none;">
@@ -97,8 +98,6 @@
       
           <!-- Button to toggle the display of links -->
           <button class="button grey" onclick="window.location.href='weblinks.html';">Web Links</button>
-
-
 <script>
 function toggleLinks() {
     var linksDiv = document.getElementById('links');
@@ -110,14 +109,16 @@ function toggleLinks() {
 }
 </script>
 
-      </div>
-      <button class="button grey" onclick="location.href='aboutalan.html';">
-        <i class="fas fa-cog"></i> <!-- Font Awesome cog icon -->
-    </button>
+
+<div class="menu-container">
+  <button class="button grey" onclick="toggleMenu()">
+      <i class="fas fa-cog"></i> <!-- Font Awesome cog icon -->
+  </button>
+  <div class="submenu hidden">
+      <p id="job-role" style="color: rgb(255, 0, 0);"></p>
+      <a href="aboutalan.html">About Alan</a>
   </div>
-  
-  
-  
+</div>
 
 
       <div class="content-wrapper" style="display: flex; flex-direction: column; justify-content: flex-start; min-height: 20vh; font-weight: bold;">
@@ -219,6 +220,18 @@ function toggleLinks() {
           button.style.color = 'white';
       }
   });
+  document.addEventListener("DOMContentLoaded", function() {
+  // Set the job role from localStorage
+  const jobRole = localStorage.getItem("selectedJobRole");
+  if (jobRole) {
+      document.getElementById('job-role').textContent = jobRole;
+  }
+});
+
+function toggleMenu() {
+  const submenu = document.querySelector('.submenu');
+  submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+}
   </script>
   
   
