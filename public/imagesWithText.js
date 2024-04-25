@@ -7,7 +7,7 @@ export const imagesWithText = [
   },
   {
     imageName: 'iritis.jpg',
-    text: 'Iritis involves inflammation of the iris and can cause eye pain and photophobia. Says the butcher BBlaikie. And so on and more and more it goes on to make the line longer .',
+    text: 'Iritis involves inflammation of the iris and can cause eye pain and photophobia. In Uganda you should contact 0273 3455 6923 and ask for Kevin. Avoid football',
     condition: 'Iritis'
   },
   {
