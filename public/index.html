@@ -194,6 +194,32 @@
         <option value="Ear care practitioner">Ear care practitioner</option>
       </select>
 
+      <!-- Additional margin for spacing between dropdowns -->
+      <div style="margin-bottom: 20px"></div>
+
+      <!-- Country dropdown -->
+      <select id="country-select" class="country-dropdown">
+        <option value="" disabled selected hidden>Country</option>
+        <option value="Australia">Australia</option>
+        <option value="Bhutan">Bhutan</option>
+        <option value="Egypt">Egypt</option>
+        <option value="Germany">Germany</option>
+        <option value="Ghana">Ghana</option>
+        <option value="India">India</option>
+        <option value="Indonesia">Indonesia</option>
+        <option value="Kenya">Kenya</option>
+        <option value="Malawi">Malawi</option>
+        <option value="Mongolia">Mongolia</option>
+        <option value="Nepal">Nepal</option>
+        <option value="Pakistan">Pakistan</option>
+        <option value="Rwanda">Rwanda</option>
+        <option value="South Africa">South Africa</option>
+        <option value="Tanzania">Tanzania</option>
+        <option value="Uganda">Uganda</option>
+        <option value="UK">UK</option>
+        <option value="USA">USA</option>
+      </select>
+
       <br /><br /><br />
       <button onclick="proceedToHome()" id="acceptButton" disabled>
         Accept
@@ -201,58 +227,66 @@
     </div>
 
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const selectElement = document.getElementById("job-role-select");
-    const acceptButton = document.getElementById("acceptButton");
+      document.addEventListener("DOMContentLoaded", function () {
+        const jobSelectElement = document.getElementById("job-role-select");
+        const countrySelectElement = document.getElementById("country-select");
+        const acceptButton = document.getElementById("acceptButton");
 
-    // Enable the accept button when a selection is made
-    selectElement.addEventListener("change", function () {
-        if (this.value !== "") {
+        jobSelectElement.addEventListener("change", function () {
+          checkSelections();
+        });
+
+        countrySelectElement.addEventListener("change", function () {
+          checkSelections();
+        });
+
+        function checkSelections() {
+          if (
+            jobSelectElement.value !== "" &&
+            countrySelectElement.value !== ""
+          ) {
             acceptButton.disabled = false;
-            this.style.color = "blue"; // Change text color to blue when a role is selected
-        } else {
+          } else {
             acceptButton.disabled = true;
-            this.style.color = "grey"; // Revert to grey if selection is cleared
+          }
         }
-    });
 
-    // Function to handle moving to the home page and saving the role
-    acceptButton.addEventListener('click', function() {
-        localStorage.setItem("selectedJobRole", selectElement.value); // Correctly save the selected job role
-        window.location.href = "home.html";
-    });
+        acceptButton.addEventListener("click", function () {
+          localStorage.setItem("selectedJobRole", jobSelectElement.value);
+          localStorage.setItem("selectedCountry", countrySelectElement.value);
+          window.location.href = "home.html";
+        });
 
-    // Handle splash screen transitions
-    if (!sessionStorage.getItem("splashShown")) {
-        sessionStorage.setItem("splashShown", "true");
-        showSplashScreen();
-    } else {
-        window.location.href = "home.html";
-    }
-});
+        if (!sessionStorage.getItem("splashShown")) {
+          sessionStorage.setItem("splashShown", "true");
+          showSplashScreen();
+        } else {
+          window.location.href = "home.html";
+        }
+      });
 
-// Function to manage the splash screen effects and transition
-function showSplashScreen() {
-    const logo1 = document.getElementById("logo1");
-    const logo2 = document.getElementById("logo2");
-    logo1.style.transform = "scale(0.8)";
-    logo2.style.transform = "rotateX(-90deg)";
+      function showSplashScreen() {
+        const logo1 = document.getElementById("logo1");
+        const logo2 = document.getElementById("logo2");
+        logo1.style.transform = "scale(0.8)";
+        logo2.style.transform = "rotateX(-90deg)";
 
-    setTimeout(() => {
-        logo1.style.transform = "scale(1)";
-        logo2.style.transform = "rotateX(0deg)";
-    }, 100);
+        setTimeout(() => {
+          logo1.style.transform = "scale(1)";
+          logo2.style.transform = "rotateX(0deg)";
+        }, 100);
 
-    setTimeout(() => {
-        const splashScreen = document.querySelector(".splash-screen");
-        const instructionScreen = document.querySelector(".instruction-screen");
-        splashScreen.classList.remove("visible");
-        splashScreen.classList.add("hidden");
-        instructionScreen.classList.remove("hidden");
-        instructionScreen.classList.add("visible");
-    }, 6000);
-}
-
+        setTimeout(() => {
+          const splashScreen = document.querySelector(".splash-screen");
+          const instructionScreen = document.querySelector(
+            ".instruction-screen"
+          );
+          splashScreen.classList.remove("visible");
+          splashScreen.classList.add("hidden");
+          instructionScreen.classList.remove("hidden");
+          instructionScreen.classList.add("visible");
+        }, 6000);
+      }
     </script>
   </body>
 </html>
