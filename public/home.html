@@ -150,8 +150,8 @@ function toggleLinks() {
 <p id="user-info" style="font-size: 13px; color: rgb(92, 92, 92); text-align: center; margin-top: 10px; margin-bottom: 0;"></p>
 
 <!-- Disclaimer about Alan potentially making mistakes -->
-<div class="chatbot-version" style="margin-top: 0; padding-top: 5px;">
-    *Alan can make mistakes. Use clinical judgement. 4/24
+<div class="chatbot-version" style="margin-top: 0; padding-top: 2px;">
+    *Alan can make mistakes. Use clinical judgement. 5/24
 </div>
 </div>
   
@@ -178,64 +178,89 @@ function toggleLinks() {
 
 <script type="module">
   import { translations } from './language.js';
-  
+
   document.addEventListener('DOMContentLoaded', function() {
-      const menuIcon = document.querySelector('.menu-icon');
-      const tray = document.querySelector('.side-menu');
-      const instructionsButton = document.getElementById("instructions-button");
-  
-      // Check if the instructions button was previously clicked and update its style
-      if (localStorage.getItem("instructionsClicked") === "true") {
-          updateButtonStyle(instructionsButton);
-      }
-  
-      menuIcon.addEventListener('click', function() {
-          tray.style.left = (tray.style.left === '0px' ? '-370px' : '0px');
-          this.classList.toggle('active');
-      });
-  
-      const dropdown = document.querySelector('.language-dropdown');
-      dropdown.addEventListener('change', function() {
-          const lang = this.value;
-          updateLanguageDisplays(lang);
-      });
-  
-      instructionsButton.addEventListener("click", function(event) {
-          event.preventDefault();
-          localStorage.setItem("instructionsClicked", "true"); // Save the state in local storage
-          updateButtonStyle(this);
-          setTimeout(() => {
-              window.location.href = 'instructions.html';
-          }, 300);
-      });
-  
-      function updateLanguageDisplays(lang) {
-          document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
-          document.getElementById('good-history').textContent = translations[lang].goodHistory;
-          document.getElementById('examine-well').textContent = translations[lang].examineWell;
-          document.getElementById('use-arclight').textContent = translations[lang].useArclight;
-          document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
-          document.querySelector('.chatbot-version').textContent = translations[lang].alanMistakes;
-      }
-  
-      function updateButtonStyle(button) {
-          button.classList.remove('pulse');
-          button.style.backgroundColor = 'grey';
-          button.style.color = 'white';
-      }
+    const menuIcon = document.querySelector('.menu-icon');
+    const tray = document.querySelector('.side-menu');
+    const instructionsButton = document.getElementById("instructions-button");
+    const dropdown = document.querySelector('.language-dropdown');
+    const userInfo = document.getElementById('user-info');
+    var storedJobRole = localStorage.getItem('selectedJobRole') || 'Not selected';
+    var storedCountry = localStorage.getItem('selectedCountry') || 'Not selected';
+
+    // Define a mapping from the stored job role descriptions to the translation keys
+    const jobRoleKeys = {
+      "Health worker": "healthWorker",
+      "Nurse": "nurse",
+      "Ophthalmic clinical officer": "ophthalmicOfficer",
+      "Medical student": "medicalStudent",
+      "General practitioner": "generalPractitioner",
+      "Hospital doctor": "hospitalDoctor",
+      "Ophthalmologist": "ophthalmologist",
+      "Optometrist": "optometrist",
+      "Orthoptist": "orthoptist",
+      "ENT specialist": "entSpecialist",
+      "Pharmacist": "pharmacist",
+      "Audiologist": "audiologist",
+      "Ear care practitioner": "earCarePractitioner"
+    };
+
+    function updateUserInfoDisplay(lang) {
+      // Get the translation key from the mappings or default to the stored value if not found
+      let roleKey = jobRoleKeys[storedJobRole] || storedJobRole;
+      let translatedJobRole = translations[lang][roleKey] || storedJobRole;
+      userInfo.innerHTML = `${translatedJobRole}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${storedCountry}`;
+    }
+
+    function updateLanguageDisplays(lang) {
+      document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
+      document.getElementById('good-history').textContent = translations[lang].goodHistory;
+      document.getElementById('examine-well').textContent = translations[lang].examineWell;
+      document.getElementById('use-arclight').textContent = translations[lang].useArclight;
+      document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
+      document.querySelector('.chatbot-version').textContent = translations[lang].alanMistakes;
+      updateUserInfoDisplay(lang); // Also update the job role and country as per the selected language
+    }
+
+    function updateButtonStyle(button) {
+      button.classList.remove('pulse');
+      button.style.backgroundColor = 'grey';
+      button.style.color = 'white';
+    }
+
+    // Check if the instructions button was previously clicked and update its style
+    if (localStorage.getItem("instructionsClicked") === "true") {
+      updateButtonStyle(instructionsButton);
+    }
+
+    // Dropdown for language selection
+    dropdown.addEventListener('change', function() {
+      const lang = this.value;
+      updateLanguageDisplays(lang);
+    });
+
+    // Menu toggle
+    menuIcon.addEventListener('click', function() {
+      tray.style.left = (tray.style.left === '0px' ? '-370px' : '0px');
+      this.classList.toggle('active');
+    });
+
+    // Instructions button behaviour
+    instructionsButton.addEventListener("click", function(event) {
+      event.preventDefault();
+      localStorage.setItem("instructionsClicked", "true");
+      updateButtonStyle(this);
+      setTimeout(() => {
+        window.location.href = 'instructions.html';
+      }, 300);
+    });
+
+    // Initial language setup, default to English or another default language
+    updateLanguageDisplays('en');
   });
-  </script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-      // Fetch the stored job role and country from local storage
-      var storedJobRole = localStorage.getItem('selectedJobRole') || 'Not selected';
-      var storedCountry = localStorage.getItem('selectedCountry') || 'Not selected';
-  
-      // Update the content of the paragraph element with added spacing
-      var userInfo = document.getElementById('user-info');
-      userInfo.textContent = `${storedJobRole}    |    ${storedCountry}`; // Added four spaces on each side of '|'
-  });
-  </script>
+</script>
+
+
   
     
   
