@@ -148,6 +148,7 @@
       button:disabled {
         background-color: #ccc;
       }
+
     </style>
   </head>
   <body>
@@ -167,10 +168,8 @@
       <p><strong>*Experimental*</strong></p>
       <p>
         Alan is an AI assistant for students and those who only occasionally see
-        eye or ear cases.
-     
-        Write or speak clearly, avoid identifying names or other details, keep
-        audio messages &lt;30s.
+        eye or ear cases. Write or speak clearly, avoid identifying names or
+        other details, keep audio messages &lt;30s.
       </p>
       <p>Good luck!</p>
 
@@ -240,15 +239,33 @@
         });
 
         function checkSelections() {
-          if (
-            jobSelectElement.value !== "" &&
-            countrySelectElement.value !== ""
-          ) {
-            acceptButton.disabled = false;
-          } else {
-            acceptButton.disabled = true;
-          }
-        }
+  // Update the text color for job role dropdown based on selection
+  jobSelectElement.style.color = jobSelectElement.value ? 'blue' : 'grey';
+
+  // Update the text color for country dropdown based on selection
+  countrySelectElement.style.color = countrySelectElement.value ? 'blue' : 'grey';
+
+  // Enable or disable the accept button based on whether both dropdowns have a selection
+  acceptButton.disabled = !(jobSelectElement.value && countrySelectElement.value);
+}
+
+// Additional listeners to reset the dropdown color when it is opened
+jobSelectElement.addEventListener('mousedown', function () {
+  this.style.color = 'grey';
+});
+countrySelectElement.addEventListener('mousedown', function () {
+  this.style.color = 'grey';
+});
+
+// Listeners to set the dropdown color when it is closed without a selection
+jobSelectElement.addEventListener('blur', function () {
+  this.style.color = this.value ? 'blue' : 'grey';
+});
+countrySelectElement.addEventListener('blur', function () {
+  this.style.color = this.value ? 'blue' : 'grey';
+});
+
+
 
         acceptButton.addEventListener("click", function () {
           localStorage.setItem("selectedJobRole", jobSelectElement.value);
