@@ -1,5 +1,5 @@
 // chatbot-module.js
-import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@v2.6/dist/web.js";
+import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@v2.7/dist/web.js";
 
 const initChatbot = () => {
   Chatbot.initFull({
