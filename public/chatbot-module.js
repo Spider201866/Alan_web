@@ -3,8 +3,8 @@ import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@v
 
 const initChatbot = () => {
   Chatbot.initFull({
-    chatflowid: "7c2b1dfd-161d-467f-a4ef-f3db8b67f6db",
-    apiHost: "https://flowiseai-railway-production-f44f.up.railway.app",
+    chatflowid: "2fdb1644-0fef-45f8-a8e9-002c97554bfa",
+    apiHost: "https://flowiseai-railway-production-8550.up.railway.app",
     theme: {
       button: {
         backgroundColor: "#ffffff",
