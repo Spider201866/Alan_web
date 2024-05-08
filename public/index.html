@@ -18,6 +18,42 @@
         background-color: #f0f0f0;
         box-sizing: border-box; /* Includes padding and border in the element's dimensions */
       }
+      .black-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.50s ease-in-out;
+        }
+        .black-screen.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+        .black-screen img {
+            width: auto;
+            max-width: 30%;
+            height: auto;
+        }
+        .hidden {
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s 0.5s, opacity 0.5s linear;
+        }
+        .visible {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 0.5s linear;
+        }
+        button:disabled {
+            background-color: #ccc;
+        }
       .splash-screen img,
       .splash-screen p {
         transition: transform 3s ease-in-out;
@@ -219,90 +255,90 @@
       </select>
 
       <br /><br /><br />
-      <button onclick="proceedToHome()" id="acceptButton" disabled>
-        Accept
-      </button>
+      <button onclick="proceedToHome()" id="acceptButton" disabled>Accept</button>
+    </div>
+
+    <div class="black-screen" id="blackScreen">
+        <img src="./sky.png" alt="Sky">
     </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const jobSelectElement = document.getElementById("job-role-select");
-        const countrySelectElement = document.getElementById("country-select");
-        const acceptButton = document.getElementById("acceptButton");
+    const jobSelectElement = document.getElementById("job-role-select");
+    const countrySelectElement = document.getElementById("country-select");
+    const acceptButton = document.getElementById("acceptButton");
+    const blackScreen = document.getElementById("blackScreen");
+    const skyImage = blackScreen.querySelector('img'); // Ensure this selector matches your image element
 
-        jobSelectElement.addEventListener("change", function () {
-          checkSelections();
-        });
+    // Initial setup for the image transformation
+    skyImage.style.transform = 'scale(1)';
+    skyImage.style.transition = 'transform 4s ease-in-out';
 
-        countrySelectElement.addEventListener("change", function () {
-          checkSelections();
-        });
+    jobSelectElement.addEventListener("change", function () {
+        checkSelections();
+    });
 
-        function checkSelections() {
-  // Update the text color for job role dropdown based on selection
-  jobSelectElement.style.color = jobSelectElement.value ? 'blue' : 'grey';
+    countrySelectElement.addEventListener("change", function () {
+        checkSelections();
+    });
 
-  // Update the text color for country dropdown based on selection
-  countrySelectElement.style.color = countrySelectElement.value ? 'blue' : 'grey';
+    function checkSelections() {
+        jobSelectElement.style.color = jobSelectElement.value ? 'blue' : 'grey';
+        countrySelectElement.style.color = countrySelectElement.value ? 'blue' : 'grey';
+        acceptButton.disabled = !(jobSelectElement.value && countrySelectElement.value);
+    }
 
-  // Enable or disable the accept button based on whether both dropdowns have a selection
-  acceptButton.disabled = !(jobSelectElement.value && countrySelectElement.value);
+    acceptButton.addEventListener("click", function () {
+        localStorage.setItem("selectedJobRole", jobSelectElement.value);
+        localStorage.setItem("selectedCountry", countrySelectElement.value);
+
+        // Make the black screen visible
+        blackScreen.style.visibility = 'visible';
+        blackScreen.style.opacity = 1;
+
+        // Start the zoom effect shortly after making the image visible
+        setTimeout(() => {
+            skyImage.style.transform = 'scale(1.3)';
+        }, 200); // Delay to ensure the transition is noticeable
+
+        // Fade out after the set display time
+        setTimeout(() => {
+            blackScreen.style.opacity = 0;
+            setTimeout(() => {
+                window.location.href = "home.html";
+            }, 5); // Delay for fade out
+        }, 6000); // Display time for the black screen
+    });
+
+    if (!sessionStorage.getItem("splashShown")) {
+        sessionStorage.setItem("splashShown", "true");
+        showSplashScreen();
+    } else {
+        window.location.href = "home.html";
+    }
+});
+
+function showSplashScreen() {
+    const logo1 = document.getElementById("logo1");
+    const logo2 = document.getElementById("logo2");
+    logo1.style.transform = "scale(0.8)";
+    logo2.style.transform = "rotateX(-90deg)";
+
+    setTimeout(() => {
+        logo1.style.transform = "scale(1)";
+        logo2.style.transform = "rotateX(0deg)";
+    }, 100);
+
+    setTimeout(() => {
+        const splashScreen = document.querySelector(".splash-screen");
+        const instructionScreen = document.querySelector(".instruction-screen");
+        splashScreen.classList.remove("visible");
+        splashScreen.classList.add("hidden");
+        instructionScreen.classList.remove("hidden");
+        instructionScreen.classList.add("visible");
+    }, 6000);
 }
-
-// Additional listeners to reset the dropdown color when it is opened
-jobSelectElement.addEventListener('mousedown', function () {
-  this.style.color = 'grey';
-});
-countrySelectElement.addEventListener('mousedown', function () {
-  this.style.color = 'grey';
-});
-
-// Listeners to set the dropdown color when it is closed without a selection
-jobSelectElement.addEventListener('blur', function () {
-  this.style.color = this.value ? 'blue' : 'grey';
-});
-countrySelectElement.addEventListener('blur', function () {
-  this.style.color = this.value ? 'blue' : 'grey';
-});
-
-
-
-        acceptButton.addEventListener("click", function () {
-          localStorage.setItem("selectedJobRole", jobSelectElement.value);
-          localStorage.setItem("selectedCountry", countrySelectElement.value);
-          window.location.href = "home.html";
-        });
-
-        if (!sessionStorage.getItem("splashShown")) {
-          sessionStorage.setItem("splashShown", "true");
-          showSplashScreen();
-        } else {
-          window.location.href = "home.html";
-        }
-      });
-
-      function showSplashScreen() {
-        const logo1 = document.getElementById("logo1");
-        const logo2 = document.getElementById("logo2");
-        logo1.style.transform = "scale(0.8)";
-        logo2.style.transform = "rotateX(-90deg)";
-
-        setTimeout(() => {
-          logo1.style.transform = "scale(1)";
-          logo2.style.transform = "rotateX(0deg)";
-        }, 100);
-
-        setTimeout(() => {
-          const splashScreen = document.querySelector(".splash-screen");
-          const instructionScreen = document.querySelector(
-            ".instruction-screen"
-          );
-          splashScreen.classList.remove("visible");
-          splashScreen.classList.add("hidden");
-          instructionScreen.classList.remove("hidden");
-          instructionScreen.classList.add("visible");
-        }, 6000);
-      }
-    </script>
+      </script>
+      
   </body>
 </html>
