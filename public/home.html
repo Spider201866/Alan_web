@@ -24,6 +24,13 @@
   <body>
     <style>
       #mainContent { text-align: center; }
+      @media only screen and (max-device-width: 812px) and (orientation: portrait) { /* Adjust for iPhone X dimensions as an example */
+    .iframe-container iframe {
+        height: auto; /* Change or adjust the height */
+        min-height: 150px; /* Ensure a minimum height is maintained */
+    }
+}
+
     </style>
     <div id="mainContent" class="hidden">
     </div>
