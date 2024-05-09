@@ -9,7 +9,7 @@ body, html {
     font-family: "Calibri Light", Arial, sans-serif;
     margin: 0;
     padding: 0;
-    height: calc(var(--vh, 1vh) * 100); /* Dynamic viewport height */
+    height: 100px; /* Fixed height in pixels */
     overflow: hidden; /* Prevent any scrollbars */
     display: flex;
     flex-direction: column;
@@ -65,15 +65,7 @@ body, html {
 }
 
 </style>
-<script>
-    function adjustViewportHeight() {
-        let vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-    }
-    
-    window.addEventListener('resize', adjustViewportHeight);
-    window.addEventListener('load', adjustViewportHeight);
-    </script>
+
 </head>
 <body>
 <div class="marquee">
