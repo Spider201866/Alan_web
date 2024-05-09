@@ -31,9 +31,6 @@
     background-color: transparent;
 }
 
-
-
-
     </style>
     <div id="mainContent" class="hidden">
     </div>
@@ -272,6 +269,13 @@ function toggleLinks() {
     // Initial language setup, default to English or another default language
     updateLanguageDisplays('en');
   });
+  window.addEventListener('load', function() {
+    const iframe = document.getElementById('boxesFrame');
+    const scale = window.innerWidth / iframe.offsetWidth;
+    iframe.style.transform = `scale(${scale})`;
+    iframe.style.transformOrigin = 'top left';
+});
+
 </script>
   
   
