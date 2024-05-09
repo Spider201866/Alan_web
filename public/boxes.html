@@ -20,6 +20,7 @@ body, html {
 
     .marquee {
         display: flex;
+        flex-shrink: 0; /* Prevents flex items from shrinking below their set size */
         white-space: nowrap;
         overflow: hidden;
         width: 100vw; /* Set a definite width to help manage the animation */
