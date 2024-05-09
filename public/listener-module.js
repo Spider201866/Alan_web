@@ -92,12 +92,16 @@ const initHideElementsListener = () => {
   // Attach the hideElements function to both click and keydown events
   document.addEventListener('keydown', hideElements);
   document.addEventListener('click', hideElements);
+
+  // Add event listener to the iframe itself to hide when clicked
+  const iframeBox = document.getElementById('boxesFrame');
+  if (iframeBox) {
+    iframeBox.addEventListener('click', hideElements);
+  }
 };
 
-
 document.addEventListener("DOMContentLoaded", () => {
-  // Assuming initChatbotListeners is defined elsewhere and needs to be initialized too
-  initChatbotListeners();
   initHideElementsListener();
 });
+
 

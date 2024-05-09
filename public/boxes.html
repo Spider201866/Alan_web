@@ -5,17 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Continuous Infinite Loop in Both Directions</title>
 <style>
-    body, html {
-        font-family: "Calibri Light", Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        overflow: hidden; /* Prevent any scrollbars */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
+body, html {
+    font-family: "Calibri Light", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden; /* Prevent any scrollbars */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    user-select: none; /* Disables text selection on the entire page */
+}
+
     .marquee {
         display: flex;
         white-space: nowrap;
@@ -43,12 +45,12 @@
         width: auto; /* Width auto to accommodate the content */
         min-width: 120px; /* Minimum width based on content */
         height: 10px;
-        padding: 15px;
+        padding: 10px;
         margin-right: 15px; /* Consistent space between boxes */
-        font-size: 15px;
+        font-size: 14px;
         background-color: #ffffff;
         border: 1px solid #000000;
-        border-radius: 15px;
+        border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
