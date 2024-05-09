@@ -63,16 +63,20 @@ const initHideElementsListener = () => {
       return; // Do nothing if the click is inside the language selector
     }
 
+    // Elements to be removed or hidden
     const logoImage = document.getElementById('logo-image');
     const mainText = document.getElementById('main-text'); 
     const subText = document.getElementById('sub-text');
     const additionalText = document.getElementById('additional-text'); 
     const contentWrapper = document.querySelector('.content-wrapper'); // Assuming this is the parent container
+    const iframeBox = document.getElementById('boxesFrame'); // Access the iframe
 
+    // Remove or hide elements
     if (logoImage) logoImage.remove();
     if (mainText) mainText.remove();
     if (subText) subText.remove();
     if (additionalText) additionalText.remove();
+    if (iframeBox) iframeBox.style.display = 'none'; // Hide the iframe instead of removing
 
     // After removing elements, adjust the parent container's styling as needed
     if (contentWrapper) {
@@ -89,6 +93,7 @@ const initHideElementsListener = () => {
   document.addEventListener('keydown', hideElements);
   document.addEventListener('click', hideElements);
 };
+
 
 document.addEventListener("DOMContentLoaded", () => {
   // Assuming initChatbotListeners is defined elsewhere and needs to be initialized too
