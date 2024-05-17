@@ -1,16 +1,27 @@
 const express = require('express');
 const fs = require('fs');
+const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Set the 'trust proxy' setting
+app.set('trust proxy', true);
+
 // Serve your static site
 app.use(express.static('public'));
+
+// Ensure access.log file exists
+const logFilePath = path.join(__dirname, 'access.log');
+if (!fs.existsSync(logFilePath)) {
+  fs.writeFileSync(logFilePath, '', { flag: 'a' });
+  console.log('Created access.log file');
+}
 
 // IP address logging middleware
 app.use((req, res, next) => {
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   console.log(`Access from IP: ${ip}`);
-  fs.appendFile('access.log', `Access from IP: ${ip}\n`, err => {
+  fs.appendFile(logFilePath, `Access from IP: ${ip}\n`, err => {
     if (err) {
       console.error('Error writing to access.log', err);
     }
