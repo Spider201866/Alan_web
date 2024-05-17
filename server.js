@@ -17,13 +17,16 @@ if (!fs.existsSync(logFilePath)) {
   console.log('Created access.log file');
 }
 
-// IP address logging middleware
+// IP address logging middleware with additional debugging
 app.use((req, res, next) => {
+  console.log('Headers:', req.headers);  // Log all headers to debug
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   console.log(`Access from IP: ${ip}`);
   fs.appendFile(logFilePath, `Access from IP: ${ip}\n`, err => {
     if (err) {
       console.error('Error writing to access.log', err);
+    } else {
+      console.log('Logged IP to access.log');
     }
   });
   next();
