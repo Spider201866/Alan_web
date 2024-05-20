@@ -26,7 +26,7 @@ const initChatbot = () => {
           backgroundColor: "#ffffff",
           textColor: "#000000",
           showAvatar: true,
-          avatarSrc: "http://localhost:8080/black.png", // Local avatar URL
+          avatarSrc: "https://github.com/Spider201866/Alan_web/blob/main/public/black.png", // Local avatar URL
         },
         userMessage: {
           backgroundColor: "#f4f4f4",
