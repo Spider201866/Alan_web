@@ -23,12 +23,13 @@ const initChatbot = () => {
         fontSize: 15,
         poweredByTextColor: "#D3D3D3",
         botMessage: {
-          backgroundColor: "#ece0d1",
+          backgroundColor: "#ffffff",
           textColor: "#000000",
-          showAvatar: false,
+          showAvatar: true,
+          avatarSrc: "http://localhost:8080/black.png", // Local avatar URL
         },
         userMessage: {
-          backgroundColor: "#d1ddec",
+          backgroundColor: "#f4f4f4",
           textColor: "#000000",
           showAvatar: false,
         },

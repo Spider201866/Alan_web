@@ -198,8 +198,7 @@ input:checked + .slider:before {
         
         
         <p style="margin-bottom: 20px; font-size: 15px; text-align: justify;">
-            Alan is an AI assistant for students and those who only occasionally see eye or ear cases.
-            Write or speak clearly, avoid identifying names or other details, keep audio messages &lt;30s. Good luck!
+            Alan is an AI assistant for students and those who only occasionally see eye or ear cases. Write or speak clearly and avoid identifying names or details. Good luck!
         </p>
         
 
@@ -219,7 +218,7 @@ input:checked + .slider:before {
         
         <div class="justify" id="additionalExamples">
             <p><strong>Too little</strong><br><span id="tooLittle">man red eye what?</span></p>
-            <p><strong>Just right</strong><br><span id="justRight">Man 25yr, red eye 3 day. No meds or eye prob before. Bad pain, eye waters. With arclight I see big white cornea patch. Pupils OK. Vision 6/12 in poor eye, 6/6 in other.</span></p>
+            <p><strong>Just right</strong><br><span id="justRight">Man 25yr, red eye 3 day. No meds or eye prob before. Bad pain, watering. See white cornea dot. Pupils OK. Vision 6/12, 6/6 in other.</span></p>
             <p><strong>Too much</strong><br><span id="tooMuch">This man com into clinics today. He, driver in th building, a red eyes now he thinks the food eaten; Is looking at eye I see watering. It red edges you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is dis…</span></p>
 
             <p id="additionalQuery" style="padding-top: 15px; color: blue; font-size: 15px;">
@@ -246,8 +245,8 @@ function toggleContent() {
     document.getElementById('dynamicContent').textContent = isChecked ? 'hearing' : 'vision & pupils';
     document.getElementById('tooLittle').textContent = isChecked ? 'man red ear what?' : 'man red eye what?';
     document.getElementById('justRight').textContent = isChecked ?
-        'Man 25yr, red ear 3 day. No meds or ear prob before. Bad pain, ear discharging lots. With arclight I see a red drum. Hearing muffled in bad ear but OK in other ear.' :
-        'Man 25yr, red eye 3 day. No meds or eye prob before. Bad pain, eye waters. With arclight I see big white cornea patch. Pupils OK. Vision 6/12 in poor eye, 6/6.';
+        'Man 25yr, red ear 3 day. No meds or ear prob before. Bad pain, ear discharge lots. See a red drum. Hearing muffled in bad ear but OK other ear.' :
+        'Man 25yr, red eye 3 day. No meds or eye prob before. Bad pain, eye waters. See big white cornea patch. Pupils OK. Vision 6/12 in poor eye, 6/6.';
     document.getElementById('tooMuch').textContent = isChecked ?
         'This man com into clinics today. He, driver in the building, a red ears now he thinks the food eaten; Is looking at ear I see discharge. It red edges you know? He wan help; he tall man ears watery worried about hearing and pain he says. wat is dis…' :
         'This man com into clinics today. He, driver in the building, a red eye now he thinks the food eaten; Is looking at eye I see watering. It red edges you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is dis…';

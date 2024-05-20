@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Splash Screen</title>
     <style>
-        body,
-        html {
+        body, html {
             height: 100%;
             margin: 0;
             padding: 0;
@@ -141,6 +140,9 @@
             border-radius: 15px;
             cursor: pointer;
         }
+        button:disabled {
+            background-color: #ccc;
+        }
         select {
             padding: 4px 20px;
             font-size: 14px;
@@ -160,8 +162,20 @@
             min-width: 230px;
             line-height: 1.2;
         }
-        button:disabled {
-            background-color: #ccc;
+        .geo-button {
+            padding: 4px 20px;
+            font-size: 14px;
+            color: grey;
+            background-color: white;
+            border: 1px solid grey;
+            cursor: pointer;
+            border-radius: 15px;
+            overflow: auto;
+            min-width: 230px;
+            text-align: center;
+        }
+        .geo-button.clicked {
+            color: blue;
         }
     </style>
 </head>
@@ -174,8 +188,7 @@
 
     <div class="instruction-screen hidden">
         <img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: -10px" />
-        <p><strong>*Experimental*</strong></p>
-        <p>Alan is an AI assistant for students and those who only occasionally see eye or ear cases. Write or speak clearly, avoid identifying names or other details, keep audio messages &lt;30s.</p>
+        <p>Alan is an AI assistant for students and those who only occasionally see eye or ear cases. Write or speak clearly and avoid identifying names or details.</p>
         <p>Good luck!</p>
 
         <select id="job-role-select" class="job-role-dropdown">
@@ -197,30 +210,12 @@
 
         <div style="margin-bottom: 20px"></div>
 
-        <select id="country-select" class="country-dropdown">
-            <option value="" disabled selected hidden>Country</option>
-            <option value="Australia">Australia</option>
-            <option value="Bhutan">Bhutan</option>
-            <option value="Egypt">Egypt</option>
-            <option value="Germany">Germany</option>
-            <option value="Ghana">Ghana</option>
-            <option value="India">India</option>
-            <option value="Indonesia">Indonesia</option>
-            <option value="Kenya">Kenya</option>
-            <option value="Malawi">Malawi</option>
-            <option value="Mongolia">Mongolia</option>
-            <option value="Nepal">Nepal</option>
-            <option value="Pakistan">Pakistan</option>
-            <option value="Rwanda">Rwanda</option>
-            <option value="South Africa">South Africa</option>
-            <option value="Tanzania">Tanzania</option>
-            <option value="Uganda">Uganda</option>
-            <option value="UK">UK</option>
-            <option value="USA">USA</option>
-        </select>
+        <button id="geolocationButton" class="geo-button">Accept Geolocation</button>
 
         <br /><br /><br />
-        <button onclick="proceedToHome()" id="acceptButton" disabled>Accept</button>
+        <button id="acceptButton" disabled>Accept</button>
+        <br />
+        <div id="locationInfo" style="display:none;"></div>
     </div>
 
     <div class="black-screen" id="blackScreen">
@@ -230,32 +225,65 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const jobSelectElement = document.getElementById("job-role-select");
-            const countrySelectElement = document.getElementById("country-select");
+            const geolocationButton = document.getElementById("geolocationButton");
             const acceptButton = document.getElementById("acceptButton");
+            const locationInfo = document.getElementById("locationInfo");
             const blackScreen = document.getElementById("blackScreen");
             const skyImage = blackScreen.querySelector('img');
+            let locationAccepted = false;
 
             // Initial setup for the image transformation
             skyImage.style.transform = 'scale(1)';
             skyImage.style.transition = 'transform 4s ease-in-out, filter 4s ease-in-out';
 
-            jobSelectElement.addEventListener("change", function () {
-                checkSelections();
-            });
-
-            countrySelectElement.addEventListener("change", function () {
-                checkSelections();
-            });
+            jobSelectElement.addEventListener("change", checkSelections);
 
             function checkSelections() {
                 jobSelectElement.style.color = jobSelectElement.value ? 'blue' : 'grey';
-                countrySelectElement.style.color = countrySelectElement.value ? 'blue' : 'grey';
-                acceptButton.disabled = !(jobSelectElement.value && countrySelectElement.value);
+                acceptButton.disabled = !(jobSelectElement.value && locationAccepted);
+            }
+
+            geolocationButton.addEventListener("click", function () {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition, showError);
+                } else {
+                    locationInfo.innerText = 'Geolocation is not supported by this browser.';
+                    locationInfo.style.display = 'block';
+                }
+            });
+
+            function showPosition(position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                localStorage.setItem("latitude", latitude);
+                localStorage.setItem("longitude", longitude);
+                locationInfo.innerText = `${latitude}, ${longitude}`;
+                locationInfo.style.display = 'block';
+                geolocationButton.classList.add('clicked');
+                locationAccepted = true;
+                checkSelections();
+            }
+
+            function showError(error) {
+                switch (error.code) {
+                    case error.PERMISSION_DENIED:
+                        locationInfo.innerText = 'User denied the request for Geolocation.';
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        locationInfo.innerText = 'Location information is unavailable.';
+                        break;
+                    case error.TIMEOUT:
+                        locationInfo.innerText = 'The request to get user location timed out.';
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        locationInfo.innerText = 'An unknown error occurred.';
+                        break;
+                }
+                locationInfo.style.display = 'block';
             }
 
             acceptButton.addEventListener("click", function () {
                 localStorage.setItem("selectedJobRole", jobSelectElement.value);
-                localStorage.setItem("selectedCountry", countrySelectElement.value);
 
                 // Make the black screen visible
                 blackScreen.style.visibility = 'visible';

@@ -19,6 +19,8 @@
 
     <script type="module" src="closer.js"></script>
     
+
+    
   </head>
 
   <body>
@@ -157,12 +159,13 @@ function toggleLinks() {
 <img id="condition-image" alt="" style="max-width: 100%; height: 120px; display: block; margin: 0 auto; cursor: pointer;" onclick="toggleZoom(this)" /> 
 <p id="condition-description"></p>
 
-<!-- Single line display for selected job role and country, centered -->
+<!-- Single line display for selected job role and location coordinates, centered -->
 <p id="user-info" style="font-size: 13px; color: rgb(92, 92, 92); text-align: center; margin-top: 10px; margin-bottom: 0;"></p>
+
 
 <!-- Disclaimer about Alan potentially making mistakes -->
 <div class="chatbot-version" style="margin-top: 0; padding-top: 2px;">
-    *Alan can make mistakes. Use clinical judgement. 5/24
+    Alan can make mistakes. Use clinical judgement. 5/24
 </div>
 </div>
   
@@ -217,11 +220,14 @@ function toggleLinks() {
     };
 
     function updateUserInfoDisplay(lang) {
-      // Get the translation key from the mappings or default to the stored value if not found
-      let roleKey = jobRoleKeys[storedJobRole] || storedJobRole;
-      let translatedJobRole = translations[lang][roleKey] || storedJobRole;
-      userInfo.innerHTML = `${translatedJobRole}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${storedCountry}`;
-    }
+  // Get the translation key from the mappings or default to the stored value if not found
+  let roleKey = jobRoleKeys[storedJobRole] || storedJobRole;
+  let translatedJobRole = translations[lang][roleKey] || storedJobRole;
+  let storedLatitude = localStorage.getItem('latitude') || 'Not set';
+  let storedLongitude = localStorage.getItem('longitude') || 'Not set';
+  userInfo.innerHTML = `${translatedJobRole}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${storedLatitude}, ${storedLongitude}`;
+}
+
 
     function updateLanguageDisplays(lang) {
       document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
