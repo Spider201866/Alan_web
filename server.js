@@ -1,5 +1,5 @@
-import express from 'express';
-import redis from './redisClient.js'; // Import the Redis client
+const express = require('express');
+const redis = require('./redisClient.js'); // Import the Redis client
 
 const app = express();
 const port = process.env.PORT || 3000;
