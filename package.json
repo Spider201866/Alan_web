@@ -5,6 +5,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@upstash/redis": "^1.31.1",
     "express": "^4.17.1"
   },
   "license": "MIT"
