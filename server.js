@@ -1,10 +1,11 @@
 const express = require('express');
-const redis = require('./redisClient.js'); // Import the Redis client
+const path = require('path'); // Include path module for correct path resolution
+const redis = require('./public/redisClient.js'); // Correct the path to redisClient.js
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.static('public')); // Serve static files from the public directory
+app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from the public directory
 
 // API endpoint to fetch chat sessions from Redis
 app.get('/api/getChatSession', async (req, res) => {
