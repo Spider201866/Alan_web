@@ -6,4 +6,17 @@ const redis = new Redis({
   token: 'AcudAAIncDFhMmJhZDJhMTUwYTE0ZjQ5OTY5YWIwZjhkMTBkNzU2ZnAxNTIxMjU',
 });
 
-module.exports = redis;
+async function getChatData(chatId) {
+    try {
+      const data = await redis.lrange(chatId, 0, -1); // Retrieve all elements in the list
+      console.log(`Data retrieved from Redis for chatId ${chatId}: ${data}`);
+      return data;
+    } catch (error) {
+      console.error(`Error retrieving data from Redis for chatId ${chatId}:`, error);
+      throw error;
+    }
+  }
+  
+  module.exports = {
+    get: getChatData,
+  };
