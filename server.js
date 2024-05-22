@@ -1,11 +1,12 @@
 const express = require('express');
-const path = require('path'); // Include path module for correct path resolution
-const redis = require('./public/redisClient.js'); // Correct the path to redisClient.js
+const path = require('path');
+const redis = require('./public/redisClient.js'); // Adjust the path as needed
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000; // Use the port from the environment or default to 3000
 
-app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from the public directory
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // API endpoint to fetch chat sessions from Redis
 app.get('/api/getChatSession', async (req, res) => {
@@ -17,6 +18,11 @@ app.get('/api/getChatSession', async (req, res) => {
     console.error('Error fetching chat session:', error);
     res.status(500).json({ error: 'Failed to fetch chat session' });
   }
+});
+
+// Default route to serve the homepage or a message
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html')); // Serve index.html from public folder
 });
 
 app.listen(port, () => {
