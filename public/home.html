@@ -1,29 +1,15 @@
-<!-- WJW 12/04/2024 -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Alan</title>
-
     <script type="module"> import { faviconAndMetaSetup } from './faviconAndMeta.js'; faviconAndMetaSetup();</script>
-
     <link rel="stylesheet" href="styles.css">
     <link rel="preload" href="atomsblue.jpg" as="image">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-
     <script type="module" src="closer.js"></script>
-    
 
-    
-  </head>
-
-  <body>
     <style>
 #boxesFrame {
     width: 100%; 
@@ -32,6 +18,7 @@
     overflow: hidden;
     background-color: transparent;
 }
+
 .object-container {
     width: 100%;
     overflow: hidden;
@@ -44,21 +31,85 @@
     display: block;
 }
 
+/* Sidebar styles */
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 2001; /* Ensures the sidebar is on top of all other elements */
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    color: white; /* Ensure the close button is visible */
+}
+
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: white; /* Changed background color to white */
+    color: black; /* Changed text color to black */
+    padding: 10px 15px;
+    border: none;
+    position: fixed;
+    top: 90px; /* Moved further down */
+    left: -3px;
+    z-index: 1000; /* Higher than sidebar to ensure visibility */
+    display: flex;
+    align-items: center;
+}
+
+.openbtn:hover {
+    background-color: #f1f1f1;
+}
+
+.openbtn .icon {
+    font-size: 20px;
+    margin-right: 10px;
+    color: black; /* Changed icon color to black */
+}
+
+
+
 
     </style>
-    <div id="mainContent" class="hidden">
-    </div>
-    
+  </head>
+
+  <body>
+    <div id="mainContent" class="hidden"></div>
 
     <div class="chatbot-header">
       <div class="flex-spacer"></div> <!-- Invisible spacer to balance the language selector -->
       <div>
-          <div class="chatbot-title">
-              <span class="red">Al</span><span class="white">an</span>
-          </div>
-          <div class="chatbot-subtitle">
-              Eyes & Ears
-          </div>
+        <div class="chatbot-title">
+          <span class="red">Al</span><span class="white">an</span>
+        </div>
+        <div class="chatbot-subtitle">
+          Eyes & Ears
+        </div>
       </div>
       <div class="language-selector">
         <select class="language-dropdown">
@@ -72,116 +123,103 @@
           <option value="ny">Chichewa</option> <!-- For Malawi -->
           <option value="rw">Kinwanda</option> <!-- For Rwanda -->
           <option value="lg">Luganda</option> <!-- For Uganda -->
-      </select>
-      
+        </select>
       </div>
       <div class="flex-spacer"></div> <!-- Second spacer for symmetry; can be hidden if not needed -->
-  </div>
-  
+    </div>
 
+    <button class="openbtn" onclick="openNav()"> <i class="fas fa-comment icon"></i></button>
+    
+    
 
-  <div class="menu-icon">&#9776;</div> <!-- 3 lines Menu Icon -->
-  <div class="side-menu" style="display: flex; flex-wrap: wrap; align-items: center;">
-  
-    <div style="display: flex; margin-bottom: 10px;">
-      <div>
+    <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="#">Chat 1</a>
+      <a href="#">Chat 2</a>
+      <a href="#">Chat 3</a>
+      <a href="#">Chat 4</a>
+      <a href="#">Chat 5</a>
+      <a href="#">Chat 6</a>
+      <a href="#">Chat 7</a>
+      <a href="#">Chat 8</a>
+      <a href="#">Chat 9</a>
+      <a href="#">Chat 4</a>
+    </div>
+
+    <div class="menu-icon">&#9776;</div> <!-- 3 lines Menu Icon -->
+    <div class="side-menu" style="display: flex; flex-wrap: wrap; align-items: center;">
+      <div style="display: flex; margin-bottom: 10px;">
+        <div>
           <button id="instructions-button" class="button red pulse">Diagnose with Alan: How to use</button>
+        </div>
       </div>
-      
-      </div>
-  
+
       <!-- Grouping Front of Eye, Fundal Reflex, and Back of Eye buttons for same line display -->
       <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for eye-related buttons -->
         <button class="button" style="margin-right: 10px;" onclick="window.location.href='eye.html';">How to examine the Eye</button>
-
       </div>
-  
+
       <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for eye-related buttons -->
         <button class="button green" style="margin-right: 10px;" onclick="window.location.href='ear.html';">How to examine the Ear</button>
-       </div>
+      </div>
 
       <!-- Grouping Videos, Atoms, Tools buttons for same line display -->
       <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for informational buttons -->
         <a href="https://www.youtube.com/@arclightproject" style="text-decoration: none;">
           <button class="button grey" style="margin-right: 10px;">Videos</button>
-      </a>      
-      <button class="button grey" style="margin-right: 10px;" onclick="window.location.href='atoms.html';">Atoms</button>
-
-          <button class="button grey">Tools</button>
+        </a>
+        <button class="button grey" style="margin-right: 10px;" onclick="window.location.href='atoms.html';">Atoms</button>
+        <button class="button grey">Tools</button>
       </div>
-  
+
       <!-- Grouping Arclight Project and Web Links buttons for same line display -->
       <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for project-related buttons -->
         <a href="https://medicine.st-andrews.ac.uk/arclight/" style="text-decoration: none;">
           <button class="button grey" style="margin-right: 10px;">Arclight Project</button>
-      </a>
-      
-          <!-- Button to toggle the display of links -->
-          <button class="button grey" onclick="window.location.href='weblinks.html';">Web Links</button>
-
-
-<script>
-function toggleLinks() {
-    var linksDiv = document.getElementById('links');
-    if (linksDiv.style.display === 'none') {
-        linksDiv.style.display = 'block';
-    } else {
-        linksDiv.style.display = 'none';
-    }
-}
-</script>
-
+        </a>
+        <button class="button grey" onclick="window.location.href='weblinks.html';">Web Links</button>
       </div>
       <button class="button grey" onclick="location.href='aboutalan.html';">
         <i class="fas fa-cog"></i> <!-- Font Awesome cog icon -->
-    </button>
-  </div>
-  
-  
-
-
-      <div class="content-wrapper" style="display: flex; flex-direction: column; justify-content: flex-start; min-height: 20vh; font-weight: bold;">
-        <div class="logo-and-text-container" style="text-align: center; line-height: 1.0; padding-top: 20px;">
-          <img src="./triangle.png" alt="Logo" id="logo-image" style="max-width: 100px; display: block; margin: 0 auto; margin-bottom: 5px;"> <!-- Adjust margin-bottom if necessary -->
-          <p id="additional-text" class="grey-text" style="font-size: 15px; color: grey; margin-top: -5px;"> <!-- Adjust margin-top to reduce space -->
-            <span id="good-history">Good History</span>  |  
-            <span id="examine-well">Examine Well</span>  |  
-            <span id="use-arclight">Use Arclight</span>
-          </p>          
-          <p id="sub-text" class="centered-content" style="font-size: 16px; color: black; font-weight: 900; padding-bottom: 5px;">How can I help you today?</p>
-        </div>
-      </div>      
-           
-      <object type="text/html" data="boxes.html" id="boxesFrame" style="width:100%; height:100px; overflow:auto; border:none;"></object>
-
-
-      
-</div>
-
+      </button>
     </div>
+
+    <div class="content-wrapper" style="display: flex; flex-direction: column; justify-content: flex-start; min-height: 20vh; font-weight: bold;">
+      <div class="logo-and-text-container" style="text-align: center; line-height: 1.0; padding-top: 20px;">
+        <img src="./triangle.png" alt="Logo" id="logo-image" style="max-width: 100px; display: block; margin: 0 auto; margin-bottom: 5px;"> <!-- Adjust margin-bottom if necessary -->
+        <p id="additional-text" class="grey-text" style="font-size: 15px; color: grey; margin-top: -5px;"> <!-- Adjust margin-top to reduce space -->
+          <span id="good-history">Good History</span>  |  
+          <span id="examine-well">Examine Well</span>  |  
+          <span id="use-arclight">Use Arclight</span>
+        </p>
+        <p id="sub-text" class="centered-content" style="font-size: 16px; color: black; font-weight: 900; padding-bottom: 5px;">How can I help you today?</p>
+      </div>
+    </div>
+
+    <object type="text/html" data="boxes.html" id="boxesFrame" style="width:100%; height:100px; overflow:auto; border:none;"></object>
+
     <div class="chatbot-container">
       <flowise-fullchatbot></flowise-fullchatbot>
     </div>
 
-    <div>     
-<!-- Condition name displayed here -->
-<div class="detected-condition"></div>
-    
-<!-- Thumbnail image with onclick functionality for zoom -->
-<img id="condition-image" alt="" style="max-width: 100%; height: 120px; display: block; margin: 0 auto; cursor: pointer;" onclick="toggleZoom(this)" /> 
-<p id="condition-description"></p>
+    <div>
+      <!-- Condition name displayed here -->
+      <div class="detected-condition"></div>
 
-<!-- Single line display for selected job role and location coordinates, centered -->
-<p id="user-info" style="font-size: 13px; color: rgb(92, 92, 92); text-align: center; margin-top: 10px; margin-bottom: 0;"></p>
+      <!-- Thumbnail image with onclick functionality for zoom -->
+      <img id="condition-image" alt="" style="max-width: 100%; height: 120px; display: block; margin: 0 auto; cursor: pointer;" onclick="toggleZoom(this)" />
+      <p id="condition-description"></p>
 
+      <!-- Single line display for selected job role and location coordinates, centered -->
+      <p id="user-info" style="font-size: 13px; color: rgb(92, 92, 92); text-align: center; margin-top: 10px; margin-bottom: 0;"></p>
 
-<!-- Disclaimer about Alan potentially making mistakes -->
-<div class="chatbot-version" style="margin-top: 0; padding-top: 2px;">
-    Alan can make mistakes. Use clinical judgement. 5/24
-</div>
-</div>
-  
-  <script>
+      <!-- Disclaimer about Alan potentially making mistakes -->
+      <div class="chatbot-version" style="margin-top: 0; padding-top: 2px;">
+        Alan can make mistakes. Use clinical judgement. 5/24
+      </div>
+    </div>
+
+    <script>
       function toggleZoom(image) {
           // Check if the image is already zoomed
           if (image.style.height === '200px') {
@@ -196,101 +234,103 @@ function toggleLinks() {
               image.style.cursor = 'zoom-in'; // Change cursor for zoom-in
           }
       }
-  </script>
+
+      function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+    }
+    </script>
     
-    <script type="module">  import { initChatbot } from './chatbot-module.js'; initChatbot();</script>
+    <script type="module"> import { initChatbot } from './chatbot-module.js'; initChatbot();</script>
+    <script type="module" src="listener-module.js"></script>
+    <script type="module">
+      import { translations } from './language.js';
 
-<script type="module" src="listener-module.js"></script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const menuIcon = document.querySelector('.menu-icon');
+        const tray = document.querySelector('.side-menu');
+        const instructionsButton = document.getElementById("instructions-button");
+        const dropdown = document.querySelector('.language-dropdown');
+        const userInfo = document.getElementById('user-info');
+        var storedJobRole = localStorage.getItem('selectedJobRole') || 'Not selected';
+        var storedCountry = localStorage.getItem('selectedCountry') || 'Not selected';
 
-<script type="module">
-  import { translations } from './language.js';
+        // Define a mapping from the stored job role descriptions to the translation keys
+        const jobRoleKeys = {
+          "Health worker": "healthWorker",
+          "Nurse": "nurse",
+          "Ophthalmic clinical officer": "ophthalmicOfficer",
+          "Medical student": "medicalStudent",
+          "General practitioner": "generalPractitioner",
+          "Hospital doctor": "hospitalDoctor",
+          "Ophthalmologist": "ophthalmologist",
+          "Optometrist": "optometrist",
+          "Orthoptist": "orthoptist",
+          "ENT specialist": "entSpecialist",
+          "Pharmacist": "pharmacist",
+          "Audiologist": "audiologist",
+          "Ear care practitioner": "earCarePractitioner"
+        };
 
-  document.addEventListener('DOMContentLoaded', function() {
-    const menuIcon = document.querySelector('.menu-icon');
-    const tray = document.querySelector('.side-menu');
-    const instructionsButton = document.getElementById("instructions-button");
-    const dropdown = document.querySelector('.language-dropdown');
-    const userInfo = document.getElementById('user-info');
-    var storedJobRole = localStorage.getItem('selectedJobRole') || 'Not selected';
-    var storedCountry = localStorage.getItem('selectedCountry') || 'Not selected';
+        function updateUserInfoDisplay(lang) {
+          // Get the translation key from the mappings or default to the stored value if not found
+          let roleKey = jobRoleKeys[storedJobRole] || storedJobRole;
+          let translatedJobRole = translations[lang][roleKey] || storedJobRole;
+          let storedLatitude = localStorage.getItem('latitude') || 'Not set';
+          let storedLongitude = localStorage.getItem('longitude') || 'Not set';
+          userInfo.innerHTML = `${translatedJobRole}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${storedLatitude}, ${storedLongitude}`;
+        }
 
-    // Define a mapping from the stored job role descriptions to the translation keys
-    const jobRoleKeys = {
-      "Health worker": "healthWorker",
-      "Nurse": "nurse",
-      "Ophthalmic clinical officer": "ophthalmicOfficer",
-      "Medical student": "medicalStudent",
-      "General practitioner": "generalPractitioner",
-      "Hospital doctor": "hospitalDoctor",
-      "Ophthalmologist": "ophthalmologist",
-      "Optometrist": "optometrist",
-      "Orthoptist": "orthoptist",
-      "ENT specialist": "entSpecialist",
-      "Pharmacist": "pharmacist",
-      "Audiologist": "audiologist",
-      "Ear care practitioner": "earCarePractitioner"
-    };
+        function updateLanguageDisplays(lang) {
+          document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
+          document.getElementById('good-history').textContent = translations[lang].goodHistory;
+          document.getElementById('examine-well').textContent = translations[lang].examineWell;
+          document.getElementById('use-arclight').textContent = translations[lang].useArclight;
+          document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
+          document.querySelector('.chatbot-version').textContent = translations[lang].alanMistakes;
+          updateUserInfoDisplay(lang); // Also update the job role and country as per the selected language
+        }
 
-    function updateUserInfoDisplay(lang) {
-  // Get the translation key from the mappings or default to the stored value if not found
-  let roleKey = jobRoleKeys[storedJobRole] || storedJobRole;
-  let translatedJobRole = translations[lang][roleKey] || storedJobRole;
-  let storedLatitude = localStorage.getItem('latitude') || 'Not set';
-  let storedLongitude = localStorage.getItem('longitude') || 'Not set';
-  userInfo.innerHTML = `${translatedJobRole}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${storedLatitude}, ${storedLongitude}`;
-}
+        function updateButtonStyle(button) {
+          button.classList.remove('pulse');
+          button.style.backgroundColor = 'grey';
+          button.style.color = 'white';
+        }
 
+        // Check if the instructions button was previously clicked and update its style
+        if (localStorage.getItem("instructionsClicked") === "true") {
+          updateButtonStyle(instructionsButton);
+        }
 
-    function updateLanguageDisplays(lang) {
-      document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
-      document.getElementById('good-history').textContent = translations[lang].goodHistory;
-      document.getElementById('examine-well').textContent = translations[lang].examineWell;
-      document.getElementById('use-arclight').textContent = translations[lang].useArclight;
-      document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
-      document.querySelector('.chatbot-version').textContent = translations[lang].alanMistakes;
-      updateUserInfoDisplay(lang); // Also update the job role and country as per the selected language
-    }
+        // Dropdown for language selection
+        dropdown.addEventListener('change', function() {
+          const lang = this.value;
+          updateLanguageDisplays(lang);
+        });
 
-    function updateButtonStyle(button) {
-      button.classList.remove('pulse');
-      button.style.backgroundColor = 'grey';
-      button.style.color = 'white';
-    }
+        // Menu toggle
+        menuIcon.addEventListener('click', function() {
+          tray.style.left = (tray.style.left === '0px' ? '-370px' : '0px');
+          this.classList.toggle('active');
+        });
 
-    // Check if the instructions button was previously clicked and update its style
-    if (localStorage.getItem("instructionsClicked") === "true") {
-      updateButtonStyle(instructionsButton);
-    }
+        // Instructions button behaviour
+        instructionsButton.addEventListener("click", function(event) {
+          event.preventDefault();
+          localStorage.setItem("instructionsClicked", "true");
+          updateButtonStyle(this);
+          setTimeout(() => {
+            window.location.href = 'instructions.html';
+          }, 300);
+        });
 
-    // Dropdown for language selection
-    dropdown.addEventListener('change', function() {
-      const lang = this.value;
-      updateLanguageDisplays(lang);
-    });
-
-    // Menu toggle
-    menuIcon.addEventListener('click', function() {
-      tray.style.left = (tray.style.left === '0px' ? '-370px' : '0px');
-      this.classList.toggle('active');
-    });
-
-    // Instructions button behaviour
-    instructionsButton.addEventListener("click", function(event) {
-      event.preventDefault();
-      localStorage.setItem("instructionsClicked", "true");
-      updateButtonStyle(this);
-      setTimeout(() => {
-        window.location.href = 'instructions.html';
-      }, 300);
-    });
-
-    // Initial language setup, default to English or another default language
-    updateLanguageDisplays('en');
-  });
-  
-</script>
-  
-  
+        // Initial language setup, default to English or another default language
+        updateLanguageDisplays('en');
+      });
+    </script>
 
   </body>
 </html>
