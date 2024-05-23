@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM fully loaded and parsed");
+  
     const chatLinks = document.querySelectorAll('.chat-link');
+    console.log(`Found ${chatLinks.length} chat links`);
   
     chatLinks.forEach(link => {
       link.addEventListener('click', async (event) => {
@@ -22,7 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return await response.json();
+        const data = await response.json();
+        console.log(`Data fetched for ${chatId}: `, data);
+        return data;
       } catch (error) {
         console.error('Error fetching chat session:', error);
         return null;
@@ -31,13 +36,15 @@ document.addEventListener('DOMContentLoaded', () => {
   
     function loadChatSession(chatData) {
       const chatbot = document.querySelector('flowise-fullchatbot');
+      console.log("Loading chat session into chatbot component");
       if (chatbot && chatbot.init) {
         chatbot.init({
             chatflowid: "1300ed15-4043-4a8d-b19b-2bb5dd681cc6",
             apiHost: "https://flowiseai-railway-production-fecf.up.railway.app",
           initialMessages: chatData.map(data => data.data.content), // Extract the content from each message
-          sessionId: chatData[0].sessionId || 'unknown' // Adjust based on your data structure
+          sessionId: chatData[0]?.sessionId || 'unknown' // Adjust based on your data structure
         });
+        console.log("Chat session loaded");
       } else {
         console.error('Flowise chatbot component or init method not found');
       }

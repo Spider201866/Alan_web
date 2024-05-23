@@ -12,17 +12,16 @@ app.get('/api/getChatSession', async (req, res) => {
   console.log(`Fetching chat session for ID: ${chatId}`);
   try {
     const chatData = await redis.get(chatId); // Fetch chat data from Redis
-    console.log(`Fetched data from Redis: ${chatData}`);
+    console.log(`Fetched data from Redis: ${JSON.stringify(chatData)}`);
     if (chatData && chatData.length > 0) {
-      const parsedData = chatData.map(JSON.parse); // Parse each element if it's JSON formatted
-      res.json(parsedData);
+      res.json(chatData); // Directly send the retrieved data as JSON
     } else {
       console.log('No data found for the given chatId');
       res.json(null);
     }
   } catch (error) {
-    console.error('Error fetching chat session:', error);
-    res.status(500).json({ error: 'Failed to fetch chat session' });
+    console.error('Error fetching chat session:', error.message);
+    res.status(500).json({ error: 'Failed to fetch chat session', details: error.message });
   }
 });
 
