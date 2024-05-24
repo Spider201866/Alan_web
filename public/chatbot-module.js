@@ -1,4 +1,4 @@
-import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@geoff6/dist/web.js";
+import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@geoff7/dist/web.js";
 
 const initChatbot = () => {
   Chatbot.initFull({
