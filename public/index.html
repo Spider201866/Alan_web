@@ -127,10 +127,16 @@
             box-sizing: border-box;
         }
         .instruction-screen p {
-            font-size: 16px;
-            margin: 20px;
-            color: #333;
-        }
+    font-size: 16px;
+    margin: 10px 20px; /* Adjusted margin to reduce gap */
+    color: #333;
+}
+
+.instruction-screen p.good-luck {
+    margin-bottom: 20px; /* Add space after "Good luck!" */
+}
+
+        
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -143,40 +149,33 @@
         button:disabled {
             background-color: #ccc;
         }
-        select {
-            padding: 4px 20px;
-            font-size: 14px;
-            color: grey;
-            background-color: white;
-            border: 1px solid grey;
-            cursor: pointer;
-            appearance: none;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 25px;
-            border-radius: 15px;
-            overflow: auto;
-            max-height: 300px;
-            width: auto;
-            min-width: 230px;
-            line-height: 1.2;
-        }
-        .geo-button {
-            padding: 4px 20px;
-            font-size: 14px;
-            color: grey;
-            background-color: white;
-            border: 1px solid grey;
-            cursor: pointer;
-            border-radius: 15px;
-            overflow: auto;
-            min-width: 230px;
-            text-align: center;
-        }
-        .geo-button.clicked {
-            color: blue;
-        }
+        select, .geo-button, .name-input {
+    padding: 4px 20px;
+    font-size: 14px;
+    color: grey;
+    background-color: white;
+    border: 1px solid grey;
+    cursor: pointer;
+    border-radius: 15px;
+    width: 230px; /* Set a fixed width for all elements */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+    text-align: center;
+    margin-bottom: 20px;
+}
+select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 25px;
+    max-height: 300px;
+    line-height: 1.2;
+}
+.geo-button.clicked, .name-input.entered {
+    color: blue;
+}
+
+
     </style>
 </head>
 <body>
@@ -188,8 +187,11 @@
 
     <div class="instruction-screen hidden">
         <img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: -10px" />
-        <p>Alan is an AI assistant for students and those who only occasionally see eye or ear cases. Write or speak clearly and avoid identifying names or details. Knowing approximately where people are and their role, lets us tailor and improve the system.</p>
-        <p>Good luck!</p>
+        <p>Alan is an AI assistant for students and those who only occasionally see eye or ear cases. Write or speak clearly and avoid identifying names or details.</p>
+        <p class="good-luck">Good luck!</p>
+        
+
+        <input type="text" id="nameInput" class="name-input" placeholder="Name">
 
         <select id="job-role-select" class="job-role-dropdown">
             <option value="" disabled selected hidden>Role</option>
@@ -208,9 +210,7 @@
             <option value="Ear care practitioner">Ear care practitioner</option>
         </select>
 
-        <div style="margin-bottom: 20px"></div>
-
-        <button id="geolocationButton" class="geo-button">Accept Geolocation</button>
+        <button id="geolocationButton" class="geo-button">Geolocation On</button>
 
         <br /><br /><br />
         <button id="acceptButton" disabled>Accept</button>
@@ -224,6 +224,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const nameInput = document.getElementById("nameInput");
             const jobSelectElement = document.getElementById("job-role-select");
             const geolocationButton = document.getElementById("geolocationButton");
             const acceptButton = document.getElementById("acceptButton");
@@ -236,11 +237,15 @@
             skyImage.style.transform = 'scale(1)';
             skyImage.style.transition = 'transform 4s ease-in-out, filter 4s ease-in-out';
 
+            nameInput.addEventListener("input", function() {
+                nameInput.classList.toggle('entered', nameInput.value.trim() !== '');
+                checkSelections();
+            });
             jobSelectElement.addEventListener("change", checkSelections);
 
             function checkSelections() {
                 jobSelectElement.style.color = jobSelectElement.value ? 'blue' : 'grey';
-                acceptButton.disabled = !(jobSelectElement.value && locationAccepted);
+                acceptButton.disabled = !(nameInput.value.trim() && jobSelectElement.value && locationAccepted);
             }
 
             geolocationButton.addEventListener("click", function () {
@@ -283,6 +288,7 @@
             }
 
             acceptButton.addEventListener("click", function () {
+                localStorage.setItem("name", nameInput.value);
                 localStorage.setItem("selectedJobRole", jobSelectElement.value);
 
                 // Make the black screen visible

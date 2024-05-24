@@ -91,7 +91,22 @@
     margin-right: 10px;
     color: #464646; /* Changed icon color to black */
 }
-
+.name-icon {
+    width: 25px;
+    height: 25px;
+    background-color: rgb(109, 148, 109);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    position: fixed; /* Use fixed positioning */
+    top: 110px; /* Adjust to align vertically with the speech icon */
+    right: 23px; /* Adjust distance from the right edge */
+    z-index: 1000; /* Ensure it is above other elements */
+}
 
 
 
@@ -145,11 +160,11 @@
 
     <div class="menu-icon">&#9776;</div> <!-- 3 lines Menu Icon -->
     <div class="side-menu" style="display: flex; flex-wrap: wrap; align-items: center;">
-      <div style="display: flex; margin-bottom: 10px;">
-        <div>
-          <button id="instructions-button" class="button red pulse">Diagnose with Alan: How to use</button>
+        <div style="display: flex; margin-bottom: 10px;">
+            <div>
+                <button id="instructions-button" class="button red pulse">Diagnose with Alan: How to use</button>
+            </div>
         </div>
-      </div>
 
       <!-- Grouping Front of Eye, Fundal Reflex, and Back of Eye buttons for same line display -->
       <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for eye-related buttons -->
@@ -233,12 +248,20 @@
       }
 
       function openNav() {
-        document.getElementById("mySidebar").style.width = "250px";
-    }
+            document.getElementById("mySidebar").style.width = "250px";
+        }
 
-    function closeNav() {
-        document.getElementById("mySidebar").style.width = "0";
-    }
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+        }
+
+        function openMenu() {
+            document.querySelector('.side-menu').style.left = '0';
+        }
+
+        function closeMenu() {
+            document.querySelector('.side-menu').style.left = '-370px';
+        }
     </script>
     
     <script type="module"> import { initChatbot } from './chatbot-module.js'; initChatbot();</script>
@@ -327,6 +350,18 @@
         // Initial language setup, default to English or another default language
         updateLanguageDisplays('en');
       });
+          // Get the stored name, extract the first letter, and make it uppercase
+    var storedName = localStorage.getItem('name') || 'User';
+    var initialLetter = storedName.charAt(0).toUpperCase();
+
+    // Create the name icon
+    var nameIcon = document.createElement('div');
+    nameIcon.className = 'name-icon';
+    nameIcon.textContent = initialLetter;
+
+    // Position the name icon
+    var header = document.querySelector('.chatbot-header');
+    header.appendChild(nameIcon);
     </script>
 
   </body>
