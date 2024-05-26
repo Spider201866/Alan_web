@@ -81,7 +81,7 @@ html {
 
 .language-dropdown {
   appearance: none;
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0); /* Make the text color transparent */
   color: rgba(255, 255, 255, 0); /* Make the text color transparent */
   font-size: 12px;
   border: 1px solid #ffffff;
