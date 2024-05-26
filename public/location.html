@@ -54,8 +54,8 @@
         });
 
         function showPosition(position) {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
+            const latitude = position.coords.latitude.toFixed(6);
+            const longitude = position.coords.longitude.toFixed(6);
             document.getElementById('locationInfo').innerText = `Latitude: ${latitude}, Longitude: ${longitude}`;
         }
 

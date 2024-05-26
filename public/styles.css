@@ -480,6 +480,7 @@ p {
   top: 22px; /* Adjust to align vertically with the speech icon */
   right: 23px; /* Adjust distance from the right edge */
   z-index: 1000; /* Ensure it is above other elements */
+  user-select: none; /* Make text non-selectable */
 }
 
 .menu-icon {
@@ -542,3 +543,39 @@ p {
   border: 1px solid #ddd;
   margin: 5px 0;
 }
+
+
+.popup {
+  display: none; /* Hide by default */
+  position: fixed; /* Position fixed to the right side */
+  top: 80px;
+  right: -230px; /* Start off-screen to the right */
+  width: 230px; /* Set a fixed width for the slide-out menu */
+  height: 25%; /* Full height */
+  background-color: rgb(242, 242, 242);
+  padding: 40px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  border-radius: 18px 0 0 18px; /* Rounded corners on the left side */
+  text-align: left;
+  transition: right 0.3s ease; /* Smooth transition */
+}
+.popup h2 {
+  margin-top: 0;
+}
+.popup-content {
+  margin-bottom: 10px;
+}
+.popup-close {
+  cursor: pointer;
+  color: #696969;
+  font-size: 30px;
+  position: absolute;
+  top: 10px;
+  left: 15px; /* Position close button on the left */
+}
+.popup-close:hover {
+  color: black;
+}
+
+

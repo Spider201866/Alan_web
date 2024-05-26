@@ -115,8 +115,6 @@
         <img id="condition-image" alt="" style="max-width: 100%; height: 120px; display: block; margin: 0 auto; cursor: pointer;" onclick="toggleZoom(this)" />
         <p id="condition-description"></p>
 
-        <!-- Single line display for selected job role and location coordinates, centered -->
-        <p id="user-info" style="font-size: 13px; color: rgb(134, 134, 134); text-align: center; margin-top: 10px; margin-bottom: 0;"></p>
 
         <!-- Disclaimer about Alan potentially making mistakes -->
         <div class="chatbot-version">
@@ -124,6 +122,13 @@
         </div>
     </div>
 
+    <div id="popup" class="popup">
+      <span class="popup-close" onclick="closePopup()">&times;</span>
+      <h2>User Info</h2>
+      <div class="popup-content" id="popup-content"></div>
+  </div>
+  
+    
     <script>
         function toggleZoom(image) {
             // Check if the image is already zoomed
@@ -247,6 +252,71 @@
         // Position the name icon
         var header = document.querySelector('.chatbot-header');
         header.appendChild(nameIcon);
+
+
+        function openPopup() {
+    const popup = document.getElementById('popup');
+    const popupContent = document.getElementById('popup-content');
+    const name = localStorage.getItem('name') || 'Not set';
+    const role = localStorage.getItem('selectedJobRole') || 'Not set';
+    const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
+    const longitude = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
+
+    // Get current date and time in UK format
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const currentDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+
+    popupContent.innerHTML = `
+        <p>Name: ${name}</p>
+        <p>Role: ${role}</p>
+        <p>Lat & Long: ${latitude}, ${longitude}</p>
+        <p>Version: 1.0</p>
+        <p>Date & Time: ${currentDateTime}</p>
+    `;
+
+    // Slide in the popup from the right
+    popup.style.right = '0';
+    popup.style.display = 'block';
+}
+
+function closePopup() {
+    const popup = document.getElementById('popup');
+    // Slide out the popup to the right
+    popup.style.right = '-300px';
+    // Wait for the animation to complete before hiding the popup
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 300);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Event listener for the name icon
+    document.querySelector('.name-icon').addEventListener('click', function(event) {
+        const popup = document.getElementById('popup');
+        if (popup.style.display === 'block' && popup.style.right === '0px') {
+            closePopup();
+        } else {
+            openPopup();
+        }
+    });
+
+    // Event listener for the close button
+    document.querySelector('.popup-close').addEventListener('click', closePopup);
+});
+
+
+
+
+
+
+
+
     </script>
 </body>
 </html>
