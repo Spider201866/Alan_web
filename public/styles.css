@@ -71,7 +71,7 @@ html {
 
 
 .language-selector {
-  position: fixed; /* Change from absolute to fixed */
+  position: absolute;
   right: 23px;
   bottom: 20px; /* Position it 20px from the bottom */
   display: flex;
@@ -476,7 +476,7 @@ p {
   justify-content: center;
   font-size: 14px;
   font-weight: bold;
-  position: fixed; /* Use fixed positioning */
+  position: absolute;
   top: 22px; /* Adjust to align vertically with the speech icon */
   right: 23px; /* Adjust distance from the right edge */
   z-index: 1000; /* Ensure it is above other elements */
@@ -488,7 +488,7 @@ p {
   width: 25px; /* Width of the top line */
   height: 20px; /* Total height of the icon */
   cursor: pointer;
-  top: -46px; /* Adjust this value to move the icon upwards */
+  top: -45px; /* Adjust this value to move the icon upwards */
 }
 
 .menu-icon::before,
