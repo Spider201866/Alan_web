@@ -71,33 +71,32 @@ html {
 
 
 .language-selector {
-  position: absolute;
+  position: fixed; /* Change from absolute to fixed */
   right: 23px;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 20px; /* Position it 20px from the bottom */
   display: flex;
   align-items: center;
-  z-index: 1000;  /* Ensures it appears above most other content */
 }
+
 
 .language-dropdown {
   appearance: none;
-  background-color: black;
-  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0); /* Make the text color transparent */
   font-size: 12px;
-  border: 1px solid #000000;
+  border: 1px solid #ffffff;
   border-radius: 10px;
   padding: 10px 0px 7px 10px; /* Even smaller right padding */
   background-image: url('./lang.jpg');
   background-repeat: no-repeat;
   background-position: right -1px center; /* Adjust this if necessary */
   background-size: 25px 25px;
-  width: 93px;
+  width: 60px;
   text-align: left;
 }
 .language-dropdown:focus {
   outline: none;
-  border: 1px solid #000000;
+  border: 1px solid #ffffff;
 }
 
 .language-dropdown option {
@@ -163,23 +162,26 @@ html {
 
 
 .chatbot-title {
-  font-size: 35px;
+  font-size: 30px;
   font-weight: bold;
   color: #000;
   text-align: center;
-  padding-top: 15px;
+  padding-top: 8px;
   font-family: "Century Gothic", Arial, sans-serif;
+  z-index: 2000; /* Set a high z-index to ensure it appears above other elements */
 }
 
 .chatbot-subtitle {
-  font-size: 14px;
+  font-size: 12px;
+  margin-top: 0;
+  margin-top: 0;
   color: grey;
-  padding: 3px 20px 15px 20px; /* top, right, bottom, left */
+  padding: 0px 20px 10px 20px; /* top, right, bottom, left */
 }
 
 .chatbot-version {
   font-size: 13px;
-  color: rgb(92, 92, 92);
+  color: rgb(134, 134, 134);
   padding-top: 0;
   padding-bottom: 20px;
   text-align: center;
@@ -271,14 +273,14 @@ button {
 
 .side-menu {
   position: fixed;
-  left: -370px; /* Start off-screen */
+  left: -300px; /* Start off-screen */
   top: 10;
-  width: 370px;
+  width: 300px;
   height: 100%;
   background-color: #f4f4f4;
   box-shadow: 2px 0px 5px rgba(0,0,0,0.5);
   transition: left 0.5s ease;
-  padding-top: 70px; /* Give some space at the top */
+  padding-top: 60px; /* Give some space at the top */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -286,12 +288,12 @@ button {
 }
 
 .button, .button.green, .button.grey {
-  margin: 7px;
+  margin: 4px;
   border: none;
   border-radius: 12px;
-  padding: 11px 13px;
+  padding: 9px 11px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   color: white; /* Adjusted for visibility */
 }
 
@@ -383,3 +385,160 @@ p {
 }
 
 
+#boxesFrame {
+  width: 100%; 
+  height: 100px; /* Adjust based on the content's height */
+  border: 0;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.object-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.object-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* Sidebar styles */
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 2001; /* Ensures the sidebar is on top of all other elements */
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  color: white; /* Ensure the close button is visible */
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: white; /* Changed background color to white */
+  color: #464646; /* Changed text color to black */
+  padding: 10px 15px;
+  border: none;
+  position: fixed;
+  top: 90px; /* Moved further down */
+  left: -3px;
+  z-index: 1000; /* Higher than sidebar to ensure visibility */
+  display: flex;
+  align-items: center;
+}
+
+.openbtn:hover {
+  background-color: #f1f1f1;
+}
+
+.openbtn .icon {
+  font-size: 20px;
+  margin-right: 10px;
+  color: #464646; /* Changed icon color to black */
+}
+.name-icon {
+  width: 25px;
+  height: 25px;
+  background-color: rgb(140, 163, 140);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  position: fixed; /* Use fixed positioning */
+  top: 22px; /* Adjust to align vertically with the speech icon */
+  right: 23px; /* Adjust distance from the right edge */
+  z-index: 1000; /* Ensure it is above other elements */
+}
+
+.menu-icon {
+  position: relative;
+  display: inline-block;
+  width: 25px; /* Width of the top line */
+  height: 20px; /* Total height of the icon */
+  cursor: pointer;
+  top: -46px; /* Adjust this value to move the icon upwards */
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  height: 3px; /* Thickness of the lines */
+  background-color: rgb(255, 255, 255); /* Colour of the lines */
+  transition: background-color 0.3s; /* Smooth transition */
+}
+
+.menu-icon::before {
+  top: 0; /* Position of the top line */
+  width: 100%; /* Full width top line */
+}
+
+.menu-icon::after {
+  top: 16px; /* Position of the bottom line */
+  width: 60%; /* Width of the bottom line */
+}
+
+.menu-icon.open::before,
+.menu-icon.open::after {
+  background-color: rgb(0, 0, 0); /* Change lines to black when menu is open */
+}
+
+
+
+/* Chat links styling */
+.side-menu .chat-link {
+  display: block;
+  width: 50px; /* Ensure it fits within the padding */
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 12px;
+  margin: 5px 10px; /* Adjust top, bottom, left, and right margins */
+  text-align: center;
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.side-menu .chat-link:hover {
+  background-color: #ccc; /* Change background on hover */
+}
+
+/* Optional: Additional styling for the horizontal line */
+.side-menu hr {
+  width: 100%;
+  border: 1px solid #ddd;
+  margin: 5px 0;
+}
