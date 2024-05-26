@@ -71,7 +71,7 @@ html {
 
 
 .language-selector {
-  position: absolute;
+  position: fixed; /* Change from absolute to fixed */
   right: 23px;
   bottom: 20px; /* Position it 20px from the bottom */
   display: flex;
