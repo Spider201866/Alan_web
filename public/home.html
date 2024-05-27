@@ -190,6 +190,8 @@
                 let translatedJobRole = translations[lang][roleKey] || storedJobRole;
                 let storedLatitude = localStorage.getItem('latitude') || 'Not set';
                 let storedLongitude = localStorage.getItem('longitude') || 'Not set';
+                let storedCountry = localStorage.getItem('country') || 'Not set';
+
                 userInfo.innerHTML = `${translatedJobRole}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${storedLatitude}, ${storedLongitude}`;
             }
 
@@ -254,13 +256,20 @@
         header.appendChild(nameIcon);
 
 
-        function openPopup() {
+       function openPopup() {
     const popup = document.getElementById('popup');
     const popupContent = document.getElementById('popup-content');
     const name = localStorage.getItem('name') || 'Not set';
     const role = localStorage.getItem('selectedJobRole') || 'Not set';
     const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
     const longitude = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
+    const country = localStorage.getItem('country') || 'Not set'; // Ensure this matches how you stored the country
+
+    console.log('Name:', name);
+    console.log('Role:', role);
+    console.log('Latitude:', latitude);
+    console.log('Longitude:', longitude);
+    console.log('Country:', country); // Debugging line to check country value
 
     // Get current date and time in UK format
     const now = new Date();
@@ -276,6 +285,7 @@
         <p>Name: ${name}</p>
         <p>Role: ${role}</p>
         <p>Lat & Long: ${latitude}, ${longitude}</p>
+        <p>Country: ${country}</p> <!-- Add this line -->
         <p>Version: 1.0</p>
         <p>Date & Time: ${currentDateTime}</p>
     `;
@@ -284,6 +294,7 @@
     popup.style.right = '0';
     popup.style.display = 'block';
 }
+
 
 function closePopup() {
     const popup = document.getElementById('popup');

@@ -232,22 +232,22 @@ select {
             const blackScreen = document.getElementById("blackScreen");
             const skyImage = blackScreen.querySelector('img');
             let locationAccepted = false;
-
+    
             // Initial setup for the image transformation
             skyImage.style.transform = 'scale(1)';
             skyImage.style.transition = 'transform 4s ease-in-out, filter 4s ease-in-out';
-
+    
             nameInput.addEventListener("input", function() {
                 nameInput.classList.toggle('entered', nameInput.value.trim() !== '');
                 checkSelections();
             });
             jobSelectElement.addEventListener("change", checkSelections);
-
+    
             function checkSelections() {
                 jobSelectElement.style.color = jobSelectElement.value ? 'blue' : 'grey';
                 acceptButton.disabled = !(nameInput.value.trim() && jobSelectElement.value && locationAccepted);
             }
-
+    
             geolocationButton.addEventListener("click", function () {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -256,18 +256,18 @@ select {
                     locationInfo.style.display = 'block';
                 }
             });
-
+    
             function showPosition(position) {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
                 localStorage.setItem("latitude", latitude);
                 localStorage.setItem("longitude", longitude);
-
+                fetchCountryFromLatLong(latitude, longitude);
                 geolocationButton.classList.add('clicked');
                 locationAccepted = true;
                 checkSelections();
             }
-
+    
             function showError(error) {
                 switch (error.code) {
                     case error.PERMISSION_DENIED:
@@ -285,21 +285,41 @@ select {
                 }
                 locationInfo.style.display = 'block';
             }
-
+    
+            function fetchCountryFromLatLong(latitude, longitude) {
+                const OPEN_CAGE_API_KEY = 'b4217f147a5a4b179b336f5079b57207';
+                const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${OPEN_CAGE_API_KEY}`;
+    
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.results && data.results.length > 0) {
+                            const country = data.results[0].components.country;
+                            localStorage.setItem("country", country);
+                            console.log("Country:", country); // For debugging purposes
+                        } else {
+                            console.error('No results found');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching country:', error);
+                    });
+            }
+    
             acceptButton.addEventListener("click", function () {
                 localStorage.setItem("name", nameInput.value);
                 localStorage.setItem("selectedJobRole", jobSelectElement.value);
-
+    
                 // Make the black screen visible
                 blackScreen.style.visibility = 'visible';
                 blackScreen.style.opacity = 1;
-
+    
                 // Start the zoom and blur effect shortly after making the image visible
                 setTimeout(() => {
                     skyImage.style.transform = 'scale(1.3)';
                     skyImage.style.filter = 'blur(0px)';
                 }, 200);
-
+    
                 // Fade out after the set display time
                 setTimeout(() => {
                     blackScreen.style.opacity = 0;
@@ -308,7 +328,7 @@ select {
                     }, 250);
                 }, 6000);
             });
-
+    
             if (!sessionStorage.getItem("splashShown")) {
                 sessionStorage.setItem("splashShown", "true");
                 showSplashScreen();
@@ -316,18 +336,18 @@ select {
                 window.location.href = "home.html";
             }
         });
-
+    
         function showSplashScreen() {
             const logo1 = document.getElementById("logo1");
             const logo2 = document.getElementById("logo2");
             logo1.style.transform = "scale(0.8)";
             logo2.style.transform = "rotateX(-90deg)";
-
+    
             setTimeout(() => {
                 logo1.style.transform = "scale(1)";
                 logo2.style.transform = "rotateX(0deg)";
             }, 100);
-
+    
             setTimeout(() => {
                 const splashScreen = document.querySelector(".splash-screen");
                 const instructionScreen = document.querySelector(".instruction-screen");
@@ -338,5 +358,6 @@ select {
             }, 6000);
         }
     </script>
+    
 </body>
 </html>
