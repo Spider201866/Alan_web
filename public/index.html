@@ -287,24 +287,39 @@ select {
             }
     
             function fetchCountryFromLatLong(latitude, longitude) {
-                const OPEN_CAGE_API_KEY = 'b4217f147a5a4b179b336f5079b57207';
-                const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${OPEN_CAGE_API_KEY}`;
-    
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data && data.results && data.results.length > 0) {
-                            const country = data.results[0].components.country;
-                            localStorage.setItem("country", country);
-                            console.log("Country:", country); // For debugging purposes
-                        } else {
-                            console.error('No results found');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching country:', error);
-                    });
+    const OPEN_CAGE_API_KEY = 'b4217f147a5a4b179b336f5079b57207';
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${OPEN_CAGE_API_KEY}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.results && data.results.length > 0) {
+                const components = data.results[0].components;
+                const country = components.country;
+                let area = '';
+
+                if (components.city) {
+                    area = components.city;
+                } else if (components.town) {
+                    area = components.town;
+                } else {
+                    area = 'Unknown'; // Fallback if neither city nor town is found
+                }
+
+                localStorage.setItem("country", country);
+                localStorage.setItem("area", area);
+
+                console.log("Country:", country); // For debugging purposes
+                console.log("Area:", area); // For debugging purposes
+            } else {
+                console.error('No results found');
             }
+        })
+        .catch(error => {
+            console.error('Error fetching country and area:', error);
+        });
+}
+
     
             acceptButton.addEventListener("click", function () {
                 localStorage.setItem("name", nameInput.value);

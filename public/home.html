@@ -26,20 +26,7 @@
                 Eyes & Ears
             </div>
         </div>
-        <div class="language-selector">
-            <select class="language-dropdown">
-                <option value="en">English</option>
-                <option value="fr">Français</option>
-                <option value="es">Español</option>
-                <option value="pt">Português</option>
-                <option value="ar">العربية</option> <!-- Arabic -->
-                <option value="sw">Kiswahili</option> <!-- Swahili -->
-                <option value="cy">Cymraeg</option> <!-- Welsh -->
-                <option value="ny">Chichewa</option> <!-- For Malawi -->
-                <option value="rw">Kinwanda</option> <!-- For Rwanda -->
-                <option value="lg">Luganda</option> <!-- For Uganda -->
-            </select>
-        </div>
+
         <div class="flex-spacer"></div> <!-- Second spacer for symmetry; can be hidden if not needed -->
     </div>
 
@@ -59,14 +46,50 @@
 </div>
 
 
-        <!-- Grouping Videos, Atoms, Tools buttons for same line display -->
-        <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for informational buttons -->
-            <a href="https://www.youtube.com/@arclightproject" style="text-decoration: none;">
-                <button class="button grey" style="margin-right: 10px;">Videos</button>
-            </a>
-            <button class="button grey" style="margin-right: 10px;" onclick="window.location.href='atoms.html';">Atoms</button>
-            <button class="button grey">Tools</button>
-        </div>
+<!-- Grouping Videos, Atoms, Tools buttons for same line display -->
+<div style="display: flex; margin-bottom: 10px; align-items: center;"> <!-- Grouping container for informational buttons -->
+  <!-- Videos Button -->
+  <a href="https://www.youtube.com/@arclightproject" style="text-decoration: none;">
+      <button class="button grey" style="margin-right: 10px;">Videos</button>
+  </a>
+  
+  <!-- Atoms Button -->
+  <button class="button grey" style="margin-right: 10px;" onclick="window.location.href='atoms.html';">Atoms</button>
+  
+  <!-- Tools Button -->
+  <button class="button grey" style="margin-right: 10px;">Tools</button>
+  
+  <!-- Language Button with Dropdown -->
+  <div style="position: relative;">
+    <!-- Language Button -->
+    <button class="button grey" id="language-button" 
+            style="background: url('lang.jpg') no-repeat center center; 
+                   background-size: cover; 
+                   width: 32px; 
+                   height: 32px; 
+                   border: none;"></button>
+    
+    <!-- Language Dropdown (Initially Hidden) -->
+    <select id="language-dropdown" class="language-dropdown" 
+            style="display: none; position: absolute; top: 40px; left: 0;">
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="es">Español</option>
+        <option value="pt">Português</option>
+        <option value="ar">العربية</option> <!-- Arabic -->
+        <option value="sw">Kiswahili</option> <!-- Swahili -->
+        <option value="cy">Cymraeg</option> <!-- Welsh -->
+        <option value="ny">Chichewa</option> <!-- For Malawi -->
+        <option value="rw">Kinwanda</option> <!-- For Rwanda -->
+        <option value="lg">Luganda</option> <!-- For Uganda -->
+    </select>
+  </div>
+</div>
+
+
+
+
+        
 
 <!-- Grouping Arclight Project, Web Links, and cog buttons for same line display -->
 <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for project-related buttons -->
@@ -148,6 +171,13 @@
         document.querySelector('.menu-icon').addEventListener('click', function() {
             this.classList.toggle('open');
         });
+        document.getElementById('language-button').addEventListener('click', function() {
+        const dropdown = document.getElementById('language-dropdown');
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    });
+
+
+
     </script>
     
     <script type="module">
@@ -191,6 +221,7 @@
                 let storedLatitude = localStorage.getItem('latitude') || 'Not set';
                 let storedLongitude = localStorage.getItem('longitude') || 'Not set';
                 let storedCountry = localStorage.getItem('country') || 'Not set';
+                let storedArea = localStorage.getItem('area') || 'Not set';
 
                 userInfo.innerHTML = `${translatedJobRole}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${storedLatitude}, ${storedLongitude}`;
             }
@@ -264,12 +295,14 @@
     const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
     const longitude = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
     const country = localStorage.getItem('country') || 'Not set'; // Ensure this matches how you stored the country
+    const area = localStorage.getItem('area') || 'Not set';
 
     console.log('Name:', name);
     console.log('Role:', role);
     console.log('Latitude:', latitude);
     console.log('Longitude:', longitude);
     console.log('Country:', country); // Debugging line to check country value
+    console.log('Area:', area);
 
     // Get current date and time in UK format
     const now = new Date();
@@ -286,6 +319,7 @@
         <p>Role: ${role}</p>
         <p>Lat & Long: ${latitude}, ${longitude}</p>
         <p>Country: ${country}</p> <!-- Add this line -->
+        <p>Area: ${area}</p>
         <p>Version: 1.0</p>
         <p>Date & Time: ${currentDateTime}</p>
     `;
