@@ -262,8 +262,7 @@ select {
                 const longitude = position.coords.longitude;
                 localStorage.setItem("latitude", latitude);
                 localStorage.setItem("longitude", longitude);
-                locationInfo.innerText = `${latitude}, ${longitude}`;
-                locationInfo.style.display = 'block';
+
                 geolocationButton.classList.add('clicked');
                 locationAccepted = true;
                 checkSelections();
