@@ -1,34 +1,37 @@
 const express = require('express');
-const path = require('path');
-const redis = require('./public/redisClient.js'); // Adjust the path as needed
+const nodemailer = require('nodemailer');
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
 
-app.get('/api/getChatSession', async (req, res) => {
-  const chatId = req.query.chatId;
-  console.log(`Fetching chat session for ID: ${chatId}`);
-  try {
-    const chatData = await redis.get(chatId); // Fetch chat data from Redis
-    console.log(`Fetched data from Redis: ${JSON.stringify(chatData)}`);
-    if (chatData && chatData.length > 0) {
-      res.json(chatData); // Directly send the retrieved data as JSON
-    } else {
-      console.log('No data found for the given chatId');
-      res.json(null);
-    }
-  } catch (error) {
-    console.error('Error fetching chat session:', error.message);
-    res.status(500).json({ error: 'Failed to fetch chat session', details: error.message });
-  }
-});
+app.post('/send-email', (req, res) => {
+    const { name, role, latitude, longitude, country, area, version, dateTime } = req.body;
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    // Configure the transporter to use sendmail
+    const transporter = nodemailer.createTransport({
+        sendmail: true,
+        newline: 'unix',
+        path: '/usr/sbin/sendmail' // Path to the sendmail executable, typically this is correct
+    });
+
+    const mailOptions = {
+        from: 'no-reply@your-domain.com', // Replace with an appropriate sender email
+        to: 'wjw2@st-andrews.ac.uk', // The recipient's email
+        subject: 'User Info',
+        text: `User Info\n\nName: ${name}\nRole: ${role}\nLat & Long: ${latitude}, ${longitude}\nCountry: ${country}\nArea: ${area}\nVersion: ${version}\nDate & Time: ${dateTime}`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return res.status(500).send(error.toString());
+        }
+        res.send('Email sent: ' + info.response);
+    });
 });
 
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}/`);
+    console.log(`Server running at http://localhost:${port}/`);
 });
