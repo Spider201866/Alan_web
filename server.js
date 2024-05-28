@@ -1,34 +1,32 @@
 const express = require('express');
-const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-app.post('/send-email', (req, res) => {
+app.post('/record-info', (req, res) => {
     const { name, role, latitude, longitude, country, area, version, dateTime } = req.body;
+    const userInfo = { name, role, latitude, longitude, country, area, version, dateTime };
 
-    // Configure the transporter to use sendmail
-    const transporter = nodemailer.createTransport({
-        sendmail: true,
-        newline: 'unix',
-        path: '/usr/sbin/sendmail' // Path to the sendmail executable, typically this is correct
-    });
+    const filePath = path.join(__dirname, 'user-info.json');
 
-    const mailOptions = {
-        from: 'no-reply@your-domain.com', // Replace with an appropriate sender email
-        to: 'wjw2@st-andrews.ac.uk', // The recipient's email
-        subject: 'User Info',
-        text: `User Info\n\nName: ${name}\nRole: ${role}\nLat & Long: ${latitude}, ${longitude}\nCountry: ${country}\nArea: ${area}\nVersion: ${version}\nDate & Time: ${dateTime}`
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return res.status(500).send(error.toString());
+    fs.readFile(filePath, (err, data) => {
+        let json = [];
+        if (!err) {
+            json = JSON.parse(data);
         }
-        res.send('Email sent: ' + info.response);
+        json.push(userInfo);
+
+        fs.writeFile(filePath, JSON.stringify(json, null, 2), (err) => {
+            if (err) {
+                return res.status(500).send('Error recording user info');
+            }
+            res.send('User info recorded');
+        });
     });
 });
 
