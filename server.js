@@ -8,6 +8,11 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
+// Add a simple GET route to test the server
+app.get('/', (req, res) => {
+    res.send('Server is running');
+});
+
 app.post('/record-info', (req, res) => {
     const { name, role, latitude, longitude, country, area, version, dateTime } = req.body;
     const userInfo = { name, role, latitude, longitude, country, area, version, dateTime };
