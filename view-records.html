@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Records</title>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 50px;">
+        <h1>Enter Password to View Records</h1>
+        <input type="password" id="password" placeholder="Password" style="padding: 10px; font-size: 16px;">
+        <button id="submitPassword" style="padding: 10px 20px; font-size: 16px;">Submit</button>
+        <div id="records" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        document.getElementById('submitPassword').addEventListener('click', function() {
+            const password = document.getElementById('password').value;
+            fetch('/view-records', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ password })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Invalid password');
+                }
+            })
+            .then(data => {
+                const recordsDiv = document.getElementById('records');
+                recordsDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            })
+            .catch(error => {
+                alert(error.message);
+            });
+        });
+    </script>
+</body>
+</html>

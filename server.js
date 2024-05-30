@@ -6,6 +6,8 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
+const PASSWORD = process.env.AUTH_PASSWORD || 'your-password'; // Set your desired password here
+
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
@@ -39,7 +41,13 @@ app.post('/record-info', (req, res) => {
     // No response sent back
 });
 
-app.get('/view-records', (req, res) => {
+app.post('/view-records', (req, res) => {
+    const { password } = req.body;
+
+    if (password !== PASSWORD) {
+        return res.status(401).send('Invalid password');
+    }
+
     const filePath = path.join(__dirname, 'user-info.json');
 
     fs.readFile(filePath, (err, data) => {
@@ -48,16 +56,7 @@ app.get('/view-records', (req, res) => {
         }
 
         res.setHeader('Content-Type', 'application/json');
-        res.send(data);
-    });
-});
-
-app.get('/download-records', (req, res) => {
-    const filePath = path.join(__dirname, 'user-info.json');
-    res.download(filePath, 'user-info.json', (err) => {
-        if (err) {
-            res.status(500).send('Error downloading the file');
-        }
+        res.send(JSON.parse(data));
     });
 });
 
