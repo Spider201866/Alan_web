@@ -18,6 +18,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+app.get('/view-records', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'view-records.html'));
+});
+
 app.post('/record-info', (req, res) => {
     const { name, role, latitude, longitude, country, area, version, dateTime } = req.body;
     const userInfo = { name, role, latitude, longitude, country, area, version, dateTime };
@@ -41,7 +45,7 @@ app.post('/record-info', (req, res) => {
     // No response sent back
 });
 
-app.post('/view-records', (req, res) => {
+app.post('/fetch-records', (req, res) => {
     const { password } = req.body;
 
     if (password !== PASSWORD) {

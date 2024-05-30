@@ -16,7 +16,7 @@
     <script>
         document.getElementById('submitPassword').addEventListener('click', function() {
             const password = document.getElementById('password').value;
-            fetch('/view-records', {
+            fetch('/fetch-records', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
