@@ -42,12 +42,11 @@ app.post('/record-info', (req, res) => {
 
         fs.writeFile(filePath, JSON.stringify(json, null, 2), (err) => {
             if (err) {
-                return res.status(500).send('Error recording user info');
+                return res.status(500).end();
             }
+            res.end(); // End the response without sending any message
         });
     });
-
-    res.sendStatus(200); // Send a response to indicate success
 });
 
 // Endpoint to fetch records with password protection
