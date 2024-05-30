@@ -12,7 +12,6 @@ app.use(bodyParser.json());
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Route to serve the index.html file
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -34,8 +33,31 @@ app.post('/record-info', (req, res) => {
             if (err) {
                 return res.status(500).send('Error recording user info');
             }
-            res.send('User info recorded');
         });
+    });
+
+    // No response sent back
+});
+
+app.get('/view-records', (req, res) => {
+    const filePath = path.join(__dirname, 'user-info.json');
+
+    fs.readFile(filePath, (err, data) => {
+        if (err) {
+            return res.status(500).send('Error reading user info');
+        }
+
+        res.setHeader('Content-Type', 'application/json');
+        res.send(data);
+    });
+});
+
+app.get('/download-records', (req, res) => {
+    const filePath = path.join(__dirname, 'user-info.json');
+    res.download(filePath, 'user-info.json', (err) => {
+        if (err) {
+            res.status(500).send('Error downloading the file');
+        }
     });
 });
 
