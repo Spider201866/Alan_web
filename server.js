@@ -14,14 +14,17 @@ app.use(bodyParser.json());
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Route to serve the main page
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Route to serve the view-records page
 app.get('/view-records', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'view-records.html'));
 });
 
+// Endpoint to record user information
 app.post('/record-info', (req, res) => {
     const { name, role, latitude, longitude, country, area, version, dateTime } = req.body;
     const userInfo = { name, role, latitude, longitude, country, area, version, dateTime };
@@ -42,9 +45,10 @@ app.post('/record-info', (req, res) => {
         });
     });
 
-    // No response sent back
+    res.sendStatus(200); // Send a response to indicate success
 });
 
+// Endpoint to fetch records with password protection
 app.post('/fetch-records', (req, res) => {
     const { password } = req.body;
 
@@ -64,6 +68,7 @@ app.post('/fetch-records', (req, res) => {
     });
 });
 
+// Start the server
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 });
