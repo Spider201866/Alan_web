@@ -8,6 +8,8 @@ const port = process.env.PORT || 3000;
 
 const PASSWORD = process.env.AUTH_PASSWORD || 'your-password'; // Set your desired password here
 
+console.log("Configured password:", PASSWORD); // Log the configured password for debugging
+
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
@@ -51,6 +53,8 @@ app.post('/record-info', (req, res) => {
 // Endpoint to fetch records with password protection
 app.post('/fetch-records', (req, res) => {
     const { password } = req.body;
+
+    console.log("Received password:", password); // Log the received password for debugging
 
     if (password !== PASSWORD) {
         return res.status(401).send('Invalid password');
