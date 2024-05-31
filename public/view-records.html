@@ -18,6 +18,12 @@
         th {
             background-color: #f2f2f2;
         }
+        .refresh-icon {
+            cursor: pointer;
+            font-size: 20px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -25,12 +31,17 @@
         <h1>Enter Password to View Alan Onboarding Records</h1>
         <input type="password" id="password" placeholder="Password" style="padding: 10px; font-size: 16px;">
         <button id="submitPassword" style="padding: 10px 20px; font-size: 16px;">Submit</button>
+        <span id="refresh" class="refresh-icon" style="display: none;">&#x21bb;</span>
         <div id="records" style="margin-top: 20px;"></div>
     </div>
 
     <script>
-        document.getElementById('submitPassword').addEventListener('click', function() {
-            const password = document.getElementById('password').value;
+        const passwordInput = document.getElementById('password');
+        const submitButton = document.getElementById('submitPassword');
+        const refreshIcon = document.getElementById('refresh');
+        let currentPassword = '';
+
+        function fetchRecords(password) {
             fetch('/fetch-records', {
                 method: 'POST',
                 headers: {
@@ -78,11 +89,30 @@
                     });
                     table += `</tbody></table>`;
                     recordsDiv.innerHTML = table;
+                    refreshIcon.style.display = 'inline';
                 }
             })
             .catch(error => {
                 alert(error.message);
             });
+        }
+
+        submitButton.addEventListener('click', function() {
+            currentPassword = passwordInput.value;
+            fetchRecords(currentPassword);
+        });
+
+        passwordInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                currentPassword = passwordInput.value;
+                fetchRecords(currentPassword);
+            }
+        });
+
+        refreshIcon.addEventListener('click', function() {
+            if (currentPassword) {
+                fetchRecords(currentPassword);
+            }
         });
     </script>
 </body>
