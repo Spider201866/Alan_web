@@ -44,7 +44,7 @@ app.post('/record-info', (req, res) => {
             if (err) {
                 return res.status(500).end();
             }
-            res.end(); // End the response without sending any message
+            res.status(200).end();
         });
     });
 });
