@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Records</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
     <div style="text-align: center; margin-top: 50px;">
@@ -32,7 +47,38 @@
             })
             .then(data => {
                 const recordsDiv = document.getElementById('records');
-                recordsDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                if (data.length === 0) {
+                    recordsDiv.innerHTML = '<p>No records found.</p>';
+                } else {
+                    let table = `<table>
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Role</th>
+                                            <th>Latitude</th>
+                                            <th>Longitude</th>
+                                            <th>Country</th>
+                                            <th>Area</th>
+                                            <th>Version</th>
+                                            <th>Date & Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>`;
+                    data.forEach(record => {
+                        table += `<tr>
+                                    <td>${record.name}</td>
+                                    <td>${record.role}</td>
+                                    <td>${record.latitude}</td>
+                                    <td>${record.longitude}</td>
+                                    <td>${record.country}</td>
+                                    <td>${record.area}</td>
+                                    <td>${record.version}</td>
+                                    <td>${record.dateTime}</td>
+                                  </tr>`;
+                    });
+                    table += `</tbody></table>`;
+                    recordsDiv.innerHTML = table;
+                }
             })
             .catch(error => {
                 alert(error.message);
