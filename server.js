@@ -1,12 +1,32 @@
+
+// https://alan.up.railway.app/view-records
+
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
+const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
-
 const PASSWORD = process.env.AUTH_PASSWORD || 'your-password'; // Set your desired password here
+
+// Initialize SQLite database
+const db = new sqlite3.Database('./user-info.db');
+
+// Create table if it doesn't exist
+db.serialize(() => {
+    db.run(`CREATE TABLE IF NOT EXISTS user_info (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        role TEXT,
+        latitude REAL,
+        longitude REAL,
+        country TEXT,
+        area TEXT,
+        version TEXT,
+        dateTime TEXT
+    )`);
+});
 
 console.log("Configured password:", PASSWORD); // Log the configured password for debugging
 
@@ -29,23 +49,15 @@ app.get('/view-records', (req, res) => {
 // Endpoint to record user information
 app.post('/record-info', (req, res) => {
     const { name, role, latitude, longitude, country, area, version, dateTime } = req.body;
-    const userInfo = { name, role, latitude, longitude, country, area, version, dateTime };
 
-    const filePath = path.join(__dirname, 'user-info.json');
-
-    fs.readFile(filePath, (err, data) => {
-        let json = [];
-        if (!err) {
-            json = JSON.parse(data);
-        }
-        json.push(userInfo);
-
-        fs.writeFile(filePath, JSON.stringify(json, null, 2), (err) => {
+    db.run(`INSERT INTO user_info (name, role, latitude, longitude, country, area, version, dateTime) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [name, role, latitude, longitude, country, area, version, dateTime],
+        function (err) {
             if (err) {
                 return res.status(500).end();
             }
         });
-    });
 });
 
 // Endpoint to fetch records with password protection
@@ -58,15 +70,13 @@ app.post('/fetch-records', (req, res) => {
         return res.status(401).send('Invalid password');
     }
 
-    const filePath = path.join(__dirname, 'user-info.json');
-
-    fs.readFile(filePath, (err, data) => {
+    db.all("SELECT * FROM user_info", [], (err, rows) => {
         if (err) {
             return res.status(500).send('Error reading user info');
         }
 
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.parse(data));
+        res.send(rows);
     });
 });
 
