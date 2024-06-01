@@ -24,6 +24,13 @@
             font-size: 30px;
             margin-left: 10px;
             vertical-align: middle;
+            transition: transform 0.3s ease;
+        }
+        .refresh-icon:hover {
+            transform: rotate(20deg);
+        }
+        .refresh-icon:active {
+            transform: rotate(360deg);
         }
         .rounded-box {
             border-radius: 12px;
@@ -37,16 +44,6 @@
             font-size: 16px;
             cursor: pointer;
             border: none;
-        }
-        .refresh-icon {
-            border-radius: 12px;
-            border: 1px solid #ccc;
-            padding: 5px;
-        }
-        .map-container {
-            display: none;
-            margin-top: 20px;
-            height: 400px;
         }
     </style>
 </head>
@@ -121,18 +118,22 @@
                                         <td>${record.area}</td>
                                         <td>${record.version}</td>
                                         <td>${record.dateTime}</td>
-                                        <td><button class="rounded-button" onclick="showMap(${index}, ${record.latitude}, ${record.longitude})">Show Map</button></td>
-                                      </tr>
-                                      <tr>
-                                        <td colspan="10">
-                                          <div id="map-${index}" class="map-container"></div>
-                                        </td>
+                                        <td><button class="show-map-button" data-lat="${record.latitude}" data-lng="${record.longitude}">Show Map</button></td>
                                       </tr>`;
                         });
                         table += `</tbody></table>`;
                         recordsDiv.innerHTML = table;
                         refreshContainer.style.display = 'inline';
                         passwordContainer.style.display = 'none'; // Hide password input and submit button
+
+                        // Add event listeners for the Show Map buttons
+                        document.querySelectorAll('.show-map-button').forEach(button => {
+                            button.addEventListener('click', function() {
+                                const lat = this.getAttribute('data-lat');
+                                const lng = this.getAttribute('data-lng');
+                                showMap(lat, lng);
+                            });
+                        });
                     }
                 })
                 .catch(error => {
@@ -140,25 +141,43 @@
                 });
             }
 
-            function showMap(index, latitude, longitude) {
-                let mapContainerId = `map-${index}`;
-                let mapContainer = document.getElementById(mapContainerId);
-                
-                if (mapContainer.style.display === 'block') {
-                    mapContainer.style.display = 'none';
-                    return;
-                }
+            function showMap(lat, lng) {
+                // Create a modal to display the map
+                const modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                modal.style.zIndex = '1000';
+                modal.style.display = 'flex';
+                modal.style.justifyContent = 'center';
+                modal.style.alignItems = 'center';
 
-                mapContainer.style.display = 'block';
+                const mapDiv = document.createElement('div');
+                mapDiv.style.width = '80%';
+                mapDiv.style.height = '80%';
+                modal.appendChild(mapDiv);
 
-                let map = L.map(mapContainerId).setView([latitude, longitude], 13);
+                document.body.appendChild(modal);
+
+                const map = L.map(mapDiv).setView([lat, lng], 13);
 
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(map);
 
-                L.marker([latitude, longitude]).addTo(map)
-                    .bindPopup(`<b>Location</b><br>Lat: ${latitude}, Long: ${longitude}`).openPopup();
+                L.marker([lat, lng]).addTo(map)
+                    .bindPopup(`Latitude: ${lat}<br>Longitude: ${lng}`)
+                    .openPopup();
+
+                // Close the modal when clicked outside the map
+                modal.addEventListener('click', function(event) {
+                    if (event.target === modal) {
+                        document.body.removeChild(modal);
+                    }
+                });
             }
 
             submitButton.addEventListener('click', function() {
