@@ -162,6 +162,7 @@
         function showMap(latitude, longitude) {
             const mapContainer = document.getElementById('map');
             mapContainer.style.display = 'block';
+            mapContainer.innerHTML = ''; // Clear the previous map
             const map = L.map('map').setView([latitude, longitude], 13);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
