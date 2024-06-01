@@ -122,6 +122,11 @@
                                         <td>${record.version}</td>
                                         <td>${record.dateTime}</td>
                                         <td><button class="rounded-button" onclick="showMap(${index}, ${record.latitude}, ${record.longitude})">Show Map</button></td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="10">
+                                          <div id="map-${index}" class="map-container"></div>
+                                        </td>
                                       </tr>`;
                         });
                         table += `</tbody></table>`;
@@ -139,11 +144,9 @@
                 let mapContainerId = `map-${index}`;
                 let mapContainer = document.getElementById(mapContainerId);
                 
-                if (!mapContainer) {
-                    mapContainer = document.createElement('div');
-                    mapContainer.id = mapContainerId;
-                    mapContainer.className = 'map-container';
-                    document.getElementById('records').appendChild(mapContainer);
+                if (mapContainer.style.display === 'block') {
+                    mapContainer.style.display = 'none';
+                    return;
                 }
 
                 mapContainer.style.display = 'block';
