@@ -24,14 +24,32 @@
             margin-left: 10px;
             vertical-align: middle;
         }
+        .rounded-box {
+            border-radius: 12px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+        }
+        .rounded-button {
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+        }
+        .refresh-icon {
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
     </style>
 </head>
 <body>
     <div style="text-align: center; margin-top: 50px;">
-        <h1>Enter Password to View Alan Onboarding Records</h1>
+        <h1>ALAN Server Onboarding Records</h1>
         <div id="password-container">
-            <input type="password" id="password" placeholder="Password" style="padding: 10px; font-size: 16px;">
-            <button id="submitPassword" style="padding: 10px 20px; font-size: 16px;">Submit</button>
+            <input type="password" id="password" class="rounded-box" placeholder="Password">
+            <button id="submitPassword" class="rounded-button">Submit</button>
         </div>
         <div id="refresh-container" style="display: none;">
             <span id="refresh" class="refresh-icon">&#x21bb;</span>
@@ -49,7 +67,6 @@
             let currentPassword = '';
 
             function fetchRecords(password) {
-                console.log('Fetching records with password:', password); // Debugging line
                 fetch('/fetch-records', {
                     method: 'POST',
                     headers: {
@@ -59,7 +76,6 @@
                     body: JSON.stringify({ password })
                 })
                 .then(response => {
-                    console.log('Response status:', response.status); // Debugging line
                     if (response.ok) {
                         return response.json();
                     } else {
@@ -67,7 +83,6 @@
                     }
                 })
                 .then(data => {
-                    console.log('Data received:', data); // Debugging line
                     const recordsDiv = document.getElementById('records');
                     if (data.length === 0) {
                         recordsDiv.innerHTML = '<p>No records found.</p>';
@@ -75,6 +90,7 @@
                         let table = `<table>
                                         <thead>
                                             <tr>
+                                                <th>#</th>
                                                 <th>Name</th>
                                                 <th>Role</th>
                                                 <th>Latitude</th>
@@ -86,8 +102,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>`;
-                        data.forEach(record => {
+                        data.forEach((record, index) => {
                             table += `<tr>
+                                        <td>${index + 1}</td>
                                         <td>${record.name}</td>
                                         <td>${record.role}</td>
                                         <td>${record.latitude}</td>
@@ -105,7 +122,6 @@
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error); // Debugging line
                     alert(error.message);
                 });
             }
