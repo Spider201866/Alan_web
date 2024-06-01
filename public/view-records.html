@@ -24,13 +24,13 @@
             font-size: 30px;
             margin-left: 10px;
             vertical-align: middle;
-            transition: transform 0.3s ease; /* Added transition for animation */
+            transition: transform 0.3s ease;
         }
         .refresh-icon:hover {
-            transform: rotate(20deg); /* Rotate on hover */
+            transform: rotate(90deg); /* More noticeable rotation on hover */
         }
         .refresh-icon:active {
-            transform: rotate(360deg); /* Rotate on click */
+            transform: rotate(360deg); /* Complete spin on click */
         }
         .rounded-box {
             border-radius: 12px;
@@ -126,22 +126,13 @@
                                         <td>${record.area}</td>
                                         <td>${record.version}</td>
                                         <td>${record.dateTime}</td>
-                                        <td><button class="map-button" data-lat="${record.latitude}" data-lng="${record.longitude}">Show Map</button></td>
+                                        <td><button onclick="showMap(${record.latitude}, ${record.longitude})">Show Map</button></td>
                                       </tr>`;
                         });
                         table += `</tbody></table>`;
                         recordsDiv.innerHTML = table;
                         refreshContainer.style.display = 'inline';
                         passwordContainer.style.display = 'none'; // Hide password input and submit button
-
-                        // Attach event listeners to all "Show Map" buttons
-                        document.querySelectorAll('.map-button').forEach(button => {
-                            button.addEventListener('click', function() {
-                                const lat = this.getAttribute('data-lat');
-                                const lng = this.getAttribute('data-lng');
-                                showMap(lat, lng);
-                            });
-                        });
                     }
                 })
                 .catch(error => {
