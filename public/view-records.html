@@ -27,10 +27,10 @@
             transition: transform 0.3s ease;
         }
         .refresh-icon:hover {
-            transform: rotate(90deg); /* More noticeable rotation on hover */
+            transform: rotate(20deg);
         }
         .refresh-icon:active {
-            transform: rotate(360deg); /* Complete spin on click */
+            transform: rotate(360deg);
         }
         .rounded-box {
             border-radius: 12px;
@@ -153,9 +153,18 @@
             });
 
             refreshIcon.addEventListener('click', function() {
+                console.log("Refresh icon clicked.");
                 if (currentPassword) {
                     fetchRecords(currentPassword);
                 }
+            });
+
+            refreshIcon.addEventListener('mouseover', function() {
+                console.log("Mouse over refresh icon.");
+            });
+
+            refreshIcon.addEventListener('mouseout', function() {
+                console.log("Mouse out of refresh icon.");
             });
         });
 
