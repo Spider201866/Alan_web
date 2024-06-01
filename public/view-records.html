@@ -20,7 +20,7 @@
         }
         .refresh-icon {
             cursor: pointer;
-            font-size: 20px;
+            font-size: 30px;
             margin-left: 10px;
             vertical-align: middle;
         }
@@ -29,9 +29,13 @@
 <body>
     <div style="text-align: center; margin-top: 50px;">
         <h1>Enter Password to View Alan Onboarding Records</h1>
-        <input type="password" id="password" placeholder="Password" style="padding: 10px; font-size: 16px;">
-        <button id="submitPassword" style="padding: 10px 20px; font-size: 16px;">Submit</button>
-        <span id="refresh" class="refresh-icon" style="display: none;">&#x21bb;</span>
+        <div id="password-container">
+            <input type="password" id="password" placeholder="Password" style="padding: 10px; font-size: 16px;">
+            <button id="submitPassword" style="padding: 10px 20px; font-size: 16px;">Submit</button>
+        </div>
+        <div id="refresh-container" style="display: none;">
+            <span id="refresh" class="refresh-icon">&#x21bb;</span>
+        </div>
         <div id="records" style="margin-top: 20px;"></div>
     </div>
 
@@ -40,6 +44,8 @@
             const passwordInput = document.getElementById('password');
             const submitButton = document.getElementById('submitPassword');
             const refreshIcon = document.getElementById('refresh');
+            const passwordContainer = document.getElementById('password-container');
+            const refreshContainer = document.getElementById('refresh-container');
             let currentPassword = '';
 
             function fetchRecords(password) {
@@ -94,7 +100,8 @@
                         });
                         table += `</tbody></table>`;
                         recordsDiv.innerHTML = table;
-                        refreshIcon.style.display = 'inline';
+                        refreshContainer.style.display = 'inline';
+                        passwordContainer.style.display = 'none'; // Hide password input and submit button
                     }
                 })
                 .catch(error => {
