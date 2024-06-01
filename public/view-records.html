@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Records</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         table {
             width: 100%;
@@ -42,6 +43,11 @@
             border: 1px solid #ccc;
             padding: 5px;
         }
+        #map {
+            height: 400px;
+            margin-top: 20px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -55,8 +61,10 @@
             <span id="refresh" class="refresh-icon">&#x21bb;</span>
         </div>
         <div id="records" style="margin-top: 20px;"></div>
+        <div id="map"></div>
     </div>
 
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const passwordInput = document.getElementById('password');
@@ -64,6 +72,8 @@
             const refreshIcon = document.getElementById('refresh');
             const passwordContainer = document.getElementById('password-container');
             const refreshContainer = document.getElementById('refresh-container');
+            const mapDiv = document.getElementById('map');
+            let map, markers = [];
             let currentPassword = '';
 
             function fetchRecords(password) {
@@ -90,7 +100,7 @@
                         let table = `<table>
                                         <thead>
                                             <tr>
-                                                <th>#</th>
+                                                <th>No.</th>
                                                 <th>Name</th>
                                                 <th>Role</th>
                                                 <th>Latitude</th>
@@ -119,11 +129,41 @@
                         recordsDiv.innerHTML = table;
                         refreshContainer.style.display = 'inline';
                         passwordContainer.style.display = 'none'; // Hide password input and submit button
+
+                        // Update the map with markers
+                        updateMap(data);
                     }
                 })
                 .catch(error => {
                     alert(error.message);
                 });
+            }
+
+            function updateMap(records) {
+                if (!map) {
+                    map = L.map('map').setView([0, 0], 2); // Set initial view
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(map);
+                }
+
+                // Clear existing markers
+                markers.forEach(marker => map.removeLayer(marker));
+                markers = [];
+
+                // Add new markers
+                records.forEach(record => {
+                    if (record.latitude && record.longitude) {
+                        const marker = L.marker([record.latitude, record.longitude]).addTo(map)
+                            .bindPopup(`<b>${record.name}</b><br>${record.role}<br>${record.area}, ${record.country}`);
+                        markers.push(marker);
+                    }
+                });
+
+                // Adjust the map to fit all markers
+                const group = new L.featureGroup(markers);
+                map.fitBounds(group.getBounds());
+                mapDiv.style.display = 'block'; // Show the map
             }
 
             submitButton.addEventListener('click', function() {
