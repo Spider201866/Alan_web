@@ -47,6 +47,7 @@ app.post('/record-info', (req, res) => {
             if (err) {
                 return res.status(500).end();
             }
+            res.status(200).end(); // End the response without sending any message
         });
     });
 });
@@ -65,11 +66,16 @@ app.post('/fetch-records', (req, res) => {
 
     fs.readFile(filePath, (err, data) => {
         if (err) {
-            return res.status(500).send('Error reading user info');
+            if (err.code === 'ENOENT') {
+                // If the file doesn't exist, return an empty array
+                return res.json([]);
+            } else {
+                return res.status(500).send('Error reading user info');
+            }
         }
 
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.parse(data));
+        const records = JSON.parse(data);
+        res.json(records);
     });
 });
 

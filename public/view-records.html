@@ -18,6 +18,12 @@
         th {
             background-color: #f2f2f2;
         }
+        .refresh-icon {
+            cursor: pointer;
+            font-size: 20px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -25,63 +31,94 @@
         <h1>Enter Password to View Alan Onboarding Records</h1>
         <input type="password" id="password" placeholder="Password" style="padding: 10px; font-size: 16px;">
         <button id="submitPassword" style="padding: 10px 20px; font-size: 16px;">Submit</button>
+        <span id="refresh" class="refresh-icon" style="display: none;">&#x21bb;</span>
         <div id="records" style="margin-top: 20px;"></div>
     </div>
 
     <script>
-        document.getElementById('submitPassword').addEventListener('click', function() {
-            const password = document.getElementById('password').value;
-            fetch('/fetch-records', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ password })
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Invalid password');
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const submitButton = document.getElementById('submitPassword');
+            const refreshIcon = document.getElementById('refresh');
+            let currentPassword = '';
+
+            function fetchRecords(password) {
+                console.log('Fetching records with password:', password); // Debugging line
+                fetch('/fetch-records', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache' // Disable cache
+                    },
+                    body: JSON.stringify({ password })
+                })
+                .then(response => {
+                    console.log('Response status:', response.status); // Debugging line
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Invalid password');
+                    }
+                })
+                .then(data => {
+                    console.log('Data received:', data); // Debugging line
+                    const recordsDiv = document.getElementById('records');
+                    if (data.length === 0) {
+                        recordsDiv.innerHTML = '<p>No records found.</p>';
+                    } else {
+                        let table = `<table>
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Role</th>
+                                                <th>Latitude</th>
+                                                <th>Longitude</th>
+                                                <th>Country</th>
+                                                <th>Area</th>
+                                                <th>Version</th>
+                                                <th>Date & Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>`;
+                        data.forEach(record => {
+                            table += `<tr>
+                                        <td>${record.name}</td>
+                                        <td>${record.role}</td>
+                                        <td>${record.latitude}</td>
+                                        <td>${record.longitude}</td>
+                                        <td>${record.country}</td>
+                                        <td>${record.area}</td>
+                                        <td>${record.version}</td>
+                                        <td>${record.dateTime}</td>
+                                      </tr>`;
+                        });
+                        table += `</tbody></table>`;
+                        recordsDiv.innerHTML = table;
+                        refreshIcon.style.display = 'inline';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error); // Debugging line
+                    alert(error.message);
+                });
+            }
+
+            submitButton.addEventListener('click', function() {
+                currentPassword = passwordInput.value;
+                fetchRecords(currentPassword);
+            });
+
+            passwordInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    currentPassword = passwordInput.value;
+                    fetchRecords(currentPassword);
                 }
-            })
-            .then(data => {
-                const recordsDiv = document.getElementById('records');
-                if (data.length === 0) {
-                    recordsDiv.innerHTML = '<p>No records found.</p>';
-                } else {
-                    let table = `<table>
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Role</th>
-                                            <th>Latitude</th>
-                                            <th>Longitude</th>
-                                            <th>Country</th>
-                                            <th>Area</th>
-                                            <th>Version</th>
-                                            <th>Date & Time</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>`;
-                    data.forEach(record => {
-                        table += `<tr>
-                                    <td>${record.name}</td>
-                                    <td>${record.role}</td>
-                                    <td>${record.latitude}</td>
-                                    <td>${record.longitude}</td>
-                                    <td>${record.country}</td>
-                                    <td>${record.area}</td>
-                                    <td>${record.version}</td>
-                                    <td>${record.dateTime}</td>
-                                  </tr>`;
-                    });
-                    table += `</tbody></table>`;
-                    recordsDiv.innerHTML = table;
+            });
+
+            refreshIcon.addEventListener('click', function() {
+                if (currentPassword) {
+                    fetchRecords(currentPassword);
                 }
-            })
-            .catch(error => {
-                alert(error.message);
             });
         });
     </script>
