@@ -20,18 +20,30 @@
             background-color: #f2f2f2;
         }
         .refresh-icon {
-            cursor: pointer;
-            font-size: 30px;
-            margin-left: 10px;
-            vertical-align: middle;
-            transition: transform 0.3s ease;
-        }
-        .refresh-icon:hover {
-            transform: rotate(20deg);
-        }
-        .refresh-icon:active {
-            transform: rotate(360deg);
-        }
+    cursor: pointer;
+    font-size: 30px;
+    margin-left: 10px;
+    vertical-align: middle;
+    transition: transform 0.3s ease; /* Ensure this transition is applicable to transform */
+}
+
+.refresh-icon:hover {
+    transform: rotate(20deg); /* Mild rotation on hover */
+}
+
+.refresh-icon:active {
+    animation: rotateOnClick 0.3s ease forwards; /* Defined animation for a full spin */
+}
+
+@keyframes rotateOnClick {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
         .rounded-box {
             border-radius: 12px;
             padding: 10px;
@@ -168,16 +180,26 @@
             });
         });
 
-        function showMap(latitude, longitude) {
-            const mapContainer = document.getElementById('map');
-            mapContainer.style.display = 'block';
-            mapContainer.innerHTML = ''; // Clear the previous map
-            const map = L.map('map').setView([latitude, longitude], 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-            L.marker([latitude, longitude]).addTo(map);
-        }
+        let map; // Declare map variable outside to keep its scope broader
+
+function showMap(latitude, longitude) {
+    const mapContainer = document.getElementById('map');
+    mapContainer.style.display = 'block';
+    mapContainer.innerHTML = ''; // Clear the previous map container content
+
+    // Check if map is already initialized
+    if (map) {
+        map.remove(); // This removes the previous map instance
+    }
+
+    // Initialize a new map
+    map = L.map('map').setView([latitude, longitude], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    L.marker([latitude, longitude]).addTo(map);
+}
+
     </script>
 </body>
 </html>
