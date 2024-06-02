@@ -31,6 +31,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            padding: 0 20px; /* Adds 20px padding on the left and right */
         }
         th, td {
             border: 1px solid black;
@@ -68,7 +69,7 @@
         }
         .map-container {
             width: 100%;
-            height: 600px;
+            height: 900px;
             margin-top: 20px;
             display: none;
         }
@@ -212,7 +213,7 @@
             L.marker([latitude, longitude], {
                 icon: L.icon({
                     iconUrl: 'redpin.png',
-                    iconSize: [31, 51],
+                    iconSize: [46, 76],
                     iconAnchor: [12, 41],
                     popupAnchor: [1, -34],
                     shadowSize: [41, 41]
