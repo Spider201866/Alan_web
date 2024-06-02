@@ -125,7 +125,7 @@
                                         <td>${record.longitude}</td>
                                         <td>${record.country}</td>
                                         <td>${record.area}</td>
-                                        <td>${record.contact || 'N/A'}</td>
+                                        <td>${record.contactInfo}</td>
                                         <td>${record.version}</td>
                                         <td>${record.dateTime}</td>
                                         <td><button onclick="showMap(${record.latitude}, ${record.longitude})">Show Map</button></td>
@@ -189,7 +189,7 @@
             }).addTo(map);
             L.marker([latitude, longitude], {
                 icon: L.icon({
-                    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x-red.png',
+                    iconUrl: 'redpin.png',
                     iconSize: [25, 41],
                     iconAnchor: [12, 41],
                     popupAnchor: [1, -34],

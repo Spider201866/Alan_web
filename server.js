@@ -28,8 +28,8 @@ app.get('/view-records', (req, res) => {
 
 // Endpoint to record user information
 app.post('/record-info', (req, res) => {
-    const { name, role, latitude, longitude, country, area, contact, version, dateTime } = req.body;
-    const userInfo = { name, role, latitude, longitude, country, area, contact, version, dateTime };
+    const { name, role, latitude, longitude, country, area, contactInfo, version, dateTime } = req.body;
+    const userInfo = { name, role, latitude, longitude, country, area, contactInfo, version, dateTime };
 
     const filePath = path.join(__dirname, 'user-info.json');
 
