@@ -6,6 +6,27 @@
     <title>View Records</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
+          body, html {
+            font-family: "Calibri Light", Arial, sans-serif; /* Default font for the entire page */
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        h1 {
+            font-size: 35
+            px; /* Specific font size for headings */
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .bold {
+            font-weight: bold; /* Bold style specifically for 'Alan' */
+        }
+        
+        .light {
+            font-weight: normal; /* Ensures 'Onboarding' uses the normal weight of the default font */
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -55,7 +76,8 @@
 </head>
 <body>
     <div style="text-align: center; margin-top: 50px;">
-        <h1><strong>Alan</strong> Onboarding</h1>
+        <h1><span class="bold">Alan</span> <span class="light">Onboarding</span></h1> <!-- 'Alan' is bolded, 'Onboarding' is not -->
+
         <div id="password-container">
             <input type="password" id="password" class="rounded-box" placeholder="Password">
             <button id="submitPassword" class="rounded-button">Submit</button>
@@ -190,7 +212,7 @@
             L.marker([latitude, longitude], {
                 icon: L.icon({
                     iconUrl: 'redpin.png',
-                    iconSize: [25, 41],
+                    iconSize: [31, 51],
                     iconAnchor: [12, 41],
                     popupAnchor: [1, -34],
                     shadowSize: [41, 41]
