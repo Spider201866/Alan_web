@@ -14,7 +14,7 @@
         }
         
         h1 {
-            font-size: 35
+            font-size: 40
             px; /* Specific font size for headings */
             text-align: center;
             margin-top: 50px;
@@ -27,11 +27,13 @@
         .light {
             font-weight: normal; /* Ensures 'Onboarding' uses the normal weight of the default font */
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            padding: 0 20px; /* Adds 20px padding on the left and right */
+        .container {
+    padding: 0 20px; /* Adds 20px padding on the left and right */
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
         }
         th, td {
             border: 1px solid black;
@@ -86,7 +88,10 @@
         <div id="refresh-container" style="display: none;">
             <span id="refresh" class="refresh-icon">&#x21bb;</span>
         </div>
-        <div id="records" style="margin-top: 20px;"></div>
+        <div class="container">
+            <div id="records" style="margin-top: 20px;"></div>
+        </div>
+        
         <div id="map" class="map-container"></div>
     </div>
 
