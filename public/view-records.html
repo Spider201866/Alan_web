@@ -20,29 +20,17 @@
             background-color: #f2f2f2;
         }
         .refresh-icon {
-    cursor: pointer;
-    font-size: 30px;
-    margin-left: 10px;
-    vertical-align: middle;
-    transition: transform 0.3s ease; /* Ensure this transition is applicable to transform */
-}
-
-.refresh-icon:hover {
-    transform: rotate(20deg); /* Mild rotation on hover */
-}
-
-.refresh-icon:active {
-    animation: rotateOnClick 0.3s ease forwards; /* Defined animation for a full spin */
-}
-
-@keyframes rotateOnClick {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
+            cursor: pointer;
+            font-size: 30px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .refresh-icon:hover {
+            transform: rotate(20deg);
+        }
+        .refresh-icon:active {
+            transform: rotate(360deg);
+        }
 
         .rounded-box {
             border-radius: 12px;
@@ -59,7 +47,7 @@
         }
         .map-container {
             width: 100%;
-            height: 300px;
+            height: 600px;
             margin-top: 20px;
             display: none;
         }
