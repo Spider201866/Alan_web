@@ -127,16 +127,15 @@
             box-sizing: border-box;
         }
         .instruction-screen p {
-    font-size: 16px;
-    margin: 10px 20px; /* Adjusted margin to reduce gap */
-    color: #333;
-}
+            font-size: 16px;
+            margin: 10px 20px; /* Adjusted margin to reduce gap */
+            color: #333;
+        }
 
-.instruction-screen p.good-luck {
-    margin-bottom: 20px; /* Add space after "Good luck!" */
-}
+        .instruction-screen p.good-luck {
+            margin-bottom: 20px; /* Add space after "Good luck!" */
+        }
 
-        
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -149,33 +148,31 @@
         button:disabled {
             background-color: #ccc;
         }
-        select, .geo-button, .name-input {
-    padding: 4px 20px;
-    font-size: 14px;
-    color: grey;
-    background-color: white;
-    border: 1px solid grey;
-    cursor: pointer;
-    border-radius: 15px;
-    width: 230px; /* Set a fixed width for all elements */
-    box-sizing: border-box; /* Include padding and border in the element's total width */
-    text-align: center;
-    margin-bottom: 20px;
-}
-select {
-    appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 25px;
-    max-height: 300px;
-    line-height: 1.2;
-}
-.geo-button.clicked, .name-input.entered {
-    color: blue;
-}
-
-
+        select, .geo-button, .name-input, .contact-input {
+            padding: 4px 20px;
+            font-size: 14px;
+            color: grey;
+            background-color: white;
+            border: 1px solid grey;
+            cursor: pointer;
+            border-radius: 15px;
+            width: 230px; /* Set a fixed width for all elements */
+            box-sizing: border-box; /* Include padding and border in the element's total width */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        select {
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 25px;
+            max-height: 300px;
+            line-height: 1.2;
+        }
+        .geo-button.clicked, .name-input.entered, .contact-input.entered {
+            color: blue;
+        }
     </style>
 </head>
 <body>
@@ -212,6 +209,8 @@ select {
 
         <button id="geolocationButton" class="geo-button">Geolocation On</button>
 
+        <input type="text" id="contactInput" class="contact-input" placeholder="Contact (email/phone)">
+
         <br /><br /><br />
         <button id="acceptButton" disabled>Accept</button>
         <br />
@@ -227,27 +226,32 @@ select {
             const nameInput = document.getElementById("nameInput");
             const jobSelectElement = document.getElementById("job-role-select");
             const geolocationButton = document.getElementById("geolocationButton");
+            const contactInput = document.getElementById("contactInput");
             const acceptButton = document.getElementById("acceptButton");
             const locationInfo = document.getElementById("locationInfo");
             const blackScreen = document.getElementById("blackScreen");
             const skyImage = blackScreen.querySelector('img');
             let locationAccepted = false;
-    
+
             // Initial setup for the image transformation
             skyImage.style.transform = 'scale(1)';
             skyImage.style.transition = 'transform 4s ease-in-out, filter 4s ease-in-out';
-    
+
             nameInput.addEventListener("input", function() {
                 nameInput.classList.toggle('entered', nameInput.value.trim() !== '');
                 checkSelections();
             });
             jobSelectElement.addEventListener("change", checkSelections);
-    
+            contactInput.addEventListener("input", function() {
+                contactInput.classList.toggle('entered', contactInput.value.trim() !== '');
+                checkSelections();
+            });
+
             function checkSelections() {
                 jobSelectElement.style.color = jobSelectElement.value ? 'blue' : 'grey';
-                acceptButton.disabled = !(nameInput.value.trim() && jobSelectElement.value && locationAccepted);
+                acceptButton.disabled = !(nameInput.value.trim() && jobSelectElement.value && contactInput.value.trim() && locationAccepted);
             }
-    
+
             geolocationButton.addEventListener("click", function () {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -256,7 +260,7 @@ select {
                     locationInfo.style.display = 'block';
                 }
             });
-    
+
             function showPosition(position) {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
@@ -267,7 +271,7 @@ select {
                 locationAccepted = true;
                 checkSelections();
             }
-    
+
             function showError(error) {
                 switch (error.code) {
                     case error.PERMISSION_DENIED:
@@ -285,11 +289,11 @@ select {
                 }
                 locationInfo.style.display = 'block';
             }
-    
+
             function fetchCountryFromLatLong(latitude, longitude) {
                 const OPEN_CAGE_API_KEY = 'b4217f147a5a4b179b336f5079b57207';
                 const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${OPEN_CAGE_API_KEY}`;
-    
+
                 fetch(url)
                     .then(response => response.json())
                     .then(data => {
@@ -297,7 +301,7 @@ select {
                             const components = data.results[0].components;
                             const country = components.country;
                             let area = '';
-    
+
                             if (components.city) {
                                 area = components.city;
                             } else if (components.town) {
@@ -305,10 +309,10 @@ select {
                             } else {
                                 area = 'Unknown'; // Fallback if neither city nor town is found
                             }
-    
+
                             localStorage.setItem("country", country);
                             localStorage.setItem("area", area);
-    
+
                             console.log("Country:", country); // For debugging purposes
                             console.log("Area:", area); // For debugging purposes
                         } else {
@@ -319,11 +323,12 @@ select {
                         console.error('Error fetching country and area:', error);
                     });
             }
-    
+
             acceptButton.addEventListener("click", function () {
                 localStorage.setItem("name", nameInput.value);
                 localStorage.setItem("selectedJobRole", jobSelectElement.value);
-    
+                localStorage.setItem("contactInfo", contactInput.value);
+
                 // Retrieve user information from local storage
                 const name = localStorage.getItem('name') || 'Not set';
                 const role = localStorage.getItem('selectedJobRole') || 'Not set';
@@ -331,9 +336,10 @@ select {
                 const longitude = localStorage.getItem('longitude') || 'Not set';
                 const country = localStorage.getItem('country') || 'Not set';
                 const area = localStorage.getItem('area') || 'Not set';
+                const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
                 const version = '1.0';
                 const dateTime = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
-    
+
                 const userInfo = {
                     name,
                     role,
@@ -341,10 +347,11 @@ select {
                     longitude,
                     country,
                     area,
+                    contactInfo,
                     version,
                     dateTime
                 };
-    
+
                 fetch('https://alan.up.railway.app/record-info', {
                     method: 'POST',
                     headers: {
@@ -354,23 +361,23 @@ select {
                 })
                 .then(response => response.text())
                 .then(data => {
-                    alert(data);
+                    console.log('Recorded Successfully:', data);
                     localStorage.setItem('infoRecorded', 'true');
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    console.error('Error recording data:', error);
                 });
-    
+
                 // Make the black screen visible
                 blackScreen.style.visibility = 'visible';
                 blackScreen.style.opacity = 1;
-    
+
                 // Start the zoom and blur effect shortly after making the image visible
                 setTimeout(() => {
                     skyImage.style.transform = 'scale(1.3)';
                     skyImage.style.filter = 'blur(0px)';
                 }, 200);
-    
+
                 // Fade out after the set display time
                 setTimeout(() => {
                     blackScreen.style.opacity = 0;
@@ -379,7 +386,7 @@ select {
                     }, 250);
                 }, 6000);
             });
-    
+
             if (!sessionStorage.getItem("splashShown")) {
                 sessionStorage.setItem("splashShown", "true");
                 showSplashScreen();
@@ -387,18 +394,18 @@ select {
                 window.location.href = "home.html";
             }
         });
-    
+
         function showSplashScreen() {
             const logo1 = document.getElementById("logo1");
             const logo2 = document.getElementById("logo2");
             logo1.style.transform = "scale(0.8)";
             logo2.style.transform = "rotateX(-90deg)";
-    
+
             setTimeout(() => {
                 logo1.style.transform = "scale(1)";
                 logo2.style.transform = "rotateX(0deg)";
             }, 100);
-    
+
             setTimeout(() => {
                 const splashScreen = document.querySelector(".splash-screen");
                 const instructionScreen = document.querySelector(".instruction-screen");
@@ -409,7 +416,5 @@ select {
             }, 6000);
         }
     </script>
-    
-    
 </body>
 </html>

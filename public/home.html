@@ -39,67 +39,61 @@
             </div>
         </div>
 
-<!-- Grouping Front of Eye and Ear buttons for same line display -->
-<div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for eye and ear-related buttons -->
-  <button class="button" style="margin-right: 10px;" onclick="window.location.href='eye.html';">Examine the Eye</button>
-  <button class="button green" style="margin-right: 10px;" onclick="window.location.href='ear.html';">Examine the Ear</button>
-</div>
+        <!-- Grouping Front of Eye and Ear buttons for same line display -->
+        <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for eye and ear-related buttons -->
+            <button class="button" style="margin-right: 10px;" onclick="window.location.href='eye.html';">Examine the Eye</button>
+            <button class="button green" style="margin-right: 10px;" onclick="window.location.href='ear.html';">Examine the Ear</button>
+        </div>
 
+        <!-- Grouping Videos, Atoms, Tools buttons for same line display -->
+        <div style="display: flex; margin-bottom: 10px; align-items: center;"> <!-- Grouping container for informational buttons -->
+            <!-- Videos Button -->
+            <a href="https://www.youtube.com/@arclightproject" style="text-decoration: none;">
+                <button class="button grey" style="margin-right: 10px;">Videos</button>
+            </a>
 
-<!-- Grouping Videos, Atoms, Tools buttons for same line display -->
-<div style="display: flex; margin-bottom: 10px; align-items: center;"> <!-- Grouping container for informational buttons -->
-  <!-- Videos Button -->
-  <a href="https://www.youtube.com/@arclightproject" style="text-decoration: none;">
-      <button class="button grey" style="margin-right: 10px;">Videos</button>
-  </a>
-  
-  <!-- Atoms Button -->
-  <button class="button grey" style="margin-right: 10px;" onclick="window.location.href='atoms.html';">Atoms</button>
-  
-  <!-- Tools Button -->
-  <button class="button grey" style="margin-right: 10px;">Tools</button>
-  
-  <!-- Language Button with Dropdown -->
-  <div style="position: relative;">
-    <!-- Language Button -->
-    <button class="button grey" id="language-button" 
-            style="background: url('lang.jpg') no-repeat center center; 
-                   background-size: cover; 
-                   width: 32px; 
-                   height: 32px; 
-                   border: none;"></button>
-    
-    <!-- Language Dropdown (Initially Hidden) -->
-    <select id="language-dropdown" class="language-dropdown" 
-            style="display: none; position: absolute; top: 40px; left: 0;">
-        <option value="en">English</option>
-        <option value="fr">Français</option>
-        <option value="es">Español</option>
-        <option value="pt">Português</option>
-        <option value="ar">العربية</option> <!-- Arabic -->
-        <option value="sw">Kiswahili</option> <!-- Swahili -->
-        <option value="cy">Cymraeg</option> <!-- Welsh -->
-        <option value="ny">Chichewa</option> <!-- For Malawi -->
-        <option value="rw">Kinwanda</option> <!-- For Rwanda -->
-        <option value="lg">Luganda</option> <!-- For Uganda -->
-    </select>
-  </div>
-</div>
+            <!-- Atoms Button -->
+            <button class="button grey" style="margin-right: 10px;" onclick="window.location.href='atoms.html';">Atoms</button>
 
+            <!-- Tools Button -->
+            <button class="button grey" style="margin-right: 10px;">Tools</button>
 
+            <!-- Language Button with Dropdown -->
+            <div style="position: relative;">
+                <!-- Language Button -->
+                <button class="button grey" id="language-button" 
+                        style="background: url('lang.jpg') no-repeat center center; 
+                            background-size: cover; 
+                            width: 32px; 
+                            height: 32px; 
+                            border: none;"></button>
 
+                <!-- Language Dropdown (Initially Hidden) -->
+                <select id="language-dropdown" class="language-dropdown" 
+                        style="display: none; position: absolute; top: 40px; left: 0;">
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="es">Español</option>
+                    <option value="pt">Português</option>
+                    <option value="ar">العربية</option> <!-- Arabic -->
+                    <option value="sw">Kiswahili</option> <!-- Swahili -->
+                    <option value="cy">Cymraeg</option> <!-- Welsh -->
+                    <option value="ny">Chichewa</option> <!-- For Malawi -->
+                    <option value="rw">Kinwanda</option> <!-- For Rwanda -->
+                    <option value="lg">Luganda</option> <!-- For Uganda -->
+                </select>
+            </div>
+        </div>
 
-        
-
-<!-- Grouping Arclight Project, Web Links, and cog buttons for same line display -->
-<div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for project-related buttons -->
-  <a href="https://medicine.st-andrews.ac.uk/arclight/" style="text-decoration: none;">
-      <button class="button grey" style="margin-right: 10px;">Arclight Project</button>
-  </a>
-  <button class="button grey" style="margin-right: 10px;" onclick="window.location.href='weblinks.html';">Links</button>
-  <button class="button grey" onclick="location.href='aboutalan.html';">About</button>
-  </button>
-</div>
+        <!-- Grouping Arclight Project, Web Links, and cog buttons for same line display -->
+        <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for project-related buttons -->
+            <a href="https://medicine.st-andrews.ac.uk/arclight/" style="text-decoration: none;">
+                <button class="button grey" style="margin-right: 10px;">Arclight Project</button>
+            </a>
+            <button class="button grey" style="margin-right: 10px;" onclick="window.location.href='weblinks.html';">Links</button>
+            <button class="button grey" onclick="location.href='aboutalan.html';">About</button>
+            </button>
+        </div>
 
         <!-- Chat Links -->
         <div style="display: flex; flex-direction: column; width: 100%; margin-top: 20px;">
@@ -114,7 +108,7 @@
 
     <div class="content-wrapper" style="display: flex; flex-direction: column; justify-content: flex-start; min-height: 20vh; font-weight: bold;">
         <div class="logo-and-text-container" style="text-align: center; line-height: 1.0; padding-top: 20px;">
-           <!-- <img src="./triangle.png" alt="Logo" id="logo-image" style="max-width: 100px; display: block; margin: 0 auto; margin-bottom: 5px;">  -->
+            <!-- <img src="./triangle.png" alt="Logo" id="logo-image" style="max-width: 100px; display: block; margin: 0 auto; margin-bottom: 5px;">  -->
             <p id="additional-text" class="grey-text" style="font-size: 15px; color: grey; margin-top: 0px;"> <!-- Adjust margin-top to reduce space -->
                 <span id="good-history">Good History</span>  |  
                 <span id="examine-well">Examine Well</span>  |  
@@ -138,7 +132,6 @@
         <img id="condition-image" alt="" style="max-width: 100%; height: 120px; display: block; margin: 0 auto; cursor: pointer;" onclick="toggleZoom(this)" />
         <p id="condition-description"></p>
 
-
         <!-- Disclaimer about Alan potentially making mistakes -->
         <div class="chatbot-version">
             Alan can make mistakes. Use clinical judgement. 6/24
@@ -146,12 +139,11 @@
     </div>
 
     <div id="popup" class="popup">
-      <span class="popup-close" onclick="closePopup()">&times;</span>
-      <h2>User Info</h2>
-      <div class="popup-content" id="popup-content"></div>
-  </div>
-  
-    
+        <span class="popup-close" onclick="closePopup()">&times;</span>
+        <h2>User Info</h2>
+        <div class="popup-content" id="popup-content"></div>
+    </div>
+
     <script>
         function toggleZoom(image) {
             // Check if the image is already zoomed
@@ -172,11 +164,9 @@
             this.classList.toggle('open');
         });
         document.getElementById('language-button').addEventListener('click', function() {
-        const dropdown = document.getElementById('language-dropdown');
-        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-    });
-
-
+            const dropdown = document.getElementById('language-dropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        });
 
     </script>
     
@@ -286,82 +276,75 @@
         var header = document.querySelector('.chatbot-header');
         header.appendChild(nameIcon);
 
+        function openPopup() {
+            const popup = document.getElementById('popup');
+            const popupContent = document.getElementById('popup-content');
+            const name = localStorage.getItem('name') || 'Not set';
+            const role = localStorage.getItem('selectedJobRole') || 'Not set';
+            const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
+            const longitude = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
+            const country = localStorage.getItem('country') || 'Not set';
+            const area = localStorage.getItem('area') || 'Not set';
+            const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
 
-       function openPopup() {
-    const popup = document.getElementById('popup');
-    const popupContent = document.getElementById('popup-content');
-    const name = localStorage.getItem('name') || 'Not set';
-    const role = localStorage.getItem('selectedJobRole') || 'Not set';
-    const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
-    const longitude = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
-    const country = localStorage.getItem('country') || 'Not set'; // Ensure this matches how you stored the country
-    const area = localStorage.getItem('area') || 'Not set';
+            console.log('Name:', name);
+            console.log('Role:', role);
+            console.log('Latitude:', latitude);
+            console.log('Longitude:', longitude);
+            console.log('Country:', country);
+            console.log('Area:', area);
+            console.log('Contact Info:', contactInfo); // Add this line to debug contact info
 
-    console.log('Name:', name);
-    console.log('Role:', role);
-    console.log('Latitude:', latitude);
-    console.log('Longitude:', longitude);
-    console.log('Country:', country); // Debugging line to check country value
-    console.log('Area:', area);
+            // Get current date and time in UK format
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+            const year = now.getFullYear();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const currentDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 
-    // Get current date and time in UK format
-    const now = new Date();
-    const day = String(now.getDate()).padStart(2, '0');
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const year = now.getFullYear();
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    const currentDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+            popupContent.innerHTML = `
+                <p>Name: ${name}</p>
+                <p>Role: ${role}</p>
+                <p>Lat & Long: ${latitude}, ${longitude}</p>
+                <p>Country: ${country}</p>
+                <p>Area: ${area}</p>
+                <p>Contact: ${contactInfo}</p> <!-- Add contact info to popup -->
+                <p>Version: 1.0</p>
+                <p>Date & Time: ${currentDateTime}</p>
+            `;
 
-    popupContent.innerHTML = `
-        <p>Name: ${name}</p>
-        <p>Role: ${role}</p>
-        <p>Lat & Long: ${latitude}, ${longitude}</p>
-        <p>Country: ${country}</p> <!-- Add this line -->
-        <p>Area: ${area}</p>
-        <p>Version: 1.0</p>
-        <p>Date & Time: ${currentDateTime}</p>
-    `;
-
-    // Slide in the popup from the right
-    popup.style.right = '0';
-    popup.style.display = 'block';
-}
-
-
-function closePopup() {
-    const popup = document.getElementById('popup');
-    // Slide out the popup to the right
-    popup.style.right = '-300px';
-    // Wait for the animation to complete before hiding the popup
-    setTimeout(() => {
-        popup.style.display = 'none';
-    }, 300);
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Event listener for the name icon
-    document.querySelector('.name-icon').addEventListener('click', function(event) {
-        const popup = document.getElementById('popup');
-        if (popup.style.display === 'block' && popup.style.right === '0px') {
-            closePopup();
-        } else {
-            openPopup();
+            // Slide in the popup from the right
+            popup.style.right = '0';
+            popup.style.display = 'block';
         }
-    });
 
-    // Event listener for the close button
-    document.querySelector('.popup-close').addEventListener('click', closePopup);
-});
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            // Slide out the popup to the right
+            popup.style.right = '-300px';
+            // Wait for the animation to complete before hiding the popup
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 300);
+        }
 
+        document.addEventListener('DOMContentLoaded', function() {
+            // Event listener for the name icon
+            document.querySelector('.name-icon').addEventListener('click', function(event) {
+                const popup = document.getElementById('popup');
+                if (popup.style.display === 'block' && popup.style.right === '0px') {
+                    closePopup();
+                } else {
+                    openPopup();
+                }
+            });
 
-
-
-
-
-
-
+            // Event listener for the close button
+            document.querySelector('.popup-close').addEventListener('click', closePopup);
+        });
     </script>
 </body>
 </html>

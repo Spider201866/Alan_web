@@ -31,7 +31,6 @@
         .refresh-icon:active {
             transform: rotate(360deg);
         }
-
         .rounded-box {
             border-radius: 12px;
             padding: 10px;
@@ -109,6 +108,7 @@
                                                 <th>Longitude</th>
                                                 <th>Country</th>
                                                 <th>Area</th>
+                                                <th>Contact</th>
                                                 <th>Version</th>
                                                 <th>Date & Time</th>
                                                 <th>Map</th>
@@ -124,6 +124,7 @@
                                         <td>${record.longitude}</td>
                                         <td>${record.country}</td>
                                         <td>${record.area}</td>
+                                        <td>${record.contact}</td>
                                         <td>${record.version}</td>
                                         <td>${record.dateTime}</td>
                                         <td><button onclick="showMap(${record.latitude}, ${record.longitude})">Show Map</button></td>
@@ -170,24 +171,31 @@
 
         let map; // Declare map variable outside to keep its scope broader
 
-function showMap(latitude, longitude) {
-    const mapContainer = document.getElementById('map');
-    mapContainer.style.display = 'block';
-    mapContainer.innerHTML = ''; // Clear the previous map container content
+        function showMap(latitude, longitude) {
+            const mapContainer = document.getElementById('map');
+            mapContainer.style.display = 'block';
+            mapContainer.innerHTML = ''; // Clear the previous map container content
 
-    // Check if map is already initialized
-    if (map) {
-        map.remove(); // This removes the previous map instance
-    }
+            // Check if map is already initialized
+            if (map) {
+                map.remove(); // This removes the previous map instance
+            }
 
-    // Initialize a new map
-    map = L.map('map').setView([latitude, longitude], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-    L.marker([latitude, longitude]).addTo(map);
-}
-
+            // Initialize a new map
+            map = L.map('map').setView([latitude, longitude], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            L.marker([latitude, longitude], {
+                icon: L.icon({
+                    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x-red.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                })
+            }).addTo(map);
+        }
     </script>
 </body>
 </html>
