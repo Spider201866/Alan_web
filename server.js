@@ -1,6 +1,3 @@
-
-// https://alan.up.railway.app/view-records
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
@@ -31,8 +28,8 @@ app.get('/view-records', (req, res) => {
 
 // Endpoint to record user information
 app.post('/record-info', (req, res) => {
-    const { name, role, latitude, longitude, country, area, version, dateTime, contactInfo } = req.body;
-    const userInfo = { name, role, latitude, longitude, country, area, version, dateTime, contactInfo };
+    const { name, role, latitude, longitude, country, area, contact, version, dateTime } = req.body;
+    const userInfo = { name, role, latitude, longitude, country, area, contact, version, dateTime };
 
     const filePath = path.join(__dirname, 'user-info.json');
 
@@ -47,6 +44,7 @@ app.post('/record-info', (req, res) => {
             if (err) {
                 return res.status(500).end();
             }
+            res.end(); // End the response without sending any message
         });
     });
 });

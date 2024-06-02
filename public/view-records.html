@@ -31,6 +31,7 @@
         .refresh-icon:active {
             transform: rotate(360deg);
         }
+
         .rounded-box {
             border-radius: 12px;
             padding: 10px;
@@ -124,7 +125,7 @@
                                         <td>${record.longitude}</td>
                                         <td>${record.country}</td>
                                         <td>${record.area}</td>
-                                        <td>${record.contact}</td>
+                                        <td>${record.contact || 'N/A'}</td>
                                         <td>${record.version}</td>
                                         <td>${record.dateTime}</td>
                                         <td><button onclick="showMap(${record.latitude}, ${record.longitude})">Show Map</button></td>
