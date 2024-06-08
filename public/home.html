@@ -277,74 +277,110 @@
         header.appendChild(nameIcon);
 
         function openPopup() {
-            const popup = document.getElementById('popup');
-            const popupContent = document.getElementById('popup-content');
-            const name = localStorage.getItem('name') || 'Not set';
-            const role = localStorage.getItem('selectedJobRole') || 'Not set';
-            const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
-            const longitude = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
-            const country = localStorage.getItem('country') || 'Not set';
-            const area = localStorage.getItem('area') || 'Not set';
-            const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
+    const popup = document.getElementById('popup');
+    const popupContent = document.getElementById('popup-content');
+    const name = localStorage.getItem('name') || 'Not set';
+    const role = localStorage.getItem('selectedJobRole') || 'Not set';
+    const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
+    const longitude = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
+    const country = localStorage.getItem('country') || 'Not set';
+    const iso_a3 = localStorage.getItem('iso_a3') || 'Not set';
+    const area = localStorage.getItem('area') || 'Not set';
+    const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
 
-            console.log('Name:', name);
-            console.log('Role:', role);
-            console.log('Latitude:', latitude);
-            console.log('Longitude:', longitude);
-            console.log('Country:', country);
-            console.log('Area:', area);
-            console.log('Contact Info:', contactInfo); // Add this line to debug contact info
+    // Define the classification groups for countries
+    const classifications = {
+        "HI": ["QAT", "MAC", "LUX", "SGP", "BRN", "IRL", "NOR", "KWT", "ARE", "CHE", "HKG", "SMR", "USA", "SAU", "NLD", "ISL", "BHR", "SWE", "DEU", "AUS", "TWN", "DNK", "AUT", "CAN", "BEL", "OMN", "FIN", "GBR", "FRA", "JPN", "MLT", "KOR", "NZL", "ESP", "ITA", "PRI", "CYP", "ISR", "CZE"],
+        "MI": ["GNQ", "SVN", "SVK", "LTU", "EST", "TTO", "PRT", "POL", "HUN", "MYS", "SYC", "RUS", "GRC", "LVA", "KNA", "ATG", "TUR", "KAZ", "BHS", "CHL", "PAN", "HRV", "ROU", "URY", "MUS", "BGR", "ARG", "IRN", "MEX", "LBN", "GAB", "MDV", "TKM", "BLR", "BWA", "THA", "CHN", "BRA", "ZAF", "IND"],
+        "LI": ["BRB", "MNE", "AZE", "CRI", "IRQ", "DOM", "PLW", "MKD", "SRB", "DZA", "GRD", "COL", "SUR", "LCA", "PER", "LKA", "EGY", "MNG", "JOR", "ALB", "VEN", "IDN", "DMA", "XKX", "NRU", "TUN", "VCT", "NAM", "BIH", "ECU", "GEO", "SWZ", "FJI", "LBY", "PRY", "JAM", "ARM", "SLV", "BTN", "UKR", "MAR", "BLZ", "GUY", "PHL", "GTM", "BOL", "LAO", "UZB", "CPV", "VNM", "PAK"],
+        "VLI": ["AGO", "COG", "MMR", "NGA", "NIC", "WSM", "MDA", "TON", "HND", "TLS", "GHA", "SDN", "BGD", "MRT", "KHM", "ZMB", "LSO", "CIV", "TUV", "PNG", "KGZ", "DJI", "KEN", "MHL", "FSM", "CMR", "TZA", "STP", "TJK", "VUT", "NPL", "SEN", "TCD", "UGA", "YEM", "ZWE", "BEN", "MLI", "SLB", "ETH", "RWA", "GIN", "KIR", "AFG", "BFA", "HTI", "GNB", "SLE", "GMB", "SSD", "TGO", "COM", "MDG", "ERI", "MOZ", "MWI", "NER", "LBR", "BDI", "COD", "CAF"]
+    };
 
-            // Get current date and time in UK format
-            const now = new Date();
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-            const year = now.getFullYear();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const currentDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    // Define the classification groups for job roles
+    const foundationRoles = ["Health worker", "Nurse", "Ophthalmic clinical officer", "Pharmacist", "Audiologist", "Ear care practitioner"];
+    const middleRoles = ["Medical student", "General practitioner", "Hospital doctor", "Ophthalmologist", "Optometrist", "Orthoptist", "ENT specialist"];
 
-            popupContent.innerHTML = `
-                <p>Name: ${name}</p>
-                <p>Role: ${role}</p>
-                <p>Lat & Long: ${latitude}, ${longitude}</p>
-                <p>Country: ${country}</p>
-                <p>Area: ${area}</p>
-                <p>Contact: ${contactInfo}</p> <!-- Add contact info to popup -->
-                <p>Version: 1.0</p>
-                <p>Date & Time: ${currentDateTime}</p>
-            `;
-
-            // Slide in the popup from the right
-            popup.style.right = '0';
-            popup.style.display = 'block';
+    // Determine the country classification
+    let classification = "Unknown";
+    let llm = "Unknown";
+    for (const [key, values] of Object.entries(classifications)) {
+        if (values.includes(iso_a3)) {
+            classification = key;
+            llm = (key === "HI" || key === "MI") ? "LLM1" : "LLM2";
+            break;
         }
+    }
 
-        function closePopup() {
-            const popup = document.getElementById('popup');
-            // Slide out the popup to the right
-            popup.style.right = '-300px';
-            // Wait for the animation to complete before hiding the popup
-            setTimeout(() => {
-                popup.style.display = 'none';
-            }, 300);
+    // Determine the job role classification
+    let roleClassification = "";
+    if (foundationRoles.includes(role)) {
+        roleClassification = " (F)";
+    } else if (middleRoles.includes(role)) {
+        roleClassification = " (M)";
+    }
+
+    console.log('Name:', name);
+    console.log('Role:', role);
+    console.log('Latitude:', latitude);
+    console.log('Longitude:', longitude);
+    console.log('Country:', country);
+    console.log('ISO Alpha-3 Code:', iso_a3); // Add this line to debug ISO Alpha-3 code
+    console.log('Area:', area);
+    console.log('Contact Info:', contactInfo); // Add this line to debug contact info
+
+    // Get current date and time in UK format
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const currentDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+
+    popupContent.innerHTML = `
+        <p>Name: ${name}</p>
+        <p>Role: ${role}${roleClassification}</p>
+        <p>Lat & Long: ${latitude}, ${longitude}</p>
+        <p>Country: ${country} (${iso_a3}) [${classification}] {${llm}}</p> <!-- Add classification and LLM to popup -->
+        <p>Area: ${area}</p>
+        <p>Contact: ${contactInfo}</p> <!-- Add contact info to popup -->
+        <p>Version: 1.0</p>
+        <p>Date & Time: ${currentDateTime}</p>
+    `;
+
+    // Slide in the popup from the right
+    popup.style.right = '0';
+    popup.style.display = 'block';
+}
+
+function closePopup() {
+    const popup = document.getElementById('popup');
+    // Slide out the popup to the right
+    popup.style.right = '-300px';
+    // Wait for the animation to complete before hiding the popup
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 300);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Event listener for the name icon
+    document.querySelector('.name-icon').addEventListener('click', function(event) {
+        const popup = document.getElementById('popup');
+        if (popup.style.display === 'block' && popup.style.right === '0px') {
+            closePopup();
+        } else {
+            openPopup();
         }
+    });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Event listener for the name icon
-            document.querySelector('.name-icon').addEventListener('click', function(event) {
-                const popup = document.getElementById('popup');
-                if (popup.style.display === 'block' && popup.style.right === '0px') {
-                    closePopup();
-                } else {
-                    openPopup();
-                }
-            });
+    // Event listener for the close button
+    document.querySelector('.popup-close').addEventListener('click', closePopup);
+});
 
-            // Event listener for the close button
-            document.querySelector('.popup-close').addEventListener('click', closePopup);
-        });
+
+
     </script>
 </body>
 </html>

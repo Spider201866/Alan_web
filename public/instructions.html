@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instructions</title>
     <style>
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             font-family: "Calibri Light", Arial, sans-serif;
             font-size: 15px;
             background-color: white;
         }
+
         #appBar {
             display: flex;
             align-items: center;
@@ -19,11 +22,13 @@
             color: white;
             padding: 10px 20px;
         }
+
         #pageTitle {
             text-align: center;
             margin: 0 auto;
             font-size: 24px;
         }
+
         #backArrow {
             color: white;
             font-size: 32px;
@@ -32,25 +37,36 @@
             cursor: pointer;
             padding-right: 20px;
         }
+
         #content {
             padding: 5px 25px 25px 25px;
-            background-color: #dfe7ff;  
+            background-color: #dfe7ff;
         }
-        .infoText, .redText, .italicText, .boldText, .justify {
+
+        .infoText,
+        .redText,
+        .italicText,
+        .boldText,
+        .justify {
             margin-bottom: 15px;
         }
+
         .redText {
             color: red;
         }
+
         .italicText {
             font-style: italic;
         }
+
         .boldText {
             font-weight: bold;
         }
+
         .justify {
             text-align: justify;
         }
+
         #switchLabel {
             cursor: pointer;
             padding: 5px 20px;
@@ -60,126 +76,158 @@
             top: 33px;
             right: 20px;
         }
+
         #additionalExamples p {
-    margin-bottom: 10px; /* Keeps space between each segment for clear separation */
-    font-size: 13px; /* Smaller font size */
-    color: #333; /* Slightly dark grey */
-}
+            margin-bottom: 10px;
+            /* Keeps space between each segment for clear separation */
+            font-size: 13px;
+            /* Smaller font size */
+            color: #333;
+            /* Slightly dark grey */
+        }
 
-#additionalExamples strong {
-    display: block; /* Ensures the label is on its own line */
-    font-weight: bold; /* Makes the label bold */
-    margin-bottom: -10px; /* No space between the label and the description */
-    line-height: 1.2; /* Reduces the line height to tighten spacing */
-}
+        #additionalExamples strong {
+            display: block;
+            /* Ensures the label is on its own line */
+            font-weight: bold;
+            /* Makes the label bold */
+            margin-bottom: -10px;
+            /* No space between the label and the description */
+            line-height: 1.2;
+            /* Reduces the line height to tighten spacing */
+        }
 
-#additionalExamples span {
-    display: block; /* Ensures the description starts on a new line below the label */
-    margin-left: 10px; /* Indents the description for better readability */
-    margin-top: 0px; /* No additional space at the top */
-    line-height: 1.2; /* Consistent line height with label for uniform appearance */
-}
-
-
-.infoText {
-    padding-left: 60px; /* Shifts the entire list to the right */
-    color: black; /* Default text color for the list including bullet points */
-}
-
-.infoText li {
-    line-height: 1.2; /* Adjusts line height for better spacing */
-    margin-bottom: 2px; /* Minimal space between list items */
-}
-
-.listText {
-    display: block; /* Makes the span a block element inside the li */
-    margin-left: 10px; /* Creates space from the bullet point */
-    color: red; /* Changes the text color to red */
-}
-hr {
-    border: none; /* Removes the default border */
-    height: 2px; /* Sets the height of the line */
-    background-color: #ccc; /* Sets the color of the line */
-    margin-top: 20px; /* Adds 30px space above the line */
-    margin-bottom: 20px; /* Adds 30px space below the line */
-}
+        #additionalExamples span {
+            display: block;
+            /* Ensures the description starts on a new line below the label */
+            margin-left: 10px;
+            /* Indents the description for better readability */
+            margin-top: 0px;
+            /* No additional space at the top */
+            line-height: 1.2;
+            /* Consistent line height with label for uniform appearance */
+        }
 
 
+        .infoText {
+            padding-left: 60px;
+            /* Shifts the entire list to the right */
+            color: black;
+            /* Default text color for the list including bullet points */
+        }
+
+        .infoText li {
+            line-height: 1.2;
+            /* Adjusts line height for better spacing */
+            margin-bottom: 2px;
+            /* Minimal space between list items */
+        }
+
+        .listText {
+            display: block;
+            /* Makes the span a block element inside the li */
+            margin-left: 10px;
+            /* Creates space from the bullet point */
+            color: red;
+            /* Changes the text color to red */
+        }
+
+        hr {
+            border: none;
+            /* Removes the default border */
+            height: 2px;
+            /* Sets the height of the line */
+            background-color: #ccc;
+            /* Sets the color of the line */
+            margin-top: 20px;
+            /* Adds 30px space above the line */
+            margin-bottom: 20px;
+            /* Adds 30px space below the line */
+        }
 
 
-/* Positioning container for the switch */
-#switchContainer {
-    position: absolute;
-    top: 100px; /* Adjust top positioning as necessary */
-    right: 80px; /* Increase right padding to move the switch inward */
-    text-align: center;
-}
 
-/* Adjusting the space between labels and the switch */
-#switchContainer label {
-    display: block;
-    color: black;
-    margin: 10px 0; /* Increase margin for more space around the labels */
-}
 
-/* Existing switch and slider styling - do not change */
-.switch {
-  position: relative;
-  display: block;
-  width: 34px;
-  height: 60px;
-}
+        /* Positioning container for the switch */
+        #switchContainer {
+            position: absolute;
+            top: 100px;
+            /* Adjust top positioning as necessary */
+            right: 80px;
+            /* Increase right padding to move the switch inward */
+            text-align: center;
+        }
 
-.switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+        /* Adjusting the space between labels and the switch */
+        #switchContainer label {
+            display: block;
+            color: black;
+            margin: 10px 0;
+            /* Increase margin for more space around the labels */
+        }
 
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #7797ff;
-  transition: .4s;
-  border-radius: 34px;
-}
+        /* Existing switch and slider styling - do not change */
+        .switch {
+            position: relative;
+            display: block;
+            width: 34px;
+            height: 60px;
+        }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 24px;
-  width: 24px;
-  left: 3px;
-  top: 3px; /* Keep the button centered vertically */
-  background-color: white;
-  transition: .4s;
-  border-radius: 50%;
-  border: 2px solid black; /* Adds a 2px black border */
-}
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
 
-input:checked + .slider {
-  background-color: #75eb75; /* Faint green background when toggled */
-}
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #7797ff;
+            transition: .4s;
+            border-radius: 34px;
+        }
 
-input:checked + .slider:before {
-  transform: translateY(26px); /* Move the button to the bottom on toggle */
-  
-}
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 24px;
+            width: 24px;
+            left: 3px;
+            top: 3px;
+            /* Keep the button centered vertically */
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            border: 2px solid black;
+            /* Adds a 2px black border */
+        }
 
-.slider.round {
-  border-radius: 34px;
-}
+        input:checked+.slider {
+            background-color: #75eb75;
+            /* Faint green background when toggled */
+        }
 
-.slider.round:before {
-  border-radius: 50%;
-}
+        input:checked+.slider:before {
+            transform: translateY(26px);
+            /* Move the button to the bottom on toggle */
 
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
     </style>
 </head>
+
 <body>
     <div id="appBar">
         <div id="backArrow" onclick="history.back()">&#x2190;</div>
@@ -195,70 +243,77 @@ input:checked + .slider:before {
             </label>
             <label style="color: black; font-weight: bold;">Ear</label>
         </div>
-        
-        
+
+
         <p style="margin-bottom: 20px; font-size: 15px; text-align: justify;">
-            Alan is an AI assistant for students and those who only occasionally see eye or ear cases. Write or speak clearly and avoid identifying names or details. Good luck!
+            Alan is an AI assistant for students and those who only occasionally see eye or ear cases. Write or speak
+            clearly and avoid identifying names or details. Good luck!
         </p>
-        
+
 
         <p class="boldText">Tell Alan about your patient's:</p>
-<ul class="infoText">
-    <li><span class="listText">problem & onset</span></li>
-    <li><span class="listText">what you see</span></li>
-    <li><span class="listText" id="dynamicContent">vision & pupils</span></li>
-    <li><span class="listText">age, sex, medication</span></li>
-</ul>
+        <ul class="infoText">
+            <li><span class="listText">problem & onset</span></li>
+            <li><span class="listText">what you see</span></li>
+            <li><span class="listText" id="dynamicContent">vision & pupils</span></li>
+            <li><span class="listText">age, sex, medication</span></li>
+        </ul>
 
-<p id="useArclight" style="margin-top: 20px;"><strong>Use Arclight:</strong> <strong><em>front, fundal reflex, back of eye.</em></strong></p>
+        <p id="useArclight" style="margin-top: 20px;"><strong>Use Arclight:</strong> <strong><em>front, fundal reflex,
+                    back of eye.</em></strong></p>
 
 
 
         <hr> <!-- Horizontal line added here -->
-        
+
         <div class="justify" id="additionalExamples">
             <p><strong>Too little</strong><br><span id="tooLittle">man red eye what?</span></p>
-            <p><strong>Just right</strong><br><span id="justRight">Man 25yr, red eye 3 day. No meds or eye prob before. Pain, watering. White cornea dot. Pupils OK. Vision 6/12, 6/6 other.</span></p>
-            <p><strong>Too much</strong><br><span id="tooMuch">This man com into clinics today. He, driver in th building, a red eyes now he thinks the food eaten; Is looking at eye I see watering. It red edges you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is dis…</span></p>
+            <p><strong>Just right</strong><br><span id="justRight">Man 25yr, red eye 3 day. No meds or eye prob before.
+                    Pain, watering. White cornea dot. Pupils OK. Vision 6/12, 6/6 other.</span></p>
+            <p><strong>Too much</strong><br><span id="tooMuch">This man com into clinics today. He, driver in th
+                    building, a red eyes now he thinks the food eaten; Is looking at eye I see watering. It red edges
+                    you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is
+                    dis…</span></p>
 
             <p id="additionalQuery" style="padding-top: 15px; color: blue; font-size: 15px;">
                 Alan also answers eye teaching/learning queries: What is Iritis?, How do I see the retina?
             </p>
-            
-            
-            
+
+
+
 
         </div>
-        
-        
-
-    <script>
-function toggleContent() {
-    var isChecked = document.getElementById('switch').checked;
-
-    // Update the background color of the body based on the switch state
-    document.getElementById('content').style.backgroundColor = isChecked ? '#f2fff2' : '#dfe7ff'; // Faint green when checked, faint blue otherwise
-
-    var useArclightText = isChecked ? 'all around ear, canal, drum.' : 'front, fundal reflex, back of eye.';
-    document.getElementById('useArclight').innerHTML = '<strong>Use Arclight:</strong> <strong><em>' + useArclightText + '</em></strong>';
-
-    document.getElementById('dynamicContent').textContent = isChecked ? 'hearing' : 'vision & pupils';
-    document.getElementById('tooLittle').textContent = isChecked ? 'man red ear what?' : 'man red eye what?';
-    document.getElementById('justRight').textContent = isChecked ?
-        'Man 25yr, red ear 3 day. No meds or ear prob before. Pain, ear discharge. Red drum. Hearing muffled in bad ear but OK other.' :
-        'Man 25yr, red eye 3 day. No meds or eye prob before. Pain, watering. White cornea dot. Pupils OK. Vision 6/12, 6/6 other.';
-    document.getElementById('tooMuch').textContent = isChecked ?
-        'This man com into clinics today. He, driver in the building, a red ears now he thinks the food eaten; Is looking at ear I see discharge. It red edges you know? He wan help; he tall man ears watery worried about hearing and pain he says. wat is dis…' :
-        'This man com into clinics today. He, driver in the building, a red eye now he thinks the food eaten; Is looking at eye I see watering. It red edges you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is dis…';
-
-        document.getElementById('additionalQuery').innerHTML = isChecked ?
-    '<span style="color: green; font-size: 15px; margin: -5px">Alan also answers ear teaching/learning queries: What is Otitis Media, How do I clean an ear? </span>' :
-    '<span style="color: blue; font-size: 15px; margin: -5px">Alan also answers eye teaching/learning queries: What is Iritis?, How do I see the retina? </span>';
 
 
 
+        <script>
+            function toggleContent() {
+                var isChecked = document.getElementById('switch').checked;
 
-}
-    </script>
+                // Update the background color of the body based on the switch state
+                document.getElementById('content').style.backgroundColor = isChecked ? '#f2fff2' : '#dfe7ff'; // Faint green when checked, faint blue otherwise
+
+                var useArclightText = isChecked ? 'all around ear, canal, drum.' : 'front, fundal reflex, back of eye.';
+                document.getElementById('useArclight').innerHTML = '<strong>Use Arclight:</strong> <strong><em>' + useArclightText + '</em></strong>';
+
+                document.getElementById('dynamicContent').textContent = isChecked ? 'hearing' : 'vision & pupils';
+                document.getElementById('tooLittle').textContent = isChecked ? 'man red ear what?' : 'man red eye what?';
+                document.getElementById('justRight').textContent = isChecked ?
+                    'Man 25yr, red ear 3 day. No meds or ear prob before. Pain, ear discharge. Red drum. Hearing muffled in bad ear but OK other.' :
+                    'Man 25yr, red eye 3 day. No meds or eye prob before. Pain, watering. White cornea dot. Pupils OK. Vision 6/12, 6/6 other.';
+                document.getElementById('tooMuch').textContent = isChecked ?
+                    'This man com into clinics today. He, driver in the building, a red ears now he thinks the food eaten; Is looking at ear I see discharge. It red edges you know? He wan help; he tall man ears watery worried about hearing and pain he says. wat is dis…' :
+                    'This man com into clinics today. He, driver in the building, a red eye now he thinks the food eaten; Is looking at eye I see watering. It red edges you know? He wan help; he tall man eyes watery worried about cornea and pain he says. wat is dis…';
+
+                document.getElementById('additionalQuery').innerHTML = isChecked ?
+                    '<span style="color: green; font-size: 15px; margin: -5px">Alan also answers ear teaching/learning queries: What is Otitis Media, How do I clean an ear? </span>' :
+                    '<span style="color: blue; font-size: 15px; margin: -5px">Alan also answers eye teaching/learning queries: What is Iritis?, How do I see the retina? </span>';
+
+
+
+
+            }
+        </script>
 </body>
+
 </html>

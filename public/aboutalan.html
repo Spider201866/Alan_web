@@ -1,118 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Alan</title>
-<style>
-  body {
-    font-family: "Calibri Light", Arial, sans-serif;
-    background-color: white; /* White background for the page */
-    color: black; /* Black text color for the page */
-    margin: 0;
-    padding: 0;
-  }
-  #appBar {
-    display: flex; /* Using flexbox to align items within the app bar */
-    align-items: center; /* Center items vertically within the app bar */
-    background-color: black; /* Black background for the app bar */
-    color: white; /* White text color for the app bar */
-    padding: 10px 20px; /* Adjusted padding */
-  }
-  #pageTitle {
-    text-align: center;
-    margin: 0 auto; /* Center title and auto margins to help center it within flex container */
-    font-size: 24px;
-  }
-  #backArrow {
-    color: white; /* White back arrow */
-    font-size: 32px; /* Increased size of back arrow */
-    font-weight: bold; /* Makes the arrow thicker */
-    position: relative; /* Changed from absolute to relative */
-    cursor: pointer;
-    padding-right: 20px; /* Added padding for visual spacing */
-  }
-  #content p { /* Specifically target paragraphs within the content area */
-    font-size: 15px; /* Set font size to 15px for paragraphs */
-  }
-  #aboutAlan {
-    padding: 15px 15px;
-    margin-top: -10px; /* Reduce the top margin to pull the content upwards */
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Alan</title>
+  <style>
+    body {
+      font-family: "Calibri Light", Arial, sans-serif;
+      background-color: white;
+      /* White background for the page */
+      color: black;
+      /* Black text color for the page */
+      margin: 0;
+      padding: 0;
+    }
 
-  .highlight {
-    color: red; /* Color for highlighted terms */
-  }
-  .bullet-point {
-    list-style-type: disc; /* Adds bullet points */
-    margin-left: 0px; /* Indent bullet points */
-  }
-  #aboutAlan p:not(.highlight),
-  #aboutAlan li:not(.highlight) {
-    color: black;
-  }
-  #aboutAlan p.space-after,
-  #aboutAlan li.space-after {
-    margin-bottom: 24px; /* This equals approximately 1.5 lines of space */
-  }
+    #appBar {
+      display: flex;
+      /* Using flexbox to align items within the app bar */
+      align-items: center;
+      /* Center items vertically within the app bar */
+      background-color: black;
+      /* Black background for the app bar */
+      color: white;
+      /* White text color for the app bar */
+      padding: 10px 20px;
+      /* Adjusted padding */
+    }
 
-  @keyframes smoothFlip360 {
-    from {
+    #pageTitle {
+      text-align: center;
+      margin: 0 auto;
+      /* Center title and auto margins to help center it within flex container */
+      font-size: 24px;
+    }
+
+    #backArrow {
+      color: white;
+      /* White back arrow */
+      font-size: 32px;
+      /* Increased size of back arrow */
+      font-weight: bold;
+      /* Makes the arrow thicker */
+      position: relative;
+      /* Changed from absolute to relative */
+      cursor: pointer;
+      padding-right: 20px;
+      /* Added padding for visual spacing */
+    }
+
+    #content p {
+      /* Specifically target paragraphs within the content area */
+      font-size: 15px;
+      /* Set font size to 15px for paragraphs */
+    }
+
+    #aboutAlan {
+      padding: 15px 15px;
+      margin-top: -10px;
+      /* Reduce the top margin to pull the content upwards */
+    }
+
+    .highlight {
+      color: red;
+      /* Color for highlighted terms */
+    }
+
+    .bullet-point {
+      list-style-type: disc;
+      /* Adds bullet points */
+      margin-left: 0px;
+      /* Indent bullet points */
+    }
+
+    #aboutAlan p:not(.highlight),
+    #aboutAlan li:not(.highlight) {
+      color: black;
+    }
+
+    #aboutAlan p.space-after,
+    #aboutAlan li.space-after {
+      margin-bottom: 24px;
+      /* This equals approximately 1.5 lines of space */
+    }
+
+    @keyframes smoothFlip360 {
+      from {
         transform: rotateY(0deg);
-    }
-    to {
+      }
+
+      to {
         transform: rotateY(180deg);
+      }
     }
-}
 
-.flip-horizontally {
-    animation: smoothFlip360 1.5s ease-out forwards;
-}
-
-</style>
+    .flip-horizontally {
+      animation: smoothFlip360 1.5s ease-out forwards;
+    }
+  </style>
 </head>
+
 <body>
 
-    <div id="appBar">
-        <div id="backArrow" onclick="history.back()">&#x2190;</div> <!-- Back arrow -->
-        <h1 id="pageTitle">About Alan</h1> <!-- Page Title -->
+  <div id="appBar">
+    <div id="backArrow" onclick="history.back()">&#x2190;</div> <!-- Back arrow -->
+    <h1 id="pageTitle">About Alan</h1> <!-- Page Title -->
+  </div>
+
+  <div id="aboutAlan">
+
+    <div style="text-align: center; margin: -10px;">
+      <img src="bigredt.png" alt="Big Red T Logo" id="logoImage"
+        style="max-width: 120px; height: auto; margin-bottom: -30px;"> <!-- Reduced margin-bottom to 5px -->
     </div>
 
     <div id="aboutAlan">
+      <p style="font-size: 15px; text-align: justify;">Alan is an AI eye & ear diagnostic assistant, comprising: a
+        foundation language model agent (runs on GPT-4/o, Claude-3, Gemini 1.5) and symbolic logic. Smart. Serious.
+        State of the art. <br><br> Clinical, local knowledge and images, are tailored to different roles such as health
+        workers and general practitioners. Concise dialogue generates a diagnosis and management plan. Use of the
+        arclight is embedded in.<br></p>
+      <ul>
+        <li class="highlight bullet-point">Expert eye & ear base – tropical/hot climate</li>
+        <li class="highlight bullet-point">Dialogue – negates errors</li>
+        <li class="highlight bullet-point space-after">Arclight aware</li>
+      </ul>
 
-        <div style="text-align: center; margin: -10px;">
-            <img src="bigredt.png" alt="Big Red T Logo" id="logoImage" style="max-width: 120px; height: auto; margin-bottom: -30px;"> <!-- Reduced margin-bottom to 5px -->
-        </div>
-        
-        
-        
-        <div id="aboutAlan">
-            <p style="font-size: 15px; text-align: justify;">Alan is an AI eye & ear diagnostic assistant, comprising: a foundation language model agent (runs on GPT-4/o, Claude-3, Gemini 1.5) and symbolic logic. Smart. Serious. State of the art. <br><br> Clinical, local knowledge and images, are tailored to different roles such as health workers and general practitioners. Concise dialogue generates a diagnosis and management plan. Use of the arclight is embedded in.<br></p>
-            <ul>
-              <li class="highlight bullet-point">Expert eye & ear base – tropical/hot climate</li>
-              <li class="highlight bullet-point">Dialogue – negates errors</li>
-              <li class="highlight bullet-point space-after">Arclight aware</li>
-            </ul>
-        
-            <p style="font-size: 15px;"><strong>Explainable</strong> – verified facts/rules, images/notes; (error rate, bias)</p>
-            <p style="font-size: 15px;"><strong>Efficient</strong> – concise, focused, plain language</p>
-            <p style="font-size: 15px;"><strong>Encouraging</strong> – empathy, practical, teacher</p>
-            <p style="font-size: 15px;"><strong>Easy-to-use</strong> – app, voice, vision</p>
-        
-            <p style="font-size: 12px;"> <br><br> wjw 6/6/24</p>
-        </div>
-        
+      <p style="font-size: 15px;"><strong>Explainable</strong> – verified facts/rules, images/notes; (error rate, bias)
+      </p>
+      <p style="font-size: 15px;"><strong>Efficient</strong> – concise, focused, plain language</p>
+      <p style="font-size: 15px;"><strong>Encouraging</strong> – empathy, practical, teacher</p>
+      <p style="font-size: 15px;"><strong>Easy-to-use</strong> – app, voice, vision</p>
+
+      <p style="font-size: 12px;"> <br><br> wjw 6/6/24</p>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                var logoImage = document.getElementById('logoImage');
-                if (logoImage) {
-                    logoImage.classList.add('flip-horizontally');  // Apply the horizontal flip animation class
-                }
-            }, 1000);  // Delay of 1 second
-        });
-        </script>
-        
+
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(function () {
+        var logoImage = document.getElementById('logoImage');
+        if (logoImage) {
+          logoImage.classList.add('flip-horizontally');  // Apply the horizontal flip animation class
+        }
+      }, 1000);  // Delay of 1 second
+    });
+  </script>
+
 </body>
+
 </html>

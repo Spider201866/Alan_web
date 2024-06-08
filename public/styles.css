@@ -549,9 +549,9 @@ p {
   display: none; /* Hide by default */
   position: fixed; /* Position fixed to the right side */
   top: 80px;
-  right: -245px; /* Start off-screen to the right */
-  width: 245px; /* Set a fixed width for the slide-out menu */
-  height: 40%; /* Full height */
+  right: -300px; /* Start off-screen to the right */
+  width: 300px; /* Set a fixed width for the slide-out menu */
+  height: 50%; /* Full height */
   background-color: rgb(242, 242, 242);
   padding: 40px;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);

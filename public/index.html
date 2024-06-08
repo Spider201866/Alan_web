@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Splash Screen</title>
     <style>
-        body, html {
+        body,
+        html {
             height: 100%;
             margin: 0;
             padding: 0;
@@ -17,6 +19,7 @@
             background-color: #f0f0f0;
             box-sizing: border-box;
         }
+
         .black-screen {
             position: fixed;
             top: 0;
@@ -31,10 +34,12 @@
             visibility: hidden;
             transition: opacity 0.50s ease-in-out;
         }
+
         .black-screen.visible {
             visibility: visible;
             opacity: 1;
         }
+
         .black-screen img {
             width: auto;
             max-width: 30%;
@@ -42,24 +47,29 @@
             filter: blur(20px);
             transition: transform 4s ease-in-out, filter 4s ease-in-out;
         }
+
         .hidden {
             visibility: hidden;
             opacity: 0;
             transition: visibility 0s 0.5s, opacity 0.5s linear;
         }
+
         .visible {
             visibility: visible;
             opacity: 1;
             transition: opacity 0.5s linear;
         }
+
         button:disabled {
             background-color: #ccc;
         }
+
         .splash-screen img,
         .splash-screen p {
             transition: transform 3s ease-in-out;
             margin: 20px 0;
         }
+
         .splash-screen img {
             width: 30vw;
             max-width: 150px;
@@ -68,19 +78,23 @@
             transform-origin: center;
             -webkit-transform-origin: center;
         }
+
         @keyframes zoomEffect {
             from {
                 transform: scale(0.8);
                 -webkit-transform: scale(0.8);
             }
+
             to {
                 transform: scale(1);
                 -webkit-transform: scale(1);
             }
         }
+
         .splash-screen.visible img {
             animation: zoomEffect 3s ease-in-out forwards;
         }
+
         .splash-screen,
         .instruction-screen {
             position: absolute;
@@ -94,28 +108,33 @@
             align-items: center;
             text-align: center;
         }
+
         .splash-screen img,
         .splash-screen p {
             transition: transform 3s ease-in-out;
             margin: 20px 0;
         }
+
         .splash-screen img {
             width: 30vw;
             max-width: 150px;
             height: auto;
             margin-bottom: 60px;
         }
+
         #logo2 {
             width: 50vw;
             max-width: 300px;
             margin-bottom: 60px;
         }
+
         .splash-screen p {
             font-size: calc(12px + 1vmin);
             font-weight: bold;
             font-style: italic;
             margin-top: 60px;
         }
+
         .instruction-screen {
             padding: 40px;
             display: flex;
@@ -126,14 +145,17 @@
             overflow: auto;
             box-sizing: border-box;
         }
+
         .instruction-screen p {
             font-size: 16px;
-            margin: 10px 20px; /* Adjusted margin to reduce gap */
+            margin: 10px 20px;
+            /* Adjusted margin to reduce gap */
             color: #333;
         }
 
         .instruction-screen p.good-luck {
-            margin-bottom: 20px; /* Add space after "Good luck!" */
+            margin-bottom: 20px;
+            /* Add space after "Good luck!" */
         }
 
         button {
@@ -145,10 +167,15 @@
             border-radius: 15px;
             cursor: pointer;
         }
+
         button:disabled {
             background-color: #ccc;
         }
-        select, .geo-button, .name-input, .contact-input {
+
+        select,
+        .geo-button,
+        .name-input,
+        .contact-input {
             padding: 4px 20px;
             font-size: 14px;
             color: grey;
@@ -156,11 +183,14 @@
             border: 1px solid grey;
             cursor: pointer;
             border-radius: 15px;
-            width: 230px; /* Set a fixed width for all elements */
-            box-sizing: border-box; /* Include padding and border in the element's total width */
+            width: 230px;
+            /* Set a fixed width for all elements */
+            box-sizing: border-box;
+            /* Include padding and border in the element's total width */
             text-align: center;
             margin-bottom: 20px;
         }
+
         select {
             appearance: none;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>');
@@ -170,11 +200,15 @@
             max-height: 300px;
             line-height: 1.2;
         }
-        .geo-button.clicked, .name-input.entered, .contact-input.entered {
+
+        .geo-button.clicked,
+        .name-input.entered,
+        .contact-input.entered {
             color: blue;
         }
     </style>
 </head>
+
 <body>
     <div class="splash-screen visible">
         <img id="logo1" src="./Q.png" alt="Q Logo" />
@@ -184,9 +218,10 @@
 
     <div class="instruction-screen hidden">
         <img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: -10px" />
-        <p>Alan is an AI assistant for students and those who only occasionally see eye or ear cases. Write or speak clearly and avoid identifying names or details.</p>
+        <p>Alan is an AI assistant for students and those who only occasionally see eye or ear cases. Write or speak
+            clearly and avoid identifying names or details.</p>
         <p class="good-luck">Good luck!</p>
-        
+
 
         <input type="text" id="nameInput" class="name-input" placeholder="Name">
 
@@ -237,12 +272,12 @@
             skyImage.style.transform = 'scale(1)';
             skyImage.style.transition = 'transform 4s ease-in-out, filter 4s ease-in-out';
 
-            nameInput.addEventListener("input", function() {
+            nameInput.addEventListener("input", function () {
                 nameInput.classList.toggle('entered', nameInput.value.trim() !== '');
                 checkSelections();
             });
             jobSelectElement.addEventListener("change", checkSelections);
-            contactInput.addEventListener("input", function() {
+            contactInput.addEventListener("input", function () {
                 contactInput.classList.toggle('entered', contactInput.value.trim() !== '');
                 checkSelections();
             });
@@ -300,6 +335,7 @@
                         if (data && data.results && data.results.length > 0) {
                             const components = data.results[0].components;
                             const country = components.country;
+                            const iso_a3 = components['ISO_3166-1_alpha-3'] || 'no country returned';
                             let area = '';
 
                             if (components.city) {
@@ -311,9 +347,11 @@
                             }
 
                             localStorage.setItem("country", country);
+                            localStorage.setItem("iso_a3", iso_a3);
                             localStorage.setItem("area", area);
 
                             console.log("Country:", country); // For debugging purposes
+                            console.log("ISO Alpha-3 Code:", iso_a3); // For debugging purposes
                             console.log("Area:", area); // For debugging purposes
                         } else {
                             console.error('No results found');
@@ -335,6 +373,7 @@
                 const latitude = localStorage.getItem('latitude') || 'Not set';
                 const longitude = localStorage.getItem('longitude') || 'Not set';
                 const country = localStorage.getItem('country') || 'Not set';
+                const iso_a3 = localStorage.getItem('iso_a3') || 'Not set';
                 const area = localStorage.getItem('area') || 'Not set';
                 const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
                 const version = '1.0';
@@ -346,6 +385,7 @@
                     latitude,
                     longitude,
                     country,
+                    iso_a3,
                     area,
                     contactInfo,
                     version,
@@ -359,14 +399,14 @@
                     },
                     body: JSON.stringify(userInfo)
                 })
-                .then(response => response.text())
-                .then(data => {
-                    console.log('Recorded Successfully:', data);
-                    localStorage.setItem('infoRecorded', 'true');
-                })
-                .catch(error => {
-                    console.error('Error recording data:', error);
-                });
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log('Recorded Successfully:', data);
+                        localStorage.setItem('infoRecorded', 'true');
+                    })
+                    .catch(error => {
+                        console.error('Error recording data:', error);
+                    });
 
                 // Make the black screen visible
                 blackScreen.style.visibility = 'visible';
@@ -417,4 +457,5 @@
         }
     </script>
 </body>
+
 </html>
