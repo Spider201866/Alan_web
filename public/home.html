@@ -108,8 +108,7 @@
 
     <div class="content-wrapper" style="display: flex; flex-direction: column; justify-content: flex-start; min-height: 20vh; font-weight: bold;">
         <div class="logo-and-text-container" style="text-align: center; line-height: 1.0; padding-top: 20px;">
-            <!-- <img src="./triangle.png" alt="Logo" id="logo-image" style="max-width: 100px; display: block; margin: 0 auto; margin-bottom: 5px;">  -->
-            <p id="additional-text" class="grey-text" style="font-size: 15px; color: grey; margin-top: 0px;"> <!-- Adjust margin-top to reduce space -->
+            <p id="additional-text" class="grey-text" style="font-size: 15px; color: grey; margin-top: 0px;">
                 <span id="good-history">Good History</span>  |  
                 <span id="examine-well">Examine Well</span>  |  
                 <span id="use-arclight">Use Arclight</span>
@@ -146,17 +145,14 @@
 
     <script>
         function toggleZoom(image) {
-            // Check if the image is already zoomed
             if (image.style.height === '200px') {
-                // If not zoomed, enlarge to fit the screen
-                image.style.height = 'auto'; // Reset height to auto for natural aspect ratio
-                image.style.maxWidth = 'none'; // Allow image to exceed the max-width of 100%
-                image.style.cursor = 'zoom-out'; // Change cursor for zoom-out
+                image.style.height = 'auto';
+                image.style.maxWidth = 'none';
+                image.style.cursor = 'zoom-out';
             } else {
-                // If zoomed, revert to thumbnail size
-                image.style.height = '200px'; // Thumbnail height
-                image.style.maxWidth = '100%'; // Ensure image does not exceed container width
-                image.style.cursor = 'zoom-in'; // Change cursor for zoom-in
+                image.style.height = '200px';
+                image.style.maxWidth = '100%';
+                image.style.cursor = 'zoom-in';
             }
         }
 
@@ -167,18 +163,47 @@
             const dropdown = document.getElementById('language-dropdown');
             dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
         });
-
     </script>
     
-    <script type="module">
-        import { initChatbot } from './chatbot-module.js';
-        initChatbot();
-    </script>
     <script type="module" src="listener-module.js"></script>
+
     <script type="module">
         import { translations } from './language.js';
     
         document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOMContentLoaded event fired");
+
+            const classification = localStorage.getItem('classification') || 'Unknown';
+            const roleClassification = localStorage.getItem('roleClassification') || '';
+
+            console.log('Classification:', classification);
+            console.log('Role Classification:', roleClassification);
+
+            let chatbotModuleUrl = '';
+
+            if (roleClassification === ' (M)' && ['HI', 'MI'].includes(classification)) {
+                chatbotModuleUrl = './llm1-chatbot-module.js';
+            } else if (roleClassification === ' (M)' && ['LI', 'VLI'].includes(classification)) {
+                chatbotModuleUrl = './llm3-chatbot-module.js';
+            } else if (roleClassification === ' (F)' && ['HI', 'MI'].includes(classification)) {
+                chatbotModuleUrl = './llm2-chatbot-module.js';
+            } else if (roleClassification === ' (F)' && ['LI', 'VLI'].includes(classification)) {
+                chatbotModuleUrl = './llm4-chatbot-module.js';
+            }
+
+            console.log('Chatbot Module URL:', chatbotModuleUrl);
+
+            if (chatbotModuleUrl) {
+                import(chatbotModuleUrl).then(module => {
+                    module.initChatbot();
+                    console.log(`Loaded module: ${chatbotModuleUrl}`);
+                }).catch(error => {
+                    console.error('Error loading chatbot module:', error);
+                });
+            } else {
+                console.error('No matching chatbot module found.');
+            }
+
             const menuIcon = document.querySelector('.menu-icon');
             const tray = document.querySelector('.side-menu');
             const instructionsButton = document.getElementById("instructions-button");
@@ -187,7 +212,6 @@
             var storedJobRole = localStorage.getItem('selectedJobRole') || 'Not selected';
             var storedCountry = localStorage.getItem('selectedCountry') || 'Not selected';
     
-            // Define a mapping from the stored job role descriptions to the translation keys
             const jobRoleKeys = {
                 "Health worker": "healthWorker",
                 "Nurse": "nurse",
@@ -203,19 +227,18 @@
                 "Audiologist": "audiologist",
                 "Ear care practitioner": "earCarePractitioner"
             };
-    
+
             function updateUserInfoDisplay(lang) {
-                // Get the translation key from the mappings or default to the stored value if not found
                 let roleKey = jobRoleKeys[storedJobRole] || storedJobRole;
                 let translatedJobRole = translations[lang][roleKey] || storedJobRole;
                 let storedLatitude = localStorage.getItem('latitude') || 'Not set';
                 let storedLongitude = localStorage.getItem('longitude') || 'Not set';
                 let storedCountry = localStorage.getItem('country') || 'Not set';
                 let storedArea = localStorage.getItem('area') || 'Not set';
-    
+
                 userInfo.innerHTML = `${translatedJobRole}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${storedLatitude}, ${storedLongitude}`;
             }
-    
+
             function updateLanguageDisplays(lang) {
                 document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
                 document.getElementById('good-history').textContent = translations[lang].goodHistory;
@@ -223,33 +246,29 @@
                 document.getElementById('use-arclight').textContent = translations[lang].useArclight;
                 document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
                 document.querySelector('.chatbot-version').textContent = translations[lang].alanMistakes;
-                updateUserInfoDisplay(lang); // Also update the job role and country as per the selected language
+                updateUserInfoDisplay(lang);
             }
-    
+
             function updateButtonStyle(button) {
                 button.classList.remove('pulse');
                 button.style.backgroundColor = 'grey';
                 button.style.color = 'white';
             }
-    
-            // Check if the instructions button was previously clicked and update its style
+
             if (localStorage.getItem("instructionsClicked") === "true") {
                 updateButtonStyle(instructionsButton);
             }
-    
-            // Dropdown for language selection
+
             dropdown.addEventListener('change', function() {
                 const lang = this.value;
                 updateLanguageDisplays(lang);
             });
-    
-            // Menu toggle
+
             menuIcon.addEventListener('click', function() {
                 tray.style.left = (tray.style.left === '0px' ? '-370px' : '0px');
                 this.classList.toggle('active');
             });
-    
-            // Instructions button behaviour
+
             instructionsButton.addEventListener("click", function(event) {
                 event.preventDefault();
                 localStorage.setItem("instructionsClicked", "true");
@@ -258,24 +277,20 @@
                     window.location.href = 'instructions.html';
                 }, 300);
             });
-    
-            // Initial language setup, default to English or another default language
+
             updateLanguageDisplays('en');
         });
-    
-        // Get the stored name, extract the first letter, and make it uppercase
+
         var storedName = localStorage.getItem('name') || 'User';
         var initialLetter = storedName.charAt(0).toUpperCase();
-    
-        // Create the name icon
+
         var nameIcon = document.createElement('div');
         nameIcon.className = 'name-icon';
         nameIcon.textContent = initialLetter;
-    
-        // Position the name icon
+
         var header = document.querySelector('.chatbot-header');
         header.appendChild(nameIcon);
-    
+
         function openPopup() {
             const popup = document.getElementById('popup');
             const popupContent = document.getElementById('popup-content');
@@ -289,54 +304,49 @@
             const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
             const classification = localStorage.getItem('classification') || 'Unknown';
             const roleClassification = localStorage.getItem('roleClassification') || '';
-    
+
             console.log('Name:', name);
             console.log('Role:', role);
             console.log('Latitude:', latitude);
             console.log('Longitude:', longitude);
             console.log('Country:', country);
-            console.log('ISO Alpha-3 Code:', iso_a3); // Add this line to debug ISO Alpha-3 code
+            console.log('ISO Alpha-3 Code:', iso_a3);
             console.log('Area:', area);
-            console.log('Contact Info:', contactInfo); // Add this line to debug contact info
-    
-            // Get current date and time in UK format
+            console.log('Contact Info:', contactInfo);
+
             const now = new Date();
             const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+            const month = String(now.getMonth() + 1).padStart(2, '0');
             const year = now.getFullYear();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
             const currentDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
-    
+
             popupContent.innerHTML = `
                 <p>Name: ${name}</p>
                 <p>Role: ${role}${roleClassification}</p>
                 <p>Lat & Long: ${latitude}, ${longitude}</p>
-                <p>Country: ${country} (${iso_a3}) [${classification}]</p> <!-- Add classification to popup -->
+                <p>Country: ${country} (${iso_a3}) [${classification}]</p>
                 <p>Area: ${area}</p>
-                <p>Contact: ${contactInfo}</p> <!-- Add contact info to popup -->
+                <p>Contact: ${contactInfo}</p>
                 <p>Version: 1.0</p>
                 <p>Date & Time: ${currentDateTime}</p>
             `;
-    
-            // Slide in the popup from the right
+
             popup.style.right = '0';
             popup.style.display = 'block';
         }
-    
+
         function closePopup() {
             const popup = document.getElementById('popup');
-            // Slide out the popup to the right
             popup.style.right = '-300px';
-            // Wait for the animation to complete before hiding the popup
             setTimeout(() => {
                 popup.style.display = 'none';
             }, 300);
         }
-    
+
         document.addEventListener('DOMContentLoaded', function() {
-            // Event listener for the name icon
             document.querySelector('.name-icon').addEventListener('click', function(event) {
                 const popup = document.getElementById('popup');
                 if (popup.style.display === 'block' && popup.style.right === '0px') {
@@ -345,11 +355,9 @@
                     openPopup();
                 }
             });
-    
-            // Event listener for the close button
+
             document.querySelector('.popup-close').addEventListener('click', closePopup);
         });
     </script>
-    
 </body>
 </html>
