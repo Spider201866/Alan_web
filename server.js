@@ -28,8 +28,8 @@ app.get('/view-records', (req, res) => {
 
 // Endpoint to record user information
 app.post('/record-info', (req, res) => {
-    const { name, role, latitude, longitude, country, iso_a3, classification, llm, area, contactInfo, version, dateTime } = req.body;
-    const userInfo = { name, role, latitude, longitude, country, iso_a3, classification, llm, area, contactInfo, version, dateTime };
+    const { name, role, latitude, longitude, country, iso_a3, classification, roleClassification, area, contactInfo, version, dateTime } = req.body;
+    const userInfo = { name, role, latitude, longitude, country, iso_a3, classification, roleClassification, area, contactInfo, version, dateTime };
 
     const filePath = path.join(__dirname, 'user-info.json');
 
@@ -48,7 +48,6 @@ app.post('/record-info', (req, res) => {
         });
     });
 });
-
 
 // Endpoint to fetch records with password protection
 app.post('/fetch-records', (req, res) => {

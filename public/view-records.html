@@ -14,8 +14,7 @@
         }
         
         h1 {
-            font-size: 40
-            px; /* Specific font size for headings */
+            font-size: 40px; /* Specific font size for headings */
             text-align: center;
             margin-top: 50px;
         }
@@ -28,12 +27,12 @@
             font-weight: normal; /* Ensures 'Onboarding' uses the normal weight of the default font */
         }
         .container {
-    padding: 0 20px; /* Adds 20px padding on the left and right */
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+            padding: 0 20px; /* Adds 20px padding on the left and right */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
         th, td {
             border: 1px solid black;
@@ -107,70 +106,69 @@ table {
             let currentPassword = '';
 
             function fetchRecords(password) {
-    fetch('/fetch-records', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache' // Disable cache
-        },
-        body: JSON.stringify({ password })
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Invalid password');
-        }
-    })
-    .then(data => {
-        const recordsDiv = document.getElementById('records');
-        if (data.length === 0) {
-            recordsDiv.innerHTML = '<p>No records found.</p>';
-        } else {
-            let table = `<table>
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Name</th>
-                                    <th>Role</th>
-                                    <th>Latitude</th>
-                                    <th>Longitude</th>
-                                    <th>Country</th>
-                                    <th>Area</th>
-                                    <th>Contact</th>
-                                    <th>Version</th>
-                                    <th>Date & Time</th>
-                                    <th>Map</th>
-                                </tr>
-                            </thead>
-                            <tbody>`;
-            data.forEach((record, index) => {
-                const countryDetails = `${record.country} (${record.iso_a3}) [${record.classification}] {${record.llm}}`;
-                table += `<tr>
-                            <td>${index + 1}</td>
-                            <td>${record.name}</td>
-                            <td>${record.role}</td>
-                            <td>${record.latitude}</td>
-                            <td>${record.longitude}</td>
-                            <td>${countryDetails}</td>
-                            <td>${record.area}</td>
-                            <td>${record.contactInfo}</td>
-                            <td>${record.version}</td>
-                            <td>${record.dateTime}</td>
-                            <td><button onclick="showMap(${record.latitude}, ${record.longitude})">Show Map</button></td>
-                          </tr>`;
-            });
-            table += `</tbody></table>`;
-            recordsDiv.innerHTML = table;
-            refreshContainer.style.display = 'inline';
-            passwordContainer.style.display = 'none'; // Hide password input and submit button
-        }
-    })
-    .catch(error => {
-        alert(error.message);
-    });
-}
-
+                fetch('/fetch-records', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache' // Disable cache
+                    },
+                    body: JSON.stringify({ password })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Invalid password');
+                    }
+                })
+                .then(data => {
+                    const recordsDiv = document.getElementById('records');
+                    if (data.length === 0) {
+                        recordsDiv.innerHTML = '<p>No records found.</p>';
+                    } else {
+                        let table = `<table>
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Name</th>
+                                                <th>Role</th>
+                                                <th>Latitude</th>
+                                                <th>Longitude</th>
+                                                <th>Country</th>
+                                                <th>Area</th>
+                                                <th>Contact</th>
+                                                <th>Version</th>
+                                                <th>Date & Time</th>
+                                                <th>Map</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>`;
+                        data.forEach((record, index) => {
+                            const countryDetails = `${record.country} (${record.iso_a3}) [${record.classification}]`;
+                            table += `<tr>
+                                        <td>${index + 1}</td>
+                                        <td>${record.name}</td>
+                                        <td>${record.role}${record.roleClassification}</td>
+                                        <td>${record.latitude}</td>
+                                        <td>${record.longitude}</td>
+                                        <td>${countryDetails}</td>
+                                        <td>${record.area}</td>
+                                        <td>${record.contactInfo}</td>
+                                        <td>${record.version}</td>
+                                        <td>${record.dateTime}</td>
+                                        <td><button onclick="showMap(${record.latitude}, ${record.longitude})">Show Map</button></td>
+                                      </tr>`;
+                        });
+                        table += `</tbody></table>`;
+                        recordsDiv.innerHTML = table;
+                        refreshContainer.style.display = 'inline';
+                        passwordContainer.style.display = 'none'; // Hide password input and submit button
+                    }
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+            }
 
             submitButton.addEventListener('click', function() {
                 currentPassword = passwordInput.value;

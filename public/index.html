@@ -257,204 +257,247 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const nameInput = document.getElementById("nameInput");
-            const jobSelectElement = document.getElementById("job-role-select");
-            const geolocationButton = document.getElementById("geolocationButton");
-            const contactInput = document.getElementById("contactInput");
-            const acceptButton = document.getElementById("acceptButton");
-            const locationInfo = document.getElementById("locationInfo");
-            const blackScreen = document.getElementById("blackScreen");
-            const skyImage = blackScreen.querySelector('img');
-            let locationAccepted = false;
+document.addEventListener("DOMContentLoaded", function () {
+    const nameInput = document.getElementById("nameInput");
+    const jobSelectElement = document.getElementById("job-role-select");
+    const geolocationButton = document.getElementById("geolocationButton");
+    const contactInput = document.getElementById("contactInput");
+    const acceptButton = document.getElementById("acceptButton");
+    const locationInfo = document.getElementById("locationInfo");
+    const blackScreen = document.getElementById("blackScreen");
+    const skyImage = blackScreen.querySelector('img');
+    let locationAccepted = false;
 
-            // Initial setup for the image transformation
-            skyImage.style.transform = 'scale(1)';
-            skyImage.style.transition = 'transform 4s ease-in-out, filter 4s ease-in-out';
+    // Initial setup for the image transformation
+    skyImage.style.transform = 'scale(1)';
+    skyImage.style.transition = 'transform 4s ease-in-out, filter 4s ease-in-out';
 
-            nameInput.addEventListener("input", function () {
-                nameInput.classList.toggle('entered', nameInput.value.trim() !== '');
-                checkSelections();
-            });
-            jobSelectElement.addEventListener("change", checkSelections);
-            contactInput.addEventListener("input", function () {
-                contactInput.classList.toggle('entered', contactInput.value.trim() !== '');
-                checkSelections();
-            });
+    nameInput.addEventListener("input", function () {
+        nameInput.classList.toggle('entered', nameInput.value.trim() !== '');
+        checkSelections();
+    });
+    jobSelectElement.addEventListener("change", checkSelections);
+    contactInput.addEventListener("input", function () {
+        contactInput.classList.toggle('entered', contactInput.value.trim() !== '');
+        checkSelections();
+    });
 
-            function checkSelections() {
-                jobSelectElement.style.color = jobSelectElement.value ? 'blue' : 'grey';
-                acceptButton.disabled = !(nameInput.value.trim() && jobSelectElement.value && contactInput.value.trim() && locationAccepted);
-            }
+    function checkSelections() {
+        jobSelectElement.style.color = jobSelectElement.value ? 'blue' : 'grey';
+        acceptButton.disabled = !(nameInput.value.trim() && jobSelectElement.value && contactInput.value.trim() && locationAccepted);
+    }
 
-            geolocationButton.addEventListener("click", function () {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(showPosition, showError);
-                } else {
-                    locationInfo.innerText = 'Geolocation is not supported by this browser.';
-                    locationInfo.style.display = 'block';
-                }
-            });
-
-            function showPosition(position) {
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
-                localStorage.setItem("latitude", latitude);
-                localStorage.setItem("longitude", longitude);
-                fetchCountryFromLatLong(latitude, longitude);
-                geolocationButton.classList.add('clicked');
-                locationAccepted = true;
-                checkSelections();
-            }
-
-            function showError(error) {
-                switch (error.code) {
-                    case error.PERMISSION_DENIED:
-                        locationInfo.innerText = 'User denied the request for Geolocation.';
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        locationInfo.innerText = 'Location information is unavailable.';
-                        break;
-                    case error.TIMEOUT:
-                        locationInfo.innerText = 'The request to get user location timed out.';
-                        break;
-                    case error.UNKNOWN_ERROR:
-                        locationInfo.innerText = 'An unknown error occurred.';
-                        break;
-                }
-                locationInfo.style.display = 'block';
-            }
-
-            function fetchCountryFromLatLong(latitude, longitude) {
-                const OPEN_CAGE_API_KEY = 'b4217f147a5a4b179b336f5079b57207';
-                const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${OPEN_CAGE_API_KEY}`;
-
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data && data.results && data.results.length > 0) {
-                            const components = data.results[0].components;
-                            const country = components.country;
-                            const iso_a3 = components['ISO_3166-1_alpha-3'] || 'no country returned';
-                            let area = '';
-
-                            if (components.city) {
-                                area = components.city;
-                            } else if (components.town) {
-                                area = components.town;
-                            } else {
-                                area = 'Unknown'; // Fallback if neither city nor town is found
-                            }
-
-                            localStorage.setItem("country", country);
-                            localStorage.setItem("iso_a3", iso_a3);
-                            localStorage.setItem("area", area);
-
-                            console.log("Country:", country); // For debugging purposes
-                            console.log("ISO Alpha-3 Code:", iso_a3); // For debugging purposes
-                            console.log("Area:", area); // For debugging purposes
-                        } else {
-                            console.error('No results found');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching country and area:', error);
-                    });
-            }
-
-            acceptButton.addEventListener("click", function () {
-                localStorage.setItem("name", nameInput.value);
-                localStorage.setItem("selectedJobRole", jobSelectElement.value);
-                localStorage.setItem("contactInfo", contactInput.value);
-
-                // Retrieve user information from local storage
-                const name = localStorage.getItem('name') || 'Not set';
-                const role = localStorage.getItem('selectedJobRole') || 'Not set';
-                const latitude = localStorage.getItem('latitude') || 'Not set';
-                const longitude = localStorage.getItem('longitude') || 'Not set';
-                const country = localStorage.getItem('country') || 'Not set';
-                const iso_a3 = localStorage.getItem('iso_a3') || 'Not set';
-                const area = localStorage.getItem('area') || 'Not set';
-                const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
-                const version = '1.0';
-                const dateTime = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
-
-                const userInfo = {
-                    name,
-                    role,
-                    latitude,
-                    longitude,
-                    country,
-                    iso_a3,
-                    area,
-                    contactInfo,
-                    version,
-                    dateTime
-                };
-
-                fetch('https://alan.up.railway.app/record-info', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(userInfo)
-                })
-                    .then(response => response.text())
-                    .then(data => {
-                        console.log('Recorded Successfully:', data);
-                        localStorage.setItem('infoRecorded', 'true');
-                    })
-                    .catch(error => {
-                        console.error('Error recording data:', error);
-                    });
-
-                // Make the black screen visible
-                blackScreen.style.visibility = 'visible';
-                blackScreen.style.opacity = 1;
-
-                // Start the zoom and blur effect shortly after making the image visible
-                setTimeout(() => {
-                    skyImage.style.transform = 'scale(1.3)';
-                    skyImage.style.filter = 'blur(0px)';
-                }, 200);
-
-                // Fade out after the set display time
-                setTimeout(() => {
-                    blackScreen.style.opacity = 0;
-                    setTimeout(() => {
-                        window.location.href = "home.html";
-                    }, 250);
-                }, 6000);
-            });
-
-            if (!sessionStorage.getItem("splashShown")) {
-                sessionStorage.setItem("splashShown", "true");
-                showSplashScreen();
-            } else {
-                window.location.href = "home.html";
-            }
-        });
-
-        function showSplashScreen() {
-            const logo1 = document.getElementById("logo1");
-            const logo2 = document.getElementById("logo2");
-            logo1.style.transform = "scale(0.8)";
-            logo2.style.transform = "rotateX(-90deg)";
-
-            setTimeout(() => {
-                logo1.style.transform = "scale(1)";
-                logo2.style.transform = "rotateX(0deg)";
-            }, 100);
-
-            setTimeout(() => {
-                const splashScreen = document.querySelector(".splash-screen");
-                const instructionScreen = document.querySelector(".instruction-screen");
-                splashScreen.classList.remove("visible");
-                splashScreen.classList.add("hidden");
-                instructionScreen.classList.remove("hidden");
-                instructionScreen.classList.add("visible");
-            }, 6000);
+    geolocationButton.addEventListener("click", function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            locationInfo.innerText = 'Geolocation is not supported by this browser.';
+            locationInfo.style.display = 'block';
         }
+    });
+
+    function showPosition(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        localStorage.setItem("latitude", latitude);
+        localStorage.setItem("longitude", longitude);
+        fetchCountryFromLatLong(latitude, longitude);
+        geolocationButton.classList.add('clicked');
+        locationAccepted = true;
+        checkSelections();
+    }
+
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                locationInfo.innerText = 'User denied the request for Geolocation.';
+                break;
+            case error.POSITION_UNAVAILABLE:
+                locationInfo.innerText = 'Location information is unavailable.';
+                break;
+            case error.TIMEOUT:
+                locationInfo.innerText = 'The request to get user location timed out.';
+                break;
+            case error.UNKNOWN_ERROR:
+                locationInfo.innerText = 'An unknown error occurred.';
+                break;
+        }
+        locationInfo.style.display = 'block';
+    }
+
+    function fetchCountryFromLatLong(latitude, longitude) {
+        const OPEN_CAGE_API_KEY = 'b4217f147a5a4b179b336f5079b57207';
+        const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${OPEN_CAGE_API_KEY}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.results && data.results.length > 0) {
+                    const components = data.results[0].components;
+                    const country = components.country;
+                    const iso_a3 = components['ISO_3166-1_alpha-3'];
+                    let area = '';
+
+                    if (components.city) {
+                        area = components.city;
+                    } else if (components.town) {
+                        area = components.town;
+                    } else {
+                        area = 'Unknown'; // Fallback if neither city nor town is found
+                    }
+
+                    localStorage.setItem("country", country);
+                    localStorage.setItem("iso_a3", iso_a3);
+                    localStorage.setItem("area", area);
+
+                    console.log("Country:", country); // For debugging purposes
+                    console.log("ISO Alpha-3 Code:", iso_a3); // For debugging purposes
+                    console.log("Area:", area); // For debugging purposes
+
+                    // Store classifications in local storage
+                    storeClassifications(iso_a3);
+                } else {
+                    console.error('No results found');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching country and area:', error);
+            });
+    }
+
+    function storeClassifications(iso_a3) {
+        // Define the classification groups for countries
+        const classifications = {
+            "HI": ["QAT", "MAC", "LUX", "SGP", "BRN", "IRL", "NOR", "KWT", "ARE", "CHE", "HKG", "SMR", "USA", "SAU", "NLD", "ISL", "BHR", "SWE", "DEU", "AUS", "TWN", "DNK", "AUT", "CAN", "BEL", "OMN", "FIN", "GBR", "FRA", "JPN", "MLT", "KOR", "NZL", "ESP", "ITA", "PRI", "CYP", "ISR", "CZE"],
+            "MI": ["GNQ", "SVN", "SVK", "LTU", "EST", "TTO", "PRT", "POL", "HUN", "MYS", "SYC", "RUS", "GRC", "LVA", "KNA", "ATG", "TUR", "KAZ", "BHS", "CHL", "PAN", "HRV", "ROU", "URY", "MUS", "BGR", "ARG", "IRN", "MEX", "LBN", "GAB", "MDV", "TKM", "BLR", "BWA", "THA", "CHN", "BRA", "ZAF", "IND"],
+            "LI": ["BRB", "MNE", "AZE", "CRI", "IRQ", "DOM", "PLW", "MKD", "SRB", "DZA", "GRD", "COL", "SUR", "LCA", "PER", "LKA", "EGY", "MNG", "JOR", "ALB", "VEN", "IDN", "DMA", "XKX", "NRU", "TUN", "VCT", "NAM", "BIH", "ECU", "GEO", "SWZ", "FJI", "LBY", "PRY", "JAM", "ARM", "SLV", "BTN", "UKR", "MAR", "BLZ", "GUY", "PHL", "GTM", "BOL", "LAO", "UZB", "CPV", "VNM", "PAK"],
+            "VLI": ["AGO", "COG", "MMR", "NGA", "NIC", "WSM", "MDA", "TON", "HND", "TLS", "GHA", "SDN", "BGD", "MRT", "KHM", "ZMB", "LSO", "CIV", "TUV", "PNG", "KGZ", "DJI", "KEN", "MHL", "FSM", "CMR", "TZA", "STP", "TJK", "VUT", "NPL", "SEN", "TCD", "UGA", "YEM", "ZWE", "BEN", "MLI", "SLB", "ETH", "RWA", "GIN", "KIR", "AFG", "BFA", "HTI", "GNB", "SLE", "GMB", "SSD", "TGO", "COM", "MDG", "ERI", "MOZ", "MWI", "NER", "LBR", "BDI", "COD", "CAF"]
+        };
+
+        // Determine the country classification
+        let classification = "Unknown";
+        for (const [key, values] of Object.entries(classifications)) {
+            if (values.includes(iso_a3)) {
+                classification = key;
+                break;
+            }
+        }
+
+        localStorage.setItem("classification", classification);
+
+        // Determine the job role classification
+        const foundationRoles = ["Health worker", "Nurse", "Ophthalmic clinical officer", "Pharmacist", "Audiologist", "Ear care practitioner"];
+        const middleRoles = ["Medical student", "General practitioner", "Hospital doctor", "Ophthalmologist", "Optometrist", "Orthoptist", "ENT specialist"];
+
+        let role = jobSelectElement.value;
+        let roleClassification = "";
+        if (foundationRoles.includes(role)) {
+            roleClassification = " (F)";
+        } else if (middleRoles.includes(role)) {
+            roleClassification = " (M)";
+        }
+
+        localStorage.setItem("roleClassification", roleClassification);
+    }
+
+    acceptButton.addEventListener("click", function () {
+        localStorage.setItem("name", nameInput.value);
+        localStorage.setItem("selectedJobRole", jobSelectElement.value);
+        localStorage.setItem("contactInfo", contactInput.value);
+
+        // Retrieve user information from local storage
+        const name = localStorage.getItem('name') || 'Not set';
+        const role = localStorage.getItem('selectedJobRole') || 'Not set';
+        const latitude = localStorage.getItem('latitude') || 'Not set';
+        const longitude = localStorage.getItem('longitude') || 'Not set';
+        const country = localStorage.getItem('country') || 'Not set';
+        const iso_a3 = localStorage.getItem('iso_a3') || 'Not set';
+        const classification = localStorage.getItem('classification') || 'Not set';
+        const roleClassification = localStorage.getItem('roleClassification') || '';
+        const area = localStorage.getItem('area') || 'Not set';
+        const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
+        const version = '1.0';
+        const dateTime = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
+
+        const userInfo = {
+            name,
+            role,
+            latitude,
+            longitude,
+            country,
+            iso_a3,
+            classification,
+            roleClassification,
+            area,
+            contactInfo,
+            version,
+            dateTime
+        };
+
+        fetch('https://alan.up.railway.app/record-info', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userInfo)
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Recorded Successfully:', data);
+                localStorage.setItem('infoRecorded', 'true');
+            })
+            .catch(error => {
+                console.error('Error recording data:', error);
+            });
+
+        // Make the black screen visible
+        blackScreen.style.visibility = 'visible';
+        blackScreen.style.opacity = 1;
+
+        // Start the zoom and blur effect shortly after making the image visible
+        setTimeout(() => {
+            skyImage.style.transform = 'scale(1.3)';
+            skyImage.style.filter = 'blur(0px)';
+        }, 200);
+
+        // Fade out after the set display time
+        setTimeout(() => {
+            blackScreen.style.opacity = 0;
+            setTimeout(() => {
+                window.location.href = "home.html";
+            }, 250);
+        }, 6000);
+    });
+
+    if (!sessionStorage.getItem("splashShown")) {
+        sessionStorage.setItem("splashShown", "true");
+        showSplashScreen();
+    } else {
+        window.location.href = "home.html";
+    }
+});
+
+function showSplashScreen() {
+    const logo1 = document.getElementById("logo1");
+    const logo2 = document.getElementById("logo2");
+    logo1.style.transform = "scale(0.8)";
+    logo2.style.transform = "rotateX(-90deg)";
+
+    setTimeout(() => {
+        logo1.style.transform = "scale(1)";
+        logo2.style.transform = "rotateX(0deg)";
+    }, 100);
+
+    setTimeout(() => {
+        const splashScreen = document.querySelector(".splash-screen");
+        const instructionScreen = document.querySelector(".instruction-screen");
+        splashScreen.classList.remove("visible");
+        splashScreen.classList.add("hidden");
+        instructionScreen.classList.remove("hidden");
+        instructionScreen.classList.add("visible");
+    }, 6000);
+}
+
     </script>
 </body>
 
