@@ -1,10 +1,10 @@
-// LLM2 [F AND HI/MI]
+// LLM2 [F && HI/MI]
 
 import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@geoff16/dist/web.js";
 
 const initChatbot = () => {
   Chatbot.initFull({
-    chatflowid: "8cad3c5a-1a0d-4f0e-9a60-aa0e8a079496",
+    chatflowid: "0f8ccb08-e855-47eb-8153-9bf1f03f381c",
     apiHost: "https://flowiseai-railway-production-fecf.up.railway.app",
     theme: {
       button: {

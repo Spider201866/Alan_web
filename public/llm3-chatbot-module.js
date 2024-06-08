@@ -1,10 +1,10 @@
-// LLM3 [M AND LI/VLI]
+// LLM3 [M && LI/VLI]
 
 import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@geoff16/dist/web.js";
 
 const initChatbot = () => {
   Chatbot.initFull({
-    chatflowid: "8cad3c5a-1a0d-4f0e-9a60-aa0e8a079496",
+    chatflowid: "3497c2df-ab81-4f37-9ce9-361f13be351c",
     apiHost: "https://flowiseai-railway-production-fecf.up.railway.app",
     theme: {
       button: {
