@@ -180,18 +180,27 @@
             console.log('Role Classification:', roleClassification);
 
             let chatbotModuleUrl = '';
+    let selectedAgent = 'Unknown';
 
-            if (roleClassification === ' (M)' && ['HI', 'MI'].includes(classification)) {
-                chatbotModuleUrl = './llm1-chatbot-module.js';
-            } else if (roleClassification === ' (M)' && ['LI', 'VLI'].includes(classification)) {
-                chatbotModuleUrl = './llm3-chatbot-module.js';
-            } else if (roleClassification === ' (F)' && ['HI', 'MI'].includes(classification)) {
-                chatbotModuleUrl = './llm2-chatbot-module.js';
-            } else if (roleClassification === ' (F)' && ['LI', 'VLI'].includes(classification)) {
-                chatbotModuleUrl = './llm4-chatbot-module.js';
-            }
+    if (roleClassification === ' (M)' && ['HI', 'MI'].includes(classification)) {
+        chatbotModuleUrl = './agent1-chatbot-module.js';
+        selectedAgent = 'Agent 1';
+    } else if (roleClassification === ' (M)' && ['LI', 'VLI'].includes(classification)) {
+        chatbotModuleUrl = './agent3-chatbot-module.js';
+        selectedAgent = 'Agent 3';
+    } else if (roleClassification === ' (F)' && ['HI', 'MI'].includes(classification)) {
+        chatbotModuleUrl = './agent2-chatbot-module.js';
+        selectedAgent = 'Agent 2';
+    } else if (roleClassification === ' (F)' && ['LI', 'VLI'].includes(classification)) {
+        chatbotModuleUrl = './agent4-chatbot-module.js';
+        selectedAgent = 'Agent 4';
+    }
 
-            console.log('Chatbot Module URL:', chatbotModuleUrl);
+    console.log('Chatbot Module URL:', chatbotModuleUrl);
+    console.log('Selected Agent:', selectedAgent);
+
+    // Store selected agent in local storage
+    localStorage.setItem('selectedAgent', selectedAgent);
 
             if (chatbotModuleUrl) {
                 import(chatbotModuleUrl).then(module => {
@@ -304,6 +313,7 @@
             const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
             const classification = localStorage.getItem('classification') || 'Unknown';
             const roleClassification = localStorage.getItem('roleClassification') || '';
+            const selectedAgent = localStorage.getItem('selectedAgent') || 'Unknown';
 
             console.log('Name:', name);
             console.log('Role:', role);
@@ -330,7 +340,7 @@
                 <p>Country: ${country} (${iso_a3}) [${classification}]</p>
                 <p>Area: ${area}</p>
                 <p>Contact: ${contactInfo}</p>
-                <p>Version: 1.0</p>
+                <p>Version: 1.0, ${selectedAgent}</p>
                 <p>Date & Time: ${currentDateTime}</p>
             `;
 

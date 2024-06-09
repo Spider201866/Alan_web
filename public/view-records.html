@@ -6,7 +6,7 @@
     <title>View Records</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-          body, html {
+        body, html {
             font-family: "Calibri Light", Arial, sans-serif; /* Default font for the entire page */
             margin: 0;
             padding: 0;
@@ -137,7 +137,7 @@
                                                 <th>Country</th>
                                                 <th>Area</th>
                                                 <th>Contact</th>
-                                                <th>Version</th>
+                                                <th>Version & Agent</th>
                                                 <th>Date & Time</th>
                                                 <th>Map</th>
                                             </tr>
@@ -145,6 +145,7 @@
                                         <tbody>`;
                         data.forEach((record, index) => {
                             const countryDetails = `${record.country} (${record.iso_a3}) [${record.classification}]`;
+                            const versionAgent = `${record.version}, ${record.selectedAgent}`;
                             table += `<tr>
                                         <td>${index + 1}</td>
                                         <td>${record.name}</td>
@@ -154,7 +155,7 @@
                                         <td>${countryDetails}</td>
                                         <td>${record.area}</td>
                                         <td>${record.contactInfo}</td>
-                                        <td>${record.version}</td>
+                                        <td>${versionAgent}</td>
                                         <td>${record.dateTime}</td>
                                         <td><button onclick="showMap(${record.latitude}, ${record.longitude})">Show Map</button></td>
                                       </tr>`;
