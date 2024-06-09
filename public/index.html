@@ -434,21 +434,7 @@ document.addEventListener("DOMContentLoaded", function () {
             dateTime
         };
 
-        fetch('https://alan.up.railway.app/record-info', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userInfo)
-        })
-            .then(response => response.text())
-            .then(data => {
-                console.log('Recorded Successfully:', data);
-                localStorage.setItem('infoRecorded', 'true');
-            })
-            .catch(error => {
-                console.error('Error recording data:', error);
-            });
+
 
         // Make the black screen visible
         blackScreen.style.visibility = 'visible';
