@@ -196,11 +196,57 @@
         selectedAgent = 'Agent 4';
     }
 
-    console.log('Chatbot Module URL:', chatbotModuleUrl);
-    console.log('Selected Agent:', selectedAgent);
+        // Store selected agent in local storage
+        localStorage.setItem('selectedAgent', selectedAgent);
 
-    // Store selected agent in local storage
-    localStorage.setItem('selectedAgent', selectedAgent);
+        console.log('Selected Agent:', selectedAgent);
+
+        // If `selectedAgent` was initially 'Unknown', update the server
+        if (localStorage.getItem('infoRecorded') === 'true' && localStorage.getItem('selectedAgent') !== 'Unknown') {
+            const name = localStorage.getItem('name');
+            const role = localStorage.getItem('selectedJobRole');
+            const latitude = localStorage.getItem('latitude');
+            const longitude = localStorage.getItem('longitude');
+            const country = localStorage.getItem('country');
+            const iso_a3 = localStorage.getItem('iso_a3');
+            const classification = localStorage.getItem('classification');
+            const roleClassification = localStorage.getItem('roleClassification');
+            const area = localStorage.getItem('area');
+            const contactInfo = localStorage.getItem('contactInfo');
+            const version = '1.0';
+            const dateTime = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
+
+            const updatedUserInfo = {
+                name,
+                role,
+                latitude,
+                longitude,
+                country,
+                iso_a3,
+                classification,
+                roleClassification,
+                area,
+                contactInfo,
+                version,
+                dateTime,
+                selectedAgent
+            };
+
+            fetch('https://alan.up.railway.app/record-info', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedUserInfo)
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Updated Successfully:', data);
+            })
+            .catch(error => {
+                console.error('Error updating data:', error);
+            });
+        }
 
             if (chatbotModuleUrl) {
                 import(chatbotModuleUrl).then(module => {
