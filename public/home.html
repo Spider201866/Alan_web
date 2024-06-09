@@ -165,38 +165,36 @@
         });
     </script>
     
-    <script type="module" src="listener-module.js"></script>
+<script type="module" src="listener-module.js"></script>
 
-    <script type="module">
-        import { translations } from './language.js';
+<script type="module">
+    import { translations } from './language.js';
 
-        
-    
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log("DOMContentLoaded event fired");
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("DOMContentLoaded event fired");
 
-            const classification = localStorage.getItem('classification') || 'Unknown';
-            const roleClassification = localStorage.getItem('roleClassification') || '';
+        const classification = localStorage.getItem('classification') || 'Unknown';
+        const roleClassification = localStorage.getItem('roleClassification') || '';
 
-            console.log('Classification:', classification);
-            console.log('Role Classification:', roleClassification);
+        console.log('Classification:', classification);
+        console.log('Role Classification:', roleClassification);
 
-            let chatbotModuleUrl = '';
-    let selectedAgent = 'Unknown';
+        let chatbotModuleUrl = '';
+        let selectedAgent = 'Unknown';
 
-    if (roleClassification === ' (M)' && ['HI', 'MI'].includes(classification)) {
-        chatbotModuleUrl = './agent1-chatbot-module.js';
-        selectedAgent = 'Agent 1';
-    } else if (roleClassification === ' (M)' && ['LI', 'VLI'].includes(classification)) {
-        chatbotModuleUrl = './agent3-chatbot-module.js';
-        selectedAgent = 'Agent 3';
-    } else if (roleClassification === ' (F)' && ['HI', 'MI'].includes(classification)) {
-        chatbotModuleUrl = './agent2-chatbot-module.js';
-        selectedAgent = 'Agent 2';
-    } else if (roleClassification === ' (F)' && ['LI', 'VLI'].includes(classification)) {
-        chatbotModuleUrl = './agent4-chatbot-module.js';
-        selectedAgent = 'Agent 4';
-    }
+        if (roleClassification === ' (M)' && ['HI', 'MI'].includes(classification)) {
+            chatbotModuleUrl = './agent1-chatbot-module.js';
+            selectedAgent = 'Agent 1';
+        } else if (roleClassification === ' (M)' && ['LI', 'VLI'].includes(classification)) {
+            chatbotModuleUrl = './agent3-chatbot-module.js';
+            selectedAgent = 'Agent 3';
+        } else if (roleClassification === ' (F)' && ['HI', 'MI'].includes(classification)) {
+            chatbotModuleUrl = './agent2-chatbot-module.js';
+            selectedAgent = 'Agent 2';
+        } else if (roleClassification === ' (F)' && ['LI', 'VLI'].includes(classification)) {
+            chatbotModuleUrl = './agent4-chatbot-module.js';
+            selectedAgent = 'Agent 4';
+        }
 
         // Store selected agent in local storage
         localStorage.setItem('selectedAgent', selectedAgent);
@@ -209,44 +207,43 @@
 
         console.log('Selected Agent:', selectedAgent);
 
-        // If `selectedAgent` was initially 'Unknown', update the server
-        if (localStorage.getItem('infoRecorded') === 'true' && localStorage.getItem('selectedAgent') !== 'Unknown') {
-            const name = localStorage.getItem('name');
-            const role = localStorage.getItem('selectedJobRole');
-            const latitude = localStorage.getItem('latitude');
-            const longitude = localStorage.getItem('longitude');
-            const country = localStorage.getItem('country');
-            const iso_a3 = localStorage.getItem('iso_a3');
-            const classification = localStorage.getItem('classification');
-            const roleClassification = localStorage.getItem('roleClassification');
-            const area = localStorage.getItem('area');
-            const contactInfo = localStorage.getItem('contactInfo');
-            const version = '1.0';
-            const dateTime = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
+        // Retrieve user information from local storage
+        const name = localStorage.getItem('name');
+        const role = localStorage.getItem('selectedJobRole');
+        const latitude = localStorage.getItem('latitude');
+        const longitude = localStorage.getItem('longitude');
+        const country = localStorage.getItem('country');
+        const iso_a3 = localStorage.getItem('iso_a3');
+        const area = localStorage.getItem('area');
+        const contactInfo = localStorage.getItem('contactInfo');
+        const version = '1.0';
+        const dateTime = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
 
-            const updatedUserInfo = {
-                name,
-                role,
-                latitude,
-                longitude,
-                country,
-                iso_a3,
-                classification,
-                roleClassification,
-                area,
-                contactInfo,
-                version,
-                dateTime,
-                selectedAgent,
-                sessionId // Include session ID in the user info
-            };
+        const updateduserInfo = {
+            sessionId,
+            name,
+            role,
+            latitude,
+            longitude,
+            country,
+            iso_a3,
+            classification,
+            roleClassification,
+            area,
+            contactInfo,
+            version,
+            dateTime,
+            selectedAgent
+        };
 
+        // If `infoRecorded` is true, update the existing record
+        if (localStorage.getItem('infoRecorded') === 'true') {
             fetch('https://alan.up.railway.app/record-info', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(updatedUserInfo)
+                body: JSON.stringify(userInfo)
             })
             .then(response => response.text())
             .then(data => {
@@ -255,176 +252,192 @@
             .catch(error => {
                 console.error('Error updating data:', error);
             });
+        } else {
+            // If `infoRecorded` is not set, create a new record
+            fetch('https://alan.up.railway.app/record-info', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userInfo)
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Recorded Successfully:', data);
+                localStorage.setItem('infoRecorded', 'true');
+            })
+            .catch(error => {
+                console.error('Error recording data:', error);
+            });
         }
 
-
-
-            if (chatbotModuleUrl) {
-                import(chatbotModuleUrl).then(module => {
-                    module.initChatbot();
-                    console.log(`Loaded module: ${chatbotModuleUrl}`);
-                }).catch(error => {
-                    console.error('Error loading chatbot module:', error);
-                });
-            } else {
-                console.error('No matching chatbot module found.');
-            }
-
-            const menuIcon = document.querySelector('.menu-icon');
-            const tray = document.querySelector('.side-menu');
-            const instructionsButton = document.getElementById("instructions-button");
-            const dropdown = document.querySelector('.language-dropdown');
-            const userInfo = document.getElementById('user-info');
-            var storedJobRole = localStorage.getItem('selectedJobRole') || 'Not selected';
-            var storedCountry = localStorage.getItem('selectedCountry') || 'Not selected';
-    
-            const jobRoleKeys = {
-                "Health worker": "healthWorker",
-                "Nurse": "nurse",
-                "Ophthalmic clinical officer": "ophthalmicOfficer",
-                "Medical student": "medicalStudent",
-                "General practitioner": "generalPractitioner",
-                "Hospital doctor": "hospitalDoctor",
-                "Ophthalmologist": "ophthalmologist",
-                "Optometrist": "optometrist",
-                "Orthoptist": "orthoptist",
-                "ENT specialist": "entSpecialist",
-                "Pharmacist": "pharmacist",
-                "Audiologist": "audiologist",
-                "Ear care practitioner": "earCarePractitioner"
-            };
-
-            function updateUserInfoDisplay(lang) {
-                let roleKey = jobRoleKeys[storedJobRole] || storedJobRole;
-                let translatedJobRole = translations[lang][roleKey] || storedJobRole;
-                let storedLatitude = localStorage.getItem('latitude') || 'Not set';
-                let storedLongitude = localStorage.getItem('longitude') || 'Not set';
-                let storedCountry = localStorage.getItem('country') || 'Not set';
-                let storedArea = localStorage.getItem('area') || 'Not set';
-
-                userInfo.innerHTML = `${translatedJobRole}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${storedLatitude}, ${storedLongitude}`;
-            }
-
-            function updateLanguageDisplays(lang) {
-                document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
-                document.getElementById('good-history').textContent = translations[lang].goodHistory;
-                document.getElementById('examine-well').textContent = translations[lang].examineWell;
-                document.getElementById('use-arclight').textContent = translations[lang].useArclight;
-                document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
-                document.querySelector('.chatbot-version').textContent = translations[lang].alanMistakes;
-                updateUserInfoDisplay(lang);
-            }
-
-            function updateButtonStyle(button) {
-                button.classList.remove('pulse');
-                button.style.backgroundColor = 'grey';
-                button.style.color = 'white';
-            }
-
-            if (localStorage.getItem("instructionsClicked") === "true") {
-                updateButtonStyle(instructionsButton);
-            }
-
-            dropdown.addEventListener('change', function() {
-                const lang = this.value;
-                updateLanguageDisplays(lang);
+        if (chatbotModuleUrl) {
+            import(chatbotModuleUrl).then(module => {
+                module.initChatbot();
+                console.log(`Loaded module: ${chatbotModuleUrl}`);
+            }).catch(error => {
+                console.error('Error loading chatbot module:', error);
             });
+        } else {
+            console.error('No matching chatbot module found.');
+        }
 
-            menuIcon.addEventListener('click', function() {
-                tray.style.left = (tray.style.left === '0px' ? '-370px' : '0px');
-                this.classList.toggle('active');
-            });
+        const menuIcon = document.querySelector('.menu-icon');
+        const tray = document.querySelector('.side-menu');
+        const instructionsButton = document.getElementById("instructions-button");
+        const dropdown = document.querySelector('.language-dropdown');
+        const userInfo = document.getElementById('user-info');
+        const storedJobRole = localStorage.getItem('selectedJobRole') || 'Not selected';
+        const storedCountry = localStorage.getItem('selectedCountry') || 'Not selected';
 
-            instructionsButton.addEventListener("click", function(event) {
-                event.preventDefault();
-                localStorage.setItem("instructionsClicked", "true");
-                updateButtonStyle(this);
-                setTimeout(() => {
-                    window.location.href = 'instructions.html';
-                }, 300);
-            });
+        const jobRoleKeys = {
+            "Health worker": "healthWorker",
+            "Nurse": "nurse",
+            "Ophthalmic clinical officer": "ophthalmicOfficer",
+            "Medical student": "medicalStudent",
+            "General practitioner": "generalPractitioner",
+            "Hospital doctor": "hospitalDoctor",
+            "Ophthalmologist": "ophthalmologist",
+            "Optometrist": "optometrist",
+            "Orthoptist": "orthoptist",
+            "ENT specialist": "entSpecialist",
+            "Pharmacist": "pharmacist",
+            "Audiologist": "audiologist",
+            "Ear care practitioner": "earCarePractitioner"
+        };
 
-            updateLanguageDisplays('en');
+        function updateUserInfoDisplay(lang) {
+            let roleKey = jobRoleKeys[storedJobRole] || storedJobRole;
+            let translatedJobRole = translations[lang][roleKey] || storedJobRole;
+            let storedLatitude = localStorage.getItem('latitude') || 'Not set';
+            let storedLongitude = localStorage.getItem('longitude') || 'Not set';
+            let storedCountry = localStorage.getItem('country') || 'Not set';
+            let storedArea = localStorage.getItem('area') || 'Not set';
+
+            userInfo.innerHTML = `${translatedJobRole}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${storedLatitude}, ${storedLongitude}`;
+        }
+
+        function updateLanguageDisplays(lang) {
+            document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
+            document.getElementById('good-history').textContent = translations[lang].goodHistory;
+            document.getElementById('examine-well').textContent = translations[lang].examineWell;
+            document.getElementById('use-arclight').textContent = translations[lang].useArclight;
+            document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
+            document.querySelector('.chatbot-version').textContent = translations[lang].alanMistakes;
+            updateUserInfoDisplay(lang);
+        }
+
+        function updateButtonStyle(button) {
+            button.classList.remove('pulse');
+            button.style.backgroundColor = 'grey';
+            button.style.color = 'white';
+        }
+
+        if (localStorage.getItem("instructionsClicked") === "true") {
+            updateButtonStyle(instructionsButton);
+        }
+
+        dropdown.addEventListener('change', function() {
+            const lang = this.value;
+            updateLanguageDisplays(lang);
         });
 
-        var storedName = localStorage.getItem('name') || 'User';
-        var initialLetter = storedName.charAt(0).toUpperCase();
+        menuIcon.addEventListener('click', function() {
+            tray.style.left = (tray.style.left === '0px' ? '-370px' : '0px');
+            this.classList.toggle('active');
+        });
 
-        var nameIcon = document.createElement('div');
-        nameIcon.className = 'name-icon';
-        nameIcon.textContent = initialLetter;
-
-        var header = document.querySelector('.chatbot-header');
-        header.appendChild(nameIcon);
-
-        function openPopup() {
-            const popup = document.getElementById('popup');
-            const popupContent = document.getElementById('popup-content');
-            const name = localStorage.getItem('name') || 'Not set';
-            const role = localStorage.getItem('selectedJobRole') || 'Not set';
-            const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
-            const longitude = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
-            const country = localStorage.getItem('country') || 'Not set';
-            const iso_a3 = localStorage.getItem('iso_a3') || 'Not set';
-            const area = localStorage.getItem('area') || 'Not set';
-            const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
-            const classification = localStorage.getItem('classification') || 'Unknown';
-            const roleClassification = localStorage.getItem('roleClassification') || '';
-            const selectedAgent = localStorage.getItem('selectedAgent') || 'Unknown';
-
-            console.log('Name:', name);
-            console.log('Role:', role);
-            console.log('Latitude:', latitude);
-            console.log('Longitude:', longitude);
-            console.log('Country:', country);
-            console.log('ISO Alpha-3 Code:', iso_a3);
-            console.log('Area:', area);
-            console.log('Contact Info:', contactInfo);
-
-            const now = new Date();
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const year = now.getFullYear();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const currentDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
-
-            popupContent.innerHTML = `
-                <p>Name: ${name}</p>
-                <p>Role: ${role}${roleClassification}</p>
-                <p>Lat & Long: ${latitude}, ${longitude}</p>
-                <p>Country: ${country} (${iso_a3}) [${classification}]</p>
-                <p>Area: ${area}</p>
-                <p>Contact: ${contactInfo}</p>
-                <p>Version: 1.0, ${selectedAgent}</p>
-                <p>Date & Time: ${currentDateTime}</p>
-            `;
-
-            popup.style.right = '0';
-            popup.style.display = 'block';
-        }
-
-        function closePopup() {
-            const popup = document.getElementById('popup');
-            popup.style.right = '-300px';
+        instructionsButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            localStorage.setItem("instructionsClicked", "true");
+            updateButtonStyle(this);
             setTimeout(() => {
-                popup.style.display = 'none';
+                window.location.href = 'instructions.html';
             }, 300);
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelector('.name-icon').addEventListener('click', function(event) {
-                const popup = document.getElementById('popup');
-                if (popup.style.display === 'block' && popup.style.right === '0px') {
-                    closePopup();
-                } else {
-                    openPopup();
-                }
-            });
-
-            document.querySelector('.popup-close').addEventListener('click', closePopup);
         });
-    </script>
+
+        updateLanguageDisplays('en');
+    });
+
+    var storedName = localStorage.getItem('name') || 'User';
+    var initialLetter = storedName.charAt(0).toUpperCase();
+
+    var nameIcon = document.createElement('div');
+    nameIcon.className = 'name-icon';
+    nameIcon.textContent = initialLetter;
+
+    var header = document.querySelector('.chatbot-header');
+    header.appendChild(nameIcon);
+
+    function openPopup() {
+        const popup = document.getElementById('popup');
+        const popupContent = document.getElementById('popup-content');
+        const name = localStorage.getItem('name') || 'Not set';
+        const role = localStorage.getItem('selectedJobRole') || 'Not set';
+        const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
+        const longitude = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
+        const country = localStorage.getItem('country') || 'Not set';
+        const iso_a3 = localStorage.getItem('iso_a3') || 'Not set';
+        const area = localStorage.getItem('area') || 'Not set';
+        const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
+        const classification = localStorage.getItem('classification') || 'Unknown';
+        const roleClassification = localStorage.getItem('roleClassification') || '';
+        const selectedAgent = localStorage.getItem('selectedAgent') || 'Unknown';
+
+        console.log('Name:', name);
+        console.log('Role:', role);
+        console.log('Latitude:', latitude);
+        console.log('Longitude:', longitude);
+        console.log('Country:', country);
+        console.log('ISO Alpha-3 Code:', iso_a3);
+        console.log('Area:', area);
+        console.log('Contact Info:', contactInfo);
+
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const currentDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+
+        popupContent.innerHTML = `
+            <p>Name: ${name}</p>
+            <p>Role: ${role}${roleClassification}</p>
+            <p>Lat & Long: ${latitude}, ${longitude}</p>
+            <p>Country: ${country} (${iso_a3}) [${classification}]</p>
+            <p>Area: ${area}</p>
+            <p>Contact: ${contactInfo}</p>
+            <p>Version: 1.0, ${selectedAgent}</p>
+            <p>Date & Time: ${currentDateTime}</p>
+        `;
+
+        popup.style.right = '0';
+        popup.style.display = 'block';
+    }
+
+    function closePopup() {
+        const popup = document.getElementById('popup');
+        popup.style.right = '-300px';
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 300);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.name-icon').addEventListener('click', function(event) {
+            const popup = document.getElementById('popup');
+            if (popup.style.display === 'block' && popup.style.right === '0px') {
+                closePopup();
+            } else {
+                openPopup();
+            }
+        });
+
+        document.querySelector('.popup-close').addEventListener('click', closePopup);
+    });
+</script>
+
 </body>
 </html>

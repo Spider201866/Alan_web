@@ -28,8 +28,8 @@ app.get('/view-records', (req, res) => {
 
 // Endpoint to record user information
 app.post('/record-info', (req, res) => {
-    const { name, role, latitude, longitude, country, iso_a3, classification, roleClassification, area, contactInfo, version, dateTime, selectedAgent } = req.body;
-    const userInfo = { name, role, latitude, longitude, country, iso_a3, classification, roleClassification, area, contactInfo, version, dateTime, selectedAgent };
+    const { sessionId, name, role, latitude, longitude, country, iso_a3, classification, roleClassification, area, contactInfo, version, dateTime, selectedAgent } = req.body;
+    const userInfo = { sessionId, name, role, latitude, longitude, country, iso_a3, classification, roleClassification, area, contactInfo, version, dateTime, selectedAgent };
 
     const filePath = path.join(__dirname, 'user-info.json');
 
@@ -39,7 +39,7 @@ app.post('/record-info', (req, res) => {
             json = JSON.parse(data);
         }
 
-        const existingUserIndex = json.findIndex(record => record.name === name && record.dateTime === dateTime);
+        const existingUserIndex = json.findIndex(record => record.sessionId === sessionId);
 
         if (existingUserIndex !== -1) {
             // If user already exists, increment the refresh count
