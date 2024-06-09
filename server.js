@@ -38,7 +38,20 @@ app.post('/record-info', (req, res) => {
         if (!err) {
             json = JSON.parse(data);
         }
-        json.push(userInfo);
+
+        const existingUserIndex = json.findIndex(record => record.name === name && record.dateTime === dateTime);
+
+        if (existingUserIndex !== -1) {
+            // If user already exists, increment the refresh count
+            if (!json[existingUserIndex].refreshCount) {
+                json[existingUserIndex].refreshCount = 1;
+            }
+            json[existingUserIndex].refreshCount += 1;
+        } else {
+            // If user does not exist, add a new record
+            userInfo.refreshCount = 1;
+            json.push(userInfo);
+        }
 
         fs.writeFile(filePath, JSON.stringify(json, null, 2), (err) => {
             if (err) {

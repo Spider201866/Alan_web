@@ -169,6 +169,8 @@
 
     <script type="module">
         import { translations } from './language.js';
+
+        
     
         document.addEventListener('DOMContentLoaded', function() {
             console.log("DOMContentLoaded event fired");
@@ -198,6 +200,12 @@
 
         // Store selected agent in local storage
         localStorage.setItem('selectedAgent', selectedAgent);
+
+        // Ensure a unique session ID is set
+        if (!localStorage.getItem('sessionId')) {
+            localStorage.setItem('sessionId', Date.now().toString());
+        }
+        const sessionId = localStorage.getItem('sessionId');       
 
         console.log('Selected Agent:', selectedAgent);
 
@@ -229,7 +237,8 @@
                 contactInfo,
                 version,
                 dateTime,
-                selectedAgent
+                selectedAgent,
+                sessionId // Include session ID in the user info
             };
 
             fetch('https://alan.up.railway.app/record-info', {
@@ -247,6 +256,8 @@
                 console.error('Error updating data:', error);
             });
         }
+
+
 
             if (chatbotModuleUrl) {
                 import(chatbotModuleUrl).then(module => {
