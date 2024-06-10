@@ -392,7 +392,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let role = jobSelectElement.value;
         let roleClassification = "";
         if (foundationRoles.includes(role)) {
-            roleClassification = " (F)";
+            roleClassification = " (P)";     // Changed to (P) for Primary from Foundation
         } else if (middleRoles.includes(role)) {
             roleClassification = " (M)";
         }
