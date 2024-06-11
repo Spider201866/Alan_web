@@ -579,11 +579,10 @@ p {
 }
 
 .animation-container {
-  display: flex;
+  display: none; /* Initially hidden */
   justify-content: center;
   align-items: center;
   padding-top: 10px;
-  animation: fadeinout 7s ease-in-out forwards;
 }
 
 @keyframes fadeinout {
