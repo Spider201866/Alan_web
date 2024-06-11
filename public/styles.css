@@ -578,4 +578,22 @@ p {
   color: black;
 }
 
+.animation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+  animation: fadeinout 7s ease-in-out forwards;
+}
 
+@keyframes fadeinout {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.animation-container img {
+  width: 70px; /* Adjust the width as needed */
+  height: auto;
+}
