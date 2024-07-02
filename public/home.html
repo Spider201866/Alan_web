@@ -113,7 +113,7 @@
                 <span id="examine-well">Examine Well</span>  |  
                 <span id="use-arclight">Use Arclight</span>
             </p>
-            <p id="sub-text" class="centered-content" style="font-size: 16px; color: black; font-weight: 900; padding-bottom: 5px;">How can I help you today?</p>
+            <p id="sub-text" class="centered-content" style="font-size: 16px; color: black; font-weight: 900; padding-bottom: 5px;"></p>
         </div>
         <div class="animation-container" id="animationContainer">
             <img src="./eyeor.gif" alt="Eyeor Animation" style="opacity: 0; transition: opacity 2s;">
@@ -428,6 +428,21 @@
 
             document.querySelector('.popup-close').addEventListener('click', closePopup);
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let name = localStorage.getItem('name');
+            if (name) {
+                // Ensure the first letter is capitalized
+                name = name.charAt(0).toUpperCase() + name.slice(1);
+                // Update the greeting message
+                document.getElementById('sub-text').innerText = `${name}, how can I help you today?`;
+            } else {
+                console.error('Name not found in local storage');
+                // Fallback message if name is not found
+                document.getElementById('sub-text').innerText = 'How can I help you today?';
+            }
+        });
+
     </script>
 </body>
 </html>
