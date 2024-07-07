@@ -430,18 +430,23 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            let name = localStorage.getItem('name');
-            if (name) {
-                // Ensure the first letter is capitalized
-                name = name.charAt(0).toUpperCase() + name.slice(1);
-                // Update the greeting message
-                document.getElementById('sub-text').innerText = `${name}, how can I help you today?`;
-            } else {
-                console.error('Name not found in local storage');
-                // Fallback message if name is not found
-                document.getElementById('sub-text').innerText = 'How can I help you today?';
-            }
-        });
+    let name = localStorage.getItem('name');
+    if (name) {
+        // Split the name to handle multiple words
+        let nameParts = name.split(' ');
+        
+        // Capitalize the first name only
+        let firstName = nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1).toLowerCase();
+        
+        // Update the greeting message
+        document.getElementById('sub-text').innerText = `${firstName}, how can I help you today?`;
+    } else {
+        console.error('Name not found in local storage');
+        // Fallback message if name is not found
+        document.getElementById('sub-text').innerText = 'How can I help you today?';
+    }
+});
+
 
     </script>
 </body>
