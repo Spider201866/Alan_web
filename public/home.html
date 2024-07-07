@@ -434,10 +434,22 @@
     if (name) {
         // Split the name to handle multiple words
         let nameParts = name.split(' ');
-        
-        // Capitalize the first name only
-        let firstName = nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1).toLowerCase();
-        
+
+        let firstName = '';
+
+        // Check if the name is likely to be East Asian by looking for common East Asian surnames
+        if (isEastAsianSurname(nameParts[0])) {
+            // Assume the first part is the surname and the second part is the given name
+            if (nameParts.length > 1) {
+                firstName = nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1).toLowerCase();
+            } else {
+                firstName = nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1).toLowerCase();
+            }
+        } else {
+            // Assume the first part is the given name
+            firstName = nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1).toLowerCase();
+        }
+
         // Update the greeting message
         document.getElementById('sub-text').innerText = `${firstName}, how can I help you today?`;
     } else {
@@ -446,6 +458,88 @@
         document.getElementById('sub-text').innerText = 'How can I help you today?';
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    let name = localStorage.getItem('name');
+    if (name) {
+        // Split the name to handle multiple words
+        let nameParts = name.split(' ');
+
+        let firstName = '';
+
+        // Check if the name is likely to be East Asian by looking for common East Asian surnames
+        if (isEastAsianSurname(nameParts[0])) {
+            // Assume the first part is the surname and the second part is the given name
+            if (nameParts.length > 1) {
+                firstName = nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1).toLowerCase();
+            } else {
+                firstName = nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1).toLowerCase();
+            }
+        } else {
+            // Assume the first part is the given name
+            firstName = nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1).toLowerCase();
+        }
+
+        // Update the greeting message
+        document.getElementById('sub-text').innerText = `${firstName}, how can I help you today?`;
+    } else {
+        console.error('Name not found in local storage');
+        // Fallback message if name is not found
+        document.getElementById('sub-text').innerText = 'How can I help you today?';
+    }
+});
+
+// Function to detect if a surname is likely from an East Asian culture
+function isEastAsianSurname(surname) {
+    // Common East Asian surnames for a basic heuristic
+    const eastAsianSurnames = [
+        // 200 Chinese surnames ordered by commonality
+        'Li', 'Wang', 'Zhang', 'Liu', 'Chen', 'Yang', 'Huang', 'Zhao', 'Wu', 'Zhou',
+        'Xu', 'Sun', 'Ma', 'Zhu', 'Hu', 'Guo', 'He', 'Gao', 'Lin', 'Luo',
+        'Zheng', 'Liang', 'Song', 'Tang', 'Xu', 'Han', 'Feng', 'Yu', 'Dong', 'Xiao',
+        'Cheng', 'Cao', 'Yuan', 'Deng', 'Xue', 'Fu', 'Shen', 'Peng', 'Lu', 'Jiang',
+        'Cui', 'Wei', 'Kang', 'Qian', 'Yin', 'Hao', 'Fan', 'Bai', 'Tan', 'Meng',
+        'Qin', 'Xiong', 'Shi', 'Shao', 'Mao', 'Pan', 'Tian', 'Dai', 'Fang', 'Qiu',
+        'Ruan', 'Gong', 'Mo', 'Jin', 'Bian', 'Chang', 'Liao', 'Zhuo', 'Cen', 'Zuo',
+        'Hong', 'Ming', 'Zhan', 'Yao', 'Yan', 'Shan', 'Chai', 'Ji', 'Gu', 'Lei',
+        'Ding', 'Wan', 'Mei', 'Qi', 'Pei', 'Miao', 'Jing', 'Ge', 'Lai', 'You',
+        'Bao', 'Fu', 'Mi', 'Duan', 'Kou', 'Ning', 'Pi', 'Shang', 'Xiang', 'Gong',
+        'Qin', 'Lu', 'Xue', 'Zhu', 'Huang', 'Cao', 'Liu', 'Fu', 'Ji', 'Lei',
+        'Lai', 'Zhao', 'Liao', 'Dong', 'Fu', 'Luo', 'Ruan', 'Liu', 'Ning', 'Qin',
+        'Pan', 'Ge', 'Jiang', 'Lu', 'Deng', 'Xiao', 'Tian', 'Mo', 'Xu', 'Hu',
+        'Yan', 'Chai', 'Yuan', 'Zhao', 'Jiang', 'Li', 'Huang', 'Bian', 'Qiu', 'Gu',
+        'Bai', 'Huang', 'Mi', 'Fu', 'Duan', 'Xue', 'Huang', 'Dong', 'Gong', 'Pei',
+        // 120 Japanese surnames ordered by commonality
+        'Sato', 'Suzuki', 'Takahashi', 'Tanaka', 'Watanabe', 'Ito', 'Yamamoto', 'Nakamura', 'Kobayashi', 'Kato',
+        'Yoshida', 'Yamada', 'Sasaki', 'Yamaguchi', 'Matsumoto', 'Inoue', 'Kimura', 'Shimizu', 'Hayashi', 'Saito',
+        'Sakamoto', 'Shibata', 'Yokoyama', 'Ueda', 'Mori', 'Endo', 'Fujita', 'Okada', 'Ishikawa', 'Nakajima',
+        'Kaneko', 'Maeda', 'Harada', 'Iwasaki', 'Murakami', 'Otsuka', 'Tsuchiya', 'Miyazaki', 'Kojima', 'Kudo',
+        'Sakai', 'Takeuchi', 'Ishii', 'Fukuda', 'Miyamoto', 'Ueno', 'Sugiyama', 'Hirano', 'Arai', 'Masuda',
+        'Tamura', 'Oshima', 'Hara', 'Matsuda', 'Ono', 'Matsuoka', 'Ishida', 'Morita', 'Takagi', 'Yoshikawa',
+        'Taniguchi', 'Takada', 'Fujimoto', 'Kinoshita', 'Matsuo', 'Oda', 'Shinoda', 'Sugawara', 'Kuroda', 'Ando',
+        'Hattori', 'Nakano', 'Hosokawa', 'Miyahara', 'Shimada', 'Kawaguchi', 'Hamamoto', 'Yamashita', 'Okamura',
+        'Higuchi', 'Nagano', 'Tsuda', 'Otsubo', 'Ishizuka', 'Seki', 'Kubo', 'Miyake', 'Mizuno', 'Nakamoto',
+        'Nakao', 'Fukushima', 'Nakagawa', 'Kawai', 'Onishi', 'Koyama', 'Kitamura', 'Kuwahara', 'Hasegawa', 'Aoyama',
+        'Matsushima', 'Toyoda', 'Arakawa', 'Kondo', 'Kitagawa', 'Miyata', 'Uchida', 'Komatsu', 'Nagata', 'Yasuda',
+        'Oikawa', 'Kashiwagi', 'Higashi', 'Fukui', 'Kishimoto', 'Tsuchida', 'Hoshino', 'Nakano', 'Ueno', 'Sugiyama',
+        // 120 Korean surnames ordered by commonality
+        'Kim', 'Lee', 'Park', 'Choi', 'Jung', 'Kang', 'Cho', 'Yoon', 'Jang', 'Lim',
+        'Shin', 'Yoo', 'Chang', 'Song', 'Hong', 'Hwang', 'An', 'Ko', 'Moon', 'Oh',
+        'Kwon', 'Jeon', 'Han', 'Lim', 'Seo', 'Ha', 'Ryu', 'Joo', 'Nam', 'Shim',
+        'No', 'Min', 'Na', 'Jee', 'Seok', 'Byun', 'Yim', 'Son', 'Cha', 'Ahn',
+        'Jin', 'Chun', 'Huh', 'Noh', 'Baek', 'Jeong', 'Gu', 'Yang', 'Yu', 'Kwak',
+        'Bae', 'Hwang', 'Yun', 'Moon', 'Jung', 'Park', 'Ryu', 'Kwon', 'Choi', 'Yoo',
+        'Oh', 'Jung', 'Kim', 'Kwon', 'Yim', 'Hong', 'Yoon', 'Cho', 'Na', 'Ryu',
+        'Han', 'Yim', 'Yun', 'Kang', 'Shin', 'Yun', 'Jang', 'Yoo', 'Jung', 'Kim',
+        'Kwon', 'Jung', 'Park', 'Seo', 'Yang', 'Yoon', 'Choi', 'Park', 'Ryu', 'Kwon',
+        'Hong', 'Kim', 'Moon', 'Yim', 'Son', 'Kim', 'Lee', 'Shin', 'Park', 'Kim',
+        'Choi', 'Jung', 'Yoo', 'Hong', 'Ahn', 'Yim', 'Jung', 'Yim', 'Son', 'Jang'
+    ];
+    return eastAsianSurnames.includes(surname);
+}
+
+
+
 
 
     </script>
