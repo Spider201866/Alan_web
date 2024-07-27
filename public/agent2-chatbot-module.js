@@ -4,7 +4,7 @@ import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@g
 
 const initChatbot = () => {
   Chatbot.initFull({
-    chatflowid: "0f8ccb08-e855-47eb-8153-9bf1f03f381c",
+    chatflowid: "4634b83d-7190-4de6-9f34-618ec0caccf2",
     apiHost: "https://flowiseai-railway-production-fecf.up.railway.app",
     theme: {
       button: {
