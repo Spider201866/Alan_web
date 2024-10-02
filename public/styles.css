@@ -167,7 +167,7 @@ html {
   color: #000;
   text-align: center;
   padding-top: 8px;
-  font-family: "Century Gothic", Arial, sans-serif;
+  font-family: 'Quicksand', Arial, sans-serif;
   z-index: 2000; /* Set a high z-index to ensure it appears above other elements */
 }
 

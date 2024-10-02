@@ -1,11 +1,11 @@
 export const translations = {
   en: {
-    eyesEars: "Eyes & Ears",
+    eyesEars: "Eyes, Ears, Skin",
     goodHistory: "Good History",
     examineWell: "Examine Well",
     useArclight: "Use Arclight",
     howCanIHelp: "How can I help you today?",
-    alanMistakes: "Alan can make mistakes. Use clinical judgement. 9/24",
+    alanMistakes: "Alan can make mistakes. Use clinical judgement. 10/24",
     login: "Login",
     enterPassword: "Enter Password",
     register: "Register",

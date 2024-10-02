@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preload" href="atomsblue.jpg" as="image">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+
     <script type="module" src="closer.js"></script>
 </head>
 <body>
@@ -23,7 +27,7 @@
                 <span class="red">Al</span><span class="white">an</span>
             </div>
             <div class="chatbot-subtitle">
-                Eyes & Ears
+                Eyes, Ears, Skin
             </div>
         </div>
 
@@ -40,9 +44,16 @@
         </div>
 
         <!-- Grouping Front of Eye and Ear buttons for same line display -->
-        <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for eye and ear-related buttons -->
-            <button class="button" style="margin-right: 10px;" onclick="window.location.href='eye.html';">Examine the Eye</button>
-            <button class="button green" style="margin-right: 10px;" onclick="window.location.href='ear.html';">Examine the Ear</button>
+        <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for Eye, Ear, Skin buttons -->
+            <button class="button" style="margin-right: 10px; background-color: rgb(134, 162, 255);" onclick="window.location.href='eye.html';">
+                Eye
+            </button>
+            <button class="button" style="margin-right: 10px; background-color: rgb(133, 255, 133);" onclick="window.location.href='ear.html';">
+                Ear
+            </button>
+            <button class="button" style="background-color: #efafff;" onclick="window.location.href='skin.html';">
+                Skin
+            </button>
         </div>
 
         <!-- Grouping Videos, Atoms, Tools buttons for same line display -->
@@ -136,7 +147,7 @@
 
         <!-- Disclaimer about Alan potentially making mistakes -->
         <div class="chatbot-version">
-            Alan can make mistakes. Use clinical judgement. 9/24
+            Alan can make mistakes. Use clinical judgement. 10/24
         </div>
     </div>
 
