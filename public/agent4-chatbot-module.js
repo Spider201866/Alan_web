@@ -6,6 +6,9 @@ const initChatbot = () => {
   // Retrieve the user's name from localStorage
   const userName = localStorage.getItem("name") || "Anonymous";
 
+  // Log the name being passed to the chatbot
+  console.log("Custom data being sent to Flowise:", { name: userName });
+
   // Initialise the chatbot with the retrieved name
   Chatbot.initFull({
     chatflowid: "613f8563-a7f8-44cb-a29b-c4a7bd1d4d1f", // Your Flow ID
