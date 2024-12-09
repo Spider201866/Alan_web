@@ -407,7 +407,7 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("contactInfo", contactInput.value);
 
         // Retrieve user information from local storage
-        const name = localStorage.getItem('name') || 'Not set';
+        const name = localStorage.getItem('name') || 'Anonymous';
         const role = localStorage.getItem('selectedJobRole') || 'Not set';
         const latitude = localStorage.getItem('latitude') || 'Not set';
         const longitude = localStorage.getItem('longitude') || 'Not set';
