@@ -55,6 +55,11 @@ const initChatbot = () => {
         .chatbot-input {
           border-radius: 18px !important; /* Ensures parent also matches */
         }
+
+         /* Change clipboard, thumbs up, thumbs down icons to grey */
+          svg[stroke="#3B81F6"] {
+            stroke: #808080 !important; /* Grey colour */
+          }
       `,
     },
   });
