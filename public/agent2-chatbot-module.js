@@ -46,17 +46,16 @@ const initChatbot = () => {
         },
       },
       customCSS: `
-        /* Rounded corners for user message box */
-        .chat-message-container.user {
+        /* Rounded corners for user message bubble */
+        .chatbot-guest-bubble {
           border-radius: 18px !important;
         }
 
-        /* Rounded corners for input text box */
-        .flowise-text-input-container input {
+        /* Rounded corners for the input text box */
+        .text-input {
           border-radius: 18px !important;
         }
       `,
-
     },
   });
 };
