@@ -204,6 +204,13 @@ html {
   font-size: 14px; 
 }
 
+.flowise-chatbot .bot-message {
+  display: block !important;
+  color: #000000 !important; /* Ensure text is visible in black */
+  opacity: 1 !important;
+  background-color: #ffffff !important; /* White background for visibility */
+}
+
 
 .chatbot-container {
   margin-top: 0;
