@@ -1,6 +1,6 @@
 // LLM3 [M && LI/VLI]
 
-import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
+import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@geoff16/dist/web.js";
 
     Chatbot.initFull({
         chatflowid: "db68b77b-92be-4c80-bf50-c13e00a33d77", // Your Flow ID
