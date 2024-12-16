@@ -1,12 +1,12 @@
 // LLM1 [M && HI/MI]
 
-import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@geoff16/dist/web.js";
+import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed@latest/dist/web.js";
 
 const initChatbot = () => {
   Chatbot.initFull({
-    chatflowid: "db68b77b-92be-4c80-bf50-c13e00a33d77",
-    apiHost: "https://flowiseai-railway-production-fecf.up.railway.app",
-    container: "#chat-container", // Specify the container
+    chatflowid: "db68b77b-92be-4c80-bf50-c13e00a33d77", // Your Flow ID
+    apiHost: "https://flowiseai-railway-production-fecf.up.railway.app", // API Host
+
     theme: {
       button: {
         backgroundColor: "#ffffff",
@@ -14,8 +14,7 @@ const initChatbot = () => {
         bottom: 20,
         size: "medium",
         iconColor: "black",
-        customIconSrc:
-          "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
+        customIconSrc: "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
       },
       chatWindow: {
         welcomeMessage: false,
@@ -45,6 +44,7 @@ const initChatbot = () => {
 };
 
 initChatbot();
+
 
 
 
