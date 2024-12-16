@@ -3,12 +3,10 @@
 import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@geoff16/dist/web.js";
 
 const initChatbot = () => {
-  console.log("Initialising Chatbot...");
-
   Chatbot.initFull({
     chatflowid: "db68b77b-92be-4c80-bf50-c13e00a33d77",
     apiHost: "https://flowiseai-railway-production-fecf.up.railway.app",
-
+    container: "#chat-container", // Specify the container
     theme: {
       button: {
         backgroundColor: "#ffffff",
@@ -24,8 +22,6 @@ const initChatbot = () => {
         backgroundColor: "#ffffff",
         height: "auto",
         width: "auto",
-        fontSize: 15,
-        poweredByTextColor: "#D3D3D3",
         botMessage: {
           backgroundColor: "#ffffff",
           textColor: "#000000",
@@ -46,11 +42,7 @@ const initChatbot = () => {
       },
     },
   });
-
-  // Debugging response to verify the bot is triggering
-  Chatbot.on("message", (data) => {
-    console.log("Received bot message:", data);
-  });
 };
 
 initChatbot();
+
