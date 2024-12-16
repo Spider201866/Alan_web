@@ -51,9 +51,9 @@ const initChatbot = () => {
           border-radius: 15px !important;
         }
 
-        /* Rounded corners for the input text box */
-        .chatbot-text-input {
-          border-radius: 18px !important;
+        /* Rounded corners for the input container */
+        .chatbot-input-container {
+          border-radius: 18px !important; /* Ensures parent also matches */
         }
       `,
     },
