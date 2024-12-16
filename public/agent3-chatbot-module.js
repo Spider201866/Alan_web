@@ -3,7 +3,6 @@
 import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@geoff16/dist/web.js";
 
 const initChatbot = () => {
-;
 
   // Initialise the chatbot with the retrieved name
   Chatbot.initFull({
