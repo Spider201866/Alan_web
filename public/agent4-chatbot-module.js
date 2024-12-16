@@ -13,7 +13,7 @@ const initChatbot = () => {
         right: 30,
         bottom: 20,
         size: "medium",
-        iconColor: "black",
+        iconColor: "grey",
         customIconSrc: "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
       },
       chatWindow: {
