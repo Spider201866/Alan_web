@@ -7,7 +7,7 @@ const initChatbot = () => {
 
   // Initialise the chatbot with the retrieved name
   Chatbot.initFull({
-    chatflowid: "db68b77b-92be-4c80-bf50-c13e00a33d77", // Your Flow ID
+    chatflowid: "db68b77b-92be-4c80-bf50-c13e00a33d77", // Your Flow ID.
     apiHost: "https://flowiseai-railway-production-fecf.up.railway.app", // Your API Host
 
     theme: {
