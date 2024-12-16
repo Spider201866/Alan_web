@@ -1,13 +1,11 @@
 // LLM4 [F && LI/VLI]
 
-import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@geoff16/dist/web.js";
+import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed@latest/dist/web.js";
 
 const initChatbot = () => {
-
-  // Initialise the chatbot with the retrieved name
   Chatbot.initFull({
     chatflowid: "db68b77b-92be-4c80-bf50-c13e00a33d77", // Your Flow ID
-    apiHost: "https://flowiseai-railway-production-fecf.up.railway.app", // Your API Host
+    apiHost: "https://flowiseai-railway-production-fecf.up.railway.app", // API Host
 
     theme: {
       button: {
@@ -16,21 +14,18 @@ const initChatbot = () => {
         bottom: 20,
         size: "medium",
         iconColor: "black",
-        customIconSrc:
-          "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
+        customIconSrc: "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
       },
       chatWindow: {
         welcomeMessage: false,
         backgroundColor: "#ffffff",
         height: "auto",
         width: "auto",
-        fontSize: 15,
-        poweredByTextColor: "#D3D3D3",
         botMessage: {
           backgroundColor: "#ffffff",
           textColor: "#000000",
           showAvatar: true,
-          avatarSrc: "https://raw.githubusercontent.com/Spider201866/Alan_web/main/public/black.png", // Local avatar URL
+          avatarSrc: "https://raw.githubusercontent.com/Spider201866/Alan_web/main/public/black.png",
         },
         userMessage: {
           backgroundColor: "#f4f4f4",
@@ -48,5 +43,5 @@ const initChatbot = () => {
   });
 };
 
-export { initChatbot };
+initChatbot();
 
