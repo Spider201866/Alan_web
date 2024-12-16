@@ -45,10 +45,14 @@ const initChatbot = () => {
           companyLink: "", // Remove company link
         },
       },
+      customCSS: `
+        .flowise-chatbot-button, 
+        .flowise-chatbot-send-button {
+          border-radius: 20px !important; /* Makes the corners rounded */
+        }
+      `,
     },
   });
 };
 
 initChatbot();
-
-
