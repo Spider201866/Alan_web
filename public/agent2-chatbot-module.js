@@ -52,7 +52,7 @@ const initChatbot = () => {
         }
 
         /* Rounded corners for the input container */
-        .chatbot-input-container {
+        .chatbot-input {
           border-radius: 18px !important; /* Ensures parent also matches */
         }
       `,
