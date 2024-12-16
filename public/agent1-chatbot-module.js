@@ -33,10 +33,16 @@ const initChatbot = () => {
           showAvatar: false,
         },
         textInput: {
-          placeholder: "Message Alan...",
+          placeholder: "Ask Alan...",
           backgroundColor: "#ffffff",
           textColor: "#303235",
           sendButtonColor: "#000000",
+        },
+        footer: {
+          textColor: "#ffffff", // Make footer text white (invisible)
+          text: "", // Remove "Powered by"
+          company: "", // Remove company name
+          companyLink: "", // Remove company link
         },
       },
     },
