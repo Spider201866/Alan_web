@@ -1,13 +1,13 @@
 // LLM2 [F && HI/MI]
 
 import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@geoff16/dist/web.js";
-import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@geoff16/dist/web.js";
 
 const initChatbot = () => {
-  // Initialise the chatbot
+  console.log("Initialising Chatbot...");
+
   Chatbot.initFull({
-    chatflowid: "db68b77b-92be-4c80-bf50-c13e00a33d77", // Your Flow ID
-    apiHost: "https://flowiseai-railway-production-fecf.up.railway.app", // Your API Host
+    chatflowid: "db68b77b-92be-4c80-bf50-c13e00a33d77",
+    apiHost: "https://flowiseai-railway-production-fecf.up.railway.app",
 
     theme: {
       button: {
@@ -20,17 +20,17 @@ const initChatbot = () => {
           "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
       },
       chatWindow: {
-        welcomeMessage: false, // Keep Alan's welcome style
+        welcomeMessage: false,
         backgroundColor: "#ffffff",
-        height: "auto", // Auto-resize chat window
-        width: "auto", // Auto-resize chat window
+        height: "auto",
+        width: "auto",
         fontSize: 15,
         poweredByTextColor: "#D3D3D3",
         botMessage: {
           backgroundColor: "#ffffff",
           textColor: "#000000",
           showAvatar: true,
-          avatarSrc: "https://raw.githubusercontent.com/Spider201866/Alan_web/main/public/black.png", // Alan's avatar
+          avatarSrc: "https://raw.githubusercontent.com/Spider201866/Alan_web/main/public/black.png",
         },
         userMessage: {
           backgroundColor: "#f4f4f4",
@@ -38,7 +38,7 @@ const initChatbot = () => {
           showAvatar: false,
         },
         textInput: {
-          placeholder: "Message Alan...", // Alan-specific input placeholder
+          placeholder: "Message Alan...",
           backgroundColor: "#ffffff",
           textColor: "#303235",
           sendButtonColor: "#000000",
@@ -46,6 +46,11 @@ const initChatbot = () => {
       },
     },
   });
+
+  // Debugging response to verify the bot is triggering
+  Chatbot.on("message", (data) => {
+    console.log("Received bot message:", data);
+  });
 };
 
-export { initChatbot };
+initChatbot();
