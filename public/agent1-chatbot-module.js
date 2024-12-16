@@ -46,9 +46,14 @@ const initChatbot = () => {
         },
       },
       customCSS: `
-        .flowise-chatbot-button, 
-        .flowise-chatbot-send-button {
-          border-radius: 20px !important; /* Makes the corners rounded */
+        /* Rounded corners for user message box */
+        .flowise-user-message {
+          border-radius: 12px !important; /* Adjust roundness */
+        }
+
+        /* Rounded corners for input text box */
+        .flowise-text-input {
+          border-radius: 12px !important; /* Adjust roundness */
         }
       `,
     },
@@ -56,7 +61,6 @@ const initChatbot = () => {
 };
 
 initChatbot();
-
 
 
 
