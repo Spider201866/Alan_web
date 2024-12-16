@@ -13,7 +13,7 @@ const initChatbot = () => {
         right: 30,
         bottom: 20,
         size: "medium",
-        iconColor: "grey",
+        iconColor: "black",
         customIconSrc: "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
       },
       chatWindow: {
@@ -34,7 +34,7 @@ const initChatbot = () => {
         },
         textInput: {
           placeholder: "Ask Alan...",
-          backgroundColor: "#ffffff",
+          backgroundColor: "#f0f0f0", // Light grey background
           textColor: "#303235",
           sendButtonColor: "#000000",
         },
