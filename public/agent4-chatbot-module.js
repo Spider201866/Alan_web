@@ -48,11 +48,11 @@ const initChatbot = () => {
       customCSS: `
         /* Rounded corners for user message bubble */
         .chatbot-guest-bubble {
-          border-radius: 18px !important;
+          border-radius: 15px !important;
         }
 
         /* Rounded corners for the input text box */
-        .text-input {
+        .chatbot-text-input {
           border-radius: 18px !important;
         }
       `,
