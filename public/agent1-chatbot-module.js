@@ -2,9 +2,10 @@
 
 import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@geoff16/dist/web.js";
 
+try {
     Chatbot.initFull({
-        chatflowid: "db68b77b-92be-4c80-bf50-c13e00a33d77", // Your Flow ID
-        apiHost: "https://flowiseai-railway-production-fecf.up.railway.app", // Your API Host
+        chatflowid: "db68b77b-92be-4c80-bf50-c13e00a33d77",
+        apiHost: "https://flowiseai-railway-production-fecf.up.railway.app",
 
         theme: {
             button: {
@@ -42,6 +43,11 @@ import Chatbot from "https://cdn.jsdelivr.net/gh/Spider201866/FlowiseChatEmbed@g
             },
         },
     });
+
+    console.log("Chatbot successfully initialised.");
+} catch (error) {
+    console.error("Error initialising chatbot:", error);
+}
 
 
 
