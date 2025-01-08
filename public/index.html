@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Splash Screen</title>
     <style>
+        /* Basic page styling */
         body,
         html {
             height: 100%;
@@ -20,6 +21,7 @@
             box-sizing: border-box;
         }
 
+        /* Black screen overlay for the zoom-out transition */
         .black-screen {
             position: fixed;
             top: 0;
@@ -34,12 +36,10 @@
             visibility: hidden;
             transition: opacity 0.50s ease-in-out;
         }
-
         .black-screen.visible {
             visibility: visible;
             opacity: 1;
         }
-
         .black-screen img {
             width: auto;
             max-width: 30%;
@@ -48,28 +48,24 @@
             transition: transform 4s ease-in-out, filter 4s ease-in-out;
         }
 
+        /* For hiding and showing screens */
         .hidden {
             visibility: hidden;
             opacity: 0;
             transition: visibility 0s 0.5s, opacity 0.5s linear;
         }
-
         .visible {
             visibility: visible;
             opacity: 1;
             transition: opacity 0.5s linear;
         }
 
-        button:disabled {
-            background-color: #ccc;
-        }
-
+        /* Splash screen animations */
         .splash-screen img,
         .splash-screen p {
             transition: transform 3s ease-in-out;
             margin: 20px 0;
         }
-
         .splash-screen img {
             width: 30vw;
             max-width: 150px;
@@ -78,23 +74,21 @@
             transform-origin: center;
             -webkit-transform-origin: center;
         }
-
         @keyframes zoomEffect {
             from {
                 transform: scale(0.8);
                 -webkit-transform: scale(0.8);
             }
-
             to {
                 transform: scale(1);
                 -webkit-transform: scale(1);
             }
         }
-
         .splash-screen.visible img {
             animation: zoomEffect 3s ease-in-out forwards;
         }
 
+        /* Container screens */
         .splash-screen,
         .instruction-screen {
             position: absolute;
@@ -108,26 +102,11 @@
             align-items: center;
             text-align: center;
         }
-
-        .splash-screen img,
-        .splash-screen p {
-            transition: transform 3s ease-in-out;
-            margin: 20px 0;
-        }
-
-        .splash-screen img {
-            width: 30vw;
-            max-width: 150px;
-            height: auto;
-            margin-bottom: 60px;
-        }
-
         #logo2 {
             width: 50vw;
             max-width: 300px;
             margin-bottom: 60px;
         }
-
         .splash-screen p {
             font-size: calc(12px + 1vmin);
             font-weight: bold;
@@ -145,19 +124,16 @@
             overflow: auto;
             box-sizing: border-box;
         }
-
         .instruction-screen p {
             font-size: 16px;
             margin: 10px 20px;
-            /* Adjusted margin to reduce gap */
             color: #333;
         }
-
         .instruction-screen p.good-luck {
             margin-bottom: 20px;
-            /* Add space after "Good luck!" */
         }
 
+        /* The blue buttons (Accept, or if you want others to match it) */
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -167,11 +143,11 @@
             border-radius: 15px;
             cursor: pointer;
         }
-
         button:disabled {
             background-color: #ccc;
         }
 
+        /* White background inputs & dropdowns (Role, Experience, Geolocation, Name, Contact) */
         select,
         .geo-button,
         .name-input,
@@ -181,16 +157,15 @@
             color: grey;
             background-color: white;
             border: 1px solid grey;
-            cursor: pointer;
             border-radius: 15px;
             width: 230px;
-            /* Set a fixed width for all elements */
             box-sizing: border-box;
-            /* Include padding and border in the element's total width */
             text-align: center;
             margin-bottom: 20px;
+            cursor: pointer;
         }
 
+        /* Keep the black arrow icon for SELECTs */
         select {
             appearance: none;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>');
@@ -201,27 +176,79 @@
             line-height: 1.2;
         }
 
-        .geo-button.clicked,
+        /* Make geolocation button text turn blue after it is clicked */
+        .geo-button.clicked {
+            color: blue;
+        }
         .name-input.entered,
         .contact-input.entered {
             color: blue;
+        }
+
+        /* The "Your Focus" button with white background, identical shape & size to the others */
+        .focus-button {
+            padding: 4px 20px;
+            font-size: 14px;
+            color: grey; /* Same grey as placeholders */
+            background-color: white;
+            border: 1px solid grey;
+            border-radius: 15px;
+            width: 230px;
+            box-sizing: border-box;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        /* Turn text blue when any checkbox is selected */
+        .focus-button.entered {
+            color: blue;
+        }
+
+        /* Absolutely positioned dropdown for checkboxes so the page does not jump */
+        .focus-container {
+            position: relative;
+        }
+        .focus-dropdown.hidden {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid grey;
+            border-radius: 10px;
+            padding: 10px;
+            z-index: 999;
+            width: 230px;
+        }
+        .focus-dropdown.visible {
+            display: block;
+        }
+        .focus-dropdown label {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            margin: 5px 0;
+            cursor: pointer;
+            color: grey;
+        }
+        .focus-dropdown input[type="checkbox"] {
+            margin-right: 8px;
         }
     </style>
 </head>
 
 <body>
+    <!-- SPLASH SCREEN -->
     <div class="splash-screen visible">
         <img id="logo1" src="./Q.png" alt="Q Logo" />
         <img id="logo2" src="./AP.png" alt="AP Logo" />
-        <p>Eye, Ear, Skin AI Assistant</p>
+        <p>Eye Ear Skin AI Assistant</p>
     </div>
 
+    <!-- INSTRUCTION SCREEN -->
     <div class="instruction-screen hidden">
         <img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: -10px" />
-        <p>Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak
+        <p>Alan is an AI assistant for students and those who only occasionally see eye ear or skin cases. Write or speak
             clearly and avoid identifying names or details.</p>
         <p class="good-luck">Good luck!</p>
-
 
         <input type="text" id="nameInput" class="name-input" placeholder="Name">
 
@@ -243,6 +270,37 @@
             <option value="Dermatologist">Dermatologist</option>
         </select>
 
+        <select id="experience-select" class="experience-dropdown">
+            <option value="" disabled selected hidden>Experience</option>
+            <option value="<1 yr">&lt;1 yr</option>
+            <option value="1-5 yr">1-5 yr</option>
+            <option value="6-10 yr">6-10 yr</option>
+            <option value=">10 yr">&gt;10 yr</option>
+        </select>
+
+        <!-- FOCUS BUTTON AND DROPDOWN WITH MULTIPLE CHECKBOXES -->
+        <div class="focus-container">
+            <button id="focusToggleBtn" class="focus-button">Your Focus</button>
+            <div id="focusDropdown" class="focus-dropdown hidden">
+                <label>
+                    <input type="checkbox" name="focus" value="Diagnostic Second Opinion" />
+                    Diagnostic Second Opinion
+                </label>
+                <label>
+                    <input type="checkbox" name="focus" value="Quick Condition Lookup" />
+                    Quick Condition Lookup
+                </label>
+                <label>
+                    <input type="checkbox" name="focus" value="Communicate Better" />
+                    Communicate Better
+                </label>
+                <label>
+                    <input type="checkbox" name="focus" value="Get Me Thinking" />
+                    Get Me Thinking
+                </label>
+            </div>
+        </div>
+
         <button id="geolocationButton" class="geo-button">Geolocation On</button>
 
         <input type="text" id="contactInput" class="contact-input" placeholder="Contact (email/phone)">
@@ -253,239 +311,278 @@
         <div id="locationInfo" style="display:none;"></div>
     </div>
 
+    <!-- BLACK SCREEN OVERLAY -->
     <div class="black-screen" id="blackScreen">
         <img src="./sky.png" alt="Sky">
     </div>
 
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const nameInput = document.getElementById("nameInput");
-    const jobSelectElement = document.getElementById("job-role-select");
-    const geolocationButton = document.getElementById("geolocationButton");
-    const contactInput = document.getElementById("contactInput");
-    const acceptButton = document.getElementById("acceptButton");
-    const locationInfo = document.getElementById("locationInfo");
-    const blackScreen = document.getElementById("blackScreen");
-    const skyImage = blackScreen.querySelector('img');
-    let locationAccepted = false;
+    document.addEventListener("DOMContentLoaded", function () {
+        // References
+        const nameInput = document.getElementById("nameInput");
+        const jobSelectElement = document.getElementById("job-role-select");
+        const experienceSelectElement = document.getElementById("experience-select");
+        const geolocationButton = document.getElementById("geolocationButton");
+        const contactInput = document.getElementById("contactInput");
+        const acceptButton = document.getElementById("acceptButton");
+        const locationInfo = document.getElementById("locationInfo");
+        const blackScreen = document.getElementById("blackScreen");
+        const skyImage = blackScreen.querySelector("img");
+        let locationAccepted = false;
 
-    // Initial setup for the image transformation
-    skyImage.style.transform = 'scale(1)';
-    skyImage.style.transition = 'transform 4s ease-in-out, filter 4s ease-in-out';
+        // FOCUS DROPDOWN
+        const focusToggleBtn = document.getElementById("focusToggleBtn");
+        const focusDropdown = document.getElementById("focusDropdown");
+        const focusCheckboxes = document.querySelectorAll('#focusDropdown input[name="focus"]');
 
-    nameInput.addEventListener("input", function () {
-        nameInput.classList.toggle('entered', nameInput.value.trim() !== '');
-        checkSelections();
-    });
-    jobSelectElement.addEventListener("change", checkSelections);
-    contactInput.addEventListener("input", function () {
-        contactInput.classList.toggle('entered', contactInput.value.trim() !== '');
-        checkSelections();
-    });
-
-    function checkSelections() {
-        jobSelectElement.style.color = jobSelectElement.value ? 'blue' : 'grey';
-        acceptButton.disabled = !(nameInput.value.trim() && jobSelectElement.value && contactInput.value.trim() && locationAccepted);
-    }
-
-    geolocationButton.addEventListener("click", function () {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition, showError);
-        } else {
-            locationInfo.innerText = 'Geolocation is not supported by this browser.';
-            locationInfo.style.display = 'block';
-        }
-    });
-
-    function showPosition(position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        localStorage.setItem("latitude", latitude);
-        localStorage.setItem("longitude", longitude);
-        fetchCountryFromLatLong(latitude, longitude);
-        geolocationButton.classList.add('clicked');
-        locationAccepted = true;
-        checkSelections();
-    }
-
-    function showError(error) {
-        switch (error.code) {
-            case error.PERMISSION_DENIED:
-                locationInfo.innerText = 'User denied the request for Geolocation.';
-                break;
-            case error.POSITION_UNAVAILABLE:
-                locationInfo.innerText = 'Location information is unavailable.';
-                break;
-            case error.TIMEOUT:
-                locationInfo.innerText = 'The request to get user location timed out.';
-                break;
-            case error.UNKNOWN_ERROR:
-                locationInfo.innerText = 'An unknown error occurred.';
-                break;
-        }
-        locationInfo.style.display = 'block';
-    }
-
-    function fetchCountryFromLatLong(latitude, longitude) {
-        const OPEN_CAGE_API_KEY = 'b4217f147a5a4b179b336f5079b57207';
-        const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${OPEN_CAGE_API_KEY}`;
-
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                if (data && data.results && data.results.length > 0) {
-                    const components = data.results[0].components;
-                    const country = components.country;
-                    const iso_a3 = components['ISO_3166-1_alpha-3'];
-                    let area = '';
-
-                    if (components.city) {
-                        area = components.city;
-                    } else if (components.town) {
-                        area = components.town;
-                    } else {
-                        area = 'Unknown'; // Fallback if neither city nor town is found
-                    }
-
-                    localStorage.setItem("country", country);
-                    localStorage.setItem("iso_a3", iso_a3);
-                    localStorage.setItem("area", area);
-
-                    console.log("Country:", country); // For debugging purposes
-                    console.log("ISO Alpha-3 Code:", iso_a3); // For debugging purposes
-                    console.log("Area:", area); // For debugging purposes
-
-                    // Store classifications in local storage
-                    storeClassifications(iso_a3);
-                } else {
-                    console.error('No results found');
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching country and area:', error);
-            });
-    }
-
-    function storeClassifications(iso_a3) {
-        // Define the classification groups for countries
-        const classifications = {
-            "HI": ["QAT", "MAC", "LUX", "SGP", "BRN", "IRL", "NOR", "KWT", "ARE", "CHE", "HKG", "SMR", "USA", "SAU", "NLD", "ISL", "BHR", "SWE", "DEU", "AUS", "TWN", "DNK", "AUT", "CAN", "BEL", "OMN", "FIN", "GBR", "FRA", "JPN", "MLT", "KOR", "NZL", "ESP", "ITA", "PRI", "CYP", "ISR", "CZE"],
-            "MI": ["GNQ", "SVN", "SVK", "LTU", "EST", "TTO", "PRT", "POL", "HUN", "MYS", "SYC", "RUS", "GRC", "LVA", "KNA", "ATG", "TUR", "KAZ", "BHS", "CHL", "PAN", "HRV", "ROU", "URY", "MUS", "BGR", "ARG", "IRN", "MEX", "LBN", "GAB", "MDV", "TKM", "BLR", "BWA", "THA", "CHN", "BRA", "ZAF", "IND"],
-            "LI": ["BRB", "MNE", "AZE", "CRI", "IRQ", "DOM", "PLW", "MKD", "SRB", "DZA", "GRD", "COL", "SUR", "LCA", "PER", "LKA", "EGY", "MNG", "JOR", "ALB", "VEN", "IDN", "DMA", "XKX", "NRU", "TUN", "VCT", "NAM", "BIH", "ECU", "GEO", "SWZ", "FJI", "LBY", "PRY", "JAM", "ARM", "SLV", "BTN", "UKR", "MAR", "BLZ", "GUY", "PHL", "GTM", "BOL", "LAO", "UZB", "CPV", "VNM", "PAK"],
-            "VLI": ["AGO", "COG", "MMR", "NGA", "NIC", "WSM", "MDA", "TON", "HND", "TLS", "GHA", "SDN", "BGD", "MRT", "KHM", "ZMB", "LSO", "CIV", "TUV", "PNG", "KGZ", "DJI", "KEN", "MHL", "FSM", "CMR", "TZA", "STP", "TJK", "VUT", "NPL", "SEN", "TCD", "UGA", "YEM", "ZWE", "BEN", "MLI", "SLB", "ETH", "RWA", "GIN", "KIR", "AFG", "BFA", "HTI", "GNB", "SLE", "GMB", "SSD", "TGO", "COM", "MDG", "ERI", "MOZ", "MWI", "NER", "LBR", "BDI", "COD", "CAF"]
-        };
-
-        // Determine the country classification
-        let classification = "Unknown";
-        for (const [key, values] of Object.entries(classifications)) {
-            if (values.includes(iso_a3)) {
-                classification = key;
-                break;
+        // Toggle dropdown on button click
+        focusToggleBtn.addEventListener("click", () => {
+            focusDropdown.classList.toggle("hidden");
+            focusDropdown.classList.toggle("visible");
+        });
+        // Close dropdown if user clicks outside
+        document.addEventListener("click", (event) => {
+            if (!focusDropdown.contains(event.target) && event.target !== focusToggleBtn) {
+                focusDropdown.classList.add("hidden");
+                focusDropdown.classList.remove("visible");
             }
+        });
+        // Checkboxes => re-check form validity
+        focusCheckboxes.forEach((checkbox) => {
+            checkbox.addEventListener("change", checkSelections);
+        });
+
+        // Animate sky
+        skyImage.style.transform = "scale(1)";
+        skyImage.style.transition = "transform 4s ease-in-out, filter 4s ease-in-out";
+
+        // Input listeners
+        nameInput.addEventListener("input", function () {
+            nameInput.classList.toggle("entered", nameInput.value.trim() !== "");
+            checkSelections();
+        });
+        jobSelectElement.addEventListener("change", checkSelections);
+        experienceSelectElement.addEventListener("change", checkSelections);
+        contactInput.addEventListener("input", function () {
+            contactInput.classList.toggle("entered", contactInput.value.trim() !== "");
+            checkSelections();
+        });
+
+        // Geolocation
+        geolocationButton.addEventListener("click", function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                locationInfo.innerText = "Geolocation is not supported by this browser.";
+                locationInfo.style.display = "block";
+            }
+        });
+
+        function showPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            localStorage.setItem("latitude", latitude);
+            localStorage.setItem("longitude", longitude);
+            fetchCountryFromLatLong(latitude, longitude);
+            geolocationButton.classList.add("clicked");
+            locationAccepted = true;
+            checkSelections();
+        }
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    locationInfo.innerText = "User denied the request for Geolocation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    locationInfo.innerText = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    locationInfo.innerText = "The request to get user location timed out.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    locationInfo.innerText = "An unknown error occurred.";
+                    break;
+            }
+            locationInfo.style.display = "block";
         }
 
-        localStorage.setItem("classification", classification);
+        // Check if form can be accepted
+        function checkSelections() {
+            jobSelectElement.style.color = jobSelectElement.value ? "blue" : "grey";
+            experienceSelectElement.style.color = experienceSelectElement.value ? "blue" : "grey";
 
-        // Determine the job role classification
-        const foundationRoles = ["Health worker", "Nurse", "Ophthalmic clinical officer", "Pharmacist", "Audiologist", "Ear care practitioner"];
-        const middleRoles = ["Medical student", "General practitioner", "Hospital doctor", "Ophthalmologist", "Optometrist", "Orthoptist", "ENT specialist", "Dermatologist"];
+            // Has user selected any focus options?
+            const isAnyFocusSelected = Array.from(focusCheckboxes).some(cb => cb.checked);
+            // If yes, "Your Focus" button text => blue
+            focusToggleBtn.classList.toggle("entered", isAnyFocusSelected);
 
-        let role = jobSelectElement.value;
-        let roleClassification = "";
-        if (foundationRoles.includes(role)) {
-            roleClassification = " (P)";     // Changed to (P) for Primary from Foundation
-        } else if (middleRoles.includes(role)) {
-            roleClassification = " (M)";
+            acceptButton.disabled = !(
+                nameInput.value.trim() &&
+                jobSelectElement.value &&
+                experienceSelectElement.value &&
+                isAnyFocusSelected &&
+                contactInput.value.trim() &&
+                locationAccepted
+            );
         }
 
-        localStorage.setItem("roleClassification", roleClassification);
-    }
+        function fetchCountryFromLatLong(latitude, longitude) {
+            const OPEN_CAGE_API_KEY = "b4217f147a5a4b179b336f5079b57207";
+            const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${OPEN_CAGE_API_KEY}`;
 
-    acceptButton.addEventListener("click", function () {
-        localStorage.setItem("name", nameInput.value);
-        localStorage.setItem("selectedJobRole", jobSelectElement.value);
-        localStorage.setItem("contactInfo", contactInput.value);
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.results && data.results.length > 0) {
+                        const components = data.results[0].components;
+                        const country = components.country;
+                        const iso_a3 = components["ISO_3166-1_alpha-3"];
+                        let area = "";
 
-        // Retrieve user information from local storage
-        const name = localStorage.getItem('name') || 'Anonymous';
-        const role = localStorage.getItem('selectedJobRole') || 'Not set';
-        const latitude = localStorage.getItem('latitude') || 'Not set';
-        const longitude = localStorage.getItem('longitude') || 'Not set';
-        const country = localStorage.getItem('country') || 'Not set';
-        const iso_a3 = localStorage.getItem('iso_a3') || 'Not set';
-        const classification = localStorage.getItem('classification') || 'Not set';
-        const roleClassification = localStorage.getItem('roleClassification') || '';
-        const area = localStorage.getItem('area') || 'Not set';
-        const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
-        const version = '1.0';
-        const dateTime = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
+                        if (components.city) {
+                            area = components.city;
+                        } else if (components.town) {
+                            area = components.town;
+                        } else {
+                            area = "Unknown";
+                        }
 
-        const userInfo = {
-            name,
-            role,
-            latitude,
-            longitude,
-            country,
-            iso_a3,
-            classification,
-            roleClassification,
-            area,
-            contactInfo,
-            version,
-            dateTime
-        };
+                        localStorage.setItem("country", country);
+                        localStorage.setItem("iso_a3", iso_a3);
+                        localStorage.setItem("area", area);
 
+                        storeClassifications(iso_a3);
+                    } else {
+                        console.error("No results found");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching country and area:", error);
+                });
+        }
 
+        function storeClassifications(iso_a3) {
+            const classifications = {
+                "HI": ["QAT", "MAC", "LUX", "SGP", "BRN", "IRL", "NOR", "KWT", "ARE", "CHE", "HKG", "SMR", "USA", "SAU", "NLD", "ISL", "BHR", "SWE", "DEU", "AUS", "TWN", "DNK", "AUT", "CAN", "BEL", "OMN", "FIN", "GBR", "FRA", "JPN", "MLT", "KOR", "NZL", "ESP", "ITA", "PRI", "CYP", "ISR", "CZE"],
+                "MI": ["GNQ", "SVN", "SVK", "LTU", "EST", "TTO", "PRT", "POL", "HUN", "MYS", "SYC", "RUS", "GRC", "LVA", "KNA", "ATG", "TUR", "KAZ", "BHS", "CHL", "PAN", "HRV", "ROU", "URY", "MUS", "BGR", "ARG", "IRN", "MEX", "LBN", "GAB", "MDV", "TKM", "BLR", "BWA", "THA", "CHN", "BRA", "ZAF", "IND"],
+                "LI": ["BRB", "MNE", "AZE", "CRI", "IRQ", "DOM", "PLW", "MKD", "SRB", "DZA", "GRD", "COL", "SUR", "LCA", "PER", "LKA", "EGY", "MNG", "JOR", "ALB", "VEN", "IDN", "DMA", "XKX", "NRU", "TUN", "VCT", "NAM", "BIH", "ECU", "GEO", "SWZ", "FJI", "LBY", "PRY", "JAM", "ARM", "SLV", "BTN", "UKR", "MAR", "BLZ", "GUY", "PHL", "GTM", "BOL", "LAO", "UZB", "CPV", "VNM", "PAK"],
+                "VLI": ["AGO", "COG", "MMR", "NGA", "NIC", "WSM", "MDA", "TON", "HND", "TLS", "GHA", "SDN", "BGD", "MRT", "KHM", "ZMB", "LSO", "CIV", "TUV", "PNG", "KGZ", "DJI", "KEN", "MHL", "FSM", "CMR", "TZA", "STP", "TJK", "VUT", "NPL", "SEN", "TCD", "UGA", "YEM", "ZWE", "BEN", "MLI", "SLB", "ETH", "RWA", "GIN", "KIR", "AFG", "BFA", "HTI", "GNB", "SLE", "GMB", "SSD", "TGO", "COM", "MDG", "ERI", "MOZ", "MWI", "NER", "LBR", "BDI", "COD", "CAF"]
+            };
 
-        // Make the black screen visible
-        blackScreen.style.visibility = 'visible';
-        blackScreen.style.opacity = 1;
+            let classification = "Unknown";
+            for (const [key, values] of Object.entries(classifications)) {
+                if (values.includes(iso_a3)) {
+                    classification = key;
+                    break;
+                }
+            }
+            localStorage.setItem("classification", classification);
 
-        // Start the zoom and blur effect shortly after making the image visible
-        setTimeout(() => {
-            skyImage.style.transform = 'scale(1.3)';
-            skyImage.style.filter = 'blur(0px)';
-        }, 200);
+            const foundationRoles = ["Health worker", "Nurse", "Ophthalmic clinical officer", "Pharmacist", "Audiologist", "Ear care practitioner"];
+            const middleRoles = ["Medical student", "General practitioner", "Hospital doctor", "Ophthalmologist", "Optometrist", "Orthoptist", "ENT specialist", "Dermatologist"];
 
-        // Fade out after the set display time
-        setTimeout(() => {
-            blackScreen.style.opacity = 0;
+            let role = jobSelectElement.value;
+            let roleClassification = "";
+            if (foundationRoles.includes(role)) {
+                roleClassification = " (P)";
+            } else if (middleRoles.includes(role)) {
+                roleClassification = " (M)";
+            }
+            localStorage.setItem("roleClassification", roleClassification);
+        }
+
+        acceptButton.addEventListener("click", function () {
+            localStorage.setItem("name", nameInput.value);
+            localStorage.setItem("selectedJobRole", jobSelectElement.value);
+            localStorage.setItem("selectedExperience", experienceSelectElement.value);
+
+            // Collect all checked focus boxes
+            const selectedFocusValues = Array.from(focusCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+            localStorage.setItem("selectedFocus", JSON.stringify(selectedFocusValues));
+
+            localStorage.setItem("contactInfo", contactInput.value);
+
+            // Retrieve everything
+            const name = localStorage.getItem("name") || "Anonymous";
+            const role = localStorage.getItem("selectedJobRole") || "Not set";
+            const experience = localStorage.getItem("selectedExperience") || "Not set";
+            const focusRaw = localStorage.getItem("selectedFocus");
+            const focus = focusRaw ? JSON.parse(focusRaw) : [];
+            const latitude = localStorage.getItem("latitude") || "Not set";
+            const longitude = localStorage.getItem("longitude") || "Not set";
+            const country = localStorage.getItem("country") || "Not set";
+            const iso_a3 = localStorage.getItem("iso_a3") || "Not set";
+            const classification = localStorage.getItem("classification") || "Not set";
+            const roleClassification = localStorage.getItem("roleClassification") || "";
+            const area = localStorage.getItem("area") || "Not set";
+            const contactInfo = localStorage.getItem("contactInfo") || "Not set";
+            const version = "1.0";
+            const dateTime = new Date().toLocaleString("en-GB", { timeZone: "UTC" });
+
+            const userInfo = {
+                name,
+                role,
+                experience,
+                focus,
+                latitude,
+                longitude,
+                country,
+                iso_a3,
+                classification,
+                roleClassification,
+                area,
+                contactInfo,
+                version,
+                dateTime
+            };
+
+            // Fade to black screen
+            blackScreen.style.visibility = "visible";
+            blackScreen.style.opacity = 1;
             setTimeout(() => {
-                window.location.href = "home.html";
-            }, 250);
-        }, 6000);
+                skyImage.style.transform = "scale(1.3)";
+                skyImage.style.filter = "blur(0px)";
+            }, 200);
+
+            setTimeout(() => {
+                blackScreen.style.opacity = 0;
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 250);
+            }, 6000);
+        });
+
+        // Splash logic
+        if (!sessionStorage.getItem("splashShown")) {
+            sessionStorage.setItem("splashShown", "true");
+            showSplashScreen();
+        } else {
+            window.location.href = "home.html";
+        }
     });
 
-    if (!sessionStorage.getItem("splashShown")) {
-        sessionStorage.setItem("splashShown", "true");
-        showSplashScreen();
-    } else {
-        window.location.href = "home.html";
+    function showSplashScreen() {
+        const logo1 = document.getElementById("logo1");
+        const logo2 = document.getElementById("logo2");
+        logo1.style.transform = "scale(0.8)";
+        logo2.style.transform = "rotateX(-90deg)";
+
+        setTimeout(() => {
+            logo1.style.transform = "scale(1)";
+            logo2.style.transform = "rotateX(0deg)";
+        }, 100);
+
+        setTimeout(() => {
+            const splashScreen = document.querySelector(".splash-screen");
+            const instructionScreen = document.querySelector(".instruction-screen");
+            splashScreen.classList.remove("visible");
+            splashScreen.classList.add("hidden");
+            instructionScreen.classList.remove("hidden");
+            instructionScreen.classList.add("visible");
+        }, 6000);
     }
-});
-
-function showSplashScreen() {
-    const logo1 = document.getElementById("logo1");
-    const logo2 = document.getElementById("logo2");
-    logo1.style.transform = "scale(0.8)";
-    logo2.style.transform = "rotateX(-90deg)";
-
-    setTimeout(() => {
-        logo1.style.transform = "scale(1)";
-        logo2.style.transform = "rotateX(0deg)";
-    }, 100);
-
-    setTimeout(() => {
-        const splashScreen = document.querySelector(".splash-screen");
-        const instructionScreen = document.querySelector(".instruction-screen");
-        splashScreen.classList.remove("visible");
-        splashScreen.classList.add("hidden");
-        instructionScreen.classList.remove("hidden");
-        instructionScreen.classList.add("visible");
-    }, 6000);
-}
-
     </script>
 </body>
-
 </html>
