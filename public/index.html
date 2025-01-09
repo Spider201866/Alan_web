@@ -185,7 +185,7 @@
             color: blue;
         }
 
-        /* The "Your Focus" button with white background, identical shape & size to the others */
+        /* Updated Focus Button with Centred Text and Dropdown Arrow */
         .focus-button {
             padding: 4px 20px;
             font-size: 14px;
@@ -195,10 +195,20 @@
             border-radius: 15px;
             width: 230px;
             box-sizing: border-box;
-            text-align: center;
+            text-align: center; /* Centre the text */
             margin-bottom: 20px;
             cursor: pointer;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="16px" height="16px"><path d="M7 10l5 5 5-5H7z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center; /* Adjust position of the arrow */
+            background-size: 25px; /* Adjust arrow size */
+            padding-right: 25px; /* Ensure the arrow does not overlap text */
+            line-height: 1.2; /* Improve vertical alignment of text */
+            display: flex;
+            justify-content: center; /* Centre text horizontally */
+            align-items: center; /* Centre text vertically */
         }
+
         /* Turn text blue when any checkbox is selected */
         .focus-button.entered {
             color: blue;
@@ -208,8 +218,13 @@
         .focus-container {
             position: relative;
         }
+
         .focus-dropdown.hidden {
             display: none;
+        }
+
+        .focus-dropdown.visible {
+            display: block;
             position: absolute;
             background-color: #fff;
             border: 1px solid grey;
@@ -217,20 +232,24 @@
             padding: 10px;
             z-index: 999;
             width: 230px;
+            box-sizing: border-box; /* Ensure padding doesn't affect width */
         }
-        .focus-dropdown.visible {
-            display: block;
-        }
+
         .focus-dropdown label {
             display: flex;
-            align-items: center;
+            align-items: center; /* Vertically centre checkbox and label text */
+            justify-content: flex-start; /* Align text and checkbox to the left */
             font-size: 14px;
-            margin: 5px 0;
+            margin: 10px 0; /* Add spacing between items */
             cursor: pointer;
             color: grey;
         }
+
         .focus-dropdown input[type="checkbox"] {
-            margin-right: 8px;
+            margin-right: 10px; /* Space between checkbox and label */
+            width: 14px; /* Adjust width for smaller size */
+            height: 14px; /* Adjust height for smaller size */
+            vertical-align: middle; /* Align checkbox with label text */
         }
     </style>
 </head>
@@ -246,7 +265,7 @@
     <!-- INSTRUCTION SCREEN -->
     <div class="instruction-screen hidden">
         <img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: -10px" />
-        <p>Alan is an AI assistant for students and those who only occasionally see eye ear or skin cases. Write or speak
+        <p>Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak
             clearly and avoid identifying names or details.</p>
         <p class="good-luck">Good luck!</p>
 
@@ -280,7 +299,7 @@
 
         <!-- FOCUS BUTTON AND DROPDOWN WITH MULTIPLE CHECKBOXES -->
         <div class="focus-container">
-            <button id="focusToggleBtn" class="focus-button">Your Focus</button>
+            <button id="focusToggleBtn" class="focus-button">Aims</button>
             <div id="focusDropdown" class="focus-dropdown hidden">
                 <label>
                     <input type="checkbox" name="focus" value="Diagnostic Second Opinion" />
@@ -293,10 +312,6 @@
                 <label>
                     <input type="checkbox" name="focus" value="Communicate Better" />
                     Communicate Better
-                </label>
-                <label>
-                    <input type="checkbox" name="focus" value="Get Me Thinking" />
-                    Get Me Thinking
                 </label>
             </div>
         </div>

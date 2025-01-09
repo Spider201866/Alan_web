@@ -372,52 +372,55 @@
         header.appendChild(nameIcon);
 
         function openPopup() {
-            const popup = document.getElementById('popup');
-            const popupContent = document.getElementById('popup-content');
-            const name = localStorage.getItem('name') || 'Not set';
-            const role = localStorage.getItem('selectedJobRole') || 'Not set';
-            const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
-            const longitude = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
-            const country = localStorage.getItem('country') || 'Not set';
-            const iso_a3 = localStorage.getItem('iso_a3') || 'Not set';
-            const area = localStorage.getItem('area') || 'Not set';
-            const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
-            const classification = localStorage.getItem('classification') || 'Unknown';
-            const roleClassification = localStorage.getItem('roleClassification') || '';
-            const selectedAgent = localStorage.getItem('selectedAgent') || 'Unknown';
+        const popup = document.getElementById('popup');
+        const popupContent = document.getElementById('popup-content');
 
-            console.log('Name:', name);
-            console.log('Role:', role);
-            console.log('Latitude:', latitude);
-            console.log('Longitude:', longitude);
-            console.log('Country:', country);
-            console.log('ISO Alpha-3 Code:', iso_a3);
-            console.log('Area:', area);
-            console.log('Contact Info:', contactInfo);
+        // Retrieve data from localStorage
+        const name = localStorage.getItem('name') || 'Not set';
+        const role = localStorage.getItem('selectedJobRole') || 'Not set';
+        const experience = localStorage.getItem('selectedExperience') || 'Not set';
+        const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
+        const longitude = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
+        const country = localStorage.getItem('country') || 'Not set';
+        const iso_a3 = localStorage.getItem('iso_a3') || 'Not set';
+        const area = localStorage.getItem('area') || 'Not set';
+        const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
+        const classification = localStorage.getItem('classification') || 'Unknown';
+        const roleClassification = localStorage.getItem('roleClassification') || '';
+        const selectedAgent = localStorage.getItem('selectedAgent') || 'Unknown';
 
-            const now = new Date();
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const year = now.getFullYear();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const currentDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+        // Retrieve and format Aims
+        const focusRaw = localStorage.getItem('selectedFocus');
+        const aims = focusRaw ? JSON.parse(focusRaw).join('; ') : 'Not set';
 
-            popupContent.innerHTML = `
-                <p>Name: ${name}</p>
-                <p>Role: ${role}${roleClassification}</p>
-                <p>Lat & Long: ${latitude}, ${longitude}</p>
-                <p>Country: ${country} (${iso_a3}) [${classification}]</p>
-                <p>Area: ${area}</p>
-                <p>Contact: ${contactInfo}</p>
-                <p>Version: 1.0, ${selectedAgent}</p>
-                <p>Date & Time: ${currentDateTime}</p>
-            `;
+        // Get current date and time
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const currentDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 
-            popup.style.right = '0';
-            popup.style.display = 'block';
-        }
+        // Populate the popup content
+        popupContent.innerHTML = `
+            <p><strong>Role:</strong> ${role}${roleClassification}</p>
+            <p><strong>Experience:</strong> ${experience}</p>
+            <p><strong>Aims:</strong> ${aims}</p>
+            <p><strong>Lat & Long:</strong> ${latitude}, ${longitude}</p>
+            <p><strong>Area:</strong> ${area}</p>
+            <p><strong>Country:</strong> ${country} (${iso_a3}) [${classification}]</p>
+            <p><strong>Contact:</strong> ${contactInfo}</p>
+            <p><strong>Version:</strong> 1.0, ${selectedAgent}</p>
+            <p><strong>Date & Time:</strong> ${currentDateTime}</p>
+        `;
+
+        // Display the popup
+        popup.style.right = '0';
+        popup.style.display = 'block';
+    }
+
 
         function closePopup() {
             const popup = document.getElementById('popup');
