@@ -4,7 +4,7 @@ export const translations = {
     goodHistory: "Good History",
     examineWell: "Examine Well",
     useArclight: "Use Arclight",
-    howCanIHelp: "How can I help you today?",
+    howCanIHelp: "what can I help with?",
     alanMistakes: "Alan can make mistakes. Use clinical judgement. 1/25",
     login: "Login",
     enterPassword: "Enter Password",

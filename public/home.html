@@ -441,10 +441,10 @@
             }
             // Capitalise the first letter
             firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-            subTextEl.innerText = `${firstName}, how can I help you today?`;
+            subTextEl.innerText = `${firstName}, what can I help with??`;
         } else {
             console.error('Name not found in local storage');
-            subTextEl.innerText = 'How can I help you today?';
+            subTextEl.innerText = 'what can I help with?';
         }
     }
 
