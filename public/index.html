@@ -5,253 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Splash Screen</title>
-    <style>
-        /* Basic page styling */
-        body,
-        html {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: "Calibri Light", Arial, sans-serif;
-            background-color: #f0f0f0;
-            box-sizing: border-box;
-        }
-
-        /* Black screen overlay for the zoom-out transition */
-        .black-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.50s ease-in-out;
-        }
-        .black-screen.visible {
-            visibility: visible;
-            opacity: 1;
-        }
-        .black-screen img {
-            width: auto;
-            max-width: 30%;
-            height: auto;
-            filter: blur(20px);
-            transition: transform 4s ease-in-out, filter 4s ease-in-out;
-        }
-
-        /* For hiding and showing screens */
-        .hidden {
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0s 0.5s, opacity 0.5s linear;
-        }
-        .visible {
-            visibility: visible;
-            opacity: 1;
-            transition: opacity 0.5s linear;
-        }
-
-        /* Splash screen animations */
-        .splash-screen img,
-        .splash-screen p {
-            transition: transform 3s ease-in-out;
-            margin: 20px 0;
-        }
-        .splash-screen img {
-            width: 30vw;
-            max-width: 150px;
-            height: auto;
-            margin-bottom: 60px;
-            transform-origin: center;
-            -webkit-transform-origin: center;
-        }
-        @keyframes zoomEffect {
-            from {
-                transform: scale(0.8);
-                -webkit-transform: scale(0.8);
-            }
-            to {
-                transform: scale(1);
-                -webkit-transform: scale(1);
-            }
-        }
-        .splash-screen.visible img {
-            animation: zoomEffect 3s ease-in-out forwards;
-        }
-
-        /* Container screens */
-        .splash-screen,
-        .instruction-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        #logo2 {
-            width: 50vw;
-            max-width: 300px;
-            margin-bottom: 60px;
-        }
-        .splash-screen p {
-            font-size: calc(12px + 1vmin);
-            font-weight: bold;
-            font-style: italic;
-            margin-top: 60px;
-        }
-
-        .instruction-screen {
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: white;
-            overflow: auto;
-            box-sizing: border-box;
-        }
-        .instruction-screen p {
-            font-size: 16px;
-            margin: 10px 20px;
-            color: #333;
-        }
-        .instruction-screen p.good-luck {
-            margin-bottom: 20px;
-        }
-
-        /* The blue buttons (Accept, or if you want others to match it) */
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: white;
-            background-color: #007bff;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-        }
-        button:disabled {
-            background-color: #ccc;
-        }
-
-        /* White background inputs & dropdowns (Role, Experience, Geolocation, Name, Contact) */
-        select,
-        .geo-button,
-        .name-input,
-        .contact-input {
-            padding: 4px 20px;
-            font-size: 14px;
-            color: grey;
-            background-color: white;
-            border: 1px solid grey;
-            border-radius: 15px;
-            width: 230px;
-            box-sizing: border-box;
-            text-align: center;
-            margin-bottom: 20px;
-            cursor: pointer;
-        }
-
-        /* Keep the black arrow icon for SELECTs */
-        select {
-            appearance: none;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 25px;
-            max-height: 300px;
-            line-height: 1.2;
-        }
-
-        /* Make geolocation button text turn blue after it is clicked */
-        .geo-button.clicked {
-            color: blue;
-        }
-        .name-input.entered,
-        .contact-input.entered {
-            color: blue;
-        }
-
-        /* Updated Focus Button with Centred Text and Dropdown Arrow */
-        .focus-button {
-            padding: 4px 20px;
-            font-size: 14px;
-            color: grey; /* Same grey as placeholders */
-            background-color: white;
-            border: 1px solid grey;
-            border-radius: 15px;
-            width: 230px;
-            box-sizing: border-box;
-            text-align: center; /* Centre the text */
-            margin-bottom: 20px;
-            cursor: pointer;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="16px" height="16px"><path d="M7 10l5 5 5-5H7z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: right 10px center; /* Adjust position of the arrow */
-            background-size: 25px; /* Adjust arrow size */
-            padding-right: 25px; /* Ensure the arrow does not overlap text */
-            line-height: 1.2; /* Improve vertical alignment of text */
-            display: flex;
-            justify-content: center; /* Centre text horizontally */
-            align-items: center; /* Centre text vertically */
-        }
-
-        /* Turn text blue when any checkbox is selected */
-        .focus-button.entered {
-            color: blue;
-        }
-
-        /* Absolutely positioned dropdown for checkboxes so the page does not jump */
-        .focus-container {
-            position: relative;
-        }
-
-        .focus-dropdown.hidden {
-            display: none;
-        }
-
-        .focus-dropdown.visible {
-            display: block;
-            position: absolute;
-            background-color: #fff;
-            border: 1px solid grey;
-            border-radius: 10px;
-            padding: 10px;
-            z-index: 999;
-            width: 230px;
-            box-sizing: border-box; /* Ensure padding doesn't affect width */
-        }
-
-        .focus-dropdown label {
-            display: flex;
-            align-items: center; /* Vertically centre checkbox and label text */
-            justify-content: flex-start; /* Align text and checkbox to the left */
-            font-size: 14px;
-            margin: 10px 0; /* Add spacing between items */
-            cursor: pointer;
-            color: grey;
-        }
-
-        .focus-dropdown input[type="checkbox"] {
-            margin-right: 10px; /* Space between checkbox and label */
-            width: 14px; /* Adjust width for smaller size */
-            height: 14px; /* Adjust height for smaller size */
-            vertical-align: middle; /* Align checkbox with label text */
-        }
-    </style>
+    <link rel="stylesheet" href="styles_index.css">
 </head>
 
 <body>
@@ -259,7 +13,7 @@
     <div class="splash-screen visible">
         <img id="logo1" src="./Q.png" alt="Q Logo" />
         <img id="logo2" src="./AP.png" alt="AP Logo" />
-        <p>Eye Ear Skin AI Assistant</p>
+        <p>Eye, Ear, Skin AI Assistant</p>
     </div>
 
     <!-- INSTRUCTION SCREEN -->
@@ -277,6 +31,7 @@
             <option value="Nurse">Nurse</option>
             <option value="Ophthalmic clinical officer">Ophthalmic clinical officer</option>
             <option value="Medical student">Medical student</option>
+            <option value="Physician associate">Physician associate</option>
             <option value="General practitioner">General practitioner</option>
             <option value="Hospital doctor">Hospital doctor</option>
             <option value="Ophthalmologist">Ophthalmologist</option>
@@ -288,7 +43,7 @@
             <option value="Ear care practitioner">Ear care practitioner</option>
             <option value="Dermatologist">Dermatologist</option>
         </select>
-
+        
         <select id="experience-select" class="experience-dropdown">
             <option value="" disabled selected hidden>Experience</option>
             <option value="<1 yr">&lt;1 yr</option>
@@ -316,8 +71,6 @@
             </div>
         </div>
 
-        <button id="geolocationButton" class="geo-button">Geolocation On</button>
-
         <input type="text" id="contactInput" class="contact-input" placeholder="Contact (email/phone)">
 
         <br /><br /><br />
@@ -331,273 +84,267 @@
         <img src="./sky.png" alt="Sky">
     </div>
 
+    <!-- SINGLE SCRIPT BLOCK -->
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // References
-        const nameInput = document.getElementById("nameInput");
-        const jobSelectElement = document.getElementById("job-role-select");
-        const experienceSelectElement = document.getElementById("experience-select");
-        const geolocationButton = document.getElementById("geolocationButton");
-        const contactInput = document.getElementById("contactInput");
-        const acceptButton = document.getElementById("acceptButton");
-        const locationInfo = document.getElementById("locationInfo");
-        const blackScreen = document.getElementById("blackScreen");
-        const skyImage = blackScreen.querySelector("img");
-        let locationAccepted = false;
+    /*********************************************/
+    /*               GLOBAL REFERENCES           */
+    /*********************************************/
+    const splashScreenRef  = document.querySelector(".splash-screen");
+    const instructionRef   = document.querySelector(".instruction-screen");
+    const blackScreen      = document.getElementById("blackScreen");
+    const skyImage         = blackScreen.querySelector("img");
 
-        // FOCUS DROPDOWN
-        const focusToggleBtn = document.getElementById("focusToggleBtn");
-        const focusDropdown = document.getElementById("focusDropdown");
-        const focusCheckboxes = document.querySelectorAll('#focusDropdown input[name="focus"]');
+    const nameInput        = document.getElementById("nameInput");
+    const jobSelectElement = document.getElementById("job-role-select");
+    const experienceSelect = document.getElementById("experience-select");
+    const contactInput     = document.getElementById("contactInput");
+    const acceptButton     = document.getElementById("acceptButton");
 
-        // Toggle dropdown on button click
+    // Focus Button & Dropdown
+    const focusToggleBtn   = document.getElementById("focusToggleBtn");
+    const focusDropdown    = document.getElementById("focusDropdown");
+    const focusCheckboxes  = document.querySelectorAll('#focusDropdown input[name="focus"]');
+
+    // IP-based Location Variables
+    let ipLatitude  = "Not set";
+    let ipLongitude = "Not set";
+    let ipCountry   = "Not set";
+    let ipArea      = "Not set";
+    let ipISO2      = "Not set";
+
+    // Classification Arrays (2-letter ISO)
+    const classificationLookup = {
+        "HI": [
+            "QA","MO","LU","SG","BN","IE","NO","KW","AE","CH","HK","SM","US","SA","NL","IS","BH","SE",
+            "DE","AU","TW","DK","AT","CA","BE","OM","FI","GB","FR","JP","MT","KR","NZ","ES","IT","PR","CY","IL","CZ"
+        ],
+        "MI": [
+            "GQ","SI","SK","LT","EE","TT","PT","PL","HU","MY","SC","RU","GR","LV","KN","AG","TR","KZ","BS","CL","PA",
+            "HR","RO","UY","MU","BG","AR","IR","MX","LB","GA","MV","TM","BY","BW","TH","CN","BR","ZA","IN"
+        ],
+        "LI": [
+            "BB","ME","AZ","CR","IQ","DO","PW","MK","RS","DZ","GD","CO","SR","LC","PE","LK","EG","MN","JO","AL","VE",
+            "ID","DM","XK","NR","TN","VC","NA","BA","EC","GE","SZ","FJ","LY","PY","JM","AM","SV","BT","UA","MA","BZ",
+            "GY","PH","GT","BO","LA","UZ","CV","VN","PK"
+        ],
+        "VLI": [
+            "AO","CG","MM","NG","NI","WS","MD","TO","HN","TL","GH","SD","BD","MR","KH","ZM","LS","CI","TV","PG","KG",
+            "DJ","KE","MH","FM","CM","TZ","ST","TJ","VU","NP","SN","TD","UG","YE","ZW","BJ","ML","SB","ET","RW","GN",
+            "KI","AF","BF","HT","GW","SL","GM","SS","TG","KM","MG","ER","MZ","MW","NE","LR","BI","CD","CF"
+        ]
+    };
+
+    /*********************************************/
+    /*               HELPER FUNCTIONS            */
+    /*********************************************/
+    
+    // 1) Animate the splash & switch to instructions
+    function showSplashScreen() {
+        const logo1 = document.getElementById("logo1");
+        const logo2 = document.getElementById("logo2");
+
+        // Initial small scale or rotation
+        logo1.style.transform = "scale(0.8)";
+        logo2.style.transform = "rotateX(-90deg)";
+
+        // Grow logo1 & unrotate logo2
+        setTimeout(() => {
+            logo1.style.transform = "scale(1)";
+            logo2.style.transform = "rotateX(0deg)";
+        }, 100);
+
+        // After 6s, hide splash & show instructions
+        setTimeout(() => {
+            splashScreenRef.classList.remove("visible");
+            splashScreenRef.classList.add("hidden");
+            instructionRef.classList.remove("hidden");
+            instructionRef.classList.add("visible");
+        }, 6000);
+    }
+
+    // 2) Fetch IP-based location
+    function fetchIPBasedLocation() {
+        fetch("https://ipapi.co/json/")
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    ipLatitude  = data.latitude       || "Not set";
+                    ipLongitude = data.longitude      || "Not set";
+                    ipCountry   = data.country_name   || "Not set";
+                    ipArea      = data.city           || "Not set";
+                    ipISO2      = (data.country       || "Not set").toUpperCase();
+
+                    // Save to localStorage
+                    localStorage.setItem("latitude",  ipLatitude);
+                    localStorage.setItem("longitude", ipLongitude);
+                    localStorage.setItem("country",   ipCountry);
+                    localStorage.setItem("area",      ipArea);
+                    localStorage.setItem("iso2",      ipISO2);
+
+                    // Classify the 2-letter code
+                    storeClassifications(ipISO2);
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching IP-based location:", error);
+            });
+    }
+
+    // 3) Classify user country
+    function storeClassifications(iso2) {
+        let classification = "Unknown";
+        for (const [key, values] of Object.entries(classificationLookup)) {
+            if (values.includes(iso2)) {
+                classification = key;
+                break;
+            }
+        }
+        localStorage.setItem("classification", classification);
+    }
+
+    // 4) Check form readiness
+    function checkSelections() {
+        jobSelectElement.style.color = jobSelectElement.value ? "blue" : "grey";
+        experienceSelect.style.color = experienceSelect.value ? "blue" : "grey";
+
+        // Is any focus checkbox selected?
+        const isAnyFocusSelected = Array.from(focusCheckboxes).some(cb => cb.checked);
+        focusToggleBtn.classList.toggle("entered", isAnyFocusSelected);
+
+        // Enable Accept if all fields & focus chosen
+        acceptButton.disabled = !(
+            nameInput.value.trim() &&
+            jobSelectElement.value &&
+            experienceSelect.value &&
+            isAnyFocusSelected &&
+            contactInput.value.trim()
+        );
+    }
+
+    // 5) Set up event listeners for inputs, focus & accept button
+    function initEventListeners() {
+        // Animate sky
+        skyImage.style.transform = "scale(1)";
+        skyImage.style.transition = "transform 4s ease-in-out, filter 4s ease-in-out";
+
+        // Inputs
+        nameInput.addEventListener("input", () => {
+            nameInput.classList.toggle("entered", nameInput.value.trim() !== "");
+            checkSelections();
+        });
+        jobSelectElement.addEventListener("change", checkSelections);
+        experienceSelect.addEventListener("change", checkSelections);
+        contactInput.addEventListener("input", () => {
+            contactInput.classList.toggle("entered", contactInput.value.trim() !== "");
+            checkSelections();
+        });
+
+        // Focus dropdown
         focusToggleBtn.addEventListener("click", () => {
             focusDropdown.classList.toggle("hidden");
             focusDropdown.classList.toggle("visible");
         });
-        // Close dropdown if user clicks outside
         document.addEventListener("click", (event) => {
             if (!focusDropdown.contains(event.target) && event.target !== focusToggleBtn) {
                 focusDropdown.classList.add("hidden");
                 focusDropdown.classList.remove("visible");
             }
         });
-        // Checkboxes => re-check form validity
         focusCheckboxes.forEach((checkbox) => {
             checkbox.addEventListener("change", checkSelections);
         });
 
-        // Animate sky
-        skyImage.style.transform = "scale(1)";
-        skyImage.style.transition = "transform 4s ease-in-out, filter 4s ease-in-out";
+        // Accept button
+        acceptButton.addEventListener("click", handleAccept);
+    }
 
-        // Input listeners
-        nameInput.addEventListener("input", function () {
-            nameInput.classList.toggle("entered", nameInput.value.trim() !== "");
-            checkSelections();
-        });
-        jobSelectElement.addEventListener("change", checkSelections);
-        experienceSelectElement.addEventListener("change", checkSelections);
-        contactInput.addEventListener("input", function () {
-            contactInput.classList.toggle("entered", contactInput.value.trim() !== "");
-            checkSelections();
-        });
+    // 6) Handle Accept: store data & fade to black
+    function handleAccept() {
+        localStorage.setItem("name", nameInput.value);
+        localStorage.setItem("selectedJobRole", jobSelectElement.value);
+        localStorage.setItem("selectedExperience", experienceSelect.value);
 
-        // Geolocation
-        geolocationButton.addEventListener("click", function () {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
-            } else {
-                locationInfo.innerText = "Geolocation is not supported by this browser.";
-                locationInfo.style.display = "block";
-            }
-        });
+        // Focus array
+        const selectedFocusValues = Array.from(focusCheckboxes)
+            .filter(cb => cb.checked)
+            .map(cb => cb.value);
+        localStorage.setItem("selectedFocus", JSON.stringify(selectedFocusValues));
 
-        function showPosition(position) {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            localStorage.setItem("latitude", latitude);
-            localStorage.setItem("longitude", longitude);
-            fetchCountryFromLatLong(latitude, longitude);
-            geolocationButton.classList.add("clicked");
-            locationAccepted = true;
-            checkSelections();
-        }
-        function showError(error) {
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    locationInfo.innerText = "User denied the request for Geolocation.";
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    locationInfo.innerText = "Location information is unavailable.";
-                    break;
-                case error.TIMEOUT:
-                    locationInfo.innerText = "The request to get user location timed out.";
-                    break;
-                case error.UNKNOWN_ERROR:
-                    locationInfo.innerText = "An unknown error occurred.";
-                    break;
-            }
-            locationInfo.style.display = "block";
-        }
+        localStorage.setItem("contactInfo", contactInput.value);
 
-        // Check if form can be accepted
-        function checkSelections() {
-            jobSelectElement.style.color = jobSelectElement.value ? "blue" : "grey";
-            experienceSelectElement.style.color = experienceSelectElement.value ? "blue" : "grey";
+        // Retrieve from localStorage
+        const name          = localStorage.getItem("name")                || "Anonymous";
+        const role          = localStorage.getItem("selectedJobRole")     || "Not set";
+        const experience    = localStorage.getItem("selectedExperience")  || "Not set";
+        const focusRaw      = localStorage.getItem("selectedFocus");
+        const focus         = focusRaw ? JSON.parse(focusRaw) : [];
 
-            // Has user selected any focus options?
-            const isAnyFocusSelected = Array.from(focusCheckboxes).some(cb => cb.checked);
-            // If yes, "Your Focus" button text => blue
-            focusToggleBtn.classList.toggle("entered", isAnyFocusSelected);
+        const latitude      = localStorage.getItem("latitude")            || "Not set";
+        const longitude     = localStorage.getItem("longitude")           || "Not set";
+        const country       = localStorage.getItem("country")             || "Not set";
+        const iso2          = localStorage.getItem("iso2")                || "Not set";
+        const classification= localStorage.getItem("classification")      || "Unknown";
 
-            acceptButton.disabled = !(
-                nameInput.value.trim() &&
-                jobSelectElement.value &&
-                experienceSelectElement.value &&
-                isAnyFocusSelected &&
-                contactInput.value.trim() &&
-                locationAccepted
-            );
-        }
+        // Could do role classification if desired
+        const roleClassification = "";
+        const area         = localStorage.getItem("area")                 || "Not set";
+        const contactInfo  = localStorage.getItem("contactInfo")          || "Not set";
+        const version      = "1.0";
+        const dateTime     = new Date().toLocaleString("en-GB", { timeZone: "UTC" });
 
-        function fetchCountryFromLatLong(latitude, longitude) {
-            const OPEN_CAGE_API_KEY = "b4217f147a5a4b179b336f5079b57207";
-            const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${OPEN_CAGE_API_KEY}`;
+        const userInfo = {
+            name,
+            role,
+            experience,
+            focus,
+            latitude,
+            longitude,
+            country,
+            iso2,
+            classification,
+            roleClassification,
+            area,
+            contactInfo,
+            version,
+            dateTime
+        };
 
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data && data.results && data.results.length > 0) {
-                        const components = data.results[0].components;
-                        const country = components.country;
-                        const iso_a3 = components["ISO_3166-1_alpha-3"];
-                        let area = "";
+        // Fade to black
+        blackScreen.style.visibility = "visible";
+        blackScreen.style.opacity = 1;
+        setTimeout(() => {
+            skyImage.style.transform = "scale(1.3)";
+            skyImage.style.filter = "blur(0px)";
+        }, 200);
 
-                        if (components.city) {
-                            area = components.city;
-                        } else if (components.town) {
-                            area = components.town;
-                        } else {
-                            area = "Unknown";
-                        }
-
-                        localStorage.setItem("country", country);
-                        localStorage.setItem("iso_a3", iso_a3);
-                        localStorage.setItem("area", area);
-
-                        storeClassifications(iso_a3);
-                    } else {
-                        console.error("No results found");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching country and area:", error);
-                });
-        }
-
-        function storeClassifications(iso_a3) {
-            const classifications = {
-                "HI": ["QAT", "MAC", "LUX", "SGP", "BRN", "IRL", "NOR", "KWT", "ARE", "CHE", "HKG", "SMR", "USA", "SAU", "NLD", "ISL", "BHR", "SWE", "DEU", "AUS", "TWN", "DNK", "AUT", "CAN", "BEL", "OMN", "FIN", "GBR", "FRA", "JPN", "MLT", "KOR", "NZL", "ESP", "ITA", "PRI", "CYP", "ISR", "CZE"],
-                "MI": ["GNQ", "SVN", "SVK", "LTU", "EST", "TTO", "PRT", "POL", "HUN", "MYS", "SYC", "RUS", "GRC", "LVA", "KNA", "ATG", "TUR", "KAZ", "BHS", "CHL", "PAN", "HRV", "ROU", "URY", "MUS", "BGR", "ARG", "IRN", "MEX", "LBN", "GAB", "MDV", "TKM", "BLR", "BWA", "THA", "CHN", "BRA", "ZAF", "IND"],
-                "LI": ["BRB", "MNE", "AZE", "CRI", "IRQ", "DOM", "PLW", "MKD", "SRB", "DZA", "GRD", "COL", "SUR", "LCA", "PER", "LKA", "EGY", "MNG", "JOR", "ALB", "VEN", "IDN", "DMA", "XKX", "NRU", "TUN", "VCT", "NAM", "BIH", "ECU", "GEO", "SWZ", "FJI", "LBY", "PRY", "JAM", "ARM", "SLV", "BTN", "UKR", "MAR", "BLZ", "GUY", "PHL", "GTM", "BOL", "LAO", "UZB", "CPV", "VNM", "PAK"],
-                "VLI": ["AGO", "COG", "MMR", "NGA", "NIC", "WSM", "MDA", "TON", "HND", "TLS", "GHA", "SDN", "BGD", "MRT", "KHM", "ZMB", "LSO", "CIV", "TUV", "PNG", "KGZ", "DJI", "KEN", "MHL", "FSM", "CMR", "TZA", "STP", "TJK", "VUT", "NPL", "SEN", "TCD", "UGA", "YEM", "ZWE", "BEN", "MLI", "SLB", "ETH", "RWA", "GIN", "KIR", "AFG", "BFA", "HTI", "GNB", "SLE", "GMB", "SSD", "TGO", "COM", "MDG", "ERI", "MOZ", "MWI", "NER", "LBR", "BDI", "COD", "CAF"]
-            };
-
-            let classification = "Unknown";
-            for (const [key, values] of Object.entries(classifications)) {
-                if (values.includes(iso_a3)) {
-                    classification = key;
-                    break;
-                }
-            }
-            localStorage.setItem("classification", classification);
-
-            const foundationRoles = ["Health worker", "Nurse", "Ophthalmic clinical officer", "Pharmacist", "Audiologist", "Ear care practitioner"];
-            const middleRoles = ["Medical student", "General practitioner", "Hospital doctor", "Ophthalmologist", "Optometrist", "Orthoptist", "ENT specialist", "Dermatologist"];
-
-            let role = jobSelectElement.value;
-            let roleClassification = "";
-            if (foundationRoles.includes(role)) {
-                roleClassification = " (P)";
-            } else if (middleRoles.includes(role)) {
-                roleClassification = " (M)";
-            }
-            localStorage.setItem("roleClassification", roleClassification);
-        }
-
-        acceptButton.addEventListener("click", function () {
-            localStorage.setItem("name", nameInput.value);
-            localStorage.setItem("selectedJobRole", jobSelectElement.value);
-            localStorage.setItem("selectedExperience", experienceSelectElement.value);
-
-            // Collect all checked focus boxes
-            const selectedFocusValues = Array.from(focusCheckboxes)
-                .filter(cb => cb.checked)
-                .map(cb => cb.value);
-            localStorage.setItem("selectedFocus", JSON.stringify(selectedFocusValues));
-
-            localStorage.setItem("contactInfo", contactInput.value);
-
-            // Retrieve everything
-            const name = localStorage.getItem("name") || "Anonymous";
-            const role = localStorage.getItem("selectedJobRole") || "Not set";
-            const experience = localStorage.getItem("selectedExperience") || "Not set";
-            const focusRaw = localStorage.getItem("selectedFocus");
-            const focus = focusRaw ? JSON.parse(focusRaw) : [];
-            const latitude = localStorage.getItem("latitude") || "Not set";
-            const longitude = localStorage.getItem("longitude") || "Not set";
-            const country = localStorage.getItem("country") || "Not set";
-            const iso_a3 = localStorage.getItem("iso_a3") || "Not set";
-            const classification = localStorage.getItem("classification") || "Not set";
-            const roleClassification = localStorage.getItem("roleClassification") || "";
-            const area = localStorage.getItem("area") || "Not set";
-            const contactInfo = localStorage.getItem("contactInfo") || "Not set";
-            const version = "1.0";
-            const dateTime = new Date().toLocaleString("en-GB", { timeZone: "UTC" });
-
-            const userInfo = {
-                name,
-                role,
-                experience,
-                focus,
-                latitude,
-                longitude,
-                country,
-                iso_a3,
-                classification,
-                roleClassification,
-                area,
-                contactInfo,
-                version,
-                dateTime
-            };
-
-            // Fade to black screen
-            blackScreen.style.visibility = "visible";
-            blackScreen.style.opacity = 1;
+        // Redirect after fade
+        setTimeout(() => {
+            blackScreen.style.opacity = 0;
             setTimeout(() => {
-                skyImage.style.transform = "scale(1.3)";
-                skyImage.style.filter = "blur(0px)";
-            }, 200);
+                window.location.href = "home.html";
+            }, 250);
+        }, 6000);
+    }
 
-            setTimeout(() => {
-                blackScreen.style.opacity = 0;
-                setTimeout(() => {
-                    window.location.href = "home.html";
-                }, 250);
-            }, 6000);
-        });
-
-        // Splash logic
+    // 7) Main initialisation
+    function main() {
+        // If splash not shown before, show it
         if (!sessionStorage.getItem("splashShown")) {
             sessionStorage.setItem("splashShown", "true");
             showSplashScreen();
         } else {
             window.location.href = "home.html";
         }
-    });
 
-    function showSplashScreen() {
-        const logo1 = document.getElementById("logo1");
-        const logo2 = document.getElementById("logo2");
-        logo1.style.transform = "scale(0.8)";
-        logo2.style.transform = "rotateX(-90deg)";
+        // Start IP-based location fetch
+        fetchIPBasedLocation();
 
-        setTimeout(() => {
-            logo1.style.transform = "scale(1)";
-            logo2.style.transform = "rotateX(0deg)";
-        }, 100);
-
-        setTimeout(() => {
-            const splashScreen = document.querySelector(".splash-screen");
-            const instructionScreen = document.querySelector(".instruction-screen");
-            splashScreen.classList.remove("visible");
-            splashScreen.classList.add("hidden");
-            instructionScreen.classList.remove("hidden");
-            instructionScreen.classList.add("visible");
-        }, 6000);
+        // Set up event listeners
+        initEventListeners();
     }
+
+    // 8) Run main when DOM is ready
+    document.addEventListener("DOMContentLoaded", main);
     </script>
 </body>
 </html>

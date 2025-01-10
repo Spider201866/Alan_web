@@ -1,0 +1,246 @@
+
+/* Basic page styling */
+body,
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Calibri Light", Arial, sans-serif;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+}
+
+/* Black screen overlay for the zoom-out transition */
+.black-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.50s ease-in-out;
+}
+.black-screen.visible {
+    visibility: visible;
+    opacity: 1;
+}
+.black-screen img {
+    width: auto;
+    max-width: 30%;
+    height: auto;
+    filter: blur(20px);
+    transition: transform 4s ease-in-out, filter 4s ease-in-out;
+}
+
+/* For hiding and showing screens */
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s linear;
+}
+.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s linear;
+}
+
+/* Splash screen animations */
+.splash-screen img,
+.splash-screen p {
+    transition: transform 3s ease-in-out;
+    margin: 20px 0;
+}
+.splash-screen img {
+    width: 30vw;
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 60px;
+    transform-origin: center;
+    -webkit-transform-origin: center;
+}
+@keyframes zoomEffect {
+    from {
+        transform: scale(0.8);
+        -webkit-transform: scale(0.8);
+    }
+    to {
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+}
+.splash-screen.visible img {
+    animation: zoomEffect 3s ease-in-out forwards;
+}
+
+/* Container screens */
+.splash-screen,
+.instruction-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#logo2 {
+    width: 50vw;
+    max-width: 300px;
+    margin-bottom: 60px;
+}
+.splash-screen p {
+    font-size: calc(12px + 1vmin);
+    font-weight: bold;
+    font-style: italic;
+    margin-top: 60px;
+}
+
+.instruction-screen {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    overflow: auto;
+    box-sizing: border-box;
+}
+.instruction-screen p {
+    font-size: 16px;
+    margin: 10px 20px;
+    color: #333;
+}
+.instruction-screen p.good-luck {
+    margin-bottom: 20px;
+}
+
+/* The blue buttons (Accept, or if you want others to match it) */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+}
+button:disabled {
+    background-color: #ccc;
+}
+
+/* White background inputs & dropdowns (Role, Experience, Geolocation, Name, Contact) */
+select,
+.geo-button,
+.name-input,
+.contact-input {
+    padding: 4px 20px;
+    font-size: 14px;
+    color: grey;
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 15px;
+    width: 230px;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+/* Keep the black arrow icon for SELECTs */
+select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 25px;
+    max-height: 300px;
+    line-height: 1.2;
+}
+
+/* Make geolocation button text turn blue after it is clicked */
+.geo-button.clicked {
+    color: blue;
+}
+.name-input.entered,
+.contact-input.entered {
+    color: blue;
+}
+
+/* Updated Focus Button with Centred Text and Dropdown Arrow */
+.focus-button {
+    padding: 4px 20px;
+    font-size: 14px;
+    color: grey; /* Same grey as placeholders */
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 15px;
+    width: 230px;
+    box-sizing: border-box;
+    text-align: center; /* Centre the text */
+    margin-bottom: 20px;
+    cursor: pointer;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="16px" height="16px"><path d="M7 10l5 5 5-5H7z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center; /* Adjust position of the arrow */
+    background-size: 25px; /* Adjust arrow size */
+    padding-right: 25px; /* Ensure the arrow does not overlap text */
+    line-height: 1.2; /* Improve vertical alignment of text */
+    display: flex;
+    justify-content: center; /* Centre text horizontally */
+    align-items: center; /* Centre text vertically */
+}
+
+/* Turn text blue when any checkbox is selected */
+.focus-button.entered {
+    color: blue;
+}
+
+/* Absolutely positioned dropdown for checkboxes so the page does not jump */
+.focus-container {
+    position: relative;
+}
+
+.focus-dropdown.hidden {
+    display: none;
+}
+
+.focus-dropdown.visible {
+    display: block;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 999;
+    width: 230px;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+.focus-dropdown label {
+    display: flex;
+    align-items: center; /* Vertically centre checkbox and label text */
+    justify-content: flex-start; /* Align text and checkbox to the left */
+    font-size: 14px;
+    margin: 10px 0; /* Add spacing between items */
+    cursor: pointer;
+    color: grey;
+}
+
+.focus-dropdown input[type="checkbox"] {
+    margin-right: 10px; /* Space between checkbox and label */
+    width: 14px; /* Adjust width for smaller size */
+    height: 14px; /* Adjust height for smaller size */
+    vertical-align: middle; /* Align checkbox with label text */
+}

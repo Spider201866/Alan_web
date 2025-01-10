@@ -2,36 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
     <title>Alan</title>
+
     <script type="module">
         import { faviconAndMetaSetup } from './faviconAndMeta.js';
         faviconAndMetaSetup();
     </script>
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="styles.css">
     <link rel="preload" href="atomsblue.jpg" as="image">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Font links -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
 
     <script type="module" src="closer.js"></script>
 </head>
+
 <body>
     <div id="mainContent" class="hidden"></div>
 
     <div class="chatbot-header">
-        <div class="flex-spacer"></div> <!-- Invisible spacer to balance the language selector -->
+        <div class="flex-spacer"></div>
         <div>
             <div class="chatbot-title">
                 <span class="red">Al</span><span class="white">an</span>
             </div>
-            <div class="chatbot-subtitle">
-                Eyes, Ears, Skin
-            </div>
+            <div class="chatbot-subtitle">Eyes, Ears, Skin</div>
         </div>
-
-        <div class="flex-spacer"></div> <!-- Second spacer for symmetry; can be hidden if not needed -->
+        <div class="flex-spacer"></div>
     </div>
 
     <div class="menu-icon"></div> <!-- 2 line Menu Icon -->
@@ -43,8 +46,8 @@
             </div>
         </div>
 
-        <!-- Grouping Front of Eye and Ear buttons for same line display -->
-        <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for Eye, Ear, Skin buttons -->
+        <!-- Eye/Ear/Skin Buttons -->
+        <div style="display: flex; margin-bottom: 10px;">
             <button class="button" style="margin-right: 10px; background-color: rgb(134, 162, 255);" onclick="window.location.href='eye.html';">
                 Eye
             </button>
@@ -56,31 +59,23 @@
             </button>
         </div>
 
-        <!-- Grouping Videos, Atoms, Tools buttons for same line display -->
-        <div style="display: flex; margin-bottom: 10px; align-items: center;"> <!-- Grouping container for informational buttons -->
-            <!-- Videos Button -->
+        <!-- Videos/Atoms/Tools/Language -->
+        <div style="display: flex; margin-bottom: 10px; align-items: center;">
             <a href="https://www.youtube.com/@arclightproject" style="text-decoration: none;">
                 <button class="button grey" style="margin-right: 10px;">Videos</button>
             </a>
-
-            <!-- Atoms Button -->
             <button class="button grey" style="margin-right: 10px;" onclick="window.location.href='atoms.html';">Atoms</button>
-
-            <!-- Tools Button -->
             <button class="button grey" style="margin-right: 10px;">Tools</button>
-
-            <!-- Language Button with Dropdown -->
+            <!-- Language Button & Dropdown -->
             <div style="position: relative;">
-                <!-- Language Button -->
                 <button class="button grey" id="language-button" 
                         style="background: url('lang.jpg') no-repeat center center; 
-                            background-size: cover; 
-                            width: 32px; 
-                            height: 32px; 
-                            border: none;"></button>
-
-                <!-- Language Dropdown (Initially Hidden) -->
-                <select id="language-dropdown" class="language-dropdown" 
+                               background-size: cover; 
+                               width: 32px; 
+                               height: 32px; 
+                               border: none;">
+                </button>
+                <select id="language-dropdown" class="language-dropdown"
                         style="display: none; position: absolute; top: 40px; left: 0;">
                     <option value="en">English</option>
                     <option value="fr">Français</option>
@@ -88,22 +83,21 @@
                     <option value="pt">Português</option>
                     <option value="ar">العربية</option> <!-- Arabic -->
                     <option value="sw">Kiswahili</option> <!-- Swahili -->
-                    <option value="cy">Cymraeg</option> <!-- Welsh -->
-                    <option value="ny">Chichewa</option> <!-- For Malawi -->
-                    <option value="rw">Kinwanda</option> <!-- For Rwanda -->
-                    <option value="lg">Luganda</option> <!-- For Uganda -->
+                    <option value="cy">Cymraeg</option>  <!-- Welsh -->
+                    <option value="ny">Chichewa</option> <!-- Malawi -->
+                    <option value="rw">Kinwanda</option> <!-- Rwanda -->
+                    <option value="lg">Luganda</option>  <!-- Uganda -->
                 </select>
             </div>
         </div>
 
-        <!-- Grouping Arclight Project, Web Links, and cog buttons for same line display -->
-        <div style="display: flex; margin-bottom: 10px;"> <!-- Grouping container for project-related buttons -->
+        <!-- Arclight/Links/About -->
+        <div style="display: flex; margin-bottom: 10px;">
             <a href="https://medicine.st-andrews.ac.uk/arclight/" style="text-decoration: none;">
                 <button class="button grey" style="margin-right: 10px;">Arclight Project</button>
             </a>
             <button class="button grey" style="margin-right: 10px;" onclick="window.location.href='weblinks.html';">Links</button>
             <button class="button grey" onclick="location.href='aboutalan.html';">About</button>
-            </button>
         </div>
 
         <!-- Chat Links -->
@@ -142,7 +136,7 @@
         <div class="detected-condition"></div>
 
         <!-- Thumbnail image with onclick functionality for zoom -->
-        <img id="condition-image" alt="" style="max-width: 100%; height: 120px; display: block; margin: 0 auto; cursor: pointer;" onclick="toggleZoom(this)" />
+        <img id="condition-image" alt="" style="max-width: 100%; height: 120px; display: block; margin: 0 auto; cursor: pointer;" />
         <p id="condition-description"></p>
 
         <!-- Disclaimer about Alan potentially making mistakes -->
@@ -151,359 +145,127 @@
         </div>
     </div>
 
+    <!-- Popup for user info -->
     <div id="popup" class="popup">
         <span class="popup-close" onclick="closePopup()">&times;</span>
         <h2>User Info</h2>
         <div class="popup-content" id="popup-content"></div>
     </div>
 
-    <script>
-        function toggleZoom(image) {
-            if (image.style.height === '200px') {
-                image.style.height = 'auto';
-                image.style.maxWidth = 'none';
-                image.style.cursor = 'zoom-out';
-            } else {
-                image.style.height = '200px';
-                image.style.maxWidth = '100%';
-                image.style.cursor = 'zoom-in';
-            }
-        }
-
-        document.querySelector('.menu-icon').addEventListener('click', function() {
-            this.classList.toggle('open');
-        });
-        document.getElementById('language-button').addEventListener('click', function() {
-            const dropdown = document.getElementById('language-dropdown');
-            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-        });
-    </script>
-    
-    <script type="module" src="listener-module.js"></script>
-
+    <!-- SINGLE SCRIPT BLOCK AT THE BOTTOM, TYPE=MODULE -->
     <script type="module">
-        import { translations } from './language.js';
+    /*********************************************/
+    /*                MODULE IMPORTS             */
+    /*********************************************/
+    import { translations } from './language.js';
+    import { faviconAndMetaSetup } from './faviconAndMeta.js';
+    import './closer.js';          // If you want to inline the code from closer.js
+    import './listener-module.js'; // If needed
 
-        
+    // If needed, call the favicon setup again or remove from <head>
+    faviconAndMetaSetup();
+
+    /*********************************************/
+    /*          GLOBAL DOM REFERENCES            */
+    /*********************************************/
+    const menuIcon            = document.querySelector('.menu-icon');
+    const sideMenu            = document.querySelector('.side-menu');
+    const instructionsButton  = document.getElementById('instructions-button');
+    const languageButton      = document.getElementById('language-button');
+    const languageDropdown    = document.getElementById('language-dropdown');
+    const conditionImage      = document.getElementById('condition-image');
+    const popup               = document.getElementById('popup');
+    const popupClose          = document.querySelector('.popup-close');
+    const popupContent        = document.getElementById('popup-content');
+    const additionalText      = document.getElementById('additional-text');
+    const subText             = document.getElementById('sub-text');
+    const chatbotVersion      = document.querySelector('.chatbot-version');
+    const mainContent         = document.getElementById('mainContent');
+
+    // For user info 
+    const storedName          = localStorage.getItem('name') || 'User';
+    const classification      = localStorage.getItem('classification') || 'Unknown';
+    const roleClassification  = localStorage.getItem('roleClassification') || '';
+    const iso_a3              = localStorage.getItem('iso_a3') || 'Not set';
+
+    /*********************************************/
+    /*             HELPER FUNCTIONS              */
+    /*********************************************/
     
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log("DOMContentLoaded event fired");
-
-            const classification = localStorage.getItem('classification') || 'Unknown';
-            const roleClassification = localStorage.getItem('roleClassification') || '';
-
-            console.log('Classification:', classification);
-            console.log('Role Classification:', roleClassification);
-
-            let chatbotModuleUrl = '';
-    let selectedAgent = 'Unknown';
-
-    if (roleClassification === ' (M)' && ['HI', 'MI'].includes(classification)) {
-        chatbotModuleUrl = './agent1-chatbot-module.js';
-        selectedAgent = 'Agent 1';
-    } else if (roleClassification === ' (M)' && ['LI', 'VLI'].includes(classification)) {
-        chatbotModuleUrl = './agent3-chatbot-module.js';
-        selectedAgent = 'Agent 3';
-    } else if (roleClassification === ' (P)' && ['HI', 'MI'].includes(classification)) {
-        chatbotModuleUrl = './agent2-chatbot-module.js';
-        selectedAgent = 'Agent 2';
-    } else if (roleClassification === ' (P)' && ['LI', 'VLI'].includes(classification)) {
-        chatbotModuleUrl = './agent4-chatbot-module.js';
-        selectedAgent = 'Agent 4';
+    // Zoom toggle for the condition image
+    function toggleZoom(image) {
+        if (image.style.height === '200px') {
+            image.style.height    = 'auto';
+            image.style.maxWidth  = 'none';
+            image.style.cursor    = 'zoom-out';
+        } else {
+            image.style.height    = '200px';
+            image.style.maxWidth  = '100%';
+            image.style.cursor    = 'zoom-in';
+        }
     }
 
-        // Store selected agent in local storage
-        localStorage.setItem('selectedAgent', selectedAgent);
-
-        // Ensure a unique session ID is set
-        if (!localStorage.getItem('sessionId')) {
-            localStorage.setItem('sessionId', Date.now().toString());
-        }
-        const sessionId = localStorage.getItem('sessionId');       
-
-        console.log('Selected Agent:', selectedAgent);
-
-        // If `selectedAgent` was initially 'Unknown', update the server
-        if (localStorage.getItem('infoRecorded') === 'true' && localStorage.getItem('selectedAgent') !== 'Unknown') {
-            const name = localStorage.getItem('name');
-            const role = localStorage.getItem('selectedJobRole');
-            const latitude = localStorage.getItem('latitude');
-            const longitude = localStorage.getItem('longitude');
-            const country = localStorage.getItem('country');
-            const iso_a3 = localStorage.getItem('iso_a3');
-            const classification = localStorage.getItem('classification');
-            const roleClassification = localStorage.getItem('roleClassification');
-            const area = localStorage.getItem('area');
-            const contactInfo = localStorage.getItem('contactInfo');
-            const version = '1.0';
-            const dateTime = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
-
-            const updatedUserInfo = {
-                name,
-                role,
-                latitude,
-                longitude,
-                country,
-                iso_a3,
-                classification,
-                roleClassification,
-                area,
-                contactInfo,
-                version,
-                dateTime,
-                selectedAgent,
-                sessionId // Include session ID in the user info
-            };
-
-            fetch('https://alan.up.railway.app/record-info', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updatedUserInfo)
-            })
-            .then(response => response.text())
-            .then(data => {
-                console.log('Updated Successfully:', data);
-            })
-            .catch(error => {
-                console.error('Error updating data:', error);
-            });
-        }
-
-
-
-            if (chatbotModuleUrl) {
-                import(chatbotModuleUrl).then(module => {
-                    module.initChatbot();
-                    console.log(`Loaded module: ${chatbotModuleUrl}`);
-                }).catch(error => {
-                    console.error('Error loading chatbot module:', error);
-                });
-            } else {
-                console.error('No matching chatbot module found.');
-            }
-
-            const menuIcon = document.querySelector('.menu-icon');
-            const tray = document.querySelector('.side-menu');
-            const instructionsButton = document.getElementById("instructions-button");
-            const dropdown = document.querySelector('.language-dropdown');
-            const userInfo = document.getElementById('user-info');
-            var storedJobRole = localStorage.getItem('selectedJobRole') || 'Not selected';
-            var storedCountry = localStorage.getItem('selectedCountry') || 'Not selected';
-    
-            const jobRoleKeys = {
-                "Health worker": "healthWorker",
-                "Nurse": "nurse",
-                "Ophthalmic clinical officer": "ophthalmicOfficer",
-                "Medical student": "medicalStudent",
-                "General practitioner": "generalPractitioner",
-                "Hospital doctor": "hospitalDoctor",
-                "Ophthalmologist": "ophthalmologist",
-                "Optometrist": "optometrist",
-                "Orthoptist": "orthoptist",
-                "ENT specialist": "entSpecialist",
-                "Pharmacist": "pharmacist",
-                "Audiologist": "audiologist",
-                "Ear care practitioner": "earCarePractitioner"
-            };
-
-            function updateUserInfoDisplay(lang) {
-                let roleKey = jobRoleKeys[storedJobRole] || storedJobRole;
-                let translatedJobRole = translations[lang][roleKey] || storedJobRole;
-                let storedLatitude = localStorage.getItem('latitude') || 'Not set';
-                let storedLongitude = localStorage.getItem('longitude') || 'Not set';
-                let storedCountry = localStorage.getItem('country') || 'Not set';
-                let storedArea = localStorage.getItem('area') || 'Not set';
-
-                userInfo.innerHTML = `${translatedJobRole}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${storedLatitude}, ${storedLongitude}`;
-            }
-
-            function updateLanguageDisplays(lang) {
-                document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
-                document.getElementById('good-history').textContent = translations[lang].goodHistory;
-                document.getElementById('examine-well').textContent = translations[lang].examineWell;
-                document.getElementById('use-arclight').textContent = translations[lang].useArclight;
-                document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
-                document.querySelector('.chatbot-version').textContent = translations[lang].alanMistakes;
-                updateUserInfoDisplay(lang);
-            }
-
-            function updateButtonStyle(button) {
-                button.classList.remove('pulse');
-                button.style.backgroundColor = 'grey';
-                button.style.color = 'white';
-            }
-
-            if (localStorage.getItem("instructionsClicked") === "true") {
-                updateButtonStyle(instructionsButton);
-            }
-
-            dropdown.addEventListener('change', function() {
-                const lang = this.value;
-                updateLanguageDisplays(lang);
-            });
-
-            menuIcon.addEventListener('click', function() {
-                tray.style.left = (tray.style.left === '0px' ? '-370px' : '0px');
-                this.classList.toggle('active');
-            });
-
-            instructionsButton.addEventListener("click", function(event) {
-                event.preventDefault();
-                localStorage.setItem("instructionsClicked", "true");
-                updateButtonStyle(this);
-                setTimeout(() => {
-                    window.location.href = 'instructions.html';
-                }, 300);
-            });
-
-            updateLanguageDisplays('en');
-        });
-
-        var storedName = localStorage.getItem('name') || 'User';
-        var initialLetter = storedName.charAt(0).toUpperCase();
-
-        var nameIcon = document.createElement('div');
-        nameIcon.className = 'name-icon';
-        nameIcon.textContent = initialLetter;
-
-        var header = document.querySelector('.chatbot-header');
-        header.appendChild(nameIcon);
-
-        function openPopup() {
-        const popup = document.getElementById('popup');
-        const popupContent = document.getElementById('popup-content');
-
-        // Retrieve data from localStorage
-        const name = localStorage.getItem('name') || 'Not set';
-        const role = localStorage.getItem('selectedJobRole') || 'Not set';
-        const experience = localStorage.getItem('selectedExperience') || 'Not set';
-        const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
-        const longitude = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
-        const country = localStorage.getItem('country') || 'Not set';
-        const iso_a3 = localStorage.getItem('iso_a3') || 'Not set';
-        const area = localStorage.getItem('area') || 'Not set';
-        const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
-        const classification = localStorage.getItem('classification') || 'Unknown';
-        const roleClassification = localStorage.getItem('roleClassification') || '';
-        const selectedAgent = localStorage.getItem('selectedAgent') || 'Unknown';
-
-        // Retrieve and format Aims
-        const focusRaw = localStorage.getItem('selectedFocus');
-        const aims = focusRaw ? JSON.parse(focusRaw).join('; ') : 'Not set';
-
-        // Get current date and time
-        const now = new Date();
-        const day = String(now.getDate()).padStart(2, '0');
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const year = now.getFullYear();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        const currentDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
-
-        // Populate the popup content
-        popupContent.innerHTML = `
-            <p><strong>Role:</strong> ${role}${roleClassification}</p>
-            <p><strong>Experience:</strong> ${experience}</p>
-            <p><strong>Aims:</strong> ${aims}</p>
-            <p><strong>Lat & Long:</strong> ${latitude}, ${longitude}</p>
-            <p><strong>Area:</strong> ${area}</p>
-            <p><strong>Country:</strong> ${country} (${iso_a3}) [${classification}]</p>
-            <p><strong>Contact:</strong> ${contactInfo}</p>
-            <p><strong>Version:</strong> 1.0, ${selectedAgent}</p>
-            <p><strong>Date & Time:</strong> ${currentDateTime}</p>
-        `;
-
-        // Display the popup
+    // Open/close the popup
+    function openPopup() {
+        popupContent.innerHTML = buildPopupContent();
         popup.style.right = '0';
         popup.style.display = 'block';
     }
-
-
-        function closePopup() {
-            const popup = document.getElementById('popup');
-            popup.style.right = '-300px';
-            setTimeout(() => {
-                popup.style.display = 'none';
-            }, 300);
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelector('.name-icon').addEventListener('click', function(event) {
-                const popup = document.getElementById('popup');
-                if (popup.style.display === 'block' && popup.style.right === '0px') {
-                    closePopup();
-                } else {
-                    openPopup();
-                }
-            });
-
-            document.querySelector('.popup-close').addEventListener('click', closePopup);
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-    let name = localStorage.getItem('name');
-    if (name) {
-        // Split the name to handle multiple words
-        let nameParts = name.split(' ');
-
-        let firstName = '';
-
-        // Check if the name is likely to be East Asian by looking for common East Asian surnames
-        if (isEastAsianSurname(nameParts[0])) {
-            // Assume the first part is the surname and the second part is the given name
-            if (nameParts.length > 1) {
-                firstName = nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1).toLowerCase();
-            } else {
-                firstName = nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1).toLowerCase();
-            }
-        } else {
-            // Assume the first part is the given name
-            firstName = nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1).toLowerCase();
-        }
-
-        // Update the greeting message
-        document.getElementById('sub-text').innerText = `${firstName}, how can I help you today?`;
-    } else {
-        console.error('Name not found in local storage');
-        // Fallback message if name is not found
-        document.getElementById('sub-text').innerText = 'How can I help you today?';
+    function closePopup() {
+        popup.style.right = '-300px';
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 300);
     }
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-    let name = localStorage.getItem('name');
-    if (name) {
-        // Split the name to handle multiple words
-        let nameParts = name.split(' ');
+    // Build the dynamic content for the popup
+    function buildPopupContent() {
+    const name             = localStorage.getItem('name')              || 'Not set';
+    const role             = localStorage.getItem('selectedJobRole')   || 'Not set';
+    const experience       = localStorage.getItem('selectedExperience')|| 'Not set';
+    const latitude         = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
+    const longitude        = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
+    const country          = localStorage.getItem('country')           || 'Not set';
+    const iso2             = localStorage.getItem('iso2')              || 'Not set';  // ← retrieve iso2 here
+    const classification   = localStorage.getItem('classification')    || 'Unknown';
+    const roleClassification = localStorage.getItem('roleClassification') || '';
+    const area             = localStorage.getItem('area')              || 'Not set';
+    const contactInfo      = localStorage.getItem('contactInfo')       || 'Not set';
+    const selectedAgent    = localStorage.getItem('selectedAgent')     || 'Unknown';
+    const focusRaw         = localStorage.getItem('selectedFocus');
+    const aims             = focusRaw ? JSON.parse(focusRaw).join('; ') : 'Not set';
 
-        let firstName = '';
+    // Current date/time
+    const now    = new Date();
+    const day    = String(now.getDate()).padStart(2, '0');
+    const month  = String(now.getMonth() + 1).padStart(2, '0');
+    const year   = now.getFullYear();
+    const hours  = String(now.getHours()).padStart(2, '0');
+    const mins   = String(now.getMinutes()).padStart(2, '0');
+    const secs   = String(now.getSeconds()).padStart(2, '0');
+    const currDT = `${day}/${month}/${year} ${hours}:${mins}:${secs}`;
 
-        // Check if the name is likely to be East Asian by looking for common East Asian surnames
-        if (containsEastAsianSurname(nameParts)) {
-            // Assume the last part is the given name for East Asian names
-            firstName = nameParts[nameParts.length - 1].charAt(0).toUpperCase() + nameParts[nameParts.length - 1].slice(1).toLowerCase();
-        } else {
-            // Assume the first part is the given name for Western names
-            firstName = nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1).toLowerCase();
-        }
+    return `
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Role:</strong> ${role}${roleClassification}</p>
+        <p><strong>Experience:</strong> ${experience}</p>
+        <p><strong>Aims:</strong> ${aims}</p>
+        <p><strong>Lat & Long:</strong> ${latitude}, ${longitude}</p>
+        <p><strong>Area:</strong> ${area}</p>
+        <!-- Show the two-letter code in parentheses -->
+        <p><strong>Country:</strong> ${country} (${iso2}) [${classification}]</p>
+        <p><strong>Contact:</strong> ${contactInfo}</p>
+        <p><strong>Version:</strong> 1.0, ${selectedAgent}</p>
+        <p><strong>Date & Time:</strong> ${currDT}</p>
+    `;
+}
 
-        // Update the greeting message
-        document.getElementById('sub-text').innerText = `${firstName}, how can I help you today?`;
-    } else {
-        console.error('Name not found in local storage');
-        // Fallback message if name is not found
-        document.getElementById('sub-text').innerText = 'How can I help you today?';
-    }
-});
 
-// Function to detect if the name contains a surname likely from an East Asian culture
-function containsEastAsianSurname(nameParts) {
-    // Common East Asian surnames for a basic heuristic
-    const eastAsianSurnames = [
-        // 200 Chinese surnames ordered by commonality
+    // Basic check to see if a name part might be an East Asian surname
+    function containsEastAsianSurname(nameParts) {
+        // A short snippet from your bigger list for illustration
+        const eastAsianSurnames = [
+            // 200 Chinese surnames ordered by commonality
         'Li', 'Wang', 'Zhang', 'Liu', 'Chen', 'Yang', 'Huang', 'Zhao', 'Wu', 'Zhou',
         'Xu', 'Sun', 'Ma', 'Zhu', 'Hu', 'Guo', 'He', 'Gao', 'Lin', 'Luo',
         'Zheng', 'Liang', 'Song', 'Tang', 'Han', 'Feng', 'Yu', 'Dong', 'Xiao',
@@ -542,10 +304,253 @@ function containsEastAsianSurname(nameParts) {
         'Yun', 'Kang', 'Shin', 'Yun', 'Jang', 'Yoo', 'Kim', 'Kwon', 'Jung', 'Park',
         'Seo', 'Yang', 'Yoon', 'Choi', 'Park', 'Ryu', 'Kwon', 'Hong', 'Kim', 'Moon',
         'Yim', 'Son', 'Kim', 'Lee', 'Shin', 'Park', 'Kim', 'Choi', 'Jung', 'Yoo'
-    ];
-    // Check if any part of the name is an East Asian surname
-    return nameParts.some(part => eastAsianSurnames.includes(part));
+        ];
+        return nameParts.some(part => eastAsianSurnames.includes(part));
+    }
+
+    function updateLanguageDisplays(lang) {
+    // The text content is mapped in translations[lang]
+    document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
+    document.getElementById('good-history').textContent      = translations[lang].goodHistory;
+    document.getElementById('examine-well').textContent      = translations[lang].examineWell;
+    document.getElementById('use-arclight').textContent      = translations[lang].useArclight;
+    chatbotVersion.textContent                               = translations[lang].alanMistakes;
+
+    // Pull name from localStorage
+    const name = localStorage.getItem('name') || '';
+
+    if (name) {
+        // If we find a name, extract a first name and inject it into the greeting
+        let nameParts = name.split(' ');
+        let firstName = nameParts[0]; // or implement East Asian check if you like
+
+        firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+        document.getElementById('sub-text').textContent =
+            `${firstName}, ${translations[lang].howCanIHelp}`;
+    } else {
+        // If no name in localStorage, fall back to default text
+        document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
+    }
 }
+
+
+    // Style adjustments for instructions button
+    function updateButtonStyle(button) {
+        button.classList.remove('pulse');
+        button.style.backgroundColor = 'grey';
+        button.style.color = 'white';
+    }
+
+    /*********************************************/
+    /*            MAIN LOGIC / INIT              */
+    /*********************************************/
+    document.addEventListener('DOMContentLoaded', main);
+
+    function main() {
+        console.log("DOMContentLoaded event fired");
+        setupMenuIcon();
+        setupLanguageButton();
+        setupInstructionsButton();
+        setupNameIcon();
+
+        // If instructions button was already clicked
+        if (localStorage.getItem("instructionsClicked") === "true") {
+            updateButtonStyle(instructionsButton);
+        }
+
+        // If we have a name, show the greeting
+        showGreeting();
+
+        // Set up image zoom
+        conditionImage.addEventListener('click', () => toggleZoom(conditionImage));
+
+        // Expand language to default 'en'
+        updateLanguageDisplays('en');
+
+        // If we have role/classification logic for agent selection, run it
+        selectAgentAndFetch();
+    }
+
+    // Setup menu icon click
+    function setupMenuIcon() {
+        menuIcon.addEventListener('click', function() {
+            this.classList.toggle('open');
+            sideMenu.style.left = (sideMenu.style.left === '0px' ? '-370px' : '0px');
+        });
+    }
+
+    // Setup language button
+    function setupLanguageButton() {
+        languageButton.addEventListener('click', function() {
+            languageDropdown.style.display = (languageDropdown.style.display === 'none' ? 'block' : 'none');
+        });
+        languageDropdown.addEventListener('change', function() {
+            updateLanguageDisplays(this.value);
+        });
+    }
+
+    // Setup instructions button
+    function setupInstructionsButton() {
+        instructionsButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            localStorage.setItem("instructionsClicked", "true");
+            updateButtonStyle(this);
+            setTimeout(() => {
+                window.location.href = 'instructions.html';
+            }, 300);
+        });
+    }
+
+    // Add the user’s first initial icon in the header
+    function setupNameIcon() {
+        const initialLetter = storedName.charAt(0).toUpperCase();
+        const nameIcon      = document.createElement('div');
+        nameIcon.className  = 'name-icon';
+        nameIcon.textContent= initialLetter;
+
+        document.querySelector('.chatbot-header').appendChild(nameIcon);
+
+        // Clicking the icon toggles the popup
+        nameIcon.addEventListener('click', () => {
+            if (popup.style.display === 'block' && popup.style.right === '0px') {
+                closePopup();
+            } else {
+                openPopup();
+            }
+        });
+
+        // Also handle clicking the [x]
+        popupClose.addEventListener('click', closePopup);
+    }
+
+    // Show greeting message based on stored name
+    function showGreeting() {
+        let name       = localStorage.getItem('name');
+        const subTextEl= document.getElementById('sub-text');
+
+        if (name) {
+            let nameParts = name.split(' ');
+            let firstName = '';
+
+            if (containsEastAsianSurname(nameParts)) {
+                // Assume last part is the given name for East Asian
+                firstName = nameParts[nameParts.length - 1];
+            } else {
+                // Assume first part is given name for Western
+                firstName = nameParts[0];
+            }
+            // Capitalise the first letter
+            firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+            subTextEl.innerText = `${firstName}, how can I help you today?`;
+        } else {
+            console.error('Name not found in local storage');
+            subTextEl.innerText = 'How can I help you today?';
+        }
+    }
+
+    // This block chooses an agent based on classification, then loads the appropriate chatbot module
+    function selectAgentAndFetch() {
+        let chatbotModuleUrl = '';
+        let selectedAgent    = 'Unknown';
+
+        const classification = localStorage.getItem('classification') || 'Unknown';
+        const roleClass      = localStorage.getItem('roleClassification') || '';
+
+        // Branching logic for agent
+        if (roleClass === ' (M)' && ['HI','MI'].includes(classification)) {
+            chatbotModuleUrl = './agent1-chatbot-module.js';
+            selectedAgent    = 'Agent 1';
+        } else if (roleClass === ' (M)' && ['LI','VLI'].includes(classification)) {
+            chatbotModuleUrl = './agent3-chatbot-module.js';
+            selectedAgent    = 'Agent 3';
+        } else if (roleClass === ' (P)' && ['HI','MI'].includes(classification)) {
+            chatbotModuleUrl = './agent2-chatbot-module.js';
+            selectedAgent    = 'Agent 2';
+        } else if (roleClass === ' (P)' && ['LI','VLI'].includes(classification)) {
+            chatbotModuleUrl = './agent4-chatbot-module.js';
+            selectedAgent    = 'Agent 4';
+        }
+
+        // Store the selected agent
+        localStorage.setItem('selectedAgent', selectedAgent);
+
+        // Ensure a unique session ID
+        if (!localStorage.getItem('sessionId')) {
+            localStorage.setItem('sessionId', Date.now().toString());
+        }
+        const sessionId = localStorage.getItem('sessionId');
+
+        console.log('Classification:', classification);
+        console.log('Role Classification:', roleClass);
+        console.log('Selected Agent:', selectedAgent);
+
+        // If user info was already recorded but agent was unknown, do an update call
+        if (localStorage.getItem('infoRecorded') === 'true' && selectedAgent !== 'Unknown') {
+            updateServerWithAgent(selectedAgent, sessionId);
+        }
+
+        // Dynamically import the matching chatbot module
+        if (chatbotModuleUrl) {
+            import(chatbotModuleUrl)
+                .then(module => {
+                    module.initChatbot();
+                    console.log(`Loaded module: ${chatbotModuleUrl}`);
+                })
+                .catch(error => {
+                    console.error('Error loading chatbot module:', error);
+                });
+        } else {
+            console.error('No matching chatbot module found.');
+        }
+    }
+
+    // Send updated user info to server
+    function updateServerWithAgent(selectedAgent, sessionId) {
+        const name               = localStorage.getItem('name');
+        const role               = localStorage.getItem('selectedJobRole');
+        const latitude           = localStorage.getItem('latitude');
+        const longitude          = localStorage.getItem('longitude');
+        const country            = localStorage.getItem('country');
+        const iso2             = localStorage.getItem('iso_2');
+        const classification     = localStorage.getItem('classification');
+        const roleClassification = localStorage.getItem('roleClassification');
+        const area               = localStorage.getItem('area');
+        const contactInfo        = localStorage.getItem('contactInfo');
+        const version            = '1.0';
+        const dateTime           = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
+
+        const updatedUserInfo = {
+            name,
+            role,
+            latitude,
+            longitude,
+            country,
+            iso_a3,
+            classification,
+            roleClassification,
+            area,
+            contactInfo,
+            version,
+            dateTime,
+            selectedAgent,
+            sessionId
+        };
+
+        fetch('https://alan.up.railway.app/record-info', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedUserInfo)
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Updated Successfully:', data);
+        })
+        .catch(error => {
+            console.error('Error updating data:', error);
+        });
+    }
 
     </script>
 </body>
