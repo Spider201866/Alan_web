@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
     <title>Alan</title>
 
+    <!-- If you have a faviconAndMetaSetup script -->
     <script type="module">
         import { faviconAndMetaSetup } from './faviconAndMeta.js';
         faviconAndMetaSetup();
@@ -20,7 +21,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
 
+    <!-- Closer.js if needed -->
     <script type="module" src="closer.js"></script>
+
+    <!-- Optional inline style for flash effect -->
+    <style>
+      /* The flash-blue class briefly highlights the background in light-blue */
+      .flash-blue {
+        background-color: #cde8ff;  /* light blue */
+        transition: background-color 1s ease-out;
+      }
+    </style>
 </head>
 
 <body>
@@ -81,12 +92,12 @@
                     <option value="fr">Français</option>
                     <option value="es">Español</option>
                     <option value="pt">Português</option>
-                    <option value="ar">العربية</option> <!-- Arabic -->
-                    <option value="sw">Kiswahili</option> <!-- Swahili -->
-                    <option value="cy">Cymraeg</option>  <!-- Welsh -->
-                    <option value="ny">Chichewa</option> <!-- Malawi -->
-                    <option value="rw">Kinwanda</option> <!-- Rwanda -->
-                    <option value="lg">Luganda</option>  <!-- Uganda -->
+                    <option value="ar">العربية</option>
+                    <option value="sw">Kiswahili</option>
+                    <option value="cy">Cymraeg</option>
+                    <option value="ny">Chichewa</option>
+                    <option value="rw">Kinwanda</option>
+                    <option value="lg">Luganda</option>
                 </select>
             </div>
         </div>
@@ -150,23 +161,29 @@
         <span class="popup-close" onclick="closePopup()">&times;</span>
         <h2>User Info</h2>
         <div class="popup-content" id="popup-content"></div>
+
+        <!-- GEOLOCATION BUTTON & FEEDBACK -->
+        <div style="text-align: center; margin-top: 10px;">
+            <button id="geolocation-button" class="button grey">Geolocation</button>
+            <p id="location-info" style="display:none; margin-top: 5px; font-size: 12px;"></p>
+        </div>
     </div>
 
     <!-- SINGLE SCRIPT BLOCK AT THE BOTTOM, TYPE=MODULE -->
     <script type="module">
     /*********************************************/
-    /*                MODULE IMPORTS             */
+    /*         MODULE IMPORTS (IF ANY)           */
     /*********************************************/
     import { translations } from './language.js';
     import { faviconAndMetaSetup } from './faviconAndMeta.js';
-    import './closer.js';          // If you want to inline the code from closer.js
+    import './closer.js';
     import './listener-module.js'; // If needed
 
-    // If needed, call the favicon setup again or remove from <head>
+    // If needed, set up favicons again
     faviconAndMetaSetup();
 
     /*********************************************/
-    /*          GLOBAL DOM REFERENCES            */
+    /*       GLOBAL DOM REFERENCES               */
     /*********************************************/
     const menuIcon            = document.querySelector('.menu-icon');
     const sideMenu            = document.querySelector('.side-menu');
@@ -182,16 +199,16 @@
     const chatbotVersion      = document.querySelector('.chatbot-version');
     const mainContent         = document.getElementById('mainContent');
 
-    // For user info 
+    // For user info
     const storedName          = localStorage.getItem('name') || 'User';
     const classification      = localStorage.getItem('classification') || 'Unknown';
     const roleClassification  = localStorage.getItem('roleClassification') || '';
     const iso_a3              = localStorage.getItem('iso_a3') || 'Not set';
 
     /*********************************************/
-    /*             HELPER FUNCTIONS              */
+    /*          HELPER FUNCTIONS                 */
     /*********************************************/
-    
+
     // Zoom toggle for the condition image
     function toggleZoom(image) {
         if (image.style.height === '200px') {
@@ -220,46 +237,72 @@
 
     // Build the dynamic content for the popup
     function buildPopupContent() {
-    const name             = localStorage.getItem('name')              || 'Not set';
-    const role             = localStorage.getItem('selectedJobRole')   || 'Not set';
-    const experience       = localStorage.getItem('selectedExperience')|| 'Not set';
-    const latitude         = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
-    const longitude        = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
-    const country          = localStorage.getItem('country')           || 'Not set';
-    const iso2             = localStorage.getItem('iso2')              || 'Not set';  // ← retrieve iso2 here
-    const classification   = localStorage.getItem('classification')    || 'Unknown';
-    const roleClassification = localStorage.getItem('roleClassification') || '';
-    const area             = localStorage.getItem('area')              || 'Not set';
-    const contactInfo      = localStorage.getItem('contactInfo')       || 'Not set';
-    const selectedAgent    = localStorage.getItem('selectedAgent')     || 'Unknown';
-    const focusRaw         = localStorage.getItem('selectedFocus');
-    const aims             = focusRaw ? JSON.parse(focusRaw).join('; ') : 'Not set';
+        const name          = localStorage.getItem('name')              || 'Not set';
+        const role          = localStorage.getItem('selectedJobRole')   || 'Not set';
+        const experience    = localStorage.getItem('selectedExperience')|| 'Not set';
+        const latitude      = (parseFloat(localStorage.getItem('latitude'))  || 0).toFixed(6);
+        const longitude     = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
+        const country       = localStorage.getItem('country')           || 'Not set';
+        const iso2          = localStorage.getItem('iso2')              || 'Not set';
+        const classification= localStorage.getItem('classification')    || 'Unknown';
+        const roleClass     = localStorage.getItem('roleClassification')|| '';
+        const area          = localStorage.getItem('area')              || 'Not set';
+        const contactInfo   = localStorage.getItem('contactInfo')       || 'Not set';
+        const selectedAgent = localStorage.getItem('selectedAgent')     || 'Unknown';
+        const focusRaw      = localStorage.getItem('selectedFocus');
+        const aims          = focusRaw ? JSON.parse(focusRaw).join(', ') : 'Not set';
 
-    // Current date/time
-    const now    = new Date();
-    const day    = String(now.getDate()).padStart(2, '0');
-    const month  = String(now.getMonth() + 1).padStart(2, '0');
-    const year   = now.getFullYear();
-    const hours  = String(now.getHours()).padStart(2, '0');
-    const mins   = String(now.getMinutes()).padStart(2, '0');
-    const secs   = String(now.getSeconds()).padStart(2, '0');
-    const currDT = `${day}/${month}/${year} ${hours}:${mins}:${secs}`;
+        // Current date/time
+        const now    = new Date();
+        const day    = String(now.getDate()).padStart(2, '0');
+        const month  = String(now.getMonth() + 1).padStart(2, '0');
+        const year   = now.getFullYear();
+        const hours  = String(now.getHours()).padStart(2, '0');
+        const mins   = String(now.getMinutes()).padStart(2, '0');
+        const secs   = String(now.getSeconds()).padStart(2, '0');
+        const currDT = `${day}/${month}/${year}, ${hours}:${mins}:${secs}`;
 
-    return `
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Role:</strong> ${role}${roleClassification}</p>
-        <p><strong>Experience:</strong> ${experience}</p>
-        <p><strong>Aims:</strong> ${aims}</p>
-        <p><strong>Lat & Long:</strong> ${latitude}, ${longitude}</p>
-        <p><strong>Area:</strong> ${area}</p>
-        <!-- Show the two-letter code in parentheses -->
-        <p><strong>Country:</strong> ${country} (${iso2}) [${classification}]</p>
-        <p><strong>Contact:</strong> ${contactInfo}</p>
-        <p><strong>Version:</strong> 1.0, ${selectedAgent}</p>
-        <p><strong>Date & Time:</strong> ${currDT}</p>
-    `;
-}
+        // Add IDs to lat/long, area, country <p> for flash effect
+        return `
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Contact:</strong> ${contactInfo}</p>
+          <p><strong>Role:</strong> ${role}, ${experience}, ${roleClass}</p>
+          <p><strong>Aims:</strong> ${aims}</p>
+          <p id="latLongSection" style="color: grey;">
+             <strong>Lat &amp; Long:</strong> ${latitude}, ${longitude}
+          </p>
+          <p id="areaSection" style="color: grey;">
+             <strong>Area:</strong> ${area}
+          </p>
+          <p id="countrySection" style="color: grey;">
+             <strong>Country:</strong> ${country}, ${iso2}, ${classification}
+          </p>
+          <p style="color: grey;">
+             <em><strong>Version:</strong> 1.0, ${selectedAgent}</em>
+          </p>
+          <p style="color: grey;">
+             <em><strong>Date &amp; Time:</strong> ${currDT}</em>
+          </p>
+        `;
+    }
 
+    // Simple function to highlight (flash) lat/long, area, and country
+    function flashBlueOnUpdate() {
+      const latLongEl  = document.getElementById('latLongSection');
+      const areaEl     = document.getElementById('areaSection');
+      const countryEl  = document.getElementById('countrySection');
+
+      if (latLongEl)  latLongEl.classList.add('flash-blue');
+      if (areaEl)     areaEl.classList.add('flash-blue');
+      if (countryEl)  countryEl.classList.add('flash-blue');
+
+      // Remove the highlight after ~2 seconds
+      setTimeout(() => {
+          if (latLongEl)  latLongEl.classList.remove('flash-blue');
+          if (areaEl)     areaEl.classList.remove('flash-blue');
+          if (countryEl)  countryEl.classList.remove('flash-blue');
+      }, 2000);
+    }
 
     // Basic check to see if a name part might be an East Asian surname
     function containsEastAsianSurname(nameParts) {
@@ -307,34 +350,24 @@
         ];
         return nameParts.some(part => eastAsianSurnames.includes(part));
     }
-
     function updateLanguageDisplays(lang) {
-    // The text content is mapped in translations[lang]
-    document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
-    document.getElementById('good-history').textContent      = translations[lang].goodHistory;
-    document.getElementById('examine-well').textContent      = translations[lang].examineWell;
-    document.getElementById('use-arclight').textContent      = translations[lang].useArclight;
-    chatbotVersion.textContent                               = translations[lang].alanMistakes;
+        document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
+        document.getElementById('good-history').textContent      = translations[lang].goodHistory;
+        document.getElementById('examine-well').textContent      = translations[lang].examineWell;
+        document.getElementById('use-arclight').textContent      = translations[lang].useArclight;
+        chatbotVersion.textContent                               = translations[lang].alanMistakes;
 
-    // Pull name from localStorage
-    const name = localStorage.getItem('name') || '';
-
-    if (name) {
-        // If we find a name, extract a first name and inject it into the greeting
-        let nameParts = name.split(' ');
-        let firstName = nameParts[0]; // or implement East Asian check if you like
-
-        firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-        document.getElementById('sub-text').textContent =
-            `${firstName}, ${translations[lang].howCanIHelp}`;
-    } else {
-        // If no name in localStorage, fall back to default text
-        document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
+        const name = localStorage.getItem('name') || '';
+        if (name) {
+            let firstName = name.split(' ')[0];
+            firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+            document.getElementById('sub-text').textContent = `${firstName}, ${translations[lang].howCanIHelp}`;
+        } else {
+            document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
+        }
     }
-}
 
-
-    // Style adjustments for instructions button
+    // Style for instructions button
     function updateButtonStyle(button) {
         button.classList.remove('pulse');
         button.style.backgroundColor = 'grey';
@@ -353,22 +386,15 @@
         setupInstructionsButton();
         setupNameIcon();
 
-        // If instructions button was already clicked
         if (localStorage.getItem("instructionsClicked") === "true") {
             updateButtonStyle(instructionsButton);
         }
 
-        // If we have a name, show the greeting
         showGreeting();
-
-        // Set up image zoom
         conditionImage.addEventListener('click', () => toggleZoom(conditionImage));
-
-        // Expand language to default 'en'
         updateLanguageDisplays('en');
-
-        // If we have role/classification logic for agent selection, run it
         selectAgentAndFetch();
+        setupGeolocationButton();
     }
 
     // Setup menu icon click
@@ -389,7 +415,7 @@
         });
     }
 
-    // Setup instructions button
+    // Instructions button
     function setupInstructionsButton() {
         instructionsButton.addEventListener("click", function(event) {
             event.preventDefault();
@@ -401,7 +427,7 @@
         });
     }
 
-    // Add the user’s first initial icon in the header
+    // User’s first initial icon
     function setupNameIcon() {
         const initialLetter = storedName.charAt(0).toUpperCase();
         const nameIcon      = document.createElement('div');
@@ -410,7 +436,6 @@
 
         document.querySelector('.chatbot-header').appendChild(nameIcon);
 
-        // Clicking the icon toggles the popup
         nameIcon.addEventListener('click', () => {
             if (popup.style.display === 'block' && popup.style.right === '0px') {
                 closePopup();
@@ -418,28 +443,22 @@
                 openPopup();
             }
         });
-
-        // Also handle clicking the [x]
         popupClose.addEventListener('click', closePopup);
     }
 
-    // Show greeting message based on stored name
+    // Show greeting
     function showGreeting() {
-        let name       = localStorage.getItem('name');
-        const subTextEl= document.getElementById('sub-text');
+        let name = localStorage.getItem('name');
+        const subTextEl = document.getElementById('sub-text');
 
         if (name) {
             let nameParts = name.split(' ');
             let firstName = '';
-
             if (containsEastAsianSurname(nameParts)) {
-                // Assume last part is the given name for East Asian
                 firstName = nameParts[nameParts.length - 1];
             } else {
-                // Assume first part is given name for Western
                 firstName = nameParts[0];
             }
-            // Capitalise the first letter
             firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
             subTextEl.innerText = `${firstName}, what can I help with??`;
         } else {
@@ -448,7 +467,75 @@
         }
     }
 
-    // This block chooses an agent based on classification, then loads the appropriate chatbot module
+    // Geolocation button
+    function setupGeolocationButton() {
+        const geolocationButton = document.getElementById("geolocation-button");
+        const locationInfo      = document.getElementById("location-info");
+
+        if (!geolocationButton) return;
+
+        geolocationButton.addEventListener("click", () => {
+            // Turn button blue
+            geolocationButton.style.backgroundColor = "blue";
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+
+                        // Overwrite lat/long
+                        localStorage.setItem('latitude', latitude);
+                        localStorage.setItem('longitude', longitude);
+
+                        // Show updated location
+                        locationInfo.innerText = `Updated location: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+                        locationInfo.style.display = "block";
+
+                        // Rebuild popup so lat/long are fresh
+                        popupContent.innerHTML = buildPopupContent();
+
+                        // Now flash lat/long, area, country in blue
+                        flashBlueOnUpdate();
+
+                        // Revert button to grey after 2s
+                        setTimeout(() => {
+                            geolocationButton.style.backgroundColor = "grey";
+                        }, 2000);
+                    },
+                    (error) => {
+                        switch (error.code) {
+                            case error.PERMISSION_DENIED:
+                                locationInfo.innerText = "User denied geolocation.";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                locationInfo.innerText = "Location information unavailable.";
+                                break;
+                            case error.TIMEOUT:
+                                locationInfo.innerText = "Request to get user location timed out.";
+                                break;
+                            default:
+                                locationInfo.innerText = "An unknown error occurred.";
+                        }
+                        locationInfo.style.display = "block";
+
+                        // Revert color after 2s
+                        setTimeout(() => {
+                            geolocationButton.style.backgroundColor = "grey";
+                        }, 2000);
+                    }
+                );
+            } else {
+                locationInfo.innerText = "Geolocation not supported by this browser.";
+                locationInfo.style.display = "block";
+
+                setTimeout(() => {
+                    geolocationButton.style.backgroundColor = "grey";
+                }, 2000);
+            }
+        });
+    }
+
+    // Agent selection
     function selectAgentAndFetch() {
         let chatbotModuleUrl = '';
         let selectedAgent    = 'Unknown';
@@ -456,7 +543,6 @@
         const classification = localStorage.getItem('classification') || 'Unknown';
         const roleClass      = localStorage.getItem('roleClassification') || '';
 
-        // Branching logic for agent
         if (roleClass === ' (M)' && ['HI','MI'].includes(classification)) {
             chatbotModuleUrl = './agent1-chatbot-module.js';
             selectedAgent    = 'Agent 1';
@@ -471,10 +557,8 @@
             selectedAgent    = 'Agent 4';
         }
 
-        // Store the selected agent
         localStorage.setItem('selectedAgent', selectedAgent);
 
-        // Ensure a unique session ID
         if (!localStorage.getItem('sessionId')) {
             localStorage.setItem('sessionId', Date.now().toString());
         }
@@ -484,12 +568,10 @@
         console.log('Role Classification:', roleClass);
         console.log('Selected Agent:', selectedAgent);
 
-        // If user info was already recorded but agent was unknown, do an update call
         if (localStorage.getItem('infoRecorded') === 'true' && selectedAgent !== 'Unknown') {
             updateServerWithAgent(selectedAgent, sessionId);
         }
 
-        // Dynamically import the matching chatbot module
         if (chatbotModuleUrl) {
             import(chatbotModuleUrl)
                 .then(module => {
@@ -511,7 +593,7 @@
         const latitude           = localStorage.getItem('latitude');
         const longitude          = localStorage.getItem('longitude');
         const country            = localStorage.getItem('country');
-        const iso2             = localStorage.getItem('iso_2');
+        const iso2               = localStorage.getItem('iso_2');
         const classification     = localStorage.getItem('classification');
         const roleClassification = localStorage.getItem('roleClassification');
         const area               = localStorage.getItem('area');
@@ -551,7 +633,6 @@
             console.error('Error updating data:', error);
         });
     }
-
     </script>
 </body>
 </html>

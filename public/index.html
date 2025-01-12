@@ -2,349 +2,394 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Splash Screen</title>
-    <link rel="stylesheet" href="styles_index.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Splash Screen</title>
+  <link rel="stylesheet" href="styles_index.css">
 </head>
 
 <body>
-    <!-- SPLASH SCREEN -->
-    <div class="splash-screen visible">
-        <img id="logo1" src="./Q.png" alt="Q Logo" />
-        <img id="logo2" src="./AP.png" alt="AP Logo" />
-        <p>Eye, Ear, Skin AI Assistant</p>
+  <!-- SPLASH SCREEN -->
+  <div class="splash-screen visible">
+    <img id="logo1" src="./Q.png" alt="Q Logo" />
+    <img id="logo2" src="./AP.png" alt="AP Logo" />
+    <p>Eye, Ear, Skin AI Assistant</p>
+  </div>
+
+  <!-- INSTRUCTION SCREEN -->
+  <div class="instruction-screen hidden">
+    <img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: -10px" />
+    <p>
+      Alan is an AI assistant for students and those who only occasionally
+      see eye, ear or skin cases. Write or speak clearly and avoid
+      identifying names or details.
+    </p>
+    <p class="good-luck">Good luck!</p>
+
+    <!-- NAME INPUT -->
+    <input 
+      type="text"
+      id="nameInput"
+      class="name-input"
+      placeholder="Name"
+      title="2-20 letters, spaces, apostrophes, or hyphens only"
+      style="color: grey;"  
+    />
+
+    <select id="job-role-select" class="job-role-dropdown">
+      <option value="" disabled selected hidden>Role</option>
+      <option value="Health worker">Health worker</option>
+      <option value="Nurse">Nurse</option>
+      <option value="Ophthalmic clinical officer">Ophthalmic clinical officer</option>
+      <option value="Medical student">Medical student</option>
+      <option value="Physician associate">Physician associate</option>
+      <option value="General practitioner">General practitioner</option>
+      <option value="Hospital doctor">Hospital doctor</option>
+      <option value="Ophthalmologist">Ophthalmologist</option>
+      <option value="Optometrist">Optometrist</option>
+      <option value="Orthoptist">Orthoptist</option>
+      <option value="ENT specialist">ENT specialist</option>
+      <option value="Pharmacist">Pharmacist</option>
+      <option value="Audiologist">Audiologist</option>
+      <option value="Ear care practitioner">Ear care practitioner</option>
+      <option value="Dermatologist">Dermatologist</option>
+    </select>
+
+    <select id="experience-select" class="experience-dropdown">
+      <option value="" disabled selected hidden>Experience</option>
+      <option value="<1 yr">&lt;1 yr</option>
+      <option value="1-3 yr">1-3 yr</option>
+      <option value="3-7 yr">3-7 yr</option>
+      <option value=">7 yr">&gt;7 yr</option>
+    </select>
+
+    <!-- FOCUS BUTTON AND DROPDOWN WITH MULTIPLE CHECKBOXES -->
+    <div class="focus-container">
+      <button id="focusToggleBtn" class="focus-button">Aims</button>
+      <div id="focusDropdown" class="focus-dropdown hidden">
+        <label>
+          <input type="checkbox" name="focus" value="Second opinion" />
+          Second opinion
+        </label>
+        <label>
+          <input type="checkbox" name="focus" value="Condition lookup" />
+          Condition lookup
+        </label>
+        <label>
+          <input type="checkbox" name="focus" value="Communicate better" />
+          Communicate better
+        </label>
+      </div>
     </div>
 
-    <!-- INSTRUCTION SCREEN -->
-    <div class="instruction-screen hidden">
-        <img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: -10px" />
-        <p>Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak
-            clearly and avoid identifying names or details.</p>
-        <p class="good-luck">Good luck!</p>
+    <input 
+      type="text"
+      id="contactInput"
+      class="contact-input"
+      placeholder="Contact (email/phone)"
+    />
 
-        <input type="text" id="nameInput" class="name-input" placeholder="Name">
+    <br><br><br>
+    <button id="acceptButton" disabled>Accept</button>
+    <br>
+    <div id="locationInfo" style="display:none;"></div>
+  </div>
 
-        <select id="job-role-select" class="job-role-dropdown">
-            <option value="" disabled selected hidden>Role</option>
-            <option value="Health worker">Health worker</option>
-            <option value="Nurse">Nurse</option>
-            <option value="Ophthalmic clinical officer">Ophthalmic clinical officer</option>
-            <option value="Medical student">Medical student</option>
-            <option value="Physician associate">Physician associate</option>
-            <option value="General practitioner">General practitioner</option>
-            <option value="Hospital doctor">Hospital doctor</option>
-            <option value="Ophthalmologist">Ophthalmologist</option>
-            <option value="Optometrist">Optometrist</option>
-            <option value="Orthoptist">Orthoptist</option>
-            <option value="ENT specialist">ENT specialist</option>
-            <option value="Pharmacist">Pharmacist</option>
-            <option value="Audiologist">Audiologist</option>
-            <option value="Ear care practitioner">Ear care practitioner</option>
-            <option value="Dermatologist">Dermatologist</option>
-        </select>
-        
-        <select id="experience-select" class="experience-dropdown">
-            <option value="" disabled selected hidden>Experience</option>
-            <option value="<1 yr">&lt;1 yr</option>
-            <option value="1-5 yr">1-5 yr</option>
-            <option value="6-10 yr">6-10 yr</option>
-            <option value=">10 yr">&gt;10 yr</option>
-        </select>
+  <!-- BLACK SCREEN OVERLAY -->
+  <div class="black-screen" id="blackScreen">
+    <img src="./sky.png" alt="Sky">
+  </div>
 
-        <!-- FOCUS BUTTON AND DROPDOWN WITH MULTIPLE CHECKBOXES -->
-        <div class="focus-container">
-            <button id="focusToggleBtn" class="focus-button">Aims</button>
-            <div id="focusDropdown" class="focus-dropdown hidden">
-                <label>
-                    <input type="checkbox" name="focus" value="Diagnostic Second Opinion" />
-                    Diagnostic Second Opinion
-                </label>
-                <label>
-                    <input type="checkbox" name="focus" value="Quick Condition Lookup" />
-                    Quick Condition Lookup
-                </label>
-                <label>
-                    <input type="checkbox" name="focus" value="Communicate Better" />
-                    Communicate Better
-                </label>
-            </div>
-        </div>
+  <!-- SINGLE SCRIPT BLOCK -->
+  <script>
+  /*********************************************/
+  /*               GLOBAL REFERENCES           */
+  /*********************************************/
+  const splashScreenRef  = document.querySelector(".splash-screen");
+  const instructionRef   = document.querySelector(".instruction-screen");
+  const blackScreen      = document.getElementById("blackScreen");
+  const skyImage         = blackScreen.querySelector("img");
 
-        <input type="text" id="contactInput" class="contact-input" placeholder="Contact (email/phone)">
+  const nameInput        = document.getElementById("nameInput");
+  const jobSelectElement = document.getElementById("job-role-select");
+  const experienceSelect = document.getElementById("experience-select");
+  const contactInput     = document.getElementById("contactInput");
+  const acceptButton     = document.getElementById("acceptButton");
 
-        <br /><br /><br />
-        <button id="acceptButton" disabled>Accept</button>
-        <br />
-        <div id="locationInfo" style="display:none;"></div>
-    </div>
+  // Focus Button & Dropdown
+  const focusToggleBtn   = document.getElementById("focusToggleBtn");
+  const focusDropdown    = document.getElementById("focusDropdown");
+  const focusCheckboxes  = document.querySelectorAll('#focusDropdown input[name="focus"]');
 
-    <!-- BLACK SCREEN OVERLAY -->
-    <div class="black-screen" id="blackScreen">
-        <img src="./sky.png" alt="Sky">
-    </div>
+  // IP-based Location Variables
+  let ipLatitude  = "Not set";
+  let ipLongitude = "Not set";
+  let ipCountry   = "Not set";
+  let ipArea      = "Not set";
+  let ipISO2      = "Not set";
 
-    <!-- SINGLE SCRIPT BLOCK -->
-    <script>
-    /*********************************************/
-    /*               GLOBAL REFERENCES           */
-    /*********************************************/
-    const splashScreenRef  = document.querySelector(".splash-screen");
-    const instructionRef   = document.querySelector(".instruction-screen");
-    const blackScreen      = document.getElementById("blackScreen");
-    const skyImage         = blackScreen.querySelector("img");
+  // Classification Arrays (2-letter ISO)
+  const classificationLookup = {
+      "HI": [
+          "QA","MO","LU","SG","BN","IE","NO","KW","AE","CH","HK","SM","US","SA","NL","IS","BH","SE",
+          "DE","AU","TW","DK","AT","CA","BE","OM","FI","GB","FR","JP","MT","KR","NZ","ES","IT","PR","CY","IL","CZ"
+      ],
+      "MI": [
+          "GQ","SI","SK","LT","EE","TT","PT","PL","HU","MY","SC","RU","GR","LV","KN","AG","TR","KZ","BS","CL","PA",
+          "HR","RO","UY","MU","BG","AR","IR","MX","LB","GA","MV","TM","BY","BW","TH","CN","BR","ZA","IN"
+      ],
+      "LI": [
+          "BB","ME","AZ","CR","IQ","DO","PW","MK","RS","DZ","GD","CO","SR","LC","PE","LK","EG","MN","JO","AL","VE",
+          "ID","DM","XK","NR","TN","VC","NA","BA","EC","GE","SZ","FJ","LY","PY","JM","AM","SV","BT","UA","MA","BZ",
+          "GY","PH","GT","BO","LA","UZ","CV","VN","PK"
+      ],
+      "VLI": [
+          "AO","CG","MM","NG","NI","WS","MD","TO","HN","TL","GH","SD","BD","MR","KH","ZM","LS","CI","TV","PG","KG",
+          "DJ","KE","MH","FM","CM","TZ","ST","TJ","VU","NP","SN","TD","UG","YE","ZW","BJ","ML","SB","ET","RW","GN",
+          "KI","AF","BF","HT","GW","SL","GM","SS","TG","KM","MG","ER","MZ","MW","NE","LR","BI","CD","CF"
+      ]
+  };
 
-    const nameInput        = document.getElementById("nameInput");
-    const jobSelectElement = document.getElementById("job-role-select");
-    const experienceSelect = document.getElementById("experience-select");
-    const contactInput     = document.getElementById("contactInput");
-    const acceptButton     = document.getElementById("acceptButton");
+  /*********************************************/
+  /*               HELPER FUNCTIONS            */
+  /*********************************************/
+  
+  // 1) Animate the splash & switch to instructions
+  function showSplashScreen() {
+      const logo1 = document.getElementById("logo1");
+      const logo2 = document.getElementById("logo2");
 
-    // Focus Button & Dropdown
-    const focusToggleBtn   = document.getElementById("focusToggleBtn");
-    const focusDropdown    = document.getElementById("focusDropdown");
-    const focusCheckboxes  = document.querySelectorAll('#focusDropdown input[name="focus"]');
+      // Initial small scale or rotation
+      logo1.style.transform = "scale(0.8)";
+      logo2.style.transform = "rotateX(-90deg)";
 
-    // IP-based Location Variables
-    let ipLatitude  = "Not set";
-    let ipLongitude = "Not set";
-    let ipCountry   = "Not set";
-    let ipArea      = "Not set";
-    let ipISO2      = "Not set";
+      // Grow logo1 & unrotate logo2
+      setTimeout(() => {
+          logo1.style.transform = "scale(1)";
+          logo2.style.transform = "rotateX(0deg)";
+      }, 100);
 
-    // Classification Arrays (2-letter ISO)
-    const classificationLookup = {
-        "HI": [
-            "QA","MO","LU","SG","BN","IE","NO","KW","AE","CH","HK","SM","US","SA","NL","IS","BH","SE",
-            "DE","AU","TW","DK","AT","CA","BE","OM","FI","GB","FR","JP","MT","KR","NZ","ES","IT","PR","CY","IL","CZ"
-        ],
-        "MI": [
-            "GQ","SI","SK","LT","EE","TT","PT","PL","HU","MY","SC","RU","GR","LV","KN","AG","TR","KZ","BS","CL","PA",
-            "HR","RO","UY","MU","BG","AR","IR","MX","LB","GA","MV","TM","BY","BW","TH","CN","BR","ZA","IN"
-        ],
-        "LI": [
-            "BB","ME","AZ","CR","IQ","DO","PW","MK","RS","DZ","GD","CO","SR","LC","PE","LK","EG","MN","JO","AL","VE",
-            "ID","DM","XK","NR","TN","VC","NA","BA","EC","GE","SZ","FJ","LY","PY","JM","AM","SV","BT","UA","MA","BZ",
-            "GY","PH","GT","BO","LA","UZ","CV","VN","PK"
-        ],
-        "VLI": [
-            "AO","CG","MM","NG","NI","WS","MD","TO","HN","TL","GH","SD","BD","MR","KH","ZM","LS","CI","TV","PG","KG",
-            "DJ","KE","MH","FM","CM","TZ","ST","TJ","VU","NP","SN","TD","UG","YE","ZW","BJ","ML","SB","ET","RW","GN",
-            "KI","AF","BF","HT","GW","SL","GM","SS","TG","KM","MG","ER","MZ","MW","NE","LR","BI","CD","CF"
-        ]
-    };
+      // After 6s, hide splash & show instructions
+      setTimeout(() => {
+          splashScreenRef.classList.remove("visible");
+          splashScreenRef.classList.add("hidden");
+          instructionRef.classList.remove("hidden");
+          instructionRef.classList.add("visible");
+      }, 6000);
+  }
 
-    /*********************************************/
-    /*               HELPER FUNCTIONS            */
-    /*********************************************/
-    
-    // 1) Animate the splash & switch to instructions
-    function showSplashScreen() {
-        const logo1 = document.getElementById("logo1");
-        const logo2 = document.getElementById("logo2");
+  // 2) Fetch IP-based location
+  function fetchIPBasedLocation() {
+      fetch("https://ipapi.co/json/")
+          .then(response => response.json())
+          .then(data => {
+              if (data) {
+                  ipLatitude  = data.latitude       || "Not set";
+                  ipLongitude = data.longitude      || "Not set";
+                  ipCountry   = data.country_name   || "Not set";
+                  ipArea      = data.city           || "Not set";
+                  ipISO2      = (data.country       || "Not set").toUpperCase();
 
-        // Initial small scale or rotation
-        logo1.style.transform = "scale(0.8)";
-        logo2.style.transform = "rotateX(-90deg)";
+                  // Save to localStorage
+                  localStorage.setItem("latitude",  ipLatitude);
+                  localStorage.setItem("longitude", ipLongitude);
+                  localStorage.setItem("country",   ipCountry);
+                  localStorage.setItem("area",      ipArea);
+                  localStorage.setItem("iso2",      ipISO2);
 
-        // Grow logo1 & unrotate logo2
-        setTimeout(() => {
-            logo1.style.transform = "scale(1)";
-            logo2.style.transform = "rotateX(0deg)";
-        }, 100);
+                  // Classify the 2-letter code
+                  storeClassifications(ipISO2);
+              }
+          })
+          .catch(error => {
+              console.error("Error fetching IP-based location:", error);
+          });
+  }
 
-        // After 6s, hide splash & show instructions
-        setTimeout(() => {
-            splashScreenRef.classList.remove("visible");
-            splashScreenRef.classList.add("hidden");
-            instructionRef.classList.remove("hidden");
-            instructionRef.classList.add("visible");
-        }, 6000);
-    }
+  // 3) Classify user country
+  function storeClassifications(iso2) {
+      let classification = "Unknown";
+      for (const [key, values] of Object.entries(classificationLookup)) {
+          if (values.includes(iso2)) {
+              classification = key;
+              break;
+          }
+      }
+      localStorage.setItem("classification", classification);
+  }
 
-    // 2) Fetch IP-based location
-    function fetchIPBasedLocation() {
-        fetch("https://ipapi.co/json/")
-            .then(response => response.json())
-            .then(data => {
-                if (data) {
-                    ipLatitude  = data.latitude       || "Not set";
-                    ipLongitude = data.longitude      || "Not set";
-                    ipCountry   = data.country_name   || "Not set";
-                    ipArea      = data.city           || "Not set";
-                    ipISO2      = (data.country       || "Not set").toUpperCase();
+  // 4) Check form readiness
+  function checkSelections() {
+      // COLOR: Role & Experience
+      jobSelectElement.style.color = jobSelectElement.value ? "blue" : "grey";
+      experienceSelect.style.color = experienceSelect.value ? "blue" : "grey";
 
-                    // Save to localStorage
-                    localStorage.setItem("latitude",  ipLatitude);
-                    localStorage.setItem("longitude", ipLongitude);
-                    localStorage.setItem("country",   ipCountry);
-                    localStorage.setItem("area",      ipArea);
-                    localStorage.setItem("iso2",      ipISO2);
+      // NAME: If >=2 chars, go blue; else grey
+      if (nameInput.value.trim().length >= 2) {
+        nameInput.style.color = "blue";
+      } else {
+        nameInput.style.color = "grey";
+      }
 
-                    // Classify the 2-letter code
-                    storeClassifications(ipISO2);
-                }
-            })
-            .catch(error => {
-                console.error("Error fetching IP-based location:", error);
-            });
-    }
+      // Is any focus checkbox selected?
+      const isAnyFocusSelected = Array.from(focusCheckboxes).some(cb => cb.checked);
+      focusToggleBtn.classList.toggle("entered", isAnyFocusSelected);
 
-    // 3) Classify user country
-    function storeClassifications(iso2) {
-        let classification = "Unknown";
-        for (const [key, values] of Object.entries(classificationLookup)) {
-            if (values.includes(iso2)) {
-                classification = key;
-                break;
-            }
-        }
-        localStorage.setItem("classification", classification);
-    }
+      // Enable Accept if all fields & focus chosen
+      acceptButton.disabled = !(
+          nameInput.value.trim() &&
+          jobSelectElement.value &&
+          experienceSelect.value &&
+          isAnyFocusSelected &&
+          contactInput.value.trim()
+      );
+  }
 
-    // 4) Check form readiness
-    function checkSelections() {
-        jobSelectElement.style.color = jobSelectElement.value ? "blue" : "grey";
-        experienceSelect.style.color = experienceSelect.value ? "blue" : "grey";
+  // 5) Set up event listeners for inputs, focus & accept button
+  function initEventListeners() {
+      // Animate sky
+      skyImage.style.transform = "scale(1)";
+      skyImage.style.transition = "transform 4s ease-in-out, filter 4s ease-in-out";
 
-        // Is any focus checkbox selected?
-        const isAnyFocusSelected = Array.from(focusCheckboxes).some(cb => cb.checked);
-        focusToggleBtn.classList.toggle("entered", isAnyFocusSelected);
+      // NAME INPUT: strip invalid chars, then color
+      nameInput.addEventListener("input", (e) => {
+        // 1) Strip invalid chars
+        e.target.value = e.target.value.replace(/[^A-Za-z'\- ]/g, "");
 
-        // Enable Accept if all fields & focus chosen
-        acceptButton.disabled = !(
-            nameInput.value.trim() &&
-            jobSelectElement.value &&
-            experienceSelect.value &&
-            isAnyFocusSelected &&
-            contactInput.value.trim()
-        );
-    }
-
-    // 5) Set up event listeners for inputs, focus & accept button
-    function initEventListeners() {
-        // Animate sky
-        skyImage.style.transform = "scale(1)";
-        skyImage.style.transition = "transform 4s ease-in-out, filter 4s ease-in-out";
-
-        // Inputs
-        nameInput.addEventListener("input", () => {
-            nameInput.classList.toggle("entered", nameInput.value.trim() !== "");
-            checkSelections();
-        });
-        jobSelectElement.addEventListener("change", checkSelections);
-        experienceSelect.addEventListener("change", checkSelections);
-        contactInput.addEventListener("input", () => {
-            contactInput.classList.toggle("entered", contactInput.value.trim() !== "");
-            checkSelections();
-        });
-
-        // Focus dropdown
-        focusToggleBtn.addEventListener("click", () => {
-            focusDropdown.classList.toggle("hidden");
-            focusDropdown.classList.toggle("visible");
-        });
-        document.addEventListener("click", (event) => {
-            if (!focusDropdown.contains(event.target) && event.target !== focusToggleBtn) {
-                focusDropdown.classList.add("hidden");
-                focusDropdown.classList.remove("visible");
-            }
-        });
-        focusCheckboxes.forEach((checkbox) => {
-            checkbox.addEventListener("change", checkSelections);
-        });
-
-        // Accept button
-        acceptButton.addEventListener("click", handleAccept);
-    }
-
-    // 6) Handle Accept: store data & fade to black
-    function handleAccept() {
-        localStorage.setItem("name", nameInput.value);
-        localStorage.setItem("selectedJobRole", jobSelectElement.value);
-        localStorage.setItem("selectedExperience", experienceSelect.value);
-
-        // Focus array
-        const selectedFocusValues = Array.from(focusCheckboxes)
-            .filter(cb => cb.checked)
-            .map(cb => cb.value);
-        localStorage.setItem("selectedFocus", JSON.stringify(selectedFocusValues));
-
-        localStorage.setItem("contactInfo", contactInput.value);
-
-        // Retrieve from localStorage
-        const name          = localStorage.getItem("name")                || "Anonymous";
-        const role          = localStorage.getItem("selectedJobRole")     || "Not set";
-        const experience    = localStorage.getItem("selectedExperience")  || "Not set";
-        const focusRaw      = localStorage.getItem("selectedFocus");
-        const focus         = focusRaw ? JSON.parse(focusRaw) : [];
-
-        const latitude      = localStorage.getItem("latitude")            || "Not set";
-        const longitude     = localStorage.getItem("longitude")           || "Not set";
-        const country       = localStorage.getItem("country")             || "Not set";
-        const iso2          = localStorage.getItem("iso2")                || "Not set";
-        const classification= localStorage.getItem("classification")      || "Unknown";
-
-        // Could do role classification if desired
-        const roleClassification = "";
-        const area         = localStorage.getItem("area")                 || "Not set";
-        const contactInfo  = localStorage.getItem("contactInfo")          || "Not set";
-        const version      = "1.0";
-        const dateTime     = new Date().toLocaleString("en-GB", { timeZone: "UTC" });
-
-        const userInfo = {
-            name,
-            role,
-            experience,
-            focus,
-            latitude,
-            longitude,
-            country,
-            iso2,
-            classification,
-            roleClassification,
-            area,
-            contactInfo,
-            version,
-            dateTime
-        };
-
-        // Fade to black
-        blackScreen.style.visibility = "visible";
-        blackScreen.style.opacity = 1;
-        setTimeout(() => {
-            skyImage.style.transform = "scale(1.3)";
-            skyImage.style.filter = "blur(0px)";
-        }, 200);
-
-        // Redirect after fade
-        setTimeout(() => {
-            blackScreen.style.opacity = 0;
-            setTimeout(() => {
-                window.location.href = "home.html";
-            }, 250);
-        }, 6000);
-    }
-
-    // 7) Main initialisation
-    function main() {
-        // If splash not shown before, show it
-        if (!sessionStorage.getItem("splashShown")) {
-            sessionStorage.setItem("splashShown", "true");
-            showSplashScreen();
-        } else {
-            window.location.href = "home.html";
+        // 2) Limit to 20 characters
+        if (e.target.value.length > 20) {
+            e.target.value = e.target.value.substring(0, 20);
         }
 
-        // Start IP-based location fetch
-        fetchIPBasedLocation();
+        // 3) Check everything again
+        checkSelections();
+        });
 
-        // Set up event listeners
-        initEventListeners();
-    }
 
-    // 8) Run main when DOM is ready
-    document.addEventListener("DOMContentLoaded", main);
-    </script>
+      // Other inputs
+      jobSelectElement.addEventListener("change", checkSelections);
+      experienceSelect.addEventListener("change", checkSelections);
+      contactInput.addEventListener("input", () => {
+          contactInput.classList.toggle("entered", contactInput.value.trim() !== "");
+          checkSelections();
+      });
+
+      // Focus dropdown
+      focusToggleBtn.addEventListener("click", () => {
+          focusDropdown.classList.toggle("hidden");
+          focusDropdown.classList.toggle("visible");
+      });
+      document.addEventListener("click", (event) => {
+          if (!focusDropdown.contains(event.target) && event.target !== focusToggleBtn) {
+              focusDropdown.classList.add("hidden");
+              focusDropdown.classList.remove("visible");
+          }
+      });
+      focusCheckboxes.forEach((checkbox) => {
+          checkbox.addEventListener("change", checkSelections);
+      });
+
+      // Accept button
+      acceptButton.addEventListener("click", handleAccept);
+  }
+
+  // 6) Handle Accept: final name check & fade to black
+  function handleAccept() {
+      const rawName = nameInput.value.trim();
+
+      // Final check: 2-20 chars, only letters, spaces, apostrophes, hyphens
+      const nameIsValid = /^[A-Za-z'\- ]{2,20}$/.test(rawName);
+      if (!nameIsValid) {
+          alert("Please enter a valid name (2-20 letters, spaces, apostrophes or hyphens).");
+          return; // Stop here
+      }
+
+      // Store all data
+      localStorage.setItem("name", rawName);
+      localStorage.setItem("selectedJobRole", jobSelectElement.value);
+      localStorage.setItem("selectedExperience", experienceSelect.value);
+
+      // Focus array
+      const selectedFocusValues = Array.from(focusCheckboxes)
+          .filter(cb => cb.checked)
+          .map(cb => cb.value);
+      localStorage.setItem("selectedFocus", JSON.stringify(selectedFocusValues));
+
+      localStorage.setItem("contactInfo", contactInput.value);
+
+      // Retrieve & build user info
+      const name          = localStorage.getItem("name")                || "Anonymous";
+      const role          = localStorage.getItem("selectedJobRole")     || "Not set";
+      const experience    = localStorage.getItem("selectedExperience")  || "Not set";
+      const focusRaw      = localStorage.getItem("selectedFocus");
+      const focus         = focusRaw ? JSON.parse(focusRaw) : [];
+
+      const latitude      = localStorage.getItem("latitude")            || "Not set";
+      const longitude     = localStorage.getItem("longitude")           || "Not set";
+      const country       = localStorage.getItem("country")             || "Not set";
+      const iso2          = localStorage.getItem("iso2")                || "Not set";
+      const classification= localStorage.getItem("classification")      || "Unknown";
+      
+      const roleClassification = "";
+      const area         = localStorage.getItem("area")                 || "Not set";
+      const contactInfo  = localStorage.getItem("contactInfo")          || "Not set";
+      const version      = "1.0";
+      const dateTime     = new Date().toLocaleString("en-GB", { timeZone: "UTC" });
+
+      const userInfo = {
+          name,
+          role,
+          experience,
+          focus,
+          latitude,
+          longitude,
+          country,
+          iso2,
+          classification,
+          roleClassification,
+          area,
+          contactInfo,
+          version,
+          dateTime
+      };
+
+      // Fade to black
+      blackScreen.style.visibility = "visible";
+      blackScreen.style.opacity = 1;
+      setTimeout(() => {
+          skyImage.style.transform = "scale(1.3)";
+          skyImage.style.filter = "blur(0px)";
+      }, 200);
+
+      // Redirect after fade
+      setTimeout(() => {
+          blackScreen.style.opacity = 0;
+          setTimeout(() => {
+              window.location.href = "home.html";
+          }, 250);
+      }, 6000);
+  }
+
+  // 7) Main initialisation
+  function main() {
+      // If splash not shown before, show it
+      if (!sessionStorage.getItem("splashShown")) {
+          sessionStorage.setItem("splashShown", "true");
+          showSplashScreen();
+      } else {
+          // If user revisits, skip splash
+          window.location.href = "home.html";
+      }
+
+      // Start IP-based location fetch
+      fetchIPBasedLocation();
+
+      // Set up event listeners
+      initEventListeners();
+  }
+
+  // 8) Run main when DOM is ready
+  document.addEventListener("DOMContentLoaded", main);
+  </script>
 </body>
 </html>
