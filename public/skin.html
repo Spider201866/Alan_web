@@ -1,61 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Eye Exam</title>
-    <style>
-      body {
-        font-family: "Calibri Light", Arial, sans-serif;
-        background-color: white; /* White background for the page */
-        color: black; /* Black text color for the page */
-        margin: 0;
-        padding: 0;
-      }
-      #appBar {
-        display: flex; /* Using flexbox to align items within the app bar */
-        align-items: center; /* Center items vertically within the app bar */
-        background-color: black; /* Black background for the app bar */
-        color: white; /* White text color for the app bar */
-        padding: 10px 20px; /* Adjusted padding for consistent height */
-      }
-      #pageTitle {
-        text-align: center;
-        margin: 0 auto; /* Center title and auto margins to help center it within flex container */
-        font-size: 24px; /* Font size for page title */
-      }
-      #backArrow {
-        color: white; /* White back arrow */
-        font-size: 32px; /* Size of back arrow */
-        font-weight: bold; /* Makes the arrow thicker */
-        position: relative; /* Adjusted to work within flexbox layout */
-        cursor: pointer;
-        padding-right: 20px; /* Right padding for visual balance */
-      }
-      img {
-        display: block;
-        height: 80vh; /* Sets the image height to fill the screen vertically */
-        width: auto; /* Maintains the aspect ratio */
-        margin: auto; /* Centers the image horizontally */
-        max-width: none; /* Overrules any max-width settings */
-      }
-    </style>
-  </head>
-  <body>
-    <div id="appBar">
-      <div id="backArrow" onclick="history.back()">&#x2190;</div>
-      <!-- Back arrow to navigate to the previous page -->
-      <h1 id="pageTitle" style="text-align: center">How to examine the skin</h1>
-      <!-- Page title -->
-    </div>
 
-    <div>
-      <img
-        src="howtouseeye.png"
-        alt="How to Use Skin Examination Equipment"
-        style="touch-action: manipulation"
-      />
-      <!-- Image with pinch and zoom enabled -->
-    </div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eye Exam</title>
+
+  <!-- 
+    **********************************************
+    *                 PAGE STYLES               *
+    **********************************************
+    - White background, black text
+    - A top app bar with back arrow and centered title
+    - Image filling 80% of the viewport height
+  -->
+  <style>
+    /* Global page layout and typography */
+    body {
+      font-family: "Calibri Light", Arial, sans-serif;
+      background-color: white;  /* White background for the page */
+      color: black;             /* Black text color for the page */
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Top bar (app bar) styling */
+    #appBar {
+      display: flex;            /* Using flexbox to align items */
+      align-items: center;      /* Center items vertically */
+      background-color: black;  /* Black background for the app bar */
+      color: white;             /* White text color for the app bar */
+      padding: 10px 20px;       /* Consistent padding */
+    }
+
+    /* Centered page title in the app bar */
+    #pageTitle {
+      text-align: center;
+      margin: 0 auto;          /* Centers title within flex container */
+      font-size: 24px;         /* Font size for the page title */
+    }
+
+    /* Back arrow on the left side */
+    #backArrow {
+      color: white;            /* White back arrow */
+      font-size: 32px;         /* Size of the arrow */
+      font-weight: bold;       /* Bold arrow */
+      position: relative;      /* Works within flexbox layout */
+      cursor: pointer;
+      padding-right: 20px;     /* Visual spacing on the right */
+    }
+
+    /* Main image styling */
+    img {
+      display: block;
+      height: 80vh;           /* Fills 80% of the viewport height */
+      width: auto;            /* Maintains aspect ratio */
+      margin: auto;           /* Centers the image horizontally */
+      max-width: none;        /* Overrules any default max-width settings */
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 
+    **********************************************
+    *              TOP APP BAR                  *
+    **********************************************
+    - Includes a back arrow and a centered title
+  -->
+  <div id="appBar">
+    <div id="backArrow" onclick="history.back()">&#x2190;</div>
+    <!-- Back arrow to navigate to the previous page -->
+
+    <h1 id="pageTitle" style="text-align: center;">How to examine the skin</h1>
+    <!-- Page title -->
+  </div>
+
+  <!-- 
+    **********************************************
+    *            MAIN CONTENT AREA             *
+    **********************************************
+    - Displays an instructional image
+  -->
+  <div>
+    <img 
+      src="howtouseeye.png"
+      alt="How to Use Skin Examination Equipment"
+      style="touch-action: manipulation;"
+    />
+    <!-- Image with pinch and zoom enabled -->
+  </div>
+
+</body>
 </html>

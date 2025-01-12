@@ -1,4 +1,13 @@
-// imagesWithText.js
+/**
+ * imagesWithText.js
+ * ---------------------------------------------------------
+ * Exports an array of objects, each containing:
+ *   - imageName: the filename of the image
+ *   - text: a short description or key information
+ *   - condition: a more concise condition name
+ * ---------------------------------------------------------
+ */
+
 export const imagesWithText = [
   {
     imageName: 'allergic_conjunctivitis.jpg',
@@ -14,6 +23,6 @@ export const imagesWithText = [
     imageName: 'pingueculae.jpg',
     text: 'Pingueculae are benign growths on the white part of the eye, often related to sun exposure.',
     condition: 'Pingueculae'
-  },
+  }
   // Add more objects as needed
 ];

@@ -1,4 +1,23 @@
+/**
+ * translations.js
+ * ------------------------------------------------------------
+ * Provides an object containing translations for multiple 
+ * languages (e.g., English, French, Spanish, etc.). 
+ * Each language code (e.g., 'en', 'fr') maps to an object 
+ * holding key-value pairs of translatable strings.
+ * 
+ * Usage:
+ *   1) Import this module wherever needed:
+ *        import { translations } from './translations.js';
+ *   2) Access a language object by its code, 
+ *      e.g., translations.en.eyesEars => "Eyes, Ears, Skin"
+ * 
+ * Note: Each language object contains the same keys, 
+ * ensuring consistent usage across multiple locales.
+ * ------------------------------------------------------------
+ */
 export const translations = {
+  // English
   en: {
     eyesEars: "Eyes, Ears, Skin",
     goodHistory: "Good History",
@@ -25,6 +44,7 @@ export const translations = {
     earCarePractitioner: "Ear care practitioner",
     password: "Password (4-digit number)",
   },
+
   // Français
   fr: {
     eyesEars: "Yeux & Oreilles",
@@ -53,6 +73,7 @@ export const translations = {
     earCarePractitioner: "Praticien soins de l'oreille",
     password: "Mot de passe (4 chiffres)",
   },
+
   // Español
   es: {
     eyesEars: "Ojos & Oídos",
@@ -80,6 +101,7 @@ export const translations = {
     earCarePractitioner: "Practicante de cuidado del oído",
     password: "Contraseña (4 dígitos)",
   },
+
   // Português
   pt: {
     eyesEars: "Olhos & Ouvidos",
@@ -100,13 +122,14 @@ export const translations = {
     hospitalDoctor: "Médico hospitalar",
     ophthalmologist: "Oftalmologista",
     optometrist: "Optometrista",
-    orthoptist: "Ortoptista",
+    orthoptist: "Orthoptist",
     entSpecialist: "Especialista em Otorrinolaringologia",
     pharmacist: "Farmacêutico",
     audiologist: "Audiologista",
     earCarePractitioner: "Praticante de cuidados auditivos",
     password: "Senha (4 dígitos)",
   },
+
   // Arabic
   ar: {
     eyesEars: "العيون والأذنين",

@@ -1,66 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Web Links</title>
-<style>
-  body {
-    font-family: "Calibri Light", Arial, sans-serif;
-    background-color: white; /* White background for the page */
-    color: black; /* Black text color for the page */
-    margin: 0;
-    padding: 0;
-  }
-  #appBar {
-    display: flex; /* Using flexbox to align items within the app bar */
-    align-items: center; /* Center items vertically within the app bar */
-    background-color: black; /* Black background for the app bar */
-    color: white; /* White text color for the app bar */
-    padding: 10px 20px; /* Adjusted padding for consistent height */
-  }
-  #pageTitle {
-    text-align: center;
-    margin: 0 auto; /* Center title and auto margins to help center it within flex container */
-    font-size: 24px; /* Font size for page title */
-  }
-  #backArrow {
-    color: white; /* White back arrow */
-    font-size: 32px; /* Size of back arrow */
-    font-weight: bold; /* Makes the arrow thicker */
-    position: relative; /* Adjusted to work within flexbox layout */
-    cursor: pointer;
-    padding-right: 20px; /* Right padding for visual balance */
-  }
-  #links {
-    padding: 20px;
-    display: block; /* Display links */
-  }
-  #links a {
-    display: block;
-    margin-bottom: 10px;
-    color: #0037ff; /* Faint blue color for links */
-    text-decoration: none; /* No underline */
-  }
-  #linkIntro {
-    text-align: center;
-    margin-top: 20px; /* Top margin for spacing */
-    margin-bottom: 20px; /* Bottom margin for spacing */
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Links</title>
+
+  <!-- 
+    **********************************************
+    *                 PAGE STYLES               *
+    **********************************************
+    - Black top app bar with white text & back arrow
+    - Links section with faint blue links
+    - Intro paragraph centered at the top
+  -->
+  <style>
+    /* Global page layout and typography */
+    body {
+      font-family: "Calibri Light", Arial, sans-serif;
+      background-color: white;  /* White background for the page */
+      color: black;             /* Black text color for the page */
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Top bar (app bar) styling */
+    #appBar {
+      display: flex;            /* Using flexbox to align items */
+      align-items: center;      /* Center items vertically */
+      background-color: black;  /* Black background for the app bar */
+      color: white;             /* White text color for the app bar */
+      padding: 10px 20px;       /* Consistent padding for height */
+    }
+
+    /* Centered page title in the app bar */
+    #pageTitle {
+      text-align: center;
+      margin: 0 auto;          /* Centers title within the flex container */
+      font-size: 24px;         /* Font size for page title */
+    }
+
+    /* Back arrow on the left side */
+    #backArrow {
+      color: white;            /* White back arrow */
+      font-size: 32px;         /* Size of the back arrow */
+      font-weight: bold;       /* Makes the arrow thicker */
+      position: relative;      /* Works within flex layout */
+      cursor: pointer;
+      padding-right: 20px;     /* Visual spacing on the right */
+    }
+
+    /* Main links container */
+    #links {
+      padding: 20px;
+      display: block;          /* Display links in a block layout */
+    }
+    #links a {
+      display: block;
+      margin-bottom: 10px;
+      color: #0037ff;         /* Faint blue color for links */
+      text-decoration: none;   /* Remove underline */
+    }
+
+    /* Intro text above the links */
+    #linkIntro {
+      text-align: center;
+      margin-top: 20px;        /* Spacing above intro text */
+      margin-bottom: 20px;     /* Spacing below intro text */
+    }
+  </style>
 </head>
+
 <body>
 
-<div id="appBar">
+  <!-- 
+    **********************************************
+    *              TOP APP BAR                  *
+    **********************************************
+    - Contains the back arrow & page title
+  -->
+  <div id="appBar">
     <div id="backArrow" onclick="history.back()">&#x2190;</div> <!-- Back arrow -->
     <h1 id="pageTitle">Web Links</h1> <!-- Page Title -->
-</div>
+  </div>
 
-<div id="linkIntro">
+  <!-- 
+    **********************************************
+    *              LINKS INTRO                  *
+    **********************************************
+    - Brief introductory message about the links
+  -->
+  <div id="linkIntro">
     <p>Here are some interesting links...</p>
-</div>
+  </div>
 
-<div id="links">
+  <!-- 
+    **********************************************
+    *               LINKS SECTION               *
+    **********************************************
+    - Provides a series of links
+  -->
+  <div id="links">
     <a href="https://www.youtube.com/watch?v=OgDjOazTt1o">1) Neurology | David Nicholl, Birmingham, UK</a>
     <a href="https://www.youtube.com/watch?v=QsD5T4m7ynQ&feature=youtu.be">2) Cat / Paediatric Eye Examination</a>
     <a href="https://www.youtube.com/watch?v=y04qoQE43T8">3) Arclight in Rwanda | German Rotary Club</a>
@@ -68,7 +108,7 @@
     <a href="https://www.youtube.com/watch?v=eYgDzum3z4c">5) Arclight In Africa | The Fred Hollows Foundation, Australia</a>
     <a href="https://youtu.be/RDpTy8X_pVI">6) Arclight in 60 Seconds | University of St Andrews</a>
     <a href="https://www.afro.who.int/sites/default/files/2018-06/WEB-2835-OMS-Afro-PrimaryEyeCaretrainingmanual-20180406.pdf">7) WHO</a>
-</div>
+  </div>
 
 </body>
 </html>
