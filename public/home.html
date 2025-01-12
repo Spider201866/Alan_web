@@ -467,6 +467,21 @@
         }
     }
 
+    // **Reverse-Geocoding** to get area from lat/long (BigDataCloud example)
+    async function fetchAreaFromLatLong(lat, lng) {
+        try {
+            const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`;
+            const resp = await fetch(url);
+            const data = await resp.json();
+            // city, locality, principalSubdivision, etc.
+            const cityName = data.city || data.locality || data.principalSubdivision || 'Unknown';
+            return cityName;
+        } catch (err) {
+            console.warn('Area fetch failed:', err);
+            return 'Unknown';
+        }
+    }
+
     // Geolocation button
     function setupGeolocationButton() {
         const geolocationButton = document.getElementById("geolocation-button");
@@ -480,21 +495,25 @@
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
-                    (position) => {
+                    async (position) => {
                         const { latitude, longitude } = position.coords;
 
                         // Overwrite lat/long
                         localStorage.setItem('latitude', latitude);
                         localStorage.setItem('longitude', longitude);
 
-                        // Show updated location
+                        // Show updated location quickly
                         locationInfo.innerText = `Updated location: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
                         locationInfo.style.display = "block";
 
-                        // Rebuild popup so lat/long are fresh
+                        // 1) Reverse-geocode to get "area"
+                        const areaName = await fetchAreaFromLatLong(latitude, longitude);
+                        localStorage.setItem('area', areaName);
+
+                        // 2) Rebuild popup so lat/long + area are fresh
                         popupContent.innerHTML = buildPopupContent();
 
-                        // Now flash lat/long, area, country in blue
+                        // 3) Now flash lat/long, area, country in blue
                         flashBlueOnUpdate();
 
                         // Revert button to grey after 2s
