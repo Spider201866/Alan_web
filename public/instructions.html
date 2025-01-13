@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <!-- Ensures the page scales properly on mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Instructions</title>
 
   <style>
@@ -21,17 +19,17 @@
 
     /* Top bar (app bar) styling */
     #appBar {
-      display: flex;
-      align-items: center;
+      display: flex;              /* Use flex for horizontal alignment */
+      align-items: center;        /* Vertically centre items */
       background-color: black;
       color: white;
-      padding: 10px 20px;
+      padding: 10px 20px;         /* Adjust spacing around items */
     }
 
-    /* Page title centered in the app bar */
+    /* Page title centred in the app bar */
     #pageTitle {
       text-align: center;
-      margin: 0 auto;
+      margin: 0 auto;             /* Forces the title to remain in the centre */
       font-size: 24px;
     }
 
@@ -40,18 +38,18 @@
       color: white;
       font-size: 32px;
       font-weight: bold;
-      position: relative;
-      cursor: pointer;
-      padding-right: 20px;
+      position: relative;         /* Make it 'relative' instead of absolute */
+      cursor: pointer;            /* Change cursor to pointer on hover */
+      padding-right: 20px;        /* Space between arrow and title */
     }
 
-    /* Main content area with background color that changes */
+    /* Main content area with background colour that changes (default faint blue) */
     #content {
       padding: 5px 25px 25px 25px;
-      background-color: #dfe7ff; /* Default faint blue background */
+      background-color: #dfe7ff; /* Default background */
     }
 
-    /* Text styling classes */
+    /* General text styling classes */
     .infoText,
     .redText,
     .italicText,
@@ -76,20 +74,18 @@
       text-align: justify;
     }
 
-    /* Additional examples container */
+    /* Container for example texts at the bottom of the page */
     #additionalExamples p {
       margin-bottom: 10px;
       font-size: 13px;
       color: #333;
     }
-
     #additionalExamples strong {
       display: block;
       font-weight: bold;
       margin-bottom: -10px;
       line-height: 1.2;
     }
-
     #additionalExamples span {
       display: block;
       margin-left: 10px;
@@ -97,24 +93,22 @@
       line-height: 1.2;
     }
 
-    /* Info text & list items */
+    /* Indentation for the bullet list */
     .infoText {
       padding-left: 60px;
       color: black;
     }
-
     .infoText li {
       line-height: 1.2;
       margin-bottom: 2px;
     }
-
     .listText {
       display: block;
       margin-left: 10px;
       color: red;
     }
 
-    /* Horizontal rule styling */
+    /* Horizontal divider (hr) styling */
     hr {
       border: none;
       height: 2px;
@@ -123,30 +117,30 @@
       margin-bottom: 20px;
     }
 
-    /* Switch container for the radio buttons */
+    /* Container holding the radio switch (eye/ear/skin) */
     #switchContainer {
-      position: absolute;
-      top: 160px;
-      right: 40px;
+      position: absolute;         /* Positioned absolutely to float over content */
+      top: 160px;                 /* Distance from top of page */
+      right: 40px;                /* Distance from right edge (adjust for layout) */
       text-align: center;
       padding: 10px;
       border-radius: 15px;
     }
 
-    /* Switch styling (vertical stack) */
+    /* Switch styling with three radio buttons stacked vertically */
     .switch {
       position: relative;
       display: inline-block;
       width: 60px;
-      height: 180px;
+      height: 180px;             /* Enough height to stack 3 labels */
     }
 
-    /* Hide the radio inputs */
+    /* Hide the radio inputs themselves */
     .switch input {
       display: none;
     }
 
-    /* Labels that act as clickable switch buttons */
+    /* Labels acting as clickable circular buttons */
     .switch-label {
       display: block;
       text-align: center;
@@ -160,32 +154,48 @@
       transition: background-color 0.3s, box-shadow 0.3s;
       border-radius: 30px;
       border: 1px solid black;
-      margin-bottom: 5px;
+      margin-bottom: 5px;         /* Spacing between each circular label */
     }
 
-    /* Hover effect on switch labels */
+    /* Hover effect on labels */
     .switch-label:hover {
       background-color: #e0e0e0;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     }
 
-    /* Active label styling (when radio is checked) */
+    /* Style applied to label when its corresponding radio input is checked */
     .switch input:checked + .switch-label {
       background-color: black;
       color: white;
       border-color: black;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     }
+
+    /* 
+      Media query for smaller screens
+      Reduces the 'right' spacing so the radio buttons
+      are not too far off-screen on mobile 
+    */
+    @media (max-width: 600px) {
+      #switchContainer {
+        right: 10px;       /* Pulls the switch closer to the left on small devices */
+        top: 140px;        /* Adjust as needed if you want it a bit lower or higher */
+      }
+    }
   </style>
 </head>
-
 <body>
+  <!-- Top App Bar -->
   <div id="appBar">
+    <!-- Back arrow to go to previous page -->
     <div id="backArrow" onclick="history.back()">&#x2190;</div>
+    <!-- Page Title in the centre -->
     <h1 id="pageTitle">Instructions</h1>
   </div>
 
+  <!-- Main content that changes colour and content based on user selection -->
   <div id="content">
+    <!-- Container for Eye/Ear/Skin radio switch -->
     <div id="switchContainer">
       <div class="switch">
         <input 
@@ -221,7 +231,7 @@
     <p style="margin-bottom: 20px; font-size: 15px; text-align: justify;">
       Alan is an AI assistant for students and those who only occasionally see eye ear or skin cases
       Write or speak clearly and avoid identifying names or details Look fully around head/face/body part
-      and examine both eyes/ears Good luck
+      and examine both eyes/ears. Good luck!
     </p>
 
     <p class="boldText">Tell Alan about your patient's:</p>
@@ -232,6 +242,7 @@
       <li><span class="listText">age sex medication</span></li>
     </ul>
 
+    <!-- Eye/Ear/Skin instructions that update based on the chosen radio button -->
     <p id="useArclight" style="margin-top: 20px;">
       <strong>Use Arclight:</strong> 
       <strong><em>front, fundal reflex, back of eye.</em></strong>
@@ -239,6 +250,7 @@
 
     <hr>
 
+    <!-- Container with usage examples -->
     <div class="justify" id="additionalExamples">
       <p>
         <strong>Too little</strong><br>
@@ -262,18 +274,24 @@
         </span>
       </p>
 
-      <p id="additionalQuery" style="padding-top: 15px; color: blue; font-size: 15px;">
+      <p id="additionalQuery" style="padding-top: 5px; color: blue; font-size: 15px;">
         Alan also answers eye teaching/learning queries: What is Iritis? How do I see the retina?
       </p>
     </div>
 
+    <!-- 
+      JavaScript to toggle the background colour and text
+      depending on the radio button selection 
+    -->
     <script>
       function toggleContent() {
         var option = document.querySelector('input[name="option"]:checked').value;
 
+        /* If user selects Eye */
         if (option === 'eye') {
           document.getElementById('content').style.backgroundColor = '#dfe7ff';
-          document.getElementById('useArclight').innerHTML = '<strong>Use Arclight:</strong> <strong><em>front, fundal reflex, back of eye.</em></strong>';
+          document.getElementById('useArclight').innerHTML =
+            '<strong>Use Arclight:</strong> <strong><em>front, fundal reflex, back of eye.</em></strong>';
           document.getElementById('dynamicContent').textContent = 'vision & pupils';
           document.getElementById('tooLittle').textContent = 'man red eye what?';
           document.getElementById('justRight').textContent =
@@ -283,9 +301,11 @@
           document.getElementById('additionalQuery').innerHTML =
             '<span style="color: blue; font-size: 15px; margin: -5px">Alan also answers eye teaching/learning queries: What is Iritis? How do I see the retina?</span>';
 
+        /* If user selects Ear */
         } else if (option === 'ear') {
           document.getElementById('content').style.backgroundColor = '#f2fff2';
-          document.getElementById('useArclight').innerHTML = '<strong>Use Arclight:</strong> <strong><em>all around ear, canal, drum.</em></strong>';
+          document.getElementById('useArclight').innerHTML =
+            '<strong>Use Arclight:</strong> <strong><em>all around ear, canal, drum.</em></strong>';
           document.getElementById('dynamicContent').textContent = 'hearing';
           document.getElementById('tooLittle').textContent = 'man red ear what?';
           document.getElementById('justRight').textContent =
@@ -295,9 +315,11 @@
           document.getElementById('additionalQuery').innerHTML =
             '<span style="color: green; font-size: 15px; margin: -5px">Alan also answers ear teaching/learning queries: What is Otitis Media? How do I clean an ear?</span>';
 
+        /* If user selects Skin */
         } else if (option === 'skin') {
           document.getElementById('content').style.backgroundColor = '#fddfff';
-          document.getElementById('useArclight').innerHTML = '<strong>Use Arclight:</strong> <strong><em>UV light, dermoscopy.</em></strong>';
+          document.getElementById('useArclight').innerHTML =
+            '<strong>Use Arclight:</strong> <strong><em>UV light, dermoscopy.</em></strong>';
           document.getElementById('dynamicContent').textContent = 'skin ABCDE & PDSBV';
           document.getElementById('tooLittle').textContent = 'man red skin what?';
           document.getElementById('justRight').textContent =
@@ -311,5 +333,4 @@
     </script>
   </div>
 </body>
-
 </html>
