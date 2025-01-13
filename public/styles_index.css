@@ -1,3 +1,6 @@
+/* ==============================
+   BODY / HTML BASE STYLES
+============================== */
 
 /* Basic page styling */
 body,
@@ -5,14 +8,18 @@ html {
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow: hidden; /* Prevent scrollbars */
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Centre content horizontally */
+    align-items: center;     /* Centre content vertically */
     font-family: "Calibri Light", Arial, sans-serif;
     background-color: #f0f0f0;
     box-sizing: border-box;
 }
+
+/* ==============================
+   BLACK SCREEN OVERLAY 
+============================== */
 
 /* Black screen overlay for the zoom-out transition */
 .black-screen {
@@ -41,6 +48,10 @@ html {
     transition: transform 4s ease-in-out, filter 4s ease-in-out;
 }
 
+/* ==============================
+   HIDE / SHOW SCREEN UTILITIES
+============================== */
+
 /* For hiding and showing screens */
 .hidden {
     visibility: hidden;
@@ -53,20 +64,28 @@ html {
     transition: opacity 0.5s linear;
 }
 
-/* Splash screen animations */
+/* ==============================
+   SPLASH SCREEN ANIMATIONS
+============================== */
+
+/* Smooth transition for images and text */
 .splash-screen img,
 .splash-screen p {
     transition: transform 3s ease-in-out;
     margin: 20px 0;
 }
+
+/* Splash screen image specifics */
 .splash-screen img {
     width: 30vw;
     max-width: 150px;
     height: auto;
     margin-bottom: 60px;
     transform-origin: center;
-    -webkit-transform-origin: center;
+    -webkit-transform-origin: center; /* For older browsers */
 }
+
+/* Zoom keyframes */
 @keyframes zoomEffect {
     from {
         transform: scale(0.8);
@@ -77,11 +96,17 @@ html {
         -webkit-transform: scale(1);
     }
 }
+
+/* When splash screen is visible, apply zoom animation */
 .splash-screen.visible img {
     animation: zoomEffect 3s ease-in-out forwards;
 }
 
-/* Container screens */
+/* ==============================
+   CONTAINER SCREENS
+============================== */
+
+/* Common container for splash and instruction screens */
 .splash-screen,
 .instruction-screen {
     position: absolute;
@@ -95,11 +120,15 @@ html {
     align-items: center;
     text-align: center;
 }
+
+/* Logo styling */
 #logo2 {
     width: 50vw;
     max-width: 300px;
     margin-bottom: 60px;
 }
+
+/* Splash screen paragraph text */
 .splash-screen p {
     font-size: calc(12px + 1vmin);
     font-weight: bold;
@@ -107,6 +136,11 @@ html {
     margin-top: 60px;
 }
 
+/* ==============================
+   INSTRUCTION SCREEN
+============================== */
+
+/* White background container with scroll if needed */
 .instruction-screen {
     padding: 40px;
     display: flex;
@@ -126,7 +160,11 @@ html {
     margin-bottom: 20px;
 }
 
-/* The blue buttons (Accept, or if you want others to match it) */
+/* ==============================
+   BUTTON STYLING
+============================== */
+
+/* The blue buttons (Accept etc.) */
 button {
     padding: 10px 20px;
     font-size: 16px;
@@ -136,9 +174,15 @@ button {
     border-radius: 15px;
     cursor: pointer;
 }
+
+/* Disabled button state */
 button:disabled {
     background-color: #ccc;
 }
+
+/* ==============================
+   INPUTS / SELECTS / DROPDOWNS
+============================== */
 
 /* White background inputs & dropdowns (Role, Experience, Geolocation, Name, Contact) */
 select,
@@ -173,12 +217,13 @@ select {
 .geo-button.clicked {
     color: blue;
 }
+/* Turn text blue after name and contact input are entered */
 .name-input.entered,
 .contact-input.entered {
     color: blue;
 }
 
-/* Updated Focus Button with Centred Text and Dropdown Arrow */
+/* Updated Focus Button with centred text and dropdown arrow */
 .focus-button {
     padding: 4px 20px;
     font-size: 14px;
@@ -207,15 +252,17 @@ select {
     color: blue;
 }
 
+/* ==============================
+   FOCUS DROPDOWN CHECKBOXES
+============================== */
+
 /* Absolutely positioned dropdown for checkboxes so the page does not jump */
 .focus-container {
     position: relative;
 }
-
 .focus-dropdown.hidden {
     display: none;
 }
-
 .focus-dropdown.visible {
     display: block;
     position: absolute;
@@ -225,9 +272,10 @@ select {
     padding: 10px;
     z-index: 999;
     width: 230px;
-    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    box-sizing: border-box; /* Ensure padding does not affect width */
 }
 
+/* Style each checkbox item */
 .focus-dropdown label {
     display: flex;
     align-items: center; /* Vertically centre checkbox and label text */
@@ -237,7 +285,6 @@ select {
     cursor: pointer;
     color: grey;
 }
-
 .focus-dropdown input[type="checkbox"] {
     margin-right: 10px; /* Space between checkbox and label */
     width: 14px; /* Adjust width for smaller size */

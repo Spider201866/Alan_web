@@ -1,3 +1,8 @@
+/* ============================== 
+   GLOBAL RESETS / BASE STYLES
+============================== */
+
+/* Resets margin/padding on body/html and sets up flex layout */
 body,
 html {
   margin: 0;
@@ -7,14 +12,26 @@ html {
   flex-direction: column;
   font-family: "Calibri Light", Arial, sans-serif;
 }
+
+/* Helper class to hide elements */
 .hidden {
   display: none;
 }
+
+/* ==============================
+   MAIN CONTENT WRAPPER
+============================== */
+
+/* Main content wrapper for page layout */
 #mainContent {
   position: relative;
-  padding: 0px 10px 0px 10px; /* Increase right padding to avoid overlap */
+  padding: 0px 10px 0px 10px; /* Increase right/left padding to avoid overlap */
   font-size: 14px;
 }
+
+/* ==============================
+   KEYFRAMES
+============================== */
 
 @keyframes smoothFlip360 {
   from {
@@ -25,11 +42,20 @@ html {
   }
 }
 
+/* ==============================
+   CLASSES / ANIMATIONS
+============================== */
+
+/* Class to animate a horizontal flip */
 .flip-horizontally {
   animation: smoothFlip360 1.5s ease-out forwards;
 }
 
+/* ==============================
+   HEADER & TITLE STYLES
+============================== */
 
+/* Header text colour variants */
 .chatbot-header .red {
   color: #F44336FF;
 }
@@ -44,18 +70,21 @@ html {
 .divider {
   color: grey;
 }
+
+/* Duplicate grey-text (also below) */
 .grey-text {
   color: grey;
 }
+
+/* Tooltip pointer styling */
 .tooltip-item {
   cursor: pointer;
 }
 
-
-/* Header Styling */
+/* Header container, centering content horizontally and vertically */
 .chatbot-header {
   display: flex;
-  justify-content: center; /* Initially centers everything */
+  justify-content: center; /* Initially centres everything */
   align-items: center;
   padding: 0 30px;
   background-color: black;
@@ -63,33 +92,36 @@ html {
   position: relative; /* Allows absolute positioning within */
 }
 
-/* Title and Subtitle Styling */
+/* Title/subtitle wrapper for centring text */
 .title-and-subtitle {
-  text-align: center; /* Ensures text is centered */
+  text-align: center;
 }
 
+/* ==============================
+   LANGUAGE SELECTOR
+============================== */
 
-
+/* Positions the language selector at bottom-right, fixed */
 .language-selector {
-  position: fixed; /* Change from absolute to fixed */
+  position: fixed;
   right: 23px;
-  bottom: 20px; /* Position it 20px from the bottom */
+  bottom: 20px;
   display: flex;
   align-items: center;
 }
 
-
+/* Custom dropdown appearance */
 .language-dropdown {
   appearance: none;
-  background-color: rgba(255, 255, 255, 0); /* Make the text color transparent */
-  color: rgba(255, 255, 255, 0); /* Make the text color transparent */
+  background-color: rgba(255, 255, 255, 0); /* Make the text colour transparent */
+  color: rgba(255, 255, 255, 0); /* Make the text colour transparent */
   font-size: 12px;
   border: 1px solid #ffffff;
   border-radius: 10px;
   padding: 10px 0px 7px 10px; /* Even smaller right padding */
   background-image: url('./lang.jpg');
   background-repeat: no-repeat;
-  background-position: right -1px center; /* Adjust this if necessary */
+  background-position: right -1px center; /* Adjust if necessary */
   background-size: 25px 25px;
   width: 60px;
   text-align: left;
@@ -98,15 +130,16 @@ html {
   outline: none;
   border: 1px solid #ffffff;
 }
-
 .language-dropdown option {
-  background-color: white; /* Ensures a consistent background color */
-  color: black; /* Text color for better contrast */
+  background-color: white; /* Ensures a consistent background colour */
+  color: black; /* Text colour for better contrast */
   padding-left: 5px; /* Reduces the left padding */
   text-align: left; /* Aligns the text to the left */
 }
 
-
+/* ==============================
+   DROPDOWN CONTENT
+============================== */
 
 .dropdown-content {
   display: none; /* Hidden by default */
@@ -116,35 +149,44 @@ html {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
-
 .dropdown-content a {
   color: black;
   padding: 8px 16px;
   text-decoration: none;
   display: block;
 }
-
 .dropdown-content a:hover {
   background-color: #f1f1f1;
 }
 
+/* Same .hidden duplicated below - used to hide elements */
 .hidden {
   display: none;
 }
-
 .visible {
   display: block;
 }
+
+/* ==============================
+   PULSE KEYFRAME
+============================== */
+
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
 
+/* For repeated pulsing animation */
 .pulse {
   animation: pulse 1s infinite;
 }
 
+/* ==============================
+   BUTTON LABELS / SPACING
+============================== */
+
+/* Example label styling */
 .button-label {
   color: black;
   text-align: center;
@@ -152,14 +194,14 @@ html {
   margin-bottom: 1px; /* Reduced for closer appearance */
   line-height: 0.8; /* Adjust line height if necessary */
 }
-
 .button {
   margin-top: 0px; /* Ensure no extra space above the button */
   padding-top: 5px; /* Adjust padding if needed to align better visually */
 }
 
-
-
+/* ==============================
+   CHATBOT TITLE / SUBTITLE
+============================== */
 
 .chatbot-title {
   font-size: 30px;
@@ -170,7 +212,6 @@ html {
   font-family: 'Quicksand', Arial, sans-serif;
   z-index: 2000; /* Set a high z-index to ensure it appears above other elements */
 }
-
 .chatbot-subtitle {
   font-size: 12px;
   margin-top: 0;
@@ -178,7 +219,6 @@ html {
   color: grey;
   padding: 0px 20px 10px 20px; /* top, right, bottom, left */
 }
-
 .chatbot-version {
   font-size: 13px;
   color: rgb(134, 134, 134);
@@ -192,6 +232,11 @@ html {
   color: rgb(162, 162, 162);
 }
 
+/* ==============================
+   CONTENT CENTRING
+============================== */
+
+/* Centres content horizontally in a block-level context */
 .centered-content {
   display: block;
   margin: 0 auto;
@@ -199,11 +244,13 @@ html {
   font-size: 20px; 
 }
 
+/* Duplicate grey-text (already declared above) */
 .grey-text {
   color: grey;
   font-size: 14px; 
 }
 
+/* Ensures the Flowise chatbot's bot-message is visible */
 .flowise-chatbot .bot-message {
   display: block !important;
   color: #000000 !important; /* Ensure text is visible in black */
@@ -211,6 +258,9 @@ html {
   background-color: #ffffff !important; /* White background for visibility */
 }
 
+/* ==============================
+   CHATBOT CONTAINER
+============================== */
 
 .chatbot-container {
   margin-top: 0;
@@ -224,6 +274,10 @@ flowise-fullchatbot {
   padding-top: 0;
 }
 
+/* ==============================
+   DETECTED CONDITION
+============================== */
+
 .detected-condition,
 #condition-description {
   color: rgb(0, 0, 0);
@@ -231,57 +285,69 @@ flowise-fullchatbot {
   padding-left: 40px; /* Add padding to the left */
   padding-right: 40px; /* Add padding to the right */
 }
-.access-screen, #registrationSection {
+.access-screen,
+#registrationSection {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* ==============================
+   HIDDEN / LINKS
+============================== */
+
 .hidden { display: none; }
-.register-link, .login-link {
-    cursor: pointer;
-    color: blue;
-    text-decoration: underline;
-    font-size: 0.9em; /* Smaller than the main text */
-    margin-top: 20px;
+.register-link,
+.login-link {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+  font-size: 0.9em; /* Smaller than the main text */
+  margin-top: 20px;
 }
 
+/* ==============================
+   FORM ELEMENTS
+============================== */
 
-input, button {
+input,
+button {
   margin: 10px;
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #ddd;
 }
-
 button {
   cursor: pointer;
   background-color: #007bff;
   color: white;
 }
 
-
-
+/* ==============================
+   MENU ICON (TOP LEFT)
+============================== */
 
 .menu-icon {
   cursor: pointer;
   font-size: 25px;  /* Icon's approximate height based on the font-size */
   color: white;
   position: fixed;
-  top: calc(42px - 12.5px); /* Precisely centers the icon vertically */
+  top: calc(42px - 12.5px); /* Precisely centres the icon vertically */
   left: 20px;
   z-index: 1100;
 }
 .menu-icon.active {
-  color: black;  /* Change icon color to black when active */
+  color: black;  /* Change icon colour to black when active */
 }
 
-
+/* ==============================
+   SIDE MENU (SLIDE-IN)
+============================== */
 
 .side-menu {
   position: fixed;
   left: -300px; /* Start off-screen */
-  top: 10;
+  top: 10;      /* As per original code, no px specified */
   width: 300px;
   height: 100%;
   background-color: #f4f4f4;
@@ -294,7 +360,13 @@ button {
   z-index: 1000; /* Ensure the menu is also in front, but behind the icon */
 }
 
-.button, .button.green, .button.grey {
+/* ==============================
+   BUTTON COLOUR VARIANTS
+============================== */
+
+.button,
+.button.green,
+.button.grey {
   margin: 4px;
   border: none;
   border-radius: 12px;
@@ -304,26 +376,29 @@ button {
   color: white; /* Adjusted for visibility */
 }
 
+/* Default (blue) button */
 .button {
   background-color: #2196F3FF; /* Default blue background */
 }
-
+/* Green button variant */
 .button.green {
   background-color: #4ec94e; /* Faint green */
 }
-
+/* Grey button variant */
 .button.grey {
   background-color: rgb(181, 181, 181); /* Grey */
 }
+/* Red button variant (for instructions) */
 .button.red {
   background-color: #ff0000; /* Red background for the Instructions button */
-  color: white; /* White text color for better readability */
+  color: white; /* White text colour for better readability */
   border-radius: 12px;
   border: 2px solid black; /* Adds a thin black border around the button */
 }
 
-
-
+/* ==============================
+   MODAL OVERLAY
+============================== */
 
 .modal {
   display: none; /* Hidden by default */
@@ -338,7 +413,6 @@ button {
   align-items: center;
   display: flex;
 }
-
 .modal-content {
   background-color: #fefefe;
   margin: auto;
@@ -348,14 +422,12 @@ button {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   text-align: center;
 }
-
 .close-button {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
-
 .close-button:hover,
 .close-button:focus {
   color: black;
@@ -363,19 +435,17 @@ button {
   cursor: pointer;
 }
 
-
-
-
-
-
-
-
-
+/* ==============================
+   PARAGRAPHS
+============================== */
 
 p {
   margin: 20px 0;
 }
 
+/* ==============================
+   DISPLAYED JOB ROLE
+============================== */
 
 #displayed-job-role {
   font-size: 8px;
@@ -384,13 +454,16 @@ p {
   flex-grow: 1; /* Ensures it uses available space to align right */
 }
 
-/* Ensure this class has the necessary specificity to override default styles */
+/* Inactive button styling */
 .button.inactive-button {
   background-color: grey;
   color: white;
   animation: none;
 }
 
+/* ==============================
+   BOXES FRAME
+============================== */
 
 #boxesFrame {
   width: 100%; 
@@ -399,12 +472,10 @@ p {
   overflow: hidden;
   background-color: transparent;
 }
-
 .object-container {
   width: 100%;
   overflow: hidden;
 }
-
 .object-container iframe {
   width: 100%;
   height: 100%;
@@ -412,7 +483,10 @@ p {
   display: block;
 }
 
-/* Sidebar styles */
+/* ==============================
+   SIDEBAR OVERLAY
+============================== */
+
 .sidebar {
   height: 100%;
   width: 0;
@@ -425,7 +499,6 @@ p {
   transition: 0.5s;
   padding-top: 60px;
 }
-
 .sidebar a {
   padding: 10px 15px;
   text-decoration: none;
@@ -434,11 +507,9 @@ p {
   display: block;
   transition: 0.3s;
 }
-
 .sidebar a:hover {
   color: #f1f1f1;
 }
-
 .sidebar .closebtn {
   position: absolute;
   top: 0;
@@ -448,11 +519,12 @@ p {
   color: white; /* Ensure the close button is visible */
 }
 
+/* Button to open the overlay sidebar */
 .openbtn {
   font-size: 20px;
   cursor: pointer;
-  background-color: white; /* Changed background color to white */
-  color: #464646; /* Changed text color to black */
+  background-color: white; /* Changed background colour to white */
+  color: #464646; /* Changed text colour to black */
   padding: 10px 15px;
   border: none;
   position: fixed;
@@ -462,16 +534,19 @@ p {
   display: flex;
   align-items: center;
 }
-
 .openbtn:hover {
   background-color: #f1f1f1;
 }
-
 .openbtn .icon {
   font-size: 20px;
   margin-right: 10px;
-  color: #464646; /* Changed icon color to black */
+  color: #464646; /* Changed icon colour to black */
 }
+
+/* ==============================
+   NAME ICON (SMALL CIRCLE)
+============================== */
+
 .name-icon {
   width: 25px;
   height: 25px;
@@ -490,6 +565,10 @@ p {
   user-select: none; /* Make text non-selectable */
 }
 
+/* ==============================
+   MENU ICON ADJUSTMENTS
+============================== */
+
 .menu-icon {
   position: relative;
   display: inline-block;
@@ -498,7 +577,6 @@ p {
   cursor: pointer;
   top: -45px; /* Adjust this value to move the icon upwards */
 }
-
 .menu-icon::before,
 .menu-icon::after {
   content: '';
@@ -508,25 +586,23 @@ p {
   background-color: rgb(255, 255, 255); /* Colour of the lines */
   transition: background-color 0.3s; /* Smooth transition */
 }
-
 .menu-icon::before {
   top: 0; /* Position of the top line */
   width: 100%; /* Full width top line */
 }
-
 .menu-icon::after {
   top: 16px; /* Position of the bottom line */
   width: 60%; /* Width of the bottom line */
 }
-
 .menu-icon.open::before,
 .menu-icon.open::after {
   background-color: rgb(0, 0, 0); /* Change lines to black when menu is open */
 }
 
+/* ==============================
+   SIDE MENU CHAT LINKS
+============================== */
 
-
-/* Chat links styling */
 .side-menu .chat-link {
   display: block;
   width: 50px; /* Ensure it fits within the padding */
@@ -539,18 +615,18 @@ p {
   text-decoration: none;
   transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
-
 .side-menu .chat-link:hover {
   background-color: #ccc; /* Change background on hover */
 }
-
-/* Optional: Additional styling for the horizontal line */
 .side-menu hr {
   width: 100%;
   border: 1px solid #ddd;
   margin: 5px 0;
 }
 
+/* ==============================
+   POPUP SLIDE-OUT
+============================== */
 
 .popup {
   display: none; /* Hide by default */
@@ -585,20 +661,22 @@ p {
   color: black;
 }
 
+/* ==============================
+   IMAGE ANIMATION CONTAINER
+============================== */
+
 .animation-container {
   display: none; /* Initially hidden */
   justify-content: center;
   align-items: center;
   padding-top: 10px;
 }
-
 @keyframes fadeinout {
   0% { opacity: 0; }
   10% { opacity: 1; }
   90% { opacity: 1; }
   100% { opacity: 0; }
 }
-
 .animation-container img {
   width: 70px; /* Adjust the width as needed */
   height: auto;
