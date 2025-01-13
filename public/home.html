@@ -59,21 +59,32 @@
         background-color: rgba(0,0,0,0.4); /* dark overlay */
         }
 
-        /* Modal content area */
         .modal-content {
         background-color: #fefefe;
-        margin: 15% auto;  /* roughly center on screen */
-        max-width: 400px;
+        margin: 15% auto; /* roughly center on screen */
+        max-width: 400px; /* fixed width */
         padding: 20px;
         border-radius: 6px;
         position: relative;
+        box-sizing: border-box; /* Ensure padding is included in total dimensions */
+        overflow: visible; /* Allow content to expand the container */
+        max-height: 90vh; /* Prevent the modal from exceeding the viewport */
+        overflow-y: auto; /* Add scroll if content exceeds max height */
         }
+
 
         .close {
         float: right;
         font-size: 24px;
         cursor: pointer;
         }
+
+        .popup-content p {
+        margin: 4px 0; /* Adjust the values as needed to reduce spacing */
+        padding: 0;    /* Ensure no extra padding is applied */
+        line-height: 1.5; /* Adjust line height for closer text */
+        }
+
 
     </style>
 </head>
