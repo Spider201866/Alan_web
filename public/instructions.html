@@ -2,12 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Ensures the page scales properly on mobile devices -->
+  <!-- 
+    **********************************************
+    *          VIEWPORT & PAGE SETTINGS         *
+    **********************************************
+    - Ensures correct scaling on mobile devices
+    - Sets the title of the page
+  -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instructions</title>
 
+  <!-- 
+    **********************************************
+    *                 PAGE STYLES               *
+    **********************************************
+    - Defines global layout and typography
+    - Styles the top app bar, content area and switch
+    - Uses simple media query to adjust position on mobile
+  -->
   <style>
-    /* Reset & typography */
+    /* 
+      Global layout and typography 
+      - Zeroes out margins/padding 
+      - Sets default font and background 
+    */
     body,
     html {
       margin: 0;
@@ -17,39 +35,56 @@
       background-color: white;
     }
 
-    /* Top bar (app bar) styling */
+    /* 
+      Top App Bar 
+      - Black background 
+      - Flex layout for horizontal alignment 
+    */
     #appBar {
-      display: flex;              /* Use flex for horizontal alignment */
-      align-items: center;        /* Vertically centre items */
-      background-color: black;
-      color: white;
-      padding: 10px 20px;         /* Adjust spacing around items */
+      display: flex;              /* Aligns child elements horizontally */
+      align-items: center;        /* Vertically centres content */
+      background-color: black;    /* Black app bar */
+      color: white;               /* White text/icons */
+      padding: 10px 20px;         /* Spacing around the app bar */
     }
 
-    /* Page title centred in the app bar */
+    /* 
+      Page Title
+      - Centrally positioned within the app bar 
+    */
     #pageTitle {
       text-align: center;
-      margin: 0 auto;             /* Forces the title to remain in the centre */
+      margin: 0 auto;             /* Keeps the title in the centre */
       font-size: 24px;
     }
 
-    /* Back arrow on the left side of the app bar */
+    /* 
+      Back Arrow 
+      - Large clickable arrow to return to previous page 
+    */
     #backArrow {
-      color: white;
-      font-size: 32px;
-      font-weight: bold;
-      position: relative;         /* Make it 'relative' instead of absolute */
-      cursor: pointer;            /* Change cursor to pointer on hover */
-      padding-right: 20px;        /* Space between arrow and title */
+      color: white;               /* White arrow */
+      font-size: 32px;            /* Larger than standard text */
+      font-weight: bold;          /* Makes arrow visually heavier */
+      position: relative;         /* Relative positioning for layout */
+      cursor: pointer;            /* Cursor changes to pointer on hover */
+      padding-right: 20px;        /* Spacing between arrow and title */
     }
 
-    /* Main content area with background colour that changes (default faint blue) */
+    /* 
+      Main Content 
+      - Default faint blue background
+      - Padding for breathing room 
+    */
     #content {
       padding: 5px 25px 25px 25px;
-      background-color: #dfe7ff; /* Default background */
+      background-color: #dfe7ff;  /* Subtle blue shade */
     }
 
-    /* General text styling classes */
+    /* 
+      General Text Classes 
+      - Common spacing or styling for paragraphs or text blocks 
+    */
     .infoText,
     .redText,
     .italicText,
@@ -74,18 +109,23 @@
       text-align: justify;
     }
 
-    /* Container for example texts at the bottom of the page */
+    /* 
+      Additional Examples
+      - Content at the bottom for "Too little," "Just right," "Too much" 
+    */
     #additionalExamples p {
       margin-bottom: 10px;
       font-size: 13px;
       color: #333;
     }
+
     #additionalExamples strong {
       display: block;
       font-weight: bold;
       margin-bottom: -10px;
       line-height: 1.2;
     }
+
     #additionalExamples span {
       display: block;
       margin-left: 10px;
@@ -93,9 +133,12 @@
       line-height: 1.2;
     }
 
-    /* Indentation for the bullet list */
+    /* 
+      Info Text & List Items 
+      - Indented text for bullet points 
+    */
     .infoText {
-      padding-left: 60px;
+      padding-left: 60px;         /* Extra left indentation */
       color: black;
     }
     .infoText li {
@@ -108,7 +151,10 @@
       color: red;
     }
 
-    /* Horizontal divider (hr) styling */
+    /* 
+      Horizontal Rule Styling
+      - Subtle 2px line to separate content 
+    */
     hr {
       border: none;
       height: 2px;
@@ -117,30 +163,43 @@
       margin-bottom: 20px;
     }
 
-    /* Container holding the radio switch (eye/ear/skin) */
+    /* 
+      Switch Container 
+      - Holds radio buttons for Eye/Ear/Skin 
+      - Positioned absolutely so it floats on the page 
+    */
     #switchContainer {
-      position: absolute;         /* Positioned absolutely to float over content */
-      top: 160px;                 /* Distance from top of page */
-      right: 40px;                /* Distance from right edge (adjust for layout) */
+      position: absolute;
+      top: 160px;
+      right: 40px;
       text-align: center;
       padding: 10px;
       border-radius: 15px;
     }
 
-    /* Switch styling with three radio buttons stacked vertically */
+    /* 
+      Switch Layout 
+      - Stacks three radio inputs vertically 
+    */
     .switch {
       position: relative;
       display: inline-block;
       width: 60px;
-      height: 180px;             /* Enough height to stack 3 labels */
+      height: 180px;              /* Enough space for three circular labels */
     }
 
-    /* Hide the radio inputs themselves */
+    /* 
+      Hide Radio Inputs 
+      - Only labels are displayed 
+    */
     .switch input {
       display: none;
     }
 
-    /* Labels acting as clickable circular buttons */
+    /* 
+      Switch Labels 
+      - Circular clickable buttons 
+    */
     .switch-label {
       display: block;
       text-align: center;
@@ -154,16 +213,23 @@
       transition: background-color 0.3s, box-shadow 0.3s;
       border-radius: 30px;
       border: 1px solid black;
-      margin-bottom: 5px;         /* Spacing between each circular label */
+      margin-bottom: 5px;         /* Vertical spacing between circles */
     }
 
-    /* Hover effect on labels */
+    /* 
+      Hover Effect on Labels 
+      - Light grey background 
+      - Subtle drop shadow 
+    */
     .switch-label:hover {
       background-color: #e0e0e0;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     }
 
-    /* Style applied to label when its corresponding radio input is checked */
+    /* 
+      Checked Label State 
+      - Inverted colours for selected label 
+    */
     .switch input:checked + .switch-label {
       background-color: black;
       color: white;
@@ -172,30 +238,44 @@
     }
 
     /* 
-      Media query for smaller screens
-      Reduces the 'right' spacing so the radio buttons
-      are not too far off-screen on mobile 
+      Responsive Adjustment 
+      - Moves switch container closer to the left on narrow screens 
     */
     @media (max-width: 600px) {
       #switchContainer {
-        right: 10px;       /* Pulls the switch closer to the left on small devices */
-        top: 140px;        /* Adjust as needed if you want it a bit lower or higher */
+        right: 10px;  /* Reduce indentation on mobile */
+        top: 140px;   /* Adjust vertical position if needed */
       }
     }
   </style>
 </head>
+
 <body>
-  <!-- Top App Bar -->
+  <!-- 
+    **********************************************
+    *              TOP APP BAR                  *
+    **********************************************
+    - Contains the back arrow and page title
+    - Styled with black background and white text
+  -->
   <div id="appBar">
-    <!-- Back arrow to go to previous page -->
-    <div id="backArrow" onclick="history.back()">&#x2190;</div>
-    <!-- Page Title in the centre -->
-    <h1 id="pageTitle">Instructions</h1>
+    <div id="backArrow" onclick="history.back()">&#x2190;</div> <!-- Back arrow -->
+    <h1 id="pageTitle">Instructions</h1>                        <!-- Page Title -->
   </div>
 
-  <!-- Main content that changes colour and content based on user selection -->
+  <!-- 
+    **********************************************
+    *            MAIN CONTENT AREA              *
+    **********************************************
+    - Contains instructions for Eye/Ear/Skin
+    - Includes a switch for toggling the background
+      and text details
+  -->
   <div id="content">
-    <!-- Container for Eye/Ear/Skin radio switch -->
+    <!-- 
+      Switch container holding radio inputs for 
+      selecting Eye/Ear/Skin instructions
+    -->
     <div id="switchContainer">
       <div class="switch">
         <input 
@@ -228,12 +308,14 @@
       </div>
     </div>
 
+    <!-- Introductory paragraph explaining Alan's usage -->
     <p style="margin-bottom: 20px; font-size: 15px; text-align: justify;">
       Alan is an AI assistant for students and those who only occasionally see eye ear or skin cases
       Write or speak clearly and avoid identifying names or details Look fully around head/face/body part
       and examine both eyes/ears. Good luck!
     </p>
 
+    <!-- Prompt for key patient details -->
     <p class="boldText">Tell Alan about your patient's:</p>
     <ul class="infoText">
       <li><span class="listText">problem & onset</span></li>
@@ -242,7 +324,7 @@
       <li><span class="listText">age sex medication</span></li>
     </ul>
 
-    <!-- Eye/Ear/Skin instructions that update based on the chosen radio button -->
+    <!-- Default instruction for using Arclight (overridden by toggleContent) -->
     <p id="useArclight" style="margin-top: 20px;">
       <strong>Use Arclight:</strong> 
       <strong><em>front, fundal reflex, back of eye.</em></strong>
@@ -250,7 +332,10 @@
 
     <hr>
 
-    <!-- Container with usage examples -->
+    <!-- 
+      Additional examples showing different levels of detail:
+      "Too little," "Just right," and "Too much"
+    -->
     <div class="justify" id="additionalExamples">
       <p>
         <strong>Too little</strong><br>
@@ -280,14 +365,17 @@
     </div>
 
     <!-- 
-      JavaScript to toggle the background colour and text
-      depending on the radio button selection 
+      **********************************************
+      *             SCRIPT SECTION                *
+      **********************************************
+      - Dynamically updates content based on selected option
+      - Changes background colour and text details
     -->
     <script>
       function toggleContent() {
         var option = document.querySelector('input[name="option"]:checked').value;
 
-        /* If user selects Eye */
+        // Eye selection
         if (option === 'eye') {
           document.getElementById('content').style.backgroundColor = '#dfe7ff';
           document.getElementById('useArclight').innerHTML =
@@ -301,7 +389,7 @@
           document.getElementById('additionalQuery').innerHTML =
             '<span style="color: blue; font-size: 15px; margin: -5px">Alan also answers eye teaching/learning queries: What is Iritis? How do I see the retina?</span>';
 
-        /* If user selects Ear */
+        // Ear selection
         } else if (option === 'ear') {
           document.getElementById('content').style.backgroundColor = '#f2fff2';
           document.getElementById('useArclight').innerHTML =
@@ -315,7 +403,7 @@
           document.getElementById('additionalQuery').innerHTML =
             '<span style="color: green; font-size: 15px; margin: -5px">Alan also answers ear teaching/learning queries: What is Otitis Media? How do I clean an ear?</span>';
 
-        /* If user selects Skin */
+        // Skin selection
         } else if (option === 'skin') {
           document.getElementById('content').style.backgroundColor = '#fddfff';
           document.getElementById('useArclight').innerHTML =

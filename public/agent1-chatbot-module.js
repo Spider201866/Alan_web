@@ -7,7 +7,7 @@ import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed@latest/dist/web.
 /**
  * Initializes the Flowise chatbot with specific configuration:
  * - API endpoint
- * - Theme customizations (colors, icons, layout)
+ * - Theme customisations (colours, icons, layout)
  * - Custom CSS for rounded bubbles, icons, etc.
  */
 const initChatbot = () => {
@@ -38,8 +38,8 @@ const initChatbot = () => {
         botMessage: {
           backgroundColor: "#ffffff",
           textColor: "#000000",
-          showAvatar: true,
-          avatarSrc: "https://raw.githubusercontent.com/Spider201866/Alan_web/main/public/black.png",
+          showAvatar: false, // Disables the avatar
+          // avatarSrc: "https://raw.githubusercontent.com/Spider201866/Alan_web/main/public/black.png",
         },
         // User message bubble config
         userMessage: {
