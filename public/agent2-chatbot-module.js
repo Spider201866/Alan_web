@@ -4,7 +4,7 @@ import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed@latest/dist/web.
 
 const initChatbot = () => {
   Chatbot.initFull({
-    chatflowid: "db68b77b-92be-4c80-bf50-c13e00a33d77", // Your Flow ID
+    chatflowid: "75b5edc0-4e39-441b-ba7a-eb6cb404b69a", // Your Flow ID
     apiHost: "https://flowiseai-railway-production-fecf.up.railway.app", // API Host
 
     theme: {
