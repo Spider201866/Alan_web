@@ -2,61 +2,69 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eye Exam</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ear Exam</title>
 
   <!-- 
     **********************************************
     *                 PAGE STYLES               *
     **********************************************
     - White background, black text
-    - A top app bar with back arrow and centered title
-    - Image filling 80% of the viewport height
+    - A top app bar with back arrow and centred title
+    - Main content now shows ear exam text
   -->
   <style>
     /* Global page layout and typography */
     body {
       font-family: "Calibri Light", Arial, sans-serif;
-      background-color: white;  /* White background for the page */
-      color: black;             /* Black text color for the page */
+      background-color: white;   /* White background for the page */
+      color: black;              /* Black text colour for the page */
       margin: 0;
       padding: 0;
     }
 
     /* Top bar (app bar) styling */
     #appBar {
-      display: flex;               /* Using flexbox to align items */
-      align-items: center;         /* Center items vertically */
-      background-color: black;     /* Black background for the app bar */
-      color: white;                /* White text color */
-      padding: 10px 20px;          /* Consistent padding */
+      display: flex;            /* Using flexbox to align items */
+      align-items: center;      /* Centre items vertically */
+      background-color: black;  /* Black background for the app bar */
+      color: white;             /* White text colour for the app bar */
+      padding: 10px 20px;       /* Consistent padding */
     }
 
-    /* Centered page title in the app bar */
+    /* Centred page title in the app bar */
     #pageTitle {
       text-align: center;
-      margin: 0 auto;             /* Centers title within flex container */
-      font-size: 24px;            /* Font size for the page title */
+      margin: 0 auto;           /* Centres title within flex container */
+      font-size: 24px;          /* Font size for the page title */
     }
 
     /* Back arrow on the left side */
     #backArrow {
-      color: white;               /* White back arrow */
-      font-size: 32px;            /* Size of the arrow */
-      font-weight: bold;          /* Bold arrow */
-      position: relative;         /* Works within flexbox layout */
+      color: white;             /* White back arrow */
+      font-size: 32px;          /* Size of the arrow */
+      font-weight: bold;        /* Bold arrow */
+      position: relative;       /* Works within flexbox layout */
       cursor: pointer;
-      padding-right: 20px;        /* Visual spacing on the right */
+      padding-right: 20px;      /* Visual spacing on the right */
     }
 
-    /* Main image styling */
-    img {
-      display: block;
-      height: 80vh;              /* Fills 80% of the viewport height */
-      width: auto;               /* Maintains aspect ratio */
-      margin: auto;              /* Centers image horizontally */
-      max-width: none;           /* Overrules any default max-width settings */
+    /* Main text container */
+    #earExamText {
+      padding: 15px;
+      line-height: 1.4em;       /* Slightly increased line spacing for readability */
+    }
+
+    /* Heading style for sections within the exam text */
+    #earExamText h2, #earExamText h3 {
+      margin-bottom: 8px;
+      margin-top: 16px;
+    }
+
+    /* Paragraph style */
+    #earExamText p {
+      margin-bottom: 8px;
     }
   </style>
 </head>
@@ -67,25 +75,47 @@
     **********************************************
     *              TOP APP BAR                  *
     **********************************************
-    - Includes a back arrow and a centered title
+    - Includes a back arrow and a centred title
   -->
   <div id="appBar">
-    <div id="backArrow" onclick="history.back()">&#x2190;</div> <!-- Back arrow to navigate to the previous page -->
-    <h1 id="pageTitle" style="text-align: center;">How to examine the ear</h1> <!-- Page title -->
+    <div id="backArrow" onclick="history.back()">&#x2190;</div>
+    <h1 id="pageTitle">How to examine the ear</h1>
   </div>
 
   <!-- 
     **********************************************
     *            MAIN CONTENT AREA             *
     **********************************************
-    - Displays an instructional image
+    - Displays concise text about ear examination
   -->
-  <div>
-    <img 
-      src="howtouseeye.png" 
-      alt="How to Use Eye Examination Equipment" 
-      style="touch-action: manipulation;"
-    > <!-- Image with pinch and zoom enabled -->
+  <div id="earExamText">
+    <h2>7 HOW TO LOOK AT AN EAR</h2>
+
+    <h3>All around ear</h3>
+    <p>
+      • Check pinna, tragus, mastoid for lumps, tenderness or discharge<br>
+      • Gently move pinna, note any pain
+    </p>
+
+    <h3>Ear canal</h3>
+    <p>
+      • Tilt head, hold Arclight like a pen<br>
+      • Pull pinna up/back (adults), down/back (children)<br>
+      • Insert speculum (4.5mm adult, 2.5mm infant), rotate if needed<br>
+      • Look for wax, debris or infection
+    </p>
+
+    <h3>Tympanic membrane</h3>
+    <p>
+      • Identify handle of malleus, light reflex, attic<br>
+      • Note colour, position, translucency<br>
+      • Look for perforation, fluid or scarring
+    </p>
+
+    <p>
+      Know your ear: normal, red, bulging, retracted, perforated<br>
+      &gt;Practice often&lt;
+    </p>
   </div>
 
 </body>
