@@ -254,266 +254,277 @@
     "pinna304"          // 21
   ];
 
-  /*********************************************/
-  /*             HELPER FUNCTIONS              */
-  /*********************************************/
+ /*********************************************/
+/*             HELPER FUNCTIONS              */
+/*********************************************/
 
-  // 1) Check if password is already verified
-  function checkPasswordStatus() {
-    const isVerified = localStorage.getItem("verified");
-    if (isVerified === "true") {
-      // Skip password screen
-      passwordScreen.classList.remove("visible");
-      passwordScreen.classList.add("hidden");
-      showSplashOrRedirect();
-    } else {
-      // Show password screen
-      passwordScreen.classList.add("visible");
-      passwordScreen.classList.remove("hidden");
-    }
+// 1) Check if password is already verified
+function checkPasswordStatus() {
+  const isVerified = localStorage.getItem("verified");
+  if (isVerified === "true") {
+    // Skip password screen
+    passwordScreen.classList.remove("visible");
+    passwordScreen.classList.add("hidden");
+    showSplashOrRedirect();
+  } else {
+    // Show password screen
+    passwordScreen.classList.add("visible");
+    passwordScreen.classList.remove("hidden");
   }
+}
 
-  // 2) If splash not shown before, show. Otherwise skip to home
-  function showSplashOrRedirect() {
-    if (!sessionStorage.getItem("splashShown")) {
-      sessionStorage.setItem("splashShown", "true");
-      showSplashScreen();
-    } else {
-      // If user revisits index after verification, skip straight to home
-      window.location.href = "home.html";
-    }
+// 2) If splash not shown before, show. Otherwise skip to home
+function showSplashOrRedirect() {
+  if (!sessionStorage.getItem("splashShown")) {
+    sessionStorage.setItem("splashShown", "true");
+    showSplashScreen();
+  } else {
+    // If user revisits index after verification, skip straight to home
+    window.location.href = "home.html";
   }
+}
 
-  // 3) Splash screen animation
-  function showSplashScreen() {
-    const logo1 = document.getElementById("logo1");
-    const logo2 = document.getElementById("logo2");
+// 3) Splash screen animation
+function showSplashScreen() {
+  const logo1 = document.getElementById("logo1");
+  const logo2 = document.getElementById("logo2");
 
-    logo1.style.transform = "scale(0.8)";
-    logo2.style.transform = "rotateX(-90deg)";
+  logo1.style.transform = "scale(0.8)";
+  logo2.style.transform = "rotateX(-90deg)";
 
-    setTimeout(() => {
-      logo1.style.transform = "scale(1)";
-      logo2.style.transform = "rotateX(0deg)";
-    }, 100);
+  setTimeout(() => {
+    logo1.style.transform = "scale(1)";
+    logo2.style.transform = "rotateX(0deg)";
+  }, 100);
 
-    // After 1 second (shorter than original 6s), hide splash & show instructions
-    setTimeout(() => {
-      splashScreenRef.classList.remove("visible");
-      splashScreenRef.classList.add("hidden");
-      instructionRef.classList.remove("hidden");
-      instructionRef.classList.add("visible");
-    }, 1000);
-  }
+  // After 1 second (shorter than original 6s), hide splash & show instructions
+  setTimeout(() => {
+    splashScreenRef.classList.remove("visible");
+    splashScreenRef.classList.add("hidden");
+    instructionRef.classList.remove("hidden");
+    instructionRef.classList.add("visible");
+  }, 1000);
+}
 
-  // 4) Fetch IP-based location
-  function fetchIPBasedLocation() {
-    fetch("https://ipapi.co/json/")
-      .then(response => response.json())
-      .then(data => {
-        if (data) {
-          ipLatitude  = data.latitude       || "Not set";
-          ipLongitude = data.longitude      || "Not set";
-          ipCountry   = data.country_name   || "Not set";
-          ipArea      = data.city           || "Not set";
-          ipISO2      = (data.country       || "Not set").toUpperCase();
-
-          // Save to localStorage
-          localStorage.setItem("latitude",  ipLatitude);
-          localStorage.setItem("longitude", ipLongitude);
-          localStorage.setItem("country",   ipCountry);
-          localStorage.setItem("area",      ipArea);
-          localStorage.setItem("iso2",      ipISO2);
-
-          // Classify the 2-letter code
-          storeClassifications(ipISO2);
-        }
-      })
-      .catch(error => {
-        console.error("Error fetching IP-based location:", error);
-      });
-  }
-
-  // 5) Classify user country
-  function storeClassifications(iso2) {
-    let classification = "Unknown";
-    for (const [key, values] of Object.entries(classificationLookup)) {
-      if (values.includes(iso2)) {
-        classification = key;
-        break;
-      }
-    }
-    localStorage.setItem("classification", classification);
-  }
-
-  // 6) Form readiness
-  function checkSelections() {
-    jobSelectElement.style.color = jobSelectElement.value ? "blue" : "grey";
-    experienceSelect.style.color = experienceSelect.value ? "blue" : "grey";
-
-    if (nameInput.value.trim().length >= 2) {
-      nameInput.style.color = "blue";
-    } else {
-      nameInput.style.color = "grey";
-    }
-
-    const isAnyFocusSelected = Array.from(focusCheckboxes).some(cb => cb.checked);
-    focusToggleBtn.classList.toggle("entered", isAnyFocusSelected);
-
-    acceptButton.disabled = !(
-      nameInput.value.trim() &&
-      jobSelectElement.value &&
-      experienceSelect.value &&
-      isAnyFocusSelected &&
-      contactInput.value.trim()
-    );
-  }
-
-  // 7) Event listeners
-  function initEventListeners() {
-    // Animate sky
-    skyImage.style.transform = "scale(1)";
-    skyImage.style.transition = "transform 4s ease-in-out, filter 4s ease-in-out";
-
-    nameInput.addEventListener("input", (e) => {
-      e.target.value = e.target.value.replace(/[^A-Za-z'\- ]/g, "");
-      if (e.target.value.length > 20) {
-        e.target.value = e.target.value.substring(0, 20);
-      }
-      checkSelections();
-    });
-
-    jobSelectElement.addEventListener("change", checkSelections);
-    experienceSelect.addEventListener("change", checkSelections);
-    contactInput.addEventListener("input", () => {
-      contactInput.classList.toggle("entered", contactInput.value.trim() !== "");
-      checkSelections();
-    });
-
-    focusToggleBtn.addEventListener("click", () => {
-      focusDropdown.classList.toggle("hidden");
-      focusDropdown.classList.toggle("visible");
-    });
-    document.addEventListener("click", (event) => {
-      if (!focusDropdown.contains(event.target) && event.target !== focusToggleBtn) {
-        focusDropdown.classList.add("hidden");
-        focusDropdown.classList.remove("visible");
-      }
-    });
-    focusCheckboxes.forEach((checkbox) => {
-      checkbox.addEventListener("change", checkSelections);
-    });
-
-    acceptButton.addEventListener("click", handleAccept);
-
-    // PASSWORD: input & submit
-    passwordInput.addEventListener("input", () => {
-      passwordSubmitBtn.disabled = (passwordInput.value.trim() === "");
-      passwordError.style.display = "none";
-    });
-    passwordSubmitBtn.addEventListener("click", verifyPassword);
-  }
-
-  // 8) Verify password (client-side check)
-  function verifyPassword() {
-    const entered = passwordInput.value.trim();
-    if (validPasswords.includes(entered)) {
-      localStorage.setItem("verified", "true");
-      passwordScreen.classList.remove("visible");
-      passwordScreen.classList.add("hidden");
-      showSplashOrRedirect();
-    } else {
-      // Show error
-      passwordError.style.display = "block";
-      passwordInput.value = "";
-      passwordSubmitBtn.disabled = true;
-
-      // Hide error after 3s
-      setTimeout(() => {
-        passwordError.style.display = "none";
-      }, 3000);
-    }
-  }
-
-  // 9) When user clicks "Accept" at end of onboarding
-  function handleAccept() {
-    const rawName = nameInput.value.trim();
-    const nameIsValid = /^[A-Za-z'\- ]{2,20}$/.test(rawName);
-    if (!nameIsValid) {
-      alert("Please enter a valid name (2-20 letters, spaces, apostrophes, or hyphens).");
-      return;
-    }
-
-    // Store data locally
-    localStorage.setItem("name", rawName);
-    localStorage.setItem("selectedJobRole", jobSelectElement.value);
-    localStorage.setItem("selectedExperience", experienceSelect.value);
-
-    // Focus array
-    const selectedFocusValues = Array.from(focusCheckboxes)
-      .filter(cb => cb.checked)
-      .map(cb => cb.value);
-    localStorage.setItem("selectedFocus", JSON.stringify(selectedFocusValues));
-
-    localStorage.setItem("contactInfo", contactInput.value);
-
-    // ALSO: post to server so it appears on /view-records
-    const userInfo = {
-      name: rawName,
-      role: jobSelectElement.value,
-      experience: experienceSelect.value,
-      focus: selectedFocusValues,
-      latitude: localStorage.getItem("latitude"),
-      longitude: localStorage.getItem("longitude"),
-      country: localStorage.getItem("country"),
-      iso2: localStorage.getItem("iso2"),
-      classification: localStorage.getItem("classification"),
-      area: localStorage.getItem("area"),
-      contactInfo: contactInput.value,
-      dateTime: new Date().toLocaleString("en-GB", { timeZone: "UTC" }),
-      // add any other fields you like
-    };
-
-    fetch("https://alan.up.railway.app/record-info", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(userInfo)
-    })
-    .then(resp => resp.text())
+// 4) Fetch IP-based location
+function fetchIPBasedLocation() {
+  fetch("https://ipapi.co/json/")
+    .then(response => response.json())
     .then(data => {
-      console.log("Record saved:", data);
+      if (data) {
+        ipLatitude  = data.latitude       || "Not set";
+        ipLongitude = data.longitude      || "Not set";
+        ipCountry   = data.country_name   || "Not set";
+        ipArea      = data.city           || "Not set";
+        ipISO2      = (data.country       || "Not set").toUpperCase();
+
+        // Save to localStorage
+        localStorage.setItem("latitude",  ipLatitude);
+        localStorage.setItem("longitude", ipLongitude);
+        localStorage.setItem("country",   ipCountry);
+        localStorage.setItem("area",      ipArea);
+        localStorage.setItem("iso2",      ipISO2);
+
+        // Classify the 2-letter code
+        storeClassifications(ipISO2);
+      }
     })
-    .catch(err => {
-      console.error("Error saving record:", err);
+    .catch(error => {
+      console.error("Error fetching IP-based location:", error);
     });
+}
 
-    // Fade to black
-    blackScreen.style.visibility = "visible";
-    blackScreen.style.opacity = 1;
-    setTimeout(() => {
-      skyImage.style.transform = "scale(1.3)";
-      skyImage.style.filter = "blur(0px)";
-    }, 200);
+// 5) Classify user country
+function storeClassifications(iso2) {
+  let classification = "Unknown";
+  for (const [key, values] of Object.entries(classificationLookup)) {
+    if (values.includes(iso2)) {
+      classification = key;
+      break;
+    }
+  }
+  localStorage.setItem("classification", classification);
+}
 
-    // Redirect after fade
-    setTimeout(() => {
-      blackScreen.style.opacity = 0;
-      setTimeout(() => {
-        window.location.href = "home.html";
-      }, 250);
-    }, 6000);
+// 6) Form readiness
+function checkSelections() {
+  jobSelectElement.style.color = jobSelectElement.value ? "blue" : "grey";
+  experienceSelect.style.color = experienceSelect.value ? "blue" : "grey";
+
+  if (nameInput.value.trim().length >= 2) {
+    nameInput.style.color = "blue";
+  } else {
+    nameInput.style.color = "grey";
   }
 
-  // 10) Main initialisation
-  function main() {
-    checkPasswordStatus();
-    fetchIPBasedLocation();
-    initEventListeners();
+  const isAnyFocusSelected = Array.from(focusCheckboxes).some(cb => cb.checked);
+  focusToggleBtn.classList.toggle("entered", isAnyFocusSelected);
+
+  acceptButton.disabled = !(
+    nameInput.value.trim() &&
+    jobSelectElement.value &&
+    experienceSelect.value &&
+    isAnyFocusSelected &&
+    contactInput.value.trim()
+  );
+}
+
+// 7) Event listeners
+function initEventListeners() {
+  // Animate sky
+  skyImage.style.transform = "scale(1)";
+  skyImage.style.transition = "transform 4s ease-in-out, filter 4s ease-in-out";
+
+  nameInput.addEventListener("input", (e) => {
+    e.target.value = e.target.value.replace(/[^A-Za-z'\- ]/g, "");
+    if (e.target.value.length > 20) {
+      e.target.value = e.target.value.substring(0, 20);
+    }
+    checkSelections();
+  });
+
+  jobSelectElement.addEventListener("change", checkSelections);
+  experienceSelect.addEventListener("change", checkSelections);
+  contactInput.addEventListener("input", () => {
+    contactInput.classList.toggle("entered", contactInput.value.trim() !== "");
+    checkSelections();
+  });
+
+  focusToggleBtn.addEventListener("click", () => {
+    focusDropdown.classList.toggle("hidden");
+    focusDropdown.classList.toggle("visible");
+  });
+  document.addEventListener("click", (event) => {
+    if (!focusDropdown.contains(event.target) && event.target !== focusToggleBtn) {
+      focusDropdown.classList.add("hidden");
+      focusDropdown.classList.remove("visible");
+    }
+  });
+  focusCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", checkSelections);
+  });
+
+  acceptButton.addEventListener("click", handleAccept);
+
+  // PASSWORD: input & submit
+  passwordInput.addEventListener("input", () => {
+    passwordSubmitBtn.disabled = (passwordInput.value.trim() === "");
+    passwordError.style.display = "none";
+  });
+  passwordSubmitBtn.addEventListener("click", verifyPassword);
+}
+
+// 8) Verify password (client-side check)
+function verifyPassword() {
+  const entered = passwordInput.value.trim();
+  if (validPasswords.includes(entered)) {
+    localStorage.setItem("verified", "true");
+    passwordScreen.classList.remove("visible");
+    passwordScreen.classList.add("hidden");
+    showSplashOrRedirect();
+  } else {
+    // Show error
+    passwordError.style.display = "block";
+    passwordInput.value = "";
+    passwordSubmitBtn.disabled = true;
+
+    // Hide error after 3s
+    setTimeout(() => {
+      passwordError.style.display = "none";
+    }, 3000);
+  }
+}
+
+// 9) When user clicks "Accept" at end of onboarding
+function handleAccept() {
+  const rawName = nameInput.value.trim();
+  const nameIsValid = /^[A-Za-z'\- ]{2,20}$/.test(rawName);
+  if (!nameIsValid) {
+    alert("Please enter a valid name (2-20 letters, spaces, apostrophes, or hyphens).");
+    return;
   }
 
-  document.addEventListener("DOMContentLoaded", main);
+  // Store data locally
+  localStorage.setItem("name", rawName);
+  localStorage.setItem("selectedJobRole", jobSelectElement.value);
+  localStorage.setItem("selectedExperience", experienceSelect.value);
+
+  // Focus array
+  const selectedFocusValues = Array.from(focusCheckboxes)
+    .filter(cb => cb.checked)
+    .map(cb => cb.value);
+  localStorage.setItem("selectedFocus", JSON.stringify(selectedFocusValues));
+
+  localStorage.setItem("contactInfo", contactInput.value);
+
+  // NEW SESSION ID LOGIC:
+  // If we don't have a sessionId yet, create one
+  if (!localStorage.getItem("sessionId")) {
+    localStorage.setItem("sessionId", `user-${Date.now()}`);
+  }
+
+  // Build the object to post to the server
+  const userInfo = {
+    // Include our stable sessionId
+    sessionId: localStorage.getItem("sessionId"),
+
+    name: rawName,
+    role: jobSelectElement.value,
+    experience: experienceSelect.value,
+    focus: selectedFocusValues,
+    latitude: localStorage.getItem("latitude"),
+    longitude: localStorage.getItem("longitude"),
+    country: localStorage.getItem("country"),
+    iso2: localStorage.getItem("iso2"),
+    classification: localStorage.getItem("classification"),
+    area: localStorage.getItem("area"),
+    contactInfo: contactInput.value,
+    dateTime: new Date().toLocaleString("en-GB", { timeZone: "UTC" }),
+    // add any other fields you like
+  };
+
+  // Post to server so it appears on /view-records
+  fetch("https://alan.up.railway.app/record-info", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(userInfo)
+  })
+  .then(resp => resp.text())
+  .then(data => {
+    console.log("Record saved:", data);
+  })
+  .catch(err => {
+    console.error("Error saving record:", err);
+  });
+
+  // Fade to black
+  blackScreen.style.visibility = "visible";
+  blackScreen.style.opacity = 1;
+  setTimeout(() => {
+    skyImage.style.transform = "scale(1.3)";
+    skyImage.style.filter = "blur(0px)";
+  }, 200);
+
+  // Redirect after fade
+  setTimeout(() => {
+    blackScreen.style.opacity = 0;
+    setTimeout(() => {
+      window.location.href = "home.html";
+    }, 250);
+  }, 6000);
+}
+
+// 10) Main initialisation
+function main() {
+  checkPasswordStatus();
+  fetchIPBasedLocation();
+  initEventListeners();
+}
+
+document.addEventListener("DOMContentLoaded", main);
+
   </script>
 </body>
 </html>

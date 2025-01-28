@@ -6,41 +6,35 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Change this to your desired password, or rely on an environment variable
+// Change this to your own desired password, or rely on an environment variable
 const PASSWORD = process.env.AUTH_PASSWORD || '662023';
-console.log("Configured password:", PASSWORD); // For debugging
+console.log("Configured password:", PASSWORD);
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
-// Serve static files from the 'public' directory
+// Serve static files from 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Route to serve the main onboarding page (index.html)
+// Serve index.html on GET /
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Route to serve the view-records page
+// Serve view-records.html on GET /view-records
 app.get('/view-records', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'view-records.html'));
 });
 
-// 1) Endpoint to record user information
+// 1) Store user info (POST /record-info)
 app.post('/record-info', (req, res) => {
-  /**
-   * Expecting body fields from the onboarding:
-   * sessionId (optional if you use it)
-   * name, role, experience, focus (array),
-   * latitude, longitude, country, iso2, classification, area,
-   * contactInfo, dateTime, version, selectedAgent, etc.
-   */
-  const {
+  // Extract fields sent by the onboarding page
+  let {
     sessionId,
     name,
     role,
     experience,
-    focus,             // array of strings
+    focus,
     latitude,
     longitude,
     country,
@@ -53,9 +47,14 @@ app.post('/record-info', (req, res) => {
     selectedAgent
   } = req.body;
 
-  // Build an object to store
+  // If no sessionId is provided, generate one
+  if (!sessionId) {
+    sessionId = `anon-${Date.now()}`;
+  }
+
+  // Build the new/updated record
   const userInfo = {
-    sessionId,     // if null or undefined, it just remains empty
+    sessionId,
     name,
     role,
     experience,
@@ -75,50 +74,50 @@ app.post('/record-info', (req, res) => {
   const filePath = path.join(__dirname, 'user-info.json');
 
   fs.readFile(filePath, (err, data) => {
-    let json = [];
+    let records = [];
     if (!err) {
-      json = JSON.parse(data);
-    }
-
-    // If you are using sessionId to detect existing user, do that here:
-    let existingUserIndex = -1;
-    if (sessionId) {
-      existingUserIndex = json.findIndex(record => record.sessionId === sessionId);
-    }
-
-    if (existingUserIndex !== -1) {
-      // If user already exists, increment refreshCount
-      if (!json[existingUserIndex].refreshCount) {
-        json[existingUserIndex].refreshCount = 1;
+      try {
+        records = JSON.parse(data);
+      } catch (parseErr) {
+        console.error("Could not parse user-info.json:", parseErr);
       }
-      json[existingUserIndex].refreshCount += 1;
+    }
 
-      // Optionally update other fields if needed:
-      json[existingUserIndex] = { 
-        ...json[existingUserIndex],
-        ...userInfo 
+    // Find if this sessionId already exists
+    const existingIndex = records.findIndex(r => r.sessionId === sessionId);
+
+    if (existingIndex !== -1) {
+      // Update existing record
+      // Keep existing refreshCount, or set to 1 if missing
+      const existingRecord = records[existingIndex];
+      const currentCount = existingRecord.refreshCount || 1;
+
+      records[existingIndex] = {
+        ...existingRecord,
+        ...userInfo,
+        refreshCount: currentCount + 1
       };
     } else {
-      // If new user
+      // Create a new record
       userInfo.refreshCount = 1;
-      json.push(userInfo);
+      records.push(userInfo);
     }
 
-    fs.writeFile(filePath, JSON.stringify(json, null, 2), (writeErr) => {
+    // Write back to file
+    fs.writeFile(filePath, JSON.stringify(records, null, 2), (writeErr) => {
       if (writeErr) {
-        console.error("Error writing user info:", writeErr);
+        console.error("Error writing user-info.json:", writeErr);
         return res.status(500).send('Error saving data');
       }
-      // End the response
       res.send('OK');
     });
   });
 });
 
-// 2) Endpoint to fetch records with password protection
+// 2) Fetch records with password protection (POST /fetch-records)
 app.post('/fetch-records', (req, res) => {
   const { password } = req.body;
-  console.log("Received password:", password); // debug log
+  console.log("Received password:", password);
 
   if (password !== PASSWORD) {
     return res.status(401).send('Invalid password');
@@ -128,17 +127,24 @@ app.post('/fetch-records', (req, res) => {
 
   fs.readFile(filePath, (err, data) => {
     if (err) {
+      // If the file does not exist, return an empty array
       if (err.code === 'ENOENT') {
-        // If file doesn't exist, return empty array
         return res.json([]);
-      } else {
-        console.error("Error reading user-info.json:", err);
-        return res.status(500).send('Error reading user info');
       }
+      console.error("Error reading user-info.json:", err);
+      return res.status(500).send('Error reading user info');
     }
 
-    const records = JSON.parse(data);
-    // Return them as JSON
+    let records;
+    try {
+      records = JSON.parse(data);
+    } catch (parseErr) {
+      console.error("Could not parse user-info.json:", parseErr);
+      // If file is corrupted, fallback to empty array
+      return res.json([]);
+    }
+
+    // Return the array
     res.json(records);
   });
 });
