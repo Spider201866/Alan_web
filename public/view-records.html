@@ -1,50 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <title>View Records</title>
+  <title>Alan Records</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- 
-    **********************************************
-    *                 PAGE STYLES               *
-    **********************************************
-    - Global styling (font, reset)
-    - Table styling for records display
-    - Refresh icon styling with hover & active effects
-    - Map container (hidden by default)
-  -->
+  <!-- Leaflet for maps -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
     /* Global resets & typography */
-    body, html {
-      font-family: "Calibri Light", Arial, sans-serif; /* Default font for the entire page */
+    html, body {
       margin: 0;
       padding: 0;
-      overflow: hidden;
+      font-family: "Calibri Light", Arial, sans-serif;
     }
 
-    /* Heading (h1) styling */
+    /* Page heading */
     h1 {
-      font-size: 40px; /* Specific font size for headings */
       text-align: center;
-      margin-top: 50px;
+      margin-top: 40px;
+      font-size: 32px;
     }
-
-    /* Class for 'Alan' to be bolded */
     .bold {
       font-weight: bold;
     }
-
-    /* Class for 'Onboarding' to be normal weight */
     .light {
       font-weight: normal;
     }
 
-    /* Container for records table and general layout */
+    /* Container for main content */
     .container {
-      padding: 0 20px; /* Adds 20px padding on the left and right */
+      padding: 0 20px;
     }
 
     /* Table styling */
@@ -57,12 +42,21 @@
       border: 1px solid black;
       padding: 10px;
       text-align: left;
+      vertical-align: top;
     }
     th {
       background-color: #f2f2f2;
     }
 
-    /* Refresh icon (↻) */
+    /* Map container (initially hidden) */
+    .map-container {
+      width: 100%;
+      height: 900px;
+      margin-top: 20px;
+      display: none;
+    }
+
+    /* Refresh icon */
     .refresh-icon {
       cursor: pointer;
       font-size: 30px;
@@ -91,212 +85,327 @@
       border: none;
     }
 
-    /* Map container (hidden by default) */
-    .map-container {
-      width: 100%;
-      height: 900px;
-      margin-top: 20px;
-      display: none;
+    /* Password screen styling (like index) */
+    .password-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+    }
+    .password-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .password-column {
+      display: flex;
+      flex-direction: column;
+      margin-right: 30px;
+    }
+    /* Hide/show utility classes */
+    .hidden {
+      display: none !important;
     }
   </style>
 </head>
 
 <body>
-  <!-- 
-    **********************************************
-    *           PAGE TITLE & CONTAINERS         *
-    **********************************************
-    - Title: Alan Onboarding
-    - Password input & Submit button
-    - Refresh icon (hidden until valid password)
-    - Records display
-    - Map container
-  -->
-  <div style="text-align: center; margin-top: 50px;">
-    <h1>
-      <span class="bold">Alan</span>
-      <span class="light">Onboarding</span>
-    </h1> 
-    <!-- 'Alan' is bolded, 'Onboarding' is normal -->
+  <!-- PAGE TITLE -->
+  <h1>
+    <span class="bold">Al</span><span class="light">an</span> Records
+  </h1>
 
-    <!-- Password input & submit -->
-    <div id="password-container">
-      <input 
-        type="password" 
-        id="password" 
-        class="rounded-box" 
-        placeholder="Password"
-      >
-      <button 
-        id="submitPassword" 
-        class="rounded-button"
+  <!-- PASSWORD SCREEN -->
+  <div class="password-screen" id="passwordScreen">
+    <h2 style="margin-bottom: 40px; font-weight: normal;">
+      Enter your 
+      <span style="font-weight: bold; font-family: 'Quicksand', sans-serif;">
+        <span style="color: red;">Al</span>an
+      </span> 
+      invite password
+    </h2>
+
+    <!-- Row holding input/error and button -->
+    <div class="password-row">
+      <div class="password-column">
+        <input 
+          type="password"
+          id="passwordInput"
+          placeholder="Password"
+          style="
+            color: grey;
+            padding: 12px;
+            width: 220px;
+            font-size: 16px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+          "
+        />
+        <p
+          id="passwordError"
+          style="
+            color: red;
+            display: none;
+            width: 220px;
+            text-align: center;
+            margin-top: 6px;
+            margin-bottom: 0;
+          "
+        >
+          Invalid password
+        </p>
+      </div>
+      <button
+        id="passwordSubmitBtn"
+        disabled
+        style="
+          padding: 12px;
+          font-size: 16px;
+          border-radius: 12px;
+          border: 1px solid #ccc;
+          cursor: pointer;
+          margin-top: -15px; /* tweak if needed */
+        "
       >
         Submit
       </button>
     </div>
 
-    <!-- Refresh icon (hidden by default) -->
-    <div id="refresh-container" style="display: none;">
-      <span id="refresh" class="refresh-icon">&#x21bb;</span>
-    </div>
+    <!-- "No or wrong code?" line -->
+    <p
+      style="
+        margin-top: 50px;
+        font-style: italic;
+        font-size: 14px; 
+        color: black;
+        text-align: center;
+      "
+    >
+      No or wrong code? Contact us 
+      <a 
+        href="https://medicine.st-andrews.ac.uk/arclight/contact/" 
+        style="color: blue;"
+        target="_blank"
+      >
+        here
+      </a>
+    </p>
+  </div>
+  <!-- END PASSWORD SCREEN -->
 
-    <!-- Records container -->
-    <div class="container">
-      <div id="records" style="margin-top: 20px;"></div>
-    </div>
-
-    <!-- Map container (initially hidden) -->
-    <div id="map" class="map-container"></div>
+  <!-- REFRESH ICON (hidden initially) -->
+  <div id="refreshContainer" class="hidden" style="text-align: center; margin-top: 20px;">
+    <span id="refreshIcon" class="refresh-icon">&#x21bb;</span>
   </div>
 
-  <!-- 
-    **********************************************
-    *             LEAFLET & JAVASCRIPT          *
-    **********************************************
-    - Uses Leaflet for map rendering
-    - Fetch & display records from server (POST /fetch-records)
-    - Password protection logic
-    - Refresh icon functionality
-    - "Show Map" button triggers Leaflet map
-  -->
+  <!-- RECORDS CONTAINER -->
+  <div class="container">
+    <div id="records" style="margin-top: 20px;"></div>
+  </div>
+
+  <!-- MAP CONTAINER -->
+  <div id="map" class="map-container"></div>
+
+  <!-- LEAFLET SCRIPT -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- MAIN SCRIPT -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const passwordInput = document.getElementById('password');
-      const submitButton = document.getElementById('submitPassword');
-      const refreshIcon = document.getElementById('refresh');
-      const passwordContainer = document.getElementById('password-container');
-      const refreshContainer = document.getElementById('refresh-container');
-      const mapContainer = document.getElementById('map');
-      let currentPassword = '';
+    // References
+    const passwordScreen   = document.getElementById('passwordScreen');
+    const passwordInput    = document.getElementById('passwordInput');
+    const passwordError    = document.getElementById('passwordError');
+    const passwordSubmitBtn= document.getElementById('passwordSubmitBtn');
 
-      // Function to fetch records from server
-      function fetchRecords(password) {
-        fetch('/fetch-records', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache' // Disable cache
-          },
-          body: JSON.stringify({ password })
-        })
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error('Invalid password');
-          }
-        })
-        .then(data => {
-          const recordsDiv = document.getElementById('records');
-          if (data.length === 0) {
-            recordsDiv.innerHTML = '<p>No records found.</p>';
-          } else {
-            let table = `<table>
-                          <thead>
-                            <tr>
-                              <th>No.</th>
-                              <th>Name</th>
-                              <th>Role</th>
-                              <th>Latitude</th>
-                              <th>Longitude</th>
-                              <th>Country</th>
-                              <th>Area</th>
-                              <th>Contact</th>
-                              <th>Version & Agent</th>
-                              <th>Date & Time</th>
-                              <th>Refresh Count</th>
-                              <th>Map</th>
-                            </tr>
-                          </thead>
-                          <tbody>`;
+    const refreshContainer = document.getElementById('refreshContainer');
+    const refreshIcon      = document.getElementById('refreshIcon');
+    const recordsDiv       = document.getElementById('records');
 
-            data.forEach((record, index) => {
-              const countryDetails = `${record.country} (${record.iso_a3}) [${record.classification}]`;
-              const versionAgent = `${record.version}, ${record.selectedAgent}`;
-              const refreshCount = record.refreshCount || 1;
-              table += `<tr>
-                          <td>${index + 1}</td>
-                          <td>${record.name}</td>
-                          <td>${record.role}${record.roleClassification}</td>
-                          <td>${record.latitude}</td>
-                          <td>${record.longitude}</td>
-                          <td>${countryDetails}</td>
-                          <td>${record.area}</td>
-                          <td>${record.contactInfo}</td>
-                          <td>${versionAgent}</td>
-                          <td>${record.dateTime}</td>
-                          <td>${refreshCount}</td>
-                          <td><button onclick="showMap(${record.latitude}, ${record.longitude})">Show Map</button></td>
-                        </tr>`;
-            });
+    const mapContainer     = document.getElementById('map');
+    let map; // global map instance
+    let currentPassword = '';
 
-            table += `</tbody></table>`;
-            recordsDiv.innerHTML = table;
+    // List of valid passwords for client-side check, if desired
+    const validPasswords = [
+      "662023",
+      /* add more if you like */
+    ];
 
-            // Show refresh icon, hide password fields
-            refreshContainer.style.display = 'inline';
-            passwordContainer.style.display = 'none';
-          }
-        })
-        .catch(error => {
-          alert(error.message);
-        });
-      }
+    // On load, set up event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      passwordInput.addEventListener('input', handlePasswordInput);
+      passwordSubmitBtn.addEventListener('click', handleSubmit);
 
-      // Submit button logic
-      submitButton.addEventListener('click', function() {
-        currentPassword = passwordInput.value;
-        fetchRecords(currentPassword);
-      });
-
-      // Enter key submission
-      passwordInput.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-          currentPassword = passwordInput.value;
-          fetchRecords(currentPassword);
+      passwordInput.addEventListener('keypress', (evt) => {
+        if (evt.key === 'Enter') {
+          handleSubmit();
         }
       });
 
-      // Refresh icon logic
-      refreshIcon.addEventListener('click', function() {
-        console.log("Refresh icon clicked.");
-        if (currentPassword) {
-          fetchRecords(currentPassword);
-        }
-      });
-
-      refreshIcon.addEventListener('mouseover', function() {
-        console.log("Mouse over refresh icon.");
-      });
-
-      refreshIcon.addEventListener('mouseout', function() {
-        console.log("Mouse out of refresh icon.");
-      });
+      refreshIcon.addEventListener('click', handleRefresh);
     });
 
-    let map; // Global map variable
+    // Enable/disable button based on password input
+    function handlePasswordInput() {
+      passwordError.style.display = 'none';
+      passwordSubmitBtn.disabled = (passwordInput.value.trim() === '');
+    }
+
+    // On submit, check password
+    function handleSubmit() {
+      const entered = passwordInput.value.trim();
+      if (validPasswords.includes(entered)) {
+        currentPassword = entered;
+        // Hide password screen
+        passwordScreen.classList.add('hidden');
+        // Fetch & show records
+        fetchRecords(currentPassword);
+      } else {
+        showInvalidPassword();
+      }
+    }
+
+    // If password is invalid
+    function showInvalidPassword() {
+      passwordError.style.display = 'block';
+      passwordInput.value = '';
+      passwordSubmitBtn.disabled = true;
+      // Hide error after 3s
+      setTimeout(() => {
+        passwordError.style.display = 'none';
+      }, 3000);
+    }
+
+    // Fetch records from your server
+    function fetchRecords(password) {
+      fetch('/fetch-records', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache'
+        },
+        body: JSON.stringify({ password })
+      })
+      .then(response => {
+        if (!response.ok) throw new Error('Invalid password');
+        return response.json();
+      })
+      .then(data => {
+        if (!data.length) {
+          recordsDiv.innerHTML = '<p>No records found.</p>';
+        } else {
+          buildRecordsTable(data);
+        }
+        // Show refresh icon
+        refreshContainer.classList.remove('hidden');
+      })
+      .catch(err => {
+        alert(err.message);
+      });
+    }
+
+    // Build the records table with all fields
+    function buildRecordsTable(data) {
+      // We show many columns: name, role, experience, focus, contact, lat/long, country, iso2, classification, area, dateTime, version, agent, refreshCount
+      // Modify or remove columns if your server is not storing them
+      let table = `
+        <table>
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Experience</th>
+              <th>Focus</th>
+              <th>Contact</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Country (ISO2) [Classification]</th>
+              <th>Area</th>
+              <th>Date & Time</th>
+              <th>Version & Agent</th>
+              <th>Refresh Count</th>
+              <th>Map</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      data.forEach((record, index) => {
+        // Focus is likely an array. We'll join with commas if present
+        const focusStr = Array.isArray(record.focus) ? record.focus.join(", ") : (record.focus || "");
+        
+        // Some server fields might be absent, so use blank if not found
+        const role         = record.role         || "";
+        const experience   = record.experience   || "";
+        const contactInfo  = record.contactInfo  || "";
+        const latitude     = record.latitude     || "";
+        const longitude    = record.longitude    || "";
+        const country      = record.country      || "";
+        const iso2         = record.iso2         || "";
+        const classification = record.classification || "";
+        const area         = record.area         || "";
+        const dateTime     = record.dateTime     || "";
+        const version      = record.version      || "";
+        const selectedAgent= record.selectedAgent|| "";
+        const refreshCount = record.refreshCount || 0;  // or 1 if you prefer a default
+
+        // Combine country/iso2/classification into one line
+        const countryDisplay = `${country} (${iso2}) [${classification}]`;
+        const versionAgent   = version ? `${version}, ${selectedAgent}` : `${selectedAgent}`;
+
+        table += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${record.name || ""}</td>
+            <td>${role}</td>
+            <td>${experience}</td>
+            <td>${focusStr}</td>
+            <td>${contactInfo}</td>
+            <td>${latitude}</td>
+            <td>${longitude}</td>
+            <td>${countryDisplay}</td>
+            <td>${area}</td>
+            <td>${dateTime}</td>
+            <td>${versionAgent}</td>
+            <td>${refreshCount}</td>
+            <td>
+              <button onclick="showMap(${parseFloat(latitude) || 0}, ${parseFloat(longitude) || 0})">
+                Show Map
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+
+      table += `</tbody></table>`;
+      recordsDiv.innerHTML = table;
+    }
+
+    // Handle refresh
+    function handleRefresh() {
+      if (currentPassword) {
+        fetchRecords(currentPassword);
+      } else {
+        alert("No valid password found.");
+      }
+    }
 
     // Show Leaflet map
-    function showMap(latitude, longitude) {
-      const mapContainer = document.getElementById('map');
+    function showMap(lat, lng) {
       mapContainer.style.display = 'block';
-      mapContainer.innerHTML = ''; // Clear previous map container content
+      mapContainer.innerHTML = ''; // Clear previous map
 
-      // Remove old map instance if exists
-      if (map) {
-        map.remove();
-      }
+      if (map) map.remove(); // remove old instance
 
-      // Initialize new map
-      map = L.map('map').setView([latitude, longitude], 13);
+      map = L.map('map').setView([lat, lng], 13);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution: '&copy; OpenStreetMap contributors'
       }).addTo(map);
 
-      // Marker with custom icon
-      L.marker([latitude, longitude], {
+      // Add a marker
+      L.marker([lat, lng], {
         icon: L.icon({
           iconUrl: 'redpin.png',
           iconSize: [46, 76],
@@ -308,5 +417,4 @@
     }
   </script>
 </body>
-
 </html>

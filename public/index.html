@@ -1,16 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Splash Screen</title>
+  <meta charset="UTF-8">
+  <title>Alan Onboarding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles_index.css">
 </head>
 
 <body>
+  <!-- PASSWORD SCREEN -->
+  <div class="password-screen visible" id="passwordScreen">
+    <h2 style="margin-bottom: 40px; font-weight: normal;">
+      Enter your 
+      <span style="
+        font-weight: bold; 
+        font-family: 'Quicksand', sans-serif;
+      ">
+        <span style="color: red;">Al</span>an
+      </span> 
+      invite password
+    </h2>
+
+    <!-- Row holding (input + error) and button side by side -->
+    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+      <!-- Column for input and error -->
+      <div style="display: flex; flex-direction: column; margin-right: 30px;">
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="Password"
+          style="
+            color: grey;
+            padding: 12px;
+            width: 220px;
+            font-size: 16px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px; /* Keep your existing gap */
+          "
+        />
+        <p
+          id="passwordError"
+          style="
+            color: red;
+            display: none; 
+            width: 220px; 
+            text-align: center;
+            margin-top: 6px;
+            margin-bottom: 0;
+          "
+        >
+          Invalid password
+        </p>
+      </div>
+
+      <button
+        id="passwordSubmitBtn"
+        disabled
+        style="
+          padding: 12px;
+          font-size: 16px;
+          border-radius: 12px;
+          border: 1px solid #ccc;
+          cursor: pointer;
+          margin-top: -15px; /* Slight nudge upwards if needed */
+        "
+      >
+        Submit
+      </button>
+    </div>
+
+    <!-- Small italic black text line below, centred -->
+    <p style="
+      margin-top: 50px;
+      font-style: italic;
+      font-size: 14px; 
+      color: black;
+      text-align: center;
+    ">
+      No or wrong code? Contact us 
+      <a 
+        href="https://medicine.st-andrews.ac.uk/arclight/contact/" 
+        style="color: blue;"
+        target="_blank"
+      >
+        here
+      </a>
+    </p>
+  </div>
+  <!-- END NEW PASSWORD SCREEN -->
+
   <!-- SPLASH SCREEN -->
-  <div class="splash-screen visible">
+  <div class="splash-screen hidden">
     <img id="logo1" src="./Q.png" alt="Q Logo" />
     <img id="logo2" src="./AP.png" alt="AP Logo" />
     <p>Eye, Ear, Skin AI Assistant</p>
@@ -27,15 +108,16 @@
     <p class="good-luck">Good luck!</p>
 
     <!-- NAME INPUT -->
-    <input 
+    <input
       type="text"
       id="nameInput"
       class="name-input"
       placeholder="Name"
-      title="2-20 letters, spaces, apostrophes, or hyphens only"
-      style="color: grey;"  
+      title="2-20 letters, spaces, apostrophes or hyphens only"
+      style="color: grey;"
     />
 
+    <!-- JOB ROLE -->
     <select id="job-role-select" class="job-role-dropdown">
       <option value="" disabled selected hidden>Role</option>
       <option value="Health worker">Health worker</option>
@@ -55,6 +137,7 @@
       <option value="Dermatologist">Dermatologist</option>
     </select>
 
+    <!-- EXPERIENCE -->
     <select id="experience-select" class="experience-dropdown">
       <option value="" disabled selected hidden>Experience</option>
       <option value="<1 yr">&lt;1 yr</option>
@@ -63,7 +146,7 @@
       <option value=">7 yr">&gt;7 yr</option>
     </select>
 
-    <!-- FOCUS BUTTON AND DROPDOWN WITH MULTIPLE CHECKBOXES -->
+    <!-- AIMS BUTTON & DROPDOWN -->
     <div class="focus-container">
       <button id="focusToggleBtn" class="focus-button">Aims</button>
       <div id="focusDropdown" class="focus-dropdown hidden">
@@ -82,7 +165,8 @@
       </div>
     </div>
 
-    <input 
+    <!-- CONTACT INFO -->
+    <input
       type="text"
       id="contactInput"
       class="contact-input"
@@ -105,23 +189,26 @@
   /*********************************************/
   /*               GLOBAL REFERENCES           */
   /*********************************************/
-  const splashScreenRef  = document.querySelector(".splash-screen");
-  const instructionRef   = document.querySelector(".instruction-screen");
-  const blackScreen      = document.getElementById("blackScreen");
-  const skyImage         = blackScreen.querySelector("img");
+  const passwordScreen     = document.getElementById("passwordScreen");
+  const passwordInput      = document.getElementById("passwordInput");
+  const passwordSubmitBtn  = document.getElementById("passwordSubmitBtn");
+  const passwordError      = document.getElementById("passwordError");
 
-  const nameInput        = document.getElementById("nameInput");
-  const jobSelectElement = document.getElementById("job-role-select");
-  const experienceSelect = document.getElementById("experience-select");
-  const contactInput     = document.getElementById("contactInput");
-  const acceptButton     = document.getElementById("acceptButton");
+  const splashScreenRef    = document.querySelector(".splash-screen");
+  const instructionRef     = document.querySelector(".instruction-screen");
+  const blackScreen        = document.getElementById("blackScreen");
+  const skyImage           = blackScreen.querySelector("img");
 
-  // Focus Button & Dropdown
-  const focusToggleBtn   = document.getElementById("focusToggleBtn");
-  const focusDropdown    = document.getElementById("focusDropdown");
-  const focusCheckboxes  = document.querySelectorAll('#focusDropdown input[name="focus"]');
+  const nameInput          = document.getElementById("nameInput");
+  const jobSelectElement   = document.getElementById("job-role-select");
+  const experienceSelect   = document.getElementById("experience-select");
+  const contactInput       = document.getElementById("contactInput");
+  const acceptButton       = document.getElementById("acceptButton");
 
-  // IP-based Location Variables
+  const focusToggleBtn     = document.getElementById("focusToggleBtn");
+  const focusDropdown      = document.getElementById("focusDropdown");
+  const focusCheckboxes    = document.querySelectorAll('#focusDropdown input[name="focus"]');
+
   let ipLatitude  = "Not set";
   let ipLongitude = "Not set";
   let ipCountry   = "Not set";
@@ -130,265 +217,302 @@
 
   // Classification Arrays (2-letter ISO)
   const classificationLookup = {
-      "HI": [
-          "QA","MO","LU","SG","BN","IE","NO","KW","AE","CH","HK","SM","US","SA","NL","IS","BH","SE",
-          "DE","AU","TW","DK","AT","CA","BE","OM","FI","GB","FR","JP","MT","KR","NZ","ES","IT","PR","CY","IL","CZ"
-      ],
-      "MI": [
-          "GQ","SI","SK","LT","EE","TT","PT","PL","HU","MY","SC","RU","GR","LV","KN","AG","TR","KZ","BS","CL","PA",
-          "HR","RO","UY","MU","BG","AR","IR","MX","LB","GA","MV","TM","BY","BW","TH","CN","BR","ZA","IN"
-      ],
-      "LI": [
-          "BB","ME","AZ","CR","IQ","DO","PW","MK","RS","DZ","GD","CO","SR","LC","PE","LK","EG","MN","JO","AL","VE",
-          "ID","DM","XK","NR","TN","VC","NA","BA","EC","GE","SZ","FJ","LY","PY","JM","AM","SV","BT","UA","MA","BZ",
-          "GY","PH","GT","BO","LA","UZ","CV","VN","PK"
-      ],
-      "VLI": [
-          "AO","CG","MM","NG","NI","WS","MD","TO","HN","TL","GH","SD","BD","MR","KH","ZM","LS","CI","TV","PG","KG",
-          "DJ","KE","MH","FM","CM","TZ","ST","TJ","VU","NP","SN","TD","UG","YE","ZW","BJ","ML","SB","ET","RW","GN",
-          "KI","AF","BF","HT","GW","SL","GM","SS","TG","KM","MG","ER","MZ","MW","NE","LR","BI","CD","CF"
-      ]
+    "HI": [ "QA","MO","LU","SG","BN","IE","NO","KW","AE","CH","HK","SM","US","SA","NL","IS","BH","SE",
+            "DE","AU","TW","DK","AT","CA","BE","OM","FI","GB","FR","JP","MT","KR","NZ","ES","IT","PR","CY","IL","CZ" ],
+    "MI": [ "GQ","SI","SK","LT","EE","TT","PT","PL","HU","MY","SC","RU","GR","LV","KN","AG","TR","KZ","BS","CL","PA",
+            "HR","RO","UY","MU","BG","AR","IR","MX","LB","GA","MV","TM","BY","BW","TH","CN","BR","ZA","IN" ],
+    "LI": [ "BB","ME","AZ","CR","IQ","DO","PW","MK","RS","DZ","GD","CO","SR","LC","PE","LK","EG","MN","JO","AL","VE",
+            "ID","DM","XK","NR","TN","VC","NA","BA","EC","GE","SZ","FJ","LY","PY","JM","AM","SV","BT","UA","MA","BZ",
+            "GY","PH","GT","BO","LA","UZ","CV","VN","PK" ],
+    "VLI": ["AO","CG","MM","NG","NI","WS","MD","TO","HN","TL","GH","SD","BD","MR","KH","ZM","LS","CI","TV","PG","KG",
+            "DJ","KE","MH","FM","CM","TZ","ST","TJ","VU","NP","SN","TD","UG","YE","ZW","BJ","ML","SB","ET","RW","GN",
+            "KI","AF","BF","HT","GW","SL","GM","SS","TG","KM","MG","ER","MZ","MW","NE","LR","BI","CD","CF"]
   };
 
+  // NEW: List of valid passwords (client-side check)
+  const validPasswords = [
+    "662023",           // 1
+    "slitlamp286",      // 2
+    "fundus512",        // 3
+    "retina728",        // 4
+    "cornea203",        // 5
+    "jobson892",        // 6
+    "otoscope414",      // 7
+    "earcare917",       // 8
+    "auricle345",       // 9
+    "skincheck112",     // 10
+    "dermatol559",      // 11
+    "sunhat192",        // 12
+    "uvprotect789",     // 13
+    "dermascope245",    // 14
+    "macula009",        // 15
+    "hearing095",       // 16
+    "earhealth770",     // 17
+    "visual556",        // 18
+    "skinshield356",    // 19
+    "redreflex609",     // 20
+    "pinna304"          // 21
+  ];
+
   /*********************************************/
-  /*               HELPER FUNCTIONS            */
+  /*             HELPER FUNCTIONS              */
   /*********************************************/
-  
-  // 1) Animate the splash & switch to instructions
+
+  // 1) Check if password is already verified
+  function checkPasswordStatus() {
+    const isVerified = localStorage.getItem("verified");
+    if (isVerified === "true") {
+      // Skip password screen
+      passwordScreen.classList.remove("visible");
+      passwordScreen.classList.add("hidden");
+      showSplashOrRedirect();
+    } else {
+      // Show password screen
+      passwordScreen.classList.add("visible");
+      passwordScreen.classList.remove("hidden");
+    }
+  }
+
+  // 2) If splash not shown before, show. Otherwise skip to home
+  function showSplashOrRedirect() {
+    if (!sessionStorage.getItem("splashShown")) {
+      sessionStorage.setItem("splashShown", "true");
+      showSplashScreen();
+    } else {
+      // If user revisits index after verification, skip straight to home
+      window.location.href = "home.html";
+    }
+  }
+
+  // 3) Splash screen animation
   function showSplashScreen() {
-      const logo1 = document.getElementById("logo1");
-      const logo2 = document.getElementById("logo2");
+    const logo1 = document.getElementById("logo1");
+    const logo2 = document.getElementById("logo2");
 
-      // Initial small scale or rotation
-      logo1.style.transform = "scale(0.8)";
-      logo2.style.transform = "rotateX(-90deg)";
+    logo1.style.transform = "scale(0.8)";
+    logo2.style.transform = "rotateX(-90deg)";
 
-      // Grow logo1 & unrotate logo2
-      setTimeout(() => {
-          logo1.style.transform = "scale(1)";
-          logo2.style.transform = "rotateX(0deg)";
-      }, 100);
+    setTimeout(() => {
+      logo1.style.transform = "scale(1)";
+      logo2.style.transform = "rotateX(0deg)";
+    }, 100);
 
-      // After 6s, hide splash & show instructions
-      setTimeout(() => {
-          splashScreenRef.classList.remove("visible");
-          splashScreenRef.classList.add("hidden");
-          instructionRef.classList.remove("hidden");
-          instructionRef.classList.add("visible");
-      }, 6000);
+    // After 1 second (shorter than original 6s), hide splash & show instructions
+    setTimeout(() => {
+      splashScreenRef.classList.remove("visible");
+      splashScreenRef.classList.add("hidden");
+      instructionRef.classList.remove("hidden");
+      instructionRef.classList.add("visible");
+    }, 1000);
   }
 
-  // 2) Fetch IP-based location
+  // 4) Fetch IP-based location
   function fetchIPBasedLocation() {
-      fetch("https://ipapi.co/json/")
-          .then(response => response.json())
-          .then(data => {
-              if (data) {
-                  ipLatitude  = data.latitude       || "Not set";
-                  ipLongitude = data.longitude      || "Not set";
-                  ipCountry   = data.country_name   || "Not set";
-                  ipArea      = data.city           || "Not set";
-                  ipISO2      = (data.country       || "Not set").toUpperCase();
+    fetch("https://ipapi.co/json/")
+      .then(response => response.json())
+      .then(data => {
+        if (data) {
+          ipLatitude  = data.latitude       || "Not set";
+          ipLongitude = data.longitude      || "Not set";
+          ipCountry   = data.country_name   || "Not set";
+          ipArea      = data.city           || "Not set";
+          ipISO2      = (data.country       || "Not set").toUpperCase();
 
-                  // Save to localStorage
-                  localStorage.setItem("latitude",  ipLatitude);
-                  localStorage.setItem("longitude", ipLongitude);
-                  localStorage.setItem("country",   ipCountry);
-                  localStorage.setItem("area",      ipArea);
-                  localStorage.setItem("iso2",      ipISO2);
+          // Save to localStorage
+          localStorage.setItem("latitude",  ipLatitude);
+          localStorage.setItem("longitude", ipLongitude);
+          localStorage.setItem("country",   ipCountry);
+          localStorage.setItem("area",      ipArea);
+          localStorage.setItem("iso2",      ipISO2);
 
-                  // Classify the 2-letter code
-                  storeClassifications(ipISO2);
-              }
-          })
-          .catch(error => {
-              console.error("Error fetching IP-based location:", error);
-          });
-  }
-
-  // 3) Classify user country
-  function storeClassifications(iso2) {
-      let classification = "Unknown";
-      for (const [key, values] of Object.entries(classificationLookup)) {
-          if (values.includes(iso2)) {
-              classification = key;
-              break;
-          }
-      }
-      localStorage.setItem("classification", classification);
-  }
-
-  // 4) Check form readiness
-  function checkSelections() {
-      // COLOR: Role & Experience
-      jobSelectElement.style.color = jobSelectElement.value ? "blue" : "grey";
-      experienceSelect.style.color = experienceSelect.value ? "blue" : "grey";
-
-      // NAME: If >=2 chars, go blue; else grey
-      if (nameInput.value.trim().length >= 2) {
-        nameInput.style.color = "blue";
-      } else {
-        nameInput.style.color = "grey";
-      }
-
-      // Is any focus checkbox selected?
-      const isAnyFocusSelected = Array.from(focusCheckboxes).some(cb => cb.checked);
-      focusToggleBtn.classList.toggle("entered", isAnyFocusSelected);
-
-      // Enable Accept if all fields & focus chosen
-      acceptButton.disabled = !(
-          nameInput.value.trim() &&
-          jobSelectElement.value &&
-          experienceSelect.value &&
-          isAnyFocusSelected &&
-          contactInput.value.trim()
-      );
-  }
-
-  // 5) Set up event listeners for inputs, focus & accept button
-  function initEventListeners() {
-      // Animate sky
-      skyImage.style.transform = "scale(1)";
-      skyImage.style.transition = "transform 4s ease-in-out, filter 4s ease-in-out";
-
-      // NAME INPUT: strip invalid chars, then color
-      nameInput.addEventListener("input", (e) => {
-        // 1) Strip invalid chars
-        e.target.value = e.target.value.replace(/[^A-Za-z'\- ]/g, "");
-
-        // 2) Limit to 20 characters
-        if (e.target.value.length > 20) {
-            e.target.value = e.target.value.substring(0, 20);
+          // Classify the 2-letter code
+          storeClassifications(ipISO2);
         }
-
-        // 3) Check everything again
-        checkSelections();
-        });
-
-
-      // Other inputs
-      jobSelectElement.addEventListener("change", checkSelections);
-      experienceSelect.addEventListener("change", checkSelections);
-      contactInput.addEventListener("input", () => {
-          contactInput.classList.toggle("entered", contactInput.value.trim() !== "");
-          checkSelections();
+      })
+      .catch(error => {
+        console.error("Error fetching IP-based location:", error);
       });
-
-      // Focus dropdown
-      focusToggleBtn.addEventListener("click", () => {
-          focusDropdown.classList.toggle("hidden");
-          focusDropdown.classList.toggle("visible");
-      });
-      document.addEventListener("click", (event) => {
-          if (!focusDropdown.contains(event.target) && event.target !== focusToggleBtn) {
-              focusDropdown.classList.add("hidden");
-              focusDropdown.classList.remove("visible");
-          }
-      });
-      focusCheckboxes.forEach((checkbox) => {
-          checkbox.addEventListener("change", checkSelections);
-      });
-
-      // Accept button
-      acceptButton.addEventListener("click", handleAccept);
   }
 
-  // 6) Handle Accept: final name check & fade to black
+  // 5) Classify user country
+  function storeClassifications(iso2) {
+    let classification = "Unknown";
+    for (const [key, values] of Object.entries(classificationLookup)) {
+      if (values.includes(iso2)) {
+        classification = key;
+        break;
+      }
+    }
+    localStorage.setItem("classification", classification);
+  }
+
+  // 6) Form readiness
+  function checkSelections() {
+    jobSelectElement.style.color = jobSelectElement.value ? "blue" : "grey";
+    experienceSelect.style.color = experienceSelect.value ? "blue" : "grey";
+
+    if (nameInput.value.trim().length >= 2) {
+      nameInput.style.color = "blue";
+    } else {
+      nameInput.style.color = "grey";
+    }
+
+    const isAnyFocusSelected = Array.from(focusCheckboxes).some(cb => cb.checked);
+    focusToggleBtn.classList.toggle("entered", isAnyFocusSelected);
+
+    acceptButton.disabled = !(
+      nameInput.value.trim() &&
+      jobSelectElement.value &&
+      experienceSelect.value &&
+      isAnyFocusSelected &&
+      contactInput.value.trim()
+    );
+  }
+
+  // 7) Event listeners
+  function initEventListeners() {
+    // Animate sky
+    skyImage.style.transform = "scale(1)";
+    skyImage.style.transition = "transform 4s ease-in-out, filter 4s ease-in-out";
+
+    nameInput.addEventListener("input", (e) => {
+      e.target.value = e.target.value.replace(/[^A-Za-z'\- ]/g, "");
+      if (e.target.value.length > 20) {
+        e.target.value = e.target.value.substring(0, 20);
+      }
+      checkSelections();
+    });
+
+    jobSelectElement.addEventListener("change", checkSelections);
+    experienceSelect.addEventListener("change", checkSelections);
+    contactInput.addEventListener("input", () => {
+      contactInput.classList.toggle("entered", contactInput.value.trim() !== "");
+      checkSelections();
+    });
+
+    focusToggleBtn.addEventListener("click", () => {
+      focusDropdown.classList.toggle("hidden");
+      focusDropdown.classList.toggle("visible");
+    });
+    document.addEventListener("click", (event) => {
+      if (!focusDropdown.contains(event.target) && event.target !== focusToggleBtn) {
+        focusDropdown.classList.add("hidden");
+        focusDropdown.classList.remove("visible");
+      }
+    });
+    focusCheckboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", checkSelections);
+    });
+
+    acceptButton.addEventListener("click", handleAccept);
+
+    // PASSWORD: input & submit
+    passwordInput.addEventListener("input", () => {
+      passwordSubmitBtn.disabled = (passwordInput.value.trim() === "");
+      passwordError.style.display = "none";
+    });
+    passwordSubmitBtn.addEventListener("click", verifyPassword);
+  }
+
+  // 8) Verify password (client-side check)
+  function verifyPassword() {
+    const entered = passwordInput.value.trim();
+    if (validPasswords.includes(entered)) {
+      localStorage.setItem("verified", "true");
+      passwordScreen.classList.remove("visible");
+      passwordScreen.classList.add("hidden");
+      showSplashOrRedirect();
+    } else {
+      // Show error
+      passwordError.style.display = "block";
+      passwordInput.value = "";
+      passwordSubmitBtn.disabled = true;
+
+      // Hide error after 3s
+      setTimeout(() => {
+        passwordError.style.display = "none";
+      }, 3000);
+    }
+  }
+
+  // 9) When user clicks "Accept" at end of onboarding
   function handleAccept() {
-      const rawName = nameInput.value.trim();
+    const rawName = nameInput.value.trim();
+    const nameIsValid = /^[A-Za-z'\- ]{2,20}$/.test(rawName);
+    if (!nameIsValid) {
+      alert("Please enter a valid name (2-20 letters, spaces, apostrophes, or hyphens).");
+      return;
+    }
 
-      // Final check: 2-20 chars, only letters, spaces, apostrophes, hyphens
-      const nameIsValid = /^[A-Za-z'\- ]{2,20}$/.test(rawName);
-      if (!nameIsValid) {
-          alert("Please enter a valid name (2-20 letters, spaces, apostrophes or hyphens).");
-          return; // Stop here
-      }
+    // Store data locally
+    localStorage.setItem("name", rawName);
+    localStorage.setItem("selectedJobRole", jobSelectElement.value);
+    localStorage.setItem("selectedExperience", experienceSelect.value);
 
-      // Store all data
-      localStorage.setItem("name", rawName);
-      localStorage.setItem("selectedJobRole", jobSelectElement.value);
-      localStorage.setItem("selectedExperience", experienceSelect.value);
+    // Focus array
+    const selectedFocusValues = Array.from(focusCheckboxes)
+      .filter(cb => cb.checked)
+      .map(cb => cb.value);
+    localStorage.setItem("selectedFocus", JSON.stringify(selectedFocusValues));
 
-      // Focus array
-      const selectedFocusValues = Array.from(focusCheckboxes)
-          .filter(cb => cb.checked)
-          .map(cb => cb.value);
-      localStorage.setItem("selectedFocus", JSON.stringify(selectedFocusValues));
+    localStorage.setItem("contactInfo", contactInput.value);
 
-      localStorage.setItem("contactInfo", contactInput.value);
+    // ALSO: post to server so it appears on /view-records
+    const userInfo = {
+      name: rawName,
+      role: jobSelectElement.value,
+      experience: experienceSelect.value,
+      focus: selectedFocusValues,
+      latitude: localStorage.getItem("latitude"),
+      longitude: localStorage.getItem("longitude"),
+      country: localStorage.getItem("country"),
+      iso2: localStorage.getItem("iso2"),
+      classification: localStorage.getItem("classification"),
+      area: localStorage.getItem("area"),
+      contactInfo: contactInput.value,
+      dateTime: new Date().toLocaleString("en-GB", { timeZone: "UTC" }),
+      // add any other fields you like
+    };
 
-      // Retrieve & build user info
-      const name          = localStorage.getItem("name")                || "Anonymous";
-      const role          = localStorage.getItem("selectedJobRole")     || "Not set";
-      const experience    = localStorage.getItem("selectedExperience")  || "Not set";
-      const focusRaw      = localStorage.getItem("selectedFocus");
-      const focus         = focusRaw ? JSON.parse(focusRaw) : [];
+    fetch("https://alan.up.railway.app/record-info", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userInfo)
+    })
+    .then(resp => resp.text())
+    .then(data => {
+      console.log("Record saved:", data);
+    })
+    .catch(err => {
+      console.error("Error saving record:", err);
+    });
 
-      const latitude      = localStorage.getItem("latitude")            || "Not set";
-      const longitude     = localStorage.getItem("longitude")           || "Not set";
-      const country       = localStorage.getItem("country")             || "Not set";
-      const iso2          = localStorage.getItem("iso2")                || "Not set";
-      const classification= localStorage.getItem("classification")      || "Unknown";
-      
-      const roleClassification = "";
-      const area         = localStorage.getItem("area")                 || "Not set";
-      const contactInfo  = localStorage.getItem("contactInfo")          || "Not set";
-      const version      = "1.0";
-      const dateTime     = new Date().toLocaleString("en-GB", { timeZone: "UTC" });
+    // Fade to black
+    blackScreen.style.visibility = "visible";
+    blackScreen.style.opacity = 1;
+    setTimeout(() => {
+      skyImage.style.transform = "scale(1.3)";
+      skyImage.style.filter = "blur(0px)";
+    }, 200);
 
-      const userInfo = {
-          name,
-          role,
-          experience,
-          focus,
-          latitude,
-          longitude,
-          country,
-          iso2,
-          classification,
-          roleClassification,
-          area,
-          contactInfo,
-          version,
-          dateTime
-      };
-
-      // Fade to black
-      blackScreen.style.visibility = "visible";
-      blackScreen.style.opacity = 1;
+    // Redirect after fade
+    setTimeout(() => {
+      blackScreen.style.opacity = 0;
       setTimeout(() => {
-          skyImage.style.transform = "scale(1.3)";
-          skyImage.style.filter = "blur(0px)";
-      }, 200);
-
-      // Redirect after fade
-      setTimeout(() => {
-          blackScreen.style.opacity = 0;
-          setTimeout(() => {
-              window.location.href = "home.html";
-          }, 250);
-      }, 6000);
+        window.location.href = "home.html";
+      }, 250);
+    }, 6000);
   }
 
-  // 7) Main initialisation
+  // 10) Main initialisation
   function main() {
-      // If splash not shown before, show it
-      if (!sessionStorage.getItem("splashShown")) {
-          sessionStorage.setItem("splashShown", "true");
-          showSplashScreen();
-      } else {
-          // If user revisits, skip splash
-          window.location.href = "home.html";
-      }
-
-      // Start IP-based location fetch
-      fetchIPBasedLocation();
-
-      // Set up event listeners
-      initEventListeners();
+    checkPasswordStatus();
+    fetchIPBasedLocation();
+    initEventListeners();
   }
 
-  // 8) Run main when DOM is ready
   document.addEventListener("DOMContentLoaded", main);
   </script>
 </body>
