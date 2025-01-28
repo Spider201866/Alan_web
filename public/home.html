@@ -134,27 +134,46 @@
             <button class="button grey" style="margin-right: 10px;">Tools</button>
             <!-- Language Button & Dropdown -->
             <div style="position: relative;">
-                <button class="button grey" id="language-button" 
-                        style="background: url('lang.jpg') no-repeat center center; 
-                               background-size: cover; 
-                               width: 32px; 
-                               height: 32px; 
-                               border: none;">
+                <button
+                  class="button grey"
+                  id="language-button"
+                  style="
+                    background: url('lang.jpg') no-repeat center center;
+                    background-size: cover;
+                    width: 32px;
+                    height: 32px;
+                    border: none;
+                  ">
                 </button>
-                <select id="language-dropdown" class="language-dropdown"
-                        style="display: none; position: absolute; top: 40px; left: 0;">
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                    <option value="es">Español</option>
-                    <option value="pt">Português</option>
-                    <option value="ar">العربية</option>
-                    <option value="sw">Kiswahili</option>
-                    <option value="cy">Cymraeg</option>
-                    <option value="ny">Chichewa</option>
-                    <option value="rw">Kinwanda</option>
-                    <option value="lg">Luganda</option>
-                </select>
-            </div>
+              
+                <!-- New custom dropdown container with clickable list items -->
+                <div
+                  id="language-dropdown"
+                  style="
+                    display: none;
+                    position: absolute;
+                    top: 40px;
+                    left: 0;
+                    background: #fff;
+                    border: 1px solid #ccc;
+                    z-index: 999;
+                  "
+                >
+                  <ul style="margin: 0; padding: 0; list-style: none;">
+                    <li data-value="en" style="padding: 8px; cursor: pointer;">English</li>
+                    <li data-value="fr" style="padding: 8px; cursor: pointer;">Français</li>
+                    <li data-value="es" style="padding: 8px; cursor: pointer;">Español</li>
+                    <li data-value="pt" style="padding: 8px; cursor: pointer;">Português</li>
+                    <li data-value="ar" style="padding: 8px; cursor: pointer;">العربية</li>
+                    <li data-value="sw" style="padding: 8px; cursor: pointer;">Kiswahili</li>
+                    <li data-value="cy" style="padding: 8px; cursor: pointer;">Cymraeg</li>
+                    <li data-value="ny" style="padding: 8px; cursor: pointer;">Chichewa</li>
+                    <li data-value="rw" style="padding: 8px; cursor: pointer;">Kinwanda</li>
+                    <li data-value="lg" style="padding: 8px; cursor: pointer;">Luganda</li>
+                  </ul>
+                </div>
+              </div>
+              
         </div>
 
         <!-- Arclight/Links/About -->
@@ -479,7 +498,6 @@
     function main() {
         console.log("DOMContentLoaded event fired");
         setupMenuIcon();
-        setupLanguageButton();
         setupInstructionsButton();
         setupNameIcon();
 
@@ -503,14 +521,26 @@
     }
 
     // Setup language button
-    function setupLanguageButton() {
-        languageButton.addEventListener('click', function() {
-            languageDropdown.style.display = (languageDropdown.style.display === 'none' ? 'block' : 'none');
-        });
-        languageDropdown.addEventListener('change', function() {
-            updateLanguageDisplays(this.value);
-        });
-    }
+// Get references to the new button and custom dropdown
+
+// Toggle the custom dropdown with a single click
+languageButton.addEventListener('click', () => {
+  if (languageDropdown.style.display === 'none') {
+    languageDropdown.style.display = 'block';
+  } else {
+    languageDropdown.style.display = 'none';
+  }
+});
+
+// When a user picks a language, hide the dropdown and call updateLanguageDisplays
+languageDropdown.querySelectorAll('li').forEach(item => {
+  item.addEventListener('click', () => {
+    const chosenLang = item.getAttribute('data-value');
+    updateLanguageDisplays(chosenLang);
+    languageDropdown.style.display = 'none';
+  });
+});
+
 
     // Instructions button
     function setupInstructionsButton() {
