@@ -226,11 +226,6 @@
     let map; // global map instance
     let currentPassword = '';
 
-    // List of valid passwords for client-side check, if desired
-    const validPasswords = [
-      "662023",
-      /* add more if you like */
-    ];
 
     // On load, set up event listeners
     document.addEventListener('DOMContentLoaded', () => {
@@ -254,17 +249,40 @@
 
     // On submit, check password
     function handleSubmit() {
-      const entered = passwordInput.value.trim();
-      if (validPasswords.includes(entered)) {
-        currentPassword = entered;
-        // Hide password screen
-        passwordScreen.classList.add('hidden');
-        // Fetch & show records
-        fetchRecords(currentPassword);
-      } else {
-        showInvalidPassword();
-      }
+  const entered = passwordInput.value.trim();
+  
+  // POST to /fetch-records just to check the password
+  fetch('/fetch-records', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ password: entered })
+  })
+  .then(response => {
+    if (!response.ok) { 
+      // server says invalid
+      throw new Error('Invalid password');
     }
+    // If we get here, password = "662023"
+    currentPassword = entered;
+    passwordScreen.classList.add('hidden');
+    // Now that we know it's valid, fetchRecords as well
+    return response.json(); // server should return the records data
+  })
+  .then(data => {
+    if (!data.length) {
+      recordsDiv.innerHTML = '<p>No records found.</p>';
+    } else {
+      buildRecordsTable(data);
+    }
+    refreshContainer.classList.remove('hidden'); 
+  })
+  .catch(err => {
+    showInvalidPassword();
+  });
+}
+
 
     // If password is invalid
     function showInvalidPassword() {

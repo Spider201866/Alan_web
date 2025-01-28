@@ -229,30 +229,7 @@
             "KI","AF","BF","HT","GW","SL","GM","SS","TG","KM","MG","ER","MZ","MW","NE","LR","BI","CD","CF"]
   };
 
-  // NEW: List of valid passwords (client-side check)
-  const validPasswords = [
-    "662023",           // 1
-    "slitlamp286",      // 2
-    "fundus512",        // 3
-    "retina728",        // 4
-    "cornea203",        // 5
-    "jobson892",        // 6
-    "otoscope414",      // 7
-    "earcare917",       // 8
-    "auricle345",       // 9
-    "skincheck112",     // 10
-    "dermatol559",      // 11
-    "sunhat192",        // 12
-    "uvprotect789",     // 13
-    "dermascope245",    // 14
-    "macula009",        // 15
-    "hearing095",       // 16
-    "earhealth770",     // 17
-    "visual556",        // 18
-    "skinshield356",    // 19
-    "redreflex609",     // 20
-    "pinna304"          // 21
-  ];
+
 
  /*********************************************/
 /*             HELPER FUNCTIONS              */
@@ -417,23 +394,35 @@ function initEventListeners() {
 // 8) Verify password (client-side check)
 function verifyPassword() {
   const entered = passwordInput.value.trim();
-  if (validPasswords.includes(entered)) {
+
+  // Send the user’s typed password to the server
+  fetch("/fetch-records", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password: entered })
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("Invalid password");
+    }
+    // If server returns 200, password is correct
     localStorage.setItem("verified", "true");
     passwordScreen.classList.remove("visible");
     passwordScreen.classList.add("hidden");
     showSplashOrRedirect();
-  } else {
+  })
+  .catch(err => {
     // Show error
     passwordError.style.display = "block";
     passwordInput.value = "";
     passwordSubmitBtn.disabled = true;
-
-    // Hide error after 3s
     setTimeout(() => {
       passwordError.style.display = "none";
     }, 3000);
-  }
+  });
 }
+
+
 
 // 9) When user clicks "Accept" at end of onboarding
 function handleAccept() {

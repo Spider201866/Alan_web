@@ -6,29 +6,54 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Change this to your own desired password, or rely on an environment variable
-const PASSWORD = process.env.AUTH_PASSWORD || '662023';
-console.log("Configured password:", PASSWORD);
+/*********************************************/
+/* 1) Your list of valid passwords           */
+/*********************************************/
+const VALID_PASSWORDS = [
+  "662023",          // 1
+  "slitlamp286",     // 2
+  "fundus512",       // 3
+  "retina728",       // 4
+  "cornea203",       // 5
+  "jobson892",       // 6
+  "otoscope414",     // 7
+  "earcare917",      // 8
+  "auricle345",      // 9
+  "skincheck112",    // 10
+  "dermatol559",     // 11
+  "sunhat192",       // 12
+  "uvprotect789",    // 13
+  "dermascope245",   // 14
+  "macula009",       // 15
+  "hearing095",      // 16
+  "earhealth770",    // 17
+  "visual556",       // 18
+  "skinshield356",   // 19
+  "redreflex609",    // 20
+  "pinna304"         // 21
+];
 
-// Middleware to parse JSON bodies
+/*********************************************/
+/* 2) Standard Setup                         */
+/*********************************************/
 app.use(bodyParser.json());
-
-// Serve static files from 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve index.html on GET /
 app.get('/', (req, res) => {
+  // Serve the main onboarding page
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Serve view-records.html on GET /view-records
 app.get('/view-records', (req, res) => {
+  // Serve the view-records page
   res.sendFile(path.join(__dirname, 'public', 'view-records.html'));
 });
 
-// 1) Store user info (POST /record-info)
+/*********************************************/
+/* 3) Storing User Info (POST /record-info)  */
+/*********************************************/
 app.post('/record-info', (req, res) => {
-  // Extract fields sent by the onboarding page
+  // Extract fields from the request body
   let {
     sessionId,
     name,
@@ -47,12 +72,12 @@ app.post('/record-info', (req, res) => {
     selectedAgent
   } = req.body;
 
-  // If no sessionId is provided, generate one
+  // Generate a sessionId if none is provided
   if (!sessionId) {
     sessionId = `anon-${Date.now()}`;
   }
 
-  // Build the new/updated record
+  // Build record object
   const userInfo = {
     sessionId,
     name,
@@ -83,27 +108,24 @@ app.post('/record-info', (req, res) => {
       }
     }
 
-    // Find if this sessionId already exists
+    // Find existing record by sessionId
     const existingIndex = records.findIndex(r => r.sessionId === sessionId);
 
     if (existingIndex !== -1) {
-      // Update existing record
-      // Keep existing refreshCount, or set to 1 if missing
+      // Update existing record, increment refreshCount
       const existingRecord = records[existingIndex];
       const currentCount = existingRecord.refreshCount || 1;
-
       records[existingIndex] = {
         ...existingRecord,
         ...userInfo,
         refreshCount: currentCount + 1
       };
     } else {
-      // Create a new record
+      // Create new record
       userInfo.refreshCount = 1;
       records.push(userInfo);
     }
 
-    // Write back to file
     fs.writeFile(filePath, JSON.stringify(records, null, 2), (writeErr) => {
       if (writeErr) {
         console.error("Error writing user-info.json:", writeErr);
@@ -114,12 +136,14 @@ app.post('/record-info', (req, res) => {
   });
 });
 
-// 2) Fetch records with password protection (POST /fetch-records)
+/*********************************************/
+/* 4) Fetch Records (POST /fetch-records)    */
+/*********************************************/
 app.post('/fetch-records', (req, res) => {
   const { password } = req.body;
-  console.log("Received password:", password);
 
-  if (password !== PASSWORD) {
+  // If password is not in the VALID_PASSWORDS array, deny access
+  if (!VALID_PASSWORDS.includes(password)) {
     return res.status(401).send('Invalid password');
   }
 
@@ -127,7 +151,7 @@ app.post('/fetch-records', (req, res) => {
 
   fs.readFile(filePath, (err, data) => {
     if (err) {
-      // If the file does not exist, return an empty array
+      // If file doesn't exist, return empty array
       if (err.code === 'ENOENT') {
         return res.json([]);
       }
@@ -140,16 +164,18 @@ app.post('/fetch-records', (req, res) => {
       records = JSON.parse(data);
     } catch (parseErr) {
       console.error("Could not parse user-info.json:", parseErr);
-      // If file is corrupted, fallback to empty array
+      // Fallback to empty if corrupted
       return res.json([]);
     }
 
-    // Return the array
+    // Return all records
     res.json(records);
   });
 });
 
-// Start the server
+/*********************************************/
+/* 5) Start the server                       */
+/*********************************************/
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
 });
