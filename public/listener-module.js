@@ -38,7 +38,7 @@ const initChatbotListeners = () => {
     observer.observe(shadowRoot, { childList: true, subtree: true });
 
     /***********************************************
-     * B) FALLBACK CHECK: every 3s, is the chat empty?
+     * B) FALLBACK CHECK: every 2s, is the chat empty?
      ***********************************************/
     // If so, remove the "chat-end-buttons"
     setInterval(() => {
@@ -47,7 +47,7 @@ const initChatbotListeners = () => {
       if (hostBubbles.length === 0) {
         removeChatEndButtons();
       }
-    }, 3000);
+    }, 2000);
 
   }, 1000);
 };
