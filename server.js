@@ -7,31 +7,34 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 /*********************************************/
-/* 1) Your list of valid passwords           */
+/* 1) Master password + one-time set         */
 /*********************************************/
-const VALID_PASSWORDS = [
-  "662023",          // 1
-  "slitlamp286",     // 2
-  "fundus512",       // 3
-  "retina728",       // 4
-  "cornea203",       // 5
-  "jobson892",       // 6
-  "otoscope414",     // 7
-  "earcare917",      // 8
-  "auricle345",      // 9
-  "skincheck112",    // 10
-  "dermatol559",     // 11
-  "sunhat192",       // 12
-  "uvprotect789",    // 13
-  "dermascope245",   // 14
-  "macula009",       // 15
-  "hearing095",      // 16
-  "earhealth770",    // 17
-  "visual556",       // 18
-  "skinshield356",   // 19
-  "redreflex609",    // 20
-  "pinna304"         // 21
-];
+const MASTER_PASSWORD = "662023"; // never changes
+
+// A set of one-time passwords. Each is valid exactly once
+let ONE_TIME_PASSWORDS = new Set([
+  "slitlamp286",
+  "fundus512",
+  "retina728",
+  "cornea203",
+  "jobson892",
+  "otoscope414",
+  "earcare917",
+  "auricle345",
+  "skincheck112",
+  "dermatol559",
+  "sunhat192",
+  "uvprotect789",
+  "dermascope245",
+  "macula009",
+  "hearing095",
+  "earhealth770",
+  "visual556",
+  "skinshield356",
+  "redreflex609",
+  "pinna304"
+]);
+// Once an item is used, we remove it from this set, so it cannot be reused.
 
 /*********************************************/
 /* 2) Standard Setup                         */
@@ -39,13 +42,11 @@ const VALID_PASSWORDS = [
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Serve pages
 app.get('/', (req, res) => {
-  // Serve the main onboarding page
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
 app.get('/view-records', (req, res) => {
-  // Serve the view-records page
   res.sendFile(path.join(__dirname, 'public', 'view-records.html'));
 });
 
@@ -53,7 +54,6 @@ app.get('/view-records', (req, res) => {
 /* 3) Storing User Info (POST /record-info)  */
 /*********************************************/
 app.post('/record-info', (req, res) => {
-  // Extract fields from the request body
   let {
     sessionId,
     name,
@@ -72,12 +72,11 @@ app.post('/record-info', (req, res) => {
     selectedAgent
   } = req.body;
 
-  // Generate a sessionId if none is provided
+  // If no sessionId, generate one
   if (!sessionId) {
     sessionId = `anon-${Date.now()}`;
   }
 
-  // Build record object
   const userInfo = {
     sessionId,
     name,
@@ -108,11 +107,9 @@ app.post('/record-info', (req, res) => {
       }
     }
 
-    // Find existing record by sessionId
+    // find existing
     const existingIndex = records.findIndex(r => r.sessionId === sessionId);
-
     if (existingIndex !== -1) {
-      // Update existing record, increment refreshCount
       const existingRecord = records[existingIndex];
       const currentCount = existingRecord.refreshCount || 1;
       records[existingIndex] = {
@@ -121,7 +118,6 @@ app.post('/record-info', (req, res) => {
         refreshCount: currentCount + 1
       };
     } else {
-      // Create new record
       userInfo.refreshCount = 1;
       records.push(userInfo);
     }
@@ -141,19 +137,29 @@ app.post('/record-info', (req, res) => {
 /*********************************************/
 app.post('/fetch-records', (req, res) => {
   const { password } = req.body;
-
-  // If password is not in the VALID_PASSWORDS array, deny access
-  if (!VALID_PASSWORDS.includes(password)) {
+  
+  // 1) If password matches master, allow
+  if (password === MASTER_PASSWORD) {
+    // proceed to return records
+  }
+  // 2) Else if the password is in the one-time set
+  else if (ONE_TIME_PASSWORDS.has(password)) {
+    // remove it so it cannot be reused
+    ONE_TIME_PASSWORDS.delete(password);
+    // proceed to return records
+  }
+  // 3) Otherwise deny
+  else {
     return res.status(401).send('Invalid password');
   }
 
+  // If valid, read user-info.json
   const filePath = path.join(__dirname, 'user-info.json');
 
   fs.readFile(filePath, (err, data) => {
     if (err) {
-      // If file doesn't exist, return empty array
       if (err.code === 'ENOENT') {
-        return res.json([]);
+        return res.json([]); // no file => empty array
       }
       console.error("Error reading user-info.json:", err);
       return res.status(500).send('Error reading user info');
@@ -164,11 +170,11 @@ app.post('/fetch-records', (req, res) => {
       records = JSON.parse(data);
     } catch (parseErr) {
       console.error("Could not parse user-info.json:", parseErr);
-      // Fallback to empty if corrupted
+      // fallback to empty if corrupted
       return res.json([]);
     }
 
-    // Return all records
+    // Return records
     res.json(records);
   });
 });
