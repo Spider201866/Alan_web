@@ -13,26 +13,26 @@ const MASTER_PASSWORD = "662023"; // never changes
 
 // A set of one-time passwords. Each is valid exactly once
 let ONE_TIME_PASSWORDS = new Set([
-  "slitlamp286",
-  "fundus512",
-  "retina728",
-  "cornea203",
-  "jobson892",
-  "otoscope414",
-  "earcare917",
-  "auricle345",
-  "skincheck112",
-  "dermatol559",
-  "sunhat192",
-  "uvprotect789",
-  "dermascope245",
-  "macula009",
-  "hearing095",
-  "earhealth770",
-  "visual556",
-  "skinshield356",
-  "redreflex609",
-  "pinna304"
+  "slitlamp286", //1
+  "fundus512",  //2
+  "retina728", //3
+  "cornea203", //4
+  "jobson892",  //5
+  "otoscope414",  //6
+  "earcare917",  //7
+  "auricle345",  //8
+  "skincheck112",  //9
+  "dermatol559",  //10
+  "sunhat192",  //11
+  "uvprotect789",  //12
+  "dermascope245",  //13
+  "macula009",  //14
+  "hearing095",  //15
+  "earhealth770",  //16
+  "visual556",  //17
+  "skinshield356",  //18
+  "redreflex609",  //19
+  "pinna304"  //20
 ]);
 // Once an item is used, we remove it from this set, so it cannot be reused.
 
