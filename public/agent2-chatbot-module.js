@@ -72,6 +72,7 @@ const initChatbot = () => {
         /* Rounded corners for the input container */
         .chatbot-input {
           border-radius: 18px !important; /* Ensures parent also matches */
+          border: 1px solid #999 !important;
         }
 
         /* Change clipboard, thumbs up, thumbs down icons to grey */
