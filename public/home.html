@@ -112,78 +112,154 @@
             </div>
         </div>
 
-        <!-- Eye/Ear/Skin Buttons -->
-        <div style="display: flex; margin-bottom: 10px;">
-            <button class="button" style="margin-right: 10px; background-color: rgb(134, 162, 255);" onclick="window.location.href='eye.html';">
-                Eye
-            </button>
-            <button class="button" style="margin-right: 10px; background-color: rgb(133, 255, 133);" onclick="window.location.href='ear.html';">
-                Ear
-            </button>
-            <button class="button" style="background-color: #efafff;" onclick="window.location.href='skin.html';">
-                Skin
-            </button>
-        </div>
+<!-- Eye/Ear/Skin Buttons -->
+<div style="display: flex; margin-bottom: 10px;">
+    <button
+      id="eye-button"
+      class="button"
+      style="margin-right: 10px; background-color: rgb(134, 162, 255); border: 2px solid black; color: black;"
+      onclick="window.location.href='eye.html';"
+    >
+      Eye
+    </button>
+    <button
+      id="ear-button"
+      class="button"
+      style="margin-right: 10px; background-color: rgb(133, 255, 133); border: 2px solid black; color: black;"
+      onclick="window.location.href='ear.html';"
+    >
+      Ear
+    </button>
+    <button
+      id="skin-button"
+      class="button"
+      style="background-color: #efafff; border: 2px solid black; color: black;"
+      onclick="window.location.href='skin.html';"
+    >
+      Skin
+    </button>
+  </div>
+  
+  
 
-        <!-- Videos/Atoms/Tools/Language -->
-        <div style="display: flex; margin-bottom: 10px; align-items: center;">
-            <a href="https://www.youtube.com/@arclightproject" style="text-decoration: none;">
-                <button class="button grey" style="margin-right: 10px;">Videos</button>
-            </a>
-            <button class="button grey" style="margin-right: 10px;" onclick="window.location.href='atoms.html';">Atoms</button>
-            <button class="button grey" style="margin-right: 10px;">Tools</button>
-            <!-- Language Button & Dropdown -->
-            <div style="position: relative;">
-                <button
-                  class="button grey"
-                  id="language-button"
-                  style="
-                    background: url('lang.jpg') no-repeat center center;
-                    background-size: cover;
-                    width: 32px;
-                    height: 32px;
-                    border: none;
-                  ">
-                </button>
+<!-- Videos/Atoms/Tools/Language -->
+<div style="display: flex; margin-bottom: 10px; align-items: center;">
+    <a href="https://www.youtube.com/@arclightproject" style="text-decoration: none;">
+      <button
+        id="videos-button"
+        class="button grey"
+        style="margin-right: 10px;"
+      >
+        Videos
+      </button>
+    </a>
+    <button
+      id="atoms-button"
+      class="button grey"
+      style="margin-right: 10px;"
+      onclick="window.location.href='atoms.html';"
+    >
+      Atoms
+    </button>
+    <button
+      id="tools-button"
+      class="button grey"
+      style="margin-right: 10px;"
+    >
+      Tools
+    </button>
+    <!-- Language Button & Dropdown -->
+    <div style="position: relative;">
+      <button
+        class="button grey"
+        id="language-button"
+        style="
+          background: url('lang.jpg') no-repeat center center;
+          background-size: cover;
+          border: 2px solid #3e3e3e;
+          width: 32px;
+          height: 32px;
+        
+        "
+      >
+      </button>
               
                 <!-- New custom dropdown container with clickable list items -->
                 <div
-                  id="language-dropdown"
-                  style="
-                    display: none;
-                    position: absolute;
-                    top: 40px;
-                    left: 0;
-                    background: #fff;
-                    border: 1px solid #ccc;
-                    z-index: 999;
-                  "
+                id="language-dropdown"
+                style="
+                  display: none;
+                  position: absolute;
+                  top: 40px; /* Slightly below the button */
+                  left: 50%;
+                  transform: translateX(-50%);
+                  background: #fff;
+                  border: 1px solid #ccc;
+                  z-index: 9999;
+                  min-width: 220px; /* Ensures the dropdown is at least 220px wide */
+                  white-space: nowrap; /* Keeps text on one line */
+                "
                 >
-                  <ul style="margin: 0; padding: 0; list-style: none;">
-                    <li data-value="en" style="padding: 8px; cursor: pointer;">English</li>
-                    <li data-value="fr" style="padding: 8px; cursor: pointer;">Français</li>
-                    <li data-value="es" style="padding: 8px; cursor: pointer;">Español</li>
-                    <li data-value="pt" style="padding: 8px; cursor: pointer;">Português</li>
-                    <li data-value="ar" style="padding: 8px; cursor: pointer;">العربية</li>
-                    <li data-value="sw" style="padding: 8px; cursor: pointer;">Kiswahili</li>
-                    <li data-value="cy" style="padding: 8px; cursor: pointer;">Cymraeg</li>
-                    <li data-value="ny" style="padding: 8px; cursor: pointer;">Chichewa</li>
-                    <li data-value="rw" style="padding: 8px; cursor: pointer;">Kinwanda</li>
-                    <li data-value="lg" style="padding: 8px; cursor: pointer;">Luganda</li>
+                <ul style="margin: 0; padding: 0; list-style: none;">
+                    <li data-value="en" style="padding: 6px; cursor: pointer;"><strong>English</strong> (English)</li>
+                    <li data-value="zh" style="padding: 6px; cursor: pointer;"><strong>中文</strong> (Chinese)</li>
+                    <li data-value="hi" style="padding: 6px; cursor: pointer;"><strong>हिन्दी</strong> (Hindi)</li>
+                    <li data-value="es" style="padding: 6px; cursor: pointer;"><strong>Español</strong> (Spanish)</li>
+                    <li data-value="ar" style="padding: 6px; cursor: pointer;"><strong>العربية</strong> (Arabic)</li>
+                    <li data-value="fr" style="padding: 6px; cursor: pointer;"><strong>Français</strong> (French)</li>
+                    <li data-value="bn" style="padding: 6px; cursor: pointer;"><strong>বাংলা</strong> (Bangla)</li>
+                    <li data-value="pt" style="padding: 6px; cursor: pointer;"><strong>Português</strong> (Portuguese)</li>
+                    <li data-value="id" style="padding: 6px; cursor: pointer;"><strong>Bahasa Indonesia</strong> (Indonesian)</li>
+                    <li data-value="sw" style="padding: 6px; cursor: pointer;"><strong>Kiswahili</strong> (Swahili)</li>
+                    <li data-value="ur" style="padding: 6px; cursor: pointer;"><strong>اردو</strong> (Urdu)</li>
+                    <li data-value="fa" style="padding: 6px; cursor: pointer;"><strong>فارسی</strong> (Persian)</li>
+                    <li data-value="ln" style="padding: 6px; cursor: pointer;"><strong>Lingala</strong> (Lingala)</li>
+                    <li data-value="ha" style="padding: 6px; cursor: pointer;"><strong>Hausa</strong> (Hausa)</li>
+                    <li data-value="yo" style="padding: 6px; cursor: pointer;"><strong>Yorùbá</strong> (Yoruba)</li>
+                    <li data-value="ig" style="padding: 6px; cursor: pointer;"><strong>Igbo</strong> (Igbo)</li>
+                    <li data-value="zu" style="padding: 6px; cursor: pointer;"><strong>Zulu</strong> (Zulu)</li>
+                    <li data-value="am" style="padding: 6px; cursor: pointer;"><strong>አማርኛ</strong> (Amharic)</li>
+                    <li data-value="sn" style="padding: 6px; cursor: pointer;"><strong>chiShona</strong> (Shona)</li>
+                    <li data-value="rw" style="padding: 6px; cursor: pointer;"><strong>Ikinyarwanda</strong> (Kinyarwanda)</li>
+                    <li data-value="ny" style="padding: 6px; cursor: pointer;"><strong>Chichewa</strong> (Chichewa)</li>
+                    <li data-value="cy" style="padding: 6px; cursor: pointer;"><strong>Cymraeg</strong> (Welsh)</li>
                   </ul>
+                  
                 </div>
               </div>
               
         </div>
 
-        <!-- Arclight/Links/About -->
-        <div style="display: flex; margin-bottom: 10px;">
-            <a href="https://medicine.st-andrews.ac.uk/arclight/" style="text-decoration: none;">
-                <button class="button grey" style="margin-right: 10px;">Arclight Project</button>
-            </a>
-            <button class="button grey" style="margin-right: 10px;" onclick="window.location.href='weblinks.html';">Links</button>
-            <button class="button grey" onclick="location.href='aboutalan.html';">About</button>
-        </div>
+
+        
+<!-- Arclight/Links/About -->
+<div style="display: flex; margin-bottom: 10px;">
+    <a href="https://medicine.st-andrews.ac.uk/arclight/" style="text-decoration: none;">
+      <button
+        id="arclight-project-button"
+        class="button grey"
+        style="margin-right: 10px;"
+      >
+        Arclight Project
+      </button>
+    </a>
+    <button
+      id="links-button"
+      class="button grey"
+      style="margin-right: 10px;"
+      onclick="window.location.href='weblinks.html';"
+    >
+      Links
+    </button>
+    <button
+      id="about-button"
+      class="button grey"
+      onclick="location.href='aboutalan.html';"
+    >
+      About
+    </button>
+  </div>
+  
 
         <!-- Chat Links -->
         <div style="display: none; flex-direction: column; width: 100%; margin-top: 20px;">
@@ -226,21 +302,20 @@
 
         <!-- Disclaimer about Alan potentially making mistakes -->
         <div class="chatbot-version">
-            Alan can make mistakes. Use clinical judgement. 1/25
+    
         </div>
     </div>
 
     <!-- Popup for user info -->
     <div id="popup" class="popup">
         <span class="popup-close" onclick="closePopup()">&times;</span>
-        <h2>User Info</h2>
         <div class="popup-content" id="popup-content"></div>
 
         <!-- GEOLOCATION BUTTON & FEEDBACK -->
         <div style="text-align: center; margin-top: 10px; position: relative;">
             <!-- Main Geolocation button -->
             <button id="geolocation-button" class="button grey">
-                Geolocation
+
             </button>
 
             <!-- “i” button with white background, black text/border, rounded corners -->
@@ -277,10 +352,7 @@
                 padding: 10px; 
                 border-radius: 10px;
                 box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
-            <p style="font-size: 14px; margin: 0;">
-                Clicking "Geolocation" will share a more accurate location (lat/long). 
-                This helps offer better guidance and choices.
-            </p>
+             <p id="geoInfoText" style="font-size: 14px; margin: 0;"></p>
             </div>
         </div>
 
@@ -321,6 +393,12 @@
     const roleClassification  = localStorage.getItem('roleClassification') || '';
     const iso_a3              = localStorage.getItem('iso_a3') || 'Not set';
 
+    window.addEventListener('pageshow', (event) => {
+  // Reset the sidebar to off-screen when the page is shown (even from bfcache)
+  sideMenu.style.left = '-370px';
+});
+
+
     /*********************************************/
     /*          HELPER FUNCTIONS                 */
     /*********************************************/
@@ -353,54 +431,63 @@
 
     // Build the dynamic content for the popup
     function buildPopupContent() {
-        const name          = localStorage.getItem('name')              || 'Not set';
-        const role          = localStorage.getItem('selectedJobRole')   || 'Not set';
-        const experience    = localStorage.getItem('selectedExperience')|| 'Not set';
-        const latitude      = (parseFloat(localStorage.getItem('latitude'))  || 0).toFixed(6);
-        const longitude     = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
-        const country       = localStorage.getItem('country')           || 'Not set';
-        const iso2          = localStorage.getItem('iso2')              || 'Not set';
-        const classification= localStorage.getItem('classification')    || 'Unknown';
-        const roleClass     = localStorage.getItem('roleClassification')|| '';
-        const area          = localStorage.getItem('area')              || 'Not set';
-        const contactInfo   = localStorage.getItem('contactInfo')       || 'Not set';
-        const selectedAgent = localStorage.getItem('selectedAgent')     || 'Unknown';
-        const focusRaw      = localStorage.getItem('selectedFocus');
-        const aims          = focusRaw ? JSON.parse(focusRaw).join(', ') : 'Not set';
+  // 1) Decide which language is active
+  const lang = localStorage.getItem("preferredLanguage") || "en";
 
-        // Current date/time
-        const now    = new Date();
-        const day    = String(now.getDate()).padStart(2, '0');
-        const month  = String(now.getMonth() + 1).padStart(2, '0');
-        const year   = now.getFullYear();
-        const hours  = String(now.getHours()).padStart(2, '0');
-        const mins   = String(now.getMinutes()).padStart(2, '0');
-        const secs   = String(now.getSeconds()).padStart(2, '0');
-        const currDT = `${day}/${month}/${year}, ${hours}:${mins}:${secs}`;
+  // 2) Grab references from localStorage (unchanged logic)
+  const name         = localStorage.getItem('name')              || 'Not set';
+  const role         = localStorage.getItem('selectedJobRole')   || 'Not set';
+  const experience   = localStorage.getItem('selectedExperience')|| 'Not set';
+  const latitude     = (parseFloat(localStorage.getItem('latitude'))  || 0).toFixed(6);
+  const longitude    = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
+  const country      = localStorage.getItem('country')           || 'Not set';
+  const iso2         = localStorage.getItem('iso2')              || 'Not set';
+  const classification = localStorage.getItem('classification')  || 'Unknown';
+  const roleClass    = localStorage.getItem('roleClassification')|| '';
+  const area         = localStorage.getItem('area')              || 'Not set';
+  const contactInfo  = localStorage.getItem('contactInfo')       || 'Not set';
+  const selectedAgent= localStorage.getItem('selectedAgent')     || 'Unknown';
+  const focusRaw     = localStorage.getItem('selectedFocus');
+  const aims         = focusRaw ? JSON.parse(focusRaw).join(', ') : 'Not set';
 
-        // Add IDs to lat/long, area, country <p> for flash effect
-        return `
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Contact:</strong> ${contactInfo}</p>
-          <p><strong>Role:</strong> ${role}, ${experience}, ${roleClass}</p>
-          <p><strong>Aims:</strong> ${aims}</p>
-          <p id="latLongSection" style="color: grey;">
-             <strong>Lat &amp; Long:</strong> ${latitude}, ${longitude}
-          </p>
-          <p id="areaSection" style="color: grey;">
-             <strong>Area:</strong> ${area}
-          </p>
-          <p id="countrySection" style="color: grey;">
-             <strong>Country:</strong> ${country}, ${iso2}, ${classification}
-          </p>
-          <p style="color: grey;">
-             <em><strong>Version:</strong> 1.0, ${selectedAgent}</em>
-          </p>
-          <p style="color: grey;">
-             <em><strong>Date &amp; Time:</strong> ${currDT}</em>
-          </p>
-        `;
-    }
+  // Date/time
+  const now    = new Date();
+  const day    = String(now.getDate()).padStart(2, '0');
+  const month  = String(now.getMonth()+1).padStart(2, '0');
+  const year   = now.getFullYear();
+  const hours  = String(now.getHours()).padStart(2, '0');
+  const mins   = String(now.getMinutes()).padStart(2, '0');
+  const secs   = String(now.getSeconds()).padStart(2, '0');
+  const currDT = `${day}/${month}/${year}, ${hours}:${mins}:${secs}`;
+
+  // 3) Build HTML using your new translation keys
+  return `
+    <h2>${translations[lang].userInfoTitle}</h2>
+
+    <p><strong>${translations[lang].userName}:</strong> ${name}</p>
+    <p><strong>${translations[lang].userContact}:</strong> ${contactInfo}</p>
+    <p><strong>${translations[lang].userRole}:</strong> ${role}, ${experience}, ${roleClass}</p>
+    <p><strong>${translations[lang].userAims}:</strong> ${aims}</p>
+
+    <p id="latLongSection" style="color: grey;">
+      <strong>${translations[lang].userLatLong}:</strong> ${latitude}, ${longitude}
+    </p>
+    <p id="areaSection" style="color: grey;">
+      <strong>${translations[lang].userArea}:</strong> ${area}
+    </p>
+    <p id="countrySection" style="color: grey;">
+      <strong>${translations[lang].userCountry}:</strong> ${country}, ${iso2}, ${classification}
+    </p>
+
+    <p style="color: grey;">
+      <em><strong>${translations[lang].userVersion}:</strong> 1.0, ${selectedAgent}</em>
+    </p>
+    <p style="color: grey;">
+      <em><strong>${translations[lang].userDateTime}:</strong> ${currDT}</em>
+    </p>
+  `;
+}
+
 
     // Simple function to highlight (flash) lat/long, area, and country
     function flashBlueOnUpdate() {
@@ -467,21 +554,101 @@
         return nameParts.some(part => eastAsianSurnames.includes(part));
     }
     function updateLanguageDisplays(lang) {
-        document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
-        document.getElementById('good-history').textContent      = translations[lang].goodHistory;
-        document.getElementById('examine-well').textContent      = translations[lang].examineWell;
-        document.getElementById('use-arclight').textContent      = translations[lang].useArclight;
-        chatbotVersion.textContent                               = translations[lang].alanMistakes;
+  // 1) Existing lines setting top bar text
+  document.querySelector(".chatbot-subtitle").textContent = translations[lang].eyesEars;
+  document.getElementById("good-history").textContent      = translations[lang].goodHistory;
+  document.getElementById("examine-well").textContent      = translations[lang].examineWell;
+  document.getElementById("use-arclight").textContent      = translations[lang].useArclight;
+  chatbotVersion.textContent                               = translations[lang].alanMistakes;
 
-        const name = localStorage.getItem('name') || '';
-        if (name) {
-            let firstName = name.split(' ')[0];
-            firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-            document.getElementById('sub-text').textContent = `${firstName}, ${translations[lang].howCanIHelp}`;
-        } else {
-            document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
-        }
-    }
+  // 2) Sidebar button texts
+  document.getElementById("instructions-button").textContent = translations[lang].instructionsButton;
+  document.getElementById("eye-button").textContent          = translations[lang].eyeButton;
+  document.getElementById("ear-button").textContent          = translations[lang].earButton;
+  document.getElementById("skin-button").textContent         = translations[lang].skinButton;
+  document.getElementById("videos-button").textContent       = translations[lang].videosButton;
+  document.getElementById("atoms-button").textContent        = translations[lang].atomsButton;
+  document.getElementById("tools-button").textContent        = translations[lang].toolsButton;
+  document.getElementById("arclight-project-button").textContent = translations[lang].arclightProjectButton;
+  document.getElementById("links-button").textContent        = translations[lang].linksButton;
+  document.getElementById("about-button").textContent        = translations[lang].aboutButton;
+
+  // Update geolocation button text
+  const geoButton = document.getElementById("geolocation-button");
+  if (geoButton) {
+    geoButton.textContent = translations[lang].geolocationButton;
+  }
+
+  // Update geolocation info text
+  const geoInfoEl = document.getElementById('geoInfoText');
+  if (geoInfoEl) {
+    geoInfoEl.textContent = translations[lang].geoInfoText;
+  }
+
+
+  // 3) Greeting logic for user name
+  const name = localStorage.getItem("name") || "";
+  if (name) {
+    let firstName = name.split(" ")[0];
+    firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+    document.getElementById("sub-text").textContent = `${firstName}, ${translations[lang].howCanIHelp}`;
+  } else {
+    document.getElementById("sub-text").textContent = translations[lang].howCanIHelp;
+  }
+
+  // 4) OPTIONAL: Update marquee lines in boxes.html
+  //    (if you have <object id="boxesFrame" data="boxes.html"> in home.html)
+  const boxesFrame = document.getElementById("boxesFrame");
+  // Check if the child document is loaded and accessible
+  if (boxesFrame && boxesFrame.contentDocument) {
+    const boxesDoc = boxesFrame.contentDocument;
+
+// EYE lines
+if (boxesDoc.getElementById("eyeMarqueeLine1a")) {
+  // First copy (a)
+  boxesDoc.getElementById("eyeMarqueeLine1a").textContent = translations[lang].eyeMarqueeLine1;
+  boxesDoc.getElementById("eyeMarqueeLine2a").textContent = translations[lang].eyeMarqueeLine2;
+  boxesDoc.getElementById("eyeMarqueeLine3a").textContent = translations[lang].eyeMarqueeLine3;
+  boxesDoc.getElementById("eyeMarqueeLine4a").textContent = translations[lang].eyeMarqueeLine4;
+  boxesDoc.getElementById("eyeMarqueeLine5a").textContent = translations[lang].eyeMarqueeLine5;
+  boxesDoc.getElementById("eyeMarqueeLine6a").textContent = translations[lang].eyeMarqueeLine6;
+  boxesDoc.getElementById("eyeMarqueeLine7a").textContent = translations[lang].eyeMarqueeLine7;
+
+  // Second copy (b)
+  boxesDoc.getElementById("eyeMarqueeLine1b").textContent = translations[lang].eyeMarqueeLine1;
+  boxesDoc.getElementById("eyeMarqueeLine2b").textContent = translations[lang].eyeMarqueeLine2;
+  boxesDoc.getElementById("eyeMarqueeLine3b").textContent = translations[lang].eyeMarqueeLine3;
+  boxesDoc.getElementById("eyeMarqueeLine4b").textContent = translations[lang].eyeMarqueeLine4;
+  boxesDoc.getElementById("eyeMarqueeLine5b").textContent = translations[lang].eyeMarqueeLine5;
+  boxesDoc.getElementById("eyeMarqueeLine6b").textContent = translations[lang].eyeMarqueeLine6;
+  boxesDoc.getElementById("eyeMarqueeLine7b").textContent = translations[lang].eyeMarqueeLine7;
+}
+
+// EAR lines
+if (boxesDoc.getElementById("earMarqueeLine1a")) {
+  // First copy (a)
+  boxesDoc.getElementById("earMarqueeLine1a").textContent = translations[lang].earMarqueeLine1;
+  boxesDoc.getElementById("earMarqueeLine2a").textContent = translations[lang].earMarqueeLine2;
+  boxesDoc.getElementById("earMarqueeLine3a").textContent = translations[lang].earMarqueeLine3;
+  boxesDoc.getElementById("earMarqueeLine4a").textContent = translations[lang].earMarqueeLine4;
+  boxesDoc.getElementById("earMarqueeLine5a").textContent = translations[lang].earMarqueeLine5;
+  boxesDoc.getElementById("earMarqueeLine6a").textContent = translations[lang].earMarqueeLine6;
+  boxesDoc.getElementById("earMarqueeLine7a").textContent = translations[lang].earMarqueeLine7;
+
+  // Second copy (b)
+  boxesDoc.getElementById("earMarqueeLine1b").textContent = translations[lang].earMarqueeLine1;
+  boxesDoc.getElementById("earMarqueeLine2b").textContent = translations[lang].earMarqueeLine2;
+  boxesDoc.getElementById("earMarqueeLine3b").textContent = translations[lang].earMarqueeLine3;
+  boxesDoc.getElementById("earMarqueeLine4b").textContent = translations[lang].earMarqueeLine4;
+  boxesDoc.getElementById("earMarqueeLine5b").textContent = translations[lang].earMarqueeLine5;
+  boxesDoc.getElementById("earMarqueeLine6b").textContent = translations[lang].earMarqueeLine6;
+  boxesDoc.getElementById("earMarqueeLine7b").textContent = translations[lang].earMarqueeLine7;
+}
+
+  }
+}
+
+
 
     // Style for instructions button
     function updateButtonStyle(button) {
@@ -532,14 +699,33 @@ languageButton.addEventListener('click', () => {
   }
 });
 
-// When a user picks a language, hide the dropdown and call updateLanguageDisplays
+// 1) Listen for "load" event on boxesFrame,
+//    ensuring we re-run the translation once boxes.html is fully loaded.
+const boxesFrame = document.getElementById('boxesFrame');
+if (boxesFrame) {
+  boxesFrame.addEventListener('load', () => {
+    console.log("boxes.html finished loading.");
+    // Use whichever language was last chosen (or fallback to 'en').
+    const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+    updateLanguageDisplays(currentLang);
+  });
+}
+
+// 2) When a user picks a language from the dropdown, call updateLanguageDisplays.
 languageDropdown.querySelectorAll('li').forEach(item => {
   item.addEventListener('click', () => {
     const chosenLang = item.getAttribute('data-value');
+    // Save chosen language for future use
+    localStorage.setItem('preferredLanguage', chosenLang);
+
+    // Actually update the UI to the chosen language
     updateLanguageDisplays(chosenLang);
+
+    // Then hide the dropdown
     languageDropdown.style.display = 'none';
   });
 });
+
 
 
     // Instructions button

@@ -1,127 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eye Exam</title>
+    <!-- Load the translations object from language.js -->
+    <script type="module" src="language.js"></script>
+    <style>
+      /* Global page layout and typography */
+      body {
+        font-family: "Calibri Light", Arial, sans-serif;
+        background-color: white;
+        color: black;
+        margin: 0;
+        padding: 0;
+      }
+      /* Top app bar styling */
+      #appBar {
+        display: flex;
+        align-items: center;
+        background-color: black;
+        color: white;
+        padding: 10px 20px;
+      }
+      /* Back arrow */
+      #backArrow {
+        color: white;
+        font-size: 32px;
+        font-weight: bold;
+        cursor: pointer;
+        padding-right: 20px;
+      }
+      /* Page title (centered) */
+      #pageTitle {
+        text-align: center;
+        margin: 0 auto;
+        font-size: 24px;
+      }
+      /* Main content styling */
+      #eyeExamText {
+        padding: 15px;
+        line-height: 1.4em;
+      }
+      /* Section headings */
+      #frontOfEyeHeading,
+      #fundalReflexHeading,
+      #backOfEyeHeading {
+        margin-top: 16px;
+        margin-bottom: 8px;
+      }
+      /* Paragraphs */
+      #frontOfEyeText,
+      #fundalReflexText,
+      #backOfEyeText,
+      #additionalText {
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top App Bar -->
+    <div id="appBar">
+      <div id="backArrow" onclick="history.back()">&#x2190;</div>
+      <h1 id="pageTitle">How to examine the eye</h1>
+    </div>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Eye Exam</title>
+    <!-- Main Content Area -->
+    <div id="eyeExamText">
+      <!-- Front of Eye Section -->
+      <h3 id="frontOfEyeHeading">Front of Eye</h3>
+      <p id="frontOfEyeText">
+        Observe and compare eyes: <em>straight,</em> <em>right,</em>
+        <em>left,</em> <em>up,</em> down<br />
+        <strong><u>Hold &amp; get close</u></strong>. Examine:
+        <em>lids,</em> <em>conjunctiva,</em> <em>cornea,</em>
+        <em>pupil</em><br />
+        Use with <span style="color: orange;">fluro</span> for corneal ulcers or scratches
+      </p>
 
-  <!-- 
-    **********************************************
-    *                 PAGE STYLES               *
-    **********************************************
-    - White background, black text
-    - A top app bar with back arrow and centred title
-    - Main content now shows eye exam text
-  -->
-  <style>
-    /* Global page layout and typography */
-    body {
-      font-family: "Calibri Light", Arial, sans-serif;
-      background-color: white;  /* White background for the page */
-      color: black;             /* Black text colour for the page */
-      margin: 0;
-      padding: 0;
-    }
+      <!-- Fundal Reflex Section -->
+      <h3 id="fundalReflexHeading">Fundal Reflex</h3>
+      <p id="fundalReflexText">
+        <em>Dim</em> room, baby happy; at arms-length – compare reflexes<br />
+        Equal: <em>Brightness,</em> <em>Colour,</em> <em>Shape</em><br />
+        Go closer for details: <em>Scar, cataract, RB, Vit Haem</em>
+      </p>
 
-    /* Top bar (app bar) styling */
-    #appBar {
-      display: flex;            /* Using flexbox to align items */
-      align-items: center;      /* Centre items vertically */
-      background-color: black;  /* Black background for the app bar */
-      color: white;             /* White text colour for the app bar */
-      padding: 10px 20px;       /* Consistent padding */
-    }
+      <!-- Back of Eye Section -->
+      <h3 id="backOfEyeHeading">Back of Eye</h3>
+      <p id="backOfEyeText">
+        Use right eye to view patient's right eye; left for left<br />
+        Patient must look straight NOT at light; get close and find optic disc
+        (Dilate = best view)<br />
+        Study disc: <em>Margin,</em> <em>Colour,</em> <em>Cup</em>. Track big vessels,
+        then ask patient to look directly into the light to see macula
+      </p>
 
-    /* Centred page title in the app bar */
-    #pageTitle {
-      text-align: center;
-      margin: 0 auto;           /* Centres title within flex container */
-      font-size: 24px;          /* Font size for the page title */
-    }
+      <!-- Additional Information -->
+      <p id="additionalText">
+        Know your discs: normal, <span style="color:red; font-weight:bold;">swollen</span>,
+        <span style="color:red;">new vessels</span>, <span style="color:orange;">cupped</span>,
+        <span style="color:green;">pale</span><br />
+        &gt;Practice often&lt;
+      </p>
+    </div>
 
-    /* Back arrow on the left side */
-    #backArrow {
-      color: white;             /* White back arrow */
-      font-size: 32px;          /* Size of the arrow */
-      font-weight: bold;        /* Bold arrow */
-      position: relative;       /* Works within flexbox layout */
-      cursor: pointer;
-      padding-right: 20px;      /* Visual spacing on the right */
-    }
-
-    /* Main text container */
-    #eyeExamText {
-      padding: 15px;
-      line-height: 1.4em;       /* Slightly increased line spacing for readability */
-    }
-
-    /* Heading style for sections within the exam text */
-    #eyeExamText h2, #eyeExamText h3 {
-      margin-bottom: 8px;
-      margin-top: 16px;
-    }
-
-    /* Paragraph style */
-    #eyeExamText p {
-      margin-bottom: 8px;
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- 
-    **********************************************
-    *              TOP APP BAR                  *
-    **********************************************
-    - Includes a back arrow and a centred title
-  -->
-  <div id="appBar">
-    <div id="backArrow" onclick="history.back()">&#x2190;</div>
-    <h1 id="pageTitle">How to examine the eye</h1>
-  </div>
-
-  <!-- 
-    **********************************************
-    *            MAIN CONTENT AREA             *
-    **********************************************
-    - Displays concise text about eye examination
-  -->
-  <div id="eyeExamText">
-  
-    <h3>Front of Eye</h3>
-    <p>
-      Observe and compare eyes: <em>straight,</em> <em>right,</em> <em>left,</em> <em>up,</em>down<em></em><br>
-      <strong><u>Hold & get close</u></strong>. Examine: <em>lids,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupil</em><br>
-      Use with <span style="color: orange;">fluro</span> for corneal ulcers or scratches
-    </p>
-  
-    <h3>Fundal Reflex</h3>
-    <p>
-      <em>Dim</em> room, baby happy; at arms-length – compare reflexes<br>
-      Equal: <em>Brightness</em>, <em>Colour</em>, <em>Shape</em><br>
-      Go closer for details: <em>Scar, cataract, RB, Vit Haem</em>
-    </p>
-  
-    <h3>Back of Eye</h3>
-    <p>
-      Use right eye to view Px's right eye; left for left<br>
-      Px must look straight NOT at light; get close and find optic disc (Dilate = best view)<br>
-      Study disc: <em>Margin</em>, <em>Colour</em>, <em>Cup</em>. Track big vessels, then ask Px to look directly into the light to see macula
-    </p>
-  
-    <p>
-      Know your discs: normal, 
-      <span style="color:red; font-weight:bold;">swollen</span>, 
-      <span style="color:red;">new vessels</span>, 
-      <span style="color:orange;">cupped</span>, 
-      <span style="color:green;">pale</span><br>
-      &gt;Practice often&lt;
-    </p>
+    <!-- Inline JavaScript to update text using the translations object -->
+    <script>
+      // Call the update function on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        updatePageTranslations();
+      });
     
-  </div>
-  
-
-</body>
+      // Also listen for storage changes (useful if the change is made in another tab)
+      window.addEventListener("storage", function (e) {
+        if (e.key === "preferredLanguage") {
+          updatePageTranslations();
+        }
+      });
+    
+      function updatePageTranslations() {
+        var lang = localStorage.getItem("preferredLanguage") || "en";
+        var t = window.translations && window.translations[lang];
+        if (t) {
+          document.getElementById("pageTitle").textContent = t.pageTitle;
+          document.getElementById("frontOfEyeHeading").textContent = t.frontOfEyeHeading;
+          document.getElementById("frontOfEyeText").innerHTML = t.frontOfEyeText;
+          document.getElementById("fundalReflexHeading").textContent = t.fundalReflexHeading;
+          document.getElementById("fundalReflexText").innerHTML = t.fundalReflexText;
+          document.getElementById("backOfEyeHeading").textContent = t.backOfEyeHeading;
+          document.getElementById("backOfEyeText").innerHTML = t.backOfEyeText;
+          document.getElementById("additionalText").innerHTML = t.additionalText;
+        }
+      }
+    </script>
+    
+  </body>
 </html>

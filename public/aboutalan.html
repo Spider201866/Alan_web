@@ -1,177 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Alan</title>
-
-  <!-- 
-    **********************************************
-    *                 PAGE STYLES               *
-    **********************************************
-    - Contains global and element-level styles
-    - Ensures consistent layout, typography, and design 
-  -->
-  <style>
-    /* Global layout and typography */
-    body {
-      font-family: "Calibri Light", Arial, sans-serif;
-      background-color: white;   /* White background for the page */
-      color: black;              /* Black text color for the page */
-      margin: 0;
-      padding: 0;
-    }
-
-    /* App bar (top black bar) styling */
-    #appBar {
-      display: flex;            /* Using flexbox to align items within the app bar */
-      align-items: center;      /* Center items vertically within the app bar */
-      background-color: black;  /* Black background for the app bar */
-      color: white;             /* White text color for the app bar */
-      padding: 10px 20px;       /* Adjusted padding */
-    }
-
-    /* Page title within the app bar */
-    #pageTitle {
-      text-align: center;
-      margin: 0 auto;   /* Center title within flex container */
-      font-size: 24px;
-    }
-
-    /* Back arrow icon on the left side of the app bar */
-    #backArrow {
-      color: white;       /* White back arrow */
-      font-size: 32px;    /* Increased size of back arrow */
-      font-weight: bold;  /* Makes the arrow thicker */
-      position: relative; /* Changed from absolute to relative */
-      cursor: pointer;
-      padding-right: 20px; /* Added padding for visual spacing */
-    }
-
-    /* Paragraphs within the main content area (#content is not used here but included) */
-    #content p {
-      font-size: 15px;    /* Set font size to 15px for paragraphs */
-    }
-
-    /* Primary container for the About Alan content */
-    #aboutAlan {
-      padding: 15px 15px;
-      margin-top: -10px;  /* Reduce the top margin to pull the content upwards */
-    }
-
-    /* Class for highlighted text */
-    .highlight {
-      color: red;         /* Color for highlighted terms */
-    }
-
-    /* Class for bullet-point items */
-    .bullet-point {
-      list-style-type: disc; /* Adds bullet points */
-      margin-left: 0px;      /* Indent bullet points */
-    }
-
-    /* Regular paragraphs and list items inside #aboutAlan (excluding .highlight) */
-    #aboutAlan p:not(.highlight),
-    #aboutAlan li:not(.highlight) {
-      color: black;
-    }
-
-    /* Adds spacing after paragraphs or list items */
-    #aboutAlan p.space-after,
-    #aboutAlan li.space-after {
-      margin-bottom: 24px; /* Approximately 1.5 lines of space */
-    }
-
-    /* Keyframes for smooth 360-degree horizontal flip */
-    @keyframes smoothFlip360 {
-      from {
-        transform: rotateY(0deg);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Alan</title>
+    <!-- Load the translations object from language.js -->
+    <script type="module" src="language.js"></script>
+    <style>
+      /* Global layout and typography */
+      body {
+        font-family: "Calibri Light", Arial, sans-serif;
+        background-color: white;
+        color: black;
+        margin: 0;
+        padding: 0;
       }
-      to {
-        transform: rotateY(180deg);
+      /* App bar styling */
+      #appBar {
+        display: flex;
+        align-items: center;
+        background-color: black;
+        color: white;
+        padding: 10px 20px;
       }
-    }
-
-    /* Class to trigger the flip animation */
-    .flip-horizontally {
-      animation: smoothFlip360 1.5s ease-out forwards;
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- 
-    **********************************************
-    *              TOP APP BAR                  *
-    **********************************************
-    - Contains the back arrow and page title
-    - Styled with a black background and white text
-  -->
-  <div id="appBar">
-    <div id="backArrow" onclick="history.back()">&#x2190;</div> <!-- Back arrow -->
-    <h1 id="pageTitle">About Alan</h1> <!-- Page Title -->
-  </div>
-
-  <!-- 
-    **********************************************
-    *            ABOUT ALAN SECTION             *
-    **********************************************
-    - Main content describing the AI assistant
-  -->
-  <div id="aboutAlan">
-
-    <!-- Centered logo with adjusted margin -->
-    <div style="text-align: center; margin: -10px;">
-      <img 
-        src="bigredt.png" 
-        alt="Big Red T Logo" 
-        id="logoImage"
-        style="max-width: 120px; height: auto; margin-bottom: -30px;"
-      > <!-- Reduced margin-bottom to 5px -->
+      /* Back arrow */
+      #backArrow {
+        color: white;
+        font-size: 32px;
+        font-weight: bold;
+        cursor: pointer;
+        padding-right: 20px;
+      }
+      /* Page title */
+      #pageTitle {
+        text-align: center;
+        margin: 0 auto;
+        font-size: 24px;
+      }
+      /* Main container for About Alan content */
+      #aboutAlan {
+        padding: 15px;
+        margin-top: -10px;
+      }
+      /* Logo container */
+      #logoContainer {
+        text-align: center;
+        margin: -10px;
+      }
+      /* Content area */
+      #aboutAlanContent {
+        margin-top: 10px;
+      }
+      /* Paragraph styling */
+      #aboutAlanText,
+      #aboutAlanEfficient,
+      #aboutAlanEasy,
+      #aboutAlanExplainable,
+      #aboutAlanEncouraging,
+      #aboutAlanDate {
+        font-size: 15px;
+        text-align: justify;
+        margin-bottom: 16px;
+      }
+      /* List styling */
+      #aboutAlanList {
+        padding-left: 20px;
+        margin-bottom: 16px;
+      }
+      .bullet-point {
+        list-style-type: disc;
+      }
+      .highlight {
+        color: red;
+      }
+      /* Animation for logo (optional) */
+      @keyframes smoothFlip360 {
+        from { transform: rotateY(0deg); }
+        to { transform: rotateY(180deg); }
+      }
+      .flip-horizontally {
+        animation: smoothFlip360 1.5s ease-out forwards;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top App Bar -->
+    <div id="appBar">
+      <div id="backArrow" onclick="history.back()">&#x2190;</div>
+      <h1 id="pageTitle">About Alan</h1>
     </div>
 
-    <!-- Repeated container for "About Alan" text (Note: nested #aboutAlan, but unchanged) -->
+    <!-- Main About Alan Content -->
     <div id="aboutAlan">
-      <p style="font-size: 15px; text-align: justify;">
-        Alan is an AI eye, ear and skin diagnostic assistant, comprising: a foundation language model and symbolic logic. Smart. Serious. State of the art. <br><br> Clinical, local knowledge and images, are tailored to different roles such as health workers and general practitioners. Concise dialogue generates a diagnosis and management plan. Use of the arclight is embedded throughout.<br>
-      </p>
-
-      <ul>
-        <li class="highlight bullet-point">Expert base – tropical/hot climate</li>
-        <li class="highlight bullet-point space-after">Arclight aware</li>
-      </ul>
-
-      <p style="font-size: 15px;"><strong>Efficient</strong> – concise, plain language</p>
-      <p style="font-size: 15px;"><strong>Easy-to-use</strong> – app, voice, vision</p>
-      <p style="font-size: 15px;"><strong>Explainable</strong> – facts/rules, images</p>
-      <p style="font-size: 15px;"><strong>Encouraging</strong> – empathy, teacher</p>
-
-
-      <p style="font-size: 12px;"> <br><br> wjw Jan 25</p>
+      <div id="logoContainer">
+        <img 
+          src="bigredt.png" 
+          alt="Big Red T Logo" 
+          id="logoImage"
+          style="max-width: 120px; height: auto; margin-bottom: -30px;"
+        >
+      </div>
+      <div id="aboutAlanContent">
+        <p id="aboutAlanText">
+          Alan is an AI eye, ear and skin diagnostic assistant, comprising: a foundation language model and symbolic logic. Smart. Serious. State of the art.<br><br>
+          Clinical, local knowledge and images, are tailored to different roles such as health workers and general practitioners. Concise dialogue generates a diagnosis and management plan. Use of the arclight is embedded throughout.<br>
+        </p>
+        <ul id="aboutAlanList">
+          <li id="aboutAlanListItem1" class="highlight bullet-point">Expert base – tropical/hot climate</li>
+          <li id="aboutAlanListItem2" class="highlight bullet-point">Arclight aware</li>
+        </ul>
+        <p id="aboutAlanEfficient"><strong>Efficient</strong> – concise, plain language</p>
+        <p id="aboutAlanEasy"><strong>Easy-to-use</strong> – app, voice, vision</p>
+        <p id="aboutAlanExplainable"><strong>Explainable</strong> – facts/rules, images</p>
+        <p id="aboutAlanEncouraging"><strong>Encouraging</strong> – empathy, teacher</p>
+        <p id="aboutAlanDate" style="font-size: 12px;"><br><br>wjw Jan 25</p>
+      </div>
     </div>
 
-  </div>
-
-  <!-- 
-    **********************************************
-    *             SCRIPT SECTION                *
-    **********************************************
-    - Handles the DOMContentLoaded event
-    - Applies a delayed horizontal flip animation to the logo image
-  -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      setTimeout(function () {
-        var logoImage = document.getElementById('logoImage');
-        if (logoImage) {
-          logoImage.classList.add('flip-horizontally');  // Apply the horizontal flip animation class
+    <!-- Inline JavaScript to update the page text using translations -->
+    <script>
+      // Update on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        updatePageTranslations();
+        // Optionally, trigger a logo flip after a delay
+        setTimeout(function () {
+          var logoImage = document.getElementById("logoImage");
+          if (logoImage) {
+            logoImage.classList.add("flip-horizontally");
+          }
+        }, 1000);
+      });
+      
+      // Listen for storage changes (if language is changed in another tab)
+      window.addEventListener("storage", function(e) {
+        if(e.key === "preferredLanguage") {
+          updatePageTranslations();
         }
-      }, 1000);  // Delay of 1 second
-    });
-  </script>
-
-</body>
-
+      });
+      
+      function updatePageTranslations() {
+        var lang = localStorage.getItem("preferredLanguage") || "en";
+        var t = window.translations && window.translations[lang];
+        if (t) {
+          document.getElementById("pageTitle").textContent = t.pageTitle;
+          document.getElementById("aboutAlanText").innerHTML = t.aboutAlanText;
+          document.getElementById("aboutAlanListItem1").textContent = t.aboutAlanListItem1;
+          document.getElementById("aboutAlanListItem2").textContent = t.aboutAlanListItem2;
+          document.getElementById("aboutAlanEfficient").innerHTML = t.aboutAlanEfficient;
+          document.getElementById("aboutAlanEasy").innerHTML = t.aboutAlanEasy;
+          document.getElementById("aboutAlanExplainable").innerHTML = t.aboutAlanExplainable;
+          document.getElementById("aboutAlanEncouraging").innerHTML = t.aboutAlanEncouraging;
+          document.getElementById("aboutAlanDate").innerHTML = t.aboutAlanDate;
+        }
+      }
+    </script>
+  </body>
 </html>

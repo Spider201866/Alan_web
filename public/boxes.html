@@ -1,19 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, user-scalable=no">
   <title>Continuous Infinite Loop in Both Directions</title>
 
-  <!-- 
-    **********************************************
-    *                  PAGE STYLES              *
-    **********************************************
-    - Full viewport usage with no scrollbars
-    - Two marquee sections: one scrolling left-to-right, 
-      the other scrolling right-to-left
-  -->
   <style>
     /* Global layout */
     body, html {
@@ -21,69 +12,56 @@
       width: 100%;
       margin: 0;
       padding: 0;
-      height: 100vh;            /* Full viewport height */
-      overflow: hidden;         /* Prevent any scrollbars */
+      height: 100vh;            
+      overflow: hidden;         
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      user-select: none;        /* Disables text selection */
+      user-select: none;        
     }
 
-    /* 
-      Marquee containers:
-      - Use flexbox
-      - No wrapping (white-space: nowrap)
-      - Overflow hidden for continuous scrolling 
-    */
     .marquee {
       display: flex;
-      flex-shrink: 0;           /* Prevents flex items from shrinking */
+      flex-shrink: 0;         
       white-space: nowrap;
       overflow: hidden;
-      width: 100vw;             /* Manages the animation by defining width */
-      margin-bottom: 15px;      /* Gap between marquee lines */
+      width: 100vw;           
+      margin-bottom: 15px;    
     }
-
-    /* Remove margin from the last marquee to avoid extra space */
     .marquee:last-child {
       margin-bottom: 0;
     }
 
-    /* Content inside each marquee line */
     .marquee-content {
       display: flex;
       animation: scroll-right 60s linear infinite;
     }
-
     .marquee-content-reverse {
       display: flex;
       animation: scroll-left 60s linear infinite;
     }
 
-    /* Keyframes for scrolling */
     @keyframes scroll-right {
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
-
     @keyframes scroll-left {
       0%   { transform: translateX(-50%); }
       100% { transform: translateX(0); }
     }
 
-    /* Boxes in the marquee */
     .box {
       flex-shrink: 0;
-      width: auto;                  /* Width auto to accommodate text */
-      min-width: 120px;             /* Minimum width for consistent sizing */
+      width: auto; 
+      min-width: 120px;
       height: 10px;
       padding: 10px;
-      margin-right: 15px;           /* Spacing between boxes */
+      margin-right: 15px;  
       font-size: 14px;
-      background-color: #ffffff;    /* White background for visibility */
-      border: 1px solid #000000;    /* Black border */
-      border-radius: 12px;          /* Rounded corners */
+      background-color: #fff; 
+      border: 1px solid #000; 
+      border-radius: 12px; 
       display: flex;
       align-items: center;
       justify-content: center;
@@ -95,61 +73,69 @@
 
   <!-- 
     **********************************************
-    *         FIRST MARQUEE (Left to Right)     *
+    *    FIRST MARQUEE (Left -> Right) (Eye)    *
     **********************************************
     .marquee-content-reverse => scroll-left animation
   -->
   <div class="marquee">
     <div class="marquee-content-reverse">
       <!-- 
-        Repeat content to ensure 
-        a seamless scrolling effect 
+        EYE LINES: 
+        - First set (IDs end in "a")
+        - Second set (IDs end in "b")
       -->
-      <div class="box">What is glaucoma?</div>
-      <div class="box">How do I see the optic disc with the Arclight?</div>
-      <div class="box">Man 25, red eye, 3 day, photophobia, VA down a little</div>
-      <div class="box">Tell me about Iritis</div>
-      <div class="box">Do I refer congenital cataract urgently?</div>
-      <div class="box">Woman 65, vision poor, no glasses. Front eye OK, cloudy pupil</div>
-      <div class="box">Mother worried about baby as noticed white pupil, no vision in eye.</div>
 
-      <div class="box">What is glaucoma?</div>
-      <div class="box">How do I see the optic disc with the Arclight?</div>
-      <div class="box">Man 25, red eye, 3 day, photophobia, VA down a little</div>
-      <div class="box">Tell me about Iritis</div>
-      <div class="box">Do I refer congenital cataract urgently?</div>
-      <div class="box">Woman 65, vision poor, no glasses. Front eye OK, cloudy pupil</div>
-      <div class="box">Mother worried about baby as noticed white pupil, no vision in eye.</div>
+      <!-- EYE lines, FIRST copy (IDs: eyeMarqueeLine1a, etc) -->
+      <div class="box" id="eyeMarqueeLine1a">What is glaucoma?</div>
+      <div class="box" id="eyeMarqueeLine2a">How do I see the optic disc with the Arclight?</div>
+      <div class="box" id="eyeMarqueeLine3a">Man 25, red eye, 3 day, photophobia, VA down a little</div>
+      <div class="box" id="eyeMarqueeLine4a">Tell me about Iritis</div>
+      <div class="box" id="eyeMarqueeLine5a">Do I refer congenital cataract urgently?</div>
+      <div class="box" id="eyeMarqueeLine6a">Woman 65, vision poor, no glasses. Front eye OK, cloudy pupil</div>
+      <div class="box" id="eyeMarqueeLine7a">Mother worried about baby as noticed white pupil, no vision in eye.</div>
+
+      <!-- EYE lines, SECOND copy (IDs: eyeMarqueeLine1b, etc) -->
+      <div class="box" id="eyeMarqueeLine1b">What is glaucoma?</div>
+      <div class="box" id="eyeMarqueeLine2b">How do I see the optic disc with the Arclight?</div>
+      <div class="box" id="eyeMarqueeLine3b">Man 25, red eye, 3 day, photophobia, VA down a little</div>
+      <div class="box" id="eyeMarqueeLine4b">Tell me about Iritis</div>
+      <div class="box" id="eyeMarqueeLine5b">Do I refer congenital cataract urgently?</div>
+      <div class="box" id="eyeMarqueeLine6b">Woman 65, vision poor, no glasses. Front eye OK, cloudy pupil</div>
+      <div class="box" id="eyeMarqueeLine7b">Mother worried about baby as noticed white pupil, no vision in eye.</div>
     </div>
   </div>
 
   <!-- 
     **********************************************
-    *       SECOND MARQUEE (Right to Left)      *
+    *   SECOND MARQUEE (Right -> Left) (Ear)    *
     **********************************************
     .marquee-content => scroll-right animation
   -->
   <div class="marquee">
     <div class="marquee-content">
       <!-- 
-        Repeat content for 
-        seamless scrolling 
+        EAR LINES:
+        - First set (IDs end in "a")
+        - Second set (IDs end in "b")
       -->
-      <div class="box">What is otitis media?</div>
-      <div class="box">Can I see the tympanic menbrane with my Arclight?</div>
-      <div class="box">Lad 16, sore pinna, 2 day, itchy, hearing is good</div>
-      <div class="box">Tell me about syringing</div>
-      <div class="box">Do I refer mastoditis urgently?</div>
-      <div class="box">Man 73yr, hearing poor. Poor view of canal. I just see wax</div>
-      <div class="box">Infant no response to voice. Been months</div>
 
-      <div class="box">What is otitis media?</div>
-      <div class="box">Can I see the tympanic menbrane with my Arclight?</div>
-      <div class="box">Lad 16, sore pinna, 2 day, itchy, hearing is good</div>
-      <div class="box">Tell me about syringing</div>
-      <div class="box">Do I refer mastoditis urgently?</div>
-      <div class="box">Man 73yr, hearing poor. Poor view of canal. I just see wax</div>
-      <div class="box">Infant no response to voice. Been months</div>
+      <!-- EAR lines, FIRST copy (IDs: earMarqueeLine1a, etc) -->
+      <div class="box" id="earMarqueeLine1a">What is otitis media?</div>
+      <div class="box" id="earMarqueeLine2a">Can I see the tympanic menbrane with my Arclight?</div>
+      <div class="box" id="earMarqueeLine3a">Lad 16, sore pinna, 2 day, itchy, hearing is good</div>
+      <div class="box" id="earMarqueeLine4a">Tell me about syringing</div>
+      <div class="box" id="earMarqueeLine5a">Do I refer mastoditis urgently?</div>
+      <div class="box" id="earMarqueeLine6a">Man 73yr, hearing poor. Poor view of canal. I just see wax</div>
+      <div class="box" id="earMarqueeLine7a">Infant no response to voice. Been months</div>
+
+      <!-- EAR lines, SECOND copy (IDs: earMarqueeLine1b, etc) -->
+      <div class="box" id="earMarqueeLine1b">What is otitis media?</div>
+      <div class="box" id="earMarqueeLine2b">Can I see the tympanic menbrane with my Arclight?</div>
+      <div class="box" id="earMarqueeLine3b">Lad 16, sore pinna, 2 day, itchy, hearing is good</div>
+      <div class="box" id="earMarqueeLine4b">Tell me about syringing</div>
+      <div class="box" id="earMarqueeLine5b">Do I refer mastoditis urgently?</div>
+      <div class="box" id="earMarqueeLine6b">Man 73yr, hearing poor. Poor view of canal. I just see wax</div>
+      <div class="box" id="earMarqueeLine7b">Infant no response to voice. Been months</div>
     </div>
   </div>
 

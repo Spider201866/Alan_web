@@ -49,7 +49,7 @@ const initChatbot = () => {
         },
         // Text input area config
         textInput: {
-          placeholder: "Ask Alan...",
+          placeholder: "Alan >",
           backgroundColor: "#f0f0f0", // Light grey background
           textColor: "#303235",
           sendButtonColor: "#000000",

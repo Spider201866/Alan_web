@@ -347,18 +347,21 @@ button {
 .side-menu {
   position: fixed;
   left: -300px; /* Start off-screen */
-  top: 10;      /* As per original code, no px specified */
-  width: 300px;
+  top: 10px;    /* Add px for clarity */
+  min-width: 300px;   /* Minimum width remains 300px */
+  width: auto;        /* Width will expand as needed */
+  max-width: 400px;   /* Optional: Limit maximum width */
   height: 100%;
   background-color: #f4f4f4;
   box-shadow: 2px 0px 5px rgba(0,0,0,0.5);
   transition: left 0.5s ease;
-  padding-top: 60px; /* Give some space at the top */
+  padding-top: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 1000; /* Ensure the menu is also in front, but behind the icon */
+  z-index: 1000;
 }
+
 
 /* ==============================
    BUTTON COLOUR VARIANTS

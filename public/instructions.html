@@ -1,423 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <!-- 
-    **********************************************
-    *          VIEWPORT & PAGE SETTINGS         *
-    **********************************************
-    - Ensures correct scaling on mobile devices
-    - Sets the title of the page
-  -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instructions</title>
-
-  <!-- 
-    **********************************************
-    *                 PAGE STYLES               *
-    **********************************************
-    - Defines global layout and typography
-    - Styles the top app bar, content area and switch
-    - Uses simple media query to adjust position on mobile
-  -->
-  <style>
-    /* 
-      Global layout and typography 
-      - Zeroes out margins/padding 
-      - Sets default font and background 
-    */
-    body,
-    html {
-      margin: 0;
-      padding: 0;
-      font-family: "Calibri Light", Arial, sans-serif;
-      font-size: 15px;
-      background-color: white;
-    }
-
-    /* 
-      Top App Bar 
-      - Black background 
-      - Flex layout for horizontal alignment 
-    */
-    #appBar {
-      display: flex;              /* Aligns child elements horizontally */
-      align-items: center;        /* Vertically centres content */
-      background-color: black;    /* Black app bar */
-      color: white;               /* White text/icons */
-      padding: 10px 20px;         /* Spacing around the app bar */
-    }
-
-    /* 
-      Page Title
-      - Centrally positioned within the app bar 
-    */
-    #pageTitle {
-      text-align: center;
-      margin: 0 auto;             /* Keeps the title in the centre */
-      font-size: 24px;
-    }
-
-    /* 
-      Back Arrow 
-      - Large clickable arrow to return to previous page 
-    */
-    #backArrow {
-      color: white;               /* White arrow */
-      font-size: 32px;            /* Larger than standard text */
-      font-weight: bold;          /* Makes arrow visually heavier */
-      position: relative;         /* Relative positioning for layout */
-      cursor: pointer;            /* Cursor changes to pointer on hover */
-      padding-right: 20px;        /* Spacing between arrow and title */
-    }
-
-    /* 
-      Main Content 
-      - Default faint blue background
-      - Padding for breathing room 
-    */
-    #content {
-      padding: 5px 25px 25px 25px;
-      background-color: #dfe7ff;  /* Subtle blue shade */
-    }
-
-    /* 
-      General Text Classes 
-      - Common spacing or styling for paragraphs or text blocks 
-    */
-    .infoText,
-    .redText,
-    .italicText,
-    .boldText,
-    .justify {
-      margin-bottom: 15px;
-    }
-
-    .redText {
-      color: red;
-    }
-
-    .italicText {
-      font-style: italic;
-    }
-
-    .boldText {
-      font-weight: bold;
-    }
-
-    .justify {
-      text-align: justify;
-    }
-
-    /* 
-      Additional Examples
-      - Content at the bottom for "Too little," "Just right," "Too much" 
-    */
-    #additionalExamples p {
-      margin-bottom: 10px;
-      font-size: 13px;
-      color: #333;
-    }
-
-    #additionalExamples strong {
-      display: block;
-      font-weight: bold;
-      margin-bottom: -10px;
-      line-height: 1.2;
-    }
-
-    #additionalExamples span {
-      display: block;
-      margin-left: 10px;
-      margin-top: 0px;
-      line-height: 1.2;
-    }
-
-    /* 
-      Info Text & List Items 
-      - Indented text for bullet points 
-    */
-    .infoText {
-      padding-left: 60px;         /* Extra left indentation */
-      color: black;
-    }
-    .infoText li {
-      line-height: 1.2;
-      margin-bottom: 2px;
-    }
-    .listText {
-      display: block;
-      margin-left: 10px;
-      color: red;
-    }
-
-    /* 
-      Horizontal Rule Styling
-      - Subtle 2px line to separate content 
-    */
-    hr {
-      border: none;
-      height: 2px;
-      background-color: #ccc;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-
-    /* 
-      Switch Container 
-      - Holds radio buttons for Eye/Ear/Skin 
-      - Positioned absolutely so it floats on the page 
-    */
-    #switchContainer {
-      position: absolute;
-      top: 160px;
-      right: 40px;
-      text-align: center;
-      padding: 10px;
-      border-radius: 15px;
-    }
-
-    /* 
-      Switch Layout 
-      - Stacks three radio inputs vertically 
-    */
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 180px;              /* Enough space for three circular labels */
-    }
-
-    /* 
-      Hide Radio Inputs 
-      - Only labels are displayed 
-    */
-    .switch input {
-      display: none;
-    }
-
-    /* 
-      Switch Labels 
-      - Circular clickable buttons 
-    */
-    .switch-label {
-      display: block;
-      text-align: center;
-      cursor: pointer;
-      width: 60px;
-      height: 60px;
-      line-height: 60px;
-      font-weight: bold;
-      color: black;
-      background-color: white;
-      transition: background-color 0.3s, box-shadow 0.3s;
-      border-radius: 30px;
-      border: 1px solid black;
-      margin-bottom: 5px;         /* Vertical spacing between circles */
-    }
-
-    /* 
-      Hover Effect on Labels 
-      - Light grey background 
-      - Subtle drop shadow 
-    */
-    .switch-label:hover {
-      background-color: #e0e0e0;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    }
-
-    /* 
-      Checked Label State 
-      - Inverted colours for selected label 
-    */
-    .switch input:checked + .switch-label {
-      background-color: black;
-      color: white;
-      border-color: black;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    }
-
-    /* 
-      Responsive Adjustment 
-      - Moves switch container closer to the left on narrow screens 
-    */
-    @media (max-width: 600px) {
-      #switchContainer {
-        right: 10px;  /* Reduce indentation on mobile */
-        top: 140px;   /* Adjust vertical position if needed */
+  <head>
+    <meta charset="UTF-8">
+    <!-- VIEWPORT & PAGE SETTINGS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructions</title>
+    <!-- Load the translations object from language.js -->
+    <script type="module" src="language.js"></script>
+    <style>
+      /* Global layout and typography */
+      body, html {
+        margin: 0;
+        padding: 0;
+        font-family: "Calibri Light", Arial, sans-serif;
+        font-size: 15px;
+        background-color: white;
       }
-    }
-  </style>
-</head>
-
-<body>
-  <!-- 
-    **********************************************
-    *              TOP APP BAR                  *
-    **********************************************
-    - Contains the back arrow and page title
-    - Styled with black background and white text
-  -->
-  <div id="appBar">
-    <div id="backArrow" onclick="history.back()">&#x2190;</div> <!-- Back arrow -->
-    <h1 id="pageTitle">Instructions</h1>                        <!-- Page Title -->
-  </div>
-
-  <!-- 
-    **********************************************
-    *            MAIN CONTENT AREA              *
-    **********************************************
-    - Contains instructions for Eye/Ear/Skin
-    - Includes a switch for toggling the background
-      and text details
-  -->
-  <div id="content">
-    <!-- 
-      Switch container holding radio inputs for 
-      selecting Eye/Ear/Skin instructions
-    -->
-    <div id="switchContainer">
-      <div class="switch">
-        <input 
-          type="radio" 
-          name="option" 
-          id="optionEye" 
-          value="eye" 
-          checked 
-          onchange="toggleContent()"
-        >
-        <label for="optionEye" class="switch-label">Eye</label>
-
-        <input 
-          type="radio" 
-          name="option" 
-          id="optionEar" 
-          value="ear" 
-          onchange="toggleContent()"
-        >
-        <label for="optionEar" class="switch-label">Ear</label>
-
-        <input 
-          type="radio" 
-          name="option" 
-          id="optionSkin" 
-          value="skin" 
-          onchange="toggleContent()"
-        >
-        <label for="optionSkin" class="switch-label">Skin</label>
+      /* Top App Bar */
+      #appBar {
+        display: flex;
+        align-items: center;
+        background-color: black;
+        color: white;
+        padding: 10px 20px;
+      }
+      /* Page Title */
+      #pageTitle {
+        text-align: center;
+        margin: 0 auto;
+        font-size: 24px;
+      }
+      /* Back Arrow */
+      #backArrow {
+        color: white;
+        font-size: 32px;
+        font-weight: bold;
+        position: relative;
+        cursor: pointer;
+        padding-right: 20px;
+      }
+      /* Main Content */
+      #content {
+        padding: 5px 25px 25px 25px;
+        background-color: #dfe7ff;  /* Default background; will be updated by toggle */
+      }
+      /* Text classes */
+      .infoText, .redText, .italicText, .boldText, .justify {
+        margin-bottom: 15px;
+      }
+      .redText { color: red; }
+      .italicText { font-style: italic; }
+      .boldText { font-weight: bold; }
+      .justify { text-align: justify; }
+      /* Additional Examples */
+      #additionalExamples p {
+        margin-bottom: 10px;
+        font-size: 13px;
+        color: #333;
+      }
+      #additionalExamples strong {
+        display: block;
+        font-weight: bold;
+        margin-bottom: -10px;
+        line-height: 1.2;
+      }
+      #additionalExamples span {
+        display: block;
+        margin-left: 10px;
+        margin-top: 0;
+        line-height: 1.2;
+      }
+      /* Info text for bullet list */
+      .infoText {
+        padding-left: 60px;
+        color: black;
+      }
+      .infoText li {
+        line-height: 1.2;
+        margin-bottom: 2px;
+      }
+      .listText {
+        display: block;
+        margin-left: 10px;
+        color: red;
+      }
+      /* Horizontal Rule */
+      hr {
+        border: none;
+        height: 2px;
+        background-color: #ccc;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      /* Switch Container */
+      #switchContainer {
+        position: absolute;
+        top: 160px;
+        right: 40px;
+        text-align: center;
+        padding: 10px;
+        border-radius: 15px;
+      }
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 180px;
+      }
+      .switch input {
+        display: none;
+      }
+      .switch-label {
+        display: block;
+        text-align: center;
+        cursor: pointer;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        font-weight: bold;
+        color: black;
+        background-color: white;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        border-radius: 30px;
+        border: 1px solid black;
+        margin-bottom: 5px;
+      }
+      .switch-label:hover {
+        background-color: #e0e0e0;
+        box-shadow: 0 0 5px rgba(0,0,0,0.3);
+      }
+      .switch input:checked + .switch-label {
+        background-color: black;
+        color: white;
+        border-color: black;
+        box-shadow: 0 0 5px rgba(0,0,0,0.5);
+      }
+      @media (max-width: 600px) {
+        #switchContainer {
+          right: 10px;
+          top: 140px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- TOP APP BAR -->
+    <div id="appBar">
+      <div id="backArrow" onclick="history.back()">&#x2190;</div>
+      <h1 id="pageTitle">Instructions</h1>
+    </div>
+    <!-- MAIN CONTENT AREA -->
+    <div id="content">
+      <!-- Switch container -->
+      <div id="switchContainer">
+        <div class="switch">
+          <input type="radio" name="option" id="optionEye" value="eye" checked onchange="toggleContent()">
+          <label for="optionEye" class="switch-label">Eye</label>
+          <input type="radio" name="option" id="optionEar" value="ear" onchange="toggleContent()">
+          <label for="optionEar" class="switch-label">Ear</label>
+          <input type="radio" name="option" id="optionSkin" value="skin" onchange="toggleContent()">
+          <label for="optionSkin" class="switch-label">Skin</label>
+        </div>
+      </div>
+      <!-- Introductory paragraph -->
+      <p id="introText" style="margin-bottom: 20px; font-size: 15px; text-align: justify;">
+        Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying names or details. Look fully around head/face/body part and examine both eyes/ears. Good luck!
+      </p>
+      <!-- Prompt for patient details -->
+      <p id="patientPrompt" class="boldText">Tell Alan about your patient's:</p>
+      <ul class="infoText">
+        <li id="patientDetail1"><span class="listText">problem & onset</span></li>
+        <li id="patientDetail2"><span class="listText">what you see</span></li>
+        <li id="patientDetail3"><span class="listText">vision & pupils</span></li>
+        <li id="patientDetail4"><span class="listText">age, sex, medication</span></li>
+      </ul>
+      <!-- Default Arclight instruction (will be overridden by toggle) -->
+      <p id="useArclight" style="margin-top: 20px;">
+        <strong>Use Arclight:</strong> <strong><em>front, fundal reflex, back of eye.</em></strong>
+      </p>
+      <hr>
+      <!-- Additional examples -->
+      <div class="justify" id="additionalExamples">
+        <p>
+          <strong id="labelTooLittle">Too little</strong><br>
+          <span id="tooLittle">man red eye what?</span>
+        </p>
+        <p>
+          <strong id="labelJustRight">Just right</strong><br>
+          <span id="justRight">
+            Man 25yr, red eye 3 day. No meds or eye prob before. Pain, watering, White cornea dot. Pupils OK, Vision 6/12 6/6 other
+          </span>
+        </p>
+        <p>
+          <strong id="labelTooMuch">Too much</strong><br>
+          <span id="tooMuch">
+            This man came into clinics today. He drove into the building with a red eye, now he thinks the food he ate is affecting his eye. I see watering, red edges, you know? He wants help. Tall man, watery eyes, worried about cornea and pain. He says, "What is this?"
+          </span>
+        </p>
+        <p id="additionalQuery" style="padding-top: 5px; color: blue; font-size: 15px;">
+          Alan also answers eye teaching/learning queries: What is Iritis? How do I see the retina?
+        </p>
       </div>
     </div>
-
-    <!-- Introductory paragraph explaining Alan's usage -->
-    <p style="margin-bottom: 20px; font-size: 15px; text-align: justify;">
-      Alan is an AI assistant for students and those who only occasionally see eye ear or skin cases
-      Write or speak clearly and avoid identifying names or details Look fully around head/face/body part
-      and examine both eyes/ears. Good luck!
-    </p>
-
-    <!-- Prompt for key patient details -->
-    <p class="boldText">Tell Alan about your patient's:</p>
-    <ul class="infoText">
-      <li><span class="listText">problem & onset</span></li>
-      <li><span class="listText">what you see</span></li>
-      <li><span class="listText" id="dynamicContent">vision & pupils</span></li>
-      <li><span class="listText">age sex medication</span></li>
-    </ul>
-
-    <!-- Default instruction for using Arclight (overridden by toggleContent) -->
-    <p id="useArclight" style="margin-top: 20px;">
-      <strong>Use Arclight:</strong> 
-      <strong><em>front, fundal reflex, back of eye.</em></strong>
-    </p>
-
-    <hr>
-
-    <!-- 
-      Additional examples showing different levels of detail:
-      "Too little," "Just right," and "Too much"
-    -->
-    <div class="justify" id="additionalExamples">
-      <p>
-        <strong>Too little</strong><br>
-        <span id="tooLittle">man red eye what?</span>
-      </p>
-
-      <p>
-        <strong>Just right</strong><br>
-        <span id="justRight">
-          Man 25yr, red eye 3 day. No meds or eye prob before. Pain, watering, White cornea dot. Pupils OK, Vision 6/12 6/6 other
-        </span>
-      </p>
-
-      <p>
-        <strong>Too much</strong><br>
-        <span id="tooMuch">
-          This man com into clinics today He driver in the building a red eye now 
-          he thinks the food eaten Is looking at eye I see watering It red edges you know?
-          He wan help he tall man eyes watery worried about cornea and pain he says wat is dis…
-        </span>
-      </p>
-
-      <p id="additionalQuery" style="padding-top: 5px; color: blue; font-size: 15px;">
-        Alan also answers eye teaching/learning queries: What is Iritis? How do I see the retina?
-      </p>
-    </div>
-
-    <!-- 
-      **********************************************
-      *             SCRIPT SECTION                *
-      **********************************************
-      - Dynamically updates content based on selected option
-      - Changes background colour and text details
-    -->
+    
+    <!-- INLINE SCRIPT: Update static text from translations and override toggleContent -->
     <script>
+      var trans; // global translation object for the current language
+
+      document.addEventListener("DOMContentLoaded", function () {
+        updatePageTranslations();
+      });
+      
+      window.addEventListener("storage", function(e) {
+        if(e.key === "preferredLanguage") {
+          updatePageTranslations();
+        }
+      });
+      
+      function updatePageTranslations() {
+        var lang = localStorage.getItem("preferredLanguage") || "en";
+        trans = window.translations && window.translations[lang];
+        if (trans) {
+          document.getElementById("pageTitle").textContent = trans.instructionsPageTitle;
+          document.getElementById("introText").innerHTML = trans.instructionsIntro;
+          document.getElementById("patientPrompt").textContent = trans.instructionsPatientPrompt;
+          document.getElementById("patientDetail1").textContent = trans.instructionsPatientDetail1;
+          document.getElementById("patientDetail2").textContent = trans.instructionsPatientDetail2;
+          document.getElementById("patientDetail3").textContent = trans.instructionsPatientDetail3;
+          document.getElementById("patientDetail4").textContent = trans.instructionsPatientDetail4;
+          // Set default Arclight text
+          document.getElementById("useArclight").innerHTML = trans.instructionsUseArclight_default;
+          // Update additional examples subtitles and content via toggleContent
+          toggleContent();
+        }
+      }
+      
       function toggleContent() {
         var option = document.querySelector('input[name="option"]:checked').value;
-
-        // Eye selection
+        if (!trans) return;
         if (option === 'eye') {
-          document.getElementById('content').style.backgroundColor = '#dfe7ff';
-          document.getElementById('useArclight').innerHTML =
-            '<strong>Use Arclight:</strong> <strong><em>front, fundal reflex, back of eye.</em></strong>';
-          document.getElementById('dynamicContent').textContent = 'vision & pupils';
-          document.getElementById('tooLittle').textContent = 'man red eye what?';
-          document.getElementById('justRight').textContent =
-            'Man 25yr, red eye 3 day. No meds or eye prob before. Pain, watering, White cornea dot. Pupils OK, Vision 6/12 6/6 other';
-          document.getElementById('tooMuch').textContent =
-            'This man com into clinics today He driver in the building a red eye now he thinks the food eaten Is looking at eye I see watering It red edges you know? He wan help he tall man eyes watery worried about cornea and pain he says wat is dis…';
-          document.getElementById('additionalQuery').innerHTML =
-            '<span style="color: blue; font-size: 15px; margin: -5px">Alan also answers eye teaching/learning queries: What is Iritis? How do I see the retina?</span>';
-
-        // Ear selection
+          document.getElementById('content').style.backgroundColor = trans.instructionsBackground_eye;
+          document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_eye;
+          document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_eye;
+          document.getElementById('justRight').textContent = trans.instructionsJustRight_eye;
+          document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_eye;
+          document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_eye;
+          // Update subtitles:
+          document.getElementById('labelTooLittle').textContent = trans.instructionsLabelTooLittle;
+          document.getElementById('labelJustRight').textContent = trans.instructionsLabelJustRight;
+          document.getElementById('labelTooMuch').textContent = trans.instructionsLabelTooMuch;
         } else if (option === 'ear') {
-          document.getElementById('content').style.backgroundColor = '#f2fff2';
-          document.getElementById('useArclight').innerHTML =
-            '<strong>Use Arclight:</strong> <strong><em>all around ear, canal, drum.</em></strong>';
-          document.getElementById('dynamicContent').textContent = 'hearing';
-          document.getElementById('tooLittle').textContent = 'man red ear what?';
-          document.getElementById('justRight').textContent =
-            'Man 25yr, red ear 3 day No meds or ear prob before. Pain, ear discharge. Red drum, Hearing muffled in bad ear but OK other';
-          document.getElementById('tooMuch').textContent =
-            'This man com into clinics today He driver in the building a red ears now he thinks the food eaten Is looking at ear I see discharge It red edges you know? He wan help he tall man ears watery worried about hearing and pain he says wat is dis…';
-          document.getElementById('additionalQuery').innerHTML =
-            '<span style="color: green; font-size: 15px; margin: -5px">Alan also answers ear teaching/learning queries: What is Otitis Media? How do I clean an ear?</span>';
-
-        // Skin selection
+          document.getElementById('content').style.backgroundColor = trans.instructionsBackground_ear;
+          document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_ear;
+          document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_ear;
+          document.getElementById('justRight').textContent = trans.instructionsJustRight_ear;
+          document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_ear;
+          document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_ear;
+          // Update subtitles:
+          document.getElementById('labelTooLittle').textContent = trans.instructionsLabelTooLittle;
+          document.getElementById('labelJustRight').textContent = trans.instructionsLabelJustRight;
+          document.getElementById('labelTooMuch').textContent = trans.instructionsLabelTooMuch;
         } else if (option === 'skin') {
-          document.getElementById('content').style.backgroundColor = '#fddfff';
-          document.getElementById('useArclight').innerHTML =
-            '<strong>Use Arclight:</strong> <strong><em>UV light, dermoscopy.</em></strong>';
-          document.getElementById('dynamicContent').textContent = 'skin ABCDE & PDSBV';
-          document.getElementById('tooLittle').textContent = 'man red skin what?';
-          document.getElementById('justRight').textContent =
-            'Man 25yr, red skin patch 3 day. No meds or eye prob before. Sore and itchy';
-          document.getElementById('tooMuch').textContent =
-            'This man com into clinics today He driver in the building a red skin now he thinks the food eaten Is looking at skin I see watering It red edges you know? He wan help he tall man eyes watery worried about cornea and pain he says wat is dis…';
-          document.getElementById('additionalQuery').innerHTML =
-            '<span style="color: purple; font-size: 15px; margin: -5px">Alan also answers skin teaching/learning queries: What is Eczema? How do I see the pigment network?</span>';
+          document.getElementById('content').style.backgroundColor = trans.instructionsBackground_skin;
+          document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_skin;
+          document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_skin;
+          document.getElementById('justRight').textContent = trans.instructionsJustRight_skin;
+          document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_skin;
+          document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_skin;
+          // Update subtitles:
+          document.getElementById('labelTooLittle').textContent = trans.instructionsLabelTooLittle;
+          document.getElementById('labelJustRight').textContent = trans.instructionsLabelJustRight;
+          document.getElementById('labelTooMuch').textContent = trans.instructionsLabelTooMuch;
         }
       }
     </script>
-  </div>
-</body>
+  </body>
 </html>
