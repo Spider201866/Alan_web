@@ -288,8 +288,7 @@
     </div>
 
     <object type="text/html" data="boxes.html" id="boxesFrame" style="width:100%; height:100px; overflow:auto; border:none;"></object>
-    
-    <script type="module" src="https://cdn.jsdelivr.net/npm/flowise-embed@latest/dist/web.js"></script>
+
 
     <div class="chatbot-container">
         <flowise-fullchatbot></flowise-fullchatbot>
@@ -399,6 +398,13 @@
     window.addEventListener('pageshow', (event) => {
   // Reset the sidebar to off-screen when the page is shown (even from bfcache)
   sideMenu.style.left = '-370px';
+});
+
+window.addEventListener('pageshow', (event) => {
+  // Ensure the sidebar is reset
+  sideMenu.style.left = '-370px';
+  // Reinitialize the chatbot if needed
+  selectAgentAndFetch();  // or initChatbot() if that’s your preferred call
 });
 
 
