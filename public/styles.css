@@ -270,9 +270,11 @@ html {
   align-items: center;
 }
 flowise-fullchatbot {
-  margin-top: 0;
-  padding-top: 0;
+  display: block;       /* Ensure it behaves as a block element */
+  min-height: 300px;    /* Force a minimum height (adjust as needed) */
+  z-index: 10;          /* Bring it to the front if overlapping elements exist */
 }
+
 
 /* ==============================
    DETECTED CONDITION
