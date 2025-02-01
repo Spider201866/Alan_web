@@ -445,72 +445,96 @@
     }
 
     // 9) When user clicks "Accept" at end of onboarding
-    function handleAccept() {
-      const rawName = nameInput.value.trim();
-      const nameIsValid = /^[A-Za-z'\- ]{2,20}$/.test(rawName);
-      if (!nameIsValid) {
-        alert("Please enter a valid name (2-20 letters, spaces, apostrophes, or hyphens).");
-        return;
-      }
+// 9) When user clicks "Accept" at end of onboarding
+function handleAccept() {
+  const rawName = nameInput.value.trim();
+  const nameIsValid = /^[A-Za-z'\- ]{2,20}$/.test(rawName);
+  if (!nameIsValid) {
+    alert("Please enter a valid name (2-20 letters, spaces, apostrophes, or hyphens).");
+    return;
+  }
 
-      localStorage.setItem("name", rawName);
-      localStorage.setItem("selectedJobRole", jobSelectElement.value);
-      localStorage.setItem("selectedExperience", experienceSelect.value);
+  localStorage.setItem("name", rawName);
+  localStorage.setItem("selectedJobRole", jobSelectElement.value);
+  localStorage.setItem("selectedExperience", experienceSelect.value);
 
-      const selectedFocusValues = Array.from(focusCheckboxes)
-        .filter(cb => cb.checked)
-        .map(cb => cb.value);
-      localStorage.setItem("selectedFocus", JSON.stringify(selectedFocusValues));
+  // --- NEW SNIPPET TO SET roleClassification ---
+  let roleClass;
+  const jobRole = jobSelectElement.value;
+  switch (jobRole) {
+    case "Health worker":
+    case "Nurse":
+    case "Medical student":
+    case "Hospital doctor":
+    case "General practitioner":
+    case "Physician associate":
+    case "Ophthalmologist":
+    case "ENT specialist":
+    case "Dermatologist":
+      roleClass = " (M)";
+      break;
+    default:
+      roleClass = " (P)";
+      break;
+  }
+  localStorage.setItem("roleClassification", roleClass);
+  // --- END NEW SNIPPET ---
 
-      localStorage.setItem("contactInfo", contactInput.value);
+  const selectedFocusValues = Array.from(focusCheckboxes)
+    .filter(cb => cb.checked)
+    .map(cb => cb.value);
+  localStorage.setItem("selectedFocus", JSON.stringify(selectedFocusValues));
 
-      if (!localStorage.getItem("sessionId")) {
-        localStorage.setItem("sessionId", `user-${Date.now()}`);
-      }
+  localStorage.setItem("contactInfo", contactInput.value);
 
-      const userInfo = {
-        sessionId: localStorage.getItem("sessionId"),
-        name: rawName,
-        role: jobSelectElement.value,
-        experience: experienceSelect.value,
-        focus: selectedFocusValues,
-        latitude: localStorage.getItem("latitude"),
-        longitude: localStorage.getItem("longitude"),
-        country: localStorage.getItem("country"),
-        iso2: localStorage.getItem("iso2"),
-        classification: localStorage.getItem("classification"),
-        area: localStorage.getItem("area"),
-        contactInfo: contactInput.value,
-        dateTime: new Date().toLocaleString("en-GB", { timeZone: "UTC" }),
-      };
+  if (!localStorage.getItem("sessionId")) {
+    localStorage.setItem("sessionId", `user-${Date.now()}`);
+  }
 
-      fetch("https://alan.up.railway.app/record-info", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userInfo)
-      })
-      .then(resp => resp.text())
-      .then(data => {
-        console.log("Record saved:", data);
-      })
-      .catch(err => {
-        console.error("Error saving record:", err);
-      });
+  const userInfo = {
+    sessionId: localStorage.getItem("sessionId"),
+    name: rawName,
+    role: jobSelectElement.value,
+    experience: experienceSelect.value,
+    focus: selectedFocusValues,
+    latitude: localStorage.getItem("latitude"),
+    longitude: localStorage.getItem("longitude"),
+    country: localStorage.getItem("country"),
+    iso2: localStorage.getItem("iso2"),
+    classification: localStorage.getItem("classification"),
+    area: localStorage.getItem("area"),
+    contactInfo: contactInput.value,
+    dateTime: new Date().toLocaleString("en-GB", { timeZone: "UTC" })
+  };
 
-      blackScreen.style.visibility = "visible";
-      blackScreen.style.opacity = 1;
-      setTimeout(() => {
-        skyImage.style.transform = "scale(1.3)";
-        skyImage.style.filter = "blur(0px)";
-      }, 200);
+  fetch("https://alan.up.railway.app/record-info", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userInfo)
+  })
+  .then(resp => resp.text())
+  .then(data => {
+    console.log("Record saved:", data);
+  })
+  .catch(err => {
+    console.error("Error saving record:", err);
+  });
 
-      setTimeout(() => {
-        blackScreen.style.opacity = 0;
-        setTimeout(() => {
-          window.location.href = "home.html";
-        }, 250);
-      }, 6000);
-    }
+  blackScreen.style.visibility = "visible";
+  blackScreen.style.opacity = 1;
+  setTimeout(() => {
+    skyImage.style.transform = "scale(1.3)";
+    skyImage.style.filter = "blur(0px)";
+  }, 200);
+
+  setTimeout(() => {
+    blackScreen.style.opacity = 0;
+    setTimeout(() => {
+      window.location.href = "home.html";
+    }, 250);
+  }, 6000);
+}
+
 
     // 10) Main initialisation
     function main() {
