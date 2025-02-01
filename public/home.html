@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
     <title>Alan</title>
@@ -287,6 +288,8 @@
     </div>
 
     <object type="text/html" data="boxes.html" id="boxesFrame" style="width:100%; height:100px; overflow:auto; border:none;"></object>
+    
+    <script type="module" src="https://cdn.jsdelivr.net/npm/flowise-embed@latest/dist/web.js"></script>
 
     <div class="chatbot-container">
         <flowise-fullchatbot></flowise-fullchatbot>
@@ -393,7 +396,10 @@
     const roleClassification  = localStorage.getItem('roleClassification') || '';
     const iso_a3              = localStorage.getItem('iso_a3') || 'Not set';
 
-
+    window.addEventListener('pageshow', (event) => {
+  // Reset the sidebar to off-screen when the page is shown (even from bfcache)
+  sideMenu.style.left = '-370px';
+});
 
 
     /*********************************************/
