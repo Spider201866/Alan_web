@@ -36,16 +36,22 @@
       <div
         id="index-language-dropdown"
         style="
-          display: none;
-          position: absolute;
-          top: 40px; /* Slightly below the button */
-          left: 50%;
-          transform: translateX(-50%);
-          background: #fff;
-          border: 1px solid #ccc;
-          z-index: 9999;
-          min-width: 220px;
-          white-space: nowrap;
+        display: none;
+        position: absolute;
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #fff;
+        border: 1px solid #ccc;
+        z-index: 9999;
+        min-width: 220px;
+        white-space: nowrap;
+    
+        /* Add these lines */
+        max-height: 350px;
+        overflow-y: auto;
+        font-size: 0.9em; 
+        line-height: 1.2;
         "
       >
         <ul style="margin: 0; padding: 0; list-style: none;">
