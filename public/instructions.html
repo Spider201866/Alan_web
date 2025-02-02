@@ -35,18 +35,78 @@
         color: white;
         font-size: 32px;
         font-weight: bold;
-        position: relative;
         cursor: pointer;
         padding-right: 20px;
       }
-      /* Main Content – reserve 100px on the right for the button area */
+      /* Main Content */
       #content {
         padding: 5px 25px 25px 25px;
         background-color: #dfe7ff;
-        margin-right: 0px;
-        /* Alternatively, if you want to force the content to not exceed the available width:
-           max-width: calc(100% - 100px); 
-        */
+      }
+      /* Introductory text (full width) */
+      #introText {
+        margin-bottom: 20px;
+        font-size: 15px;
+        text-align: justify;
+      }
+      /* Wrap Section: only this vertical region reserves space for buttons */
+      #wrapSection {
+        overflow: hidden;  /* Establish block formatting context so floats work as expected */
+        margin-bottom: 25px;
+      }
+      /* Switch Container: now floated right to reserve its area */
+      #switchContainer {
+        float: right;
+        width: 100px;           /* Reserved area (adjust if needed) */
+        text-align: center;
+        padding: 10px;
+        border-radius: 15px;
+        margin-left: 20px;
+      }
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 180px;
+      }
+      .switch input {
+        display: none;
+      }
+      .switch-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        width: 60px;
+        height: 60px;
+        font-weight: bold;
+        color: black;
+        background-color: white;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        border-radius: 20px;  /* Rounded square effect */
+        border: 1px solid black;
+        margin-bottom: 10px;
+        white-space: nowrap;       /* Prevent wrapping */
+        overflow: hidden;          /* Hide extra text */
+        text-overflow: ellipsis;   /* Ellipsis for long text */
+      }
+      .switch-label:hover {
+        background-color: #e0e0e0;
+        box-shadow: 0 0 5px rgba(0,0,0,0.3);
+      }
+      .switch input:checked + .switch-label {
+        background-color: black;
+        color: white;
+        border-color: black;
+        box-shadow: 0 0 5px rgba(0,0,0,0.5);
+      }
+      /* Content that wraps around the buttons */
+      #wrapText {
+        /* No extra right margin here – the float takes up its own space */
+      }
+      /* Clear floats after the wrap section */
+      .clear {
+        clear: both;
       }
       /* Text classes */
       .infoText, .redText, .italicText, .boldText, .justify {
@@ -74,7 +134,6 @@
         margin-top: 0;
         line-height: 1.2;
       }
-      /* Info text for bullet list */
       .infoText {
         padding-left: 60px;
         color: black;
@@ -88,7 +147,6 @@
         margin-left: 10px;
         color: red;
       }
-      /* Horizontal Rule */
       hr {
         border: none;
         height: 2px;
@@ -96,56 +154,10 @@
         margin-top: 20px;
         margin-bottom: 20px;
       }
-      /* Switch Container – remains in its original absolute position */
-      #switchContainer {
-        position: absolute;
-        top: 160px;
-        right: 40px;
-        text-align: center;
-        padding: 10px;
-        border-radius: 15px;
-      }
-      .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 180px;
-      }
-      .switch input {
-        display: none;
-      }
-      .switch-label {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        width: 60px;
-        height: 60px;
-        font-weight: bold;
-        color: black;
-        background-color: white;
-        transition: background-color 0.3s, box-shadow 0.3s;
-        border-radius: 20px;  /* Rounded square effect */
-        border: 1px solid black;
-        margin-bottom: 10px;
-        white-space: nowrap;       /* Prevent wrapping */
-        overflow: hidden;          /* Hide any extra text */
-        text-overflow: ellipsis;   /* Ellipsis if text is too long */
-      }
-      .switch-label:hover {
-        background-color: #e0e0e0;
-        box-shadow: 0 0 5px rgba(0,0,0,0.3);
-      }
-      .switch input:checked + .switch-label {
-        background-color: black;
-        color: white;
-        border-color: black;
-        box-shadow: 0 0 5px rgba(0,0,0,0.5);
-      }
       @media (max-width: 600px) {
         #switchContainer {
-          right: 10px;
-          top: 140px;
+          width: 80px;
+          margin-left: 10px;
         }
       }
     </style>
@@ -158,61 +170,66 @@
     </div>
     <!-- MAIN CONTENT AREA -->
     <div id="content">
-      <!-- Switch container (positioned absolutely) -->
-      <div id="switchContainer">
-        <div class="switch">
-          <input type="radio" name="option" id="optionEye" value="eye" checked onchange="toggleContent()">
-          <label for="optionEye" class="switch-label">Eye</label>
-          <input type="radio" name="option" id="optionEar" value="ear" onchange="toggleContent()">
-          <label for="optionEar" class="switch-label">Ear</label>
-          <input type="radio" name="option" id="optionSkin" value="skin" onchange="toggleContent()">
-          <label for="optionSkin" class="switch-label">Skin</label>
-        </div>
-      </div>
-      <!-- Introductory paragraph -->
-      <p id="introText" style="margin-bottom: 20px; font-size: 15px; text-align: justify;">
+      <!-- Introductory paragraph: full width -->
+      <p id="introText">
         Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying names or details. Look fully around head/face/body part and examine both eyes/ears. Good luck!
       </p>
-      <!-- Prompt for patient details -->
-      <p id="patientPrompt" class="boldText">Tell Alan about your patient's:</p>
-      <ul class="infoText">
-        <li id="patientDetail1"><span class="listText">problem & onset</span></li>
-        <li id="patientDetail2"><span class="listText">what you see</span></li>
-        <li id="patientDetail3"><span class="listText">vision & pupils</span></li>
-        <li id="patientDetail4"><span class="listText">age, sex, medication</span></li>
-      </ul>
-      <!-- Default Arclight instruction (will be overridden by toggle) -->
-      <p id="useArclight" style="margin-top: 20px;">
-        <strong>Use Arclight:</strong> <strong><em>front, fundal reflex, back of eye.</em></strong>
-      </p>
-      <hr>
-      <!-- Additional examples -->
-      <div class="justify" id="additionalExamples">
-        <p>
-          <strong id="labelTooLittle">Too little</strong><br>
-          <span id="tooLittle">man red eye what?</span>
-        </p>
-        <p>
-          <strong id="labelJustRight">Just right</strong><br>
-          <span id="justRight">
-            Man 25yr, red eye 3 day. No meds or eye prob before. Pain, watering, White cornea dot. Pupils OK, Vision 6/12 6/6 other
-          </span>
-        </p>
-        <p>
-          <strong id="labelTooMuch">Too much</strong><br>
-          <span id="tooMuch">
-            This man came into clinics today. He drove into the building with a red eye, now he thinks the food he ate is affecting his eye. I see watering, red edges, you know? He wants help. Tall man, watery eyes, worried about cornea and pain. He says, "What is this?"
-          </span>
-        </p>
-        <p id="additionalQuery" style="padding-top: 5px; color: blue; font-size: 15px;">
-          Alan also answers eye teaching/learning queries: What is Iritis? How do I see the retina?
-        </p>
+      <!-- Wrap Section: this region will reserve the button area -->
+      <div id="wrapSection">
+        <!-- Switch Container: now floated right -->
+        <div id="switchContainer">
+          <div class="switch">
+            <input type="radio" name="option" id="optionEye" value="eye" checked onchange="toggleContent()">
+            <label for="optionEye" class="switch-label" title="Eye">Eye</label>
+            <input type="radio" name="option" id="optionEar" value="ear" onchange="toggleContent()">
+            <label for="optionEar" class="switch-label" title="Ear">Ear</label>
+            <input type="radio" name="option" id="optionSkin" value="skin" onchange="toggleContent()">
+            <label for="optionSkin" class="switch-label" title="Skin">Skin</label>
+          </div>
+        </div>
+        <!-- Text that wraps around the float -->
+        <div id="wrapText">
+          <p id="patientPrompt" class="boldText">Tell Alan about your patient's:</p>
+          <ul class="infoText">
+            <li id="patientDetail1"><span class="listText">problem &amp; onset</span></li>
+            <li id="patientDetail2"><span class="listText">what you see</span></li>
+            <li id="patientDetail3"><span class="listText">vision &amp; pupils</span></li>
+            <li id="patientDetail4"><span class="listText">age, sex, medication</span></li>
+          </ul>
+          <p id="useArclight" style="margin-top: 20px;">
+            <strong>Use Arclight:</strong> <strong><em>front, fundal reflex, back of eye.</em></strong>
+          </p>
+          <hr>
+          <div id="additionalExamples" class="justify">
+            <p>
+              <strong id="labelTooLittle">Too little</strong><br>
+              <span id="tooLittle">man red eye what?</span>
+            </p>
+            <p>
+              <strong id="labelJustRight">Just right</strong><br>
+              <span id="justRight">
+                Man 25yr, red eye 3 day. No meds or eye prob before. Pain, watering, White cornea dot. Pupils OK, Vision 6/12 6/6 other
+              </span>
+            </p>
+            <p>
+              <strong id="labelTooMuch">Too much</strong><br>
+              <span id="tooMuch">
+                This man came into clinics today. He drove into the building with a red eye, now he thinks the food he ate is affecting his eye. I see watering, red edges, you know? He wants help. Tall man, watery eyes, worried about cornea and pain. He says, "What is this?"
+              </span>
+            </p>
+            <p id="additionalQuery" style="padding-top: 5px; color: blue; font-size: 15px;">
+              Alan also answers eye teaching/learning queries: What is Iritis? How do I see the retina?
+            </p>
+          </div>
+        </div>
+        <div class="clear"></div>
       </div>
+      <!-- (Optional) Additional content below that is full width could go here -->
     </div>
     
     <!-- INLINE SCRIPT: Update static text from translations and override toggleContent -->
     <script>
-      var trans; // Global translation object for the current language
+      var trans; // global translation object for the current language
 
       document.addEventListener("DOMContentLoaded", function () {
         updatePageTranslations();
