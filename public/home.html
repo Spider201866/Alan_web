@@ -109,7 +109,7 @@
     <div class="side-menu" style="display: flex; flex-wrap: wrap; align-items: center;">
         <div style="display: flex; margin-bottom: 10px;">
             <div>
-                <button id="instructions-button" class="button red pulse">Diagnose with Alan: How to use</button>
+                <button id="instructions-button" class="button red pulse">How to use</button>
             </div>
         </div>
 
@@ -846,77 +846,115 @@ languageDropdown.querySelectorAll('li').forEach(item => {
         }
     }
 
-    // Geolocation button
-    function setupGeolocationButton() {
-        const geolocationButton = document.getElementById("geolocation-button");
-        const locationInfo      = document.getElementById("location-info");
+/**
+ * Sends updated geolocation data to the server
+ */
+ function updateServerGeolocation() {
+  const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
+  const updatedData = {
+    sessionId: sessionId,
+    latitude: localStorage.getItem('latitude'),
+    longitude: localStorage.getItem('longitude'),
+    area: localStorage.getItem('area'),
+    name: localStorage.getItem('name'),
+    role: localStorage.getItem('selectedJobRole'),
+    contactInfo: localStorage.getItem('contactInfo'),
+    dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
+  };
 
-        if (!geolocationButton) return;
+  fetch('https://alan.up.railway.app/record-info', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updatedData)
+  })
+    .then(response => response.text())
+    .then(data => {
+      console.log('Server updated with geolocation data:', data);
+    })
+    .catch(err => {
+      console.error('Error updating server:', err);
+    });
+}
 
-        geolocationButton.addEventListener("click", () => {
-            // Turn button blue
-            geolocationButton.style.backgroundColor = "blue";
+/**
+ * Sets up the geolocation button functionality.
+ * When clicked, the button updates the local storage with the new geolocation,
+ * rebuilds the popup, flashes the updated fields and sends the data to the server.
+ */
+function setupGeolocationButton() {
+  const geolocationButton = document.getElementById("geolocation-button");
+  const locationInfo      = document.getElementById("location-info");
 
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    async (position) => {
-                        const { latitude, longitude } = position.coords;
+  if (!geolocationButton) return;
 
-                        // Overwrite lat/long
-                        localStorage.setItem('latitude', latitude);
-                        localStorage.setItem('longitude', longitude);
+  geolocationButton.addEventListener("click", () => {
+    // Change button colour to blue to indicate activity
+    geolocationButton.style.backgroundColor = "blue";
 
-                        // Show updated location quickly
-                        locationInfo.innerText = `Updated location: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
-                        locationInfo.style.display = "block";
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
 
-                        // 1) Reverse-geocode to get "area"
-                        const areaName = await fetchAreaFromLatLong(latitude, longitude);
-                        localStorage.setItem('area', areaName);
+          // Update local storage with new coordinates
+          localStorage.setItem('latitude', latitude);
+          localStorage.setItem('longitude', longitude);
 
-                        // 2) Rebuild popup so lat/long + area are fresh
-                        popupContent.innerHTML = buildPopupContent();
+          // Display updated location immediately
+          locationInfo.innerText = `Updated location: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+          locationInfo.style.display = "block";
 
-                        // 3) Now flash lat/long, area, country in blue
-                        flashBlueOnUpdate();
+          // Reverse-geocode to obtain the area name
+          const areaName = await fetchAreaFromLatLong(latitude, longitude);
+          localStorage.setItem('area', areaName);
 
-                        // Revert button to grey after 2s
-                        setTimeout(() => {
-                            geolocationButton.style.backgroundColor = "grey";
-                        }, 2000);
-                    },
-                    (error) => {
-                        switch (error.code) {
-                            case error.PERMISSION_DENIED:
-                                locationInfo.innerText = "User denied geolocation.";
-                                break;
-                            case error.POSITION_UNAVAILABLE:
-                                locationInfo.innerText = "Location information unavailable.";
-                                break;
-                            case error.TIMEOUT:
-                                locationInfo.innerText = "Request to get user location timed out.";
-                                break;
-                            default:
-                                locationInfo.innerText = "An unknown error occurred.";
-                        }
-                        locationInfo.style.display = "block";
+          // Rebuild the popup so that the updated lat/long and area are shown
+          popupContent.innerHTML = buildPopupContent();
 
-                        // Revert color after 2s
-                        setTimeout(() => {
-                            geolocationButton.style.backgroundColor = "grey";
-                        }, 2000);
-                    }
-                );
-            } else {
-                locationInfo.innerText = "Geolocation not supported by this browser.";
-                locationInfo.style.display = "block";
+          // Flash the updated fields in blue to highlight the change
+          flashBlueOnUpdate();
 
-                setTimeout(() => {
-                    geolocationButton.style.backgroundColor = "grey";
-                }, 2000);
-            }
-        });
+          // Send the updated geolocation data to the server
+          updateServerGeolocation();
+
+          // Revert button colour to grey after 2 seconds
+          setTimeout(() => {
+            geolocationButton.style.backgroundColor = "grey";
+          }, 2000);
+        },
+        (error) => {
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              locationInfo.innerText = "User denied geolocation.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              locationInfo.innerText = "Location information unavailable.";
+              break;
+            case error.TIMEOUT:
+              locationInfo.innerText = "Request to get user location timed out.";
+              break;
+            default:
+              locationInfo.innerText = "An unknown error occurred.";
+          }
+          locationInfo.style.display = "block";
+
+          // Revert button colour to grey after 2 seconds
+          setTimeout(() => {
+            geolocationButton.style.backgroundColor = "grey";
+          }, 2000);
+        }
+      );
+    } else {
+      locationInfo.innerText = "Geolocation not supported by this browser.";
+      locationInfo.style.display = "block";
+
+      setTimeout(() => {
+        geolocationButton.style.backgroundColor = "grey";
+      }, 2000);
     }
+  });
+}
+
 
     // Agent selection
     function selectAgentAndFetch() {
