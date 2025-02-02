@@ -55,7 +55,8 @@
         margin-bottom: 25px;
         padding-right: 0;  /* Remove extra right padding in this section */
       }
-      /* Switch Container: floated right with negative right margin on desktop */
+      /* Switch Container: floated right with negative right margin to pull it flush
+         and negative top margin to move it up */
       #switchContainer {
         float: right;
         width: 100px;           /* Reserved area width */
@@ -63,8 +64,8 @@
         padding: 10px;
         border-radius: 15px;
         margin-left: 0;
-        margin-right: -25px;    /* Negative margin to pull it flush on larger screens */
-        margin-top: -10px;      /* Move switches up by 10px */
+        margin-right: -10px;    /* Negative margin to counter parent's right padding */
+        margin-top: -10px;      /* New: move the switches up by 10px */
       }
       .switch {
         position: relative;
@@ -105,7 +106,7 @@
       }
       /* Content that wraps around the float */
       #wrapText {
-        /* No extra right margin – the float itself reserves its area */
+        /* No extra right margin – the float itself reserves the area */
       }
       /* Clear floats after the wrap section */
       .clear {
@@ -161,8 +162,7 @@
         #switchContainer {
           width: 80px;
           margin-left: 0;
-          margin-right: -10;  /* Remove negative margin on mobile */
-          margin-top: -10px;
+          margin-right: -20px;
         }
       }
     </style>
@@ -181,7 +181,7 @@
       </p>
       <!-- Wrap Section: this vertical region reserves the button area -->
       <div id="wrapSection">
-        <!-- Switch Container: floated right, pulled flush on desktop and repositioned on mobile -->
+        <!-- Switch Container: floated right -->
         <div id="switchContainer">
           <div class="switch">
             <input type="radio" name="option" id="optionEye" value="eye" checked onchange="toggleContent()">
