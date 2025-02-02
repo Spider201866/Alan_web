@@ -109,7 +109,7 @@
     <div class="side-menu" style="display: flex; flex-wrap: wrap; align-items: center;">
         <div style="display: flex; margin-bottom: 10px;">
             <div>
-                <button id="instructions-button" class="button red pulse">How to use</button>
+                <button id="instructions-button" class="button red pulse"> How to use</button>
             </div>
         </div>
 
@@ -846,10 +846,10 @@ languageDropdown.querySelectorAll('li').forEach(item => {
         }
     }
 
-/**
- * Sends updated geolocation data to the server
+ /**
+ * Sends updated geolocation data (with all required fields) to the server.
  */
- function updateServerGeolocation() {
+function updateServerGeolocation() {
   const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
   const updatedData = {
     sessionId: sessionId,
@@ -858,38 +858,10 @@ languageDropdown.querySelectorAll('li').forEach(item => {
     area: localStorage.getItem('area'),
     name: localStorage.getItem('name'),
     role: localStorage.getItem('selectedJobRole'),
-    contactInfo: localStorage.getItem('contactInfo'),
-    dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
-  };
-
-  fetch('https://alan.up.railway.app/record-info', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(updatedData)
-  })
-    .then(response => response.text())
-    .then(data => {
-      console.log('Server updated with geolocation data:', data);
-    })
-    .catch(err => {
-      console.error('Error updating server:', err);
-    });
-}
-
-/**
- * Sends updated geolocation data (with additional fields) to the server.
- */
- function updateServerGeolocation() {
-  const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
-  const updatedData = {
-    sessionId: sessionId,
-    latitude: localStorage.getItem('latitude'),
-    longitude: localStorage.getItem('longitude'),
-    area: localStorage.getItem('area'),
-    name: localStorage.getItem('name'),
-    role: localStorage.getItem('selectedJobRole'),
-    selectedExperience: localStorage.getItem('selectedExperience'),
-    selectedFocus: localStorage.getItem('selectedFocus'),
+    experience: localStorage.getItem('selectedExperience'),
+    focus: localStorage.getItem('selectedFocus')
+      ? JSON.parse(localStorage.getItem('selectedFocus'))
+      : [],
     country: localStorage.getItem('country'),
     iso2: localStorage.getItem('iso2'),
     classification: localStorage.getItem('classification'),
@@ -921,7 +893,7 @@ languageDropdown.querySelectorAll('li').forEach(item => {
  */
 function setupGeolocationButton() {
   const geolocationButton = document.getElementById("geolocation-button");
-  const locationInfo      = document.getElementById("location-info");
+  const locationInfo = document.getElementById("location-info");
 
   if (!geolocationButton) return;
 
@@ -946,7 +918,7 @@ function setupGeolocationButton() {
           const areaName = await fetchAreaFromLatLong(latitude, longitude);
           localStorage.setItem('area', areaName);
 
-          // Rebuild the popup so that updated lat/long and area are shown
+          // Rebuild the popup so that the updated lat/long and area are shown
           popupContent.innerHTML = buildPopupContent();
 
           // Flash the updated fields in blue to highlight the change
@@ -992,7 +964,6 @@ function setupGeolocationButton() {
     }
   });
 }
-
 
 
     // Agent selection
