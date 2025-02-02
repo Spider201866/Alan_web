@@ -41,9 +41,10 @@
       }
       /* Main Content */
       #content {
-        padding: 5px 25px 25px 25px;
-        background-color: #dfe7ff;  /* Default background; will be updated by toggle */
-      }
+  padding: 5px 120px 25px 25px;  /* Increased right padding to 120px */
+  background-color: #dfe7ff;
+}
+
       /* Text classes */
       .infoText, .redText, .italicText, .boldText, .justify {
         margin-bottom: 15px;
@@ -111,20 +112,25 @@
         display: none;
       }
       .switch-label {
-        display: block;
-        text-align: center;
-        cursor: pointer;
-        width: 60px;
-        height: 60px;
-        line-height: 60px;
-        font-weight: bold;
-        color: black;
-        background-color: white;
-        transition: background-color 0.3s, box-shadow 0.3s;
-        border-radius: 30px;
-        border: 1px solid black;
-        margin-bottom: 5px;
-      }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  font-weight: bold;
+  color: black;
+  background-color: white;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  border-radius: 20px;  /* Rounded square effect */
+  border: 1px solid black;
+  margin-bottom: 10px;
+  white-space: nowrap;       /* Prevent wrapping */
+  overflow: hidden;          /* Hide any extra text */
+  text-overflow: ellipsis;   /* Display an ellipsis if text is too long */
+}
+
+
       .switch-label:hover {
         background-color: #e0e0e0;
         box-shadow: 0 0 5px rgba(0,0,0,0.3);
