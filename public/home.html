@@ -877,9 +877,47 @@ languageDropdown.querySelectorAll('li').forEach(item => {
 }
 
 /**
+ * Sends updated geolocation data (with additional fields) to the server.
+ */
+ function updateServerGeolocation() {
+  const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
+  const updatedData = {
+    sessionId: sessionId,
+    latitude: localStorage.getItem('latitude'),
+    longitude: localStorage.getItem('longitude'),
+    area: localStorage.getItem('area'),
+    name: localStorage.getItem('name'),
+    role: localStorage.getItem('selectedJobRole'),
+    selectedExperience: localStorage.getItem('selectedExperience'),
+    selectedFocus: localStorage.getItem('selectedFocus'),
+    country: localStorage.getItem('country'),
+    iso2: localStorage.getItem('iso2'),
+    classification: localStorage.getItem('classification'),
+    roleClassification: localStorage.getItem('roleClassification'),
+    contactInfo: localStorage.getItem('contactInfo'),
+    version: localStorage.getItem('version') || '1.0',
+    selectedAgent: localStorage.getItem('selectedAgent'),
+    dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
+  };
+
+  fetch('https://alan.up.railway.app/record-info', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updatedData)
+  })
+    .then(response => response.text())
+    .then(data => {
+      console.log('Server updated with geolocation data:', data);
+    })
+    .catch(err => {
+      console.error('Error updating server:', err);
+    });
+}
+
+/**
  * Sets up the geolocation button functionality.
- * When clicked, the button updates the local storage with the new geolocation,
- * rebuilds the popup, flashes the updated fields and sends the data to the server.
+ * When clicked, it updates local storage with the new geolocation,
+ * rebuilds the popup, flashes the updated fields and sends all data to the server.
  */
 function setupGeolocationButton() {
   const geolocationButton = document.getElementById("geolocation-button");
@@ -908,13 +946,13 @@ function setupGeolocationButton() {
           const areaName = await fetchAreaFromLatLong(latitude, longitude);
           localStorage.setItem('area', areaName);
 
-          // Rebuild the popup so that the updated lat/long and area are shown
+          // Rebuild the popup so that updated lat/long and area are shown
           popupContent.innerHTML = buildPopupContent();
 
           // Flash the updated fields in blue to highlight the change
           flashBlueOnUpdate();
 
-          // Send the updated geolocation data to the server
+          // Send the updated geolocation data (including all other details) to the server
           updateServerGeolocation();
 
           // Revert button colour to grey after 2 seconds
@@ -954,6 +992,7 @@ function setupGeolocationButton() {
     }
   });
 }
+
 
 
     // Agent selection
