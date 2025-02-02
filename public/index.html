@@ -466,20 +466,22 @@
         }
 
         const userInfo = {
-          sessionId: localStorage.getItem('sessionId'),
-          name: rawName,
-          role: jobSelectElement.value,
-          experience: experienceSelect.value,
-          focus: selectedFocusValues,
-          latitude: localStorage.getItem('latitude'),
-          longitude: localStorage.getItem('longitude'),
-          country: localStorage.getItem('country'),
-          iso2: localStorage.getItem('iso2'),
-          classification: localStorage.getItem('classification'),
-          area: localStorage.getItem('area'),
-          contactInfo: contactInput.value,
-          dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }),
-        };
+        sessionId: localStorage.getItem('sessionId'),
+        name: rawName,
+        role: jobSelectElement.value,
+        experience: experienceSelect.value,
+        focus: selectedFocusValues,
+        latitude: localStorage.getItem('latitude'),
+        longitude: localStorage.getItem('longitude'),
+        country: localStorage.getItem('country'),
+        iso2: localStorage.getItem('iso2'),
+        classification: localStorage.getItem('classification'),
+        area: localStorage.getItem('area'),
+        contactInfo: contactInput.value,
+        version: localStorage.getItem('version') || '1.0',
+        selectedAgent: localStorage.getItem('selectedAgent') || 'Unknown',
+        dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
+      };
 
         fetch('https://alan.up.railway.app/record-info', {
           method: 'POST',
