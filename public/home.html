@@ -693,6 +693,34 @@ if (boxesDoc.getElementById("earMarqueeLine1a")) {
         selectAgentAndFetch();
         setupGeolocationButton();
     }
+    // --- New code starts here ---
+    // Function to hide the box animations
+    function hideAnimations() {
+        const animationContainer = document.getElementById('animationContainer');
+        const boxesFrame = document.getElementById('boxesFrame');
+        if (animationContainer) {
+            animationContainer.style.display = 'none';
+        }
+        if (boxesFrame) {
+            boxesFrame.style.display = 'none';
+        }
+    }
+
+    // Attach the hideAnimations function to the chatbot container click
+    const chatbotContainer = document.querySelector('.chatbot-container');
+    if (chatbotContainer) {
+        chatbotContainer.addEventListener('click', hideAnimations);
+    }
+
+    // Optional: If your chatbot uses a shadow DOM, add a focus listener to its input field
+    const chatbot = document.querySelector('flowise-fullchatbot');
+    if (chatbot && chatbot.shadowRoot) {
+        const chatInput = chatbot.shadowRoot.querySelector('input');
+        if (chatInput) {
+            chatInput.addEventListener('focus', hideAnimations);
+        }
+    }
+    // --- New code ends here ---
 
     // Setup menu icon click
     function setupMenuIcon() {
