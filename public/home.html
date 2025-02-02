@@ -693,18 +693,26 @@ if (boxesDoc.getElementById("earMarqueeLine1a")) {
         selectAgentAndFetch();
         setupGeolocationButton();
     }
+
     // --- New code starts here ---
     // Function to hide the box animations
-    function hideAnimations() {
-        const animationContainer = document.getElementById('animationContainer');
-        const boxesFrame = document.getElementById('boxesFrame');
-        if (animationContainer) {
-            animationContainer.style.display = 'none';
-        }
-        if (boxesFrame) {
-            boxesFrame.style.display = 'none';
-        }
+function hideAnimations() {
+    const animationContainer = document.getElementById('animationContainer')
+    const boxesFrame = document.getElementById('boxesFrame')
+    const subTextEl = document.getElementById('sub-text')  // New: greeting line element
+
+    if (animationContainer) {
+        animationContainer.style.display = 'none'
     }
+    if (boxesFrame) {
+        boxesFrame.style.display = 'none'
+    }
+    if (subTextEl) {
+        subTextEl.style.display = 'none'
+    }
+}
+
+
 
     // Attach the hideAnimations function to the chatbot container click
     const chatbotContainer = document.querySelector('.chatbot-container');
