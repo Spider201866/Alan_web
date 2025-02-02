@@ -79,6 +79,52 @@ const initChatbot = () => {
         svg[stroke="#3B81F6"] {
           stroke: #808080 !important; /* Grey colour */
         }
+
+/* Hide bubble1 and bubble3 so only one remains */
+.bubble1,
+.bubble3 {
+  display: none !important;
+}
+
+/* Larger flickering circle that flashes faster */
+.bubble2 {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  opacity: 1 !important;
+  animation: flicker 0.5s infinite alternate !important; /* Flicker speed */
+}
+
+/* Force the parent container to be truly white with no extra styling */
+.chatbot-host-bubble .bubble-typing {
+  background-color: #ffffff !important;
+  border: none !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+
+/* Also ensure chatbot-host-bubble is white (if needed) */
+.chatbot-host-bubble {
+  background-color: #ffffff !important;
+  border: none !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+
+/* Define the flicker animation */
+@keyframes flicker {
+  0%, 100% {
+    background-color: #000000;
+  }
+  50% {
+    background-color: #f44336ff; /* Keep your custom colour */
+  }
+}
+
+
+
+
+
       `,
     },
   });
