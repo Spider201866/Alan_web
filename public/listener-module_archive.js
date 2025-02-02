@@ -10,51 +10,49 @@ import { imagesWithText } from './imagesWithText.js'; // Adjust the path as nece
 const initChatbotListeners = () => {
   // Delay to ensure the Flowise <flowise-fullchatbot> element is present
   setTimeout(() => {
-    const shadowHost = document.querySelector("flowise-fullchatbot");
+    const shadowHost = document.querySelector('flowise-fullchatbot');
     if (!shadowHost) {
-      console.error("Shadow host not found.");
+      console.error('Shadow host not found.');
       return;
     }
 
     const shadowRoot = shadowHost.shadowRoot;
     if (!shadowRoot) {
-      console.error("Unable to access shadow root.");
+      console.error('Unable to access shadow root.');
       return;
     }
 
-    let messageBuffer = "";
-    let lastCompleteMessage = "";
+    let messageBuffer = '';
+    let lastCompleteMessage = '';
 
     // Create a MutationObserver to watch for newly added nodes
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         mutation.addedNodes.forEach((node) => {
           if (node.nodeType === Node.ELEMENT_NODE) {
-            console.log("New node added:", node);
+            console.log('New node added:', node);
 
             // Accumulate text content in messageBuffer
             messageBuffer += node.textContent;
-            console.log("Updated messageBuffer:", messageBuffer);
+            console.log('Updated messageBuffer:', messageBuffer);
 
             // Check if "Good luck!" is in the buffer => signals end of a chatbot message
-            if (messageBuffer.includes("Good luck!")) {
+            if (messageBuffer.includes('Good luck!')) {
               lastCompleteMessage = messageBuffer.trim();
-              messageBuffer = "";
-              console.log("Detected complete message:", lastCompleteMessage);
+              messageBuffer = '';
+              console.log('Detected complete message:', lastCompleteMessage);
 
               // Extract condition from the text: "On balance, X is..."
               const conditionMatch = lastCompleteMessage.match(/On balance, (.*?) is/);
               if (conditionMatch && conditionMatch[1]) {
                 const condition = conditionMatch[1].replace(/ is$/, '').trim();
-                console.log("Detected condition:", condition);
+                console.log('Detected condition:', condition);
 
                 // Find a matching object in imagesWithText
-                const matchingObject = imagesWithText.find(
-                  item => item.condition.toLowerCase() === condition.toLowerCase()
-                );
+                const matchingObject = imagesWithText.find((item) => item.condition.toLowerCase() === condition.toLowerCase());
 
                 if (matchingObject) {
-                  console.log("Matching object found:", matchingObject);
+                  console.log('Matching object found:', matchingObject);
 
                   // Update detected-condition text
                   const conditionElement = document.querySelector('.detected-condition');
@@ -71,10 +69,10 @@ const initChatbotListeners = () => {
                     conditionImage.style.visibility = 'visible';
                   }
                 } else {
-                  console.log("No matching object found for condition:", condition);
+                  console.log('No matching object found for condition:', condition);
                 }
               } else {
-                console.log("No condition match found in message:", lastCompleteMessage);
+                console.log('No condition match found in message:', lastCompleteMessage);
               }
               lastCompleteMessage = '';
             }
@@ -92,7 +90,6 @@ const initChatbotListeners = () => {
 // 3) Initialize Hide Elements Listener
 // ------------------------------------------------------
 const initHideElementsListener = () => {
-
   // Hide certain elements upon click/keydown (unless click is on .language-selector)
   const hideElements = (event) => {
     if (event.target.closest('.language-selector')) {
@@ -139,8 +136,8 @@ const initHideElementsListener = () => {
 // ------------------------------------------------------
 // 4) DOMContentLoaded Hook
 // ------------------------------------------------------
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOMContentLoaded event fired.");
-  initChatbotListeners();      // Setup chatbot observers
-  initHideElementsListener();  // Setup hide elements logic
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOMContentLoaded event fired.');
+  initChatbotListeners(); // Setup chatbot observers
+  initHideElementsListener(); // Setup hide elements logic
 });

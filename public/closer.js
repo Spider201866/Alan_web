@@ -6,9 +6,9 @@
  *    - Scrolls to the top of the page.
  * ******************************************************
  */
-window.onload = function() {
+window.onload = function () {
   // Show main content straight away
-  document.getElementById("mainContent").classList.remove("hidden");
+  document.getElementById('mainContent').classList.remove('hidden');
   showAnimation();
 
   // After 1s, run doSomething()
@@ -50,9 +50,9 @@ function showAnimation() {
  * ******************************************************
  */
 function doSomething() {
-  document.getElementById("mainContent").classList.add("hidden");
+  document.getElementById('mainContent').classList.add('hidden');
 
-  setTimeout(function() {
+  setTimeout(function () {
     const d = document.querySelector('.chatbot-title');
     if (d) {
       d.classList.add('flip-horizontally');
@@ -77,18 +77,17 @@ function anotherFunction() {
   goodHistory.style.color = 'red';
   setTimeout(() => {
     goodHistory.style.color = 'grey';
-    
+
     // Turn #examine-well red, then grey
     examineWell.style.color = 'red';
     setTimeout(() => {
       examineWell.style.color = 'grey';
-      
+
       // Turn #use-arclight red, then grey
       useArclight.style.color = 'red';
       setTimeout(() => {
         useArclight.style.color = 'grey';
       }, 1000);
-
     }, 1000);
   }, 1000);
 }

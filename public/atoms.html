@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atoms</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atoms</title>
 
-  <!-- 
+    <!-- 
     **********************************************
     *                 PAGE STYLES               *
     **********************************************
@@ -13,87 +13,82 @@
     - Black app bar at the top, white text
     - Centered content area for image
   -->
-  <style>
-    /* Global reset and structure */
-    body, html {
-      height: 100%;            /* Ensures the entire height of the viewport is used */
-      margin: 0;
-      padding: 0;
-      display: flex;           /* Enables flexbox */
-      flex-direction: column;  /* Stacks children elements vertically */
-      font-family: "Calibri Light", Arial, sans-serif; /* Keeps your chosen font */
-    }
+    <style>
+      /* Global reset and structure */
+      body,
+      html {
+        height: 100%; /* Ensures the entire height of the viewport is used */
+        margin: 0;
+        padding: 0;
+        display: flex; /* Enables flexbox */
+        flex-direction: column; /* Stacks children elements vertically */
+        font-family: 'Calibri Light', Arial, sans-serif; /* Keeps your chosen font */
+      }
 
-    /* Top bar (app bar) styling */
-    #appBar {
-      display: flex;
-      align-items: center;
-      background-color: black;
-      color: white;
-      padding: 10px 20px;
-    }
+      /* Top bar (app bar) styling */
+      #appBar {
+        display: flex;
+        align-items: center;
+        background-color: black;
+        color: white;
+        padding: 10px 20px;
+      }
 
-    /* Page title in the center of the app bar */
-    #pageTitle {
-      text-align: center;
-      margin: 0 auto;
-      font-size: 24px;
-    }
+      /* Page title in the center of the app bar */
+      #pageTitle {
+        text-align: center;
+        margin: 0 auto;
+        font-size: 24px;
+      }
 
-    /* Back arrow on the left side of the app bar */
-    #backArrow {
-      color: white;
-      font-size: 32px;
-      font-weight: bold;
-      position: relative;
-      cursor: pointer;
-      padding-right: 20px;
-    }
+      /* Back arrow on the left side of the app bar */
+      #backArrow {
+        color: white;
+        font-size: 32px;
+        font-weight: bold;
+        position: relative;
+        cursor: pointer;
+        padding-right: 20px;
+      }
 
-    /* Container to center the image both horizontally and vertically */
-    #imageContainer {
-      flex-grow: 1;            /* Takes up all available space after #appBar */
-      display: flex;
-      justify-content: center; /* Centers horizontally */
-      align-items: center;     /* Centers vertically */
-    }
+      /* Container to center the image both horizontally and vertically */
+      #imageContainer {
+        flex-grow: 1; /* Takes up all available space after #appBar */
+        display: flex;
+        justify-content: center; /* Centers horizontally */
+        align-items: center; /* Centers vertically */
+      }
 
-    /* Image styling for responsiveness and centered display */
-    img {
-      max-width: 100%; /* Responsive width, prevents overflow */
-      height: auto;    /* Maintain aspect ratio */
-      margin: 0 auto;  /* Centers the image horizontally if smaller than container */
-    }
-  </style>
-</head>
+      /* Image styling for responsiveness and centered display */
+      img {
+        max-width: 100%; /* Responsive width, prevents overflow */
+        height: auto; /* Maintain aspect ratio */
+        margin: 0 auto; /* Centers the image horizontally if smaller than container */
+      }
+    </style>
+  </head>
 
-<body>
-
-  <!-- 
+  <body>
+    <!-- 
     **********************************************
     *              TOP APP BAR                  *
     **********************************************
     - Contains back arrow & title
   -->
-  <div id="appBar">
-    <div id="backArrow" onclick="history.back()">&#x2190;</div>
-    <h1 id="pageTitle">Atoms</h1>
-  </div>
+    <div id="appBar">
+      <div id="backArrow" onclick="history.back()">&#x2190;</div>
+      <h1 id="pageTitle">Atoms</h1>
+    </div>
 
-  <!-- 
+    <!-- 
     **********************************************
     *           IMAGE CONTAINER                 *
     **********************************************
     - Flex container that fills remaining space
     - Centers the image within the viewport
   -->
-  <div id="imageContainer">
-    <img 
-      src="atomsblue.jpg" 
-      alt="Blue Atoms Image" 
-      style="touch-action: manipulation;"
-    >
-  </div>
-
-</body>
+    <div id="imageContainer">
+      <img src="atomsblue.jpg" alt="Blue Atoms Image" style="touch-action: manipulation" />
+    </div>
+  </body>
 </html>

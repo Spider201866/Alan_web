@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,7 +9,7 @@
     <style>
       /* Global layout and typography */
       body {
-        font-family: "Calibri Light", Arial, sans-serif;
+        font-family: 'Calibri Light', Arial, sans-serif;
         background-color: white;
         color: black;
         margin: 0;
@@ -75,8 +75,12 @@
       }
       /* Animation for logo (optional) */
       @keyframes smoothFlip360 {
-        from { transform: rotateY(0deg); }
-        to { transform: rotateY(180deg); }
+        from {
+          transform: rotateY(0deg);
+        }
+        to {
+          transform: rotateY(180deg);
+        }
       }
       .flip-horizontally {
         animation: smoothFlip360 1.5s ease-out forwards;
@@ -93,17 +97,14 @@
     <!-- Main About Alan Content -->
     <div id="aboutAlan">
       <div id="logoContainer">
-        <img 
-          src="bigredt.png" 
-          alt="Big Red T Logo" 
-          id="logoImage"
-          style="max-width: 120px; height: auto; margin-bottom: -10px;"
-        >
+        <img src="bigredt.png" alt="Big Red T Logo" id="logoImage" style="max-width: 120px; height: auto; margin-bottom: -10px" />
       </div>
       <div id="aboutAlanContent">
         <p id="aboutAlanText">
-          Alan is an AI eye, ear and skin diagnostic assistant, comprising: a foundation language model and symbolic logic. Smart. Serious. State of the art.<br><br>
-          Clinical, local knowledge and images, are tailored to different roles such as health workers and general practitioners. Concise dialogue generates a diagnosis and management plan. Use of the arclight is embedded throughout.<br>
+          Alan is an AI eye, ear and skin diagnostic assistant, comprising: a foundation language model and symbolic logic. Smart. Serious. State of
+          the art.<br /><br />
+          Clinical, local knowledge and images, are tailored to different roles such as health workers and general practitioners. Concise dialogue
+          generates a diagnosis and management plan. Use of the arclight is embedded throughout.<br />
         </p>
         <ul id="aboutAlanList">
           <li id="aboutAlanListItem1" class="highlight bullet-point">Expert base – tropical/hot climate</li>
@@ -113,44 +114,44 @@
         <p id="aboutAlanEasy"><strong>Easy-to-use</strong> – app, voice, vision</p>
         <p id="aboutAlanExplainable"><strong>Explainable</strong> – facts/rules, images</p>
         <p id="aboutAlanEncouraging"><strong>Encouraging</strong> – empathy, teacher</p>
-        <p id="aboutAlanDate" style="font-size: 12px;"><br><br>wjw Jan 25</p>
+        <p id="aboutAlanDate" style="font-size: 12px"><br /><br />wjw Jan 25</p>
       </div>
     </div>
 
     <!-- Inline JavaScript to update the page text using translations -->
     <script>
       // Update on page load
-      document.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener('DOMContentLoaded', function () {
         updatePageTranslations();
         // Optionally, trigger a logo flip after a delay
         setTimeout(function () {
-          var logoImage = document.getElementById("logoImage");
+          var logoImage = document.getElementById('logoImage');
           if (logoImage) {
-            logoImage.classList.add("flip-horizontally");
+            logoImage.classList.add('flip-horizontally');
           }
         }, 1000);
       });
-      
+
       // Listen for storage changes (if language is changed in another tab)
-      window.addEventListener("storage", function(e) {
-        if(e.key === "preferredLanguage") {
+      window.addEventListener('storage', function (e) {
+        if (e.key === 'preferredLanguage') {
           updatePageTranslations();
         }
       });
-      
+
       function updatePageTranslations() {
-        var lang = localStorage.getItem("preferredLanguage") || "en";
+        var lang = localStorage.getItem('preferredLanguage') || 'en';
         var t = window.translations && window.translations[lang];
         if (t) {
-          document.getElementById("pageTitle").textContent = t.pageTitle;
-          document.getElementById("aboutAlanText").innerHTML = t.aboutAlanText;
-          document.getElementById("aboutAlanListItem1").textContent = t.aboutAlanListItem1;
-          document.getElementById("aboutAlanListItem2").textContent = t.aboutAlanListItem2;
-          document.getElementById("aboutAlanEfficient").innerHTML = t.aboutAlanEfficient;
-          document.getElementById("aboutAlanEasy").innerHTML = t.aboutAlanEasy;
-          document.getElementById("aboutAlanExplainable").innerHTML = t.aboutAlanExplainable;
-          document.getElementById("aboutAlanEncouraging").innerHTML = t.aboutAlanEncouraging;
-          document.getElementById("aboutAlanDate").innerHTML = t.aboutAlanDate;
+          document.getElementById('pageTitle').textContent = t.pageTitle;
+          document.getElementById('aboutAlanText').innerHTML = t.aboutAlanText;
+          document.getElementById('aboutAlanListItem1').textContent = t.aboutAlanListItem1;
+          document.getElementById('aboutAlanListItem2').textContent = t.aboutAlanListItem2;
+          document.getElementById('aboutAlanEfficient').innerHTML = t.aboutAlanEfficient;
+          document.getElementById('aboutAlanEasy').innerHTML = t.aboutAlanEasy;
+          document.getElementById('aboutAlanExplainable').innerHTML = t.aboutAlanExplainable;
+          document.getElementById('aboutAlanEncouraging').innerHTML = t.aboutAlanEncouraging;
+          document.getElementById('aboutAlanDate').innerHTML = t.aboutAlanDate;
         }
       }
     </script>

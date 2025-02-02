@@ -1,595 +1,620 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Alan Onboarding</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles_index.css">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Alan Onboarding</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles_index.css" />
 
-  <!-- 1) Import translations from language.js (ES modules) -->
-  <script type="module">
-    import { translations } from './language.js';
-    // Make translations available globally.
-    window.translations = translations;
-  </script>
-</head>
-<body>
-  <!-- ===================================================================== -->
-  <!-- PASSWORD SCREEN (initially hidden) -->
-  <!-- ===================================================================== -->
-  <div class="password-screen hidden" id="passwordScreen" style="position: relative;">
-    <!-- Language selector button & dropdown (22 languages) -->
-    <div style="text-align: center; margin-bottom: 60px;">
-      <button id="index-language-button" title="Choose language" style="
-        background: url('lang.jpg') no-repeat center center;
-        background-size: cover;
-        width: 64px;
-        height: 64px;
-        border: 3px solid #3e3e3e;
-        cursor: pointer;
-      "></button>
-      <div id="index-language-dropdown" style="
-        display: none;
-        position: absolute;
-        top: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #fff;
-        border: 1px solid #ccc;
-        z-index: 9999;
-        min-width: 220px;
-        white-space: nowrap;
-        max-height: 350px;
-        overflow-y: auto;
-        font-size: 0.9em;
-        line-height: 1.2;
-      ">
-        <ul style="margin: 0; padding: 0; list-style: none;">
-          <li data-value="en" style="padding: 6px; cursor: pointer;"><strong>English</strong> (English)</li>
-          <li data-value="zh" style="padding: 6px; cursor: pointer;"><strong>中文</strong> (Chinese)</li>
-          <li data-value="hi" style="padding: 6px; cursor: pointer;"><strong>हिन्दी</strong> (Hindi)</li>
-          <li data-value="es" style="padding: 6px; cursor: pointer;"><strong>Español</strong> (Spanish)</li>
-          <li data-value="ar" style="padding: 6px; cursor: pointer;"><strong>العربية</strong> (Arabic)</li>
-          <li data-value="fr" style="padding: 6px; cursor: pointer;"><strong>Français</strong> (French)</li>
-          <li data-value="bn" style="padding: 6px; cursor: pointer;"><strong>বাংলা</strong> (Bangla)</li>
-          <li data-value="pt" style="padding: 6px; cursor: pointer;"><strong>Português</strong> (Portuguese)</li>
-          <li data-value="id" style="padding: 6px; cursor: pointer;"><strong>Bahasa Indonesia</strong> (Indonesian)</li>
-          <li data-value="sw" style="padding: 6px; cursor: pointer;"><strong>Kiswahili</strong> (Swahili)</li>
-          <li data-value="ur" style="padding: 6px; cursor: pointer;"><strong>اردو</strong> (Urdu)</li>
-          <li data-value="fa" style="padding: 6px; cursor: pointer;"><strong>فارسی</strong> (Persian)</li>
-          <li data-value="ln" style="padding: 6px; cursor: pointer;"><strong>Lingala</strong> (Lingala)</li>
-          <li data-value="ha" style="padding: 6px; cursor: pointer;"><strong>Hausa</strong> (Hausa)</li>
-          <li data-value="yo" style="padding: 6px; cursor: pointer;"><strong>Yorùbá</strong> (Yoruba)</li>
-          <li data-value="ig" style="padding: 6px; cursor: pointer;"><strong>Igbo</strong> (Igbo)</li>
-          <li data-value="zu" style="padding: 6px; cursor: pointer;"><strong>Zulu</strong> (Zulu)</li>
-          <li data-value="am" style="padding: 6px; cursor: pointer;"><strong>አማርኛ</strong> (Amharic)</li>
-          <li data-value="sn" style="padding: 6px; cursor: pointer;"><strong>chiShona</strong> (Shona)</li>
-          <li data-value="rw" style="padding: 6px; cursor: pointer;"><strong>Ikinyarwanda</strong> (Kinyarwanda)</li>
-          <li data-value="ny" style="padding: 6px; cursor: pointer;"><strong>Chichewa</strong> (Chichewa)</li>
-          <li data-value="cy" style="padding: 6px; cursor: pointer;"><strong>Cymraeg</strong> (Welsh)</li>
-        </ul>
+    <!-- 1) Import translations from language.js (ES modules) -->
+    <script type="module">
+      import { translations } from './language.js';
+      // Make translations available globally.
+      window.translations = translations;
+    </script>
+  </head>
+  <body>
+    <!-- ===================================================================== -->
+    <!-- PASSWORD SCREEN (initially hidden) -->
+    <!-- ===================================================================== -->
+    <div class="password-screen hidden" id="passwordScreen" style="position: relative">
+      <!-- Language selector button & dropdown (22 languages) -->
+      <div style="text-align: center; margin-bottom: 60px">
+        <button
+          id="index-language-button"
+          title="Choose language"
+          style="
+            background: url('lang.jpg') no-repeat center center;
+            background-size: cover;
+            width: 64px;
+            height: 64px;
+            border: 3px solid #3e3e3e;
+            cursor: pointer;
+          "
+        ></button>
+        <div
+          id="index-language-dropdown"
+          style="
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            border: 1px solid #ccc;
+            z-index: 9999;
+            min-width: 220px;
+            white-space: nowrap;
+            max-height: 350px;
+            overflow-y: auto;
+            font-size: 0.9em;
+            line-height: 1.2;
+          "
+        >
+          <ul style="margin: 0; padding: 0; list-style: none">
+            <li data-value="en" style="padding: 6px; cursor: pointer"><strong>English</strong> (English)</li>
+            <li data-value="zh" style="padding: 6px; cursor: pointer"><strong>中文</strong> (Chinese)</li>
+            <li data-value="hi" style="padding: 6px; cursor: pointer"><strong>हिन्दी</strong> (Hindi)</li>
+            <li data-value="es" style="padding: 6px; cursor: pointer"><strong>Español</strong> (Spanish)</li>
+            <li data-value="ar" style="padding: 6px; cursor: pointer"><strong>العربية</strong> (Arabic)</li>
+            <li data-value="fr" style="padding: 6px; cursor: pointer"><strong>Français</strong> (French)</li>
+            <li data-value="bn" style="padding: 6px; cursor: pointer"><strong>বাংলা</strong> (Bangla)</li>
+            <li data-value="pt" style="padding: 6px; cursor: pointer"><strong>Português</strong> (Portuguese)</li>
+            <li data-value="id" style="padding: 6px; cursor: pointer"><strong>Bahasa Indonesia</strong> (Indonesian)</li>
+            <li data-value="sw" style="padding: 6px; cursor: pointer"><strong>Kiswahili</strong> (Swahili)</li>
+            <li data-value="ur" style="padding: 6px; cursor: pointer"><strong>اردو</strong> (Urdu)</li>
+            <li data-value="fa" style="padding: 6px; cursor: pointer"><strong>فارسی</strong> (Persian)</li>
+            <li data-value="ln" style="padding: 6px; cursor: pointer"><strong>Lingala</strong> (Lingala)</li>
+            <li data-value="ha" style="padding: 6px; cursor: pointer"><strong>Hausa</strong> (Hausa)</li>
+            <li data-value="yo" style="padding: 6px; cursor: pointer"><strong>Yorùbá</strong> (Yoruba)</li>
+            <li data-value="ig" style="padding: 6px; cursor: pointer"><strong>Igbo</strong> (Igbo)</li>
+            <li data-value="zu" style="padding: 6px; cursor: pointer"><strong>Zulu</strong> (Zulu)</li>
+            <li data-value="am" style="padding: 6px; cursor: pointer"><strong>አማርኛ</strong> (Amharic)</li>
+            <li data-value="sn" style="padding: 6px; cursor: pointer"><strong>chiShona</strong> (Shona)</li>
+            <li data-value="rw" style="padding: 6px; cursor: pointer"><strong>Ikinyarwanda</strong> (Kinyarwanda)</li>
+            <li data-value="ny" style="padding: 6px; cursor: pointer"><strong>Chichewa</strong> (Chichewa)</li>
+            <li data-value="cy" style="padding: 6px; cursor: pointer"><strong>Cymraeg</strong> (Welsh)</li>
+          </ul>
+        </div>
       </div>
+
+      <!-- Password Screen Heading -->
+      <h2 id="password-title" style="margin-bottom: 40px; font-weight: normal; font-size: 20px">
+        Enter your <span style="font-weight: bold; font-family: 'Quicksand', sans-serif"><span style="color: red">Al</span>an</span> invitation
+        password
+      </h2>
+
+      <!-- Password Input and Submit Button -->
+      <div style="display: flex; align-items: flex-start; margin-bottom: 20px">
+        <div style="display: flex; flex-direction: column; margin-right: 30px">
+          <input
+            type="password"
+            id="passwordInput"
+            placeholder="Password"
+            style="color: grey; padding: 12px; width: 220px; font-size: 16px; border-radius: 12px; border: 1px solid #ccc; margin-bottom: 20px"
+          />
+          <p id="passwordError" style="color: red; display: none; width: 220px; text-align: center; margin: 6px auto 0">
+            Invalid password. Please try again
+          </p>
+        </div>
+        <button id="passwordSubmitBtn" disabled style="padding: 12px; font-size: 16px; border-radius: 12px; border: 1px solid #ccc; cursor: pointer">
+          Submit
+        </button>
+      </div>
+
+      <!-- Small Note -->
+      <p id="noCodeLine" style="margin-top: 50px; font-style: italic; font-size: 14px; color: black; text-align: center">
+        No or incorrect code? Contact us <a href="https://medicine.st-andrews.ac.uk/arclight/contact/" style="color: blue" target="_blank">here</a>
+      </p>
+    </div>
+    <!-- END PASSWORD SCREEN -->
+
+    <!-- ===================================================================== -->
+    <!-- SPLASH SCREEN (initially visible only via JS) -->
+    <!-- ===================================================================== -->
+    <div class="splash-screen hidden">
+      <img id="logo1" src="./Q.png" alt="Q Logo" />
+      <img id="logo2" src="./AP.png" alt="AP Logo" />
+      <p>Eye, Ear, Skin AI Assistant</p>
     </div>
 
-    <!-- Password Screen Heading -->
-    <h2 id="password-title" style="margin-bottom: 40px; font-weight: normal; font-size: 20px;">
-      Enter your <span style="font-weight: bold; font-family: 'Quicksand', sans-serif;"><span style="color: red;">Al</span>an</span> invitation password
-    </h2>
+    <!-- ===================================================================== -->
+    <!-- ONBOARDING (INSTRUCTION) SCREEN (initially hidden) -->
+    <!-- ===================================================================== -->
+    <div class="instruction-screen hidden">
+      <img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: -10px" />
+      <p id="instruction-text" style="text-align: justify">
+        Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying
+        names or details.
+      </p>
+      <p id="good-luck" class="good-luck" style="text-align: center">Good luck!</p>
+      <input
+        type="text"
+        id="nameInput"
+        class="name-input"
+        placeholder="Name"
+        title="2-20 letters, spaces, apostrophes or hyphens only"
+        style="color: grey"
+      />
+      <select id="job-role-select" class="job-role-dropdown">
+        <option value="" disabled selected hidden>Role</option>
+        <option value="Health worker">Health worker</option>
+        <option value="Nurse">Nurse</option>
+        <option value="Ophthalmic clinical officer">Ophthalmic clinical officer</option>
+        <option value="Medical student">Medical student</option>
+        <option value="Physician associate">Physician associate</option>
+        <option value="General practitioner">General practitioner</option>
+        <option value="Hospital doctor">Hospital doctor</option>
+        <option value="Ophthalmologist">Ophthalmologist</option>
+        <option value="Optometrist">Optometrist</option>
+        <option value="Orthoptist">Orthoptist</option>
+        <option value="ENT specialist">ENT specialist</option>
+        <option value="Pharmacist">Pharmacist</option>
+        <option value="Audiologist">Audiologist</option>
+        <option value="Ear care practitioner">Ear care practitioner</option>
+        <option value="Dermatologist">Dermatologist</option>
+      </select>
+      <select id="experience-select" class="experience-dropdown">
+        <option value="" disabled selected hidden>Experience</option>
+        <option value="<1 yr">&lt;1 yr</option>
+        <option value="1-3 yr">1-3 yr</option>
+        <option value="3-7 yr">3-7 yr</option>
+        <option value=">7 yr">&gt;7 yr</option>
+      </select>
+      <div class="focus-container">
+        <button id="focusToggleBtn" class="focus-button">Aims</button>
+        <div id="focusDropdown" class="focus-dropdown hidden" style="position: relative">
+          <span
+            class="close-btn"
+            style="position: absolute; top: 5px; right: 10px; cursor: pointer; font-size: 20px"
+            onclick="document.getElementById('focusDropdown').classList.remove('visible'); document.getElementById('focusDropdown').classList.add('hidden');"
+          >
+            &times;
+          </span>
 
-    <!-- Password Input and Submit Button -->
-    <div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
-      <div style="display: flex; flex-direction: column; margin-right: 30px;">
-        <input type="password" id="passwordInput" placeholder="Password" style="color: grey; padding: 12px; width: 220px; font-size: 16px; border-radius: 12px; border: 1px solid #ccc; margin-bottom: 20px;" />
-        <p id="passwordError" style="color: red; display: none; width: 220px; text-align: center; margin: 6px auto 0;">
-          Invalid password. Please try again
-        </p>
-        
+          <label>
+            <input type="checkbox" name="focus" value="Second opinion" />
+            <span class="aims-label-text">Second opinion</span>
+          </label>
+          <label>
+            <input type="checkbox" name="focus" value="Condition lookup" />
+            <span class="aims-label-text">Condition lookup</span>
+          </label>
+          <label>
+            <input type="checkbox" name="focus" value="Communicate better" />
+            <span class="aims-label-text">Communicate better</span>
+          </label>
+        </div>
       </div>
-      <button id="passwordSubmitBtn" disabled style="padding: 12px; font-size: 16px; border-radius: 12px; border: 1px solid #ccc; cursor: pointer;">
-        Submit
-      </button>
+      <input
+        type="text"
+        id="contactInput"
+        class="contact-input"
+        placeholder="Contact (email/phone)"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+      />
+      <br /><br /><br />
+      <button id="acceptButton" disabled>Accept</button>
+      <br />
+      <div id="locationInfo" style="display: none"></div>
+    </div>
+    <!-- END ONBOARDING SCREEN -->
+
+    <!-- ===================================================================== -->
+    <!-- BLACK SCREEN OVERLAY (Transition to Home) -->
+    <!-- ===================================================================== -->
+    <div class="black-screen" id="blackScreen">
+      <img src="./sky.png" alt="Sky" />
     </div>
 
-    <!-- Small Note -->
-    <p id="noCodeLine" style="margin-top: 50px; font-style: italic; font-size: 14px; color: black; text-align: center;">
-      No or incorrect code? Contact us <a href="https://medicine.st-andrews.ac.uk/arclight/contact/" style="color: blue;" target="_blank">here</a>
-    </p>
-  </div>
-  <!-- END PASSWORD SCREEN -->
+    <!-- ===================================================================== -->
+    <!-- MAIN SCRIPT -->
+    <!-- ===================================================================== -->
+    <script>
+      /*********************************************/
+      /*           GLOBAL REFERENCES             */
+      /*********************************************/
+      const passwordScreen = document.getElementById('passwordScreen');
+      const passwordInput = document.getElementById('passwordInput');
+      const passwordSubmitBtn = document.getElementById('passwordSubmitBtn');
+      const passwordError = document.getElementById('passwordError');
 
-  <!-- ===================================================================== -->
-  <!-- SPLASH SCREEN (initially visible only via JS) -->
-  <!-- ===================================================================== -->
-  <div class="splash-screen hidden">
-    <img id="logo1" src="./Q.png" alt="Q Logo" />
-    <img id="logo2" src="./AP.png" alt="AP Logo" />
-    <p>Eye, Ear, Skin AI Assistant</p>
-  </div>
+      const splashScreenRef = document.querySelector('.splash-screen');
+      const instructionRef = document.querySelector('.instruction-screen');
+      const blackScreen = document.getElementById('blackScreen');
+      const skyImage = blackScreen.querySelector('img');
 
-  <!-- ===================================================================== -->
-  <!-- ONBOARDING (INSTRUCTION) SCREEN (initially hidden) -->
-  <!-- ===================================================================== -->
-  <div class="instruction-screen hidden">
-    <img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: -10px" />
-    <p id="instruction-text" style="text-align: justify;">
-      Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying names or details.
-    </p>
-    <p id="good-luck" class="good-luck" style="text-align: center;">Good luck!</p>
-    <input type="text" id="nameInput" class="name-input" placeholder="Name" title="2-20 letters, spaces, apostrophes or hyphens only" style="color: grey;" />
-    <select id="job-role-select" class="job-role-dropdown">
-      <option value="" disabled selected hidden>Role</option>
-      <option value="Health worker">Health worker</option>
-      <option value="Nurse">Nurse</option>
-      <option value="Ophthalmic clinical officer">Ophthalmic clinical officer</option>
-      <option value="Medical student">Medical student</option>
-      <option value="Physician associate">Physician associate</option>
-      <option value="General practitioner">General practitioner</option>
-      <option value="Hospital doctor">Hospital doctor</option>
-      <option value="Ophthalmologist">Ophthalmologist</option>
-      <option value="Optometrist">Optometrist</option>
-      <option value="Orthoptist">Orthoptist</option>
-      <option value="ENT specialist">ENT specialist</option>
-      <option value="Pharmacist">Pharmacist</option>
-      <option value="Audiologist">Audiologist</option>
-      <option value="Ear care practitioner">Ear care practitioner</option>
-      <option value="Dermatologist">Dermatologist</option>
-    </select>
-    <select id="experience-select" class="experience-dropdown">
-      <option value="" disabled selected hidden>Experience</option>
-      <option value="<1 yr">&lt;1 yr</option>
-      <option value="1-3 yr">1-3 yr</option>
-      <option value="3-7 yr">3-7 yr</option>
-      <option value=">7 yr">&gt;7 yr</option>
-    </select>
-    <div class="focus-container">
-      <button id="focusToggleBtn" class="focus-button">Aims</button>
-      <div id="focusDropdown" class="focus-dropdown hidden" style="position: relative;">
-        <span class="close-btn"
-        style="position: absolute; top: 5px; right: 10px; cursor: pointer; font-size: 20px;"
-        onclick="document.getElementById('focusDropdown').classList.remove('visible'); document.getElementById('focusDropdown').classList.add('hidden');">
-    &times;
-  </span>
-  
-        <label>
-          <input type="checkbox" name="focus" value="Second opinion" />
-          <span class="aims-label-text">Second opinion</span>
-        </label>
-        <label>
-          <input type="checkbox" name="focus" value="Condition lookup" />
-          <span class="aims-label-text">Condition lookup</span>
-        </label>
-        <label>
-          <input type="checkbox" name="focus" value="Communicate better" />
-          <span class="aims-label-text">Communicate better</span>
-        </label>
-      </div>
-    </div>
-    <input type="text" id="contactInput" class="contact-input" placeholder="Contact (email/phone)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-    <br><br><br>
-    <button id="acceptButton" disabled>Accept</button>
-    <br>
-    <div id="locationInfo" style="display:none;"></div>
-  </div>
-  <!-- END ONBOARDING SCREEN -->
+      const nameInput = document.getElementById('nameInput');
+      const jobSelectElement = document.getElementById('job-role-select');
+      const experienceSelect = document.getElementById('experience-select');
+      const contactInput = document.getElementById('contactInput');
+      const acceptButton = document.getElementById('acceptButton');
 
-  <!-- ===================================================================== -->
-  <!-- BLACK SCREEN OVERLAY (Transition to Home) -->
-  <!-- ===================================================================== -->
-  <div class="black-screen" id="blackScreen">
-    <img src="./sky.png" alt="Sky">
-  </div>
+      const focusToggleBtn = document.getElementById('focusToggleBtn');
+      const focusDropdown = document.getElementById('focusDropdown');
+      const focusCheckboxes = document.querySelectorAll('#focusDropdown input[name="focus"]');
 
-  <!-- ===================================================================== -->
-  <!-- MAIN SCRIPT -->
-  <!-- ===================================================================== -->
-  <script>
-    /*********************************************/
-    /*           GLOBAL REFERENCES             */
-    /*********************************************/
-    const passwordScreen     = document.getElementById("passwordScreen");
-    const passwordInput      = document.getElementById("passwordInput");
-    const passwordSubmitBtn  = document.getElementById("passwordSubmitBtn");
-    const passwordError      = document.getElementById("passwordError");
+      let ipLatitude = 'Not set';
+      let ipLongitude = 'Not set';
+      let ipCountry = 'Not set';
+      let ipArea = 'Not set';
+      let ipISO2 = 'Not set';
 
-    const splashScreenRef    = document.querySelector(".splash-screen");
-    const instructionRef     = document.querySelector(".instruction-screen");
-    const blackScreen        = document.getElementById("blackScreen");
-    const skyImage           = blackScreen.querySelector("img");
-
-    const nameInput          = document.getElementById("nameInput");
-    const jobSelectElement   = document.getElementById("job-role-select");
-    const experienceSelect   = document.getElementById("experience-select");
-    const contactInput       = document.getElementById("contactInput");
-    const acceptButton       = document.getElementById("acceptButton");
-
-    const focusToggleBtn     = document.getElementById("focusToggleBtn");
-    const focusDropdown      = document.getElementById("focusDropdown");
-    const focusCheckboxes    = document.querySelectorAll('#focusDropdown input[name="focus"]');
-
-    let ipLatitude  = "Not set";
-    let ipLongitude = "Not set";
-    let ipCountry   = "Not set";
-    let ipArea      = "Not set";
-    let ipISO2      = "Not set";
-
-    // Classification Arrays (2-letter ISO)
-    const classificationLookup = {
-      "HI": [ "QA","MO","LU","SG","BN","IE","NO","KW","AE","CH","HK","SM","US","SA","NL","IS","BH","SE",
-              "DE","AU","TW","DK","AT","CA","BE","OM","FI","GB","FR","JP","MT","KR","NZ","ES","IT","PR","CY","IL","CZ" ],
-      "MI": [ "GQ","SI","SK","LT","EE","TT","PT","PL","HU","MY","SC","RU","GR","LV","KN","AG","TR","KZ","BS","CL","PA",
-              "HR","RO","UY","MU","BG","AR","IR","MX","LB","GA","MV","TM","BY","BW","TH","CN","BR","ZA","IN" ],
-      "LI": [ "BB","ME","AZ","CR","IQ","DO","PW","MK","RS","DZ","GD","CO","SR","LC","PE","LK","EG","MN","JO","AL","VE",
-              "ID","DM","XK","NR","TN","VC","NA","BA","EC","GE","SZ","FJ","LY","PY","JM","AM","SV","BT","UA","MA","BZ",
-              "GY","PH","GT","BO","LA","UZ","CV","VN","PK" ],
-      "VLI": ["AO","CG","MM","NG","NI","WS","MD","TO","HN","TL","GH","SD","BD","MR","KH","ZM","LS","CI","TV","PG","KG",
-              "DJ","KE","MH","FM","CM","TZ","ST","TJ","VU","NP","SN","TD","UG","YE","ZW","BJ","ML","SB","ET","RW","GN",
-              "KI","AF","BF","HT","GW","SL","GM","SS","TG","KM","MG","ER","MZ","MW","NE","LR","BI","CD","CF"]
-    };
-
-    /*********************************************/
-    /*         HELPER FUNCTIONS                */
-    /*********************************************/
-    // 1) Splash Screen Animation & Next Screen Logic
-    function showSplashScreenAndThen() {
-      // Show the splash screen (which was initially hidden)
-      splashScreenRef.classList.remove("hidden");
-      splashScreenRef.classList.add("visible");
-
-      // Run splash animation
-      const logo1 = document.getElementById("logo1");
-      const logo2 = document.getElementById("logo2");
-      logo1.style.transform = "scale(0.8)";
-      logo2.style.transform = "rotateX(-90deg)";
-      setTimeout(() => {
-        logo1.style.transform = "scale(1)";
-        logo2.style.transform = "rotateX(0deg)";
-      }, 100);
-
-      // After animation, hide splash and show the next screen based on verification
-      setTimeout(() => {
-        splashScreenRef.classList.remove("visible");
-        splashScreenRef.classList.add("hidden");
-
-        if (localStorage.getItem("verified") === "true") {
-          // If verified, show onboarding/instruction screen
-          instructionRef.classList.remove("hidden");
-          instructionRef.classList.add("visible");
-        } else {
-          // Otherwise, show password entry screen
-          passwordScreen.classList.remove("hidden");
-          passwordScreen.classList.add("visible");
-        }
-      }, 4000);
-    }
-
-    // 2) Fetch IP-Based Location
-    function fetchIPBasedLocation() {
-      fetch("https://ipapi.co/json/")
-        .then(response => response.json())
-        .then(data => {
-          if (data) {
-            ipLatitude  = data.latitude       || "Not set";
-            ipLongitude = data.longitude      || "Not set";
-            ipCountry   = data.country_name   || "Not set";
-            ipArea      = data.city           || "Not set";
-            ipISO2      = (data.country       || "Not set").toUpperCase();
-
-            localStorage.setItem("latitude",  ipLatitude);
-            localStorage.setItem("longitude", ipLongitude);
-            localStorage.setItem("country",   ipCountry);
-            localStorage.setItem("area",      ipArea);
-            localStorage.setItem("iso2",      ipISO2);
-
-            storeClassifications(ipISO2);
-          }
-        })
-        .catch(error => {
-          console.error("Error fetching IP-based location:", error);
-        });
-    }
-
-    // 3) Classify User Country
-    function storeClassifications(iso2) {
-      let classification = "Unknown";
-      for (const [key, values] of Object.entries(classificationLookup)) {
-        if (values.includes(iso2)) {
-          classification = key;
-          break;
-        }
-      }
-      localStorage.setItem("classification", classification);
-    }
-
-    // 4) Form Readiness Check
-    function checkSelections() {
-      jobSelectElement.style.color = jobSelectElement.value ? "blue" : "grey";
-      experienceSelect.style.color = experienceSelect.value ? "blue" : "grey";
-      nameInput.style.color = (nameInput.value.trim().length >= 2) ? "blue" : "grey";
-
-      const isAnyFocusSelected = Array.from(focusCheckboxes).some(cb => cb.checked);
-      focusToggleBtn.classList.toggle("entered", isAnyFocusSelected);
-
-      acceptButton.disabled = !(
-        nameInput.value.trim() &&
-        jobSelectElement.value &&
-        experienceSelect.value &&
-        isAnyFocusSelected &&
-        contactInput.value.trim()
-      );
-    }
-
-    // 5) Initialise Event Listeners
-    function initEventListeners() {
-      // Setup sky image animation
-      skyImage.style.transform = "scale(1)";
-      skyImage.style.transition = "transform 4s ease-in-out, filter 4s ease-in-out";
-
-      nameInput.addEventListener("input", (e) => {
-        e.target.value = e.target.value.replace(/[^A-Za-z'\- ]/g, "");
-        if (e.target.value.length > 20) {
-          e.target.value = e.target.value.substring(0, 20);
-        }
-        checkSelections();
-      });
-
-      jobSelectElement.addEventListener("change", checkSelections);
-      experienceSelect.addEventListener("change", checkSelections);
-      contactInput.addEventListener("input", () => {
-        contactInput.classList.toggle("entered", contactInput.value.trim() !== "");
-        checkSelections();
-      });
-
-      focusToggleBtn.addEventListener("click", () => {
-        focusDropdown.classList.toggle("hidden");
-        focusDropdown.classList.toggle("visible");
-      });
-
-      document.addEventListener("click", (event) => {
-        if (!focusDropdown.contains(event.target) && event.target !== focusToggleBtn) {
-          focusDropdown.classList.add("hidden");
-          focusDropdown.classList.remove("visible");
-        }
-      });
-
-      focusCheckboxes.forEach((checkbox) => {
-        checkbox.addEventListener("change", checkSelections);
-      });
-
-      // Accept button click
-      acceptButton.addEventListener("click", handleAccept);
-
-      // Password input and submit events
-      passwordInput.addEventListener("input", () => {
-        passwordSubmitBtn.disabled = (passwordInput.value.trim() === "");
-        passwordError.style.display = "none";
-      });
-      passwordSubmitBtn.addEventListener("click", verifyPassword);
-    }
-
-    // 6) Verify Password (Client-Side Check)
-    function verifyPassword() {
-      const entered = passwordInput.value.trim();
-
-      fetch("/fetch-records", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: entered })
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Invalid password");
-        }
-        localStorage.setItem("verified", "true");
-        passwordScreen.classList.remove("visible");
-        passwordScreen.classList.add("hidden");
-        // Show onboarding screen after successful verification
-        instructionRef.classList.remove("hidden");
-        instructionRef.classList.add("visible");
-      })
-      .catch(err => {
-        passwordError.style.display = "block";
-        passwordInput.value = "";
-        passwordSubmitBtn.disabled = true;
-        setTimeout(() => {
-          passwordError.style.display = "none";
-        }, 3000);
-      });
-    }
-
-    // 7) Handle Accept (Onboarding Completion & Transition to Home)
-    function handleAccept() {
-      const rawName = nameInput.value.trim();
-      const nameIsValid = /^[A-Za-z'\- ]{2,20}$/.test(rawName);
-      if (!nameIsValid) {
-        alert("Please enter a valid name (2-20 letters, spaces, apostrophes, or hyphens).");
-        return;
-      }
-
-      localStorage.setItem("name", rawName);
-      localStorage.setItem("selectedJobRole", jobSelectElement.value);
-      localStorage.setItem("selectedExperience", experienceSelect.value);
-
-      // Set role classification
-      let roleClass;
-      const jobRole = jobSelectElement.value;
-      switch (jobRole) {
-        case "Health worker":
-        case "Nurse":
-        case "Medical student":
-        case "Hospital doctor":
-        case "General practitioner":
-        case "Physician associate":
-        case "Ophthalmologist":
-        case "ENT specialist":
-        case "Dermatologist":
-          roleClass = " (M)";
-          break;
-        default:
-          roleClass = " (P)";
-          break;
-      }
-      localStorage.setItem("roleClassification", roleClass);
-
-      const selectedFocusValues = Array.from(focusCheckboxes)
-        .filter(cb => cb.checked)
-        .map(cb => cb.value);
-      localStorage.setItem("selectedFocus", JSON.stringify(selectedFocusValues));
-      localStorage.setItem("contactInfo", contactInput.value);
-
-      if (!localStorage.getItem("sessionId")) {
-        localStorage.setItem("sessionId", `user-${Date.now()}`);
-      }
-
-      const userInfo = {
-        sessionId: localStorage.getItem("sessionId"),
-        name: rawName,
-        role: jobSelectElement.value,
-        experience: experienceSelect.value,
-        focus: selectedFocusValues,
-        latitude: localStorage.getItem("latitude"),
-        longitude: localStorage.getItem("longitude"),
-        country: localStorage.getItem("country"),
-        iso2: localStorage.getItem("iso2"),
-        classification: localStorage.getItem("classification"),
-        area: localStorage.getItem("area"),
-        contactInfo: contactInput.value,
-        dateTime: new Date().toLocaleString("en-GB", { timeZone: "UTC" })
+      // Classification Arrays (2-letter ISO)
+      const classificationLookup = {
+        HI: ['QA', 'MO', 'LU', 'SG', 'BN', 'IE', 'NO', 'KW', 'AE', 'CH', 'HK', 'SM', 'US', 'SA', 'NL', 'IS', 'BH', 'SE', 'DE', 'AU', 'TW', 'DK', 'AT', 'CA', 'BE', 'OM', 'FI', 'GB', 'FR', 'JP', 'MT', 'KR', 'NZ', 'ES', 'IT', 'PR', 'CY', 'IL', 'CZ'],
+        MI: ['GQ', 'SI', 'SK', 'LT', 'EE', 'TT', 'PT', 'PL', 'HU', 'MY', 'SC', 'RU', 'GR', 'LV', 'KN', 'AG', 'TR', 'KZ', 'BS', 'CL', 'PA', 'HR', 'RO', 'UY', 'MU', 'BG', 'AR', 'IR', 'MX', 'LB', 'GA', 'MV', 'TM', 'BY', 'BW', 'TH', 'CN', 'BR', 'ZA', 'IN'],
+        LI: ['BB', 'ME', 'AZ', 'CR', 'IQ', 'DO', 'PW', 'MK', 'RS', 'DZ', 'GD', 'CO', 'SR', 'LC', 'PE', 'LK', 'EG', 'MN', 'JO', 'AL', 'VE', 'ID', 'DM', 'XK', 'NR', 'TN', 'VC', 'NA', 'BA', 'EC', 'GE', 'SZ', 'FJ', 'LY', 'PY', 'JM', 'AM', 'SV', 'BT', 'UA', 'MA', 'BZ', 'GY', 'PH', 'GT', 'BO', 'LA', 'UZ', 'CV', 'VN', 'PK'],
+        VLI: ['AO', 'CG', 'MM', 'NG', 'NI', 'WS', 'MD', 'TO', 'HN', 'TL', 'GH', 'SD', 'BD', 'MR', 'KH', 'ZM', 'LS', 'CI', 'TV', 'PG', 'KG', 'DJ', 'KE', 'MH', 'FM', 'CM', 'TZ', 'ST', 'TJ', 'VU', 'NP', 'SN', 'TD', 'UG', 'YE', 'ZW', 'BJ', 'ML', 'SB', 'ET', 'RW', 'GN', 'KI', 'AF', 'BF', 'HT', 'GW', 'SL', 'GM', 'SS', 'TG', 'KM', 'MG', 'ER', 'MZ', 'MW', 'NE', 'LR', 'BI', 'CD', 'CF']
       };
 
-      fetch("https://alan.up.railway.app/record-info", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userInfo)
-      })
-      .then(resp => resp.text())
-      .then(data => {
-        console.log("Record saved:", data);
-      })
-      .catch(err => {
-        console.error("Error saving record:", err);
-      });
+      /*********************************************/
+      /*         HELPER FUNCTIONS                */
+      /*********************************************/
+      // 1) Splash Screen Animation & Next Screen Logic
+      function showSplashScreenAndThen() {
+        // Show the splash screen (which was initially hidden)
+        splashScreenRef.classList.remove('hidden');
+        splashScreenRef.classList.add('visible');
 
-      // Transition animation before going to home page
-      blackScreen.style.visibility = "visible";
-      blackScreen.style.opacity = 1;
-      setTimeout(() => {
-        skyImage.style.transform = "scale(1.3)";
-        skyImage.style.filter = "blur(0px)";
-      }, 200);
-
-      setTimeout(() => {
-        blackScreen.style.opacity = 0;
+        // Run splash animation
+        const logo1 = document.getElementById('logo1');
+        const logo2 = document.getElementById('logo2');
+        logo1.style.transform = 'scale(0.8)';
+        logo2.style.transform = 'rotateX(-90deg)';
         setTimeout(() => {
-          window.location.href = "home.html";
-        }, 250);
-      }, 6000);
-    }
+          logo1.style.transform = 'scale(1)';
+          logo2.style.transform = 'rotateX(0deg)';
+        }, 100);
 
-    // 8) Main Initialization
-    function main() {
-      // Start by showing the splash screen.
-      showSplashScreenAndThen();
-      fetchIPBasedLocation();
-      initEventListeners();
+        // After animation, hide splash and show the next screen based on verification
+        setTimeout(() => {
+          splashScreenRef.classList.remove('visible');
+          splashScreenRef.classList.add('hidden');
 
-      // Language selector setup
-      const indexLangButton   = document.getElementById('index-language-button');
-      const indexLangDropdown = document.getElementById('index-language-dropdown');
+          if (localStorage.getItem('verified') === 'true') {
+            // If verified, show onboarding/instruction screen
+            instructionRef.classList.remove('hidden');
+            instructionRef.classList.add('visible');
+          } else {
+            // Otherwise, show password entry screen
+            passwordScreen.classList.remove('hidden');
+            passwordScreen.classList.add('visible');
+          }
+        }, 4000);
+      }
 
-      indexLangButton.addEventListener('click', () => {
-        if (indexLangDropdown.style.display === 'none' || indexLangDropdown.style.display === '') {
-          indexLangDropdown.style.display = 'block';
-        } else {
-          indexLangDropdown.style.display = 'none';
+      // 2) Fetch IP-Based Location
+      function fetchIPBasedLocation() {
+        fetch('https://ipapi.co/json/')
+          .then((response) => response.json())
+          .then((data) => {
+            if (data) {
+              ipLatitude = data.latitude || 'Not set';
+              ipLongitude = data.longitude || 'Not set';
+              ipCountry = data.country_name || 'Not set';
+              ipArea = data.city || 'Not set';
+              ipISO2 = (data.country || 'Not set').toUpperCase();
+
+              localStorage.setItem('latitude', ipLatitude);
+              localStorage.setItem('longitude', ipLongitude);
+              localStorage.setItem('country', ipCountry);
+              localStorage.setItem('area', ipArea);
+              localStorage.setItem('iso2', ipISO2);
+
+              storeClassifications(ipISO2);
+            }
+          })
+          .catch((error) => {
+            console.error('Error fetching IP-based location:', error);
+          });
+      }
+
+      // 3) Classify User Country
+      function storeClassifications(iso2) {
+        let classification = 'Unknown';
+        for (const [key, values] of Object.entries(classificationLookup)) {
+          if (values.includes(iso2)) {
+            classification = key;
+            break;
+          }
         }
-      });
+        localStorage.setItem('classification', classification);
+      }
 
-      indexLangDropdown.querySelectorAll('li').forEach((item) => {
-        item.addEventListener('click', () => {
-          const chosenLang = item.getAttribute('data-value');
-          localStorage.setItem('preferredLanguage', chosenLang);
-          updateIndexLanguageDisplays(chosenLang);
-          console.log("User chose language:", chosenLang);
-          indexLangDropdown.style.display = 'none';
+      // 4) Form Readiness Check
+      function checkSelections() {
+        jobSelectElement.style.color = jobSelectElement.value ? 'blue' : 'grey';
+        experienceSelect.style.color = experienceSelect.value ? 'blue' : 'grey';
+        nameInput.style.color = nameInput.value.trim().length >= 2 ? 'blue' : 'grey';
+
+        const isAnyFocusSelected = Array.from(focusCheckboxes).some((cb) => cb.checked);
+        focusToggleBtn.classList.toggle('entered', isAnyFocusSelected);
+
+        acceptButton.disabled = !(
+          nameInput.value.trim() &&
+          jobSelectElement.value &&
+          experienceSelect.value &&
+          isAnyFocusSelected &&
+          contactInput.value.trim()
+        );
+      }
+
+      // 5) Initialise Event Listeners
+      function initEventListeners() {
+        // Setup sky image animation
+        skyImage.style.transform = 'scale(1)';
+        skyImage.style.transition = 'transform 4s ease-in-out, filter 4s ease-in-out';
+
+        nameInput.addEventListener('input', (e) => {
+          e.target.value = e.target.value.replace(/[^A-Za-z'\- ]/g, '');
+          if (e.target.value.length > 20) {
+            e.target.value = e.target.value.substring(0, 20);
+          }
+          checkSelections();
         });
-      });
-    }
 
-    document.addEventListener("DOMContentLoaded", main);
+        jobSelectElement.addEventListener('change', checkSelections);
+        experienceSelect.addEventListener('change', checkSelections);
+        contactInput.addEventListener('input', () => {
+          contactInput.classList.toggle('entered', contactInput.value.trim() !== '');
+          checkSelections();
+        });
 
-    // 9) Update Translatable Onboarding Texts
-    function updateIndexLanguageDisplays(lang) {
-      // Update password screen texts
-      document.getElementById("password-title").textContent = translations[lang].passwordTitle;
-      document.getElementById("passwordInput").placeholder = translations[lang].passwordPlaceholder;
-      document.getElementById("passwordError").textContent = translations[lang].passwordErrorMsg;
-      document.getElementById("passwordSubmitBtn").textContent = translations[lang].passwordSubmitBtn;
-      document.getElementById("noCodeLine").innerHTML = translations[lang].noCodeLine;
+        focusToggleBtn.addEventListener('click', () => {
+          focusDropdown.classList.toggle('hidden');
+          focusDropdown.classList.toggle('visible');
+        });
 
-      // Update onboarding/instruction screen texts
-      document.getElementById("instruction-text").textContent = translations[lang].instructionText;
-      document.getElementById("good-luck").textContent = translations[lang].goodLuck;
-      document.getElementById("nameInput").placeholder = translations[lang].namePlaceholder;
+        document.addEventListener('click', (event) => {
+          if (!focusDropdown.contains(event.target) && event.target !== focusToggleBtn) {
+            focusDropdown.classList.add('hidden');
+            focusDropdown.classList.remove('visible');
+          }
+        });
 
-      // Update Role dropdown's first (disabled) option
-      document.querySelector("#job-role-select option[disabled]").textContent = translations[lang].rolePlaceholder;
+        focusCheckboxes.forEach((checkbox) => {
+          checkbox.addEventListener('change', checkSelections);
+        });
 
-      // Update Job Role options
-      const roleOptions = document.querySelectorAll("#job-role-select option:not([disabled])");
-      roleOptions.forEach(option => {
-        const mapping = {
-          "Health worker": translations[lang].healthWorker,
-          "Nurse": translations[lang].nurse,
-          "Ophthalmic clinical officer": translations[lang].ophthalmicOfficer,
-          "Medical student": translations[lang].medicalStudent,
-          "Physician associate": translations[lang].physicianAssociate,
-          "General practitioner": translations[lang].generalPractitioner,
-          "Hospital doctor": translations[lang].hospitalDoctor,
-          "Ophthalmologist": translations[lang].ophthalmologist,
-          "Optometrist": translations[lang].optometrist,
-          "Orthoptist": translations[lang].orthoptist,
-          "ENT specialist": translations[lang].entSpecialist,
-          "Pharmacist": translations[lang].pharmacist,
-          "Audiologist": translations[lang].audiologist,
-          "Ear care practitioner": translations[lang].earCarePractitioner,
-          "Dermatologist": translations[lang].dermatologist
-        };
-        if (mapping[option.value]) {
-          option.textContent = mapping[option.value];
+        // Accept button click
+        acceptButton.addEventListener('click', handleAccept);
+
+        // Password input and submit events
+        passwordInput.addEventListener('input', () => {
+          passwordSubmitBtn.disabled = passwordInput.value.trim() === '';
+          passwordError.style.display = 'none';
+        });
+        passwordSubmitBtn.addEventListener('click', verifyPassword);
+      }
+
+      // 6) Verify Password (Client-Side Check)
+      function verifyPassword() {
+        const entered = passwordInput.value.trim();
+
+        fetch('/fetch-records', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: entered }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Invalid password');
+            }
+            localStorage.setItem('verified', 'true');
+            passwordScreen.classList.remove('visible');
+            passwordScreen.classList.add('hidden');
+            // Show onboarding screen after successful verification
+            instructionRef.classList.remove('hidden');
+            instructionRef.classList.add('visible');
+          })
+          .catch((err) => {
+            passwordError.style.display = 'block';
+            passwordInput.value = '';
+            passwordSubmitBtn.disabled = true;
+            setTimeout(() => {
+              passwordError.style.display = 'none';
+            }, 3000);
+          });
+      }
+
+      // 7) Handle Accept (Onboarding Completion & Transition to Home)
+      function handleAccept() {
+        const rawName = nameInput.value.trim();
+        const nameIsValid = /^[A-Za-z'\- ]{2,20}$/.test(rawName);
+        if (!nameIsValid) {
+          alert('Please enter a valid name (2-20 letters, spaces, apostrophes, or hyphens).');
+          return;
         }
-      });
 
-      // Update Experience dropdown's first (disabled) option
-      document.querySelector("#experience-select option[disabled]").textContent = translations[lang].experiencePlaceholder;
+        localStorage.setItem('name', rawName);
+        localStorage.setItem('selectedJobRole', jobSelectElement.value);
+        localStorage.setItem('selectedExperience', experienceSelect.value);
 
-      // Update Experience options
-      const expOptions = document.querySelectorAll("#experience-select option");
-      if (expOptions.length >= 5) {
-        expOptions[1].textContent = translations[lang].experienceOption1;
-        expOptions[2].textContent = translations[lang].experienceOption2;
-        expOptions[3].textContent = translations[lang].experienceOption3;
-        expOptions[4].textContent = translations[lang].experienceOption4;
+        // Set role classification
+        let roleClass;
+        const jobRole = jobSelectElement.value;
+        switch (jobRole) {
+          case 'Health worker':
+          case 'Nurse':
+          case 'Medical student':
+          case 'Hospital doctor':
+          case 'General practitioner':
+          case 'Physician associate':
+          case 'Ophthalmologist':
+          case 'ENT specialist':
+          case 'Dermatologist':
+            roleClass = ' (M)';
+            break;
+          default:
+            roleClass = ' (P)';
+            break;
+        }
+        localStorage.setItem('roleClassification', roleClass);
+
+        const selectedFocusValues = Array.from(focusCheckboxes)
+          .filter((cb) => cb.checked)
+          .map((cb) => cb.value);
+        localStorage.setItem('selectedFocus', JSON.stringify(selectedFocusValues));
+        localStorage.setItem('contactInfo', contactInput.value);
+
+        if (!localStorage.getItem('sessionId')) {
+          localStorage.setItem('sessionId', `user-${Date.now()}`);
+        }
+
+        const userInfo = {
+          sessionId: localStorage.getItem('sessionId'),
+          name: rawName,
+          role: jobSelectElement.value,
+          experience: experienceSelect.value,
+          focus: selectedFocusValues,
+          latitude: localStorage.getItem('latitude'),
+          longitude: localStorage.getItem('longitude'),
+          country: localStorage.getItem('country'),
+          iso2: localStorage.getItem('iso2'),
+          classification: localStorage.getItem('classification'),
+          area: localStorage.getItem('area'),
+          contactInfo: contactInput.value,
+          dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }),
+        };
+
+        fetch('https://alan.up.railway.app/record-info', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(userInfo),
+        })
+          .then((resp) => resp.text())
+          .then((data) => {
+            console.log('Record saved:', data);
+          })
+          .catch((err) => {
+            console.error('Error saving record:', err);
+          });
+
+        // Transition animation before going to home page
+        blackScreen.style.visibility = 'visible';
+        blackScreen.style.opacity = 1;
+        setTimeout(() => {
+          skyImage.style.transform = 'scale(1.3)';
+          skyImage.style.filter = 'blur(0px)';
+        }, 200);
+
+        setTimeout(() => {
+          blackScreen.style.opacity = 0;
+          setTimeout(() => {
+            window.location.href = 'home.html';
+          }, 250);
+        }, 6000);
       }
 
-      // Update Aims button text
-      document.getElementById("focusToggleBtn").textContent = translations[lang].aimsButton;
+      // 8) Main Initialization
+      function main() {
+        // Start by showing the splash screen.
+        showSplashScreenAndThen();
+        fetchIPBasedLocation();
+        initEventListeners();
 
-      // Update Aims dropdown checkbox labels
-      const aimsLabelSpans = document.querySelectorAll("#focusDropdown .aims-label-text");
-      if (aimsLabelSpans.length >= 3) {
-        aimsLabelSpans[0].textContent = translations[lang].aimsOption1;
-        aimsLabelSpans[1].textContent = translations[lang].aimsOption2;
-        aimsLabelSpans[2].textContent = translations[lang].aimsOption3;
+        // Language selector setup
+        const indexLangButton = document.getElementById('index-language-button');
+        const indexLangDropdown = document.getElementById('index-language-dropdown');
+
+        indexLangButton.addEventListener('click', () => {
+          if (indexLangDropdown.style.display === 'none' || indexLangDropdown.style.display === '') {
+            indexLangDropdown.style.display = 'block';
+          } else {
+            indexLangDropdown.style.display = 'none';
+          }
+        });
+
+        indexLangDropdown.querySelectorAll('li').forEach((item) => {
+          item.addEventListener('click', () => {
+            const chosenLang = item.getAttribute('data-value');
+            localStorage.setItem('preferredLanguage', chosenLang);
+            updateIndexLanguageDisplays(chosenLang);
+            console.log('User chose language:', chosenLang);
+            indexLangDropdown.style.display = 'none';
+          });
+        });
       }
 
-      // Update Contact input placeholder
-      const contactInputEl = document.getElementById("contactInput");
-      contactInputEl.value = "";
-      contactInputEl.placeholder = translations[lang].contactPlaceholder;
+      document.addEventListener('DOMContentLoaded', main);
 
-      // Update Accept button text
-      document.getElementById("acceptButton").textContent = translations[lang].acceptButton;
-    }
-  </script>
-</body>
+      // 9) Update Translatable Onboarding Texts
+      function updateIndexLanguageDisplays(lang) {
+        // Update password screen texts
+        document.getElementById('password-title').textContent = translations[lang].passwordTitle;
+        document.getElementById('passwordInput').placeholder = translations[lang].passwordPlaceholder;
+        document.getElementById('passwordError').textContent = translations[lang].passwordErrorMsg;
+        document.getElementById('passwordSubmitBtn').textContent = translations[lang].passwordSubmitBtn;
+        document.getElementById('noCodeLine').innerHTML = translations[lang].noCodeLine;
+
+        // Update onboarding/instruction screen texts
+        document.getElementById('instruction-text').textContent = translations[lang].instructionText;
+        document.getElementById('good-luck').textContent = translations[lang].goodLuck;
+        document.getElementById('nameInput').placeholder = translations[lang].namePlaceholder;
+
+        // Update Role dropdown's first (disabled) option
+        document.querySelector('#job-role-select option[disabled]').textContent = translations[lang].rolePlaceholder;
+
+        // Update Job Role options
+        const roleOptions = document.querySelectorAll('#job-role-select option:not([disabled])');
+        roleOptions.forEach((option) => {
+          const mapping = {
+            'Health worker': translations[lang].healthWorker,
+            Nurse: translations[lang].nurse,
+            'Ophthalmic clinical officer': translations[lang].ophthalmicOfficer,
+            'Medical student': translations[lang].medicalStudent,
+            'Physician associate': translations[lang].physicianAssociate,
+            'General practitioner': translations[lang].generalPractitioner,
+            'Hospital doctor': translations[lang].hospitalDoctor,
+            Ophthalmologist: translations[lang].ophthalmologist,
+            Optometrist: translations[lang].optometrist,
+            Orthoptist: translations[lang].orthoptist,
+            'ENT specialist': translations[lang].entSpecialist,
+            Pharmacist: translations[lang].pharmacist,
+            Audiologist: translations[lang].audiologist,
+            'Ear care practitioner': translations[lang].earCarePractitioner,
+            Dermatologist: translations[lang].dermatologist,
+          };
+          if (mapping[option.value]) {
+            option.textContent = mapping[option.value];
+          }
+        });
+
+        // Update Experience dropdown's first (disabled) option
+        document.querySelector('#experience-select option[disabled]').textContent = translations[lang].experiencePlaceholder;
+
+        // Update Experience options
+        const expOptions = document.querySelectorAll('#experience-select option');
+        if (expOptions.length >= 5) {
+          expOptions[1].textContent = translations[lang].experienceOption1;
+          expOptions[2].textContent = translations[lang].experienceOption2;
+          expOptions[3].textContent = translations[lang].experienceOption3;
+          expOptions[4].textContent = translations[lang].experienceOption4;
+        }
+
+        // Update Aims button text
+        document.getElementById('focusToggleBtn').textContent = translations[lang].aimsButton;
+
+        // Update Aims dropdown checkbox labels
+        const aimsLabelSpans = document.querySelectorAll('#focusDropdown .aims-label-text');
+        if (aimsLabelSpans.length >= 3) {
+          aimsLabelSpans[0].textContent = translations[lang].aimsOption1;
+          aimsLabelSpans[1].textContent = translations[lang].aimsOption2;
+          aimsLabelSpans[2].textContent = translations[lang].aimsOption3;
+        }
+
+        // Update Contact input placeholder
+        const contactInputEl = document.getElementById('contactInput');
+        contactInputEl.value = '';
+        contactInputEl.placeholder = translations[lang].contactPlaceholder;
+
+        // Update Accept button text
+        document.getElementById('acceptButton').textContent = translations[lang].acceptButton;
+      }
+    </script>
+  </body>
 </html>

@@ -10,7 +10,7 @@ html {
   height: 100%;
   display: flex;
   flex-direction: column;
-  font-family: "Calibri Light", Arial, sans-serif;
+  font-family: 'Calibri Light', Arial, sans-serif;
 }
 
 /* Helper class to hide elements */
@@ -57,7 +57,7 @@ html {
 
 /* Header text colour variants */
 .chatbot-header .red {
-  color: #F44336FF;
+  color: #f44336ff;
 }
 .chatbot-header .black {
   color: black;
@@ -146,7 +146,7 @@ html {
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 .dropdown-content a {
@@ -172,9 +172,15 @@ html {
 ============================== */
 
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* For repeated pulsing animation */
@@ -241,13 +247,13 @@ html {
   display: block;
   margin: 0 auto;
   text-align: center;
-  font-size: 20px; 
+  font-size: 20px;
 }
 
 /* Duplicate grey-text (already declared above) */
 .grey-text {
   color: grey;
-  font-size: 14px; 
+  font-size: 14px;
 }
 
 /* Ensures the Flowise chatbot's bot-message is visible */
@@ -270,11 +276,10 @@ html {
   align-items: center;
 }
 flowise-fullchatbot {
-  display: block;       /* Ensure it behaves as a block element */
-  min-height: 300px;    /* Force a minimum height (adjust as needed) */
-  z-index: 10;          /* Bring it to the front if overlapping elements exist */
+  display: block; /* Ensure it behaves as a block element */
+  min-height: 300px; /* Force a minimum height (adjust as needed) */
+  z-index: 10; /* Bring it to the front if overlapping elements exist */
 }
-
 
 /* ==============================
    DETECTED CONDITION
@@ -298,7 +303,9 @@ flowise-fullchatbot {
    HIDDEN / LINKS
 ============================== */
 
-.hidden { display: none; }
+.hidden {
+  display: none;
+}
 .register-link,
 .login-link {
   cursor: pointer;
@@ -331,7 +338,7 @@ button {
 
 .menu-icon {
   cursor: pointer;
-  font-size: 25px;  /* Icon's approximate height based on the font-size */
+  font-size: 25px; /* Icon's approximate height based on the font-size */
   color: white;
   position: fixed;
   top: calc(42px - 12.5px); /* Precisely centres the icon vertically */
@@ -339,7 +346,7 @@ button {
   z-index: 1100;
 }
 .menu-icon.active {
-  color: black;  /* Change icon colour to black when active */
+  color: black; /* Change icon colour to black when active */
 }
 
 /* ==============================
@@ -349,13 +356,13 @@ button {
 .side-menu {
   position: fixed;
   left: -300px; /* Start off-screen */
-  top: 10px;    /* Add px for clarity */
-  min-width: 300px;   /* Minimum width remains 300px */
-  width: auto;        /* Width will expand as needed */
-  max-width: 400px;   /* Optional: Limit maximum width */
+  top: 10px; /* Add px for clarity */
+  min-width: 300px; /* Minimum width remains 300px */
+  width: auto; /* Width will expand as needed */
+  max-width: 400px; /* Optional: Limit maximum width */
   height: 100%;
   background-color: #f4f4f4;
-  box-shadow: 2px 0px 5px rgba(0,0,0,0.5);
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
   transition: left 0.5s ease;
   padding-top: 60px;
   display: flex;
@@ -363,7 +370,6 @@ button {
   align-items: center;
   z-index: 1000;
 }
-
 
 /* ==============================
    BUTTON COLOUR VARIANTS
@@ -383,7 +389,7 @@ button {
 
 /* Default (blue) button */
 .button {
-  background-color: #2196F3FF; /* Default blue background */
+  background-color: #2196f3ff; /* Default blue background */
 }
 /* Green button variant */
 .button.green {
@@ -412,7 +418,7 @@ button {
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
-  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
   z-index: 2; /* Sit on top */
   justify-content: center;
   align-items: center;
@@ -424,7 +430,9 @@ button {
   padding: 20px;
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  box-shadow:
+    0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
   text-align: center;
 }
 .close-button {
@@ -471,7 +479,7 @@ p {
 ============================== */
 
 #boxesFrame {
-  width: 100%; 
+  width: 100%;
   height: 100px; /* Adjust based on the content's height */
   border: 0;
   overflow: hidden;
@@ -677,10 +685,18 @@ p {
   padding-top: 10px;
 }
 @keyframes fadeinout {
-  0% { opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 .animation-container img {
   width: 70px; /* Adjust the width as needed */

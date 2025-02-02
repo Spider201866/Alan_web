@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,7 +9,7 @@
     <style>
       /* Global page layout and typography */
       body {
-        font-family: "Calibri Light", Arial, sans-serif;
+        font-family: 'Calibri Light', Arial, sans-serif;
         background-color: white;
         color: black;
         margin: 0;
@@ -65,58 +65,60 @@
       <!-- All Around Ear Section -->
       <h3 id="allAroundEarHeading">All around ear</h3>
       <p id="allAroundEarText">
-        Check: <em>pinna, </em><em>tragus, </em><em>mastoid</em> for lumps, tenderness or discharge<br>
+        Check: <em>pinna, </em><em>tragus, </em><em>mastoid</em> for lumps, tenderness or discharge<br />
         Gently move pinna, note any pain
       </p>
 
       <!-- Ear Canal Section -->
       <h3 id="earCanalHeading">Ear canal</h3>
       <p id="earCanalText">
-        Tilt head, <strong><u>hold Arclight like a pen</u></strong><br>
-        Pull pinna up/back (adults) or down/back (children)<br>
-        Insert speculum (4.5mm adult, 2.5mm infant), push past hairs, rotate if needed<br>
+        Tilt head, <strong><u>hold Arclight like a pen</u></strong
+        ><br />
+        Pull pinna up/back (adults) or down/back (children)<br />
+        Insert speculum (4.5mm adult, 2.5mm infant), push past hairs, rotate if needed<br />
         Look for: <em>wax,</em> <em>debris,</em> <em>infection</em>
       </p>
 
       <!-- Tympanic Membrane Section -->
       <h3 id="tympanicMembraneHeading">Tympanic membrane</h3>
       <p id="tympanicMembraneText">
-        Identify handle of malleus, light reflex, attic<br>
-        Note: <em>colour</em>, <em>position</em>, <em>translucency</em><br>
+        Identify handle of malleus, light reflex, attic<br />
+        Note: <em>colour</em>, <em>position</em>, <em>translucency</em><br />
         Look for perforation, fluid or scarring
       </p>
 
       <!-- Additional Information -->
       <p id="additionalText">
-        Know your TM's: normal, <span style="color:red; font-weight:bold;">red</span>, <span style="color:orange;">bulging</span>, <span style="color:green;">retracted</span>, <span style="color:purple;">perforated</span><br>
+        Know your TM's: normal, <span style="color: red; font-weight: bold">red</span>, <span style="color: orange">bulging</span>,
+        <span style="color: green">retracted</span>, <span style="color: purple">perforated</span><br />
         &gt;Practice often&lt;
       </p>
     </div>
 
     <!-- Inline JavaScript to update text using the translations object -->
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener('DOMContentLoaded', function () {
         updatePageTranslations();
       });
-    
-      window.addEventListener("storage", function (e) {
-        if (e.key === "preferredLanguage") {
+
+      window.addEventListener('storage', function (e) {
+        if (e.key === 'preferredLanguage') {
           updatePageTranslations();
         }
       });
-    
+
       function updatePageTranslations() {
-        var lang = localStorage.getItem("preferredLanguage") || "en";
+        var lang = localStorage.getItem('preferredLanguage') || 'en';
         var t = window.translations && window.translations[lang];
         if (t) {
-          document.getElementById("pageTitle").textContent = t.pageTitle;
-          document.getElementById("allAroundEarHeading").textContent = t.allAroundEarHeading;
-          document.getElementById("allAroundEarText").innerHTML = t.allAroundEarText;
-          document.getElementById("earCanalHeading").textContent = t.earCanalHeading;
-          document.getElementById("earCanalText").innerHTML = t.earCanalText;
-          document.getElementById("tympanicMembraneHeading").textContent = t.tympanicMembraneHeading;
-          document.getElementById("tympanicMembraneText").innerHTML = t.tympanicMembraneText;
-          document.getElementById("additionalText").innerHTML = t.additionalText;
+          document.getElementById('pageTitle').textContent = t.pageTitle;
+          document.getElementById('allAroundEarHeading').textContent = t.allAroundEarHeading;
+          document.getElementById('allAroundEarText').innerHTML = t.allAroundEarText;
+          document.getElementById('earCanalHeading').textContent = t.earCanalHeading;
+          document.getElementById('earCanalText').innerHTML = t.earCanalText;
+          document.getElementById('tympanicMembraneHeading').textContent = t.tympanicMembraneHeading;
+          document.getElementById('tympanicMembraneText').innerHTML = t.tympanicMembraneText;
+          document.getElementById('additionalText').innerHTML = t.additionalText;
         }
       }
     </script>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,7 +9,7 @@
     <style>
       /* Global page layout and typography */
       body {
-        font-family: "Calibri Light", Arial, sans-serif;
+        font-family: 'Calibri Light', Arial, sans-serif;
         background-color: white;
         color: black;
         margin: 0;
@@ -70,12 +70,10 @@
       <!-- Front of Eye Section -->
       <h3 id="frontOfEyeHeading">Front of Eye</h3>
       <p id="frontOfEyeText">
-        Observe and compare eyes: <em>straight,</em> <em>right,</em>
-        <em>left,</em> <em>up,</em> down<br />
-        <strong><u>Hold &amp; get close</u></strong>. Examine:
-        <em>lids,</em> <em>conjunctiva,</em> <em>cornea,</em>
-        <em>pupil</em><br />
-        Use with <span style="color: orange;">fluro</span> for corneal ulcers or scratches
+        Observe and compare eyes: <em>straight,</em> <em>right,</em> <em>left,</em> <em>up,</em> down<br />
+        <strong><u>Hold &amp; get close</u></strong
+        >. Examine: <em>lids,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupil</em><br />
+        Use with <span style="color: orange">fluro</span> for corneal ulcers or scratches
       </p>
 
       <!-- Fundal Reflex Section -->
@@ -90,17 +88,14 @@
       <h3 id="backOfEyeHeading">Back of Eye</h3>
       <p id="backOfEyeText">
         Use right eye to view patient's right eye; left for left<br />
-        Patient must look straight NOT at light; get close and find optic disc
-        (Dilate = best view)<br />
-        Study disc: <em>Margin,</em> <em>Colour,</em> <em>Cup</em>. Track big vessels,
-        then ask patient to look directly into the light to see macula
+        Patient must look straight NOT at light; get close and find optic disc (Dilate = best view)<br />
+        Study disc: <em>Margin,</em> <em>Colour,</em> <em>Cup</em>. Track big vessels, then ask patient to look directly into the light to see macula
       </p>
 
       <!-- Additional Information -->
       <p id="additionalText">
-        Know your discs: normal, <span style="color:red; font-weight:bold;">swollen</span>,
-        <span style="color:red;">new vessels</span>, <span style="color:orange;">cupped</span>,
-        <span style="color:green;">pale</span><br />
+        Know your discs: normal, <span style="color: red; font-weight: bold">swollen</span>, <span style="color: red">new vessels</span>,
+        <span style="color: orange">cupped</span>, <span style="color: green">pale</span><br />
         &gt;Practice often&lt;
       </p>
     </div>
@@ -108,32 +103,31 @@
     <!-- Inline JavaScript to update text using the translations object -->
     <script>
       // Call the update function on page load
-      document.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener('DOMContentLoaded', function () {
         updatePageTranslations();
       });
-    
+
       // Also listen for storage changes (useful if the change is made in another tab)
-      window.addEventListener("storage", function (e) {
-        if (e.key === "preferredLanguage") {
+      window.addEventListener('storage', function (e) {
+        if (e.key === 'preferredLanguage') {
           updatePageTranslations();
         }
       });
-    
+
       function updatePageTranslations() {
-        var lang = localStorage.getItem("preferredLanguage") || "en";
+        var lang = localStorage.getItem('preferredLanguage') || 'en';
         var t = window.translations && window.translations[lang];
         if (t) {
-          document.getElementById("pageTitle").textContent = t.pageTitle;
-          document.getElementById("frontOfEyeHeading").textContent = t.frontOfEyeHeading;
-          document.getElementById("frontOfEyeText").innerHTML = t.frontOfEyeText;
-          document.getElementById("fundalReflexHeading").textContent = t.fundalReflexHeading;
-          document.getElementById("fundalReflexText").innerHTML = t.fundalReflexText;
-          document.getElementById("backOfEyeHeading").textContent = t.backOfEyeHeading;
-          document.getElementById("backOfEyeText").innerHTML = t.backOfEyeText;
-          document.getElementById("additionalText").innerHTML = t.additionalText;
+          document.getElementById('pageTitle').textContent = t.pageTitle;
+          document.getElementById('frontOfEyeHeading').textContent = t.frontOfEyeHeading;
+          document.getElementById('frontOfEyeText').innerHTML = t.frontOfEyeText;
+          document.getElementById('fundalReflexHeading').textContent = t.fundalReflexHeading;
+          document.getElementById('fundalReflexText').innerHTML = t.fundalReflexText;
+          document.getElementById('backOfEyeHeading').textContent = t.backOfEyeHeading;
+          document.getElementById('backOfEyeText').innerHTML = t.backOfEyeText;
+          document.getElementById('additionalText').innerHTML = t.additionalText;
         }
       }
     </script>
-    
   </body>
 </html>

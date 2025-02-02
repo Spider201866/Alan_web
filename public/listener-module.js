@@ -4,15 +4,15 @@
 // ------------------------------------------------------
 const initChatbotListeners = () => {
   setTimeout(() => {
-    const shadowHost = document.querySelector("flowise-fullchatbot");
+    const shadowHost = document.querySelector('flowise-fullchatbot');
     if (!shadowHost) {
-      console.error("Shadow host not found.");
+      console.error('Shadow host not found.');
       return;
     }
 
     const shadowRoot = shadowHost.shadowRoot;
     if (!shadowRoot) {
-      console.error("Unable to access shadow root.");
+      console.error('Unable to access shadow root.');
       return;
     }
 
@@ -27,7 +27,7 @@ const initChatbotListeners = () => {
             if (!bubbleText) continue;
 
             // If final message => parse "is most likely"
-            if (bubbleText.toLowerCase().includes("good luck!")) {
+            if (bubbleText.toLowerCase().includes('good luck!')) {
               parseFinalLLMMessage(bubbleText);
             }
           }
@@ -48,7 +48,6 @@ const initChatbotListeners = () => {
         removeChatEndButtons();
       }
     }, 2000);
-
   }, 1000);
 };
 
@@ -57,31 +56,31 @@ const initChatbotListeners = () => {
 // ------------------------------------------------------
 function parseFinalLLMMessage(llmBubbleText) {
   // 1) Truncate everything after "Good luck!"
-  const glIndex = llmBubbleText.toLowerCase().indexOf("good luck!");
+  const glIndex = llmBubbleText.toLowerCase().indexOf('good luck!');
   const truncated = llmBubbleText.substring(0, glIndex).trim();
 
   // 2) Find the last line containing "is most likely"
   const lines = truncated
-    .split("\n")
-    .map(line => line.trim())
+    .split('\n')
+    .map((line) => line.trim())
     .filter(Boolean);
 
-  let targetLine = "";
+  let targetLine = '';
   for (let i = lines.length - 1; i >= 0; i--) {
-    if (lines[i].toLowerCase().includes("is most likely")) {
+    if (lines[i].toLowerCase().includes('is most likely')) {
       targetLine = lines[i];
       break;
     }
   }
 
   if (targetLine) {
-    const rawCondition = targetLine.split("is most likely")[0].trim();
+    const rawCondition = targetLine.split('is most likely')[0].trim();
     // optional cleanup
     const pattern = /([A-Za-z\s]+)(?=$)/i;
     const match = rawCondition.match(pattern);
     if (match && match[1]) {
       const condition = match[1].trim();
-      console.log("Detected condition:", condition);
+      console.log('Detected condition:', condition);
       createButtonsWithText(condition);
     }
   }
@@ -92,55 +91,55 @@ function parseFinalLLMMessage(llmBubbleText) {
 // ------------------------------------------------------
 function createButtonsWithText(condition) {
   // Avoid duplicates
-  if (document.getElementById("chat-end-buttons")) return;
+  if (document.getElementById('chat-end-buttons')) return;
 
-  const container = document.createElement("div");
-  container.id = "chat-end-buttons";
-  container.style.display = "flex";
-  container.style.flexDirection = "column";
-  container.style.alignItems = "center";
-  container.style.marginTop = "-10px";
-  container.style.marginBottom = "20px";
+  const container = document.createElement('div');
+  container.id = 'chat-end-buttons';
+  container.style.display = 'flex';
+  container.style.flexDirection = 'column';
+  container.style.alignItems = 'center';
+  container.style.marginTop = '-10px';
+  container.style.marginBottom = '20px';
 
   // "Find X images..."
-  const textLine = document.createElement("div");
+  const textLine = document.createElement('div');
   textLine.innerHTML = `Find <strong>${condition}</strong> images on these sites`;
-  textLine.style.fontSize = "16px";
-  textLine.style.marginBottom = "20px";
+  textLine.style.fontSize = '16px';
+  textLine.style.marginBottom = '20px';
   container.appendChild(textLine);
 
   // Buttons row
-  const buttonsRow = document.createElement("div");
-  buttonsRow.style.display = "flex";
-  buttonsRow.style.flexWrap = "wrap";
-  buttonsRow.style.justifyContent = "center";
-  buttonsRow.style.gap = "15px";
+  const buttonsRow = document.createElement('div');
+  buttonsRow.style.display = 'flex';
+  buttonsRow.style.flexWrap = 'wrap';
+  buttonsRow.style.justifyContent = 'center';
+  buttonsRow.style.gap = '15px';
 
   // Ophthalmology
-  const ophButton = document.createElement("button");
-  ophButton.className = "button";
-  ophButton.style.backgroundColor = "rgb(134, 162, 255)";
-  ophButton.textContent = "Ophthalmology";
-  ophButton.addEventListener("click", () => {
-    window.open("https://eyewiki.org/Main_Page", "_blank");
+  const ophButton = document.createElement('button');
+  ophButton.className = 'button';
+  ophButton.style.backgroundColor = 'rgb(134, 162, 255)';
+  ophButton.textContent = 'Ophthalmology';
+  ophButton.addEventListener('click', () => {
+    window.open('https://eyewiki.org/Main_Page', '_blank');
   });
 
   // ENT
-  const entButton = document.createElement("button");
-  entButton.className = "button";
-  entButton.style.backgroundColor = "rgb(133, 255, 133)";
-  entButton.textContent = "ENT";
-  entButton.addEventListener("click", () => {
-    window.open("ent.html", "_blank");
+  const entButton = document.createElement('button');
+  entButton.className = 'button';
+  entButton.style.backgroundColor = 'rgb(133, 255, 133)';
+  entButton.textContent = 'ENT';
+  entButton.addEventListener('click', () => {
+    window.open('ent.html', '_blank');
   });
 
   // Dermatology
-  const dermButton = document.createElement("button");
-  dermButton.className = "button";
-  dermButton.style.backgroundColor = "#efafff";
-  dermButton.textContent = "Dermatology";
-  dermButton.addEventListener("click", () => {
-    window.open("https://dermnetnz.org/images", "_blank");
+  const dermButton = document.createElement('button');
+  dermButton.className = 'button';
+  dermButton.style.backgroundColor = '#efafff';
+  dermButton.textContent = 'Dermatology';
+  dermButton.addEventListener('click', () => {
+    window.open('https://dermnetnz.org/images', '_blank');
   });
 
   buttonsRow.appendChild(ophButton);
@@ -149,7 +148,7 @@ function createButtonsWithText(condition) {
   container.appendChild(buttonsRow);
 
   // Insert above "Alan can make mistakes..." line
-  const chatbotVersionElem = document.querySelector(".chatbot-version");
+  const chatbotVersionElem = document.querySelector('.chatbot-version');
   if (chatbotVersionElem) {
     chatbotVersionElem.parentNode.insertBefore(container, chatbotVersionElem);
   } else {
@@ -161,7 +160,7 @@ function createButtonsWithText(condition) {
 // 4) Remove the text+buttons container
 // ------------------------------------------------------
 function removeChatEndButtons() {
-  const oldContainer = document.getElementById("chat-end-buttons");
+  const oldContainer = document.getElementById('chat-end-buttons');
   if (oldContainer) {
     oldContainer.remove();
   }
@@ -170,12 +169,12 @@ function removeChatEndButtons() {
 // ------------------------------------------------------
 // 5) DOMContentLoaded Hook
 // ------------------------------------------------------
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOMContentLoaded event fired.");
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOMContentLoaded event fired.');
 
-  const chatbotContainer = document.querySelector(".chatbot-container");
+  const chatbotContainer = document.querySelector('.chatbot-container');
   if (chatbotContainer) {
-    chatbotContainer.style.marginBottom = "0";
+    chatbotContainer.style.marginBottom = '0';
   }
 
   initChatbotListeners();

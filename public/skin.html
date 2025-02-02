@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,7 +9,7 @@
     <style>
       /* Global page layout and typography */
       body {
-        font-family: "Calibri Light", Arial, sans-serif;
+        font-family: 'Calibri Light', Arial, sans-serif;
         background-color: white;
         color: black;
         margin: 0;
@@ -65,59 +65,57 @@
       <!-- General observation -->
       <h3 id="generalObservationHeading">General observation</h3>
       <p id="generalObservationText">
-        Inspect lumps, <em>colour changes</em>, distribution<br>
+        Inspect lumps, <em>colour changes</em>, distribution<br />
         Gently palpate for texture, temperature or tenderness
       </p>
 
       <!-- UV (Wood’s) light -->
       <h3 id="uvLightHeading">UV (Wood’s) light</h3>
       <p id="uvLightText">
-        In a blacked-out room check for characteristic fluorescence:<br>
-        <span style="color:teal;">tinea (blue-green)</span>,
-        <span style="color:#FF7F50;">pityriasis versicolor (coppery-orange)</span>,
-        <span style="color:#FF4040;">erythrasma (coral-red)</span>,
-        <span style="color:blue;">vitiligo (blue-white)</span>,
-        <span style="color:orange;">acne (orange-red)</span>,
-        <span style="color:#BFEFFF;">head lice nits (pale-blue)</span>
+        In a blacked-out room check for characteristic fluorescence:<br />
+        <span style="color: teal">tinea (blue-green)</span>, <span style="color: #ff7f50">pityriasis versicolor (coppery-orange)</span>,
+        <span style="color: #ff4040">erythrasma (coral-red)</span>, <span style="color: blue">vitiligo (blue-white)</span>,
+        <span style="color: orange">acne (orange-red)</span>,
+        <span style="color: #bfefff">head lice nits (pale-blue)</span>
       </p>
 
       <!-- Dermoscopy -->
       <h3 id="dermoscopyHeading">Dermoscopy</h3>
       <p id="dermoscopyText">
-        <strong><u>Hold Arclight polariser like a pen</u></strong>, check: <strong>ABCDE</strong>
-        (<em>Asymmetry</em>, <em>Border</em>, <em>Colour</em>, <em>Diameter &gt;6mm</em>, <em>Evolving</em>)<br>
+        <strong><u>Hold Arclight polariser like a pen</u></strong
+        >, check: <strong>ABCDE</strong> (<em>Asymmetry</em>, <em>Border</em>, <em>Colour</em>, <em>Diameter &gt;6mm</em>, <em>Evolving</em>)<br />
         Study: PDSBV (<em>Pigment network</em>, <em>Dots</em>, <em>Streaks</em>, <em>Blue-white</em>, <em>Vascular</em>)
       </p>
 
       <!-- Additional Information -->
       <p id="additionalText">
-        Know your lesion: normal, <span style="color:red;">suspicious</span>, <span style="color:orange;">inflamed</span><br>
+        Know your lesion: normal, <span style="color: red">suspicious</span>, <span style="color: orange">inflamed</span><br />
         &gt;Practice often&lt;
       </p>
     </div>
 
     <!-- Inline JavaScript to update text using the translations object -->
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener('DOMContentLoaded', function () {
         updatePageTranslations();
       });
-      window.addEventListener("storage", function (e) {
-        if (e.key === "preferredLanguage") {
+      window.addEventListener('storage', function (e) {
+        if (e.key === 'preferredLanguage') {
           updatePageTranslations();
         }
       });
       function updatePageTranslations() {
-        var lang = localStorage.getItem("preferredLanguage") || "en";
+        var lang = localStorage.getItem('preferredLanguage') || 'en';
         var t = window.translations && window.translations[lang];
         if (t) {
-          document.getElementById("pageTitle").textContent = t.pageTitle;
-          document.getElementById("generalObservationHeading").textContent = t.generalObservationHeading;
-          document.getElementById("generalObservationText").innerHTML = t.generalObservationText;
-          document.getElementById("uvLightHeading").textContent = t.uvLightHeading;
-          document.getElementById("uvLightText").innerHTML = t.uvLightText;
-          document.getElementById("dermoscopyHeading").textContent = t.dermoscopyHeading;
-          document.getElementById("dermoscopyText").innerHTML = t.dermoscopyText;
-          document.getElementById("additionalText").innerHTML = t.additionalText;
+          document.getElementById('pageTitle').textContent = t.pageTitle;
+          document.getElementById('generalObservationHeading').textContent = t.generalObservationHeading;
+          document.getElementById('generalObservationText').innerHTML = t.generalObservationText;
+          document.getElementById('uvLightHeading').textContent = t.uvLightHeading;
+          document.getElementById('uvLightText').innerHTML = t.uvLightText;
+          document.getElementById('dermoscopyHeading').textContent = t.dermoscopyHeading;
+          document.getElementById('dermoscopyText').innerHTML = t.dermoscopyText;
+          document.getElementById('additionalText').innerHTML = t.additionalText;
         }
       }
     </script>
