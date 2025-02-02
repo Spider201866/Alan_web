@@ -51,17 +51,19 @@
       }
       /* Wrap Section: only this vertical region reserves space for buttons */
       #wrapSection {
-        overflow: hidden;  /* Establish block formatting context so floats work as expected */
+        overflow: hidden;  /* Establish block formatting context for floats */
         margin-bottom: 25px;
+        padding-right: 0;  /* Remove extra right padding in this section */
       }
-      /* Switch Container: now floated right to reserve its area */
+      /* Switch Container: floated right with negative right margin to pull it flush */
       #switchContainer {
         float: right;
-        width: 100px;           /* Reserved area (adjust if needed) */
+        width: 100px;           /* Reserved area width */
         text-align: center;
         padding: 10px;
         border-radius: 15px;
-        margin-left: 20px;
+        margin-left: 0;
+        margin-right: -25px;    /* Negative margin to counter parent's right padding */
       }
       .switch {
         position: relative;
@@ -100,9 +102,9 @@
         border-color: black;
         box-shadow: 0 0 5px rgba(0,0,0,0.5);
       }
-      /* Content that wraps around the buttons */
+      /* Content that wraps around the float */
       #wrapText {
-        /* No extra right margin here – the float takes up its own space */
+        /* No extra right margin – the float itself reserves its area */
       }
       /* Clear floats after the wrap section */
       .clear {
@@ -157,7 +159,8 @@
       @media (max-width: 600px) {
         #switchContainer {
           width: 80px;
-          margin-left: 10px;
+          margin-left: 0;
+          margin-right: -20px;
         }
       }
     </style>
@@ -174,9 +177,9 @@
       <p id="introText">
         Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying names or details. Look fully around head/face/body part and examine both eyes/ears. Good luck!
       </p>
-      <!-- Wrap Section: this region will reserve the button area -->
+      <!-- Wrap Section: this vertical region reserves the button area -->
       <div id="wrapSection">
-        <!-- Switch Container: now floated right -->
+        <!-- Switch Container: floated right -->
         <div id="switchContainer">
           <div class="switch">
             <input type="radio" name="option" id="optionEye" value="eye" checked onchange="toggleContent()">
@@ -224,12 +227,12 @@
         </div>
         <div class="clear"></div>
       </div>
-      <!-- (Optional) Additional content below that is full width could go here -->
+      <!-- Additional full-width content could follow here -->
     </div>
     
     <!-- INLINE SCRIPT: Update static text from translations and override toggleContent -->
     <script>
-      var trans; // global translation object for the current language
+      var trans; // Global translation object for the current language
 
       document.addEventListener("DOMContentLoaded", function () {
         updatePageTranslations();
