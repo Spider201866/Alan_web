@@ -10,12 +10,15 @@ import Chatbot from 'https://cdn.jsdelivr.net/npm/flowise-embed@latest/dist/web.
  * - Theme customisations (colours, icons, layout)
  * - Custom CSS for rounded bubbles, icons, etc.
  */
+const sessionId = localStorage.getItem('sessionId') || 'no-session-id';
+
 const initChatbot = () => {
   Chatbot.initFull({
     // The Flow ID for your chatbot
     chatflowid: '75b5edc0-4e39-441b-ba7a-eb6cb404b69a',
     // Host where Flowise is running
     apiHost: 'https://flowiseai-railway-production-fecf.up.railway.app',
+    userId: sessionId, // <-- We add this line
 
     theme: {
       // Button (floating icon) styling
