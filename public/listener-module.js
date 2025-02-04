@@ -178,5 +178,5 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initChatbotListeners();
-  initHideElementsListener();
+  
 });
