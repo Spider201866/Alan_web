@@ -1065,6 +1065,37 @@ function setupGeolocationButton() {
         });
     }
 
+    fetch('https://alan.up.railway.app/record-info', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userInfo)
+  })
+    .then((resp) => resp.text())
+    .then((data) => {
+      console.log('Record saved:', data);
+    })
+    .catch((err) => {
+      console.error('Error saving record:', err);
+    });
+
+    const sessionId = localStorage.getItem('sessionId') || 'no-session-id';
+
+    console.log("About to call Flowise API with sessionId:", sessionId);
+    fetch('https://flowiseai-railway-production-fecf.up.railway.app/api/v1/prediction/75b5edc0-4e39-441b-ba7a-eb6cb404b69a', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    question: "Hello, how can I help?",
+    overrideConfig: {
+      sessionId: sessionId
+    }
+  })
+})
+  .then(response => response.json())
+  .then(data => console.log('Flowise API response:', data))
+  .catch(error => console.error('Error:', error));
+
+
     const geoInfoButton = document.getElementById('geo-info-button');
 const geoInfoPopup  = document.getElementById('geo-info-popup');
 
