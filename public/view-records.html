@@ -119,7 +119,9 @@
     <div class="password-screen" id="passwordScreen">
       <h2 style="margin-bottom: 40px; font-weight: normal">
         Enter your
-        <span style="font-weight: bold; font-family: 'Quicksand', sans-serif"> <span style="color: red">Al</span>an </span>
+        <span style="font-weight: bold; font-family: 'Quicksand', sans-serif">
+          <span style="color: red">Al</span>an
+        </span>
         invite password
       </h2>
 
@@ -132,7 +134,10 @@
             placeholder="Password"
             style="color: grey; padding: 12px; width: 220px; font-size: 16px; border-radius: 12px; border: 1px solid #ccc; margin-bottom: 20px"
           />
-          <p id="passwordError" style="color: red; display: none; width: 220px; text-align: center; margin-top: 6px; margin-bottom: 0">
+          <p
+            id="passwordError"
+            style="color: red; display: none; width: 220px; text-align: center; margin-top: 6px; margin-bottom: 0"
+          >
             Invalid password
           </p>
         </div>
@@ -229,7 +234,7 @@
               // server says invalid
               throw new Error('Invalid password');
             }
-            // If we get here, password = "662023"
+            // If we get here, password is valid (like "662023")
             currentPassword = entered;
             passwordScreen.classList.add('hidden');
             // Now that we know it's valid, fetchRecords as well
@@ -289,13 +294,13 @@
 
       // Build the records table with all fields
       function buildRecordsTable(data) {
-        // We show many columns: name, role, experience, focus, contact, lat/long, country, iso2, classification, area, dateTime, version, agent, refreshCount
-        // Modify or remove columns if your server is not storing them
+        // We show many columns, including a new Session ID column
         let table = `
         <table>
           <thead>
             <tr>
               <th>No.</th>
+              <th>Session ID</th> <!-- New column here -->
               <th>Name</th>
               <th>Role</th>
               <th>Experience</th>
@@ -317,8 +322,6 @@
         data.forEach((record, index) => {
           // Focus is likely an array. We'll join with commas if present
           const focusStr = Array.isArray(record.focus) ? record.focus.join(', ') : record.focus || '';
-
-          // Some server fields might be absent, so use blank if not found
           const role = record.role || '';
           const experience = record.experience || '';
           const contactInfo = record.contactInfo || '';
@@ -332,6 +335,7 @@
           const version = record.version || '';
           const selectedAgent = record.selectedAgent || '';
           const refreshCount = record.refreshCount || 0; // or 1 if you prefer a default
+          const sessionID = record.sessionId || ''; // New field for the table
 
           // Combine country/iso2/classification into one line
           const countryDisplay = `${country} (${iso2}) [${classification}]`;
@@ -340,6 +344,7 @@
           table += `
           <tr>
             <td>${index + 1}</td>
+            <td>${sessionID}</td> <!-- Show the session ID here -->
             <td>${record.name || ''}</td>
             <td>${role}</td>
             <td>${experience}</td>

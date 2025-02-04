@@ -171,9 +171,11 @@ app.post('/fetch-records', (req, res) => {
       return res.json([]);
     }
 
-    // If a sessionId is provided, filter the records
     if (sessionId) {
+      // Show filtering step
+      console.log(`Filtering records by sessionId: ${sessionId}`);
       records = records.filter(record => record.sessionId === sessionId);
+      console.log("Filtered records:", records);
     }
 
     res.json(records);
