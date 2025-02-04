@@ -520,6 +520,23 @@
       console.error('Error saving record:', err);
     });
 
+    const sessionId = localStorage.getItem('sessionId') || 'no-session-id';
+
+fetch('https://flowiseai-railway-production-fecf.up.railway.app/api/v1/prediction/75b5edc0-4e39-441b-ba7a-eb6cb404b69a', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    question: "Hello, how can I help?",
+    overrideConfig: {
+      sessionId: sessionId
+    }
+  })
+})
+  .then(response => response.json())
+  .then(data => console.log('Flowise API response:', data))
+  .catch(error => console.error('Error:', error));
+
+
   // Transition animation before going to home page
   blackScreen.style.visibility = 'visible';
   blackScreen.style.opacity = 1;
@@ -642,6 +659,8 @@
         // Update Accept button text
         document.getElementById('acceptButton').textContent = translations[lang].acceptButton;
       }
+
+      
     </script>
   </body>
 </html>

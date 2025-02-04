@@ -136,24 +136,22 @@ app.post('/record-info', (req, res) => {
 /* 4) Fetch Records (POST /fetch-records)    */
 /*********************************************/
 app.post('/fetch-records', (req, res) => {
-  const { password } = req.body;
+  const { password, sessionId } = req.body;
   
   // 1) If password matches master, allow
   if (password === MASTER_PASSWORD) {
-    // proceed to return records
+    // proceed
   }
   // 2) Else if the password is in the one-time set
   else if (ONE_TIME_PASSWORDS.has(password)) {
-    // remove it so it cannot be reused
     ONE_TIME_PASSWORDS.delete(password);
-    // proceed to return records
+    // proceed
   }
   // 3) Otherwise deny
   else {
     return res.status(401).send('Invalid password');
   }
 
-  // If valid, read user-info.json
   const filePath = path.join(__dirname, 'user-info.json');
 
   fs.readFile(filePath, (err, data) => {
@@ -170,14 +168,18 @@ app.post('/fetch-records', (req, res) => {
       records = JSON.parse(data);
     } catch (parseErr) {
       console.error("Could not parse user-info.json:", parseErr);
-      // fallback to empty if corrupted
       return res.json([]);
     }
 
-    // Return records
+    // If a sessionId is provided, filter the records
+    if (sessionId) {
+      records = records.filter(record => record.sessionId === sessionId);
+    }
+
     res.json(records);
   });
 });
+
 
 /*********************************************/
 /* 5) Start the server                       */
