@@ -1065,19 +1065,6 @@ function setupGeolocationButton() {
         });
     }
 
-    fetch('https://alan.up.railway.app/record-info', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(userInfo)
-  })
-    .then((resp) => resp.text())
-    .then((data) => {
-      console.log('Record saved:', data);
-    })
-    .catch((err) => {
-      console.error('Error saving record:', err);
-    });
-
     const sessionId = localStorage.getItem('sessionId') || 'no-session-id';
 
     console.log("About to call Flowise API with sessionId:", sessionId);
