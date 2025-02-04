@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
     <title>Alan</title>
@@ -33,8 +32,8 @@
         transition: background-color 1s ease-out;
       }
 
-        /* Info button styling */
-        .info-button {
+      /* Info button styling */
+      .info-button {
         margin-left: 5px;
         background-color: #777;
         color: #fff;
@@ -47,22 +46,22 @@
         text-align: center;
         cursor: pointer;
         border: none;
-        }
+      }
 
-        /* Basic mini modal overlay */
-        .mini-modal {
-        position: fixed; 
-        z-index: 9999; 
-        left: 0; 
-        top: 0; 
-        width: 100%; 
-        height: 100%; 
+      /* Basic mini modal overlay */
+      .mini-modal {
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
         background-color: rgba(0,0,0,0.4); /* dark overlay */
-        }
+      }
 
-        .modal-content {
+      .modal-content {
         background-color: #fefefe;
-        margin: 15% auto; /* roughly center on screen */
+        margin: 15% auto; /* roughly centre on screen */
         max-width: 400px; /* fixed width */
         padding: 20px;
         border-radius: 6px;
@@ -71,22 +70,19 @@
         overflow: visible; /* Allow content to expand the container */
         max-height: 90vh; /* Prevent the modal from exceeding the viewport */
         overflow-y: auto; /* Add scroll if content exceeds max height */
-        }
+      }
 
-
-        .close {
+      .close {
         float: right;
         font-size: 24px;
         cursor: pointer;
-        }
+      }
 
-        .popup-content p {
+      .popup-content p {
         margin: 4px 0; /* Adjust the values as needed to reduce spacing */
         padding: 0;    /* Ensure no extra padding is applied */
         line-height: 1.5; /* Adjust line height for closer text */
-        }
-
-
+      }
     </style>
 </head>
 
@@ -113,100 +109,95 @@
             </div>
         </div>
 
-<!-- Eye/Ear/Skin Buttons -->
-<div style="display: flex; margin-bottom: 10px;">
-    <button
-      id="eye-button"
-      class="button"
-      style="margin-right: 10px; background-color: rgb(134, 162, 255); border: 2px solid black; color: black;"
-      onclick="window.location.href='eye.html';"
-    >
-      Eye
-    </button>
-    <button
-      id="ear-button"
-      class="button"
-      style="margin-right: 10px; background-color: rgb(133, 255, 133); border: 2px solid black; color: black;"
-      onclick="window.location.href='ear.html';"
-    >
-      Ear
-    </button>
-    <button
-      id="skin-button"
-      class="button"
-      style="background-color: #efafff; border: 2px solid black; color: black;"
-      onclick="window.location.href='skin.html';"
-    >
-      Skin
-    </button>
-  </div>
-  
-  
-
-<!-- Videos/Atoms/Tools/Language -->
-<div style="display: flex; margin-bottom: 10px; align-items: center;">
-    <a href="https://www.youtube.com/@arclightproject" style="text-decoration: none;">
-      <button
-        id="videos-button"
-        class="button grey"
-        style="margin-right: 10px;"
-      >
-        Videos
-      </button>
-    </a>
-    <button
-      id="atoms-button"
-      class="button grey"
-      style="margin-right: 10px;"
-      onclick="window.location.href='atoms.html';"
-    >
-      Atoms
-    </button>
-    <button
-      id="tools-button"
-      class="button grey"
-      style="margin-right: 10px;"
-    >
-      Tools
-    </button>
-    <!-- Language Button & Dropdown -->
-    <div style="position: relative;">
-      <button
-        class="button grey"
-        id="language-button"
-        style="
-          background: url('lang.jpg') no-repeat center center;
-          background-size: cover;
-          border: 2px solid #3e3e3e;
-          width: 32px;
-          height: 32px;
+        <!-- Eye/Ear/Skin Buttons -->
+        <div style="display: flex; margin-bottom: 10px;">
+            <button
+              id="eye-button"
+              class="button"
+              style="margin-right: 10px; background-color: rgb(134, 162, 255); border: 2px solid black; color: black;"
+              onclick="window.location.href='eye.html';"
+            >
+              Eye
+            </button>
+            <button
+              id="ear-button"
+              class="button"
+              style="margin-right: 10px; background-color: rgb(133, 255, 133); border: 2px solid black; color: black;"
+              onclick="window.location.href='ear.html';"
+            >
+              Ear
+            </button>
+            <button
+              id="skin-button"
+              class="button"
+              style="background-color: #efafff; border: 2px solid black; color: black;"
+              onclick="window.location.href='skin.html';"
+            >
+              Skin
+            </button>
+        </div>
         
-        "
-      >
-      </button>
-              
-                <!-- New custom dropdown container with clickable list items -->
-                <div
+        <!-- Videos/Atoms/Tools/Language -->
+        <div style="display: flex; margin-bottom: 10px; align-items: center;">
+            <a href="https://www.youtube.com/@arclightproject" style="text-decoration: none;">
+              <button
+                id="videos-button"
+                class="button grey"
+                style="margin-right: 10px;"
+              >
+                Videos
+              </button>
+            </a>
+            <button
+              id="atoms-button"
+              class="button grey"
+              style="margin-right: 10px;"
+              onclick="window.location.href='atoms.html';"
+            >
+              Atoms
+            </button>
+            <button
+              id="tools-button"
+              class="button grey"
+              style="margin-right: 10px;"
+            >
+              Tools
+            </button>
+            <!-- Language Button & Dropdown -->
+            <div style="position: relative;">
+              <button
+                class="button grey"
+                id="language-button"
+                style="
+                  background: url('lang.jpg') no-repeat center center;
+                  background-size: cover;
+                  border: 2px solid #3e3e3e;
+                  width: 32px;
+                  height: 32px;
+                "
+              >
+              </button>
+                          
+              <!-- New custom dropdown container with clickable list items -->
+              <div
                 id="language-dropdown"
                 style="
-                display: none;
-                position: absolute;
-                top: 40px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #fff;
-                border: 1px solid #ccc;
-                z-index: 9999;
-                min-width: 220px;
-                white-space: nowrap;
-            
-                /* Add these lines */
-                max-height: 350px;
-                overflow-y: auto;
-                font-size: 0.9em; 
-                line-height: 1.2;
+                  display: none;
+                  position: absolute;
+                  top: 40px;
+                  left: 50%;
+                  transform: translateX(-50%);
+                  background: #fff;
+                  border: 1px solid #ccc;
+                  z-index: 9999;
+                  min-width: 220px;
+                  white-space: nowrap;
+                  max-height: 350px;
+                  overflow-y: auto;
+                  font-size: 0.9em;
+                  line-height: 1.2;
                 "
-                >
+              >
                 <ul style="margin: 0; padding: 0; list-style: none;">
                     <li data-value="en" style="padding: 6px; cursor: pointer;"><strong>English</strong> (English)</li>
                     <li data-value="zh" style="padding: 6px; cursor: pointer;"><strong>中文</strong> (Chinese)</li>
@@ -231,43 +222,38 @@
                     <li data-value="ny" style="padding: 6px; cursor: pointer;"><strong>Chichewa</strong> (Chichewa)</li>
                     <li data-value="cy" style="padding: 6px; cursor: pointer;"><strong>Cymraeg</strong> (Welsh)</li>
                   </ul>
-                  
-                </div>
               </div>
-              
+            </div>
         </div>
 
-
-        
-<!-- Arclight/Links/About -->
-<div style="display: flex; margin-bottom: 10px;">
-    <a href="https://medicine.st-andrews.ac.uk/arclight/" style="text-decoration: none;">
-      <button
-        id="arclight-project-button"
-        class="button grey"
-        style="margin-right: 10px;"
-      >
-        Arclight Project
-      </button>
-    </a>
-    <button
-      id="links-button"
-      class="button grey"
-      style="margin-right: 10px;"
-      onclick="window.location.href='weblinks.html';"
-    >
-      Links
-    </button>
-    <button
-      id="about-button"
-      class="button grey"
-      onclick="location.href='aboutalan.html';"
-    >
-      About
-    </button>
-  </div>
+        <!-- Arclight/Links/About -->
+        <div style="display: flex; margin-bottom: 10px;">
+            <a href="https://medicine.st-andrews.ac.uk/arclight/" style="text-decoration: none;">
+              <button
+                id="arclight-project-button"
+                class="button grey"
+                style="margin-right: 10px;"
+              >
+                Arclight Project
+              </button>
+            </a>
+            <button
+              id="links-button"
+              class="button grey"
+              style="margin-right: 10px;"
+              onclick="window.location.href='weblinks.html';"
+            >
+              Links
+            </button>
+            <button
+              id="about-button"
+              class="button grey"
+              onclick="location.href='aboutalan.html';"
+            >
+              About
+            </button>
+        </div>
   
-
         <!-- Chat Links -->
         <div style="display: none; flex-direction: column; width: 100%; margin-top: 20px;">
             <a href="#" data-chat-id="chat1" class="chat-link">Chat 1</a>
@@ -295,7 +281,6 @@
 
     <object type="text/html" data="boxes.html" id="boxesFrame" style="width:100%; height:100px; overflow:auto; border:none;"></object>
 
-
     <div class="chatbot-container">
         <flowise-fullchatbot></flowise-fullchatbot>
     </div>
@@ -309,9 +294,7 @@
         <p id="condition-description"></p>
 
         <!-- Disclaimer about Alan potentially making mistakes -->
-        <div class="chatbot-version">
-    
-        </div>
+        <div class="chatbot-version"></div>
     </div>
 
     <!-- Popup for user info -->
@@ -322,48 +305,46 @@
         <!-- GEOLOCATION BUTTON & FEEDBACK -->
         <div style="text-align: center; margin-top: 10px; position: relative;">
             <!-- Main Geolocation button -->
-            <button id="geolocation-button" class="button grey">
-
-            </button>
+            <button id="geolocation-button" class="button grey"></button>
 
             <!-- “i” button with white background, black text/border, rounded corners -->
             <button 
                 id="geo-info-button"
                 style="
-                background-color: #fff;
-                color: #000; 
-                border: 1px solid #000; 
-                border-radius: 8px;
-                padding: 4px 8px;
-                cursor: pointer;">
-            i
+                  background-color: #fff;
+                  color: #000;
+                  border: 1px solid #000;
+                  border-radius: 8px;
+                  padding: 4px 8px;
+                  cursor: pointer;
+                ">
+              i
             </button>
 
             <!-- The <p> element for showing “Updated location:” messages -->
-            <p id="location-info" 
-            style="display:none; margin-top: 5px; font-size:12px;">
-            </p>
+            <p id="location-info" style="display:none; margin-top: 5px; font-size:12px;"></p>
 
             <!-- Press-and-hold popup (no X needed) -->
             <div 
-            id="geo-info-popup" 
-            style="
-                display: none; 
+              id="geo-info-popup" 
+              style="
+                display: none;
                 position: absolute;
-                left: 50%; 
-                top: 120%; 
+                left: 50%;
+                top: 120%;
                 transform: translateX(-50%);
-                width: 250px;  
+                width: 250px;
                 max-width: none;
-                background: #fefefe; 
+                background: #fefefe;
                 border: 1px solid #000;
-                padding: 10px; 
+                padding: 10px;
                 border-radius: 10px;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
-             <p id="geoInfoText" style="font-size: 14px; margin: 0;"></p>
+                box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+              ">
+              <p id="geoInfoText" style="font-size: 14px; margin: 0;"></p>
             </div>
         </div>
-
+    </div>
 
     <!-- SINGLE SCRIPT BLOCK AT THE BOTTOM, TYPE=MODULE -->
     <script type="module">
@@ -402,22 +383,20 @@
     const iso_a3              = localStorage.getItem('iso_a3') || 'Not set';
 
     window.addEventListener('pageshow', (event) => {
-  // Reset the sidebar to off-screen when the page is shown (even from bfcache)
-  sideMenu.style.left = '-370px';
-});
+      // Reset the sidebar to off-screen when the page is shown (even from bfcache)
+      sideMenu.style.left = '-370px';
+    });
 
-window.addEventListener('pageshow', (event) => {
-  // Ensure the sidebar is reset
-  sideMenu.style.left = '-370px';
-  // Reinitialize the chatbot if needed
-  selectAgentAndFetch();  // or initChatbot() if that’s your preferred call
-});
-
+    window.addEventListener('pageshow', (event) => {
+      // Ensure the sidebar is reset
+      sideMenu.style.left = '-370px';
+      // Reinitialise the chatbot if needed
+      selectAgentAndFetch();  // or initChatbot() if that’s your preferred call
+    });
 
     /*********************************************/
     /*          HELPER FUNCTIONS                 */
     /*********************************************/
-
     // Zoom toggle for the condition image
     function toggleZoom(image) {
         if (image.style.height === '200px') {
@@ -446,63 +425,59 @@ window.addEventListener('pageshow', (event) => {
 
     // Build the dynamic content for the popup
     function buildPopupContent() {
-  // 1) Decide which language is active
-  const lang = localStorage.getItem("preferredLanguage") || "en";
+      // 1) Decide which language is active
+      const lang = localStorage.getItem("preferredLanguage") || "en";
 
-  // 2) Grab references from localStorage (unchanged logic)
-  const name         = localStorage.getItem('name')              || 'Not set';
-  const role         = localStorage.getItem('selectedJobRole')   || 'Not set';
-  const experience   = localStorage.getItem('selectedExperience')|| 'Not set';
-  const latitude     = (parseFloat(localStorage.getItem('latitude'))  || 0).toFixed(6);
-  const longitude    = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
-  const country      = localStorage.getItem('country')           || 'Not set';
-  const iso2         = localStorage.getItem('iso2')              || 'Not set';
-  const classification = localStorage.getItem('classification')  || 'Unknown';
-  const roleClass    = localStorage.getItem('roleClassification')|| '';
-  const area         = localStorage.getItem('area')              || 'Not set';
-  const contactInfo  = localStorage.getItem('contactInfo')       || 'Not set';
-  const selectedAgent= localStorage.getItem('selectedAgent')     || 'Unknown';
-  const focusRaw     = localStorage.getItem('selectedFocus');
-  const aims         = focusRaw ? JSON.parse(focusRaw).join(', ') : 'Not set';
+      // 2) Grab references from localStorage (unchanged logic)
+      const name         = localStorage.getItem('name')              || 'Not set';
+      const role         = localStorage.getItem('selectedJobRole')   || 'Not set';
+      const experience   = localStorage.getItem('selectedExperience')|| 'Not set';
+      const latitude     = (parseFloat(localStorage.getItem('latitude'))  || 0).toFixed(6);
+      const longitude    = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
+      const country      = localStorage.getItem('country')           || 'Not set';
+      const iso2         = localStorage.getItem('iso2')              || 'Not set';
+      const classification = localStorage.getItem('classification')  || 'Unknown';
+      const roleClass    = localStorage.getItem('roleClassification')|| '';
+      const area         = localStorage.getItem('area')              || 'Not set';
+      const contactInfo  = localStorage.getItem('contactInfo')       || 'Not set';
+      const selectedAgent= localStorage.getItem('selectedAgent')     || 'Unknown';
+      const focusRaw     = localStorage.getItem('selectedFocus');
+      const aims         = focusRaw ? JSON.parse(focusRaw).join(', ') : 'Not set';
 
-  // Date/time
-  const now    = new Date();
-  const day    = String(now.getDate()).padStart(2, '0');
-  const month  = String(now.getMonth()+1).padStart(2, '0');
-  const year   = now.getFullYear();
-  const hours  = String(now.getHours()).padStart(2, '0');
-  const mins   = String(now.getMinutes()).padStart(2, '0');
-  const secs   = String(now.getSeconds()).padStart(2, '0');
-  const currDT = `${day}/${month}/${year}, ${hours}:${mins}:${secs}`;
+      // Date/time
+      const now    = new Date();
+      const day    = String(now.getDate()).padStart(2, '0');
+      const month  = String(now.getMonth()+1).padStart(2, '0');
+      const year   = now.getFullYear();
+      const hours  = String(now.getHours()).padStart(2, '0');
+      const mins   = String(now.getMinutes()).padStart(2, '0');
+      const secs   = String(now.getSeconds()).padStart(2, '0');
+      const currDT = `${day}/${month}/${year}, ${hours}:${mins}:${secs}`;
 
-  // 3) Build HTML using your new translation keys
-  return `
-    <h2>${translations[lang].userInfoTitle}</h2>
-
-    <p><strong>${translations[lang].userName}:</strong> ${name}</p>
-    <p><strong>${translations[lang].userContact}:</strong> ${contactInfo}</p>
-    <p><strong>${translations[lang].userRole}:</strong> ${role}, ${experience}, ${roleClass}</p>
-    <p><strong>${translations[lang].userAims}:</strong> ${aims}</p>
-
-    <p id="latLongSection" style="color: grey;">
-      <strong>${translations[lang].userLatLong}:</strong> ${latitude}, ${longitude}
-    </p>
-    <p id="areaSection" style="color: grey;">
-      <strong>${translations[lang].userArea}:</strong> ${area}
-    </p>
-    <p id="countrySection" style="color: grey;">
-      <strong>${translations[lang].userCountry}:</strong> ${country}, ${iso2}, ${classification}
-    </p>
-
-    <p style="color: grey;">
-      <em><strong>${translations[lang].userVersion}:</strong> 1.0, ${selectedAgent}</em>
-    </p>
-    <p style="color: grey;">
-      <em><strong>${translations[lang].userDateTime}:</strong> ${currDT}</em>
-    </p>
-  `;
-}
-
+      // 3) Build HTML using your new translation keys
+      return `
+        <h2>${translations[lang].userInfoTitle}</h2>
+        <p><strong>${translations[lang].userName}:</strong> ${name}</p>
+        <p><strong>${translations[lang].userContact}:</strong> ${contactInfo}</p>
+        <p><strong>${translations[lang].userRole}:</strong> ${role}, ${experience}, ${roleClass}</p>
+        <p><strong>${translations[lang].userAims}:</strong> ${aims}</p>
+        <p id="latLongSection" style="color: grey;">
+          <strong>${translations[lang].userLatLong}:</strong> ${latitude}, ${longitude}
+        </p>
+        <p id="areaSection" style="color: grey;">
+          <strong>${translations[lang].userArea}:</strong> ${area}
+        </p>
+        <p id="countrySection" style="color: grey;">
+          <strong>${translations[lang].userCountry}:</strong> ${country}, ${iso2}, ${classification}
+        </p>
+        <p style="color: grey;">
+          <em><strong>${translations[lang].userVersion}:</strong> 1.0, ${selectedAgent}</em>
+        </p>
+        <p style="color: grey;">
+          <em><strong>${translations[lang].userDateTime}:</strong> ${currDT}</em>
+        </p>
+      `;
+    }
 
     // Simple function to highlight (flash) lat/long, area, and country
     function flashBlueOnUpdate() {
@@ -524,146 +499,114 @@ window.addEventListener('pageshow', (event) => {
 
     // Basic check to see if a name part might be an East Asian surname
     function containsEastAsianSurname(nameParts) {
-        // A short snippet from your bigger list for illustration
         const eastAsianSurnames = [
-            // 200 Chinese surnames ordered by commonality
-        'Li', 'Wang', 'Zhang', 'Liu', 'Chen', 'Yang', 'Huang', 'Zhao', 'Wu', 'Zhou',
-        'Xu', 'Sun', 'Ma', 'Zhu', 'Hu', 'Guo', 'He', 'Gao', 'Lin', 'Luo',
-        'Zheng', 'Liang', 'Song', 'Tang', 'Han', 'Feng', 'Yu', 'Dong', 'Xiao',
-        'Cheng', 'Cao', 'Yuan', 'Deng', 'Xue', 'Fu', 'Shen', 'Peng', 'Lu', 'Jiang',
-        'Cui', 'Wei', 'Kang', 'Qian', 'Yin', 'Hao', 'Fan', 'Bai', 'Tan', 'Meng',
-        'Qin', 'Xiong', 'Shi', 'Shao', 'Mao', 'Pan', 'Tian', 'Dai', 'Fang', 'Qiu',
-        'Ruan', 'Gong', 'Mo', 'Jin', 'Bian', 'Chang', 'Liao', 'Zhuo', 'Cen', 'Zuo',
-        'Hong', 'Ming', 'Zhan', 'Yao', 'Yan', 'Shan', 'Chai', 'Ji', 'Gu', 'Lei',
-        'Ding', 'Wan', 'Mei', 'Qi', 'Pei', 'Miao', 'Jing', 'Ge', 'Lai', 'You',
-        'Bao', 'Fu', 'Mi', 'Duan', 'Kou', 'Ning', 'Pi', 'Shang', 'Xiang', 'Gong',
-        'Qin', 'Lu', 'Xue', 'Zhu', 'Cao', 'Fu', 'Ji', 'Lei', 'Lai', 'Zhao',
-        'Liao', 'Dong', 'Ruan', 'Liu', 'Ning', 'Qin', 'Pan', 'Ge', 'Jiang', 'Lu',
-        'Deng', 'Xiao', 'Tian', 'Mo', 'Xu', 'Hu', 'Yan', 'Chai', 'Yuan', 'Zhao',
-        'Huang', 'Bian', 'Qiu', 'Gu', 'Shang', 'Duan', 'Xue', 'Dong', 'Gong', 'Pei',
-        // 120 Japanese surnames ordered by commonality
-        'Sato', 'Suzuki', 'Takahashi', 'Tanaka', 'Watanabe', 'Ito', 'Yamamoto', 'Nakamura', 'Kobayashi', 'Kato',
-        'Yoshida', 'Yamada', 'Sasaki', 'Yamaguchi', 'Matsumoto', 'Inoue', 'Kimura', 'Shimizu', 'Hayashi', 'Saito',
-        'Sakamoto', 'Shibata', 'Yokoyama', 'Ueda', 'Mori', 'Endo', 'Fujita', 'Okada', 'Ishikawa', 'Nakajima',
-        'Kaneko', 'Maeda', 'Harada', 'Iwasaki', 'Murakami', 'Otsuka', 'Tsuchiya', 'Miyazaki', 'Kojima', 'Kudo',
-        'Sakai', 'Takeuchi', 'Ishii', 'Fukuda', 'Miyamoto', 'Ueno', 'Sugiyama', 'Hirano', 'Arai', 'Masuda',
-        'Tamura', 'Oshima', 'Hara', 'Matsuda', 'Ono', 'Matsuoka', 'Ishida', 'Morita', 'Takagi', 'Yoshikawa',
-        'Taniguchi', 'Takada', 'Fujimoto', 'Kinoshita', 'Matsuo', 'Oda', 'Shinoda', 'Sugawara', 'Kuroda', 'Ando',
-        'Hattori', 'Nakano', 'Hosokawa', 'Miyahara', 'Shimada', 'Kawaguchi', 'Hamamoto', 'Yamashita', 'Okamura',
-        'Higuchi', 'Nagano', 'Tsuda', 'Otsubo', 'Ishizuka', 'Seki', 'Kubo', 'Miyake', 'Mizuno', 'Nakamoto',
-        'Nakao', 'Fukushima', 'Nakagawa', 'Kawai', 'Onishi', 'Koyama', 'Kitamura', 'Kuwahara', 'Hasegawa', 'Aoyama',
-        'Matsushima', 'Toyoda', 'Arakawa', 'Kondo', 'Kitagawa', 'Miyata', 'Uchida', 'Komatsu', 'Nagata', 'Yasuda',
-        'Oikawa', 'Kashiwagi', 'Higashi', 'Fukui', 'Kishimoto', 'Tsuchida', 'Hoshino', 'Nakano', 'Ueno', 'Sugiyama',
-        // 120 Korean surnames ordered by commonality
-        'Kim', 'Lee', 'Park', 'Choi', 'Jung', 'Kang', 'Cho', 'Yoon', 'Jang', 'Lim',
-        'Shin', 'Yoo', 'Chang', 'Song', 'Hong', 'Hwang', 'An', 'Ko', 'Moon', 'Oh',
-        'Kwon', 'Jeon', 'Han', 'Seo', 'Ha', 'Ryu', 'Joo', 'Nam', 'Shim', 'No',
-        'Min', 'Na', 'Jee', 'Seok', 'Byun', 'Yim', 'Son', 'Cha', 'Ahn', 'Jin',
-        'Chun', 'Huh', 'Noh', 'Baek', 'Jeong', 'Gu', 'Yang', 'Yu', 'Kwak', 'Bae',
-        'Yun', 'Moon', 'Jung', 'Park', 'Ryu', 'Kwon', 'Choi', 'Yoo', 'Oh', 'Jung',
-        'Kim', 'Kwon', 'Yim', 'Hong', 'Yoon', 'Cho', 'Na', 'Ryu', 'Han', 'Yim',
-        'Yun', 'Kang', 'Shin', 'Yun', 'Jang', 'Yoo', 'Kim', 'Kwon', 'Jung', 'Park',
-        'Seo', 'Yang', 'Yoon', 'Choi', 'Park', 'Ryu', 'Kwon', 'Hong', 'Kim', 'Moon',
-        'Yim', 'Son', 'Kim', 'Lee', 'Shin', 'Park', 'Kim', 'Choi', 'Jung', 'Yoo'
+            'Li', 'Wang', 'Zhang', 'Liu', 'Chen', 'Yang', 'Huang', 'Zhao', 'Wu', 'Zhou',
+            'Xu', 'Sun', 'Ma', 'Zhu', 'Hu', 'Guo', 'He', 'Gao', 'Lin', 'Luo',
+            'Zheng', 'Liang', 'Song', 'Tang', 'Han', 'Feng', 'Yu', 'Dong', 'Xiao',
+            'Cheng', 'Cao', 'Yuan', 'Deng', 'Xue', 'Fu', 'Shen', 'Peng', 'Lu', 'Jiang',
+            'Cui', 'Wei', 'Kang', 'Qian', 'Yin', 'Hao', 'Fan', 'Bai', 'Tan', 'Meng',
+            'Qin', 'Xiong', 'Shi', 'Shao', 'Mao', 'Pan', 'Tian', 'Dai', 'Fang', 'Qiu',
+            'Ruan', 'Gong', 'Mo', 'Jin', 'Bian', 'Chang', 'Liao', 'Zhuo', 'Cen', 'Zuo',
+            'Hong', 'Ming', 'Zhan', 'Yao', 'Yan', 'Shan', 'Chai', 'Ji', 'Gu', 'Lei',
+            'Ding', 'Wan', 'Mei', 'Qi', 'Pei', 'Miao', 'Jing', 'Ge', 'Lai', 'You',
+            'Bao', 'Fu', 'Mi', 'Duan', 'Kou', 'Ning', 'Pi', 'Shang', 'Xiang', 'Gong',
+            'Qin', 'Lu', 'Xue', 'Zhu', 'Cao', 'Fu', 'Ji', 'Lei', 'Lai', 'Zhao',
+            'Liao', 'Dong', 'Ruan', 'Liu', 'Ning', 'Qin', 'Pan', 'Ge', 'Jiang', 'Lu',
+            'Deng', 'Xiao', 'Tian', 'Mo', 'Xu', 'Hu', 'Yan', 'Chai', 'Yuan', 'Zhao',
+            'Huang', 'Bian', 'Qiu', 'Gu', 'Shang', 'Duan', 'Xue', 'Dong', 'Gong', 'Pei',
+            'Sato', 'Suzuki', 'Takahashi', 'Tanaka', 'Watanabe', 'Ito', 'Yamamoto', 'Nakamura', 'Kobayashi', 'Kato',
+            'Yoshida', 'Yamada', 'Sasaki', 'Yamaguchi', 'Matsumoto', 'Inoue', 'Kimura', 'Shimizu', 'Hayashi', 'Saito',
+            'Sakamoto', 'Shibata', 'Yokoyama', 'Ueda', 'Mori', 'Endo', 'Fujita', 'Okada', 'Ishikawa', 'Nakajima',
+            'Kaneko', 'Maeda', 'Harada', 'Iwasaki', 'Murakami', 'Otsuka', 'Tsuchiya', 'Miyazaki', 'Kojima', 'Kudo',
+            'Sakai', 'Takeuchi', 'Ishii', 'Fukuda', 'Miyamoto', 'Ueno', 'Sugiyama', 'Hirano', 'Arai', 'Masuda',
+            'Tamura', 'Oshima', 'Hara', 'Matsuda', 'Ono', 'Matsuoka', 'Ishida', 'Morita', 'Takagi', 'Yoshikawa',
+            'Taniguchi', 'Takada', 'Fujimoto', 'Kinoshita', 'Matsuo', 'Oda', 'Shinoda', 'Sugawara', 'Kuroda', 'Ando',
+            'Hattori', 'Nakano', 'Hosokawa', 'Miyahara', 'Shimada', 'Kawaguchi', 'Hamamoto', 'Yamashita', 'Okamura',
+            'Higuchi', 'Nagano', 'Tsuda', 'Otsubo', 'Ishizuka', 'Seki', 'Kubo', 'Miyake', 'Mizuno', 'Nakamoto',
+            'Nakao', 'Fukushima', 'Nakagawa', 'Kawai', 'Onishi', 'Koyama', 'Kitamura', 'Kuwahara', 'Hasegawa', 'Aoyama',
+            'Matsushima', 'Toyoda', 'Arakawa', 'Kondo', 'Kitagawa', 'Miyata', 'Uchida', 'Komatsu', 'Nagata', 'Yasuda',
+            'Oikawa', 'Kashiwagi', 'Higashi', 'Fukui', 'Kishimoto', 'Tsuchida', 'Hoshino', 'Nakano', 'Ueno', 'Sugiyama'
         ];
         return nameParts.some(part => eastAsianSurnames.includes(part));
     }
+
     function updateLanguageDisplays(lang) {
-  // 1) Existing lines setting top bar text
-  document.querySelector(".chatbot-subtitle").textContent = translations[lang].eyesEars;
-  document.getElementById("good-history").textContent      = translations[lang].goodHistory;
-  document.getElementById("examine-well").textContent      = translations[lang].examineWell;
-  document.getElementById("use-arclight").textContent      = translations[lang].useArclight;
-  chatbotVersion.textContent                               = translations[lang].alanMistakes;
+      document.querySelector(".chatbot-subtitle").textContent = translations[lang].eyesEars;
+      document.getElementById("good-history").textContent      = translations[lang].goodHistory;
+      document.getElementById("examine-well").textContent      = translations[lang].examineWell;
+      document.getElementById("use-arclight").textContent      = translations[lang].useArclight;
+      chatbotVersion.textContent                               = translations[lang].alanMistakes;
 
-  // 2) Sidebar button texts
-  document.getElementById("instructions-button").textContent = translations[lang].instructionsButton;
-  document.getElementById("eye-button").textContent          = translations[lang].eyeButton;
-  document.getElementById("ear-button").textContent          = translations[lang].earButton;
-  document.getElementById("skin-button").textContent         = translations[lang].skinButton;
-  document.getElementById("videos-button").textContent       = translations[lang].videosButton;
-  document.getElementById("atoms-button").textContent        = translations[lang].atomsButton;
-  document.getElementById("tools-button").textContent        = translations[lang].toolsButton;
-  document.getElementById("arclight-project-button").textContent = translations[lang].arclightProjectButton;
-  document.getElementById("links-button").textContent        = translations[lang].linksButton;
-  document.getElementById("about-button").textContent        = translations[lang].aboutButton;
+      document.getElementById("instructions-button").textContent = translations[lang].instructionsButton;
+      document.getElementById("eye-button").textContent          = translations[lang].eyeButton;
+      document.getElementById("ear-button").textContent          = translations[lang].earButton;
+      document.getElementById("skin-button").textContent         = translations[lang].skinButton;
+      document.getElementById("videos-button").textContent       = translations[lang].videosButton;
+      document.getElementById("atoms-button").textContent        = translations[lang].atomsButton;
+      document.getElementById("tools-button").textContent        = translations[lang].toolsButton;
+      document.getElementById("arclight-project-button").textContent = translations[lang].arclightProjectButton;
+      document.getElementById("links-button").textContent        = translations[lang].linksButton;
+      document.getElementById("about-button").textContent        = translations[lang].aboutButton;
 
-  // Update geolocation button text
-  const geoButton = document.getElementById("geolocation-button");
-  if (geoButton) {
-    geoButton.textContent = translations[lang].geolocationButton;
-  }
+      const geoButton = document.getElementById("geolocation-button");
+      if (geoButton) {
+        geoButton.textContent = translations[lang].geolocationButton;
+      }
 
-  // Update geolocation info text
-  const geoInfoEl = document.getElementById('geoInfoText');
-  if (geoInfoEl) {
-    geoInfoEl.textContent = translations[lang].geoInfoText;
-  }
+      const geoInfoEl = document.getElementById('geoInfoText');
+      if (geoInfoEl) {
+        geoInfoEl.textContent = translations[lang].geoInfoText;
+      }
 
+      const name = localStorage.getItem("name") || "";
+      if (name) {
+        let firstName = name.split(" ")[0];
+        firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+        document.getElementById("sub-text").textContent = `${firstName}, ${translations[lang].howCanIHelp}`;
+      } else {
+        document.getElementById("sub-text").textContent = translations[lang].howCanIHelp;
+      }
 
-  // 3) Greeting logic for user name
-  const name = localStorage.getItem("name") || "";
-  if (name) {
-    let firstName = name.split(" ")[0];
-    firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-    document.getElementById("sub-text").textContent = `${firstName}, ${translations[lang].howCanIHelp}`;
-  } else {
-    document.getElementById("sub-text").textContent = translations[lang].howCanIHelp;
-  }
+      const boxesFrame = document.getElementById("boxesFrame");
+      if (boxesFrame && boxesFrame.contentDocument) {
+        const boxesDoc = boxesFrame.contentDocument;
+        if (boxesDoc.getElementById("eyeMarqueeLine1a")) {
+          boxesDoc.getElementById("eyeMarqueeLine1a").textContent = translations[lang].eyeMarqueeLine1;
+          boxesDoc.getElementById("eyeMarqueeLine2a").textContent = translations[lang].eyeMarqueeLine2;
+          boxesDoc.getElementById("eyeMarqueeLine3a").textContent = translations[lang].eyeMarqueeLine3;
+          boxesDoc.getElementById("eyeMarqueeLine4a").textContent = translations[lang].eyeMarqueeLine4;
+          boxesDoc.getElementById("eyeMarqueeLine5a").textContent = translations[lang].eyeMarqueeLine5;
+          boxesDoc.getElementById("eyeMarqueeLine6a").textContent = translations[lang].eyeMarqueeLine6;
+          boxesDoc.getElementById("eyeMarqueeLine7a").textContent = translations[lang].eyeMarqueeLine7;
 
-  // 4) OPTIONAL: Update marquee lines in boxes.html
-  //    (if you have <object id="boxesFrame" data="boxes.html"> in home.html)
-  const boxesFrame = document.getElementById("boxesFrame");
-  // Check if the child document is loaded and accessible
-  if (boxesFrame && boxesFrame.contentDocument) {
-    const boxesDoc = boxesFrame.contentDocument;
+          boxesDoc.getElementById("eyeMarqueeLine1b").textContent = translations[lang].eyeMarqueeLine1;
+          boxesDoc.getElementById("eyeMarqueeLine2b").textContent = translations[lang].eyeMarqueeLine2;
+          boxesDoc.getElementById("eyeMarqueeLine3b").textContent = translations[lang].eyeMarqueeLine3;
+          boxesDoc.getElementById("eyeMarqueeLine4b").textContent = translations[lang].eyeMarqueeLine4;
+          boxesDoc.getElementById("eyeMarqueeLine5b").textContent = translations[lang].eyeMarqueeLine5;
+          boxesDoc.getElementById("eyeMarqueeLine6b").textContent = translations[lang].eyeMarqueeLine6;
+          boxesDoc.getElementById("eyeMarqueeLine7b").textContent = translations[lang].eyeMarqueeLine7;
+        }
 
-// EYE lines
-if (boxesDoc.getElementById("eyeMarqueeLine1a")) {
-  // First copy (a)
-  boxesDoc.getElementById("eyeMarqueeLine1a").textContent = translations[lang].eyeMarqueeLine1;
-  boxesDoc.getElementById("eyeMarqueeLine2a").textContent = translations[lang].eyeMarqueeLine2;
-  boxesDoc.getElementById("eyeMarqueeLine3a").textContent = translations[lang].eyeMarqueeLine3;
-  boxesDoc.getElementById("eyeMarqueeLine4a").textContent = translations[lang].eyeMarqueeLine4;
-  boxesDoc.getElementById("eyeMarqueeLine5a").textContent = translations[lang].eyeMarqueeLine5;
-  boxesDoc.getElementById("eyeMarqueeLine6a").textContent = translations[lang].eyeMarqueeLine6;
-  boxesDoc.getElementById("eyeMarqueeLine7a").textContent = translations[lang].eyeMarqueeLine7;
+        if (boxesDoc.getElementById("earMarqueeLine1a")) {
+          boxesDoc.getElementById("earMarqueeLine1a").textContent = translations[lang].earMarqueeLine1;
+          boxesDoc.getElementById("earMarqueeLine2a").textContent = translations[lang].earMarqueeLine2;
+          boxesDoc.getElementById("earMarqueeLine3a").textContent = translations[lang].earMarqueeLine3;
+          boxesDoc.getElementById("earMarqueeLine4a").textContent = translations[lang].earMarqueeLine4;
+          boxesDoc.getElementById("earMarqueeLine5a").textContent = translations[lang].earMarqueeLine5;
+          boxesDoc.getElementById("earMarqueeLine6a").textContent = translations[lang].earMarqueeLine6;
+          boxesDoc.getElementById("earMarqueeLine7a").textContent = translations[lang].earMarqueeLine7;
 
-  // Second copy (b)
-  boxesDoc.getElementById("eyeMarqueeLine1b").textContent = translations[lang].eyeMarqueeLine1;
-  boxesDoc.getElementById("eyeMarqueeLine2b").textContent = translations[lang].eyeMarqueeLine2;
-  boxesDoc.getElementById("eyeMarqueeLine3b").textContent = translations[lang].eyeMarqueeLine3;
-  boxesDoc.getElementById("eyeMarqueeLine4b").textContent = translations[lang].eyeMarqueeLine4;
-  boxesDoc.getElementById("eyeMarqueeLine5b").textContent = translations[lang].eyeMarqueeLine5;
-  boxesDoc.getElementById("eyeMarqueeLine6b").textContent = translations[lang].eyeMarqueeLine6;
-  boxesDoc.getElementById("eyeMarqueeLine7b").textContent = translations[lang].eyeMarqueeLine7;
-}
-
-// EAR lines
-if (boxesDoc.getElementById("earMarqueeLine1a")) {
-  // First copy (a)
-  boxesDoc.getElementById("earMarqueeLine1a").textContent = translations[lang].earMarqueeLine1;
-  boxesDoc.getElementById("earMarqueeLine2a").textContent = translations[lang].earMarqueeLine2;
-  boxesDoc.getElementById("earMarqueeLine3a").textContent = translations[lang].earMarqueeLine3;
-  boxesDoc.getElementById("earMarqueeLine4a").textContent = translations[lang].earMarqueeLine4;
-  boxesDoc.getElementById("earMarqueeLine5a").textContent = translations[lang].earMarqueeLine5;
-  boxesDoc.getElementById("earMarqueeLine6a").textContent = translations[lang].earMarqueeLine6;
-  boxesDoc.getElementById("earMarqueeLine7a").textContent = translations[lang].earMarqueeLine7;
-
-  // Second copy (b)
-  boxesDoc.getElementById("earMarqueeLine1b").textContent = translations[lang].earMarqueeLine1;
-  boxesDoc.getElementById("earMarqueeLine2b").textContent = translations[lang].earMarqueeLine2;
-  boxesDoc.getElementById("earMarqueeLine3b").textContent = translations[lang].earMarqueeLine3;
-  boxesDoc.getElementById("earMarqueeLine4b").textContent = translations[lang].earMarqueeLine4;
-  boxesDoc.getElementById("earMarqueeLine5b").textContent = translations[lang].earMarqueeLine5;
-  boxesDoc.getElementById("earMarqueeLine6b").textContent = translations[lang].earMarqueeLine6;
-  boxesDoc.getElementById("earMarqueeLine7b").textContent = translations[lang].earMarqueeLine7;
-}
-
-  }
-}
-
-
+          boxesDoc.getElementById("earMarqueeLine1b").textContent = translations[lang].earMarqueeLine1;
+          boxesDoc.getElementById("earMarqueeLine2b").textContent = translations[lang].earMarqueeLine2;
+          boxesDoc.getElementById("earMarqueeLine3b").textContent = translations[lang].earMarqueeLine3;
+          boxesDoc.getElementById("earMarqueeLine4b").textContent = translations[lang].earMarqueeLine4;
+          boxesDoc.getElementById("earMarqueeLine5b").textContent = translations[lang].earMarqueeLine5;
+          boxesDoc.getElementById("earMarqueeLine6b").textContent = translations[lang].earMarqueeLine6;
+          boxesDoc.getElementById("earMarqueeLine7b").textContent = translations[lang].earMarqueeLine7;
+        }
+      }
+    }
 
     // Style for instructions button
     function updateButtonStyle(button) {
@@ -695,32 +638,27 @@ if (boxesDoc.getElementById("earMarqueeLine1a")) {
     }
 
     // --- New code starts here ---
-    // Function to hide the box animations
-function hideAnimations() {
-    const animationContainer = document.getElementById('animationContainer')
-    const boxesFrame = document.getElementById('boxesFrame')
-    const subTextEl = document.getElementById('sub-text')  // New: greeting line element
+    function hideAnimations() {
+        const animationContainer = document.getElementById('animationContainer');
+        const boxesFrame = document.getElementById('boxesFrame');
+        const subTextEl = document.getElementById('sub-text');
 
-    if (animationContainer) {
-        animationContainer.style.display = 'none'
+        if (animationContainer) {
+            animationContainer.style.display = 'none';
+        }
+        if (boxesFrame) {
+            boxesFrame.style.display = 'none';
+        }
+        if (subTextEl) {
+            subTextEl.style.display = 'none';
+        }
     }
-    if (boxesFrame) {
-        boxesFrame.style.display = 'none'
-    }
-    if (subTextEl) {
-        subTextEl.style.display = 'none'
-    }
-}
 
-
-
-    // Attach the hideAnimations function to the chatbot container click
     const chatbotContainer = document.querySelector('.chatbot-container');
     if (chatbotContainer) {
         chatbotContainer.addEventListener('click', hideAnimations);
     }
 
-    // Optional: If your chatbot uses a shadow DOM, add a focus listener to its input field
     const chatbot = document.querySelector('flowise-fullchatbot');
     if (chatbot && chatbot.shadowRoot) {
         const chatInput = chatbot.shadowRoot.querySelector('input');
@@ -730,7 +668,6 @@ function hideAnimations() {
     }
     // --- New code ends here ---
 
-    // Setup menu icon click
     function setupMenuIcon() {
         menuIcon.addEventListener('click', function() {
             this.classList.toggle('open');
@@ -738,48 +675,29 @@ function hideAnimations() {
         });
     }
 
-    // Setup language button
-// Get references to the new button and custom dropdown
+    // Toggle language dropdown
+    languageButton.addEventListener('click', () => {
+      languageDropdown.style.display = (languageDropdown.style.display === 'none') ? 'block' : 'none';
+    });
 
-// Toggle the custom dropdown with a single click
-languageButton.addEventListener('click', () => {
-  if (languageDropdown.style.display === 'none') {
-    languageDropdown.style.display = 'block';
-  } else {
-    languageDropdown.style.display = 'none';
-  }
-});
+    const boxesFrame = document.getElementById('boxesFrame');
+    if (boxesFrame) {
+      boxesFrame.addEventListener('load', () => {
+        console.log("boxes.html finished loading.");
+        const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+        updateLanguageDisplays(currentLang);
+      });
+    }
 
-// 1) Listen for "load" event on boxesFrame,
-//    ensuring we re-run the translation once boxes.html is fully loaded.
-const boxesFrame = document.getElementById('boxesFrame');
-if (boxesFrame) {
-  boxesFrame.addEventListener('load', () => {
-    console.log("boxes.html finished loading.");
-    // Use whichever language was last chosen (or fallback to 'en').
-    const currentLang = localStorage.getItem('preferredLanguage') || 'en';
-    updateLanguageDisplays(currentLang);
-  });
-}
+    languageDropdown.querySelectorAll('li').forEach(item => {
+      item.addEventListener('click', () => {
+        const chosenLang = item.getAttribute('data-value');
+        localStorage.setItem('preferredLanguage', chosenLang);
+        updateLanguageDisplays(chosenLang);
+        languageDropdown.style.display = 'none';
+      });
+    });
 
-// 2) When a user picks a language from the dropdown, call updateLanguageDisplays.
-languageDropdown.querySelectorAll('li').forEach(item => {
-  item.addEventListener('click', () => {
-    const chosenLang = item.getAttribute('data-value');
-    // Save chosen language for future use
-    localStorage.setItem('preferredLanguage', chosenLang);
-
-    // Actually update the UI to the chosen language
-    updateLanguageDisplays(chosenLang);
-
-    // Then hide the dropdown
-    languageDropdown.style.display = 'none';
-  });
-});
-
-
-
-    // Instructions button
     function setupInstructionsButton() {
         instructionsButton.addEventListener("click", function(event) {
             event.preventDefault();
@@ -791,7 +709,6 @@ languageDropdown.querySelectorAll('li').forEach(item => {
         });
     }
 
-    // User’s first initial icon
     function setupNameIcon() {
         const initialLetter = storedName.charAt(0).toUpperCase();
         const nameIcon      = document.createElement('div');
@@ -810,7 +727,6 @@ languageDropdown.querySelectorAll('li').forEach(item => {
         popupClose.addEventListener('click', closePopup);
     }
 
-    // Show greeting
     function showGreeting() {
         let name = localStorage.getItem('name');
         const subTextEl = document.getElementById('sub-text');
@@ -831,13 +747,11 @@ languageDropdown.querySelectorAll('li').forEach(item => {
         }
     }
 
-    // **Reverse-Geocoding** to get area from lat/long (BigDataCloud example)
     async function fetchAreaFromLatLong(lat, lng) {
         try {
             const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`;
             const resp = await fetch(url);
             const data = await resp.json();
-            // city, locality, principalSubdivision, etc.
             const cityName = data.city || data.locality || data.principalSubdivision || 'Unknown';
             return cityName;
         } catch (err) {
@@ -846,125 +760,107 @@ languageDropdown.querySelectorAll('li').forEach(item => {
         }
     }
 
- /**
- * Sends updated geolocation data (with all required fields) to the server.
- */
-function updateServerGeolocation() {
-  const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
-  const updatedData = {
-    sessionId: sessionId,
-    latitude: localStorage.getItem('latitude'),
-    longitude: localStorage.getItem('longitude'),
-    area: localStorage.getItem('area'),
-    name: localStorage.getItem('name'),
-    role: localStorage.getItem('selectedJobRole'),
-    experience: localStorage.getItem('selectedExperience'),
-    focus: localStorage.getItem('selectedFocus')
-      ? JSON.parse(localStorage.getItem('selectedFocus'))
-      : [],
-    country: localStorage.getItem('country'),
-    iso2: localStorage.getItem('iso2'),
-    classification: localStorage.getItem('classification'),
-    roleClassification: localStorage.getItem('roleClassification'),
-    contactInfo: localStorage.getItem('contactInfo'),
-    version: localStorage.getItem('version') || '1.0',
-    selectedAgent: localStorage.getItem('selectedAgent'),
-    dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
-  };
+    function updateServerGeolocation() {
+      const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
+      const updatedData = {
+        sessionId: sessionId,
+        latitude: localStorage.getItem('latitude'),
+        longitude: localStorage.getItem('longitude'),
+        area: localStorage.getItem('area'),
+        name: localStorage.getItem('name'),
+        role: localStorage.getItem('selectedJobRole'),
+        experience: localStorage.getItem('selectedExperience'),
+        focus: localStorage.getItem('selectedFocus')
+          ? JSON.parse(localStorage.getItem('selectedFocus'))
+          : [],
+        country: localStorage.getItem('country'),
+        iso2: localStorage.getItem('iso2'),
+        classification: localStorage.getItem('classification'),
+        roleClassification: localStorage.getItem('roleClassification'),
+        contactInfo: localStorage.getItem('contactInfo'),
+        version: localStorage.getItem('version') || '1.0',
+        selectedAgent: localStorage.getItem('selectedAgent'),
+        dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
+      };
 
-  fetch('https://alan.up.railway.app/record-info', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(updatedData)
-  })
-    .then(response => response.text())
-    .then(data => {
-      console.log('Server updated with geolocation data:', data);
-    })
-    .catch(err => {
-      console.error('Error updating server:', err);
-    });
-}
+      fetch('https://alan.up.railway.app/record-info', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData)
+      })
+        .then(response => response.text())
+        .then(data => {
+          console.log('Server updated with geolocation data:', data);
+        })
+        .catch(err => {
+          console.error('Error updating server:', err);
+        });
+    }
 
-/**
- * Sets up the geolocation button functionality.
- * When clicked, it updates local storage with the new geolocation,
- * rebuilds the popup, flashes the updated fields and sends all data to the server.
- */
-function setupGeolocationButton() {
-  const geolocationButton = document.getElementById("geolocation-button");
-  const locationInfo = document.getElementById("location-info");
+    function setupGeolocationButton() {
+      const geolocationButton = document.getElementById("geolocation-button");
+      const locationInfo = document.getElementById("location-info");
 
-  if (!geolocationButton) return;
+      if (!geolocationButton) return;
 
-  geolocationButton.addEventListener("click", () => {
-    // Change button colour to blue to indicate activity
-    geolocationButton.style.backgroundColor = "blue";
+      geolocationButton.addEventListener("click", () => {
+        geolocationButton.style.backgroundColor = "blue";
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            async (position) => {
+              const { latitude, longitude } = position.coords;
 
-          // Update local storage with new coordinates
-          localStorage.setItem('latitude', latitude);
-          localStorage.setItem('longitude', longitude);
+              localStorage.setItem('latitude', latitude);
+              localStorage.setItem('longitude', longitude);
 
-          // Display updated location immediately
-          locationInfo.innerText = `Updated location: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+              locationInfo.innerText = `Updated location: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+              locationInfo.style.display = "block";
+
+              const areaName = await fetchAreaFromLatLong(latitude, longitude);
+              localStorage.setItem('area', areaName);
+
+              popupContent.innerHTML = buildPopupContent();
+
+              flashBlueOnUpdate();
+
+              updateServerGeolocation();
+
+              setTimeout(() => {
+                geolocationButton.style.backgroundColor = "grey";
+              }, 2000);
+            },
+            (error) => {
+              switch (error.code) {
+                case error.PERMISSION_DENIED:
+                  locationInfo.innerText = "User denied geolocation.";
+                  break;
+                case error.POSITION_UNAVAILABLE:
+                  locationInfo.innerText = "Location information unavailable.";
+                  break;
+                case error.TIMEOUT:
+                  locationInfo.innerText = "Request to get user location timed out.";
+                  break;
+                default:
+                  locationInfo.innerText = "An unknown error occurred.";
+              }
+              locationInfo.style.display = "block";
+
+              setTimeout(() => {
+                geolocationButton.style.backgroundColor = "grey";
+              }, 2000);
+            }
+          );
+        } else {
+          locationInfo.innerText = "Geolocation not supported by this browser.";
           locationInfo.style.display = "block";
 
-          // Reverse-geocode to obtain the area name
-          const areaName = await fetchAreaFromLatLong(latitude, longitude);
-          localStorage.setItem('area', areaName);
-
-          // Rebuild the popup so that the updated lat/long and area are shown
-          popupContent.innerHTML = buildPopupContent();
-
-          // Flash the updated fields in blue to highlight the change
-          flashBlueOnUpdate();
-
-          // Send the updated geolocation data (including all other details) to the server
-          updateServerGeolocation();
-
-          // Revert button colour to grey after 2 seconds
-          setTimeout(() => {
-            geolocationButton.style.backgroundColor = "grey";
-          }, 2000);
-        },
-        (error) => {
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              locationInfo.innerText = "User denied geolocation.";
-              break;
-            case error.POSITION_UNAVAILABLE:
-              locationInfo.innerText = "Location information unavailable.";
-              break;
-            case error.TIMEOUT:
-              locationInfo.innerText = "Request to get user location timed out.";
-              break;
-            default:
-              locationInfo.innerText = "An unknown error occurred.";
-          }
-          locationInfo.style.display = "block";
-
-          // Revert button colour to grey after 2 seconds
           setTimeout(() => {
             geolocationButton.style.backgroundColor = "grey";
           }, 2000);
         }
-      );
-    } else {
-      locationInfo.innerText = "Geolocation not supported by this browser.";
-      locationInfo.style.display = "block";
-
-      setTimeout(() => {
-        geolocationButton.style.backgroundColor = "grey";
-      }, 2000);
+      });
     }
-  });
-}
-
 
     // Agent selection
     function selectAgentAndFetch() {
@@ -1006,8 +902,13 @@ function setupGeolocationButton() {
         if (chatbotModuleUrl) {
             import(chatbotModuleUrl)
                 .then(module => {
-                    module.initChatbot();
-                    console.log(`Loaded module: ${chatbotModuleUrl}`);
+                    const initChatbot = module.initChatbot || (module.default && module.default.initChatbot);
+                    if (typeof initChatbot === 'function') {
+                        initChatbot();
+                        console.log(`Loaded module: ${chatbotModuleUrl}`);
+                    } else {
+                        console.error('Error loading chatbot module: initChatbot function not found in the module.');
+                    }
                 })
                 .catch(error => {
                     console.error('Error loading chatbot module:', error);
@@ -1017,7 +918,6 @@ function setupGeolocationButton() {
         }
     }
 
-    // Send updated user info to server
     function updateServerWithAgent(selectedAgent, sessionId) {
         const name               = localStorage.getItem('name');
         const role               = localStorage.getItem('selectedJobRole');
@@ -1069,41 +969,44 @@ function setupGeolocationButton() {
 
     console.log("About to call Flowise API with sessionId:", sessionId);
     fetch('https://flowiseai-railway-production-fecf.up.railway.app/api/v1/prediction/75b5edc0-4e39-441b-ba7a-eb6cb404b69a', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    question: "Hello, how can I help?",
-    overrideConfig: {
-      sessionId: sessionId
-    }
-  })
-})
-  .then(response => response.json())
-  .then(data => console.log('Flowise API response:', data))
-  .catch(error => console.error('Error:', error));
-
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        question: "Hello, how can I help?",
+        overrideConfig: {
+          sessionId: sessionId
+        }
+      })
+    })
+      .then(response => response.json())
+      .then(data => console.log('Flowise API response:', data))
+      .catch(error => console.error('Error:', error));
 
     const geoInfoButton = document.getElementById('geo-info-button');
-const geoInfoPopup  = document.getElementById('geo-info-popup');
+    const geoInfoPopup  = document.getElementById('geo-info-popup');
 
-// MOUSE events
-geoInfoButton.addEventListener('mousedown', showInfoPopup);
-geoInfoButton.addEventListener('mouseup', hideInfoPopup);
-geoInfoButton.addEventListener('mouseleave', hideInfoPopup);
+    geoInfoButton.addEventListener('mousedown', showInfoPopup);
+    geoInfoButton.addEventListener('mouseup', hideInfoPopup);
+    geoInfoButton.addEventListener('mouseleave', hideInfoPopup);
+    geoInfoButton.addEventListener('touchstart', showInfoPopup);
+    geoInfoButton.addEventListener('touchend', hideInfoPopup);
+    geoInfoButton.addEventListener('touchcancel', hideInfoPopup);
 
-// TOUCH events
-geoInfoButton.addEventListener('touchstart', showInfoPopup);
-geoInfoButton.addEventListener('touchend', hideInfoPopup);
-geoInfoButton.addEventListener('touchcancel', hideInfoPopup);
+    function showInfoPopup() {
+      geoInfoPopup.style.display = 'block';
+    }
 
-function showInfoPopup() {
-  geoInfoPopup.style.display = 'block';
-}
+    function hideInfoPopup() {
+      geoInfoPopup.style.display = 'none';
+    }
 
-function hideInfoPopup() {
-  geoInfoPopup.style.display = 'none';
-}
-
+    document.addEventListener('DOMContentLoaded', () => {
+  import('./agent1-chatbot-module.js')
+    .then(module => {
+      module.initChatbot();
+    })
+    .catch(error => console.error('Error loading agent module:', error));
+});
 
     </script>
 </body>
