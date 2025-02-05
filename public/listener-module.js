@@ -119,6 +119,8 @@ function createButtonsWithText(condition) {
   const ophButton = document.createElement('button');
   ophButton.className = 'button';
   ophButton.style.backgroundColor = 'rgb(134, 162, 255)';
+  ophButton.style.color = 'black';
+  ophButton.style.border = '2px solid black';  // <-- New line
   ophButton.textContent = 'Ophthalmology';
   ophButton.addEventListener('click', () => {
     window.open('https://eyewiki.org/Main_Page', '_blank');
@@ -128,6 +130,8 @@ function createButtonsWithText(condition) {
   const entButton = document.createElement('button');
   entButton.className = 'button';
   entButton.style.backgroundColor = 'rgb(133, 255, 133)';
+  entButton.style.color = 'black';
+  entButton.style.border = '2px solid black';  // <-- New line
   entButton.textContent = 'ENT';
   entButton.addEventListener('click', () => {
     window.open('ent.html', '_blank');
@@ -137,6 +141,8 @@ function createButtonsWithText(condition) {
   const dermButton = document.createElement('button');
   dermButton.className = 'button';
   dermButton.style.backgroundColor = '#efafff';
+  dermButton.style.color = 'black';
+  dermButton.style.border = '2px solid black'; // <-- New line
   dermButton.textContent = 'Dermatology';
   dermButton.addEventListener('click', () => {
     window.open('https://dermnetnz.org/images', '_blank');
@@ -178,5 +184,4 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initChatbotListeners();
-  
 });
