@@ -633,7 +633,7 @@
         showGreeting();
         conditionImage.addEventListener('click', () => toggleZoom(conditionImage));
         updateLanguageDisplays('en');
-
+        selectAgentAndFetch();
         setupGeolocationButton();
     }
 
@@ -982,30 +982,29 @@ function pushLocalStorageToServer() {
 
 
 window.addEventListener('pageshow', (event) => {
-  // Always push local storage data to server
+  // Always do this reset:
   pushLocalStorageToServer();
-
-  // Reset the side menu to off-screen
   sideMenu.style.left = '-370px';
-  // Also remove the 'open' class if present
   menuIcon.classList.remove('open');
 
-  // Force the chatbot to reinitialise each time the main page is shown
-  reinitialiseChatbot();
+  // If this is a back/forward navigation from browser history (bfcache etc.),
+  // reinitialise the chatbot by removing/re-adding it:
+  if (event.persisted || performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
+    reinitialiseChatbot();
+  }
 });
 
-// This function removes the chatbot element then calls selectAgentAndFetch()
 function reinitialiseChatbot() {
+  console.log("Reinitialising chatbot after back/forward nav...");
   const chatbotContainer = document.querySelector('.chatbot-container');
   if (chatbotContainer) {
-    // Clear out any existing chatbot elements
     chatbotContainer.innerHTML = '';
   }
 
-  // Now call your original “selectAgentAndFetch()” 
-  // which does the dynamic import of the correct chatbot module.
+  // Then call the same function that imports and inits the right agent:
   selectAgentAndFetch();
 }
+
 
 
   // 2) Also trigger whenever the tab becomes visible again
