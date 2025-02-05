@@ -919,57 +919,67 @@
     }
 
     function updateServerWithAgent(selectedAgent, sessionId) {
-        const name               = localStorage.getItem('name');
-        const role               = localStorage.getItem('selectedJobRole');
-        const latitude           = localStorage.getItem('latitude');
-        const longitude          = localStorage.getItem('longitude');
-        const country            = localStorage.getItem('country');
-        const iso2               = localStorage.getItem('iso_2');
-        const classification     = localStorage.getItem('classification');
-        const roleClassification = localStorage.getItem('roleClassification');
-        const area               = localStorage.getItem('area');
-        const contactInfo        = localStorage.getItem('contactInfo');
-        const version            = '1.0';
-        const dateTime           = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
+  // Retrieve data from localStorage
+  const name               = localStorage.getItem('name') || '';
+  const role               = localStorage.getItem('selectedJobRole') || '';
+  const experience         = localStorage.getItem('selectedExperience') || '';
+  
+  // Because selectedFocus is stored as a JSON string, parse it into an array
+  const focusRaw           = localStorage.getItem('selectedFocus'); 
+  const focus              = focusRaw ? JSON.parse(focusRaw) : [];
 
-        const updatedUserInfo = {
-            name,
-            role,
-            latitude,
-            longitude,
-            country,
-            iso_a3,
-            classification,
-            roleClassification,
-            area,
-            contactInfo,
-            version,
-            dateTime,
-            selectedAgent,
-            sessionId
-        };
+  const latitude           = localStorage.getItem('latitude') || '';
+  const longitude          = localStorage.getItem('longitude') || '';
+  const country            = localStorage.getItem('country') || '';
+  // You sometimes use iso2 or iso_2, unify them:
+  const iso2               = localStorage.getItem('iso2') || localStorage.getItem('iso_2') || '';
+  const classification     = localStorage.getItem('classification') || '';
+  const roleClassification = localStorage.getItem('roleClassification') || '';
+  const area               = localStorage.getItem('area') || '';
+  const contactInfo        = localStorage.getItem('contactInfo') || '';
+  const version            = localStorage.getItem('version') || '1.0';
+  const dateTime           = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
 
-        fetch('https://alan.up.railway.app/record-info', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedUserInfo)
-        })
-        .then(response => response.text())
-        .then(data => {
-            console.log('Updated Successfully:', data);
-        })
-        .catch(error => {
-            console.error('Error updating data:', error);
-        });
-    }
+  // Build the updated user info object
+  const updatedUserInfo = {
+    sessionId,
+    name,
+    role,
+    experience,
+    focus,         // array if parse was successful
+    latitude,
+    longitude,
+    country,
+    iso2,
+    classification,
+    roleClassification,
+    area,
+    contactInfo,
+    version,
+    dateTime,
+    selectedAgent
+  };
 
-  function pushLocalStorageToServer() {
+  fetch('https://alan.up.railway.app/record-info', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updatedUserInfo)
+  })
+  .then(response => response.text())
+  .then(data => {
+    console.log('Updated Successfully:', data);
+  })
+  .catch(error => {
+    console.error('Error updating data:', error);
+  });
+}
+
+function pushLocalStorageToServer() {
   const selectedAgent = localStorage.getItem('selectedAgent') || 'Agent 1';
   const sessionId = localStorage.getItem('sessionId') || 'no-session-id';
   updateServerWithAgent(selectedAgent, sessionId);
 }
+
 
 // Trigger on each page load/refresh (including swipe down in mobile browsers)
 window.addEventListener('pageshow', () => {
