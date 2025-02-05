@@ -981,24 +981,10 @@ function pushLocalStorageToServer() {
 }
 
 
-window.addEventListener('pageshow', (event) => {
+// 1) Trigger on each page load/refresh (including swipe down in mobile browsers)
+window.addEventListener('pageshow', () => {
   pushLocalStorageToServer();
-  sideMenu.style.left = '-370px';
-  menuIcon.classList.remove('open');
-  
-  // Always remove the old chatbot
-  const chatbotContainer = document.querySelector('.chatbot-container');
-  if (chatbotContainer) chatbotContainer.innerHTML = '';
-
-  // Always re-import the module
-  import('./agent1-chatbot-module.js')
-    .then(module => {
-      module.initChatbot();
-    })
-    .catch(err => console.error('Error reinitialising chatbot:', err));
 });
-
-
 
   // 2) Also trigger whenever the tab becomes visible again
   document.addEventListener('visibilitychange', () => {
