@@ -981,12 +981,18 @@ function pushLocalStorageToServer() {
 }
 
 
-// Trigger on each page load/refresh (including swipe down in mobile browsers)
+// 1) Trigger on each page load/refresh (including swipe down in mobile browsers)
 window.addEventListener('pageshow', () => {
   pushLocalStorageToServer();
 });
 
-
+  // 2) Also trigger whenever the tab becomes visible again
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      console.log('Page became visible again. Calling pushLocalStorageToServer()');
+      pushLocalStorageToServer();
+    }
+  });
 
     const geoInfoButton = document.getElementById('geo-info-button');
     const geoInfoPopup  = document.getElementById('geo-info-popup');
