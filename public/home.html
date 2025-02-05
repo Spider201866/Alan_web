@@ -1012,7 +1012,13 @@ window.addEventListener('pageshow', () => {
       geoInfoPopup.style.display = 'none';
     }
 
-
+    document.addEventListener('DOMContentLoaded', () => {
+  import('./agent1-chatbot-module.js')
+    .then(module => {
+      module.initChatbot();
+    })
+    .catch(error => console.error('Error loading agent module:', error));
+});
 
     </script>
 </body>
