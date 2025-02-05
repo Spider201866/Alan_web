@@ -965,20 +965,21 @@
         });
     }
 
-    const name = localStorage.getItem('name') || 'anonymous';
-const question = `${name}. I am`;
+    const name = localStorage.getItem('name') || 'Anonymous';
 
-fetch('https://flowiseai-railway-production-fecf.up.railway.app/api/v1/prediction/<chatflow-id>', {
+fetch('https://flowiseai-railway-production-fecf.up.railway.app/api/v1/prediction/75b5edc0-4e39-441b-ba7a-eb6cb404b69a', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
-    question: question,
+    question: `Hello, I'm ${name}. How can you help me today?`,
     overrideConfig: {
       sessionId: 'some-session-id'
-    }
-  })
-})
-
+        }
+      })
+    })
+      .then(response => response.json())
+      .then(data => console.log('Flowise API response:', data))
+      .catch(error => console.error('Error:', error));
 
     const geoInfoButton = document.getElementById('geo-info-button');
     const geoInfoPopup  = document.getElementById('geo-info-popup');
