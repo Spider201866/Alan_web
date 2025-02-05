@@ -14,7 +14,17 @@ const MASTER_PASSWORD = "662023"; // never changes
 let ONE_TIME_PASSWORDS = new Set([
   "slitlamp286",
   "fundus512",
-  "pinna304"
+  "pinna304",
+  "slitlamp286",
+  "fundus512",
+  "retina728",
+  "cornea203",
+  "jobson892",
+  "otoscope414",
+  "earcare917",
+  "auricle345",
+  "skincheck112",
+  "dermatol559",
 ]);
 
 /*********************************************/
