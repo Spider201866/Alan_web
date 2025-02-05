@@ -7,106 +7,13 @@
     <!-- Leaflet for maps -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-      /* Global resets & typography */
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Calibri Light', Arial, sans-serif;
-      }
+      /* ... Your existing styles ... */
 
-      /* Page heading */
-      h1 {
-        text-align: center;
-        margin-top: 40px;
-        font-size: 32px;
-      }
-      .bold {
-        font-weight: bold;
-      }
-      .light {
-        font-weight: normal;
-      }
-
-      /* Container for main content */
-      .container {
-        padding: 0 20px;
-      }
-
-      /* Table styling */
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-      }
-      th,
-      td {
-        border: 1px solid black;
+      /* Add a style for the active user box */
+      #activeUserBox {
+        border: 2px solid red;
         padding: 10px;
-        text-align: left;
-        vertical-align: top;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-
-      /* Map container (initially hidden) */
-      .map-container {
-        width: 100%;
-        height: 900px;
-        margin-top: 20px;
-        display: none;
-      }
-
-      /* Refresh icon */
-      .refresh-icon {
-        cursor: pointer;
-        font-size: 30px;
-        display: inline-block;
-        transition: transform 0.3s ease;
-      }
-      .refresh-icon:hover {
-        transform: rotate(20deg);
-      }
-      .refresh-icon:active {
-        transform: rotate(360deg);
-      }
-
-      /* Rounded input & button */
-      .rounded-box {
-        border-radius: 12px;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-      }
-      .rounded-button {
-        border-radius: 12px;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border: none;
-      }
-
-      /* Password screen styling (like index) */
-      .password-screen {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 50px;
-      }
-      .password-row {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-      }
-      .password-column {
-        display: flex;
-        flex-direction: column;
-        margin-right: 30px;
-      }
-      /* Hide/show utility classes */
-      .hidden {
-        display: none !important;
+        margin: 20px 0;
       }
     </style>
   </head>
@@ -117,61 +24,20 @@
 
     <!-- PASSWORD SCREEN -->
     <div class="password-screen" id="passwordScreen">
-      <h2 style="margin-bottom: 40px; font-weight: normal">
-        Enter your
-        <span style="font-weight: bold; font-family: 'Quicksand', sans-serif">
-          <span style="color: red">Al</span>an
-        </span>
-        invite password
-      </h2>
-
-      <!-- Row holding input/error and button -->
-      <div class="password-row">
-        <div class="password-column">
-          <input
-            type="password"
-            id="passwordInput"
-            placeholder="Password"
-            style="color: grey; padding: 12px; width: 220px; font-size: 16px; border-radius: 12px; border: 1px solid #ccc; margin-bottom: 20px"
-          />
-          <p
-            id="passwordError"
-            style="color: red; display: none; width: 220px; text-align: center; margin-top: 6px; margin-bottom: 0"
-          >
-            Invalid password
-          </p>
-        </div>
-        <button
-          id="passwordSubmitBtn"
-          disabled
-          style="
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 12px;
-            border: 1px solid #ccc;
-            cursor: pointer;
-            margin-top: -15px; /* tweak if needed */
-          "
-        >
-          Submit
-        </button>
-      </div>
-
-      <!-- "No or wrong code?" line -->
-      <p style="margin-top: 50px; font-style: italic; font-size: 14px; color: black; text-align: center">
-        No or wrong code? Contact us
-        <a href="https://medicine.st-andrews.ac.uk/arclight/contact/" style="color: blue" target="_blank"> here </a>
-      </p>
+      <!-- Same as before -->
     </div>
-    <!-- END PASSWORD SCREEN -->
 
-    <!-- REFRESH ICON (hidden initially) -->
+    <!-- REFRESH ICON -->
     <div id="refreshContainer" class="hidden" style="text-align: center; margin-top: 20px">
       <span id="refreshIcon" class="refresh-icon">&#x21bb;</span>
     </div>
 
-    <!-- RECORDS CONTAINER -->
+    <!-- CONTAINER -->
     <div class="container">
+      <!-- 1) The red-outlined box for the active user -->
+      <div id="activeUserBox" class="hidden"></div>
+
+      <!-- 2) The records table area -->
       <div id="records" style="margin-top: 20px"></div>
     </div>
 
@@ -183,45 +49,112 @@
 
     <!-- MAIN SCRIPT -->
     <script>
-      // References
-      const passwordScreen = document.getElementById('passwordScreen');
-      const passwordInput = document.getElementById('passwordInput');
-      const passwordError = document.getElementById('passwordError');
-      const passwordSubmitBtn = document.getElementById('passwordSubmitBtn');
+      /* Existing code: password handling, fetchRecords, showMap, etc. */
 
-      const refreshContainer = document.getElementById('refreshContainer');
-      const refreshIcon = document.getElementById('refreshIcon');
-      const recordsDiv = document.getElementById('records');
+      // Overwrite or add a function to build the display:
+      //   - The first record goes into a red box (#activeUserBox)
+      //   - The remaining records go into the main table
+      function buildDisplay(data) {
+        if (!data.length) {
+          // no records at all
+          document.getElementById('activeUserBox').classList.add('hidden');
+          recordsDiv.innerHTML = '<p>No records found.</p>';
+          return;
+        }
 
-      const mapContainer = document.getElementById('map');
-      let map; // global map instance
-      let currentPassword = '';
+        // Show the "active" user in the red box
+        const activeUser = data[0];
+        showActiveUserBox(activeUser);
 
-      // On load, set up event listeners
-      document.addEventListener('DOMContentLoaded', () => {
-        passwordInput.addEventListener('input', handlePasswordInput);
-        passwordSubmitBtn.addEventListener('click', handleSubmit);
-
-        passwordInput.addEventListener('keypress', (evt) => {
-          if (evt.key === 'Enter') {
-            handleSubmit();
-          }
-        });
-
-        refreshIcon.addEventListener('click', handleRefresh);
-      });
-
-      // Enable/disable button based on password input
-      function handlePasswordInput() {
-        passwordError.style.display = 'none';
-        passwordSubmitBtn.disabled = passwordInput.value.trim() === '';
+        // If there's only 1 record, there's nothing else to display in the table
+        if (data.length === 1) {
+          recordsDiv.innerHTML = '<p>No other records.</p>';
+        } else {
+          // For the rest, build a normal table
+          const remaining = data.slice(1);
+          buildRecordsTable(remaining);
+        }
       }
 
-      // On submit, check password
+      // Show the first record in the red-outlined box
+      function showActiveUserBox(record) {
+        const box = document.getElementById('activeUserBox');
+        box.classList.remove('hidden');
+
+        // Build a single-line or multi-line display of the record
+        // For example, just show a summary:
+        box.innerHTML = `
+          <h2>Active User</h2>
+          <p><strong>Name:</strong> ${record.name || ''}</p>
+          <p><strong>Role:</strong> ${record.role || ''}</p>
+          <p><strong>Experience:</strong> ${record.experience || ''}</p>
+          <p><strong>DateTime:</strong> ${record.dateTime || ''}</p>
+          <p><strong>Version & Agent:</strong> ${record.version || ''} ${record.selectedAgent || ''}</p>
+          <button onclick="showMap(${parseFloat(record.latitude) || 0}, ${parseFloat(record.longitude) || 0})">
+            Show Map
+          </button>
+        `;
+      }
+
+      // Build a normal table for the rest of the records
+      function buildRecordsTable(data) {
+        let table = `
+          <table>
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Experience</th>
+                <th>Focus</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Country (ISO2) [Classification]</th>
+                <th>Area</th>
+                <th>Date & Time</th>
+                <th>Version & Agent</th>
+                <th>Refresh Count</th>
+                <th>Map</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        data.forEach((record, index) => {
+          const focusStr = Array.isArray(record.focus) ? record.focus.join(', ') : record.focus || '';
+          const countryDisplay = `${record.country || ''} (${record.iso2 || ''}) [${record.classification || ''}]`;
+          const versionAgent = record.version ? `${record.version}, ${record.selectedAgent}` : `${record.selectedAgent}`;
+
+          table += `
+            <tr>
+              <td>${index + 1}</td>
+              <td>${record.name || ''}</td>
+              <td>${record.role || ''}</td>
+              <td>${record.experience || ''}</td>
+              <td>${focusStr}</td>
+              <td>${record.latitude || ''}</td>
+              <td>${record.longitude || ''}</td>
+              <td>${countryDisplay}</td>
+              <td>${record.area || ''}</td>
+              <td>${record.dateTime || ''}</td>
+              <td>${versionAgent || ''}</td>
+              <td>${record.refreshCount || 1}</td>
+              <td>
+                <button onclick="showMap(${parseFloat(record.latitude) || 0}, ${parseFloat(record.longitude) || 0})">
+                  Show Map
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+
+        table += '</tbody></table>';
+        recordsDiv.innerHTML = table;
+      }
+
+      // Now, in your handleSubmit and fetchRecords, call buildDisplay(data) instead of buildRecordsTable(data)
       function handleSubmit() {
         const entered = passwordInput.value.trim();
-
-        // POST to /fetch-records just to check the password
         fetch('/fetch-records', {
           method: 'POST',
           headers: {
@@ -231,21 +164,15 @@
         })
           .then((response) => {
             if (!response.ok) {
-              // server says invalid
               throw new Error('Invalid password');
             }
-            // If we get here, password is valid (like "662023")
             currentPassword = entered;
             passwordScreen.classList.add('hidden');
-            // Now that we know it's valid, fetchRecords as well
-            return response.json(); // server should return the records data
+            return response.json();
           })
           .then((data) => {
-            if (!data.length) {
-              recordsDiv.innerHTML = '<p>No records found.</p>';
-            } else {
-              buildRecordsTable(data);
-            }
+            // Use buildDisplay
+            buildDisplay(data);
             refreshContainer.classList.remove('hidden');
           })
           .catch((err) => {
@@ -253,18 +180,6 @@
           });
       }
 
-      // If password is invalid
-      function showInvalidPassword() {
-        passwordError.style.display = 'block';
-        passwordInput.value = '';
-        passwordSubmitBtn.disabled = true;
-        // Hide error after 3s
-        setTimeout(() => {
-          passwordError.style.display = 'none';
-        }, 3000);
-      }
-
-      // Fetch records from your server
       function fetchRecords(password) {
         fetch('/fetch-records', {
           method: 'POST',
@@ -279,128 +194,13 @@
             return response.json();
           })
           .then((data) => {
-            if (!data.length) {
-              recordsDiv.innerHTML = '<p>No records found.</p>';
-            } else {
-              buildRecordsTable(data);
-            }
-            // Show refresh icon
+            // Use buildDisplay
+            buildDisplay(data);
             refreshContainer.classList.remove('hidden');
           })
           .catch((err) => {
             alert(err.message);
           });
-      }
-
-      // Build the records table with all fields
-      function buildRecordsTable(data) {
-        // We show many columns, including a new Session ID column
-        let table = `
-        <table>
-          <thead>
-            <tr>
-              <th>No.</th>
-              <th>Session ID</th> <!-- New column here -->
-              <th>Name</th>
-              <th>Role</th>
-              <th>Experience</th>
-              <th>Focus</th>
-              <th>Contact</th>
-              <th>Latitude</th>
-              <th>Longitude</th>
-              <th>Country (ISO2) [Classification]</th>
-              <th>Area</th>
-              <th>Date & Time</th>
-              <th>Version & Agent</th>
-              <th>Refresh Count</th>
-              <th>Map</th>
-            </tr>
-          </thead>
-          <tbody>
-      `;
-
-        data.forEach((record, index) => {
-          // Focus is likely an array. We'll join with commas if present
-          const focusStr = Array.isArray(record.focus) ? record.focus.join(', ') : record.focus || '';
-          const role = record.role || '';
-          const experience = record.experience || '';
-          const contactInfo = record.contactInfo || '';
-          const latitude = record.latitude || '';
-          const longitude = record.longitude || '';
-          const country = record.country || '';
-          const iso2 = record.iso2 || '';
-          const classification = record.classification || '';
-          const area = record.area || '';
-          const dateTime = record.dateTime || '';
-          const version = record.version || '';
-          const selectedAgent = record.selectedAgent || '';
-          const refreshCount = record.refreshCount || 0; // or 1 if you prefer a default
-          const sessionID = record.sessionId || ''; // New field for the table
-
-          // Combine country/iso2/classification into one line
-          const countryDisplay = `${country} (${iso2}) [${classification}]`;
-          const versionAgent = version ? `${version}, ${selectedAgent}` : `${selectedAgent}`;
-
-          table += `
-          <tr>
-            <td>${index + 1}</td>
-            <td>${sessionID}</td> <!-- Show the session ID here -->
-            <td>${record.name || ''}</td>
-            <td>${role}</td>
-            <td>${experience}</td>
-            <td>${focusStr}</td>
-            <td>${contactInfo}</td>
-            <td>${latitude}</td>
-            <td>${longitude}</td>
-            <td>${countryDisplay}</td>
-            <td>${area}</td>
-            <td>${dateTime}</td>
-            <td>${versionAgent}</td>
-            <td>${refreshCount}</td>
-            <td>
-              <button onclick="showMap(${parseFloat(latitude) || 0}, ${parseFloat(longitude) || 0})">
-                Show Map
-              </button>
-            </td>
-          </tr>
-        `;
-        });
-
-        table += `</tbody></table>`;
-        recordsDiv.innerHTML = table;
-      }
-
-      // Handle refresh
-      function handleRefresh() {
-        if (currentPassword) {
-          fetchRecords(currentPassword);
-        } else {
-          alert('No valid password found.');
-        }
-      }
-
-      // Show Leaflet map
-      function showMap(lat, lng) {
-        mapContainer.style.display = 'block';
-        mapContainer.innerHTML = ''; // Clear previous map
-
-        if (map) map.remove(); // remove old instance
-
-        map = L.map('map').setView([lat, lng], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; OpenStreetMap contributors',
-        }).addTo(map);
-
-        // Add a marker
-        L.marker([lat, lng], {
-          icon: L.icon({
-            iconUrl: 'redpin.png',
-            iconSize: [46, 76],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41],
-          }),
-        }).addTo(map);
       }
     </script>
   </body>

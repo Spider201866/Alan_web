@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 /*********************************************/
 const MASTER_PASSWORD = "662023"; // never changes
 
-// A set of one-time passwords. Each is valid exactly once
+// If you no longer need one-time passwords, you can remove this section
 let ONE_TIME_PASSWORDS = new Set([
   "slitlamp286",
   "fundus512",
@@ -34,7 +34,6 @@ let ONE_TIME_PASSWORDS = new Set([
   "redreflex609",
   "pinna304"
 ]);
-// Once an item is used, we remove it from this set, so it cannot be reused.
 
 /*********************************************/
 /* 2) Standard Setup                         */
@@ -53,9 +52,12 @@ app.get('/view-records', (req, res) => {
 /*********************************************/
 /* 3) Storing User Info (POST /record-info)  */
 /*********************************************/
+/**
+ * This endpoint overwrites user-info.json with ONE single record.
+ * Any new POST to /record-info replaces the existing record.
+ */
 app.post('/record-info', (req, res) => {
   let {
-    sessionId,
     name,
     role,
     experience,
@@ -72,13 +74,9 @@ app.post('/record-info', (req, res) => {
     selectedAgent
   } = req.body;
 
-  // If no sessionId, generate one
-  if (!sessionId) {
-    sessionId = `anon-${Date.now()}`;
-  }
-
+  // We don't use sessionId in this approach, so we omit it or just store a fixed "single-session"
   const userInfo = {
-    sessionId,
+    sessionId: "SINGLE-RECORD", // not strictly needed, but can keep it as a marker
     name,
     role,
     experience,
@@ -92,66 +90,41 @@ app.post('/record-info', (req, res) => {
     contactInfo,
     dateTime,
     version,
-    selectedAgent
+    selectedAgent,
+    refreshCount: 1 // or track however you like
   };
 
   const filePath = path.join(__dirname, 'user-info.json');
 
-  fs.readFile(filePath, (err, data) => {
-    let records = [];
-    if (!err) {
-      try {
-        records = JSON.parse(data);
-      } catch (parseErr) {
-        console.error("Could not parse user-info.json:", parseErr);
-      }
+  // We always overwrite with a single-element array
+  fs.writeFile(filePath, JSON.stringify([userInfo], null, 2), (writeErr) => {
+    if (writeErr) {
+      console.error("Error writing user-info.json:", writeErr);
+      return res.status(500).send('Error saving data');
     }
-
-    // find existing
-    const existingIndex = records.findIndex(r => r.sessionId === sessionId);
-    if (existingIndex !== -1) {
-      const existingRecord = records[existingIndex];
-      const currentCount = existingRecord.refreshCount || 1;
-      records[existingIndex] = {
-        ...existingRecord,
-        ...userInfo,
-        refreshCount: currentCount + 1
-      };
-    } else {
-      userInfo.refreshCount = 1;
-      records.push(userInfo);
-    }
-
-    fs.writeFile(filePath, JSON.stringify(records, null, 2), (writeErr) => {
-      if (writeErr) {
-        console.error("Error writing user-info.json:", writeErr);
-        return res.status(500).send('Error saving data');
-      }
-      res.send('OK');
-    });
+    res.send('OK');
   });
 });
 
 /*********************************************/
 /* 4) Fetch Records (POST /fetch-records)    */
 /*********************************************/
+/**
+ * This endpoint checks the password, then returns
+ * the single record in user-info.json (if it exists).
+ */
 app.post('/fetch-records', (req, res) => {
-  // Log the entire request body for debugging
   console.log("Received in /fetch-records:", req.body);
 
-  const { password, sessionId } = req.body;
+  const { password } = req.body;
 
-  // 1) If password matches master, allow
+  // Validate password
   if (password === MASTER_PASSWORD) {
     // proceed
-  }
-  // 2) Else if the password is in the one-time set
-  else if (ONE_TIME_PASSWORDS.has(password)) {
+  } else if (ONE_TIME_PASSWORDS.has(password)) {
     ONE_TIME_PASSWORDS.delete(password);
     // proceed
-  }
-  // 3) Otherwise deny
-  else {
+  } else {
     return res.status(401).send('Invalid password');
   }
 
@@ -160,7 +133,8 @@ app.post('/fetch-records', (req, res) => {
   fs.readFile(filePath, (err, data) => {
     if (err) {
       if (err.code === 'ENOENT') {
-        return res.json([]); // no file => empty array
+        // If no file yet, return empty array
+        return res.json([]);
       }
       console.error("Error reading user-info.json:", err);
       return res.status(500).send('Error reading user info');
@@ -174,13 +148,7 @@ app.post('/fetch-records', (req, res) => {
       return res.json([]);
     }
 
-    if (sessionId) {
-      // Show filtering step
-      console.log(`Filtering records by sessionId: '${sessionId}'`);
-      records = records.filter(record => record.sessionId === sessionId);
-      console.log("Filtered records:", records);
-    }
-
+    // We always store exactly one record in the array, so just return it
     res.json(records);
   });
 });
@@ -191,4 +159,3 @@ app.post('/fetch-records', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
 });
- 
