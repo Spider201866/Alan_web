@@ -150,7 +150,7 @@
 
   <!-- MAIN CONTAINER -->
   <div class="container">
-    <!-- DIV for the single active record -->
+    <!-- DIV for the single active record (red box) -->
     <div id="activeRecordDiv" style="margin-top: 20px"></div>
 
     <!-- Heading + DIV for the full history -->
@@ -164,6 +164,7 @@
   <!-- LEAFLET JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
+    /* DOM References */
     const passwordScreen    = document.getElementById('passwordScreen');
     const passwordInput     = document.getElementById('passwordInput');
     const passwordError     = document.getElementById('passwordError');
@@ -180,7 +181,6 @@
     let map; // Leaflet map instance
 
     document.addEventListener('DOMContentLoaded', () => {
-      // When user types password
       passwordInput.addEventListener('input', handlePasswordInput);
       passwordInput.addEventListener('keypress', (evt) => {
         if (evt.key === 'Enter') handleSubmit();
@@ -198,7 +198,7 @@
     // Called when user clicks "Submit" on password screen
     function handleSubmit() {
       const entered = passwordInput.value.trim();
-      // 1) Validate + fetch the single "active" record
+      // 1) Validate + fetch the single active record from /fetch-records
       fetch('/fetch-records', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -206,15 +206,16 @@
       })
       .then((response) => {
         if (!response.ok) throw new Error('Invalid password');
-        // If success, store password
         currentPassword = entered;
         passwordScreen.classList.add('hidden');
         return response.json();
       })
       .then((data) => {
-        showActiveRecord(data); // Show the single active record
+        // data => single-element array from user-info.json
+        showActiveRecord(data);
         refreshContainer.classList.remove('hidden');
-        // 2) Also fetch the full history
+
+        // 2) Also fetch full history from /fetch-history
         fetchHistory(currentPassword);
       })
       .catch((err) => {
@@ -231,22 +232,21 @@
       }, 3000);
     }
 
-    // Called when user hits the refresh icon
     function handleRefresh() {
       if (!currentPassword) {
         alert('No valid password found.');
         return;
       }
-      // Re-fetch single record & history
+      // Re-fetch single active record
       fetchActiveRecord(currentPassword);
+      // Re-fetch entire history
       fetchHistory(currentPassword);
     }
 
-    // Re-fetch the single active record
     function fetchActiveRecord(password) {
       fetch('/fetch-records', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password })
       })
       .then(response => {
@@ -257,15 +257,14 @@
         showActiveRecord(data);
       })
       .catch(err => {
-        alert(err.message);
+        console.error('Error fetching single record:', err);
       });
     }
 
-    // Re-fetch the full history
     function fetchHistory(password) {
       fetch('/fetch-history', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password })
       })
       .then(response => {
