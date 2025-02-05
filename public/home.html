@@ -981,31 +981,10 @@ function pushLocalStorageToServer() {
 }
 
 
-window.addEventListener('pageshow', (event) => {
-  // Always do this reset:
+// 1) Trigger on each page load/refresh (including swipe down in mobile browsers)
+window.addEventListener('pageshow', () => {
   pushLocalStorageToServer();
-  sideMenu.style.left = '-370px';
-  menuIcon.classList.remove('open');
-
-  // If this is a back/forward navigation from browser history (bfcache etc.),
-  // reinitialise the chatbot by removing/re-adding it:
-  if (event.persisted || performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
-    reinitialiseChatbot();
-  }
 });
-
-function reinitialiseChatbot() {
-  console.log("Reinitialising chatbot after back/forward nav...");
-  const chatbotContainer = document.querySelector('.chatbot-container');
-  if (chatbotContainer) {
-    chatbotContainer.innerHTML = '';
-  }
-
-  // Then call the same function that imports and inits the right agent:
-  selectAgentAndFetch();
-}
-
-
 
   // 2) Also trigger whenever the tab becomes visible again
   document.addEventListener('visibilitychange', () => {
