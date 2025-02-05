@@ -7,177 +7,203 @@
     <!-- Leaflet for maps -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-      /* ... Your existing styles ... */
+      /* Basic styling for your page */
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Calibri Light', Arial, sans-serif;
+      }
+      h1 {
+        text-align: center;
+        margin-top: 40px;
+        font-size: 32px;
+      }
 
-      /* Add a style for the active user box */
-      #activeUserBox {
+      /* Password screen styling */
+      .password-screen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+      }
+      .password-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .password-column {
+        display: flex;
+        flex-direction: column;
+        margin-right: 30px;
+      }
+      .hidden {
+        display: none !important;
+      }
+
+      /* Refresh icon */
+      .refresh-icon {
+        cursor: pointer;
+        font-size: 30px;
+        display: inline-block;
+        transition: transform 0.3s ease;
+      }
+      .refresh-icon:hover {
+        transform: rotate(20deg);
+      }
+      .refresh-icon:active {
+        transform: rotate(360deg);
+      }
+
+      /* Container for records */
+      .container {
+        padding: 0 20px;
+      }
+
+      /* Red-outlined box for a single record */
+      #singleRecordBox {
         border: 2px solid red;
         padding: 10px;
         margin: 20px 0;
+        display: none; /* hidden until we show it */
+      }
+
+      /* Map container (initially hidden) */
+      .map-container {
+        width: 100%;
+        height: 600px;
+        margin-top: 20px;
+        display: none;
       }
     </style>
   </head>
 
   <body>
     <!-- PAGE TITLE -->
-    <h1><span class="bold">Al</span><span class="light">an</span> Records</h1>
+    <h1>Alan Records</h1>
 
     <!-- PASSWORD SCREEN -->
     <div class="password-screen" id="passwordScreen">
-      <!-- Same as before -->
-    </div>
+      <h2 style="margin-bottom: 40px; font-weight: normal">
+        Enter your <span style="font-weight: bold; color: red">Alan</span> password
+      </h2>
 
-    <!-- REFRESH ICON -->
+      <div class="password-row">
+        <div class="password-column">
+          <input
+            type="password"
+            id="passwordInput"
+            placeholder="Password"
+            style="color: grey; padding: 12px; width: 220px; font-size: 16px; border-radius: 12px; border: 1px solid #ccc; margin-bottom: 20px"
+          />
+          <p
+            id="passwordError"
+            style="color: red; display: none; width: 220px; text-align: center; margin-top: 6px; margin-bottom: 0"
+          >
+            Invalid password
+          </p>
+        </div>
+        <button
+          id="passwordSubmitBtn"
+          disabled
+          style="
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            margin-top: -15px;
+          "
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+    <!-- END PASSWORD SCREEN -->
+
+    <!-- REFRESH ICON (hidden initially) -->
     <div id="refreshContainer" class="hidden" style="text-align: center; margin-top: 20px">
       <span id="refreshIcon" class="refresh-icon">&#x21bb;</span>
     </div>
 
-    <!-- CONTAINER -->
+    <!-- MAIN CONTAINER -->
     <div class="container">
-      <!-- 1) The red-outlined box for the active user -->
-      <div id="activeUserBox" class="hidden"></div>
-
-      <!-- 2) The records table area -->
-      <div id="records" style="margin-top: 20px"></div>
+      <!-- Single record with red border -->
+      <div id="singleRecordBox"></div>
     </div>
 
-    <!-- MAP CONTAINER -->
+    <!-- Map container (initially hidden) -->
     <div id="map" class="map-container"></div>
 
-    <!-- LEAFLET SCRIPT -->
+    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-    <!-- MAIN SCRIPT -->
     <script>
-      /* Existing code: password handling, fetchRecords, showMap, etc. */
+      /* DOM references */
+      const passwordScreen    = document.getElementById('passwordScreen');
+      const passwordInput     = document.getElementById('passwordInput');
+      const passwordError     = document.getElementById('passwordError');
+      const passwordSubmitBtn = document.getElementById('passwordSubmitBtn');
 
-      // Overwrite or add a function to build the display:
-      //   - The first record goes into a red box (#activeUserBox)
-      //   - The remaining records go into the main table
-      function buildDisplay(data) {
-        if (!data.length) {
-          // no records at all
-          document.getElementById('activeUserBox').classList.add('hidden');
-          recordsDiv.innerHTML = '<p>No records found.</p>';
-          return;
-        }
+      const refreshContainer  = document.getElementById('refreshContainer');
+      const refreshIcon       = document.getElementById('refreshIcon');
+      const singleRecordBox   = document.getElementById('singleRecordBox');
+      const mapContainer      = document.getElementById('map');
 
-        // Show the "active" user in the red box
-        const activeUser = data[0];
-        showActiveUserBox(activeUser);
+      let map; // Leaflet map instance
+      let currentPassword = '';
 
-        // If there's only 1 record, there's nothing else to display in the table
-        if (data.length === 1) {
-          recordsDiv.innerHTML = '<p>No other records.</p>';
-        } else {
-          // For the rest, build a normal table
-          const remaining = data.slice(1);
-          buildRecordsTable(remaining);
-        }
-      }
-
-      // Show the first record in the red-outlined box
-      function showActiveUserBox(record) {
-        const box = document.getElementById('activeUserBox');
-        box.classList.remove('hidden');
-
-        // Build a single-line or multi-line display of the record
-        // For example, just show a summary:
-        box.innerHTML = `
-          <h2>Active User</h2>
-          <p><strong>Name:</strong> ${record.name || ''}</p>
-          <p><strong>Role:</strong> ${record.role || ''}</p>
-          <p><strong>Experience:</strong> ${record.experience || ''}</p>
-          <p><strong>DateTime:</strong> ${record.dateTime || ''}</p>
-          <p><strong>Version & Agent:</strong> ${record.version || ''} ${record.selectedAgent || ''}</p>
-          <button onclick="showMap(${parseFloat(record.latitude) || 0}, ${parseFloat(record.longitude) || 0})">
-            Show Map
-          </button>
-        `;
-      }
-
-      // Build a normal table for the rest of the records
-      function buildRecordsTable(data) {
-        let table = `
-          <table>
-            <thead>
-              <tr>
-                <th>No.</th>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Experience</th>
-                <th>Focus</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Country (ISO2) [Classification]</th>
-                <th>Area</th>
-                <th>Date & Time</th>
-                <th>Version & Agent</th>
-                <th>Refresh Count</th>
-                <th>Map</th>
-              </tr>
-            </thead>
-            <tbody>
-        `;
-
-        data.forEach((record, index) => {
-          const focusStr = Array.isArray(record.focus) ? record.focus.join(', ') : record.focus || '';
-          const countryDisplay = `${record.country || ''} (${record.iso2 || ''}) [${record.classification || ''}]`;
-          const versionAgent = record.version ? `${record.version}, ${record.selectedAgent}` : `${record.selectedAgent}`;
-
-          table += `
-            <tr>
-              <td>${index + 1}</td>
-              <td>${record.name || ''}</td>
-              <td>${record.role || ''}</td>
-              <td>${record.experience || ''}</td>
-              <td>${focusStr}</td>
-              <td>${record.latitude || ''}</td>
-              <td>${record.longitude || ''}</td>
-              <td>${countryDisplay}</td>
-              <td>${record.area || ''}</td>
-              <td>${record.dateTime || ''}</td>
-              <td>${versionAgent || ''}</td>
-              <td>${record.refreshCount || 1}</td>
-              <td>
-                <button onclick="showMap(${parseFloat(record.latitude) || 0}, ${parseFloat(record.longitude) || 0})">
-                  Show Map
-                </button>
-              </td>
-            </tr>
-          `;
+      document.addEventListener('DOMContentLoaded', () => {
+        // Enable/disable submit button based on password input
+        passwordInput.addEventListener('input', handlePasswordInput);
+        passwordInput.addEventListener('keypress', (evt) => {
+          if (evt.key === 'Enter') handleSubmit();
         });
+        passwordSubmitBtn.addEventListener('click', handleSubmit);
+        refreshIcon.addEventListener('click', handleRefresh);
+      });
 
-        table += '</tbody></table>';
-        recordsDiv.innerHTML = table;
+      function handlePasswordInput() {
+        passwordError.style.display = 'none';
+        passwordSubmitBtn.disabled = (passwordInput.value.trim() === '');
       }
 
-      // Now, in your handleSubmit and fetchRecords, call buildDisplay(data) instead of buildRecordsTable(data)
       function handleSubmit() {
         const entered = passwordInput.value.trim();
         fetch('/fetch-records', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ password: entered }),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: entered })
         })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error('Invalid password');
-            }
+          .then(response => {
+            if (!response.ok) throw new Error('Invalid password');
             currentPassword = entered;
             passwordScreen.classList.add('hidden');
             return response.json();
           })
-          .then((data) => {
-            // Use buildDisplay
-            buildDisplay(data);
+          .then(data => {
+            displaySingleRecord(data);
             refreshContainer.classList.remove('hidden');
           })
-          .catch((err) => {
+          .catch(err => {
             showInvalidPassword();
           });
+      }
+
+      function showInvalidPassword() {
+        passwordError.style.display = 'block';
+        passwordInput.value = '';
+        passwordSubmitBtn.disabled = true;
+        setTimeout(() => {
+          passwordError.style.display = 'none';
+        }, 3000);
+      }
+
+      function handleRefresh() {
+        if (currentPassword) {
+          fetchRecords(currentPassword);
+        } else {
+          alert('No valid password found.');
+        }
       }
 
       function fetchRecords(password) {
@@ -185,22 +211,65 @@
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache',
+            'Cache-Control': 'no-cache'
           },
-          body: JSON.stringify({ password }),
+          body: JSON.stringify({ password })
         })
-          .then((response) => {
+          .then(response => {
             if (!response.ok) throw new Error('Invalid password');
             return response.json();
           })
-          .then((data) => {
-            // Use buildDisplay
-            buildDisplay(data);
-            refreshContainer.classList.remove('hidden');
+          .then(data => {
+            displaySingleRecord(data);
           })
-          .catch((err) => {
+          .catch(err => {
             alert(err.message);
           });
+      }
+
+      /* Display a single record in the red-outlined box */
+      function displaySingleRecord(data) {
+        if (!Array.isArray(data) || data.length === 0) {
+          singleRecordBox.style.display = 'none';
+          singleRecordBox.innerHTML = '';
+          return;
+        }
+
+        // We assume there's only one record in your database
+        const record = data[0];
+        singleRecordBox.style.display = 'block';
+
+        singleRecordBox.innerHTML = `
+          <h2>Active User</h2>
+          <p><strong>Name:</strong> ${record.name || ''}</p>
+          <p><strong>Role:</strong> ${record.role || ''}</p>
+          <p><strong>Latitude:</strong> ${record.latitude || ''}</p>
+          <p><strong>Longitude:</strong> ${record.longitude || ''}</p>
+          <p><strong>Country (ISO2) [Classification]:</strong>
+            ${record.country || ''} (${record.iso2 || ''})
+            [${record.classification || ''}]
+          </p>
+          <p><strong>Area:</strong> ${record.area || ''}</p>
+          <p><strong>Date & Time:</strong> ${record.dateTime || ''}</p>
+          <p><strong>Version & Agent:</strong> ${record.version || ''}, ${record.selectedAgent || ''}</p>
+          <button onclick="showMap(${parseFloat(record.latitude) || 0}, ${parseFloat(record.longitude) || 0})">
+            Show Map
+          </button>
+        `;
+      }
+
+      /* Show the map */
+      function showMap(lat, lng) {
+        mapContainer.style.display = 'block';
+        mapContainer.innerHTML = '';
+        if (map) map.remove();
+
+        map = L.map('map').setView([lat, lng], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.marker([lat, lng]).addTo(map);
       }
     </script>
   </body>
