@@ -981,33 +981,10 @@ function pushLocalStorageToServer() {
 }
 
 
-window.addEventListener('pageshow', (event) => {
+// 1) Trigger on each page load/refresh (including swipe down in mobile browsers)
+window.addEventListener('pageshow', () => {
   pushLocalStorageToServer();
-  sideMenu.style.left = '-370px';
-  menuIcon.classList.remove('open');
-
-  // Only run this if the page is restored from bfcache
-  if (event.persisted) {
-    const chatbotContainer = document.querySelector('.chatbot-container');
-    if (chatbotContainer) {
-      // Remove the existing chatbot element
-      chatbotContainer.innerHTML = '';
-      // Create a new chatbot element
-      const newChatbot = document.createElement('flowise-fullchatbot');
-      chatbotContainer.appendChild(newChatbot);
-
-      // Optionally, reinitialise the chatbot using your module
-      import('./agent1-chatbot-module.js')
-        .then(module => {
-          if (typeof module.initChatbot === 'function') {
-            module.initChatbot();
-          }
-        })
-        .catch(error => console.error('Error initialising chatbot:', error));
-    }
-  }
 });
-
 
   // 2) Also trigger whenever the tab becomes visible again
   document.addEventListener('visibilitychange', () => {
