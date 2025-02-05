@@ -981,10 +981,12 @@ function pushLocalStorageToServer() {
 }
 
 
-// 1) Trigger on each page load/refresh (including swipe down in mobile browsers)
-window.addEventListener('pageshow', () => {
+window.addEventListener('pageshow', (event) => {
   pushLocalStorageToServer();
+  sideMenu.style.left = '-370px';
+  menuIcon.classList.remove('open');
 });
+
 
   // 2) Also trigger whenever the tab becomes visible again
   document.addEventListener('visibilitychange', () => {
