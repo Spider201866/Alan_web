@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <title>Alan Records</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <!-- Leaflet for maps -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
   <style>
+    /* Global resets & typography */
     html, body {
       margin: 0;
       padding: 0;
@@ -19,16 +19,20 @@
       margin-top: 40px;
       font-size: 32px;
     }
+
+    /* Container for main content */
     .container {
       padding: 0 20px;
     }
+
     /* Table styling */
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
     }
-    th, td {
+    th,
+    td {
       border: 1px solid black;
       padding: 10px;
       text-align: left;
@@ -37,20 +41,20 @@
     th {
       background-color: #f2f2f2;
     }
+
     /* Single-row with red border */
     tr.active-record {
-      border: 2px solid red; /* Outline for that one row */
+      border: 2px solid red; /* outline for that one row */
     }
-    /* Map container */
+
+    /* Map container (initially hidden) */
     .map-container {
       width: 100%;
       height: 600px;
       margin-top: 20px;
       display: none;
     }
-    .hidden {
-      display: none !important;
-    }
+
     /* Refresh icon */
     .refresh-icon {
       cursor: pointer;
@@ -64,13 +68,45 @@
     .refresh-icon:active {
       transform: rotate(360deg);
     }
+
+    /* Password screen styling */
+    .password-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+    }
+    .password-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .password-column {
+      display: flex;
+      flex-direction: column;
+      margin-right: 30px;
+    }
+    #passwordError {
+      color: red;
+      display: none;
+      width: 220px;
+      text-align: center;
+      margin-top: 6px;
+      margin-bottom: 0;
+    }
+
+    /* Hide/show utility class */
+    .hidden {
+      display: none !important;
+    }
   </style>
 </head>
 
 <body>
-  <h1>Alan Records</h1>
+  <!-- PAGE TITLE -->
+  <h1><span class="bold">Al</span><span class="light">an</span> Records</h1>
 
-  <!-- PASSWORD SCREEN (as before) -->
+  <!-- PASSWORD SCREEN -->
   <div class="password-screen" id="passwordScreen">
     <h2 style="margin-bottom: 40px; font-weight: normal">
       Enter your <span style="font-weight: bold; color: red">Alan</span> password
@@ -81,14 +117,17 @@
           type="password"
           id="passwordInput"
           placeholder="Password"
-          style="color: grey; padding: 12px; width: 220px; font-size: 16px; border-radius: 12px; border: 1px solid #ccc; margin-bottom: 20px"
+          style="
+            color: grey;
+            padding: 12px;
+            width: 220px;
+            font-size: 16px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+          "
         />
-        <p
-          id="passwordError"
-          style="color: red; display: none; width: 220px; text-align: center; margin-top: 6px; margin-bottom: 0"
-        >
-          Invalid password
-        </p>
+        <p id="passwordError">Invalid password</p>
       </div>
       <button
         id="passwordSubmitBtn"
@@ -99,32 +138,34 @@
           border-radius: 12px;
           border: 1px solid #ccc;
           cursor: pointer;
-          margin-top: -15px;
+          margin-top: -15px; /* tweak if needed */
         "
       >
         Submit
       </button>
     </div>
   </div>
+  <!-- END PASSWORD SCREEN -->
 
-  <!-- REFRESH ICON -->
+  <!-- REFRESH ICON (hidden initially) -->
   <div id="refreshContainer" class="hidden" style="text-align: center; margin-top: 20px">
     <span id="refreshIcon" class="refresh-icon">&#x21bb;</span>
   </div>
 
+  <!-- RECORDS CONTAINER -->
   <div class="container">
-    <!-- SINGLE RECORD TABLE -->
-    <div id="records"></div>
+    <div id="records" style="margin-top: 20px"></div>
   </div>
 
   <!-- MAP CONTAINER -->
   <div id="map" class="map-container"></div>
 
-  <!-- Leaflet -->
+  <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
+  <!-- MAIN SCRIPT -->
   <script>
-    // References
+    /* References */
     const passwordScreen   = document.getElementById('passwordScreen');
     const passwordInput    = document.getElementById('passwordInput');
     const passwordError    = document.getElementById('passwordError');
@@ -133,25 +174,30 @@
     const refreshIcon      = document.getElementById('refreshIcon');
     const recordsDiv       = document.getElementById('records');
     const mapContainer     = document.getElementById('map');
+
     let map;
     let currentPassword = '';
 
+    /* On load, set up event listeners */
     document.addEventListener('DOMContentLoaded', () => {
       passwordInput.addEventListener('input', handlePasswordInput);
-      passwordInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') handleSubmit();
+      passwordInput.addEventListener('keypress', (evt) => {
+        if (evt.key === 'Enter') handleSubmit();
       });
       passwordSubmitBtn.addEventListener('click', handleSubmit);
       refreshIcon.addEventListener('click', handleRefresh);
     });
 
+    /* Enable/disable button based on password input */
     function handlePasswordInput() {
       passwordError.style.display = 'none';
-      passwordSubmitBtn.disabled = passwordInput.value.trim() === '';
+      passwordSubmitBtn.disabled = (passwordInput.value.trim() === '');
     }
 
+    /* On submit, check password */
     function handleSubmit() {
       const entered = passwordInput.value.trim();
+
       fetch('/fetch-records', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -181,6 +227,7 @@
       }, 3000);
     }
 
+    /* Fetch records again (refresh) */
     function handleRefresh() {
       if (!currentPassword) {
         alert('No valid password found.');
@@ -192,7 +239,10 @@
     function fetchRecords(password) {
       fetch('/fetch-records', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache'
+        },
         body: JSON.stringify({ password })
       })
       .then((response) => {
@@ -207,14 +257,17 @@
       });
     }
 
-    // Build a minimal table with a single row for the record, highlighted with a red border
+    /* Show exactly one record with a single row (red border) */
     function showSingleRecord(data) {
       if (!Array.isArray(data) || data.length === 0) {
         recordsDiv.innerHTML = '<p>No records found.</p>';
         return;
       }
 
-      const record = data[0]; // we only expect 1
+      // We assume there's only 1 record in your database
+      const record = data[0];
+
+      // Build a minimal table for that single record
       recordsDiv.innerHTML = `
         <table>
           <thead>
@@ -237,7 +290,7 @@
               <td>${record.latitude || ''}</td>
               <td>${record.longitude || ''}</td>
               <td>
-                ${record.country || ''} (${record.iso2 || ''})
+                ${(record.country || '')} (${record.iso2 || ''})
                 [${record.classification || ''}]
               </td>
               <td>${record.area || ''}</td>
@@ -254,6 +307,7 @@
       `;
     }
 
+    /* Show Leaflet map */
     function showMap(lat, lng) {
       mapContainer.style.display = 'block';
       mapContainer.innerHTML = '';
