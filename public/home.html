@@ -973,6 +973,7 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         question: "Mr Flowise?",
+        customSessionId: sessionId,  // <-- Added this custom field
         overrideConfig: {
           sessionId: sessionId
         }
