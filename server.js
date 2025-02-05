@@ -43,6 +43,7 @@ app.get('/view-records', (req, res) => {
  */
 app.post('/record-info', (req, res) => {
   let {
+    sessionId, 
     name,
     role,
     experience,
