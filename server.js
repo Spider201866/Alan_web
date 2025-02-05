@@ -11,7 +11,6 @@ const port = process.env.PORT || 3000;
 /*********************************************/
 const MASTER_PASSWORD = "662023"; // never changes
 
-// If you no longer need one-time passwords, you can remove this section
 let ONE_TIME_PASSWORDS = new Set([
   "slitlamp286",
   "fundus512",
@@ -41,7 +40,7 @@ let ONE_TIME_PASSWORDS = new Set([
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve pages
+// Serve main pages
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -50,11 +49,12 @@ app.get('/view-records', (req, res) => {
 });
 
 /*********************************************/
-/* 3) Storing User Info (POST /record-info)  */
+/* 3) SINGLE RECORD in user-info.json        */
 /*********************************************/
 /**
- * This endpoint overwrites user-info.json with ONE single record.
- * Any new POST to /record-info replaces the existing record.
+ * POST /record-info
+ * Overwrites user-info.json with ONE single record.
+ * Also appends each new record to user-history.json for historical tracking.
  */
 app.post('/record-info', (req, res) => {
   let {
@@ -74,13 +74,13 @@ app.post('/record-info', (req, res) => {
     selectedAgent
   } = req.body;
 
-  // We don't use sessionId in this approach, so we omit it or just store a fixed "single-session"
-  const userInfo = {
-    sessionId: "SINGLE-RECORD", // not strictly needed, but can keep it as a marker
+  // Build the single record
+  const singleRecord = {
+    sessionId: "SINGLE-RECORD",
     name,
     role,
     experience,
-    focus,
+    focus,          // e.g. array or string
     latitude,
     longitude,
     country,
@@ -91,27 +91,32 @@ app.post('/record-info', (req, res) => {
     dateTime,
     version,
     selectedAgent,
-    refreshCount: 1 // or track however you like
+    refreshCount: 1
   };
 
   const filePath = path.join(__dirname, 'user-info.json');
 
-  // We always overwrite with a single-element array
-  fs.writeFile(filePath, JSON.stringify([userInfo], null, 2), (writeErr) => {
+  // Always overwrite with a single-element array
+  fs.writeFile(filePath, JSON.stringify([singleRecord], null, 2), (writeErr) => {
     if (writeErr) {
       console.error("Error writing user-info.json:", writeErr);
       return res.status(500).send('Error saving data');
     }
+
+    // Append this record to user-history.json
+    appendToHistory(singleRecord);
+
     res.send('OK');
   });
 });
 
 /*********************************************/
-/* 4) Fetch Records (POST /fetch-records)    */
+/* 4) SINGLE RECORD FETCH: /fetch-records    */
 /*********************************************/
 /**
- * This endpoint checks the password, then returns
- * the single record in user-info.json (if it exists).
+ * POST /fetch-records
+ * Validates password, returns the single record in user-info.json (if it exists).
+ * Flowise or your custom tool uses this to see the "active" record.
  */
 app.post('/fetch-records', (req, res) => {
   console.log("Received in /fetch-records:", req.body);
@@ -133,8 +138,7 @@ app.post('/fetch-records', (req, res) => {
   fs.readFile(filePath, (err, data) => {
     if (err) {
       if (err.code === 'ENOENT') {
-        // If no file yet, return empty array
-        return res.json([]);
+        return res.json([]); // no file => empty
       }
       console.error("Error reading user-info.json:", err);
       return res.status(500).send('Error reading user info');
@@ -148,14 +152,90 @@ app.post('/fetch-records', (req, res) => {
       return res.json([]);
     }
 
-    // We always store exactly one record in the array, so just return it
+    // We always store exactly one record in that array
     res.json(records);
   });
 });
 
 /*********************************************/
-/* 5) Start the server                       */
+/* 5) HISTORY (optional): /fetch-history     */
+/*********************************************/
+/**
+ * POST /fetch-history
+ * Validates password, returns *all* records from user-history.json.
+ * This is separate from the single active record. The custom tool can ignore it.
+ */
+app.post('/fetch-history', (req, res) => {
+  console.log("Received in /fetch-history:", req.body);
+
+  const { password } = req.body;
+
+  // Validate password
+  if (password === MASTER_PASSWORD) {
+    // proceed
+  } else if (ONE_TIME_PASSWORDS.has(password)) {
+    ONE_TIME_PASSWORDS.delete(password);
+    // proceed
+  } else {
+    return res.status(401).send('Invalid password');
+  }
+
+  const historyPath = path.join(__dirname, 'user-history.json');
+  fs.readFile(historyPath, (err, data) => {
+    if (err) {
+      if (err.code === 'ENOENT') {
+        // If no file yet, return an empty array
+        return res.json([]);
+      }
+      console.error("Error reading user-history.json:", err);
+      return res.status(500).send('Error reading user history');
+    }
+
+    let fullHistory;
+    try {
+      fullHistory = JSON.parse(data);
+    } catch (parseErr) {
+      console.error("Could not parse user-history.json:", parseErr);
+      return res.json([]);
+    }
+
+    res.json(fullHistory);
+  });
+});
+
+/*********************************************/
+/* 6) Start the server                       */
 /*********************************************/
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
 });
+
+/*********************************************/
+/* HELPER: Append each single record to
+   user-history.json for multi-record log    */
+/*********************************************/
+function appendToHistory(newRecord) {
+  const historyPath = path.join(__dirname, 'user-history.json');
+
+  fs.readFile(historyPath, (err, data) => {
+    let historyArray = [];
+    if (!err) {
+      try {
+        historyArray = JSON.parse(data);
+      } catch (parseErr) {
+        console.error("Could not parse user-history.json:", parseErr);
+        historyArray = [];
+      }
+    }
+    // Add the new record
+    historyArray.push(newRecord);
+
+    fs.writeFile(historyPath, JSON.stringify(historyArray, null, 2), (writeErr) => {
+      if (writeErr) {
+        console.error("Error writing user-history.json:", writeErr);
+      } else {
+        console.log("Appended to user-history.json");
+      }
+    });
+  });
+}

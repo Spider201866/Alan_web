@@ -1,376 +1,318 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Alan Records</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8" />
+  <title>Alan Records</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Leaflet for maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-    <!-- Leaflet for maps -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    /* Overall styling */
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Calibri Light', Arial, sans-serif;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 32px;
+    }
 
-    <style>
-      /* Global styling */
-      html, body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Calibri Light', Arial, sans-serif;
-      }
-      h1 {
-        text-align: center;
-        margin-top: 40px;
-        font-size: 32px;
-      }
+    /* Password screen styling */
+    .password-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+    }
+    .password-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .password-column {
+      display: flex;
+      flex-direction: column;
+      margin-right: 30px;
+    }
+    #passwordError {
+      color: red;
+      display: none;
+      width: 220px;
+      text-align: center;
+      margin-top: 6px;
+      margin-bottom: 0;
+    }
 
-      /* Password screen styling */
-      .password-screen {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 50px;
-      }
-      .password-row {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-      }
-      .password-column {
-        display: flex;
-        flex-direction: column;
-        margin-right: 30px;
-      }
-      #passwordError {
-        color: red;
-        display: none;
-        width: 220px;
-        text-align: center;
-        margin-top: 6px;
-        margin-bottom: 0;
-      }
+    .hidden {
+      display: none !important;
+    }
 
-      /* Hide/show utility */
-      .hidden {
-        display: none !important;
-      }
+    .container {
+      padding: 0 20px;
+    }
 
-      /* Container for the record */
-      .container {
-        padding: 0 20px;
-      }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
 
-      /* Table styling */
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-      }
-      th, td {
-        border: 1px solid black;
-        padding: 10px;
-        text-align: left;
-        vertical-align: top;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
+    /* Red outline for the single active record row */
+    tr.active-record {
+      border: 2px solid red;
+    }
 
-      /* Red outline around the single record row */
-      tr.active-record {
-        border: 2px solid red;
-      }
+    /* Refresh icon */
+    .refresh-icon {
+      cursor: pointer;
+      font-size: 30px;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+    .refresh-icon:hover {
+      transform: rotate(20deg);
+    }
+    .refresh-icon:active {
+      transform: rotate(360deg);
+    }
 
-      /* Refresh icon */
-      .refresh-icon {
-        cursor: pointer;
-        font-size: 30px;
-        display: inline-block;
-        transition: transform 0.3s ease;
-      }
-      .refresh-icon:hover {
-        transform: rotate(20deg);
-      }
-      .refresh-icon:active {
-        transform: rotate(360deg);
-      }
+    /* Map container (initially hidden) */
+    .map-container {
+      width: 100%;
+      height: 600px;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
 
-      /* Map container (initially hidden) */
-      .map-container {
-        width: 100%;
-        height: 600px;
-        margin-top: 20px;
-        display: none;
-      }
-    </style>
-  </head>
+<body>
+  <!-- PAGE TITLE -->
+  <h1><span class="bold">Al</span><span class="light">an</span> Records</h1>
 
-  <body>
-    <!-- PAGE TITLE -->
-    <h1><span class="bold">Al</span><span class="light">an</span> Records</h1>
-
-    <!-- PASSWORD SCREEN -->
-    <div class="password-screen" id="passwordScreen">
-      <h2 style="margin-bottom: 40px; font-weight: normal">
-        Enter your <span style="font-weight: bold; color: red">Alan</span> password
-      </h2>
-      <div class="password-row">
-        <div class="password-column">
-          <input
-            type="password"
-            id="passwordInput"
-            placeholder="Password"
-            style="
-              color: grey;
-              padding: 12px;
-              width: 220px;
-              font-size: 16px;
-              border-radius: 12px;
-              border: 1px solid #ccc;
-              margin-bottom: 20px;
-            "
-          />
-          <p id="passwordError">Invalid password</p>
-        </div>
-        <button
-          id="passwordSubmitBtn"
-          disabled
+  <!-- PASSWORD SCREEN -->
+  <div class="password-screen" id="passwordScreen">
+    <h2 style="margin-bottom: 40px; font-weight: normal">
+      Enter your <span style="font-weight: bold; color: red">Alan</span> password
+    </h2>
+    <div class="password-row">
+      <div class="password-column">
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="Password"
           style="
+            color: grey;
             padding: 12px;
+            width: 220px;
             font-size: 16px;
             border-radius: 12px;
             border: 1px solid #ccc;
-            cursor: pointer;
-            margin-top: -15px; /* tweak if needed */
+            margin-bottom: 20px;
           "
-        >
-          Submit
-        </button>
+        />
+        <p id="passwordError">Invalid password</p>
       </div>
+      <button
+        id="passwordSubmitBtn"
+        disabled
+        style="
+          padding: 12px;
+          font-size: 16px;
+          border-radius: 12px;
+          border: 1px solid #ccc;
+          cursor: pointer;
+          margin-top: -15px; /* tweak if needed */
+        "
+      >
+        Submit
+      </button>
     </div>
-    <!-- END PASSWORD SCREEN -->
+  </div>
+  <!-- END PASSWORD SCREEN -->
 
-    <!-- REFRESH ICON (hidden until a valid password is entered) -->
-    <div id="refreshContainer" class="hidden" style="text-align: center; margin-top: 20px">
-      <span id="refreshIcon" class="refresh-icon">&#x21bb;</span>
-    </div>
+  <!-- REFRESH ICON (hidden until a valid password is entered) -->
+  <div id="refreshContainer" class="hidden" style="text-align: center; margin-top: 20px">
+    <span id="refreshIcon" class="refresh-icon">&#x21bb;</span>
+  </div>
 
-    <!-- MAIN CONTAINER FOR THE RECORD -->
-    <div class="container">
-      <div id="records" style="margin-top: 20px"></div>
+  <!-- MAIN CONTAINER -->
+  <div class="container">
+    <!-- DIV for the single active record -->
+    <div id="activeRecordDiv" style="margin-top: 20px"></div>
 
-      <!-- New heading and table container for leftover records -->
-      <h3 id="historicalHeading" style="display: none; margin-top: 40px;">Additional Records</h3>
-      <div id="additionalRecordsTable"></div>
-    </div>
+    <!-- Heading + DIV for the full history -->
+    <h3 id="historyTitle" style="display: none; margin-top: 40px;">Full History</h3>
+    <div id="historyDiv"></div>
+  </div>
 
-    <!-- MAP CONTAINER -->
-    <div id="map" class="map-container"></div>
+  <!-- MAP CONTAINER -->
+  <div id="map" class="map-container"></div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- LEAFLET JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const passwordScreen    = document.getElementById('passwordScreen');
+    const passwordInput     = document.getElementById('passwordInput');
+    const passwordError     = document.getElementById('passwordError');
+    const passwordSubmitBtn = document.getElementById('passwordSubmitBtn');
 
-    <script>
-      /* References */
-      const passwordScreen   = document.getElementById('passwordScreen');
-      const passwordInput    = document.getElementById('passwordInput');
-      const passwordError    = document.getElementById('passwordError');
-      const passwordSubmitBtn= document.getElementById('passwordSubmitBtn');
+    const refreshContainer  = document.getElementById('refreshContainer');
+    const refreshIcon       = document.getElementById('refreshIcon');
+    const activeRecordDiv   = document.getElementById('activeRecordDiv');
+    const historyTitle      = document.getElementById('historyTitle');
+    const historyDiv        = document.getElementById('historyDiv');
+    const mapContainer      = document.getElementById('map');
 
-      const refreshContainer = document.getElementById('refreshContainer');
-      const refreshIcon      = document.getElementById('refreshIcon');
-      const recordsDiv       = document.getElementById('records');
-      const mapContainer     = document.getElementById('map');
+    let currentPassword = '';
+    let map; // Leaflet map instance
 
-      const historicalHeading= document.getElementById('historicalHeading');
-      const additionalRecordsDiv = document.getElementById('additionalRecordsTable');
-
-      let currentPassword    = '';
-      let map; // Leaflet map instance
-
-      document.addEventListener('DOMContentLoaded', () => {
-        // Validate password input
-        passwordInput.addEventListener('input', handlePasswordInput);
-        passwordInput.addEventListener('keypress', (evt) => {
-          if (evt.key === 'Enter') handleSubmit();
-        });
-        passwordSubmitBtn.addEventListener('click', handleSubmit);
-
-        // Refresh the data if already unlocked
-        refreshIcon.addEventListener('click', handleRefresh);
+    document.addEventListener('DOMContentLoaded', () => {
+      // When user types password
+      passwordInput.addEventListener('input', handlePasswordInput);
+      passwordInput.addEventListener('keypress', (evt) => {
+        if (evt.key === 'Enter') handleSubmit();
       });
+      passwordSubmitBtn.addEventListener('click', handleSubmit);
 
-      function handlePasswordInput() {
+      refreshIcon.addEventListener('click', handleRefresh);
+    });
+
+    function handlePasswordInput() {
+      passwordError.style.display = 'none';
+      passwordSubmitBtn.disabled = (passwordInput.value.trim() === '');
+    }
+
+    // Called when user clicks "Submit" on password screen
+    function handleSubmit() {
+      const entered = passwordInput.value.trim();
+      // 1) Validate + fetch the single "active" record
+      fetch('/fetch-records', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: entered })
+      })
+      .then((response) => {
+        if (!response.ok) throw new Error('Invalid password');
+        // If success, store password
+        currentPassword = entered;
+        passwordScreen.classList.add('hidden');
+        return response.json();
+      })
+      .then((data) => {
+        showActiveRecord(data); // Show the single active record
+        refreshContainer.classList.remove('hidden');
+        // 2) Also fetch the full history
+        fetchHistory(currentPassword);
+      })
+      .catch((err) => {
+        showInvalidPassword();
+      });
+    }
+
+    function showInvalidPassword() {
+      passwordError.style.display = 'block';
+      passwordInput.value = '';
+      passwordSubmitBtn.disabled = true;
+      setTimeout(() => {
         passwordError.style.display = 'none';
-        passwordSubmitBtn.disabled = (passwordInput.value.trim() === '');
+      }, 3000);
+    }
+
+    // Called when user hits the refresh icon
+    function handleRefresh() {
+      if (!currentPassword) {
+        alert('No valid password found.');
+        return;
       }
+      // Re-fetch single record & history
+      fetchActiveRecord(currentPassword);
+      fetchHistory(currentPassword);
+    }
 
-      /* On Submit, we call /fetch-records to validate password & get the data */
-      function handleSubmit() {
-        const entered = passwordInput.value.trim();
-        fetch('/fetch-records', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password: entered })
-        })
-        .then((response) => {
-          if (!response.ok) throw new Error('Invalid password');
-          currentPassword = entered;
-          passwordScreen.classList.add('hidden');
-          return response.json();
-        })
-        .then((data) => {
-          displayRecords(data);  /* replaced showSingleRecord with a new function */
-          refreshContainer.classList.remove('hidden');
-        })
-        .catch((err) => {
-          showInvalidPassword();
-        });
+    // Re-fetch the single active record
+    function fetchActiveRecord(password) {
+      fetch('/fetch-records', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' },
+        body: JSON.stringify({ password })
+      })
+      .then(response => {
+        if (!response.ok) throw new Error('Invalid password');
+        return response.json();
+      })
+      .then(data => {
+        showActiveRecord(data);
+      })
+      .catch(err => {
+        alert(err.message);
+      });
+    }
+
+    // Re-fetch the full history
+    function fetchHistory(password) {
+      fetch('/fetch-history', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' },
+        body: JSON.stringify({ password })
+      })
+      .then(response => {
+        if (!response.ok) throw new Error('Invalid password');
+        return response.json();
+      })
+      .then(data => {
+        showHistory(data);
+      })
+      .catch(err => {
+        console.error('Error fetching history:', err);
+      });
+    }
+
+    // Display the single active record
+    function showActiveRecord(data) {
+      if (!Array.isArray(data) || data.length === 0) {
+        activeRecordDiv.innerHTML = '<p>No active record found.</p>';
+        return;
       }
+      const record = data[0];
 
-      function showInvalidPassword() {
-        passwordError.style.display = 'block';
-        passwordInput.value = '';
-        passwordSubmitBtn.disabled = true;
-        setTimeout(() => {
-          passwordError.style.display = 'none';
-        }, 3000);
-      }
-
-      function handleRefresh() {
-        if (!currentPassword) {
-          alert('No valid password found.');
-          return;
-        }
-        fetchRecords(currentPassword);
-      }
-
-      function fetchRecords(password) {
-        fetch('/fetch-records', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache'
-          },
-          body: JSON.stringify({ password })
-        })
-        .then((response) => {
-          if (!response.ok) throw new Error('Invalid password');
-          return response.json();
-        })
-        .then((data) => {
-          displayRecords(data);
-        })
-        .catch((err) => {
-          alert(err.message);
-        });
-      }
-
-      /* NEW: This handles both the single record AND any additional records */
-      function displayRecords(data) {
-        if (!Array.isArray(data) || data.length === 0) {
-          recordsDiv.innerHTML = '<p>No records found.</p>';
-          historicalHeading.style.display = 'none';
-          additionalRecordsDiv.innerHTML = '';
-          return;
-        }
-
-        // FIRST record => single row, red border
-        const firstRecord = data[0];
-        showSingleRecord(firstRecord);
-
-        // Additional records => if any leftover
-        const leftover = data.slice(1);
-        if (leftover.length > 0) {
-          historicalHeading.style.display = 'block';
-          buildAdditionalRecordsTable(leftover);
-        } else {
-          // hide heading
-          historicalHeading.style.display = 'none';
-          additionalRecordsDiv.innerHTML = '';
-        }
-      }
-
-      /* EXACTLY your single-record code, but changed signature a bit */
-      function showSingleRecord(record) {
-        recordsDiv.innerHTML = `
-          <table>
-            <thead>
-              <tr>
-                <th>No.</th>
-                <th>Session ID</th>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Experience</th>
-                <th>Focus</th>
-                <th>Contact</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Country (ISO2) [Classification]</th>
-                <th>Area</th>
-                <th>Date & Time</th>
-                <th>Version & Agent</th>
-                <th>Refresh Count</th>
-                <th>Map</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="active-record">
-                <td>1</td>
-                <td>${record.sessionId || ''}</td>
-                <td>${record.name || ''}</td>
-                <td>${record.role || ''}</td>
-                <td>${record.experience || ''}</td>
-                <td>${Array.isArray(record.focus) ? record.focus.join(', ') : record.focus || ''}</td>
-                <td>${record.contactInfo || ''}</td>
-                <td>${record.latitude || ''}</td>
-                <td>${record.longitude || ''}</td>
-                <td>
-                  ${(record.country || '')} (${record.iso2 || ''})
-                  [${record.classification || ''}]
-                </td>
-                <td>${record.area || ''}</td>
-                <td>${record.dateTime || ''}</td>
-                <td>${(record.version || '')}, ${(record.selectedAgent || '')}</td>
-                <td>${record.refreshCount || 1}</td>
-                <td>
-                  <button onclick="showMap(${parseFloat(record.latitude) || 0}, ${parseFloat(record.longitude) || 0})">
-                    Show Map
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        `;
-      }
-
-      /* NEW: Build a table for leftover records */
-      function buildAdditionalRecordsTable(records) {
-        let html = `
-          <table>
-            <thead>
-              <tr>
-                <th>No.</th>
-                <th>Session ID</th>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Experience</th>
-                <th>Focus</th>
-                <th>Contact</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Country (ISO2) [Classification]</th>
-                <th>Area</th>
-                <th>Date & Time</th>
-                <th>Version & Agent</th>
-                <th>Refresh Count</th>
-                <th>Map</th>
-              </tr>
-            </thead>
-            <tbody>
-        `;
-        
-        records.forEach((record, idx) => {
-          html += `
+      // Build the single-record table with a red border row
+      activeRecordDiv.innerHTML = `
+        <table>
+          <thead>
             <tr>
-              <td>${idx + 2}</td> <!-- +2 because 1 is the active record -->
+              <th>No.</th>
+              <th>Session ID</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Experience</th>
+              <th>Focus</th>
+              <th>Contact</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Country (ISO2) [Classification]</th>
+              <th>Area</th>
+              <th>Date & Time</th>
+              <th>Version & Agent</th>
+              <th>Refresh Count</th>
+              <th>Map</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="active-record">
+              <td>1</td>
               <td>${record.sessionId || ''}</td>
               <td>${record.name || ''}</td>
               <td>${record.role || ''}</td>
@@ -393,26 +335,92 @@
                 </button>
               </td>
             </tr>
-          `;
-        });
+          </tbody>
+        </table>
+      `;
+    }
 
-        html += '</tbody></table>';
-        additionalRecordsDiv.innerHTML = html;
+    // Display the full history array
+    function showHistory(historyArray) {
+      if (!Array.isArray(historyArray) || historyArray.length === 0) {
+        historyTitle.style.display = 'none';
+        historyDiv.innerHTML = '<p>No historical records found.</p>';
+        return;
       }
 
-      /* Show the map */
-      function showMap(lat, lng) {
-        mapContainer.style.display = 'block';
-        mapContainer.innerHTML = '';
-        if (map) map.remove();
+      // Show the heading
+      historyTitle.style.display = 'block';
 
-        map = L.map('map').setView([lat, lng], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
+      // Build a table listing all records from user-history.json
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Session ID</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Experience</th>
+              <th>Focus</th>
+              <th>Contact</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Country (ISO2) [Classification]</th>
+              <th>Area</th>
+              <th>Date & Time</th>
+              <th>Version & Agent</th>
+              <th>Refresh Count</th>
+              <th>Map</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
 
-        L.marker([lat, lng]).addTo(map);
-      }
-    </script>
-  </body>
+      historyArray.forEach((rec, idx) => {
+        html += `
+          <tr>
+            <td>${idx + 1}</td>
+            <td>${rec.sessionId || ''}</td>
+            <td>${rec.name || ''}</td>
+            <td>${rec.role || ''}</td>
+            <td>${rec.experience || ''}</td>
+            <td>${Array.isArray(rec.focus) ? rec.focus.join(', ') : rec.focus || ''}</td>
+            <td>${rec.contactInfo || ''}</td>
+            <td>${rec.latitude || ''}</td>
+            <td>${rec.longitude || ''}</td>
+            <td>
+              ${(rec.country || '')} (${rec.iso2 || ''})
+              [${rec.classification || ''}]
+            </td>
+            <td>${rec.area || ''}</td>
+            <td>${rec.dateTime || ''}</td>
+            <td>${(rec.version || '')}, ${(rec.selectedAgent || '')}</td>
+            <td>${rec.refreshCount || 1}</td>
+            <td>
+              <button onclick="showMap(${parseFloat(rec.latitude) || 0}, ${parseFloat(rec.longitude) || 0})">
+                Show Map
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+
+      html += '</tbody></table>';
+      historyDiv.innerHTML = html;
+    }
+
+    function showMap(lat, lng) {
+      mapContainer.style.display = 'block';
+      mapContainer.innerHTML = '';
+      if (map) map.remove();
+
+      map = L.map('map').setView([lat, lng], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+
+      L.marker([lat, lng]).addTo(map);
+    }
+  </script>
+</body>
 </html>
