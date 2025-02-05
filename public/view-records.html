@@ -1,276 +1,271 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Alan Records</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Leaflet for maps -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <style>
-      /* Basic styling for your page */
-      html, body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Calibri Light', Arial, sans-serif;
-      }
-      h1 {
-        text-align: center;
-        margin-top: 40px;
-        font-size: 32px;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <title>Alan Records</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      /* Password screen styling */
-      .password-screen {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 50px;
-      }
-      .password-row {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-      }
-      .password-column {
-        display: flex;
-        flex-direction: column;
-        margin-right: 30px;
-      }
-      .hidden {
-        display: none !important;
-      }
+  <!-- Leaflet for maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-      /* Refresh icon */
-      .refresh-icon {
-        cursor: pointer;
-        font-size: 30px;
-        display: inline-block;
-        transition: transform 0.3s ease;
-      }
-      .refresh-icon:hover {
-        transform: rotate(20deg);
-      }
-      .refresh-icon:active {
-        transform: rotate(360deg);
-      }
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Calibri Light', Arial, sans-serif;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 32px;
+    }
+    .container {
+      padding: 0 20px;
+    }
+    /* Table styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    /* Single-row with red border */
+    tr.active-record {
+      border: 2px solid red; /* Outline for that one row */
+    }
+    /* Map container */
+    .map-container {
+      width: 100%;
+      height: 600px;
+      margin-top: 20px;
+      display: none;
+    }
+    .hidden {
+      display: none !important;
+    }
+    /* Refresh icon */
+    .refresh-icon {
+      cursor: pointer;
+      font-size: 30px;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+    .refresh-icon:hover {
+      transform: rotate(20deg);
+    }
+    .refresh-icon:active {
+      transform: rotate(360deg);
+    }
+  </style>
+</head>
 
-      /* Container for records */
-      .container {
-        padding: 0 20px;
-      }
+<body>
+  <h1>Alan Records</h1>
 
-      /* Red-outlined box for a single record */
-      #singleRecordBox {
-        border: 2px solid red;
-        padding: 10px;
-        margin: 20px 0;
-        display: none; /* hidden until we show it */
-      }
-
-      /* Map container (initially hidden) */
-      .map-container {
-        width: 100%;
-        height: 600px;
-        margin-top: 20px;
-        display: none;
-      }
-    </style>
-  </head>
-
-  <body>
-    <!-- PAGE TITLE -->
-    <h1>Alan Records</h1>
-
-    <!-- PASSWORD SCREEN -->
-    <div class="password-screen" id="passwordScreen">
-      <h2 style="margin-bottom: 40px; font-weight: normal">
-        Enter your <span style="font-weight: bold; color: red">Alan</span> password
-      </h2>
-
-      <div class="password-row">
-        <div class="password-column">
-          <input
-            type="password"
-            id="passwordInput"
-            placeholder="Password"
-            style="color: grey; padding: 12px; width: 220px; font-size: 16px; border-radius: 12px; border: 1px solid #ccc; margin-bottom: 20px"
-          />
-          <p
-            id="passwordError"
-            style="color: red; display: none; width: 220px; text-align: center; margin-top: 6px; margin-bottom: 0"
-          >
-            Invalid password
-          </p>
-        </div>
-        <button
-          id="passwordSubmitBtn"
-          disabled
-          style="
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 12px;
-            border: 1px solid #ccc;
-            cursor: pointer;
-            margin-top: -15px;
-          "
+  <!-- PASSWORD SCREEN (as before) -->
+  <div class="password-screen" id="passwordScreen">
+    <h2 style="margin-bottom: 40px; font-weight: normal">
+      Enter your <span style="font-weight: bold; color: red">Alan</span> password
+    </h2>
+    <div class="password-row">
+      <div class="password-column">
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="Password"
+          style="color: grey; padding: 12px; width: 220px; font-size: 16px; border-radius: 12px; border: 1px solid #ccc; margin-bottom: 20px"
+        />
+        <p
+          id="passwordError"
+          style="color: red; display: none; width: 220px; text-align: center; margin-top: 6px; margin-bottom: 0"
         >
-          Submit
-        </button>
+          Invalid password
+        </p>
       </div>
+      <button
+        id="passwordSubmitBtn"
+        disabled
+        style="
+          padding: 12px;
+          font-size: 16px;
+          border-radius: 12px;
+          border: 1px solid #ccc;
+          cursor: pointer;
+          margin-top: -15px;
+        "
+      >
+        Submit
+      </button>
     </div>
-    <!-- END PASSWORD SCREEN -->
+  </div>
 
-    <!-- REFRESH ICON (hidden initially) -->
-    <div id="refreshContainer" class="hidden" style="text-align: center; margin-top: 20px">
-      <span id="refreshIcon" class="refresh-icon">&#x21bb;</span>
-    </div>
+  <!-- REFRESH ICON -->
+  <div id="refreshContainer" class="hidden" style="text-align: center; margin-top: 20px">
+    <span id="refreshIcon" class="refresh-icon">&#x21bb;</span>
+  </div>
 
-    <!-- MAIN CONTAINER -->
-    <div class="container">
-      <!-- Single record with red border -->
-      <div id="singleRecordBox"></div>
-    </div>
+  <div class="container">
+    <!-- SINGLE RECORD TABLE -->
+    <div id="records"></div>
+  </div>
 
-    <!-- Map container (initially hidden) -->
-    <div id="map" class="map-container"></div>
+  <!-- MAP CONTAINER -->
+  <div id="map" class="map-container"></div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Leaflet -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-    <script>
-      /* DOM references */
-      const passwordScreen    = document.getElementById('passwordScreen');
-      const passwordInput     = document.getElementById('passwordInput');
-      const passwordError     = document.getElementById('passwordError');
-      const passwordSubmitBtn = document.getElementById('passwordSubmitBtn');
+  <script>
+    // References
+    const passwordScreen   = document.getElementById('passwordScreen');
+    const passwordInput    = document.getElementById('passwordInput');
+    const passwordError    = document.getElementById('passwordError');
+    const passwordSubmitBtn= document.getElementById('passwordSubmitBtn');
+    const refreshContainer = document.getElementById('refreshContainer');
+    const refreshIcon      = document.getElementById('refreshIcon');
+    const recordsDiv       = document.getElementById('records');
+    const mapContainer     = document.getElementById('map');
+    let map;
+    let currentPassword = '';
 
-      const refreshContainer  = document.getElementById('refreshContainer');
-      const refreshIcon       = document.getElementById('refreshIcon');
-      const singleRecordBox   = document.getElementById('singleRecordBox');
-      const mapContainer      = document.getElementById('map');
-
-      let map; // Leaflet map instance
-      let currentPassword = '';
-
-      document.addEventListener('DOMContentLoaded', () => {
-        // Enable/disable submit button based on password input
-        passwordInput.addEventListener('input', handlePasswordInput);
-        passwordInput.addEventListener('keypress', (evt) => {
-          if (evt.key === 'Enter') handleSubmit();
-        });
-        passwordSubmitBtn.addEventListener('click', handleSubmit);
-        refreshIcon.addEventListener('click', handleRefresh);
+    document.addEventListener('DOMContentLoaded', () => {
+      passwordInput.addEventListener('input', handlePasswordInput);
+      passwordInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleSubmit();
       });
+      passwordSubmitBtn.addEventListener('click', handleSubmit);
+      refreshIcon.addEventListener('click', handleRefresh);
+    });
 
-      function handlePasswordInput() {
+    function handlePasswordInput() {
+      passwordError.style.display = 'none';
+      passwordSubmitBtn.disabled = passwordInput.value.trim() === '';
+    }
+
+    function handleSubmit() {
+      const entered = passwordInput.value.trim();
+      fetch('/fetch-records', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: entered })
+      })
+      .then((response) => {
+        if (!response.ok) throw new Error('Invalid password');
+        currentPassword = entered;
+        passwordScreen.classList.add('hidden');
+        return response.json();
+      })
+      .then((data) => {
+        showSingleRecord(data);
+        refreshContainer.classList.remove('hidden');
+      })
+      .catch((err) => {
+        showInvalidPassword();
+      });
+    }
+
+    function showInvalidPassword() {
+      passwordError.style.display = 'block';
+      passwordInput.value = '';
+      passwordSubmitBtn.disabled = true;
+      setTimeout(() => {
         passwordError.style.display = 'none';
-        passwordSubmitBtn.disabled = (passwordInput.value.trim() === '');
+      }, 3000);
+    }
+
+    function handleRefresh() {
+      if (!currentPassword) {
+        alert('No valid password found.');
+        return;
+      }
+      fetchRecords(currentPassword);
+    }
+
+    function fetchRecords(password) {
+      fetch('/fetch-records', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' },
+        body: JSON.stringify({ password })
+      })
+      .then((response) => {
+        if (!response.ok) throw new Error('Invalid password');
+        return response.json();
+      })
+      .then((data) => {
+        showSingleRecord(data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+    }
+
+    // Build a minimal table with a single row for the record, highlighted with a red border
+    function showSingleRecord(data) {
+      if (!Array.isArray(data) || data.length === 0) {
+        recordsDiv.innerHTML = '<p>No records found.</p>';
+        return;
       }
 
-      function handleSubmit() {
-        const entered = passwordInput.value.trim();
-        fetch('/fetch-records', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password: entered })
-        })
-          .then(response => {
-            if (!response.ok) throw new Error('Invalid password');
-            currentPassword = entered;
-            passwordScreen.classList.add('hidden');
-            return response.json();
-          })
-          .then(data => {
-            displaySingleRecord(data);
-            refreshContainer.classList.remove('hidden');
-          })
-          .catch(err => {
-            showInvalidPassword();
-          });
-      }
+      const record = data[0]; // we only expect 1
+      recordsDiv.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Country (ISO2) [Classification]</th>
+              <th>Area</th>
+              <th>Date & Time</th>
+              <th>Version & Agent</th>
+              <th>Map</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="active-record">
+              <td>${record.name || ''}</td>
+              <td>${record.role || ''}</td>
+              <td>${record.latitude || ''}</td>
+              <td>${record.longitude || ''}</td>
+              <td>
+                ${record.country || ''} (${record.iso2 || ''})
+                [${record.classification || ''}]
+              </td>
+              <td>${record.area || ''}</td>
+              <td>${record.dateTime || ''}</td>
+              <td>${(record.version || '') + ', ' + (record.selectedAgent || '')}</td>
+              <td>
+                <button onclick="showMap(${parseFloat(record.latitude) || 0}, ${parseFloat(record.longitude) || 0})">
+                  Show Map
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      `;
+    }
 
-      function showInvalidPassword() {
-        passwordError.style.display = 'block';
-        passwordInput.value = '';
-        passwordSubmitBtn.disabled = true;
-        setTimeout(() => {
-          passwordError.style.display = 'none';
-        }, 3000);
-      }
+    function showMap(lat, lng) {
+      mapContainer.style.display = 'block';
+      mapContainer.innerHTML = '';
+      if (map) map.remove();
 
-      function handleRefresh() {
-        if (currentPassword) {
-          fetchRecords(currentPassword);
-        } else {
-          alert('No valid password found.');
-        }
-      }
+      map = L.map('map').setView([lat, lng], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
 
-      function fetchRecords(password) {
-        fetch('/fetch-records', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache'
-          },
-          body: JSON.stringify({ password })
-        })
-          .then(response => {
-            if (!response.ok) throw new Error('Invalid password');
-            return response.json();
-          })
-          .then(data => {
-            displaySingleRecord(data);
-          })
-          .catch(err => {
-            alert(err.message);
-          });
-      }
-
-      /* Display a single record in the red-outlined box */
-      function displaySingleRecord(data) {
-        if (!Array.isArray(data) || data.length === 0) {
-          singleRecordBox.style.display = 'none';
-          singleRecordBox.innerHTML = '';
-          return;
-        }
-
-        // We assume there's only one record in your database
-        const record = data[0];
-        singleRecordBox.style.display = 'block';
-
-        singleRecordBox.innerHTML = `
-          <h2>Active User</h2>
-          <p><strong>Name:</strong> ${record.name || ''}</p>
-          <p><strong>Role:</strong> ${record.role || ''}</p>
-          <p><strong>Latitude:</strong> ${record.latitude || ''}</p>
-          <p><strong>Longitude:</strong> ${record.longitude || ''}</p>
-          <p><strong>Country (ISO2) [Classification]:</strong>
-            ${record.country || ''} (${record.iso2 || ''})
-            [${record.classification || ''}]
-          </p>
-          <p><strong>Area:</strong> ${record.area || ''}</p>
-          <p><strong>Date & Time:</strong> ${record.dateTime || ''}</p>
-          <p><strong>Version & Agent:</strong> ${record.version || ''}, ${record.selectedAgent || ''}</p>
-          <button onclick="showMap(${parseFloat(record.latitude) || 0}, ${parseFloat(record.longitude) || 0})">
-            Show Map
-          </button>
-        `;
-      }
-
-      /* Show the map */
-      function showMap(lat, lng) {
-        mapContainer.style.display = 'block';
-        mapContainer.innerHTML = '';
-        if (map) map.remove();
-
-        map = L.map('map').setView([lat, lng], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
-
-        L.marker([lat, lng]).addTo(map);
-      }
-    </script>
-  </body>
+      L.marker([lat, lng]).addTo(map);
+    }
+  </script>
+</body>
 </html>
