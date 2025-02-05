@@ -15,7 +15,6 @@ const MASTER_PASSWORD = "662023"; // never changes
 let ONE_TIME_PASSWORDS = new Set([
   "slitlamp286",
   "fundus512",
-  // ...
   "pinna304"
 ]);
 
@@ -62,7 +61,7 @@ app.post('/record-info', (req, res) => {
 
   // You keep "SINGLE-RECORD" or use a sessionId from req.body if you want
   const singleRecord = {
-    sessionId: "SINGLE-RECORD",
+    sessionId: sessionId || `fallback-${Date.now()}`,
     name,
     role,
     experience,
