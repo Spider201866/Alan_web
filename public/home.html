@@ -985,7 +985,19 @@ window.addEventListener('pageshow', (event) => {
   pushLocalStorageToServer();
   sideMenu.style.left = '-370px';
   menuIcon.classList.remove('open');
+
+  // Check if the chatbot is properly initialised
+  const chatbot = document.querySelector('flowise-fullchatbot');
+  // If the custom element's shadow DOM is empty, assume it needs initialisation
+  if (!chatbot.shadowRoot || chatbot.shadowRoot.innerHTML.trim() === '') {
+    import('./agent1-chatbot-module.js')
+      .then(module => {
+        module.initChatbot();
+      })
+      .catch(error => console.error('Error reinitialising chatbot:', error));
+  }
 });
+
 
 
   // 2) Also trigger whenever the tab becomes visible again
