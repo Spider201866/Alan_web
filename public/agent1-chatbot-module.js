@@ -84,8 +84,8 @@ export function initChatbot() {
         }
         /* Larger flickering circle that flashes faster */
         .bubble2 {
-          width: 18px !important;
-          height: 18px !important;
+          width: 16px !important;
+          height: 16px !important;
           border-radius: 50% !important;
           opacity: 1 !important;
           animation: flicker 0.5s infinite alternate !important;
