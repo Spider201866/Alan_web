@@ -981,32 +981,23 @@ function pushLocalStorageToServer() {
 }
 
 
-// 1) Trigger on each page load/refresh (including swipe down in mobile browsers)
 window.addEventListener('pageshow', (event) => {
-  // Always push local storage data to server (fresh load or return from another page)
   pushLocalStorageToServer();
-
-  // Reset the side menu if needed
   sideMenu.style.left = '-370px';
   menuIcon.classList.remove('open');
+  
+  // Always remove the old chatbot
+  const chatbotContainer = document.querySelector('.chatbot-container');
+  if (chatbotContainer) chatbotContainer.innerHTML = '';
 
-  // Detect back/forward navigation cache (bfcache)
-  const navType = performance.getEntriesByType('navigation')[0]?.type;
-  if (event.persisted || navType === 'back_forward') {
-    // 1) Remove the existing chatbot element
-    const chatbotContainer = document.querySelector('.chatbot-container');
-    if (chatbotContainer) chatbotContainer.innerHTML = '';
-
-    // 2) Re‑import and initialise your chatbot code
-    import('./agent1-chatbot-module.js')
-      .then(module => {
-        module.initChatbot();
-      })
-      .catch(err => {
-        console.error('Error reinitialising chatbot:', err);
-      });
-  }
+  // Always re-import the module
+  import('./agent1-chatbot-module.js')
+    .then(module => {
+      module.initChatbot();
+    })
+    .catch(err => console.error('Error reinitialising chatbot:', err));
 });
+
 
 
   // 2) Also trigger whenever the tab becomes visible again
