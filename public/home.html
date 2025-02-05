@@ -965,23 +965,20 @@
         });
     }
 
-    const sessionId = localStorage.getItem('sessionId') || 'no-session-id';
+    const name = localStorage.getItem('name') || 'anonymous';
+const question = `${name}. I am`;
 
-    console.log("About to call Flowise API with sessionId:", sessionId);
-    fetch('https://flowiseai-railway-production-fecf.up.railway.app/api/v1/prediction/75b5edc0-4e39-441b-ba7a-eb6cb404b69a', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        question: "Mr Flowise?",
-        customSessionId: sessionId,  // <-- Added this custom field
-        overrideConfig: {
-          sessionId: sessionId
-        }
-      })
-    })
-      .then(response => response.json())
-      .then(data => console.log('Flowise API response:', data))
-      .catch(error => console.error('Error:', error));
+fetch('https://flowiseai-railway-production-fecf.up.railway.app/api/v1/prediction/<chatflow-id>', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    question: question,
+    overrideConfig: {
+      sessionId: 'some-session-id'
+    }
+  })
+})
+
 
     const geoInfoButton = document.getElementById('geo-info-button');
     const geoInfoPopup  = document.getElementById('geo-info-popup');
