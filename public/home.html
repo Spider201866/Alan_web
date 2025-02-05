@@ -967,16 +967,18 @@
 
     const name = localStorage.getItem('name') || 'Anonymous';
 
-fetch('https://flowiseai-railway-production-fecf.up.railway.app/api/v1/prediction/75b5edc0-4e39-441b-ba7a-eb6cb404b69a', {
+const sessionId = localStorage.getItem('sessionId') || 'no-session-id';
+
+fetch('https://flowise-url/api/v1/prediction/<flow-id>', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
-    question: `Hello, I'm ${name}. How can you help me today?`,
+    question: `Hello, I'm ${name}.`,
     overrideConfig: {
-      sessionId: 'some-session-id'
-        }
-      })
-    })
+      sessionId: sessionId
+    }
+  })
+})
       .then(response => response.json())
       .then(data => console.log('Flowise API response:', data))
       .catch(error => console.error('Error:', error));
