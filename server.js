@@ -7,11 +7,10 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 /*********************************************/
-/* 1) Master password + one-time set         */
+/* 1) Master password + optional one-time    */
 /*********************************************/
 const MASTER_PASSWORD = "662023"; // never changes
 
-// If you still want one-time passwords, keep them here; otherwise remove
 let ONE_TIME_PASSWORDS = new Set([
   "slitlamp286",
   "fundus512",
@@ -24,7 +23,7 @@ let ONE_TIME_PASSWORDS = new Set([
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve pages
+// Serve your main pages
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -37,13 +36,12 @@ app.get('/view-records', (req, res) => {
 /*    (POST /record-info)                    */
 /*********************************************/
 /**
- * This endpoint overwrites user-info.json with ONE single "active" record
- * for Flowise. Then it appends or updates user-history.json with the same data
- * for multi-record logging.
+ * This endpoint overwrites user-info.json with ONE single "active" record.
+ * Then it also appends or merges that record into user-history.json.
  */
 app.post('/record-info', (req, res) => {
   let {
-    sessionId, 
+    sessionId,
     name,
     role,
     experience,
@@ -60,9 +58,14 @@ app.post('/record-info', (req, res) => {
     selectedAgent
   } = req.body;
 
-  // You keep "SINGLE-RECORD" or use a sessionId from req.body if you want
+  // If no sessionId is provided, create a fallback
+  if (!sessionId) {
+    sessionId = `fallback-${Date.now()}`;
+  }
+
+  // Build the single record
   const singleRecord = {
-    sessionId: sessionId || `fallback-${Date.now()}`,
+    sessionId,
     name,
     role,
     experience,
@@ -77,19 +80,19 @@ app.post('/record-info', (req, res) => {
     dateTime,
     version,
     selectedAgent,
-    refreshCount: 1 // By default
+    refreshCount: 1
   };
 
   const filePath = path.join(__dirname, 'user-info.json');
-  
-  // 1) Overwrite user-info.json with this single record
+
+  // 1) Overwrite user-info.json with exactly one record
   fs.writeFile(filePath, JSON.stringify([singleRecord], null, 2), (writeErr) => {
     if (writeErr) {
       console.error("Error writing user-info.json:", writeErr);
       return res.status(500).send('Error saving data');
     }
-    
-    // 2) Also append/update the multi-record user-history.json
+
+    // 2) Append or update user-history.json for the full log
     appendToHistory(singleRecord);
 
     res.send('OK');
@@ -101,8 +104,9 @@ app.post('/record-info', (req, res) => {
 /*    /fetch-records                         */
 /*********************************************/
 /**
- * This is what Flowise or your custom tool calls to get the single record
- * from user-info.json. Validates password, returns the single-element array.
+ * Validates the password, then returns the single-element array
+ * from user-info.json (the "active" record).
+ * Flowise uses this to see just the one current record.
  */
 app.post('/fetch-records', (req, res) => {
   console.log("Received in /fetch-records:", req.body);
@@ -139,25 +143,26 @@ app.post('/fetch-records', (req, res) => {
       return res.json([]);
     }
 
-    // Return the single record array
+    // Return whatever is in that file (usually 1 record in an array)
     res.json(records);
   });
 });
 
 /*********************************************/
-/* 5) NEW: Fetch Full History (POST)         */
+/* 5) Fetch Full History (POST)              */
 /*    /fetch-history                         */
 /*********************************************/
 /**
- * This new endpoint returns the multi-record log stored in user-history.json,
- * allowing you to show a "Full History" in view-records.html
+ * Validates the password, then returns the entire array
+ * from user-history.json. This is for your 'view-records.html' or
+ * admin page to see the full log of all sessions.
  */
 app.post('/fetch-history', (req, res) => {
   console.log("Received in /fetch-history:", req.body);
 
   const { password } = req.body;
 
-  // Validate password (same logic as /fetch-records)
+  // Validate password
   if (password === MASTER_PASSWORD) {
     // proceed
   } else if (ONE_TIME_PASSWORDS.has(password)) {
@@ -202,8 +207,8 @@ app.listen(port, () => {
 /* HELPER: Append or Update user-history.json*/
 /*********************************************/
 /**
- * If the last entry has the same sessionId, we increment refreshCount,
- * otherwise we add a new entry.
+ * If we find an existing record with the same sessionId, we increment refreshCount
+ * and update fields. If not, we push a new entry.
  */
 function appendToHistory(newRecord) {
   const historyPath = path.join(__dirname, 'user-history.json');
@@ -219,24 +224,23 @@ function appendToHistory(newRecord) {
       }
     }
 
-    if (historyArray.length > 0) {
-      const lastItem = historyArray[historyArray.length - 1];
+    // Find an item with the same sessionId
+    const existingIndex = historyArray.findIndex(
+      (item) => item.sessionId === newRecord.sessionId
+    );
 
-      // If it's the same "sessionId", we consider it a refresh
-      if (lastItem.sessionId === newRecord.sessionId) {
-        lastItem.refreshCount = (lastItem.refreshCount || 1) + 1;
-        lastItem.dateTime     = newRecord.dateTime;
-        // Optionally also update lastItem.latitude, lastItem.longitude, etc:
-        lastItem.latitude  = newRecord.latitude;
-        lastItem.longitude = newRecord.longitude;
-        lastItem.area      = newRecord.area;
-        // ... any other fields you want to keep current ...
-      } else {
-        // Different session => push a new item
-        historyArray.push(newRecord);
-      }
+    if (existingIndex >= 0) {
+      // We found an existing record => increment refreshCount
+      const existingItem = historyArray[existingIndex];
+      existingItem.refreshCount = (existingItem.refreshCount || 1) + 1;
+      // Optionally update fields with the new data
+      existingItem.dateTime     = newRecord.dateTime;
+      existingItem.latitude     = newRecord.latitude;
+      existingItem.longitude    = newRecord.longitude;
+      existingItem.area         = newRecord.area;
+      // etc. if you want them refreshed
     } else {
-      // If file was empty, just push
+      // Different session => push a new entry
       historyArray.push(newRecord);
     }
 
