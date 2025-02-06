@@ -698,34 +698,25 @@ p {
     opacity: 0;
   }
 }
-/* 1) Let the main wrapper and chatbot container expand flexibly */
-html,
-body {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+.animation-container img {
+  width: 70px; /* Adjust the width as needed */
+  height: auto;
+}
+/* 1) Remove or reduce the forced min-height on the Flowise container */
+flowise-fullchatbot {
+  min-height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.main-wrapper {
-  flex: 1 0 auto; 
-  display: flex;
-  flex-direction: column;
-}
-
-/* 2) Chatbot container grows vertically, but we top-align the content */
+/* 2) Let the chatbot container shrink naturally rather than fill space */
 .chatbot-container {
-  flex: 1 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  margin-top: 20px;   /* gap below your header */
-  margin-bottom: 20px; /* comfortable gap above Alan can make mistakes line */
+  flex-grow: 0; 
+  align-items: flex-start; /* so it does not float in the middle */
+  padding-bottom: 0;
 }
 
-/* 3) Keep the bottom line pinned near the bottom if there is spare room */
+/* 3) Trim the bottom padding on the version line if you do not need it */
 .chatbot-version {
-  flex-shrink: 0;
-  margin: 0 auto 10px;   /* centre horizontally, plus small bottom gap */
-  padding: 0;
-  text-align: center;
+  padding-bottom: 5px; /* or even 0px */
 }
