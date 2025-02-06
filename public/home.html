@@ -87,6 +87,7 @@
       padding: 0;
       line-height: 1.5;
     }
+    
   </style>
 </head>
 
@@ -357,55 +358,58 @@
 
   </div><!-- end .page-container -->
 
-  <!-- POPUP for user info -->
-  <div id="popup" class="popup">
-    <span class="popup-close" onclick="closePopup()">&times;</span>
-    <div class="popup-content" id="popup-content"></div>
+<!-- The user-info popup, hidden off to the right initially -->
+<div id="popup">
+  <span class="popup-close" onclick="closePopup()">&times;</span>
+  <div class="popup-content" id="popup-content">
+    <!-- We'll fill this with user info or geolocation data in JS -->
+  </div>
 
-    <!-- Geolocation button and info area -->
-    <div style="text-align: center; margin-top: 10px; position: relative;">
-      <button id="geolocation-button" class="button grey"></button>
-      <button
-        id="geo-info-button"
-        style="
-          background-color: #fff;
-          color: #000;
-          border: 1px solid #000;
-          border-radius: 8px;
-          padding: 4px 8px;
-          cursor: pointer;
-        "
-      >
-        i
-      </button>
-      <p
-        id="location-info"
-        style="display:none; margin-top: 5px; font-size:12px;"
-      ></p>
-      <div
-        id="geo-info-popup"
-        style="
-          display: none;
-          position: absolute;
-          left: 50%;
-          top: 120%;
-          transform: translateX(-50%);
-          width: 250px;
-          max-width: none;
-          background: #fefefe;
-          border: 1px solid #000;
-          padding: 10px;
-          border-radius: 10px;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        "
-      >
-        <p
-          id="geoInfoText"
-          style="font-size: 14px; margin: 0;"
-        ></p>
-      </div>
+  <!-- Geolocation UI, if used, also inside the popup -->
+  <div style="text-align: center; margin-top: 10px; position: relative;">
+    <button id="geolocation-button" class="button grey" style="font-size: 14px;">Check Location</button>
+    <button 
+      id="geo-info-button"
+      style="
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #000;
+        border-radius: 8px;
+        padding: 4px 8px;
+        cursor: pointer;
+        font-size: 14px;
+      "
+    >
+      i
+    </button>
+    <p
+      id="location-info"
+      style="display:none; margin-top: 5px; font-size:12px;"
+    ></p>
+    <div 
+      id="geo-info-popup" 
+      style="
+        display: none;
+        position: absolute;
+        left: 50%;
+        top: 120%;
+        transform: translateX(-50%);
+        width: 250px;
+        max-width: none;
+        background: #fefefe;
+        border: 1px solid #000;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      "
+    >
+      <p id="geoInfoText" style="font-size: 14px; margin: 0;">
+        Additional info...
+      </p>
     </div>
   </div>
+</div>
+
 
   <!-- SINGLE SCRIPT BLOCK AT BOTTOM, TYPE=MODULE -->
   <script type="module">
@@ -467,17 +471,17 @@
         image.style.cursor = 'zoom-in';
       }
     }
-    function openPopup() {
+        function openPopup() {
       popupContent.innerHTML = buildPopupContent();
+      // Only change the 'right' to bring it onscreen
       popup.style.right = '0';
-      popup.style.display = 'block';
     }
+
     function closePopup() {
-      popup.style.right = '-300px';
-      setTimeout(() => {
-        popup.style.display = 'none';
-      }, 300);
+      // Slide it offscreen again
+      popup.style.right = '-350px';
     }
+
     function buildPopupContent() {
       const lang = localStorage.getItem('preferredLanguage') || 'en';
       const name = localStorage.getItem('name') || 'Not set';
