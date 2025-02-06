@@ -54,18 +54,19 @@
       padding: 0 20px;
     }
 
-    table {
+    /* Shared table styling for both active record and history tables */
+    .records-table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
     }
-    th, td {
+    .records-table th, .records-table td {
       border: 1px solid black;
       padding: 10px;
       text-align: left;
       vertical-align: top;
     }
-    th {
+    .records-table th {
       background-color: #f2f2f2;
     }
 
@@ -74,10 +75,10 @@
       border: 2px solid red;
     }
 
-    /* Refresh icon */
+    /* Refresh icon - increased size by 50% (from 30px to 45px) */
     .refresh-icon {
       cursor: pointer;
-      font-size: 30px;
+      font-size: 45px;
       display: inline-block;
       transition: transform 0.3s ease;
     }
@@ -134,7 +135,7 @@
           border-radius: 12px;
           border: 1px solid #ccc;
           cursor: pointer;
-          margin-top: -15px; /* tweak if needed */
+          margin-top: -15px;
         "
       >
         Submit
@@ -289,7 +290,7 @@
 
       // Build the single-record table with a red border row
       activeRecordDiv.innerHTML = `
-        <table>
+        <table class="records-table">
           <thead>
             <tr>
               <th>No.</th>
@@ -352,7 +353,7 @@
 
       // Build a table listing all records from user-history.json
       let html = `
-        <table>
+        <table class="records-table">
           <thead>
             <tr>
               <th>No.</th>
