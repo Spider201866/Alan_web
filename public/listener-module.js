@@ -1,5 +1,8 @@
 // listener-module.js
 
+// Global flag: once the user manually clicks the "Images" button, we keep the 3 site buttons visible
+let imagesButtonClicked = false;
+
 // ------------------------------------------------------
 // 1) Initialise Chatbot Listeners
 // ------------------------------------------------------
@@ -40,12 +43,14 @@ const initChatbotListeners = () => {
     observer.observe(shadowRoot, { childList: true, subtree: true });
 
     /***********************************************
-     * B) FALLBACK CHECK: if chat is cleared, remove the 3 buttons
+     * B) FALLBACK CHECK: every 2s, remove the 3 buttons
+     *    ONLY if chat is empty AND user has NOT clicked "Images"
      ***********************************************/
     setInterval(() => {
       const hostBubbles = shadowRoot.querySelectorAll("[data-testid='host-bubble']");
-      // If no "host bubble" => chat likely cleared, so remove the 3 buttons
-      if (hostBubbles.length === 0) {
+      // If no host bubble => chat likely cleared
+      // But skip removal if user pressed "Images" (imagesButtonClicked === true)
+      if (hostBubbles.length === 0 && !imagesButtonClicked) {
         removeChatEndButtons();
       }
     }, 2000);
@@ -85,6 +90,7 @@ function parseFinalLLMMessage(llmBubbleText) {
       console.log('Detected condition:', condition);
 
       // Show the 3 site buttons for that condition
+      removeChatEndButtons();   // remove any old instance first
       createButtonsWithText(condition);
     }
   }
@@ -94,7 +100,7 @@ function parseFinalLLMMessage(llmBubbleText) {
 // 3) Create the line + 3 site buttons
 // ------------------------------------------------------
 function createButtonsWithText(condition) {
-  // Avoid duplicates (if a set of buttons already exists)
+  // Avoid duplicates
   if (document.getElementById('chat-end-buttons')) return;
 
   const container = document.createElement('div');
@@ -110,15 +116,14 @@ function createButtonsWithText(condition) {
   if (condition) {
     textLine.innerHTML = `Find <strong>${condition}</strong> images on these sites`;
   } else {
-    // If no condition given (e.g. user clicked "Images" button),
-    // we just say "Find images on these sites"
+    // If no condition given (e.g. user clicked "Images" button)
     textLine.innerHTML = `Find images on these sites`;
   }
   textLine.style.fontSize = '16px';
   textLine.style.marginBottom = '20px';
   container.appendChild(textLine);
 
-  // The row of 3 buttons
+  // Row of 3 buttons
   const buttonsRow = document.createElement('div');
   buttonsRow.style.display = 'flex';
   buttonsRow.style.flexWrap = 'wrap';
@@ -164,7 +169,7 @@ function createButtonsWithText(condition) {
   buttonsRow.appendChild(dermButton);
   container.appendChild(buttonsRow);
 
-  // Insert above the "Alan can make mistakes..." line if it exists
+  // Insert above the "Alan can make mistakes..." line if found
   const chatbotVersionElem = document.querySelector('.chatbot-version');
   if (chatbotVersionElem) {
     chatbotVersionElem.parentNode.insertBefore(container, chatbotVersionElem);
@@ -185,29 +190,31 @@ function removeChatEndButtons() {
 
 // ------------------------------------------------------
 // 5) DOMContentLoaded Hook
-//    - A) Adjust chatbot container styling if needed
-//    - B) Call initChatbotListeners() for the final message logic
-//    - C) ALSO attach a click to #images to show the same 3 buttons on demand
 // ------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOMContentLoaded event fired.');
 
-  // Optionally adjust the chatbot container margin
+  // Optionally adjust chatbot container margin if needed
   const chatbotContainer = document.querySelector('.chatbot-container');
   if (chatbotContainer) {
     chatbotContainer.style.marginBottom = '0';
   }
 
-  // Run the observer logic to parse final LLM messages
+  // Start the main logic to observe final chatbot messages
   initChatbotListeners();
 
-  // Now, let the "Images" button forcibly show those same 3 site buttons
+  // Let the "Images" button forcibly show the same 3 site buttons
   const imagesButton = document.getElementById('images');
   if (imagesButton) {
     imagesButton.addEventListener('click', () => {
-      // Remove existing if present, then create new
+      // Mark that user manually wants the images
+      imagesButtonClicked = true;
+
+      // Remove existing buttons if any
       removeChatEndButtons();
-      createButtonsWithText(""); // Pass empty string => "Find images on these sites"
+
+      // Show the 3 site buttons with no specific condition text
+      createButtonsWithText("");
     });
   }
 });
