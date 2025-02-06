@@ -285,39 +285,38 @@
 
 
 
-    <div class="chatbot-container">
+    <div class="main-wrapper">
+      <div class="chatbot-container">
         <flowise-fullchatbot></flowise-fullchatbot>
+      </div>
+  
+      <!-- Container for the injected muted.html -->
+      <div id="muted-buttons"></div>
+  
+      <!-- 2) Load your custom JS -->
+      <script src="muted.js"></script>
+      <script>
+        // 3) Fetch muted.html, inject into #muted-buttons, then call initMutedButtons()
+        fetch('muted.html')
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById('muted-buttons').innerHTML = html;
+            initMutedButtons();
+          })
+          .catch(err => console.error('Error loading muted.html:', err));
+      </script>
+  
+      <!-- Condition image and text -->
+      <div class="detected-condition"></div>
+      <img id="condition-image" alt="" />
+      <p id="condition-description"></p>
     </div>
-
-
-
-  <!-- Container for the injected muted.html -->
-  <div id="muted-buttons"></div>
-
-  <!-- 2) Load our custom JS which defines initMutedButtons() -->
-  <script src="muted.js"></script>
-
-  <script>
-  // 3) Fetch muted.html, inject into #muted-buttons, then call initMutedButtons()
-  fetch('muted.html')
-    .then(res => res.text())
-    .then(html => {
-      document.getElementById('muted-buttons').innerHTML = html;
-      initMutedButtons(); // Now the elements exist in the DOM
-    })
-    .catch(err => console.error('Error loading muted.html:', err));
-  </script>
-      
-
-
-  <!-- Condition image and text -->
-  <div>
-    <div class="detected-condition"></div>
-    <img id="condition-image" alt="" />
-    <p id="condition-description"></p>
-    <!-- “Alan can make mistakes” line should appear fully now -->
-    <div class="chatbot-version"></div>
-  </div>
+  
+    <!-- 4) Alan can make mistakes line at the bottom -->
+    <div class="chatbot-version">
+      Alan can make mistakes, double check everything
+    </div>
+  
 
     <!-- Popup for user info -->
     <div id="popup" class="popup">

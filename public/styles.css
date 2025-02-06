@@ -698,7 +698,34 @@ p {
     opacity: 0;
   }
 }
-.animation-container img {
-  width: 70px; /* Adjust the width as needed */
-  height: auto;
+/* 1) Let the main wrapper and chatbot container expand flexibly */
+html,
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.main-wrapper {
+  flex: 1 0 auto; 
+  display: flex;
+  flex-direction: column;
+}
+
+/* 2) Chatbot container grows vertically, but we top-align the content */
+.chatbot-container {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 20px;   /* gap below your header */
+  margin-bottom: 20px; /* comfortable gap above Alan can make mistakes line */
+}
+
+/* 3) Keep the bottom line pinned near the bottom if there is spare room */
+.chatbot-version {
+  flex-shrink: 0;
+  margin: 0 auto 10px;   /* centre horizontally, plus small bottom gap */
+  padding: 0;
+  text-align: center;
 }
