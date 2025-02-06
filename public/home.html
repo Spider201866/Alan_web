@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
     <title>Alan</title>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
 
     <!-- If you have a faviconAndMetaSetup script -->
     <script type="module">
@@ -285,15 +287,23 @@
         <flowise-fullchatbot></flowise-fullchatbot>
     </div>
 
-    <div id="muted-buttons"></div>
-    <script>
-      fetch('muted.html')
-        .then(response => response.text())
-        .then(html => {
-          document.getElementById('muted-buttons').innerHTML = html;
-        })
-        .catch(err => console.error('Error loading muted.html:', err));
-    </script>
+  <!-- Container for the injected muted.html -->
+  <div id="muted-buttons"></div>
+
+  <!-- 2) Load our custom JS which defines initMutedButtons() -->
+  <script src="muted.js"></script>
+
+  <script>
+  // 3) Fetch muted.html, inject into #muted-buttons, then call initMutedButtons()
+  fetch('muted.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('muted-buttons').innerHTML = html;
+      initMutedButtons(); // Now the elements exist in the DOM
+    })
+    .catch(err => console.error('Error loading muted.html:', err));
+  </script>
+      
 
 
     <div>

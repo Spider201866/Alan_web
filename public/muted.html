@@ -2,20 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Page title -->
   <title>Muted Buttons with Icons</title>
+  
+  <!-- Inline CSS to style the buttons and popups -->
   <style>
     body {
       background: white;
-      font-size: 7pt;
+      font-size: 7pt; 
       font-family: "Calibri", sans-serif;
       margin: 20px;
     }
+    
+    /* Container for all buttons, arranged in a row */
     .button-container {
       display: flex;
-      gap: 5px;  /* 5px gap between buttons */
+      gap: 5px;
       align-items: center;
-      justify-content: center; /* centre the container */
+      justify-content: center;
     }
+    
+    /* Base styling for each button (grey text, light border, rounded corners) */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -28,36 +35,60 @@
       color: grey;
       margin: 0;
     }
+    
+    /* A small container for the inline SVG icons within each button */
     .btn .icon {
       margin-right: 6px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
     }
+    
+    /* Force all icons to a uniform size */
     .btn .icon svg {
       width: 16px;
       height: 16px;
     }
+    
+    /* Wrapper around a button that has an associated popup element */
     .btn-wrapper {
       position: relative;
       display: inline-block;
     }
+    
+    /* The popup box that appears above a button */
     .popup {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      margin-top: 10px;
-      background: white;
-      border: 1px solid rgb(215,215,215);
-      border-radius: 16px;
-      padding: 4px 8px;
-      color: grey;
-      font-size: 7pt;
-      white-space: nowrap;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      display: none;
-      z-index: 10;
-    }
+  position: absolute;
+  /* Position above the button, anchored in the centre horizontally */
+  top: -50px;  
+  left: 50%;
+  transform: translateX(-50%);
+  
+  /* Limit width so it remains small */
+  max-width: 75px;
+  
+  /* Add some padding and border styling */
+  padding: 4px 8px;
+  border: 1px solid rgb(215,215,215);
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+  /* Make the text red and centre it horizontally + vertically */
+  color: red;
+  font-size: 8pt;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Hidden by default, revealed in your script with .style.display = "flex" (or "block") */
+  display: none;
+  z-index: 9999; /* Ensures popup stays on top */
+}
+
+    
+    /* Thumbnail styling if needed for displayed images */
     #thumbnail-container img {
       width: 100px;
       height: auto;
@@ -68,87 +99,60 @@
   </style>
 </head>
 <body>
+  <!-- Main container to centre the set of buttons -->
   <div style="text-align: center;">
     <div class="button-container">
+      <!-- Images button -->
       <button id="images" class="btn">
         <span class="icon">
+          <!-- Icon for 'Images' button -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#99CC99">
             <path d="M21 19V5H3v14h18zm0-16a2 2 0 012 2v14a2 2 0 01-2 2H3a2 2 0 01-2-2V5a2 2 0 012-2h18zM8.5 13.5l2.5 3.01L15.5 11l4.5 6H4l4.5-6.5z"/>
           </svg>
         </span>
         <span data-i18n="images">Images</span>
       </button>
+      
+      <!-- Help button, takes user to instructions.html -->
       <button id="help" class="btn" onclick="window.location.href='instructions.html'">
         <span class="icon">
+          <!-- Icon for 'Help' button -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#CC6666">
             <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm.88 15h-1.75v-1.75h1.75V17zm1.88-6.5c-.28.28-.53.53-.53.97v1h-1.75v-1c0-.65.28-1.18.75-1.65.47-.47 1.03-.94 1.03-1.85 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 1.47-.76 2.21-1.74 3.19z"/>
           </svg>
         </span>
         <span data-i18n="help">Help</span>
       </button>
+      
+      <!-- Screenshot button -->
       <button id="screenshot" class="btn">
         <span class="icon">
+          <!-- Icon for 'Screenshot' button -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFCC66">
             <path d="M12 5a3 3 0 013 3h4v11H5V8h4a3 3 0 013-3zm0 2a1 1 0 100 2 1 1 0 000-2zm-1 4a3 3 0 116 0 3 3 0 01-6 0z"/>
           </svg>
         </span>
         <span data-i18n="screenshot">Screenshot</span>
       </button>
+      
+      <!-- Refer button with associated popup -->
       <div class="btn-wrapper">
         <button id="refer" class="btn">
           <span class="icon">
+            <!-- Icon for 'Refer' button -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#CC99CC">
               <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7a3.19 3.19 0 000-1.39l7.05-4.11a3 3 0 10-.84-1.44L8.11 9.16a3 3 0 100 5.68l7.13 4.17a3 3 0 10.74-1.39z"/>
             </svg>
           </span>
           <span data-i18n="refer">Refer</span>
         </button>
+        <!-- Popup that appears for 5 seconds when the Refer button is clicked/touched -->
         <div id="refer-popup" class="popup">Coming Soon...</div>
       </div>
     </div>
   </div>
+
+  <!-- A container for thumbnails or images if needed -->
   <div id="thumbnail-container"></div>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // When the Refer button is clicked, show its popup for 5 seconds
-      document.getElementById("refer").addEventListener("click", function(e) {
-        var popup = document.getElementById("refer-popup")
-        popup.style.display = "block"
-        e.stopPropagation()
-        setTimeout(function() {
-          popup.style.display = "none"
-        }, 5000)
-      })
-
-      // Hide the popup if clicking anywhere else on the document
-      document.addEventListener("click", function() {
-        document.getElementById("refer-popup").style.display = "none"
-      })
-
-      // Screenshot functionality using getDisplayMedia
-      document.getElementById("screenshot").addEventListener("click", async function() {
-        try {
-          const stream = await navigator.mediaDevices.getDisplayMedia({ video: true })
-          const video = document.createElement("video")
-          video.srcObject = stream
-          video.addEventListener("loadedmetadata", function() {
-            video.play().then(() => {
-              const canvas = document.createElement("canvas")
-              canvas.width = video.videoWidth
-              canvas.height = video.videoHeight
-              const context = canvas.getContext("2d")
-              context.drawImage(video, 0, 0, canvas.width, canvas.height)
-              stream.getTracks().forEach(track => track.stop())
-              const dataURL = canvas.toDataURL()
-              document.getElementById("thumbnail-container").innerHTML =
-                `<img src="${dataURL}" alt="Screenshot thumbnail">`
-            })
-          })
-        } catch (err) {
-          console.error("Error capturing screenshot: " + err)
-        }
-      })
-    })
-  </script>
 </body>
 </html>
