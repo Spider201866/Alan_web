@@ -283,7 +283,7 @@
 
     <object type="text/html" data="boxes.html" id="boxesFrame" style="width:100%; height:100px; overflow:auto; border:none;"></object>
 
-    
+
 
     <div class="chatbot-container">
         <flowise-fullchatbot></flowise-fullchatbot>
@@ -310,17 +310,14 @@
       
 
 
-    <div>
-        <!-- Condition name displayed here -->
-        <div class="detected-condition"></div>
-
-        <!-- Thumbnail image with onclick functionality for zoom -->
-        <img id="condition-image" alt="" style="max-width: 100%; height: 1px; display: block; margin: 0 auto; cursor: pointer;" />
-        <p id="condition-description"></p>
-
-        <!-- Disclaimer about Alan potentially making mistakes -->
-        <div class="chatbot-version"></div>
-    </div>
+  <!-- Condition image and text -->
+  <div>
+    <div class="detected-condition"></div>
+    <img id="condition-image" alt="" />
+    <p id="condition-description"></p>
+    <!-- “Alan can make mistakes” line should appear fully now -->
+    <div class="chatbot-version"></div>
+  </div>
 
     <!-- Popup for user info -->
     <div id="popup" class="popup">
