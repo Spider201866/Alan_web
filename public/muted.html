@@ -13,10 +13,10 @@
     /* Remove whitespace gaps by setting font-size: 0 on the container */
     .button-container {
       display: inline-flex;
-      gap: 0;
+      gap: 10px;  /* fixed 5px gap between buttons */
       align-items: center;
       margin: 0 auto; /* centre the container */
-      font-size: 0;
+      font-size: 0;  /* remove extra spacing from whitespace */
     }
     /* Restore font-size for child elements */
     .button-container > * {
