@@ -219,7 +219,7 @@ html {
   z-index: 2000; /* Set a high z-index to ensure it appears above other elements */
 }
 .chatbot-subtitle {
-  font-size: 12px;
+  font-size: 11px;
   margin-top: 0;
   margin-top: 0;
   color: grey;

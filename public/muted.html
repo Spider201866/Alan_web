@@ -7,20 +7,20 @@
     body {
       background: white;
       font-size: 7pt; /* reduced text size */
-      font-family: "Calibri", sans-serif;
+      font-family: "Calibri", sans-serif; /* Calibri font */
       margin: 20px;
     }
     /* Remove whitespace gaps by setting font-size: 0 on the container */
     .button-container {
       display: inline-flex;
-      gap: 0; /* no gap */
+      gap: 0;
       align-items: center;
       margin: 0 auto; /* centre the container */
-      font-size: 0; /* remove inline spacing from whitespace */
+      font-size: 0;
     }
     /* Restore font-size for child elements */
     .button-container > * {
-      font-size: 7pt;
+      font-size: 8pt;
     }
     .btn {
       display: inline-flex;
@@ -77,16 +77,8 @@
 <body>
   <div style="text-align: center;">
     <div class="button-container">
-      <button id="arclight" class="btn" onclick="window.location.href='https://medicine.st-andrews.ac.uk/arclight/'">
-        <span class="icon">
-          <!-- Folder icon for Arclight Project -->
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#6699CC">
-            <path d="M10 4H2v16h20V6H12l-2-2z"/>
-          </svg>
-        </span>
-        <span data-i18n="arclight">Arclight</span>
-      </button><!--
-      --><button id="images" class="btn">
+      <!-- Arclight button removed -->
+      <button id="images" class="btn">
         <span class="icon">
           <!-- Picture icon for Images -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#99CC99">
