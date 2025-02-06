@@ -6,8 +6,8 @@
   <style>
     body {
       background: white;
-      font-size: 8pt;
-      font-family: Arial, sans-serif;
+      font-size: 7pt; /* reduced text size */
+      font-family: "Calibri", sans-serif; /* Calibri Light font */
       margin: 20px;
     }
     .button-container {
@@ -19,7 +19,8 @@
       display: inline-flex;
       align-items: center;
       background: white;
-      border: 1px solid rgb(215,215,215);
+      font-size: 8pt; /* reduced text size */
+      border: 1px solid rgb(225, 225, 225);
       padding: 8px 10px;
       cursor: pointer;
       border-radius: 16px;
@@ -49,7 +50,7 @@
       border-radius: 16px;
       padding: 4px 8px;
       color: grey;
-      font-size: 8pt;
+      font-size: 7pt;
       white-space: nowrap;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       display: none;
@@ -118,7 +119,7 @@
   </div>
   <div id="thumbnail-container"></div>
   <script>
-    // Toggle the refer button popup (already discussed)
+    // Toggle the refer popup and auto-hide after 2 seconds
     document.getElementById("refer").addEventListener("click", function(e) {
       var popup = document.getElementById("refer-popup")
       popup.style.display = "block"
@@ -134,11 +135,9 @@
     // Screenshot functionality using getDisplayMedia
     document.getElementById("screenshot").addEventListener("click", async function() {
       try {
-        // Request permission to capture the screen
         const stream = await navigator.mediaDevices.getDisplayMedia({ video: true })
         const video = document.createElement("video")
         video.srcObject = stream
-        // Once the video metadata is loaded, capture a frame
         video.addEventListener("loadedmetadata", function() {
           video.play().then(() => {
             const canvas = document.createElement("canvas")
@@ -146,9 +145,7 @@
             canvas.height = video.videoHeight
             const context = canvas.getContext("2d")
             context.drawImage(video, 0, 0, canvas.width, canvas.height)
-            // Stop the capture stream
             stream.getTracks().forEach(track => track.stop())
-            // Create a thumbnail image from the captured frame
             const dataURL = canvas.toDataURL()
             document.getElementById("thumbnail-container").innerHTML =
               `<img src="${dataURL}" alt="Screenshot thumbnail">`
