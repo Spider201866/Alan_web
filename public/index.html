@@ -121,22 +121,22 @@
 <!-- ===================================================================== -->
 <!-- ONBOARDING (INSTRUCTION) SCREEN (initially hidden) -->
 <!-- ===================================================================== -->
-<div class="instruction-screen hidden" style="text-align: center;">
-  <img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: -10px;" />
-  <p id="instruction-text" style="text-align: justify; margin: 0 20px;">
+<div class="instruction-screen hidden">
+  <img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: -10px" />
+  <p id="instruction-text" style="text-align: justify">
     Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying
     names or details.
   </p>
-  <p id="good-luck" class="good-luck" style="text-align: center; margin: 10px 0;">Good luck!</p>
+  <p id="good-luck" class="good-luck" style="text-align: center">Good luck!</p>
   <input
     type="text"
     id="nameInput"
     class="name-input"
     placeholder="Name"
     title="2-20 letters, spaces, apostrophes or hyphens only"
-    style="color: grey; text-align: center; display: block; margin: 0 auto; padding: 8px;"
+    style="color: grey"
   />
-  <select id="job-role-select" class="job-role-dropdown" style="text-align: center; text-align-last: center; display: block; margin: 10px auto; padding: 8px;">
+  <select id="job-role-select" class="job-role-dropdown">
     <option value="" disabled selected hidden>Role</option>
     <option value="Health worker">Health worker</option>
     <option value="Nurse">Nurse</option>
@@ -154,34 +154,33 @@
     <option value="Ear care practitioner">Ear care practitioner</option>
     <option value="Dermatologist">Dermatologist</option>
   </select>
-  <select id="experience-select" class="experience-dropdown" style="text-align: center; text-align-last: center; display: block; margin: 10px auto; padding: 8px;">
+  <select id="experience-select" class="experience-dropdown">
     <option value="" disabled selected hidden>Experience</option>
     <option value="<1 yr">&lt;1 yr</option>
     <option value="1-3 yr">1-3 yr</option>
     <option value="3-7 yr">3-7 yr</option>
     <option value=">7 yr">&gt;7 yr</option>
   </select>
-  <div class="focus-container" style="margin: 10px auto;">
-    <button id="focusToggleBtn" class="focus-button" style="display: inline-flex; align-items: center; justify-content: center; text-align: center; padding: 8px 12px; cursor: pointer;">
-      Aims
-    </button>
-    <div id="focusDropdown" class="focus-dropdown hidden" style="position: relative; display: inline-block; margin-top: 5px;">
+  <div class="focus-container">
+    <button id="focusToggleBtn" class="focus-button" style="display: inline-flex; align-items: center; justify-content: center;">Aims</button>
+    <div id="focusDropdown" class="focus-dropdown hidden" style="position: relative">
       <span
         class="close-btn"
-        style="position: absolute; top: 5px; right: 10px; cursor: pointer; font-size: 20px;"
+        style="position: absolute; top: 5px; right: 10px; cursor: pointer; font-size: 20px"
         onclick="document.getElementById('focusDropdown').classList.remove('visible'); document.getElementById('focusDropdown').classList.add('hidden');"
       >
         &times;
       </span>
-      <label style="display: block; margin: 5px 0;">
+
+      <label>
         <input type="checkbox" name="focus" value="Second opinion" />
         <span class="aims-label-text">Second opinion</span>
       </label>
-      <label style="display: block; margin: 5px 0;">
+      <label>
         <input type="checkbox" name="focus" value="Condition lookup" />
         <span class="aims-label-text">Condition lookup</span>
       </label>
-      <label style="display: block; margin: 5px 0;">
+      <label>
         <input type="checkbox" name="focus" value="Communicate better" />
         <span class="aims-label-text">Communicate better</span>
       </label>
@@ -196,14 +195,11 @@
     autocorrect="off"
     autocapitalize="off"
     spellcheck="false"
-    style="text-align: center; display: block; margin: 10px auto; padding: 8px;"
   />
   <br /><br /><br />
-  <button id="acceptButton" disabled style="display: inline-flex; align-items: center; justify-content: center; text-align: center; padding: 10px 20px; cursor: pointer; margin: 0 auto;">
-    Accept
-  </button>
+  <button id="acceptButton" disabled style="display: inline-flex; align-items: center; justify-content: center;">Accept</button>
   <br />
-  <div id="locationInfo" style="display: none;"></div>
+  <div id="locationInfo" style="display: none"></div>
 </div>
 <!-- END ONBOARDING SCREEN -->
 
