@@ -703,52 +703,52 @@ p {
   height: auto;
 }
 
-/* Ensure the body/html let content scroll freely */
+
+/* Make sure body/html do not override our flex container */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  display: block; /* or remove "display: flex" if you had that before */
-  overflow-x: hidden; /* no horizontal scrolling */
-  overflow-y: auto; /* normal vertical scroll */
 }
 
-/* Keep your main content so it can grow, 
-   but add bottom padding to avoid overlap by the fixed footer */
+/* This container will fill the entire viewport height. */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* ensures enough height to push the footer down */
+}
+
+/* The main content area grows to fill leftover vertical space, 
+   pushing the footer to the bottom if content is short. */
 .main-wrapper {
-  padding-bottom: 60px; /* matches footer height or a bit more */
+  flex: 1; /* This is what keeps the footer “sticky” at the bottom */
+  display: block; /* or flex, if you need more layout. */
+  margin: 0;
+  padding: 0;
 }
 
-/* Make the footer pinned at bottom */
-.footer-area {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  
-  z-index: 999;
-
-  text-align: center;
-  padding: 10px; 
-  /* This height ~60px is what you match in .main-wrapper padding-bottom */
-  box-sizing: border-box;
-}
-
-/* If you need to trim the chatbot container 
-   so there's no forced huge empty space. */
+/* The chatbot container: no forced min-height, so it shrinks if content is small. */
 .chatbot-container {
-  margin: 0; 
-  padding: 0; 
-  /* optional override if you had large min-heights or margins */
-  flex-grow: 0; /* only relevant if you had a flex layout earlier */
+  margin: 0;
+  padding: 0;
+  /* If you used flex before, remove it or keep if needed. 
+     E.g. flex-grow: 0; align-items: flex-start; */
 }
 
-/* If Flowise had an enforced min-height, you can override it: */
+/* Flowise’s own forced min-height can be relaxed or removed. */
 flowise-fullchatbot {
   min-height: auto !important;
   margin: 0 !important;
   padding: 0 !important;
-  /* Possibly a smaller min-height if you want: 
-     min-height: 300px !important;
-  */
 }
+
+/* The footer sits at the bottom if content is short, or is pushed further down if content is tall. */
+.chatbot-version {
+  text-align: center;
+  padding: 10px 0; /* A bit of breathing room */
+  margin: 0;       /* Remove default paragraph spacing */
+
+  color: #8d8d8d;
+  font-size: 14px;
+}
+
