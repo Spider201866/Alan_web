@@ -285,37 +285,36 @@
 
 
 
- <div class="main-wrapper">
-    <div class="chatbot-container">
-      <flowise-fullchatbot></flowise-fullchatbot>
+    <div class="main-wrapper">
+      <div class="chatbot-container">
+        <flowise-fullchatbot></flowise-fullchatbot>
+      </div>
+    
+      <!-- Container for the injected muted.html -->
+      <div id="muted-buttons"></div>
+      <script src="muted.js"></script>
+      <script>
+        fetch('muted.html')
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById('muted-buttons').innerHTML = html;
+            initMutedButtons();
+          })
+          .catch(err => console.error('Error loading muted.html:', err));
+      </script>
+    
+      <div class="detected-condition"></div>
+      <img id="condition-image" alt="" />
+      <p id="condition-description"></p>
     </div>
-
-    <!-- Container for the injected muted.html -->
-    <div id="muted-buttons"></div>
-
-    <!-- 2) Load your custom JS -->
-    <script src="muted.js"></script>
-    <script>
-      // 3) Fetch muted.html, inject into #muted-buttons, then call initMutedButtons()
-      fetch('muted.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('muted-buttons').innerHTML = html;
-          initMutedButtons();
-        })
-        .catch(err => console.error('Error loading muted.html:', err));
-    </script>
-
-    <!-- Condition image and text -->
-    <div class="detected-condition"></div>
-    <img id="condition-image" alt="" />
-    <p id="condition-description"></p>
-  </div>
-
-  <!-- 4) Alan can make mistakes line at the bottom -->
-  <div class="chatbot-version">
-    Alan can make mistakes, double check everything
-  </div>
+    
+    <!-- Pinned footer with your disclaimer text -->
+    <div class="footer-area">
+      <div class="chatbot-version">
+        Alan can make mistakes, double check everything
+      </div>
+    </div>
+    
 
 
     <!-- Popup for user info -->

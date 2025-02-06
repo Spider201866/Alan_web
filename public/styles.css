@@ -702,21 +702,53 @@ p {
   width: 70px; /* Adjust the width as needed */
   height: auto;
 }
-/* 1) Remove or reduce the forced min-height on the Flowise container */
+
+/* Ensure the body/html let content scroll freely */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: block; /* or remove "display: flex" if you had that before */
+  overflow-x: hidden; /* no horizontal scrolling */
+  overflow-y: auto; /* normal vertical scroll */
+}
+
+/* Keep your main content so it can grow, 
+   but add bottom padding to avoid overlap by the fixed footer */
+.main-wrapper {
+  padding-bottom: 60px; /* matches footer height or a bit more */
+}
+
+/* Make the footer pinned at bottom */
+.footer-area {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  
+  z-index: 999;
+
+  text-align: center;
+  padding: 10px; 
+  /* This height ~60px is what you match in .main-wrapper padding-bottom */
+  box-sizing: border-box;
+}
+
+/* If you need to trim the chatbot container 
+   so there's no forced huge empty space. */
+.chatbot-container {
+  margin: 0; 
+  padding: 0; 
+  /* optional override if you had large min-heights or margins */
+  flex-grow: 0; /* only relevant if you had a flex layout earlier */
+}
+
+/* If Flowise had an enforced min-height, you can override it: */
 flowise-fullchatbot {
   min-height: auto !important;
   margin: 0 !important;
   padding: 0 !important;
-}
-
-/* 2) Let the chatbot container shrink naturally rather than fill space */
-.chatbot-container {
-  flex-grow: 0; 
-  align-items: flex-start; /* so it does not float in the middle */
-  padding-bottom: 0;
-}
-
-/* 3) Trim the bottom padding on the version line if you do not need it */
-.chatbot-version {
-  padding-bottom: 5px; /* or even 0px */
+  /* Possibly a smaller min-height if you want: 
+     min-height: 300px !important;
+  */
 }
