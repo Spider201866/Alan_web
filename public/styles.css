@@ -761,8 +761,6 @@ html, body {
   max-width: 100%;
   overflow-x: hidden; /* ensures no huge horizontal area */
 }
-
-
 /* Force #popup to be pinned off the right edge at normal width */
 #popup {
   position: fixed !important;
@@ -770,7 +768,7 @@ html, body {
   right: -350px;      /* must be negative at least your chosen width */
   width: 300px;       /* pick how wide you want the popout */
   display: block !important;
-  background-color: #f9f9f9;
+  background-color: #f1f1f1;
   border-radius: 30px 0 0 30px;
   box-shadow: -2px 0 6px rgba(0,0,0,0.2);
   padding: 20px;
@@ -780,9 +778,6 @@ html, body {
   z-index: 9999;
   transition: right 0.4s ease; /* so it slides smoothly */
 }
-
-
-
 /* The close “X” at top-right of the popup */
 .popup-close {
   position: absolute;
@@ -794,7 +789,6 @@ html, body {
   background: transparent;
   color: #666;
 }
-
 /* Your popup-content area is normal text below the close button */
 .popup-content {
   margin-top: 40px; 
