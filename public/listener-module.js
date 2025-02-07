@@ -108,8 +108,8 @@ function createButtonsWithText(condition) {
   container.style.display = 'flex';
   container.style.flexDirection = 'column';
   container.style.alignItems = 'center';
-  container.style.marginTop = '-15px';
-  container.style.marginBottom = '20px';
+  container.style.marginTop = '0px';
+  container.style.marginBottom = '30px';
 
   // Headline text
   const textLine = document.createElement('div');
