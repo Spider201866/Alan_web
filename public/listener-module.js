@@ -21,9 +21,7 @@ const initChatbotListeners = () => {
       return;
     }
 
-    /***********************************************
-     * A) MAIN OBSERVER: watch for newly added chat bubbles
-     ***********************************************/
+    // A) MAIN OBSERVER: watch for newly added chat bubbles
     const observer = new MutationObserver((mutations) => {
       for (const mutation of mutations) {
         for (const node of mutation.addedNodes) {
@@ -42,10 +40,7 @@ const initChatbotListeners = () => {
     // Observe the entire shadowRoot for newly added nodes
     observer.observe(shadowRoot, { childList: true, subtree: true });
 
-    /***********************************************
-     * B) FALLBACK CHECK: every 2s, remove the 3 buttons
-     *    ONLY if chat is empty AND user has NOT clicked "Images"
-     ***********************************************/
+    // B) FALLBACK CHECK: every 2s, remove the 3 buttons only if chat is empty AND user has NOT clicked "Images"
     setInterval(() => {
       const hostBubbles = shadowRoot.querySelectorAll("[data-testid='host-bubble']");
       // If no host bubble => chat likely cleared
@@ -90,7 +85,7 @@ function parseFinalLLMMessage(llmBubbleText) {
       console.log('Detected condition:', condition);
 
       // Show the 3 site buttons for that condition
-      removeChatEndButtons();   // remove any old instance first
+      removeChatEndButtons(); // remove any old instance first
       createButtonsWithText(condition);
     }
   }
@@ -109,13 +104,18 @@ function createButtonsWithText(condition) {
   container.style.flexDirection = 'column';
   container.style.alignItems = 'center';
 
+  // Give it a negative margin to "pull up"
+  container.style.marginTop = '-15px';
+  container.style.marginBottom = '35px';
+
+  // Add a smooth transition in case we adjust margin after insertion
+  container.style.transition = 'margin-top 0.3s';
 
   // Headline text
   const textLine = document.createElement('div');
   if (condition) {
     textLine.innerHTML = `Find <strong>${condition}</strong> images on these sites`;
   } else {
-    // If no condition given (e.g. user clicked "Images" button)
     textLine.innerHTML = `Find images on these sites`;
   }
   textLine.style.fontSize = '14px';
@@ -181,8 +181,16 @@ function createButtonsWithText(condition) {
   } else {
     document.body.appendChild(container);
   }
-}
 
+  // After insertion, wait a moment for layout
+  setTimeout(() => {
+    const rect = container.getBoundingClientRect();
+    // If container bottom is below the viewport, remove the negative margin
+    if (rect.bottom > window.innerHeight) {
+      container.style.marginTop = '0px';
+    }
+  }, 100);
+}
 
 // ------------------------------------------------------
 // 4) Remove the container for these site buttons
@@ -213,17 +221,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const imagesButton = document.getElementById('images');
   if (imagesButton) {
     imagesButton.addEventListener('click', () => {
-      // Check if the container is already present
       const existingContainer = document.getElementById('chat-end-buttons');
       if (existingContainer) {
-        // If present, remove it
         removeChatEndButtons();
-        imagesButtonClicked = false; // Mark that buttons are now off
+        imagesButtonClicked = false; 
       } else {
-        // If not present, create it
-        imagesButtonClicked = true; // Mark that buttons are on
-        removeChatEndButtons(); // Clean up if needed
-        createButtonsWithText("");}
+        imagesButtonClicked = true;
+        removeChatEndButtons();
+        createButtonsWithText("");
+      }
     });
   }
 });
