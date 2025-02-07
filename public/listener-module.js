@@ -119,7 +119,7 @@ function createButtonsWithText(condition) {
     // If no condition given (e.g. user clicked "Images" button)
     textLine.innerHTML = `Find images on these sites`;
   }
-  textLine.style.fontSize = '16px';
+  textLine.style.fontSize = '14px';
   textLine.style.marginBottom = '5px';
   container.appendChild(textLine);
 
@@ -135,7 +135,9 @@ function createButtonsWithText(condition) {
   ophButton.className = 'button';
   ophButton.style.backgroundColor = 'rgb(134, 162, 255)';
   ophButton.style.color = 'black';
+  ophButton.style.fontSize = '14px';
   ophButton.style.border = '2px solid black';
+  ophButton.style.padding = '6px 10px';
   ophButton.textContent = 'Ophthalmology';
   ophButton.addEventListener('click', () => {
     window.open('https://eyewiki.org/Main_Page', '_blank');
@@ -146,7 +148,9 @@ function createButtonsWithText(condition) {
   entButton.className = 'button';
   entButton.style.backgroundColor = 'rgb(133, 255, 133)';
   entButton.style.color = 'black';
+  entButton.style.fontSize = '14px';
   entButton.style.border = '2px solid black';
+  entButton.style.padding = '6px 10px';
   entButton.textContent = 'ENT';
   entButton.addEventListener('click', () => {
     window.open('ent.html', '_blank');
@@ -157,7 +161,9 @@ function createButtonsWithText(condition) {
   dermButton.className = 'button';
   dermButton.style.backgroundColor = '#efafff';
   dermButton.style.color = 'black';
+  dermButton.style.fontSize = '14px';
   dermButton.style.border = '2px solid black';
+  dermButton.style.padding = '6px 10px';
   dermButton.textContent = 'Dermatology';
   dermButton.addEventListener('click', () => {
     window.open('https://dermnetnz.org/images', '_blank');
