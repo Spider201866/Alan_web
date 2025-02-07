@@ -209,6 +209,7 @@
         -webkit-appearance: none;
         width: 180px;
       "
+      onclick="document.getElementById('focusDropdown').classList.toggle('hidden'); event.stopPropagation();"
     >
       Aims
     </button>
@@ -217,18 +218,7 @@
       class="focus-dropdown hidden"
       style="position: relative"
     >
-      <span
-        class="close-btn"
-        style="
-          position: absolute;
-          top: 5px;
-          right: 10px;
-          cursor: pointer;
-          font-size: 20px;
-        "
-      >
-        &times;
-      </span>
+      <!-- The close icon (X) has been removed -->
       <label>
         <input type="checkbox" name="focus" value="Second opinion" />
         <span class="aims-label-text">Second opinion</span>
@@ -282,6 +272,32 @@
   <div id="locationInfo" style="display: none"></div>
 </div>
 <!-- END ONBOARDING SCREEN -->
+
+<script>
+  // Clicking anywhere outside the dropdown or the Aims button will close the dropdown
+  document.addEventListener('click', function(e) {
+    var dropdown = document.getElementById('focusDropdown');
+    var toggleBtn = document.getElementById('focusToggleBtn');
+    if (!dropdown.classList.contains('hidden') &&
+        !dropdown.contains(e.target) &&
+        !toggleBtn.contains(e.target)) {
+      dropdown.classList.add('hidden');
+    }
+  });
+  
+  // Prevent click events on the dropdown from bubbling up
+  document.getElementById('focusDropdown').addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+</script>
+
+
+
+
+
+
+
+
 
 
 
