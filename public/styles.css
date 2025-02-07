@@ -798,7 +798,11 @@ html, body {
 }
 /* Force centre text on iOS */
 .instruction-screen button {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
   text-align: center !important;
-  -webkit-appearance: none; /* Removes default iOS button styling */
-  appearance: none;
 }
+
