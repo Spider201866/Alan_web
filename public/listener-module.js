@@ -108,7 +108,7 @@ function createButtonsWithText(condition) {
   container.style.display = 'flex';
   container.style.flexDirection = 'column';
   container.style.alignItems = 'center';
-  container.style.marginTop = '10px';
+  container.style.marginTop = '0px';
   container.style.marginBottom = '20px';
 
   // Headline text
@@ -183,6 +183,7 @@ function createButtonsWithText(condition) {
     document.body.appendChild(container);
   }
 }
+
 
 // ------------------------------------------------------
 // 4) Remove the container for these site buttons
