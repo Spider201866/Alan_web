@@ -715,7 +715,7 @@ html, body {
 .page-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* ensures enough height to push the footer down */
+
 }
 
 /* The main content area grows to fill leftover vertical space, 
