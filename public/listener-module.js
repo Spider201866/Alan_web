@@ -105,7 +105,7 @@ function createButtonsWithText(condition) {
   container.style.alignItems = 'center';
 
   // Give it a negative margin to "pull up"
-  container.style.marginTop = '-15px';
+  container.style.marginTop = '-20px';
   container.style.marginBottom = '35px';
 
   // Add a smooth transition in case we adjust margin after insertion
