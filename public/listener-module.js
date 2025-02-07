@@ -120,7 +120,7 @@ function createButtonsWithText(condition) {
     textLine.innerHTML = `Find images on these sites`;
   }
   textLine.style.fontSize = '16px';
-  textLine.style.marginBottom = '20px';
+  textLine.style.marginBottom = '5px';
   container.appendChild(textLine);
 
   // Row of 3 buttons
