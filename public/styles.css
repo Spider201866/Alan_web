@@ -796,3 +796,9 @@ html, body {
   line-height: 1.4;
   color: #000;
 }
+/* Force centre text on iOS */
+.instruction-screen button {
+  text-align: center !important;
+  -webkit-appearance: none; /* Removes default iOS button styling */
+  appearance: none;
+}

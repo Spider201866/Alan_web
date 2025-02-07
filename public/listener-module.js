@@ -207,14 +207,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const imagesButton = document.getElementById('images');
   if (imagesButton) {
     imagesButton.addEventListener('click', () => {
-      // Mark that user manually wants the images
-      imagesButtonClicked = true;
-
-      // Remove existing buttons if any
-      removeChatEndButtons();
-
-      // Show the 3 site buttons with no specific condition text
-      createButtonsWithText("");
+      // Check if the container is already present
+      const existingContainer = document.getElementById('chat-end-buttons');
+      if (existingContainer) {
+        // If present, remove it
+        removeChatEndButtons();
+        imagesButtonClicked = false; // Mark that buttons are now off
+      } else {
+        // If not present, create it
+        imagesButtonClicked = true; // Mark that buttons are on
+        removeChatEndButtons(); // Clean up if needed
+        createButtonsWithText("");}
     });
   }
 });
