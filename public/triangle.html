@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8 Equal Segments Triangle - Reverse Pulse (Centred)</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      /* Flex container to centre content vertically & horizontally */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 75vh;
+    }
+    /* 580×580 container also using flex to centre its contents */
+    .animation-wrapper {
+      width: 580px;
+      height: 580px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    /* Centre the triangle with no extra margin */
+    .triangle-animation {
+      width: 580px;
+      height: 580px;
+      margin-left: 0px;
+      position: relative;
+    }
+    .triangle path {
+      backface-visibility: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="animation-wrapper">
+    <div class="triangle-animation">
+      <svg class="triangle" viewBox="0 0 440 440">
+        <g id="triangleGroup"></g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Anime.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script>
+    /*
+      1) Apex at (220,220), base from (0,440) to (440,440). Total height = 220.
+      2) One large red triangle (apex -> base), plus 7 outlines => 8 horizontal slices.
+      3) Outlines spaced by factor = i/8 for i=1..7.
+      4) "Reverse" breathing effect for the stroke, so it pulses in opposite phase.
+    */
+
+    // Fits the SVG to its parent dimension on window resize
+    function fitElementToParent(el, padding) {
+      let timeout = null;
+      function resize() {
+        if (timeout) clearTimeout(timeout);
+        anime.set(el, {scale: 1});
+        const pad = padding || 0;
+        const parentEl = el.parentNode;
+        const elOffsetWidth = el.offsetWidth - pad;
+        const parentOffsetWidth = parentEl.offsetWidth;
+        const ratio = parentOffsetWidth / elOffsetWidth;
+        timeout = setTimeout(function () {
+          anime.set(el, {scale: ratio});
+        }, 10);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+    }
+
+    // Main triangle coordinates
+    const apexX = 220, apexY = 220;
+    const baseLeftX  = 0,   baseLeftY  = 440;
+    const baseRightX = 440, baseRightY = 440;
+
+    // Interpolate a point along apex->baseCorner by factor in [0..1]
+    function lerpPoint(ax, ay, bx, by, factor) {
+      return {
+        x: ax + (bx - ax) * factor,
+        y: ay + (by - ay) * factor
+      };
+    }
+
+    function createTriangles() {
+      const group = document.getElementById('triangleGroup');
+
+      // Full red triangle
+      const mainFill = document.createElementNS('http://www.w3.org/2000/svg','path');
+      mainFill.setAttribute(
+        'd',
+        `M ${apexX},${apexY} L ${baseLeftX},${baseLeftY} L ${baseRightX},${baseRightY} Z`
+      );
+      mainFill.setAttribute('fill', '#FF0000');
+      mainFill.setAttribute('stroke', 'none');
+      group.appendChild(mainFill);
+
+      // 7 outlines => 8 horizontal slices
+      for (let i = 1; i <= 7; i++) {
+        const factor = i / 8; // from 1/8..7/8
+        const leftPt = lerpPoint(apexX, apexY, baseLeftX,  baseLeftY,  factor);
+        const rightPt= lerpPoint(apexX, apexY, baseRightX, baseRightY, factor);
+
+        const outline = document.createElementNS('http://www.w3.org/2000/svg','path');
+        outline.setAttribute(
+          'd',
+          `M ${apexX},${apexY} L ${leftPt.x},${leftPt.y} L ${rightPt.x},${rightPt.y} Z`
+        );
+        outline.setAttribute('fill', 'none');
+        outline.setAttribute('stroke', 'rgba(0,0,0,0.6)');
+        outline.setAttribute('stroke-width', '3');
+        group.appendChild(outline);
+      }
+    }
+
+    createTriangles();
+    fitElementToParent(document.querySelector('.triangle-animation'));
+
+    // Anime.js for the stroke animations
+    (function() {
+      const triangleEl   = document.querySelector('.triangle-animation');
+      const allPaths     = triangleEl.querySelectorAll('.triangle path');
+      const outlinePaths = Array.from(allPaths).slice(1); // skip the red fill
+      const animations   = [];
+
+      // Reverse breathing => (1 + sin(...)) / 2
+      const breathAnimation = anime({
+        begin: function() {
+          outlinePaths.forEach(function(path) {
+            animations.push(
+              anime({
+                targets: path,
+                stroke: {
+                  value: ['rgba(0,0,0,1)', 'rgba(0,0,0,0.6)'],
+                  duration: 500
+                },
+                strokeWidth: {value: [4, 1], duration: 500},
+                translateX: [1, -2],
+                translateY: [1, -2],
+                easing: 'easeOutQuad',
+                autoplay: false
+              })
+            );
+          });
+        },
+        update: function(ins) {
+          // Reverse the sine wave phase
+          animations.forEach(function(animation, i) {
+            const percent = (1 + Math.sin((i * 0.35) + (0.0022 * ins.currentTime))) / 2;
+            animation.seek(animation.duration * percent);
+          });
+        },
+        duration: Infinity,
+        autoplay: false
+      });
+
+      // Intro stroke-draw (dashoffset)
+      const introAnimation = anime.timeline({autoplay: false})
+        .add({
+          targets: outlinePaths,
+          strokeDashoffset: {
+            value: [anime.setDashoffset, 0],
+            duration: 2000,
+            easing: 'easeInOutCirc',
+            delay: anime.stagger(120, {direction: 'normal'})
+          },
+          easing: 'linear'
+        }, 0);
+
+      function init() {
+        introAnimation.play();
+        breathAnimation.play();
+      }
+      init();
+    })();
+  </script>
+</body>
+</html>
