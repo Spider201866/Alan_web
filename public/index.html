@@ -118,25 +118,49 @@
       <p>Eye, Ear, Skin AI Assistant</p>
     </div>
 
+
+<!-- W = 180px -->
+
 <!-- ===================================================================== -->
 <!-- ONBOARDING (INSTRUCTION) SCREEN (initially hidden) -->
 <!-- ===================================================================== -->
 <div class="instruction-screen hidden">
-  <img src="bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: -10px" />
+  <img
+    src="bigredt.png"
+    alt="Big Red T Logo"
+    style="max-width: 120px; height: auto; margin-bottom: -10px"
+  />
+  
   <p id="instruction-text" style="text-align: justify">
-    Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying
-    names or details.
+    Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly
+    and avoid identifying names or details.
   </p>
+  
   <p id="good-luck" class="good-luck" style="text-align: center">Good luck!</p>
+  
+  <!-- (1) NAME INPUT: width = 180px, left-aligned -->
   <input
     type="text"
     id="nameInput"
     class="name-input"
     placeholder="Name"
     title="2-20 letters, spaces, apostrophes or hyphens only"
-    style="color: grey"
+    style="
+      color: grey;
+      text-align: left;
+      width: 180px;
+    "
   />
-  <select id="job-role-select" class="job-role-dropdown">
+  
+  <!-- (2) ROLE SELECT: width = 180px, left-aligned -->
+  <select
+    id="job-role-select"
+    class="job-role-dropdown"
+    style="
+      text-align: left;
+      width: 180px;
+    "
+  >
     <option value="" disabled selected hidden>Role</option>
     <option value="Health worker">Health worker</option>
     <option value="Nurse">Nurse</option>
@@ -154,22 +178,54 @@
     <option value="Ear care practitioner">Ear care practitioner</option>
     <option value="Dermatologist">Dermatologist</option>
   </select>
-  <select id="experience-select" class="experience-dropdown">
+  
+  <!-- (3) EXPERIENCE SELECT: width = 180px, left-aligned -->
+  <select
+    id="experience-select"
+    class="experience-dropdown"
+    style="
+      text-align: left;
+      width: 180px;
+    "
+  >
     <option value="" disabled selected hidden>Experience</option>
     <option value="<1 yr">&lt;1 yr</option>
     <option value="1-3 yr">1-3 yr</option>
     <option value="3-7 yr">3-7 yr</option>
     <option value=">7 yr">&gt;7 yr</option>
   </select>
+  
+  <!-- (4) AIMS BUTTON: width = 180px, left-aligned -->
   <div class="focus-container">
-    <button id="focusToggleBtn" class="focus-button" style="display: inline-flex; align-items: center; justify-content: center; text-align: center; appearance: none;  -webkit-appearance: none;">
+    <button
+      id="focusToggleBtn"
+      class="focus-button"
+      style="
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: left;
+        appearance: none;
+        -webkit-appearance: none;
+        width: 180px;
+      "
+    >
       Aims
     </button>
-    <div id="focusDropdown" class="focus-dropdown hidden" style="position: relative">
+    <div
+      id="focusDropdown"
+      class="focus-dropdown hidden"
+      style="position: relative"
+    >
       <span
         class="close-btn"
-        style="position: absolute; top: 5px; right: 10px; cursor: pointer; font-size: 20px"
-        onclick="document.getElementById('focusDropdown').classList.remove('visible'); document.getElementById('focusDropdown').classList.add('hidden');"
+        style="
+          position: absolute;
+          top: 5px;
+          right: 10px;
+          cursor: pointer;
+          font-size: 20px;
+        "
       >
         &times;
       </span>
@@ -187,6 +243,8 @@
       </label>
     </div>
   </div>
+  
+  <!-- (5) CONTACT INPUT: width = 180px, left-aligned -->
   <input
     type="text"
     id="contactInput"
@@ -196,15 +254,36 @@
     autocorrect="off"
     autocapitalize="off"
     spellcheck="false"
+    style="
+      text-align: left;
+      width: 180px;
+    "
   />
+  
   <br /><br /><br />
-  <button id="acceptButton" disabled style="display: inline-flex; align-items: center; justify-content: center; text-align: center; appearance: none;  -webkit-appearance: none;">
+  
+  <!-- (Accept button unchanged) -->
+  <button
+    id="acceptButton"
+    disabled
+    style="
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: left;
+      appearance: none;
+      -webkit-appearance: none;
+    "
+  >
     Accept
   </button>
+  
   <br />
   <div id="locationInfo" style="display: none"></div>
 </div>
 <!-- END ONBOARDING SCREEN -->
+
+
 
 
 

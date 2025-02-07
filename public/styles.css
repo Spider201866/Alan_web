@@ -796,13 +796,12 @@ html, body {
   line-height: 1.4;
   color: #000;
 }
-/* Force centre text on iOS */
+/* TEST OVERRIDE */
 .instruction-screen button {
+  background: red !important;
+  text-align: left !important;
   -webkit-appearance: none !important;
   appearance: none !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center !important;
 }
+
 
