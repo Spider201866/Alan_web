@@ -745,16 +745,12 @@ flowise-fullchatbot {
 /* The footer sits at the bottom if content is short, or is pushed further down if content is tall. */
 .chatbot-version {
   text-align: center;
-  padding: 10px 0;
-  margin: 0;
+  padding: 10px 0; /* A bit of breathing room */
+  margin: 0;       /* Remove default paragraph spacing */
+
   color: #8d8d8d;
   font-size: 14px;
-
-  /* Add these */
-  flex-shrink: 0; /* so the footer does not shrink out of view */
-  background: #fefefe; /* optional but good to see it clearly */
 }
-
 
 
 /* Prevent horizontal scrolling or centring issues */
@@ -799,6 +795,3 @@ html, body {
   line-height: 1.4;
   color: #000;
 }
-
-
-
