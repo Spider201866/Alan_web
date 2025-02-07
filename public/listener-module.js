@@ -108,7 +108,7 @@ function createButtonsWithText(condition) {
   container.style.display = 'flex';
   container.style.flexDirection = 'column';
   container.style.alignItems = 'center';
-  container.style.marginTop = '-10px';
+  container.style.marginTop = '10px';
   container.style.marginBottom = '20px';
 
   // Headline text
@@ -120,7 +120,7 @@ function createButtonsWithText(condition) {
     textLine.innerHTML = `Find images on these sites`;
   }
   textLine.style.fontSize = '14px';
-  textLine.style.marginBottom = '5px';
+  textLine.style.marginBottom = '10px';
   container.appendChild(textLine);
 
   // Row of 3 buttons
