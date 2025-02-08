@@ -17,8 +17,8 @@
       align-items: center;
     }
 
-    /* This wrapper has a max dimension of 300px, but shrinks if screen is smaller 
-       and is shifted upward by e.g. 60px */
+    /* The wrapper has a max dimension of 300px, but shrinks if screen is smaller
+       and is shifted upward by ~30px. Adjust as needed. */
     .animation-wrapper {
       width: clamp(200px, 70vw, 300px);
       height: clamp(200px, 70vw, 300px);
@@ -26,10 +26,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      transform: translateY(-100px); /* Move upward. Adjust as needed. */
+      transform: translateY(-30px);
     }
 
-    /* The triangle-animation starts as 300×300. fitElementToParent() will scale inside the wrapper */
+    /* The triangle-animation starts as 300×300. fitElementToParent() will scale inside the wrapper. */
     .triangle-animation {
       width: 300px;
       height: 300px;
@@ -54,10 +54,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <script>
     /*
-      1) Apex at (220,220), base from (0,440) to (440,440). Total height = 220.
-      2) One large red triangle + 7 outlines => 8 horizontal slices.
-      3) Outlines spaced by factor = i/8 for i=1..7.
-      4) "Reverse" breathing effect for the stroke.
+      1) Apex at (220,220), base from (0,440) to (440,440). Total height = 220
+      2) One large red triangle + 7 outlines => 8 horizontal slices
+      3) Outlines spaced by factor = i/8 for i=1..7
+      4) "Reverse" breathing effect for the stroke
     */
 
     function fitElementToParent(el, padding) {
@@ -70,7 +70,7 @@
         const elOffsetWidth = el.offsetWidth - pad;
         const parentOffsetWidth = parentEl.offsetWidth;
         const ratio = parentOffsetWidth / elOffsetWidth;
-        timeout = setTimeout(function () {
+        timeout = setTimeout(() => {
           anime.set(el, { scale: ratio });
         }, 10);
       }
@@ -124,15 +124,15 @@
     fitElementToParent(document.querySelector('.triangle-animation'));
 
     (function() {
-      const triangleEl   = document.querySelector('.triangle-animation');
-      const allPaths     = triangleEl.querySelectorAll('.triangle path');
+      const triangleEl = document.querySelector('.triangle-animation');
+      const allPaths = triangleEl.querySelectorAll('.triangle path');
       const outlinePaths = Array.from(allPaths).slice(1);
-      const animations   = [];
+      const animations = [];
 
       // Reverse breathing => (1 + sin(...)) / 2
       const breathAnimation = anime({
-        begin: function() {
-          outlinePaths.forEach(function(path) {
+        begin: () => {
+          outlinePaths.forEach(path => {
             animations.push(
               anime({
                 targets: path,
@@ -149,8 +149,8 @@
             );
           });
         },
-        update: function(ins) {
-          animations.forEach(function(animation, i) {
+        update: ins => {
+          animations.forEach((animation, i) => {
             const percent = (1 + Math.sin((i * 0.35) + (0.0022 * ins.currentTime))) / 2;
             animation.seek(animation.duration * percent);
           });
