@@ -1,77 +1,59 @@
+// closer.js
+
 /**
- * ******************************************************
- * 1) Window onload handler:
- *    - Immediately shows main content and triggers showAnimation().
- *    - Schedules doSomething() after 1 second.
- *    - Scrolls to the top of the page.
- * ******************************************************
+ * Runs once the page (window) is fully loaded.
  */
 window.onload = function () {
-  // Show main content straight away
-  document.getElementById('mainContent').classList.remove('hidden');
+  // Remove 'hidden' if your mainContent starts hidden in CSS
+  // document.getElementById('mainContent').classList.remove('hidden');
+
+  // Start the Eyeor fade-in/fade-out sequence
   showAnimation();
 
-  // After 1s, run doSomething()
-  setTimeout(doSomething, 1000);
+  // After 2s, start the highlight sequence on Good/Examine/Arclight
+  setTimeout(anotherFunction, 2000);
 
-  // Ensure page is scrolled to the top
+  // Scroll to the top
   window.scrollTo(0, 0);
 };
 
 /**
- * ******************************************************
  * showAnimation():
- *    - Reveals #animationContainer.
- *    - Fades the image in & keeps it visible for 6 seconds.
- *    - Then fades the image out over 2 seconds, hiding container.
- * ******************************************************
+ * 1. Reveal #animationContainer (the Eyeor GIF container).
+ * 2. Fade image in fully.
+ * 3. Keep it visible for 6 seconds.
+ * 4. Fade out over 2 seconds, then hide the container.
  */
 function showAnimation() {
   const container = document.getElementById('animationContainer');
-  container.style.display = 'flex'; // Make container visible
+  if (!container) return;
+  container.style.display = 'flex'; // or 'block'
 
   const image = container.querySelector('img');
-  image.style.opacity = 1; // Fade in
+  if (!image) return;
 
+  // Fade in
+  image.style.opacity = 1;
+
+  // After 6s, fade out, then hide container
   setTimeout(() => {
-    image.style.opacity = 0; // Fade out
+    image.style.opacity = 0;
     setTimeout(() => {
-      container.style.display = 'none'; // Hide container after fade out
-    }, 2000); // Matches CSS transition duration
-  }, 6000); // Image fully visible for 6 seconds
+      container.style.display = 'none';
+    }, 2000); // match the 2s CSS transition
+  }, 6000);
 }
 
 /**
- * ******************************************************
- * doSomething():
- *    - Hides #mainContent.
- *    - After 0.5s, finds .chatbot-title and triggers flip-horizontally.
- *    - After 2s, calls anotherFunction().
- * ******************************************************
- */
-function doSomething() {
-  document.getElementById('mainContent').classList.add('hidden');
-
-  setTimeout(function () {
-    const d = document.querySelector('.chatbot-title');
-    if (d) {
-      d.classList.add('flip-horizontally');
-      setTimeout(anotherFunction, 2000);
-    }
-  }, 500);
-}
-
-/**
- * ******************************************************
  * anotherFunction():
- *    - Sequentially highlights (#good-history, #examine-well, #use-arclight)
- *      in red, then reverts them to grey in timed intervals.
- * ******************************************************
+ * Sequentially highlight #good-history, #examine-well, #use-arclight in red, then revert to grey.
  */
 function anotherFunction() {
   const goodHistory = document.getElementById('good-history');
   const examineWell = document.getElementById('examine-well');
   const useArclight = document.getElementById('use-arclight');
+
+  if (!goodHistory || !examineWell || !useArclight) return;
 
   // Turn #good-history red, then grey
   goodHistory.style.color = 'red';

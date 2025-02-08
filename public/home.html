@@ -1021,6 +1021,15 @@
         })
         .catch(error => console.error('Error loading agent module:', error));
     });
+
+      window.addEventListener('pageshow', function(event) {
+    // If true, page came from bfcache
+    if (event.persisted) {
+      // Force a full reload
+      window.location.reload();
+    }
+  });
+
   </script>
 </body>
 </html>
