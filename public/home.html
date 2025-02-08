@@ -1022,13 +1022,13 @@
         .catch(error => console.error('Error loading agent module:', error));
     });
 
-      window.addEventListener('pageshow', function(event) {
-    // If true, page came from bfcache
-    if (event.persisted) {
-      // Force a full reload
-      window.location.reload();
-    }
-  });
+    window.addEventListener('pageshow', event => {
+  if (event.persisted) {
+    // Full reload is the only guaranteed fix if reflow hacks don't work.
+    window.location.reload();
+  }
+});
+
 
   </script>
 </body>
