@@ -3,221 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2s Explosion Reveals Triangle with Transition</title>
+  <title>8 Equal Segments Triangle - Reverse Pulse (Bigger, No Scrollbars)</title>
   <style>
-    body {
+    /* Fill viewport, black background, centre content */
+    html, body {
       margin: 0;
-      overflow: hidden;
+      padding: 0;
+      width: 100%;
+      height: 100%;
       background: #000;
-    }
-    /* Explosion container covers the full viewport */
-    #explosionContainer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 2;
-    }
-    /* Triangle container using your values – this centres it nicely */
-    #triangleContainer {
-      position: absolute;
-      top: 33%;
-      left: 10%;
-      transform: translate(-50%, -50%) scale(0.8);
-      width: clamp(300px, 80vmin, 600px);
-      height: clamp(300px, 80vmin, 600px);
-      opacity: 0;
-      z-index: 1;
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden; /* Hide any incidental overflow */
     }
+
+    /*
+      Bumped up the clamp range, still no scrollbars.
+      80vmin ensures it never exceeds 80% of the smaller screen dimension.
+    */
+    .animation-wrapper {
+      width: clamp(300px, 80vmin, 600px);
+      height: clamp(300px, 80vmin, 600px);
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: translateY(-30px);
+    }
+
+    /* Fill the wrapper completely */
     .triangle-animation {
       width: 100%;
       height: 100%;
-      display: block;
+      position: relative;
     }
+
     .triangle path {
       backface-visibility: hidden;
     }
   </style>
 </head>
 <body>
-  <!-- Container for the explosion simulation -->
-  <div id="explosionContainer"></div>
-  <!-- Container for the triangle animation -->
-  <div id="triangleContainer">
+  <div class="animation-wrapper">
     <div class="triangle-animation">
-      <!-- The SVG now centres its content using a symmetric viewBox -->
-      <svg class="triangle" viewBox="-220 -146.67 440 293.34" preserveAspectRatio="xMidYMid meet">
+      <svg class="triangle" viewBox="0 0 440 440">
         <g id="triangleGroup"></g>
       </svg>
     </div>
   </div>
 
-  <!-- Load three.js and Anime.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Anime.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <script>
-    /* ===============================
-       Explosion simulation (three.js)
-       =============================== */
-    let scene, camera, renderer;
-    let particleSystem, particles, velocities, colours;
-    let explosionAnimId;
-    const PARTICLE_COUNT = 2000;
+    /*
+      1) Apex at (220,220), base from (0,440) to (440,440). Total height = 220
+      2) One large red triangle + 7 outlines => 8 horizontal slices
+      3) Outlines spaced by factor = i/8 for i=1..7
+      4) "Reverse" breathing effect for the stroke
+    */
 
-    function initExplosion() {
-      scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.z = 50;
+    const apexX = 220, apexY = 220;
+    const baseLeftX = 0, baseLeftY = 440;
+    const baseRightX = 440, baseRightY = 440;
 
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.getElementById('explosionContainer').appendChild(renderer.domElement);
-
-      window.addEventListener('resize', onWindowResize, false);
+    function lerpPoint(ax, ay, bx, by, factor) {
+      return {
+        x: ax + (bx - ax) * factor,
+        y: ay + (by - ay) * factor
+      };
     }
 
-    function onWindowResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-
-    function createCircleTexture() {
-      const size = 128;
-      const canvas = document.createElement('canvas');
-      canvas.width = size;
-      canvas.height = size;
-      const context = canvas.getContext('2d');
-      context.beginPath();
-      context.arc(size / 2, size / 2, size / 2 - 2, 0, Math.PI * 2);
-      context.closePath();
-      context.fillStyle = '#ffffff';
-      context.fill();
-      return new THREE.CanvasTexture(canvas);
-    }
-
-    function createParticles() {
-      particles = new Float32Array(PARTICLE_COUNT * 3);
-      velocities = new Float32Array(PARTICLE_COUNT * 3);
-      colours = new Float32Array(PARTICLE_COUNT * 3);
-
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        // All particles start at the origin
-        particles[i * 3] = 0;
-        particles[i * 3 + 1] = 0;
-        particles[i * 3 + 2] = 0;
-
-        // Generate a random direction using spherical coordinates
-        const theta = Math.acos(2 * Math.random() - 1);
-        const phi = 2 * Math.PI * Math.random();
-        const speed = Math.random() * 0.5 + 0.5;
-
-        velocities[i * 3]     = speed * Math.sin(theta) * Math.cos(phi);
-        velocities[i * 3 + 1] = speed * Math.sin(theta) * Math.sin(phi);
-        velocities[i * 3 + 2] = speed * Math.cos(theta);
-
-        // Assign a random red shade
-        const lightness = Math.random() * 0.4 + 0.3;
-        const color = new THREE.Color();
-        color.setHSL(0, 1, lightness);
-        colours[i * 3]     = color.r;
-        colours[i * 3 + 1] = color.g;
-        colours[i * 3 + 2] = color.b;
-      }
-
-      const geometry = new THREE.BufferGeometry();
-      geometry.setAttribute('position', new THREE.BufferAttribute(particles, 3));
-      geometry.setAttribute('color', new THREE.BufferAttribute(colours, 3));
-
-      const circleTexture = createCircleTexture();
-
-      const material = new THREE.PointsMaterial({
-        size: 0.8,
-        map: circleTexture,
-        alphaTest: 0.5,
-        transparent: true,
-        opacity: 0.8,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-        vertexColors: true
-      });
-
-      particleSystem = new THREE.Points(geometry, material);
-      scene.add(particleSystem);
-    }
-
-    function animateExplosion() {
-      explosionAnimId = requestAnimationFrame(animateExplosion);
-      const positions = particleSystem.geometry.attributes.position.array;
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        positions[i * 3]     += velocities[i * 3] * 0.5;
-        positions[i * 3 + 1] += velocities[i * 3 + 1] * 0.5;
-        positions[i * 3 + 2] += velocities[i * 3 + 2] * 0.5;
-      }
-      particleSystem.geometry.attributes.position.needsUpdate = true;
-      // Slowly move the camera backwards
-      camera.position.z -= 0.01;
-      renderer.render(scene, camera);
-    }
-
-    function startExplosion() {
-      initExplosion();
-      createParticles();
-      animateExplosion();
-    }
-
-    function stopExplosion() {
-      if (explosionAnimId) {
-        cancelAnimationFrame(explosionAnimId);
-      }
-      if (particleSystem) {
-        scene.remove(particleSystem);
-        particleSystem.geometry.dispose();
-        particleSystem.material.map.dispose();
-        particleSystem.material.dispose();
-        particleSystem = undefined;
-      }
-    }
-
-    /* ================================================
-       Triangle animation (Anime.js) with centred triangle
-       ================================================ */
-    // Redefine the triangle with vertices centred about (0,0)
-    // Original triangle (apex (220,220), base (0,440) and (440,440)) is adjusted so:
-    //   apex becomes (0, -146.67)
-    //   left base becomes (-220, 73.33)
-    //   right base becomes (220, 73.33)
     function createTriangles() {
-      const apexX = 0, apexY = -146.67;
-      const baseLeftX = -220, baseLeftY = 73.33;
-      const baseRightX = 220, baseRightY = 73.33;
       const group = document.getElementById('triangleGroup');
-      group.innerHTML = '';
 
-      // Main red triangle
+      // Full red triangle
       const mainFill = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      mainFill.setAttribute('d', `M ${apexX},${apexY} L ${baseLeftX},${baseLeftY} L ${baseRightX},${baseRightY} Z`);
+      mainFill.setAttribute('d',
+        `M ${apexX},${apexY} L ${baseLeftX},${baseLeftY} L ${baseRightX},${baseRightY} Z`
+      );
       mainFill.setAttribute('fill', '#FF0000');
       mainFill.setAttribute('stroke', 'none');
       group.appendChild(mainFill);
 
-      // Create 7 outline layers (8 segments)
+      // 7 outlines => 8 segments
       for (let i = 1; i <= 7; i++) {
         const factor = i / 8;
-        const leftPt = {
-          x: apexX + (baseLeftX - apexX) * factor,
-          y: apexY + (baseLeftY - apexY) * factor
-        };
-        const rightPt = {
-          x: apexX + (baseRightX - apexX) * factor,
-          y: apexY + (baseRightY - apexY) * factor
-        };
+        const leftPt = lerpPoint(apexX, apexY, baseLeftX, baseLeftY, factor);
+        const rightPt = lerpPoint(apexX, apexY, baseRightX, baseRightY, factor);
+
         const outline = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        outline.setAttribute('d', `M ${apexX},${apexY} L ${leftPt.x},${leftPt.y} L ${rightPt.x},${rightPt.y} Z`);
+        outline.setAttribute('d',
+          `M ${apexX},${apexY} L ${leftPt.x},${leftPt.y} L ${rightPt.x},${rightPt.y} Z`
+        );
         outline.setAttribute('fill', 'none');
         outline.setAttribute('stroke', 'rgba(0,0,0,0.6)');
         outline.setAttribute('stroke-width', '3');
@@ -225,16 +103,18 @@
       }
     }
 
-    function startTriangleAnimation() {
-      createTriangles();
-      const svgTriangle = document.querySelector('.triangle');
-      // Exclude the filled triangle (first path)
-      const outlinePaths = Array.from(svgTriangle.querySelectorAll('path')).slice(1);
+    createTriangles();
+
+    (function() {
+      const triangleEl = document.querySelector('.triangle-animation');
+      const allPaths = triangleEl.querySelectorAll('.triangle path');
+      const outlinePaths = Array.from(allPaths).slice(1);
       const animations = [];
 
+      // Reverse breathing => (1 + sin(...)) / 2
       const breathAnimation = anime({
         begin: () => {
-          outlinePaths.forEach((path, i) => {
+          outlinePaths.forEach(path => {
             animations.push(
               anime({
                 targets: path,
@@ -261,6 +141,7 @@
         autoplay: false
       });
 
+      // Intro stroke-draw (dashoffset)
       const introAnimation = anime.timeline({ autoplay: false })
         .add({
           targets: outlinePaths,
@@ -273,47 +154,12 @@
           easing: 'linear'
         }, 0);
 
-      introAnimation.play();
-      breathAnimation.play();
-    }
-
-    /* =====================================
-       Combined sequence and enhanced transition
-       ===================================== */
-    function runSequence() {
-      // Start the explosion immediately
-      startExplosion();
-
-      // After 2 seconds, begin a two-stage transition:
-      // 1. Fade explosion from 1 to 0.3 (overlay effect) while revealing the triangle.
-      // 2. Then further fade the explosion from 0.3 to 0.
-      setTimeout(() => {
-        let tl = anime.timeline({ easing: 'easeInOutQuad' });
-        tl.add({
-          targets: '#explosionContainer',
-          opacity: [1, 0.3],
-          duration: 2000
-        }, 0);
-        tl.add({
-          targets: '#triangleContainer',
-          opacity: [0, 1],
-          scale: [0.8, 1],
-          duration: 2000
-        }, 0);
-        tl.add({
-          targets: '#explosionContainer',
-          opacity: [0.3, 0],
-          duration: 2000,
-          complete: () => {
-            stopExplosion();
-            document.getElementById('explosionContainer').style.display = 'none';
-          }
-        });
-        startTriangleAnimation();
-      }, 2000);
-    }
-
-    window.addEventListener('load', runSequence);
+      function init() {
+        introAnimation.play();
+        breathAnimation.play();
+      }
+      init();
+    })();
   </script>
 </body>
 </html>
