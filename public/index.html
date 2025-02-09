@@ -14,99 +14,107 @@
     </script>
   </head>
   <body>
-    <!-- ===================================================================== -->
-    <!-- PASSWORD SCREEN (initially hidden) -->
-    <!-- ===================================================================== -->
-    <div class="password-screen hidden" id="passwordScreen" style="position: relative">
-      <!-- Language selector button & dropdown (22 languages) -->
-      <div style="text-align: center; margin-bottom: 60px">
-        <button
-          id="index-language-button"
-          title="Choose language"
-          style="
-            background: url('lang.jpg') no-repeat center center;
-            background-size: cover;
-            width: 64px;
-            height: 64px;
-            border: 3px solid #3e3e3e;
-            cursor: pointer;
-          "
-        ></button>
-        <div
-          id="index-language-dropdown"
-          style="
-            display: none;
-            position: absolute;
-            top: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #fff;
-            border: 1px solid #ccc;
-            z-index: 9999;
-            min-width: 220px;
-            white-space: nowrap;
-            max-height: 350px;
-            overflow-y: auto;
-            font-size: 14px;
-            line-height: 1.2;
-          "
-        >
-          <ul style="margin: 0; padding: 0; list-style: none">
-            <li data-value="en" style="padding: 6px; cursor: pointer"><strong>English</strong> (English)</li>
-            <li data-value="zh" style="padding: 6px; cursor: pointer"><strong>中文</strong> (Chinese)</li>
-            <li data-value="hi" style="padding: 6px; cursor: pointer"><strong>हिन्दी</strong> (Hindi)</li>
-            <li data-value="es" style="padding: 6px; cursor: pointer"><strong>Español</strong> (Spanish)</li>
-            <li data-value="ar" style="padding: 6px; cursor: pointer"><strong>العربية</strong> (Arabic)</li>
-            <li data-value="fr" style="padding: 6px; cursor: pointer"><strong>Français</strong> (French)</li>
-            <li data-value="bn" style="padding: 6px; cursor: pointer"><strong>বাংলা</strong> (Bangla)</li>
-            <li data-value="pt" style="padding: 6px; cursor: pointer"><strong>Português</strong> (Portuguese)</li>
-            <li data-value="id" style="padding: 6px; cursor: pointer"><strong>Bahasa Indonesia</strong> (Indonesian)</li>
-            <li data-value="sw" style="padding: 6px; cursor: pointer"><strong>Kiswahili</strong> (Swahili)</li>
-            <li data-value="ur" style="padding: 6px; cursor: pointer"><strong>اردو</strong> (Urdu)</li>
-            <li data-value="fa" style="padding: 6px; cursor: pointer"><strong>فارسی</strong> (Persian)</li>
-            <li data-value="ln" style="padding: 6px; cursor: pointer"><strong>Lingala</strong> (Lingala)</li>
-            <li data-value="ha" style="padding: 6px; cursor: pointer"><strong>Hausa</strong> (Hausa)</li>
-            <li data-value="yo" style="padding: 6px; cursor: pointer"><strong>Yorùbá</strong> (Yoruba)</li>
-            <li data-value="ig" style="padding: 6px; cursor: pointer"><strong>Igbo</strong> (Igbo)</li>
-            <li data-value="zu" style="padding: 6px; cursor: pointer"><strong>Zulu</strong> (Zulu)</li>
-            <li data-value="am" style="padding: 6px; cursor: pointer"><strong>አማርኛ</strong> (Amharic)</li>
-            <li data-value="sn" style="padding: 6px; cursor: pointer"><strong>chiShona</strong> (Shona)</li>
-            <li data-value="rw" style="padding: 6px; cursor: pointer"><strong>Ikinyarwanda</strong> (Kinyarwanda)</li>
-            <li data-value="ny" style="padding: 6px; cursor: pointer"><strong>Chichewa</strong> (Chichewa)</li>
-            <li data-value="cy" style="padding: 6px; cursor: pointer"><strong>Cymraeg</strong> (Welsh)</li>
-          </ul>
-        </div>
-      </div>
+<!-- ===================================================================== -->
+<!-- PASSWORD SCREEN (initially hidden) -->
+<!-- ===================================================================== -->
+<div class="password-screen hidden" id="passwordScreen" style="position: relative">
+  <!-- Language selector button & dropdown (22 languages) -->
+  <div style="text-align: center; margin-bottom: 60px">
+    <div
+      id="language-selector-text"
+      style="cursor: pointer; margin-bottom: 10px; font-size: 14px; color: #000"
+      onclick="document.getElementById('index-language-button').click()"
+    >
+      中文, हिन्दी, Español, العربية, Français...
+    </div>
+    <button
+      id="index-language-button"
+      title="Choose language"
+      style="
+        background: url('lang.jpg') no-repeat center center;
+        background-size: cover;
+        width: 64px;
+        height: 64px;
+        border: 3px solid #3e3e3e;
+        cursor: pointer;
+      "
+    ></button>
+    <div
+      id="index-language-dropdown"
+      style="
+        display: none;
+        position: absolute;
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #fff;
+        border: 1px solid #ccc;
+        z-index: 9999;
+        min-width: 220px;
+        white-space: nowrap;
+        max-height: 350px;
+        overflow-y: auto;
+        font-size: 14px;
+        line-height: 1.2;
+      "
+    >
+      <ul style="margin: 0; padding: 0; list-style: none">
+        <li data-value="en" style="padding: 6px; cursor: pointer"><strong>English</strong> (English)</li>
+        <li data-value="zh" style="padding: 6px; cursor: pointer"><strong>中文</strong> (Chinese)</li>
+        <li data-value="hi" style="padding: 6px; cursor: pointer"><strong>हिन्दी</strong> (Hindi)</li>
+        <li data-value="es" style="padding: 6px; cursor: pointer"><strong>Español</strong> (Spanish)</li>
+        <li data-value="ar" style="padding: 6px; cursor: pointer"><strong>العربية</strong> (Arabic)</li>
+        <li data-value="fr" style="padding: 6px; cursor: pointer"><strong>Français</strong> (French)</li>
+        <li data-value="bn" style="padding: 6px; cursor: pointer"><strong>বাংলা</strong> (Bangla)</li>
+        <li data-value="pt" style="padding: 6px; cursor: pointer"><strong>Português</strong> (Portuguese)</li>
+        <li data-value="id" style="padding: 6px; cursor: pointer"><strong>Bahasa Indonesia</strong> (Indonesian)</li>
+        <li data-value="sw" style="padding: 6px; cursor: pointer"><strong>Kiswahili</strong> (Swahili)</li>
+        <li data-value="ur" style="padding: 6px; cursor: pointer"><strong>اردو</strong> (Urdu)</li>
+        <li data-value="fa" style="padding: 6px; cursor: pointer"><strong>فارسی</strong> (Persian)</li>
+        <li data-value="ln" style="padding: 6px; cursor: pointer"><strong>Lingala</strong> (Lingala)</li>
+        <li data-value="ha" style="padding: 6px; cursor: pointer"><strong>Hausa</strong> (Hausa)</li>
+        <li data-value="yo" style="padding: 6px; cursor: pointer"><strong>Yorùbá</strong> (Yoruba)</li>
+        <li data-value="ig" style="padding: 6px; cursor: pointer"><strong>Igbo</strong> (Igbo)</li>
+        <li data-value="zu" style="padding: 6px; cursor: pointer"><strong>Zulu</strong> (Zulu)</li>
+        <li data-value="am" style="padding: 6px; cursor: pointer"><strong>አማርኛ</strong> (Amharic)</li>
+        <li data-value="sn" style="padding: 6px; cursor: pointer"><strong>chiShona</strong> (Shona)</li>
+        <li data-value="rw" style="padding: 6px; cursor: pointer"><strong>Ikinyarwanda</strong> (Kinyarwanda)</li>
+        <li data-value="ny" style="padding: 6px; cursor: pointer"><strong>Chichewa</strong> (Chichewa)</li>
+        <li data-value="cy" style="padding: 6px; cursor: pointer"><strong>Cymraeg</strong> (Welsh)</li>
+      </ul>
+    </div>
+  </div>
 
-      <!-- Password Screen Heading -->
-      <h2 id="password-title" style="margin-bottom: 40px; font-weight: normal; font-size: 18px; text-align: center;">
-        Enter your <span style="font-weight: bold; font-family: 'Quicksand', sans-serif"><span style="color: red">Al</span>an</span> invitation password
-      </h2>
+  <!-- Password Screen Heading -->
+  <h2 id="password-title" style="margin-bottom: 40px; font-weight: normal; font-size: 18px; text-align: center;">
+    Enter your <span style="font-weight: bold; font-family: 'Quicksand', sans-serif"><span style="color: red">Al</span>an</span> invitation password
+  </h2>
 
-      <!-- Password Input and Submit Button -->
-      <div style="display: flex; align-items: flex-start; margin-bottom: 20px">
-        <div style="display: flex; flex-direction: column; margin-right: 30px">
-          <input
-            type="password"
-            id="passwordInput"
-            placeholder="Password"
-            style="color: grey; padding: 12px; width: 150px; font-size: 16px; border-radius: 14px; border: 1px solid #ccc; margin-bottom: 20px"
-          />
-          <p id="passwordError" style="color: red; display: none; width: 220px; text-align: center; margin: 6px auto 0">
-            Invalid password. Please try again
-          </p>
-        </div>
-        <button id="passwordSubmitBtn" disabled style="padding: 12px; font-size: 16px; border-radius: 12px; border: 1px solid #ccc; cursor: pointer">
-          Submit
-        </button>
-      </div>
-
-      <!-- Small Note -->
-      <p id="noCodeLine" style="margin-top: 50px; font-style: italic; font-size: 14px; color: black; text-align: center">
-        No or incorrect code? Contact us <a href="https://medicine.st-andrews.ac.uk/arclight/contact/" style="color: blue" target="_blank">here</a>
+  <!-- Password Input and Submit Button -->
+  <div style="display: flex; align-items: flex-start; margin-bottom: 20px">
+    <div style="display: flex; flex-direction: column; margin-right: 30px">
+      <input
+        type="password"
+        id="passwordInput"
+        placeholder="Password"
+        style="color: grey; padding: 12px; width: 150px; font-size: 16px; border-radius: 14px; border: 2px solid #ccc; margin-bottom: 20px"
+      />
+      <p id="passwordError" style="color: red; display: none; width: 220px; text-align: center; margin: 6px auto 0">
+        Invalid password. Please try again
       </p>
     </div>
-    <!-- END PASSWORD SCREEN -->
+    <button id="passwordSubmitBtn" disabled style="padding: 12px; font-size: 16px; border-radius: 12px; border: 1px solid #ccc; cursor: pointer">
+      Submit
+    </button>
+  </div>
+
+  <!-- Small Note -->
+  <p id="noCodeLine" style="margin-top: 50px; font-style: italic; font-size: 14px; color: black; text-align: center">
+    No or incorrect code? Contact us <a href="https://medicine.st-andrews.ac.uk/arclight/contact/" style="color: blue" target="_blank">here</a>
+  </p>
+</div>
+<!-- END PASSWORD SCREEN -->
+
 
     <!-- ===================================================================== -->
     <!-- SPLASH SCREEN (initially visible only via JS) -->
