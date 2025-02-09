@@ -347,7 +347,7 @@ button {
 
 .side-menu {
   position: fixed;
-  left: -300px; /* Start off-screen */
+  left: -370px; /* Start off-screen */
   top: 10px; /* Add px for clarity */
   min-width: 300px; /* Minimum width remains 300px */
   width: auto; /* Width will expand as needed */

@@ -111,7 +111,7 @@
     <div class="menu-icon"></div>
 
     <!-- SIDE MENU: hidden by default, toggled by JS changing left:-370px to 0px -->
-    <div class="side-menu" style="display: flex; flex-wrap: wrap; align-items: center;">
+    <div class="side-menu">
       <div style="display: flex; margin-bottom: 10px;">
         <div>
           <button id="instructions-button" class="button red pulse">How to use</button>
@@ -448,14 +448,17 @@
     const iso_a3 = localStorage.getItem('iso_a3') || 'Not set';
 
     // Reset side menu on page show
-    window.addEventListener('pageshow', () => {
+      window.addEventListener('pageshow', () => {
       sideMenu.style.left = '-370px';
+      menuIcon.classList.remove('open');
     });
+
     // Re-fetch agent
     window.addEventListener('pageshow', () => {
-      sideMenu.style.left = '-370px';
+      // sideMenu.style.left = '-300px'; // Remove or comment out this line
       selectAgentAndFetch();
     });
+
 
     /* ============================================
        HELPER FUNCTIONS
@@ -661,13 +664,14 @@
       setupMenuIcon();
       setupInstructionsButton();
       setupNameIcon();
+      
 
       if (localStorage.getItem('instructionsClicked') === 'true') {
         updateButtonStyle(instructionsButton);
       }
       showGreeting();
       conditionImage.addEventListener('click', () => toggleZoom(conditionImage));
-      updateLanguageDisplays('en');
+      /*updateLanguageDisplays('en');*/
       selectAgentAndFetch();
       setupGeolocationButton();
     }
@@ -701,11 +705,12 @@
 
     // Menu icon toggling side menu
     function setupMenuIcon() {
-      menuIcon.addEventListener('click', function() {
-        this.classList.toggle('open');
-        sideMenu.style.left = (sideMenu.style.left === '0px') ? '-370px' : '0px';
-      });
-    }
+    menuIcon.addEventListener('click', function() {
+      this.classList.toggle('open');
+      sideMenu.style.left = (sideMenu.style.left === '0px') ? '-370px' : '0px';
+    });
+  }
+
     // Language dropdown
     languageButton.addEventListener('click', () => {
       languageDropdown.style.display = (languageDropdown.style.display === 'none') ? 'block' : 'none';
@@ -1022,12 +1027,12 @@
         .catch(error => console.error('Error loading agent module:', error));
     });
 
-    window.addEventListener('pageshow', event => {
+    window.addEventListener('pageshow', (event) => {
   if (event.persisted) {
-    // Full reload is the only guaranteed fix if reflow hacks don't work.
     window.location.reload();
   }
 });
+
 
 
   </script>
