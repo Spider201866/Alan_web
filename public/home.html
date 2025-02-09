@@ -53,7 +53,7 @@
       text-align: center;
       cursor: pointer;
       border: none;
-    }
+    } 
 
     /* Mini-modal styling */
     .mini-modal {
@@ -89,7 +89,7 @@
     }
     
   </style>
-</head>
+</head> 
 
 <body>
   <!-- Page-container for a sticky footer approach if needed -->
@@ -660,21 +660,24 @@
     document.addEventListener('DOMContentLoaded', main);
 
     function main() {
-      console.log('DOMContentLoaded event fired');
-      setupMenuIcon();
-      setupInstructionsButton();
-      setupNameIcon();
-      
+  console.log('DOMContentLoaded event fired');
 
-      if (localStorage.getItem('instructionsClicked') === 'true') {
-        updateButtonStyle(instructionsButton);
-      }
-      showGreeting();
-      conditionImage.addEventListener('click', () => toggleZoom(conditionImage));
-      /*updateLanguageDisplays('en');*/
-      selectAgentAndFetch();
-      setupGeolocationButton();
-    }
+  const storedLang = localStorage.getItem('preferredLanguage') || 'en';
+  updateLanguageDisplays(storedLang);
+
+  setupMenuIcon();
+  setupInstructionsButton();
+  setupNameIcon();
+
+  if (localStorage.getItem('instructionsClicked') === 'true') {
+    updateButtonStyle(instructionsButton);
+  }
+  showGreeting();
+  conditionImage.addEventListener('click', () => toggleZoom(conditionImage));
+  selectAgentAndFetch();
+  setupGeolocationButton();
+}
+
 
     // Hide animations when chatbot is clicked
     function hideAnimations() {
