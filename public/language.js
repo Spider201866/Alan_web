@@ -196,6 +196,13 @@ export const translations = {
     aimsOption3: 'Communicate better',
     contactPlaceholder: 'Contact (email/phone)',
     acceptButton: 'Accept',
+
+    images: "Images",
+    help: "Help",
+    screenshot: "Screenshot",
+    refer: "Refer",
+    comingSoon: "Coming Soon...",
+
   },
 
   // 2) Chinese (Simplified) - zh
@@ -370,6 +377,13 @@ export const translations = {
     aimsOption3: '更好沟通',
     contactPlaceholder: '联系方式（电子邮件/电话）',
     acceptButton: '接受',
+
+    images: "图片",
+    help: "帮助",
+    screenshot: "截屏",
+    refer: "转介",
+    comingSoon: "敬请期待...",
+
   },
 
   // 3) Hindi - hi
@@ -550,6 +564,14 @@ export const translations = {
     aimsOption3: 'बेहतर संचार',
     contactPlaceholder: 'संपर्क (ईमेल/फ़ोन)',
     acceptButton: 'स्वीकार करें',
+
+    images: "चित्र",
+    help: "सहायता",
+    screenshot: "स्क्रीनशॉट",
+    refer: "रेफ़र",
+    comingSoon: "शीघ्र आ रहा है...",
+
+
   },
 
   // 4) Spanish - es
@@ -732,6 +754,13 @@ export const translations = {
     aimsOption3: 'Comunicar mejor',
     contactPlaceholder: 'Contacto (correo/telefono)',
     acceptButton: 'Aceptar',
+
+    images: "Imágenes",
+    help: "Ayuda",
+    screenshot: "Captura de pantalla",
+    refer: "Remitir",
+    comingSoon: "Próximamente..."
+
   },
 
   // 5) Arabic - ar
@@ -911,6 +940,13 @@ export const translations = {
     aimsOption3: 'ارتباط بهتر',
     contactPlaceholder: 'تماس (ایمیل/تلفن)',
     acceptButton: 'قبول کنید',
+
+    images: "صور",
+    help: "مساعدة",
+    screenshot: "لقطة شاشة",
+    refer: "إحالة",
+    comingSoon: "قريباً..."
+
   },
 
   // 6) French - fr
@@ -1096,6 +1132,13 @@ export const translations = {
     aimsOption3: 'Communiquer mieux',
     contactPlaceholder: 'Contact (email/téléphone)',
     acceptButton: 'Accepter',
+
+    images: "Images",
+    help: "Aide",
+    screenshot: "Capture d’écran",
+    refer: "Référer",
+    comingSoon: "Bientôt disponible..."
+
   },
 
   // 7) Portuguese - pt
@@ -1278,6 +1321,13 @@ export const translations = {
     aimsOption3: 'Comunicar melhor',
     contactPlaceholder: 'Contato (email/telefone)',
     acceptButton: 'Aceitar',
+
+    images: "Imagens",
+    help: "Ajuda",
+    screenshot: "Captura de tela",
+    refer: "Encaminhar",
+    comingSoon: "Em breve..."
+
   },
 
   // 8) Bangla - bn
@@ -1457,6 +1507,13 @@ export const translations = {
     aimsOption3: 'ভালভাবে যোগাযোগ',
     contactPlaceholder: 'যোগাযোগ (ইমেইল/ফোন)',
     acceptButton: 'গ্রহণ করুন',
+
+    images: "ছবি",
+    help: "সহায়তা",
+    screenshot: "স্ক্রিনশট",
+    refer: "রেফার",
+    comingSoon: "শীঘ্রই আসছে...",
+
   },
 
   // 9) Indonesian - id
@@ -1639,6 +1696,13 @@ export const translations = {
     aimsOption3: 'Komunikasi lebih baik',
     contactPlaceholder: 'Kontak (email/telepon)',
     acceptButton: 'Terima',
+
+    images: "Gambar",
+    help: "Bantuan",
+    screenshot: "Tangkap Layar",
+    refer: "Rujuk",
+    comingSoon: "Segera hadir...",
+
   },
 
   // 10) Swahili - sw
@@ -1819,6 +1883,13 @@ export const translations = {
     aimsOption3: 'Wasiliana vyema',
     contactPlaceholder: 'Mawasiliano (email/simu)',
     acceptButton: 'Kubali',
+
+    images: "Picha",
+    help: "Msaada",
+    screenshot: "Picha ya skrini",
+    refer: "Rejelea",
+    comingSoon: "Inakuja hivi karibuni...",
+
   },
 
   // 11) Urdu - ur
@@ -1999,6 +2070,13 @@ export const translations = {
     aimsOption3: 'بہتر رابطہ',
     contactPlaceholder: 'رابطہ (ای میل/فون)',
     acceptButton: 'قبول کریں',
+
+    images: "تصاویر",
+    help: "مدد",
+    screenshot: "اسکرین شاٹ",
+    refer: "ریفر",
+    comingSoon: "جلد آ رہا ہے...",
+
   },
 
   // 12) Persian (Farsi) - fa
@@ -2179,6 +2257,13 @@ export const translations = {
     aimsOption3: 'ارتباط بهتر',
     contactPlaceholder: 'تماس (ایمیل/تلفن)',
     acceptButton: 'قبول کنید',
+
+    images: "تصاویر",
+    help: "راهنما",
+    screenshot: "اسکرین شات",
+    refer: "ارجاع",
+    comingSoon: "به‌ زودی..."
+
   },
 
   // 13) Lingala - ln
@@ -2360,6 +2445,13 @@ export const translations = {
     aimsOption3: 'Kolobela malamu',
     contactPlaceholder: 'Lumikisa (imeyili/telefonu)',
     acceptButton: 'Kobwaka',
+
+    images: "Bililingi",
+    help: "Lisungi",
+    screenshot: "Screenshot",
+    refer: "Kotinda",
+    comingSoon: "Eyakoya mosika te...",
+
   },
 
   // 14) Hausa - ha
@@ -2541,6 +2633,13 @@ export const translations = {
     aimsOption3: 'Sadarwa mafi kyau',
     contactPlaceholder: 'Tuntuɓi (email/phone)',
     acceptButton: 'Amince',
+
+    images: "Hotuna",
+    help: "Taimako",
+    screenshot: "Daukar hoton allo",
+    refer: "Mika",
+    comingSoon: "Zuwa nan ba da jimawa ba...",
+
   },
 
   // 15) Yoruba - yo
@@ -2720,6 +2819,13 @@ export const translations = {
     aimsOption3: 'Ìbánisọ̀rọ̀ tó dáa',
     contactPlaceholder: 'Ìbánisọ̀rọ̀ (imeèlì/foònù)',
     acceptButton: 'Gba',
+
+    images: "Aworan",
+    help: "Iranlowo",
+    screenshot: "Sikirinshọt",
+    refer: "Tunlo",
+    comingSoon: "Nbo laipẹ...",
+
   },
 
   // 16) Igbo - ig
@@ -2901,6 +3007,13 @@ export const translations = {
     aimsOption3: 'Kparịta ụka nke ọma',
     contactPlaceholder: 'Kpọtụrụ (email/ekwentị)',
     acceptButton: 'Nabata',
+
+    images: "Ihe oyiyi",
+    help: "Enyemaka",
+    screenshot: "Screenshot",
+    refer: "Ziga",
+    comingSoon: "Na-abịa ngwa ngwa...",
+
   },
 
   // 17) Zulu - zu
@@ -3086,6 +3199,13 @@ export const translations = {
     aimsOption3: 'Ukuxhumana kangcono',
     contactPlaceholder: 'Xhumana (imeyili/umakhalekhukhwini)',
     acceptButton: 'Yamukela',
+
+    images: "Izithombe",
+    help: "Usizo",
+    screenshot: "Isithombe-skrini",
+    refer: "Bhekisa",
+    comingSoon: "Kuze maduzane...",
+
   },
 
   // 18) Amharic - am
@@ -3260,6 +3380,13 @@ export const translations = {
     aimsOption3: 'የተሻለ አውታረ ግንኙነት',
     contactPlaceholder: 'እውቅ (ኢሜል/ስልክ)',
     acceptButton: 'ተቀበል',
+
+    images: "ሥዕሎች",
+    help: "እርዳታ",
+    screenshot: "Screenshot",
+    refer: "አስተላለፍ",
+    comingSoon: "በቅርቡ...",
+
   },
 
   // 19) Shona - sn
@@ -3438,6 +3565,13 @@ export const translations = {
     aimsOption3: 'Kutaurirana zviri nani',
     contactPlaceholder: 'Bata (email/foni)',
     acceptButton: 'Gamuchira',
+
+    images: "Mifananidzo",
+    help: "Rubatsiro",
+    screenshot: "Screenshot",
+    refer: "Tumira",
+    comingSoon: "Chiri kuuya nokukurumidza...",
+
   },
 
   // 20) Kinyarwanda - rw
@@ -3617,6 +3751,13 @@ export const translations = {
     aimsOption3: 'Kuganira neza',
     contactPlaceholder: 'Tumenyeshe (imeyili/telefone)',
     acceptButton: 'Emeza',
+
+    images: "Amafoto",
+    help: "Ubufasha",
+    screenshot: "Ifoto ya Ekrini",
+    refer: "Ohereza",
+    comingSoon: "Biraza vuba...",
+
   },
 
   // 21) Chichewa (Malawi) - ny
@@ -3796,6 +3937,13 @@ export const translations = {
     aimsOption3: 'Kufunikira kulankhulana bwino',
     contactPlaceholder: 'Lumikizani (email/phone)',
     acceptButton: 'Chitira',
+
+    images: "Zithunzi",
+    help: "Thandizo",
+    screenshot: "Chithunzi cha skirini",
+    refer: "Tumizirani",
+    comingSoon: "Kubwera posachedwa...",
+
   },
 
   // 22) Welsh - cy
@@ -3975,6 +4123,13 @@ export const translations = {
     aimsOption3: "Cysylltu'n well",
     contactPlaceholder: 'Cysylltu (e-bost/ffôn)',
     acceptButton: 'Derbyn',
+
+    images: "Delweddau",
+    help: "Cymorth",
+    screenshot: "Sgrinlun",
+    refer: "Cyfeirio",
+    comingSoon: "Ar ddod cyn bo hir..."
+
   },
 };
 window.translations = translations;
