@@ -1022,20 +1022,28 @@
     }
 
     // Load a default agent if that is your fallback
-    document.addEventListener('DOMContentLoaded', () => {
-      import('./agent1-chatbot-module.js')
-        .then(module => {
-          module.initChatbot();
-        })
-        .catch(error => console.error('Error loading agent module:', error));
-    });
+  // Keep your code that forcibly reloads if the page is shown from cache:
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+      // We need this so your menu does not break
+      window.location.reload();
+    }
+  });
 
-    window.addEventListener('pageshow', (event) => {
-  if (event.persisted) {
-    window.location.reload();
-  }
-});
+  // On DOMContentLoaded, first re-apply the user’s chosen language, 
+  // then import your agent script.
+  document.addEventListener('DOMContentLoaded', () => {
+    // Step A: Re-apply language from localStorage (so we are not stuck in English)
+    const storedLang = localStorage.getItem('preferredLanguage') || 'en';
+    updateLanguageDisplays(storedLang);
 
+    // Step B: Then (and only then) import your default agent
+    import('./agent1-chatbot-module.js')
+      .then(module => {
+        module.initChatbot();
+      })
+      .catch(error => console.error('Error loading agent module:', error));
+  });
 
 
   </script>
