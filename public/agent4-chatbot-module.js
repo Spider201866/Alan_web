@@ -23,7 +23,7 @@ export function initChatbot() {
 
   // Now initialise the chatbot using Flowise embed API
   Chatbot.initFull({
-    chatflowid: '27d555a7-53fe-4962-88f2-30c8c359ba76',
+    chatflowid: '51999581-2988-4d0f-a033-208d59211714',
     apiHost: 'https://flowiseai-railway-production-fecf.up.railway.app',
     userId: sessionId,
     theme: {
