@@ -933,27 +933,18 @@ function updateLanguageDisplays(lang) {
   }
 } 
 
+// Hides the boxesFrame object as soon as user clicks the chatbot container
+document.addEventListener('DOMContentLoaded', () => {
+  const chatbotContainer = document.querySelector('.chatbot-container');
+  const boxesFrame = document.getElementById('boxesFrame');
 
-document.addEventListener('click', (event) => {
-  // If the click is NOT inside the side menu...
-  if (!sideMenu.contains(event.target) && sideMenu.style.left === '0px') {
-    sideMenu.style.left = '-370px';
-    menuIcon.classList.remove('open');
-  }
-
-  // If the click is NOT on the language dropdown button or its dropdown...
-  if (
-    !languageButton.contains(event.target) && 
-    !languageDropdown.contains(event.target)
-  ) {
-    languageDropdown.style.display = 'none';
-  }
-
-  // If the click is NOT inside the popup or on the popup’s button...
-  if (!popup.contains(event.target)) {
-    popup.style.right = '-350px';
+  if (chatbotContainer && boxesFrame) {
+    chatbotContainer.addEventListener('click', () => {
+      boxesFrame.style.display = 'none';
+    });
   }
 });
+
 
 
     document.addEventListener('DOMContentLoaded', () => {
