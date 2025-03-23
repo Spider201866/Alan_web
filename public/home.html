@@ -933,22 +933,29 @@ function updateLanguageDisplays(lang) {
   }
 } 
 
-  // Hide these popups whenever user clicks in the chatbot input box
-  const chatbotContainer = document.querySelector('flowise-fullchatbot');
 
-  if (chatbotContainer) {
-    chatbotContainer.addEventListener('click', () => {
-      // 1) Hide the side menu if open:
-      sideMenu.style.left = '-370px';
-      menuIcon.classList.remove('open');
-
-      // 2) Hide the language dropdown if open:
-      languageDropdown.style.display = 'none';
-
-      // 3) Hide the main popup if open:
-      popup.style.right = '-350px';
-    });
+document.addEventListener('click', (event) => {
+  // If the click is NOT inside the side menu...
+  if (!sideMenu.contains(event.target) && sideMenu.style.left === '0px') {
+    sideMenu.style.left = '-370px';
+    menuIcon.classList.remove('open');
   }
+
+  // If the click is NOT on the language dropdown button or its dropdown...
+  if (
+    !languageButton.contains(event.target) && 
+    !languageDropdown.contains(event.target)
+  ) {
+    languageDropdown.style.display = 'none';
+  }
+
+  // If the click is NOT inside the popup or on the popup’s button...
+  if (!popup.contains(event.target)) {
+    popup.style.right = '-350px';
+  }
+});
+
+
     document.addEventListener('DOMContentLoaded', () => {
 
   const chatbotTitle = document.querySelector('.chatbot-title');
