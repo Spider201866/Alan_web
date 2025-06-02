@@ -25,14 +25,23 @@ export const translations = {
     examineWell: 'Examine Well',
     useArclight: 'Use Arclight',
     howCanIHelp: 'what can I help with?',
-    alanMistakes: `Alan can make mistakes. Use clinical judgement. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan can make mistakes. Use clinical judgement. ${new Date().getMonth() + 1}/25,`,
     login: 'Login',
     enterPassword: 'Enter Password',
     register: 'Register',
     name: 'Name',
     password: 'Password (4-digit number)',
 
-    // 15 job roles (updated)
+    // --- NEW "Aims" Dropdown Translations ---
+    aimsPlaceholder: 'Aims',
+    aimsEyes: 'Eyes',
+    aimsEars: 'Ears',
+    aimsSkin: 'Skin',
+    aimsVeterinary: 'Veterinary',
+    aimsChildMaternal: 'Child/Maternal',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Health worker',
     nurse: 'Nurse',
     ophthalmicOfficer: 'Ophthalmic clinical officer',
@@ -48,6 +57,7 @@ export const translations = {
     audiologist: 'Audiologist',
     earCarePractitioner: 'Ear care practitioner',
     dermatologist: 'Dermatologist',
+    */
 
     instructionsButton: 'How to use',
     eyeButton: 'Eye',
@@ -86,7 +96,8 @@ export const translations = {
     userName: 'Name',
     userContact: 'Contact',
     userRole: 'Role',
-    userAims: 'Aims',
+    userAimsPopupLabel: "Aims",
+    // userAims: 'Aims',
     userLatLong: 'Lat & Long',
     userArea: 'Area',
     userCountry: 'Country',
@@ -95,7 +106,7 @@ export const translations = {
     geolocationButton: 'Geolocation',
     geoInfoText: 'Clicking "Geolocation" will share a more accurate location (lat/long). This helps offer better guidance and choices.',
 
-    pageTitle: 'How to examine the eye',
+    pageTitle_howToExamineEye: 'How to examine the eye',
     frontOfEyeHeading: 'Front of Eye',
     frontOfEyeText:
       "Observe and compare eyes: <em>straight,</em> <em>right,</em> <em>left,</em> <em>up,</em> down<br><strong><u>Hold &amp; get close</u></strong>. Examine: <em>lids,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupil</em><br>Use with <span style='color: orange;'>fluro</span> for corneal ulcers or scratches",
@@ -105,10 +116,10 @@ export const translations = {
     backOfEyeHeading: 'Back of Eye',
     backOfEyeText:
       "Use right eye to view patient's right eye; left for left<br>Patient must look straight NOT at light; get close and find optic disc (Dilate = best view)<br>Study disc: <em>Margin,</em> <em>Colour,</em> <em>Cup</em>. Track big vessels, then ask patient to look directly into the light to see macula",
-    additionalText:
+    additionalText_eye:
       "Know your discs: normal, <span style='color:red; font-weight:bold;'>swollen,</span> <span style='color:red;'>new vessels,</span> <span style='color:orange;'>cupped,</span> <span style='color:green;'>pale</span><br>&gt;Practice often&lt;",
 
-    pageTitle: 'How to examine the ear',
+    pageTitle_howToExamineEar: 'How to examine the ear',
     allAroundEarHeading: 'All around ear',
     allAroundEarText:
       'Check: <em>pinna, </em><em>tragus, </em><em>mastoid</em> for lumps, tenderness or discharge<br>Gently move pinna, note any pain',
@@ -118,10 +129,10 @@ export const translations = {
     tympanicMembraneHeading: 'Tympanic membrane',
     tympanicMembraneText:
       'Identify handle of malleus, light reflex, attic<br>Note: <em>colour</em>, <em>position</em>, <em>translucency</em><br>Look for perforation, fluid or scarring',
-    additionalText:
+    additionalText_ear:
       "Know your TM's: normal, <span style='color:red; font-weight:bold;'>red</span>, <span style='color:orange;'>bulging</span>, <span style='color:green;'>retracted</span>, <span style='color:purple;'>perforated</span><br>&gt;Practice often&lt;",
 
-    pageTitle: 'How to examine the skin',
+    pageTitle_howToExamineSkin: 'How to examine the skin',
     generalObservationHeading: 'General observation',
     generalObservationText: 'Inspect lumps, <em>colour changes</em>, distribution<br>Gently palpate for texture, temperature or tenderness',
     uvLightHeading: 'UV (Wood’s) light',
@@ -130,10 +141,10 @@ export const translations = {
     dermoscopyHeading: 'Dermoscopy',
     dermoscopyText:
       '<strong><u>Hold Arclight polariser like a pen</u></strong>, check: <strong>ABCDE</strong> (<em>Asymmetry</em>, <em>Border</em>, <em>Colour</em>, <em>Diameter &gt;6mm</em>, <em>Evolving</em>)<br>Study: PDSBV (<em>Pigment network</em>, <em>Dots</em>, <em>Streaks</em>, <em>Blue-white</em>, <em>Vascular</em>)',
-    additionalText:
+    additionalText_skin:
       "Know your lesion: normal, <span style='color:red;'>suspicious</span>, <span style='color:orange;'>inflamed</span><br>&gt;Practice often&lt;",
 
-    pageTitle: 'About Alan',
+    pageTitle_aboutAlan: 'About Alan',
     aboutAlanText:
       'Alan is an AI eye, ear and skin diagnostic assistant, comprising: a foundation language model and symbolic logic. Smart. Serious. State of the art.<br><br>Clinical, local knowledge and images, are tailored to different roles such as health workers and general practitioners. Concise dialogue generates a diagnosis and management plan. Use of the arclight is embedded throughout.<br>',
     aboutAlanListItem1: 'Expert base – tropical/hot climate',
@@ -174,26 +185,39 @@ export const translations = {
     instructionsTooLittle_skin: 'man red skin what?',
     instructionsJustRight_skin: 'Man 25yr, red skin patch 3 day. No meds or skin prob before. Sore and itchy.',
     instructionsTooMuch_skin:
-      'This man came into clinics today. He drove into the building with red skin, now he thinks the food he ate is affecting his skin. I see watering and red edges. He wants help. Tall man, red skin, worried about pigment and irritation. He says, "What is this?"',
+      'This man came into clinics today. He drove into the building with red skin, now he thinks the food he ate is affecting his skin. I see watering, red edges. He wants help. Tall man, red skin, worried about pigment and irritation. He says, "What is this?"',
     instructionsAdditionalQuery_skin: 'Alan also answers skin teaching/learning queries: What is Eczema? How do I see the pigment network?',
     instructionsLabelTooLittle: 'Too little',
     instructionsLabelJustRight: 'Just right',
     instructionsLabelTooMuch: 'Too much',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying names or details.',
     goodLuck: 'Good luck!',
     namePlaceholder: 'Name',
-    rolePlaceholder: 'Role',
+    // rolePlaceholder: 'Role', 
+
+    // --- NEW "Experience" Dropdown Translations ---
     experiencePlaceholder: 'Experience',
+    experienceStudentRefresher: 'Student / refresher',
+    experienceConfidentCore: 'Confident core knowledge',
+    experienceExpert: 'Expert',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 yr',
     experienceOption2: '1-3 yr',
     experienceOption3: '3-7 yr',
     experienceOption4: '>7 yr',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Aims',
     aimsOption1: 'Second opinion',
     aimsOption2: 'Condition lookup',
     aimsOption3: 'Communicate better',
+    */
     contactPlaceholder: 'Contact (email/phone)',
     acceptButton: 'Accept',
 
@@ -202,7 +226,6 @@ export const translations = {
     screenshot: "Screenshot",
     refer: "Refer",
     comingSoon: "Coming Soon...",
-
   },
 
   // 2) Chinese (Simplified) - zh
@@ -212,13 +235,23 @@ export const translations = {
     examineWell: '认真检查',
     useArclight: '使用 Arclight',
     howCanIHelp: '我能帮你做什么？',
-    alanMistakes: `Alan 可能会出错。请使用临床判断。${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan 可能会出错。请使用临床判断。${new Date().getMonth() + 1}/25,`,
     login: '登录',
     enterPassword: '输入密码',
     register: '注册',
     name: '姓名',
     password: '密码 (4位数字)',
 
+    // --- NEW "Aims" Dropdown Translations ---
+    aimsPlaceholder: '目标',
+    aimsEyes: '眼科',
+    aimsEars: '耳科',
+    aimsSkin: '皮肤科',
+    aimsVeterinary: '兽医',
+    aimsChildMaternal: '儿童/母婴',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: '医务人员',
     nurse: '护士',
     ophthalmicOfficer: '眼科临床官',
@@ -234,6 +267,7 @@ export const translations = {
     audiologist: '听力学家',
     earCarePractitioner: '耳部护理人员',
     dermatologist: '皮肤科医生',
+    */
 
     instructionsButton: '如何使用',
     eyeButton: '眼睛',
@@ -272,7 +306,8 @@ export const translations = {
     userName: '姓名',
     userContact: '联系方式',
     userRole: '角色',
-    userAims: '目标',
+    userAimsPopupLabel: "目标",
+    // userAims: '目标',
     userLatLong: '经纬度',
     userArea: '区域',
     userCountry: '国家',
@@ -281,7 +316,7 @@ export const translations = {
     geolocationButton: '定位',
     geoInfoText: '点击“定位”将共享更准确的位置（经度/纬度）。这有助于提供更好的指导和选择。',
 
-    pageTitle: '如何检查眼睛',
+    pageTitle_howToExamineEye: '如何检查眼睛',
     frontOfEyeHeading: '眼前部',
     frontOfEyeText:
       "观察并比较眼睛：<em>正视,</em> <em>向右,</em> <em>向左,</em> <em>向上,</em> 向下<br><strong><u>靠近观察</u></strong>。检查：<em>眼睑,</em> <em>结膜,</em> <em>角膜,</em> <em>瞳孔</em><br>使用<span style='color: orange;'>荧光素</span>检查角膜溃疡或刮伤",
@@ -291,10 +326,10 @@ export const translations = {
     backOfEyeHeading: '眼后部',
     backOfEyeText:
       '右眼观察病人右眼; 左眼观察左侧<br>病人须直视而非看光; 靠近寻找视神经盘（散瞳视野最佳）<br>检查视盘：<em>边缘,</em> <em>颜色,</em> <em>杯状</em>。观察大血管，然后请病人直视光源以观察黄斑',
-    additionalText:
+    additionalText_eye:
       "了解你的视盘：正常, <span style='color:red; font-weight:bold;'>水肿,</span> <span style='color:red;'>新生血管,</span> <span style='color:orange;'>杯状,</span> <span style='color:green;'>苍白</span><br>&gt;多加练习&lt;",
 
-    pageTitle: '如何检查耳朵',
+    pageTitle_howToExamineEar: '如何检查耳朵',
     allAroundEarHeading: '耳周检查',
     allAroundEarText: '检查：<em>外耳廓, </em><em>耳屏, </em><em>乳突</em>是否有肿块、压痛或分泌物<br>轻轻活动外耳廓，注意是否有疼痛',
     earCanalHeading: '耳道检查',
@@ -302,10 +337,10 @@ export const translations = {
       '倾斜头部，<strong><u>像握笔般握住 Arclight</u></strong><br>成人上拉/后拉外耳廓，儿童下拉/后拉<br>插入检耳镜（成人4.5mm，婴儿2.5mm），推开耳毛，必要时旋转<br>观察：<em>耳垢,</em> <em>杂质,</em> <em>感染</em>',
     tympanicMembraneHeading: '鼓膜检查',
     tympanicMembraneText: '识别锤骨柄、光反射及鼓室上部<br>注意：<em>颜色,</em> <em>位置,</em> <em>半透明性</em><br>检查是否有穿孔、积液或瘢痕',
-    additionalText:
+    additionalText_ear:
       "了解你的鼓膜：正常, <span style='color:red; font-weight:bold;'>红</span>, <span style='color:orange;'>鼓胀</span>, <span style='color:green;'>凹陷</span>, <span style='color:purple;'>穿孔</span><br>&gt;多加练习&lt;",
 
-    pageTitle: '如何检查皮肤',
+    pageTitle_howToExamineSkin: '如何检查皮肤',
     generalObservationHeading: '一般观察',
     generalObservationText: '检查肿块，<em>颜色变化</em>，分布<br>轻轻触诊质地、温度或压痛',
     uvLightHeading: '紫外线（伍德灯）',
@@ -314,10 +349,10 @@ export const translations = {
     dermoscopyHeading: '皮肤镜检查',
     dermoscopyText:
       '<strong><u>像握笔一样握住 Arclight 偏振镜</u></strong>，检查：<strong>ABCDE</strong>（<em>不对称</em>，<em>边界</em>，<em>颜色</em>，<em>直径&gt;6mm</em>，<em>变化中</em>）<br>观察：PDSBV（<em>色素网络</em>，<em>小点</em>，<em>条纹</em>，<em>蓝白色</em>，<em>血管</em>）',
-    additionalText:
+    additionalText_skin:
       "了解你的病变：正常，<span style='color:red; font-weight:bold;'>可疑</span>，<span style='color:orange;'>发炎</span><br>&gt;多加练习&lt;",
 
-    pageTitle: '关于 Alan',
+    pageTitle_aboutAlan: '关于 Alan',
     aboutAlanText:
       'Alan 是一款 AI 眼、耳和皮肤诊断助手，融合了基础语言模型与符号逻辑。聪明、严肃、前沿。<br><br>临床、本地知识和图像针对不同角色（如卫生工作者和全科医生）量身定制。简洁的对话生成诊断和管理方案。Arclight 的使用贯穿始终。<br>',
     aboutAlanListItem1: '专家基地 – 热带/炎热气候',
@@ -362,19 +397,32 @@ export const translations = {
     instructionsLabelJustRight: '正合适',
     instructionsLabelTooMuch: '太多',
 
+    // --- Onboarding Page Translations ---
     instructionText: 'Alan 是一款 AI 助手，适用于学生和偶尔遇到眼、耳或皮肤病例的人。请清晰书写或表达，并避免透露姓名或详细信息。',
     goodLuck: '祝你好运！',
     namePlaceholder: '姓名',
-    rolePlaceholder: '角色',
+    // rolePlaceholder: '角色',
+
+    // --- NEW "Experience" Dropdown Translations ---
     experiencePlaceholder: '经验',
+    experienceStudentRefresher: '学生/复习者',
+    experienceConfidentCore: '核心知识扎实',
+    experienceExpert: '专家',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 年',
     experienceOption2: '1-3 年',
     experienceOption3: '3-7 年',
     experienceOption4: '>7 年',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: '目标',
     aimsOption1: '第二意见',
     aimsOption2: '病情查询',
     aimsOption3: '更好沟通',
+    */
     contactPlaceholder: '联系方式（电子邮件/电话）',
     acceptButton: '接受',
 
@@ -383,7 +431,6 @@ export const translations = {
     screenshot: "截屏",
     refer: "转介",
     comingSoon: "敬请期待...",
-
   },
 
   // 3) Hindi - hi
@@ -393,13 +440,23 @@ export const translations = {
     examineWell: 'अच्छी तरह जांचें',
     useArclight: 'Arclight का उपयोग करें',
     howCanIHelp: 'मैं आपकी किस तरह मदद कर सकता/सकती हूं?',
-    alanMistakes: `Alan गलतियां कर सकता है। कृपया नैदानिक निर्णय का उपयोग करें।${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan गलतियां कर सकता है। कृपया नैदानिक निर्णय का उपयोग करें।${new Date().getMonth() + 1}/25,`,
     login: 'लॉगिन',
     enterPassword: 'पासवर्ड दर्ज करें',
     register: 'रजिस्टर करें',
     name: 'नाम',
     password: 'पासवर्ड (4 अंकों का)',
 
+    // --- NEW "Aims" Dropdown Translations ---
+    aimsPlaceholder: 'लक्ष्य',
+    aimsEyes: 'आंखें',
+    aimsEars: 'कान',
+    aimsSkin: 'त्वचा',
+    aimsVeterinary: 'पशु चिकित्सा',
+    aimsChildMaternal: 'बाल/मातृ',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'स्वास्थ्यकर्मी',
     nurse: 'नर्स',
     ophthalmicOfficer: 'नेत्र चिकित्सा अधिकारी',
@@ -414,6 +471,8 @@ export const translations = {
     pharmacist: 'फार्मासिस्ट',
     audiologist: 'श्रवण विशेषज्ञ',
     earCarePractitioner: 'कान देखभाल करने वाला',
+    dermatologist: 'त्वचा विशेषज्ञ',
+    */
 
     instructionsButton: 'कैसे इस्तेमाल करें',
     eyeButton: 'आंख',
@@ -452,7 +511,8 @@ export const translations = {
     userName: 'नाम',
     userContact: 'संपर्क',
     userRole: 'भूमिका',
-    userAims: 'उद्देश्य',
+    userAimsPopupLabel: "लक्ष्य",
+    // userAims: 'उद्देश्य',
     userLatLong: 'अक्षांश व देशांतर',
     userArea: 'क्षेत्र',
     userCountry: 'देश',
@@ -461,7 +521,7 @@ export const translations = {
     geolocationButton: 'स्थान निर्धारण',
     geoInfoText: '“स्थान निर्धारण” पर क्लिक करने से अधिक सटीक स्थान (अक्षांश/देशांतर) साझा होगा। इससे बेहतर मार्गदर्शन और विकल्प मिलते हैं।',
 
-    pageTitle: 'आँख की जांच कैसे करें',
+    pageTitle_howToExamineEye: 'आँख की जांच कैसे करें',
     frontOfEyeHeading: 'आँख का सामने का भाग',
     frontOfEyeText:
       "आँखों का निरीक्षण और तुलना करें: <em>सीधे,</em> <em>दाएं,</em> <em>बाएं,</em> <em>ऊपर,</em> नीचे<br><strong><u>निकट आकर देखें</u></strong>। जाँच करें: <em>पलकें,</em> <em>कॉन्जक्टिवा,</em> <em>कॉर्निया,</em> <em>पुतलियाँ</em><br><span style='color: orange;'>फ्लूरो</span> के साथ कॉर्नियल अल्सर या खरोंच के लिए उपयोग करें",
@@ -471,10 +531,10 @@ export const translations = {
     backOfEyeHeading: 'आँख का पीछे का भाग',
     backOfEyeText:
       'दाहिनी आँख से मरीज की दाहिनी आँख देखें; बायीं से बायीं<br>मरीज को सीधे देखना चाहिए, प्रकाश की ओर नहीं; पास जाकर ऑप्टिक डिस्क खोजें (डाइलेट = सर्वश्रेष्ठ दृश्य)<br>डिस्क का अध्ययन करें: <em>किनारा,</em> <em>रंग,</em> <em>कप</em>. बड़ी नाड़ियों का पता लगाएं, फिर मरीज से सीधे प्रकाश में देखने के लिए कहें ताकि मैकुला दिखाई दे',
-    additionalText:
+    additionalText_eye:
       "अपने डिस्क्स को जानें: सामान्य, <span style='color:red; font-weight:bold;'>सूजे हुए,</span> <span style='color:red;'>नई नाड़ियाँ,</span> <span style='color:orange;'>कपयुक्त,</span> <span style='color:green;'>फीका</span><br>&gt;अधिक अभ्यास करें&lt;",
 
-    pageTitle: 'कान का परीक्षण कैसे करें',
+    pageTitle_howToExamineEar: 'कान का परीक्षण कैसे करें',
     allAroundEarHeading: 'कान के चारों ओर',
     allAroundEarText:
       'जांचें: <em>पिन्ना, </em><em>ट्रैगस, </em><em>मास्टॉइड</em> में गाँठ, संवेदनशीलता या स्राव<br>पिन्ना को धीरे से हिलाएं, किसी दर्द का ध्यान रखें',
@@ -484,10 +544,10 @@ export const translations = {
     tympanicMembraneHeading: 'कान की झिल्ली',
     tympanicMembraneText:
       'मैल्यस का हैंडल, प्रकाश परावर्तन, अट्टी की पहचान करें<br>ध्यान दें: <em>रंग,</em> <em>स्थिति,</em> <em>अर्धपारदर्शिता</em><br>छिद्र, तरल या निशान देखें',
-    additionalText:
+    additionalText_ear:
       "अपने कान की झिल्ली को जानें: सामान्य, <span style='color:red; font-weight:bold;'>लाल</span>, <span style='color:orange;'>फूली हुई</span>, <span style='color:green;'>संकोचित</span>, <span style='color:purple;'>छिद्रित</span><br>&gt;अभ्यास करते रहें&lt;",
 
-    pageTitle: 'त्वचा का परीक्षण कैसे करें',
+    pageTitle_howToExamineSkin: 'त्वचा का परीक्षण कैसे करें',
     generalObservationHeading: 'सामान्य निरीक्षण',
     generalObservationText: 'गठ्ठों, <em>रंग परिवर्तन</em> और वितरण का निरीक्षण करें<br>मुलायमता, तापमान या संवेदनशीलता के लिए धीरे से छूएँ',
     uvLightHeading: 'यूवी (वुड्स) लाइट',
@@ -496,10 +556,10 @@ export const translations = {
     dermoscopyHeading: 'डर्मोस्कोपी',
     dermoscopyText:
       '<strong><u>Arclight पोलराइजर को कलम की तरह पकड़ें</u></strong>, जांचें: <strong>ABCDE</strong> (<em>असाममिति</em>, <em>सीमा</em>, <em>रंग</em>, <em>6mm से बड़ा व्यास</em>, <em>विकसित</em>)<br>अध्ययन करें: PDSBV (<em>पिगमेंट नेटवर्क</em>, <em>बिंदु</em>, <em>रेखा</em>, <em>नीला-सफेद</em>, <em>रक्तवाहिनी</em>)',
-    additionalText:
+    additionalText_skin:
       "अपने घाव को जानें: सामान्य, <span style='color:red;'>संदिग्ध</span>, <span style='color:orange;'>सूजा हुआ</span><br>&gt;अभ्यास करते रहें&lt;",
 
-    pageTitle: 'एबाउट एलन',
+    pageTitle_aboutAlan: 'एबाउट एलन',
     aboutAlanText:
       'Alan एक AI आंख, कान और त्वचा निदान सहायक है, जिसमें एक आधार भाषा मॉडल और प्रतीकात्मक लॉजिक शामिल है। स्मार्ट। गंभीर। अत्याधुनिक।<br><br>क्लिनिकल, स्थानीय ज्ञान और छवियाँ स्वास्थ्यकर्मियों और सामान्य चिकित्सकों जैसे विभिन्न पदों के अनुरूप बनाई जाती हैं। संक्षिप्त वार्तालाप निदान और प्रबंधन योजना उत्पन्न करता है। Arclight का उपयोग हर जगह निहित है।<br>',
     aboutAlanListItem1: 'विशेषज्ञ आधार – उष्णकटिबंधीय/गर्म जलवायु',
@@ -548,20 +608,33 @@ export const translations = {
     instructionsLabelJustRight: 'ठीक है',
     instructionsLabelTooMuch: 'बहुत ज्यादा',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan एक AI सहायक है जो छात्रों और उन लोगों के लिए है जो कभी-कभार आंख, कान या त्वचा के मामलों का सामना करते हैं। कृपया स्पष्ट रूप से लिखें या बोलें और नाम या विवरण न दें।',
     goodLuck: 'शुभकामनाएं!',
     namePlaceholder: 'नाम',
-    rolePlaceholder: 'भूमिका',
+    // rolePlaceholder: 'भूमिका',
+
+    // --- NEW "Experience" Dropdown Translations ---
     experiencePlaceholder: 'अनुभव',
+    experienceStudentRefresher: 'छात्र / पुनश्चर्या',
+    experienceConfidentCore: 'आत्मविश्वासी मूल ज्ञान',
+    experienceExpert: 'विशेषज्ञ',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 वर्ष',
     experienceOption2: '1-3 वर्ष',
     experienceOption3: '3-7 वर्ष',
     experienceOption4: '>7 वर्ष',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'लक्ष्य',
     aimsOption1: 'दूसरा विचार',
     aimsOption2: 'स्थिति खोज',
     aimsOption3: 'बेहतर संचार',
+    */
     contactPlaceholder: 'संपर्क (ईमेल/फ़ोन)',
     acceptButton: 'स्वीकार करें',
 
@@ -570,8 +643,6 @@ export const translations = {
     screenshot: "स्क्रीनशॉट",
     refer: "रेफ़र",
     comingSoon: "शीघ्र आ रहा है...",
-
-
   },
 
   // 4) Spanish - es
@@ -581,13 +652,23 @@ export const translations = {
     examineWell: 'Examinar Cuidadosamente',
     useArclight: 'Usar Arclight',
     howCanIHelp: '¿Cómo puedo ayudarte hoy?',
-    alanMistakes: `Alan puede cometer errores. Usa el juicio clínico. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan puede cometer errores. Usa el juicio clínico. ${new Date().getMonth() + 1}/25,`,
     login: 'Iniciar sesión',
     enterPassword: 'Ingrese contraseña',
     register: 'Registrarse',
     name: 'Nombre',
     password: 'Contraseña (4 dígitos)',
 
+    // --- NEW "Aims" Dropdown Translations ---
+    aimsPlaceholder: 'Objetivos',
+    aimsEyes: 'Ojos',
+    aimsEars: 'Oídos',
+    aimsSkin: 'Piel',
+    aimsVeterinary: 'Veterinaria',
+    aimsChildMaternal: 'Niño/Materno',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Trabajador de la salud',
     nurse: 'Enfermero/Enfermera',
     ophthalmicOfficer: 'Oficial clínico oftálmico',
@@ -603,6 +684,7 @@ export const translations = {
     audiologist: 'Audiólogo',
     earCarePractitioner: 'Practicante de cuidado del oído',
     dermatologist: 'Dermatólogo',
+    */
 
     instructionsButton: 'Cómo usar',
     eyeButton: 'Ojo',
@@ -641,7 +723,8 @@ export const translations = {
     userName: 'Nombre',
     userContact: 'Contacto',
     userRole: 'Rol',
-    userAims: 'Objetivos',
+    userAimsPopupLabel: "Objetivos",
+    // userAims: 'Objetivos',
     userLatLong: 'Lat & Long',
     userArea: 'Área',
     userCountry: 'País',
@@ -651,7 +734,7 @@ export const translations = {
     geoInfoText:
       'Al hacer clic en "Geolocalización" se compartirá una ubicación (latitud/longitud) más precisa. Esto ayuda a ofrecer una mejor orientación y opciones.',
 
-    pageTitle: 'Cómo examinar el ojo',
+    pageTitle_howToExamineEye: 'Cómo examinar el ojo',
     frontOfEyeHeading: 'Frente del Ojo',
     frontOfEyeText:
       "Observe y compare los ojos: <em>directo,</em> <em>derecho,</em> <em>izquierdo,</em> <em>arriba,</em> abajo<br><strong><u>Mantenga y acérquese</u></strong>. Examine: <em>párpados,</em> <em>conjuntiva,</em> <em>córnea,</em> <em>pupila</em><br>Utilice con <span style='color: orange;'>fluor</span> para úlceras o rasguños corneales",
@@ -661,10 +744,10 @@ export const translations = {
     backOfEyeHeading: 'Parte Posterior del Ojo',
     backOfEyeText:
       'Use el ojo derecho para ver el ojo derecho del paciente; izquierdo para el izquierdo<br>El paciente debe mirar recto, NO hacia la luz; acérquese y encuentre el disco óptico (Dilatar = mejor vista)<br>Estudie el disco: <em>Borde,</em> <em>Color,</em> <em>Copa</em>. Siga los vasos grandes, luego pida al paciente que mire directamente la luz para ver la mácula',
-    additionalText:
+    additionalText_eye:
       "Conozca sus discos: normal, <span style='color:red; font-weight:bold;'>hinchado,</span> <span style='color:red;'>nuevos vasos,</span> <span style='color:orange;'>en forma de copa,</span> <span style='color:green;'>pálido</span><br>&gt;Practique con frecuencia&lt;",
 
-    pageTitle: 'Cómo examinar el oído',
+    pageTitle_howToExamineEar: 'Cómo examinar el oído',
     allAroundEarHeading: 'Alrededor del oído',
     allAroundEarText:
       'Verifique: <em>oreja, </em><em>trago, </em><em>mastoid</em> para bultos, sensibilidad o secreción<br>Mueva suavemente la oreja, observe si hay dolor',
@@ -674,10 +757,10 @@ export const translations = {
     tympanicMembraneHeading: 'Membrana timpánica',
     tympanicMembraneText:
       'Identifique el mango del martillo, el reflejo de luz y el ático<br>Note: <em>color,</em> <em>posición,</em> <em>translucidez</em><br>Busque perforación, líquido o cicatrices',
-    additionalText:
+    additionalText_ear:
       "Conozca sus tímpanos: normal, <span style='color:red; font-weight:bold;'>rojo</span>, <span style='color:orange;'>abultado</span>, <span style='color:green;'>retráctil</span>, <span style='color:purple;'>perforado</span><br>&gt;Practique a menudo&lt;",
 
-    pageTitle: 'Cómo examinar la piel',
+    pageTitle_howToExamineSkin: 'Cómo examinar la piel',
     generalObservationHeading: 'Observación general',
     generalObservationText:
       'Inspeccione bultos, <em>cambios de color</em> y distribución<br>Palpe suavemente para textura, temperatura o sensibilidad',
@@ -687,10 +770,10 @@ export const translations = {
     dermoscopyHeading: 'Dermoscopia',
     dermoscopyText:
       '<strong><u>Sostenga el polarizador de Arclight como si fuera un bolígrafo</u></strong>, verifique: <strong>ABCDE</strong> (<em>Asimetría</em>, <em>Borde</em>, <em>Color</em>, <em>Diámetro &gt;6mm</em>, <em>Evolutivo</em>)<br>Estudie: PDSBV (<em>Red de pigmento</em>, <em>Puntos</em>, <em>Rayas</em>, <em>Azul-blanco</em>, <em>Vascular</em>)',
-    additionalText:
+    additionalText_skin:
       "Conozca su lesión: normal, <span style='color:red;'>sospechosa</span>, <span style='color:orange;'>inflamada</span><br>&gt;Practique a menudo&lt;",
 
-    pageTitle: 'Acerca de Alan',
+    pageTitle_aboutAlan: 'Acerca de Alan',
     aboutAlanText:
       'Alan es un asistente de diagnóstico AI para ojos, oídos y piel, que integra un modelo de lenguaje fundamental y lógica simbólica. Inteligente. Serio. De última generación.<br><br>El conocimiento clínico, local y las imágenes se adaptan a roles como trabajadores de la salud y médicos generales. Un diálogo conciso genera un diagnóstico y un plan de manejo. El uso del arclight está integrado en todo momento.<br>',
     aboutAlanListItem1: 'Base experta – clima tropical/caluroso',
@@ -738,20 +821,33 @@ export const translations = {
     instructionsLabelJustRight: 'Adecuado',
     instructionsLabelTooMuch: 'Demasiado',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan es un asistente de IA para estudiantes y para quienes ocasionalmente se enfrentan a casos de ojos, oídos o piel. Escribe o habla claramente y evita revelar nombres o detalles identificativos.',
     goodLuck: '¡Buena suerte!',
     namePlaceholder: 'Nombre',
-    rolePlaceholder: 'Rol',
+    // rolePlaceholder: 'Rol',
+
+    // --- NEW "Experience" Dropdown Translations ---
     experiencePlaceholder: 'Experiencia',
+    experienceStudentRefresher: 'Estudiante / actualización',
+    experienceConfidentCore: 'Conocimiento básico sólido',
+    experienceExpert: 'Experto',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 año',
     experienceOption2: '1-3 años',
     experienceOption3: '3-7 años',
     experienceOption4: '>7 años',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Objetivos',
     aimsOption1: 'Segunda opinión',
     aimsOption2: 'Consulta de condición',
     aimsOption3: 'Comunicar mejor',
+    */
     contactPlaceholder: 'Contacto (correo/telefono)',
     acceptButton: 'Aceptar',
 
@@ -760,7 +856,6 @@ export const translations = {
     screenshot: "Captura de pantalla",
     refer: "Remitir",
     comingSoon: "Próximamente..."
-
   },
 
   // 5) Arabic - ar
@@ -770,13 +865,23 @@ export const translations = {
     examineWell: 'افحص جيدًا',
     useArclight: 'استخدم Arclight',
     howCanIHelp: 'كيف يمكنني مساعدتك اليوم؟',
-    alanMistakes: `\u202A${new Date().getMonth() + 1}/25\u202C آلان يمكن أن يخطئ. استخدم الحكم السريري.`,
+    alanMistakes: `\u202Bآلان يمكن أن يخطئ. استخدم الحكم السريري. \u202A${new Date().getMonth() + 1}/25\u202C\u202B,`,
     login: 'تسجيل الدخول',
     enterPassword: 'أدخل كلمة المرور',
     register: 'تسجيل',
     name: 'اسم',
     password: 'كلمة السر (4 أرقام)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Arabic) ---
+    aimsPlaceholder: 'الأهداف',
+    aimsEyes: 'عيون',
+    aimsEars: 'آذان',
+    aimsSkin: 'جلد',
+    aimsVeterinary: 'بيطري',
+    aimsChildMaternal: 'طفل/أمومة',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'عامل صحي',
     nurse: 'ممرضة',
     ophthalmicOfficer: 'ضابط سريري بصري',
@@ -792,6 +897,7 @@ export const translations = {
     audiologist: 'أخصائي سمعيات',
     earCarePractitioner: 'ممارس العناية بالأذن',
     dermatologist: 'طبيب أمراض الجلد',
+    */
 
     instructionsButton: 'كيفية الاستخدام',
     eyeButton: 'عين',
@@ -830,7 +936,8 @@ export const translations = {
     userName: 'الاسم',
     userContact: 'جهة الاتصال',
     userRole: 'الدور',
-    userAims: 'الأهداف',
+    userAimsPopupLabel: "الأهداف",
+    // userAims: 'الأهداف',
     userLatLong: 'خط العرض وخط الطول',
     userArea: 'المنطقة',
     userCountry: 'الدولة',
@@ -839,7 +946,7 @@ export const translations = {
     geolocationButton: 'تحديد الموقع',
     geoInfoText: 'بالنقر على "تحديد الموقع" سيتم مشاركة موقع أكثر دقة (خط العرض/خط الطول). يساعد ذلك في تقديم إرشادات وخيارات أفضل.',
 
-    pageTitle: 'كيفية فحص العين',
+    pageTitle_howToExamineEye: 'كيفية فحص العين',
     frontOfEyeHeading: 'الجزء الأمامي من العين',
     frontOfEyeText:
       "راقب وقارن العينين: <em>مباشر،</em> <em>يمين،</em> <em>يسار،</em> <em>أعلى،</em> أسفل<br><strong><u>اقترب واحتفظ بالملاحظة</u></strong>. فحص: <em>الجفون،</em> <em>الملتحمة،</em> <em>القرنية،</em> <em>البؤبؤ</em><br>استخدم <span style='color: orange;'>الفلور</span> للكشف عن تقرحات القرنية أو الخدوش",
@@ -849,10 +956,10 @@ export const translations = {
     backOfEyeHeading: 'الجزء الخلفي من العين',
     backOfEyeText:
       'استخدم العين اليمنى لرؤية عين المريض اليمنى؛ اليسرى لليسار<br>يجب على المريض النظر بشكل مستقيم وليس نحو الضوء؛ اقترب وابحث عن القرص البصري (التوسيع = أفضل رؤية)<br>ادرس القرص: <em>الحافة،</em> <em>اللون،</em> <em>الكأس</em>. تتبع الأوعية الدموية الكبيرة، ثم اطلب من المريض النظر مباشرة إلى الضوء لرؤية البقعة الصفراء',
-    additionalText:
+    additionalText_eye:
       "اعرف أقراصك: طبيعي، <span style='color:red; font-weight:bold;'>متورم،</span> <span style='color:red;'>أوعية جديدة،</span> <span style='color:orange;'>مكعب،</span> <span style='color:green;'>باهت</span><br>&gt;تدرب كثيراً&lt;",
 
-    pageTitle: 'كيفية فحص الأذن',
+    pageTitle_howToExamineEar: 'كيفية فحص الأذن',
     allAroundEarHeading: 'فحص محيط الأذن',
     allAroundEarText:
       'افحص: <em>الصيوان, </em><em>الطرف, </em><em>العظم الخددي</em> للكشف عن كتل، حساسية أو إفرازات<br>حرك الصيوان بلطف، ولاحظ أي ألم',
@@ -862,10 +969,10 @@ export const translations = {
     tympanicMembraneHeading: 'غشاء طبلي',
     tympanicMembraneText:
       'حدد مقبض المطرقة، انعكاس الضوء، والعلوي<br>لاحظ: <em>اللون,</em> <em>الموضع,</em> <em>شفافية</em><br>ابحث عن ثقب، سائل أو ندبات',
-    additionalText:
+    additionalText_ear:
       "اعرف غشائك الطبلي: طبيعي، <span style='color:red; font-weight:bold;'>أحمر</span>, <span style='color:orange;'>منتفخ</span>, <span style='color:green;'>منسحب</span>, <span style='color:purple;'>مثقوب</span><br>&gt;تمرن كثيراً&lt;",
 
-    pageTitle: 'كيفية فحص الجلد',
+    pageTitle_howToExamineSkin: 'كيفية فحص الجلد',
     generalObservationHeading: 'الملاحظة العامة',
     generalObservationText: 'افحص الكتل، <em>تغيرات اللون</em> والتوزيع<br>حرّك الجلد بلطف لتقييم الملمس، درجة الحرارة أو الحساسية',
     uvLightHeading: 'ضوء الأشعة فوق البنفسجية (وودز)',
@@ -874,10 +981,10 @@ export const translations = {
     dermoscopyHeading: 'التنظير الجلدي',
     dermoscopyText:
       '<strong><u>امسك جهاز Arclight الاستقطابي كما لو كان قلمًا</u></strong>، افحص: <strong>ABCDE</strong> (<em>عدم التماثل</em>, <em>الحدود</em>, <em>اللون</em>, <em>القطر &gt;6mm</em>, <em>متطور</em>)<br>ادرس: PDSBV (<em>شبكة الصبغة</em>, <em>النقاط</em>, <em>الخطوط</em>, <em>أزرق-أبيض</em>, <em>الأوعية الدموية</em>)',
-    additionalText:
+    additionalText_skin:
       "تعرف على آفتك: طبيعية، <span style='color:red; font-weight:bold;'>مشكوكة</span>, <span style='color:orange;'>ملتهبة</span><br>&gt;تمرن كثيراً&lt;",
 
-    pageTitle: 'حول آلان',
+    pageTitle_aboutAlan: 'حول آلان',
     aboutAlanText:
       'آلان هو مساعد تشخيصي يعتمد على الذكاء الاصطناعي لفحص العين والأذن والجلد، يجمع بين نموذج لغوي أساسي ومنطق رمزي. ذكي. جاد. على أحدث طراز.<br><br>يتم تفصيل المعرفة السريرية والمحلية والصور لتناسب أدوارًا مثل العاملين في مجال الصحة والأطباء العامين. يولّد حوار موجز تشخيصًا وخطة علاج. ويظهر استخدام Arclight في كل مكان.<br>',
     aboutAlanListItem1: 'قاعدة خبراء – مناخ استوائي/حار',
@@ -924,29 +1031,40 @@ export const translations = {
     instructionsLabelJustRight: 'مناسب',
     instructionsLabelTooMuch: 'كثير جدًا',
 
-    instructionText:
-      'آلان یک دستیار هوش مصنوعی است برای دانشجویان و کسانی که گهگاه با موارد چشم، گوش یا پوست مواجه می‌شوند. به وضوح بنویسید یا صحبت کنید و از افشای نام‌ها یا جزئیات اجتناب کنید.',
-    goodLuck: 'موفق باشید!',
-    namePlaceholder: 'نام',
-    rolePlaceholder: 'نقش',
-    experiencePlaceholder: 'تجربه',
-    experienceOption1: '<1 سال',
-    experienceOption2: '1-3 سال',
-    experienceOption3: '3-7 سال',
-    experienceOption4: '>7 سال',
-    aimsButton: 'اهداف',
-    aimsOption1: 'نظر دوم',
-    aimsOption2: 'بررسی وضعیت',
-    aimsOption3: 'ارتباط بهتر',
-    contactPlaceholder: 'تماس (ایمیل/تلفن)',
-    acceptButton: 'قبول کنید',
+    // --- Onboarding Page Translations ---
+    instructionText: '(ARABIC: Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying names or details.)',
+    goodLuck: '(ARABIC: Good luck!)',
+    namePlaceholder: '(ARABIC: Name)',
+    // rolePlaceholder: '(ARABIC: Role)',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Arabic) ---
+    experiencePlaceholder: 'الخبرة',
+    experienceStudentRefresher: 'طالب / تحديث',
+    experienceConfidentCore: 'معرفة أساسية واثقة',
+    experienceExpert: 'خبير',
+    // --- Old Experience Options Commented Out ---
+    /*
+    experienceOption1: '(ARABIC: <1 yr)',
+    experienceOption2: '(ARABIC: 1-3 yr)',
+    experienceOption3: '(ARABIC: 3-7 yr)',
+    experienceOption4: '(ARABIC: >7 yr)',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
+    aimsButton: '(ARABIC: Aims)',
+    aimsOption1: '(ARABIC: Second opinion)',
+    aimsOption2: '(ARABIC: Condition lookup)',
+    aimsOption3: '(ARABIC: Communicate better)',
+    */
+    contactPlaceholder: '(ARABIC: Contact (email/phone))',
+    acceptButton: '(ARABIC: Accept)',
 
     images: "صور",
     help: "مساعدة",
     screenshot: "لقطة شاشة",
     refer: "إحالة",
     comingSoon: "قريباً..."
-
   },
 
   // 6) French - fr
@@ -956,13 +1074,23 @@ export const translations = {
     examineWell: 'Bien Examiner',
     useArclight: 'Utiliser Arclight',
     howCanIHelp: "Comment puis-je vous aider aujourd'hui ?",
-    alanMistakes: `Alan peut se tromper. Utilisez votre jugement clinique. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan peut se tromper. Utilisez votre jugement clinique. ${new Date().getMonth() + 1}/25,`,
     login: 'Connexion',
     enterPassword: 'Entrez le mot de passe',
     register: "S'inscrire",
     name: 'Nom',
     password: 'Mot de passe (4 chiffres)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for French) ---
+    aimsPlaceholder: 'Objectifs',
+    aimsEyes: 'Yeux',
+    aimsEars: 'Oreilles',
+    aimsSkin: 'Peau',
+    aimsVeterinary: 'Vétérinaire',
+    aimsChildMaternal: 'Enfant/Maternel',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Agent de santé',
     nurse: 'Infirmier/Infirmière',
     ophthalmicOfficer: 'Officier clinique ophtalmique',
@@ -978,6 +1106,7 @@ export const translations = {
     audiologist: 'Audiologiste',
     earCarePractitioner: "Praticien soins de l'oreille",
     dermatologist: 'Dermatologue',
+    */
 
     instructionsButton: 'Comment utiliser',
     eyeButton: 'Œil',
@@ -1016,7 +1145,8 @@ export const translations = {
     userName: 'Nom',
     userContact: 'Contact',
     userRole: 'Rôle',
-    userAims: 'Objectifs',
+    userAimsPopupLabel: "Objectifs",
+    // userAims: 'Objectifs',
     userLatLong: 'Lat & Long',
     userArea: 'Zone',
     userCountry: 'Pays',
@@ -1026,7 +1156,7 @@ export const translations = {
     geoInfoText:
       'En cliquant sur "Géolocalisation", une position plus précise (lat/long) sera partagée. Cela aide à offrir de meilleures orientations et options.',
 
-    pageTitle: "Comment examiner l'œil",
+    pageTitle_howToExamineEye: "Comment examiner l'œil",
     frontOfEyeHeading: "Avant de l'œil",
     frontOfEyeText:
       "Observez et comparez les yeux : <em>de face,</em> <em>à droite,</em> <em>à gauche,</em> <em>vers le haut,</em> vers le bas<br><strong><u>Approchez-vous</u></strong> et maintenez. Examinez : <em>paupières,</em> <em>conjonctive,</em> <em>cornée,</em> <em>pupille</em><br>Utilisez avec <span style='color: orange;'>fluor</span> pour les ulcères ou éraflures cornéennes",
@@ -1036,10 +1166,10 @@ export const translations = {
     backOfEyeHeading: "Arrière de l'œil",
     backOfEyeText:
       "Utilisez l'œil droit pour voir l'œil droit du patient ; gauche pour la gauche<br>Le patient doit regarder droit et non vers la lumière ; rapprochez-vous et trouvez le disque optique (Dilater = meilleure vue)<br>Étudiez le disque : <em>Bord,</em> <em>Couleur,</em> <em>Coupe</em>. Suivez les gros vaisseaux, puis demandez au patient de regarder directement la lumière pour voir la macula",
-    additionalText:
+    additionalText_eye:
       "Connaissez vos disques : normal, <span style='color:red; font-weight:bold;'>enflé,</span> <span style='color:red;'>nouveaux vaisseaux,</span> <span style='color:orange;'>en forme de coupe,</span> <span style='color:green;'>pâle</span><br>&gt;Pratiquez souvent&lt;",
 
-    pageTitle: "Comment examiner l'oreille",
+    pageTitle_howToExamineEar: "Comment examiner l'oreille",
     allAroundEarHeading: "Autour de l'oreille",
     allAroundEarText:
       "Vérifiez : <em>l'oreille externe, </em><em>le tragus, </em><em>la mastoïde</em> pour des masses, sensibilité ou écoulement<br>Déplacez doucement l'oreille, notez toute douleur",
@@ -1049,10 +1179,10 @@ export const translations = {
     tympanicMembraneHeading: 'Membrane tympanique',
     tympanicMembraneText:
       "Identifiez la poignée du marteau, le reflet lumineux, et l'attique<br>Notez : <em>la couleur,</em> <em>la position,</em> <em>la translucidité</em><br>Recherchez perforation, liquide ou cicatrices",
-    additionalText:
+    additionalText_ear:
       "Connaissez votre tympan : normal, <span style='color:red; font-weight:bold;'>rouge</span>, <span style='color:orange;'>bombé</span>, <span style='color:green;'>rétracté</span>, <span style='color:purple;'>perforé</span><br>&gt;Exercez-vous souvent&lt;",
 
-    pageTitle: 'Comment examiner la peau',
+    pageTitle_howToExamineSkin: 'Comment examiner la peau',
     generalObservationHeading: 'Observation générale',
     generalObservationText:
       'Inspectez les masses, <em>les changements de couleur</em> et la distribution<br>Palpez doucement pour évaluer la texture, la température ou la sensibilité',
@@ -1062,10 +1192,10 @@ export const translations = {
     dermoscopyHeading: 'Dermoscopie',
     dermoscopyText:
       '<strong><u>Tenez le polariseur Arclight comme un stylo</u></strong>, vérifiez : <strong>ABCDE</strong> (<em>Asymétrie</em>, <em>Bord</em>, <em>Couleur</em>, <em>Diamètre &gt;6mm</em>, <em>Évolutif</em>)<br>Étudiez : PDSBV (<em>Réseau pigmentaire</em>, <em>Points</em>, <em>Rayures</em>, <em>Bleu-blanc</em>, <em>Vascularisé</em>)',
-    additionalText:
+    additionalText_skin:
       "Connaissez votre lésion : normale, <span style='color:red;'>suspecte</span>, <span style='color:orange;'>inflammée</span><br>&gt;Exercez-vous souvent&lt;",
 
-    pageTitle: "À propos d'Alan",
+    pageTitle_aboutAlan: "À propos d'Alan",
     aboutAlanText:
       "Alan est un assistant de diagnostic en intelligence artificielle pour l'œil, l'oreille et la peau, composé d'un modèle linguistique de base et d'une logique symbolique. Intelligent. Sérieux. À la pointe de la technologie.<br><br>Les connaissances cliniques, locales et les images sont adaptées à différents rôles tels que les professionnels de la santé et les médecins généralistes. Un dialogue concis génère un diagnostic et un plan de prise en charge. L'utilisation de l'Arclight est intégrée dans tout le processus.<br>",
     aboutAlanListItem1: "Base d'experts – climat tropical/chaud",
@@ -1116,20 +1246,33 @@ export const translations = {
     instructionsLabelJustRight: 'Juste assez',
     instructionsLabelTooMuch: 'Beaucoup trop',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan est un assistant IA pour les étudiants et ceux qui rencontrent occasionnellement des cas d’yeux, d’oreilles ou de peau. Écrivez ou parlez clairement et évitez de révéler des noms ou détails identifiants.',
     goodLuck: 'Bonne chance !',
     namePlaceholder: 'Nom',
-    rolePlaceholder: 'Rôle',
+    // rolePlaceholder: 'Rôle',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for French) ---
     experiencePlaceholder: 'Expérience',
+    experienceStudentRefresher: 'Étudiant / recyclage',
+    experienceConfidentCore: 'Connaissances de base solides',
+    experienceExpert: 'Expert',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 an',
     experienceOption2: '1-3 ans',
     experienceOption3: '3-7 ans',
     experienceOption4: '>7 ans',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Objectifs',
     aimsOption1: 'Deuxième avis',
     aimsOption2: 'Recherche de condition',
     aimsOption3: 'Communiquer mieux',
+    */
     contactPlaceholder: 'Contact (email/téléphone)',
     acceptButton: 'Accepter',
 
@@ -1138,7 +1281,6 @@ export const translations = {
     screenshot: "Capture d’écran",
     refer: "Référer",
     comingSoon: "Bientôt disponible..."
-
   },
 
   // 7) Portuguese - pt
@@ -1148,13 +1290,23 @@ export const translations = {
     examineWell: 'Examinar Bem',
     useArclight: 'Usar Arclight',
     howCanIHelp: 'Como posso ajudá-lo hoje?',
-    alanMistakes: `Alan pode cometer erros. Use o julgamento clínico. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan pode cometer erros. Use o julgamento clínico. ${new Date().getMonth() + 1}/25,`,
     login: 'Entrar',
     enterPassword: 'Digite a senha',
     register: 'Registrar',
     name: 'Nome',
     password: 'Senha (4 dígitos)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Portuguese) ---
+    aimsPlaceholder: 'Objetivos',
+    aimsEyes: 'Olhos',
+    aimsEars: 'Ouvidos',
+    aimsSkin: 'Pele',
+    aimsVeterinary: 'Veterinária',
+    aimsChildMaternal: 'Infantil/Materno',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Trabalhador da saúde',
     nurse: 'Enfermeiro',
     ophthalmicOfficer: 'Oficial clínico oftálmico',
@@ -1170,6 +1322,7 @@ export const translations = {
     audiologist: 'Audiologista',
     earCarePractitioner: 'Praticante de cuidados auditivos',
     dermatologist: 'Dermatologista',
+    */
 
     instructionsButton: 'Como usar',
     eyeButton: 'Olho',
@@ -1209,7 +1362,8 @@ export const translations = {
     userName: 'Nome',
     userContact: 'Contato',
     userRole: 'Função',
-    userAims: 'Objetivos',
+    userAimsPopupLabel: "Objetivos",
+    // userAims: 'Objetivos',
     userLatLong: 'Lat & Long',
     userArea: 'Área',
     userCountry: 'País',
@@ -1219,7 +1373,7 @@ export const translations = {
     geoInfoText:
       'Ao clicar em "Geolocalização", será partilhada uma localização (lat/long) mais precisa. Isto ajuda a oferecer uma melhor orientação e opções.',
 
-    pageTitle: 'Como examinar o olho',
+    pageTitle_howToExamineEye: 'Como examinar o olho',
     frontOfEyeHeading: 'Parte frontal do olho',
     frontOfEyeText:
       "Observe e compare os olhos: <em>direto,</em> <em>direita,</em> <em>esquerda,</em> <em>para cima,</em> para baixo<br><strong><u>Segure e aproxime-se</u></strong>. Examine: <em>pálpebras,</em> <em>conjuntiva,</em> <em>córnea,</em> <em>pupila</em><br>Use com <span style='color: orange;'>fluor</span> para úlceras ou arranhões na córnea",
@@ -1229,10 +1383,10 @@ export const translations = {
     backOfEyeHeading: 'Parte de trás do olho',
     backOfEyeText:
       'Use o olho direito para ver o olho direito do paciente; esquerdo para o esquerdo<br>O paciente deve olhar em linha reta, NÃO para a luz; aproxime-se e encontre o disco óptico (Dilatar = melhor visão)<br>Estude o disco: <em>Borda,</em> <em>Cor,</em> <em>Copa</em>. Observe os grandes vasos, então peça ao paciente que olhe diretamente para a luz para ver a mácula',
-    additionalText:
+    additionalText_eye:
       "Conheça seus discos: normal, <span style='color:red; font-weight:bold;'>inchado,</span> <span style='color:red;'>novos vasos,</span> <span style='color:orange;'>em forma de copa,</span> <span style='color:green;'>pálido</span><br>&gt;Pratique frequentemente&lt;",
 
-    pageTitle: 'Como examinar o ouvido',
+    pageTitle_howToExamineEar: 'Como examinar o ouvido',
     allAroundEarHeading: 'Ao redor do ouvido',
     allAroundEarText:
       'Verifique: <em>orelha, </em><em>trago, </em><em>mastóide</em> para nódulos, sensibilidade ou secreção<br>Mova suavemente a orelha, observe se há dor',
@@ -1242,10 +1396,10 @@ export const translations = {
     tympanicMembraneHeading: 'Membrana timpânica',
     tympanicMembraneText:
       'Identifique o cabo do martelo, o reflexo de luz e o ático<br>Note: <em>cor,</em> <em>posição,</em> <em>translucidez</em><br>Procure perfuração, líquido ou cicatrizes',
-    additionalText:
+    additionalText_ear:
       "Conheça seu tímpano: normal, <span style='color:red; font-weight:bold;'>vermelho</span>, <span style='color:orange;'>inchaço</span>, <span style='color:green;'>retrátil</span>, <span style='color:purple;'>perfurado</span><br>&gt;Pratique sempre&lt;",
 
-    pageTitle: 'Como examinar a pele',
+    pageTitle_howToExamineSkin: 'Como examinar a pele',
     generalObservationHeading: 'Observação geral',
     generalObservationText:
       'Inspecione nódulos, <em>alterações de cor</em> e distribuição<br>Palpe suavemente para textura, temperatura ou sensibilidade',
@@ -1255,10 +1409,10 @@ export const translations = {
     dermoscopyHeading: 'Dermoscopia',
     dermoscopyText:
       '<strong><u>Mantenha o polarizador Arclight como uma caneta</u></strong>, verifique: <strong>ABCDE</strong> (<em>Assimetria</em>, <em>Borda</em>, <em>Cor</em>, <em>Diâmetro &gt;6mm</em>, <em>Evolutivo</em>)<br>Estude: PDSBV (<em>Rede de pigmento</em>, <em>Pontos</em>, <em>Linhas</em>, <em>Azul-branco</em>, <em>Vascular</em>)',
-    additionalText:
+    additionalText_skin:
       "Conheça sua lesão: normal, <span style='color:red;'>suspeita</span>, <span style='color:orange;'>inflamada</span><br>&gt;Pratique sempre&lt;",
 
-    pageTitle: 'Sobre Alan',
+    pageTitle_aboutAlan: 'Sobre Alan',
     aboutAlanText:
       'Alan é um assistente de diagnóstico por IA para olhos, ouvidos e pele, composto por um modelo linguístico fundamental e lógica simbólica. Inteligente. Sério. De última geração.<br><br>O conhecimento clínico, local e as imagens são adaptados para diferentes funções, como trabalhadores de saúde e médicos generalistas. Um diálogo conciso gera um diagnóstico e um plano de manejo. O uso do Arclight está incorporado em todo o processo.<br>',
     aboutAlanListItem1: 'Base de especialistas – clima tropical/quente',
@@ -1305,20 +1459,33 @@ export const translations = {
     instructionsLabelJustRight: 'Na medida certa',
     instructionsLabelTooMuch: 'Demais',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan é um assistente de IA para estudantes e para aqueles que ocasionalmente se deparam com casos de olhos, ouvidos ou pele. Escreva ou fale claramente e evite revelar nomes ou detalhes identificativos.',
     goodLuck: 'Boa sorte!',
     namePlaceholder: 'Nome',
-    rolePlaceholder: 'Função',
+    // rolePlaceholder: 'Função',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Portuguese) ---
     experiencePlaceholder: 'Experiência',
+    experienceStudentRefresher: 'Estudante / reciclagem',
+    experienceConfidentCore: 'Conhecimento central confiante',
+    experienceExpert: 'Perito',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 ano',
     experienceOption2: '1-3 anos',
     experienceOption3: '3-7 anos',
     experienceOption4: '>7 anos',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Objetivos',
     aimsOption1: 'Segunda opinião',
     aimsOption2: 'Consulta de condição',
     aimsOption3: 'Comunicar melhor',
+    */
     contactPlaceholder: 'Contato (email/telefone)',
     acceptButton: 'Aceitar',
 
@@ -1327,7 +1494,6 @@ export const translations = {
     screenshot: "Captura de tela",
     refer: "Encaminhar",
     comingSoon: "Em breve..."
-
   },
 
   // 8) Bangla - bn
@@ -1337,13 +1503,23 @@ export const translations = {
     examineWell: 'ভালো করে পরীক্ষা করুন',
     useArclight: 'Arclight ব্যবহার করুন',
     howCanIHelp: 'আমি কীভাবে সাহায্য করতে পারি?',
-    alanMistakes: `Alan ভুল করতে পারে। দয়া করে ক্লিনিকাল বিচার ব্যবহার করুন। ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan ভুল করতে পারে। দয়া করে ক্লিনিকাল বিচার ব্যবহার করুন। ${new Date().getMonth() + 1}/25,`,
     login: 'লগইন',
     enterPassword: 'পাসওয়ার্ড দিন',
     register: 'রেজিস্টার',
     name: 'নাম',
     password: 'পাসওয়ার্ড (4-ডিজিট)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Bangla) ---
+    aimsPlaceholder: 'লক্ষ্য',
+    aimsEyes: 'চোখ',
+    aimsEars: 'কান',
+    aimsSkin: 'ত্বক',
+    aimsVeterinary: 'পশুচিকিৎসা',
+    aimsChildMaternal: 'শিশু/মাতৃ',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'স্বাস্থ্যকর্মী',
     nurse: 'নার্স',
     ophthalmicOfficer: 'চক্ষু চিকিৎসা কর্মকর্তা',
@@ -1359,6 +1535,7 @@ export const translations = {
     audiologist: 'শ্রবণ বিশেষজ্ঞ',
     earCarePractitioner: 'কান পরিচর্যা কর্মী',
     dermatologist: 'চর্মরোগ বিশেষজ্ঞ',
+    */
 
     instructionsButton: 'ব্যবহার কিভাবে করবেন',
     eyeButton: 'চোখ',
@@ -1397,7 +1574,8 @@ export const translations = {
     userName: 'নাম',
     userContact: 'যোগাযোগ',
     userRole: 'ভূমিকা',
-    userAims: 'উদ্দেশ্য',
+    userAimsPopupLabel: "লক্ষ্য",
+    // userAims: 'উদ্দেশ্য',
     userLatLong: 'অক্ষাংশ & দ্রাঘিমাংশ',
     userArea: 'এলাকা',
     userCountry: 'দেশ',
@@ -1406,7 +1584,7 @@ export const translations = {
     geolocationButton: 'জিওলোকেশন',
     geoInfoText: '“জিওলোকেশন” ক্লিক করলে আরও সঠিক অবস্থান (অক্ষাংশ/দ্রাঘিমাংশ) শেয়ার করা হবে। এটি আরও ভালো নির্দেশনা ও বিকল্প সরবরাহে সহায়তা করে।',
 
-    pageTitle: 'কিভাবে চোখ পরীক্ষা করবেন',
+    pageTitle_howToExamineEye: 'কিভাবে চোখ পরীক্ষা করবেন',
     frontOfEyeHeading: 'চোখের সামনের অংশ',
     frontOfEyeText:
       "চোখ পর্যবেক্ষণ ও তুলনা করুন: <em>সোজা,</em> <em>ডান,</em> <em>বাঁ,</em> <em>উপর,</em> নিচে<br><strong><u>নিকটে আসুন ও ধরে রাখুন</u></strong>। পরীক্ষা করুন: <em>পালক,</em> <em>কনজাংকটিভা,</em> <em>কর্নিয়া,</em> <em>পিউপিল</em><br><span style='color: orange;'>ফ্লুরো</span> ব্যবহার করুন কর্নিয়াল আলসার বা স্ক্র্যাচের জন্য",
@@ -1416,10 +1594,10 @@ export const translations = {
     backOfEyeHeading: 'চোখের পিছনের অংশ',
     backOfEyeText:
       'রাইট আই দিয়ে রোগীর ডান চোখ দেখুন; বাম দিয়ে বাম<br>রোগীকে সোজা দেখার পরামর্শ দিন, আলো নয়; কাছে যান এবং অপটিক ডিস্ক খুঁজুন (ডাইলেট = সেরা দৃশ্য)<br>ডিস্ক পরীক্ষা করুন: <em>সীমানা,</em> <em>রঙ,</em> <em>কাপ</em>. বড় রক্তনালীগুলি অনুসরণ করুন, তারপর রোগীকে সরাসরি আলো দেখাতে বলুন যাতে ম্যাকুলা দেখা যায়',
-    additionalText:
+    additionalText_eye:
       "আপনার ডিস্কগুলি জানুন: স্বাভাবিক, <span style='color:red; font-weight:bold;'>ফুলে যাওয়া,</span> <span style='color:red;'>নতুন রক্তনালী,</span> <span style='color:orange;'>কাপযুক্ত,</span> <span style='color:green;'>ফিকে</span><br>&gt;অনুশীলন করুন&lt;",
 
-    pageTitle: 'কান পরীক্ষা করার পদ্ধতি',
+    pageTitle_howToExamineEar: 'কান পরীক্ষা করার পদ্ধতি',
     allAroundEarHeading: 'কানের চারপাশ',
     allAroundEarText:
       'যাচাই করুন: <em>পিন্না, </em><em>ট্র্যাগাস, </em><em>মাস্টয়েড</em> - ফোলাভাব, স্পর্শকাতরতা বা স্রাব আছে কিনা<br>পিন্না আস্তে আস্তে নাড়ুন, কোনো ব্যথা লক্ষ্য করুন',
@@ -1429,10 +1607,10 @@ export const translations = {
     tympanicMembraneHeading: 'টিম্পানিক মেমব্রেন',
     tympanicMembraneText:
       'ম্যালিয়াসের হাতল, আলোর প্রতিফলন, এবং অ্যাটিক চিনে নিন<br>দৃষ্টি দিন: <em>রং,</em> <em>অবস্থান,</em> <em>আর্ধ-স্বচ্ছতা</em><br>ফাটল, তরল বা দাগ দেখুন',
-    additionalText:
+    additionalText_ear:
       "আপনার টিএম জানুন: স্বাভাবিক, <span style='color:red; font-weight:bold;'>লাল</span>, <span style='color:orange;'>ফোলা</span>, <span style='color:green;'>সঙ্কুচিত</span>, <span style='color:purple;'>ফাটল</span><br>&gt;অনুশীলন করুন&lt;",
 
-    pageTitle: 'কীভাবে ত্বক পরীক্ষা করবেন',
+    pageTitle_howToExamineSkin: 'কীভাবে ত্বক পরীক্ষা করবেন',
     generalObservationHeading: 'সাধারণ পর্যবেক্ষণ',
     generalObservationText: 'গিঁট, <em>রঙের পরিবর্তন</em> এবং বণ্টন পরীক্ষা করুন<br>নম্রভাবে স্পর্শ করে জানুন বস্তুর গঠন, তাপমাত্রা বা স্পর্শকাতরতা',
     uvLightHeading: 'ইউভি (উড’স) আলো',
@@ -1441,10 +1619,10 @@ export const translations = {
     dermoscopyHeading: 'ডার্মোস্কোপি',
     dermoscopyText:
       '<strong><u>Arclight পোলারাইজারকে কলমের মতো ধরে রাখুন</u></strong>, পরীক্ষা করুন: <strong>ABCDE</strong> (<em>অসমমিতি</em>, <em>সীমানা</em>, <em>রঙ</em>, <em>ডায়ামিটার &gt;6mm</em>, <em>উন্নয়নশীল</em>)<br>অধ্যয়ন করুন: PDSBV (<em>পিগমেন্ট নেটওয়ার্ক</em>, <em>বিন্দু</em>, <em>রেখা</em>, <em>নীল-সাদা</em>, <em>রক্তবাহিনী</em>)',
-    additionalText:
+    additionalText_skin:
       "আপনার ক্ষতটি জানুন: স্বাভাবিক, <span style='color:red;'>সন্দেহজনক</span>, <span style='color:orange;'>প্রদাহিত</span><br>&gt;অনুশীলন চালিয়ে যান&lt;",
 
-    pageTitle: 'Alan সম্বন্ধে',
+    pageTitle_aboutAlan: 'Alan সম্বন্ধে',
     aboutAlanText:
       'Alan হল একটি AI চোখ, কান ও ত্বক নির্ণায়ক সহায়ক, যা একটি মৌলিক ভাষা মডেল ও প্রতীকী যুক্তি নিয়ে গঠিত। বুদ্ধিমান। গম্ভীর। অত্যাধুনিক।<br><br>ক্লিনিক্যাল, স্থানীয় জ্ঞান ও চিত্র বিভিন্ন ভূমিকার (যেমন স্বাস্থ্যকর্মী ও সাধারণ চিকিৎসক) জন্য উপযোগী করা হয়েছে। সংক্ষিপ্ত সংলাপ একটি নির্ণয় ও ব্যবস্থাপনা পরিকল্পনা তৈরি করে। Arclight-এর ব্যবহার সর্বত্র এমবেড করা হয়েছে।<br>',
     aboutAlanListItem1: 'বিশেষজ্ঞ ভিত্তি – উষ্ণ/গরম জলবায়ু',
@@ -1491,20 +1669,33 @@ export const translations = {
     instructionsLabelJustRight: 'ঠিক আছে',
     instructionsLabelTooMuch: 'খুব বেশি',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan হল একটি AI সহায়ক, যা শিক্ষার্থীদের জন্য এবং এমন লোকদের জন্য যারা মাঝে মাঝে চোখ, কান বা ত্বকের সমস্যার সম্মুখীন হন। স্পষ্টভাবে লিখুন বা কথা বলুন এবং নাম বা বিস্তারিত তথ্য প্রকাশ থেকে বিরত থাকুন।',
     goodLuck: 'শুভকামনা!',
     namePlaceholder: 'নাম',
-    rolePlaceholder: 'ভূমিকা',
+    // rolePlaceholder: 'ভূমিকা',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Bangla) ---
     experiencePlaceholder: 'অভিজ্ঞতা',
+    experienceStudentRefresher: 'ছাত্র / রিফ্রেশার',
+    experienceConfidentCore: 'আত্মবিশ্বাসী মূল জ্ঞান',
+    experienceExpert: 'বিশেষজ্ঞ',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 বছর',
     experienceOption2: '1-3 বছর',
     experienceOption3: '3-7 বছর',
     experienceOption4: '>7 বছর',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'লক্ষ্য',
     aimsOption1: 'দ্বিতীয় মতামত',
     aimsOption2: 'অবস্থা অনুসন্ধান',
     aimsOption3: 'ভালভাবে যোগাযোগ',
+    */
     contactPlaceholder: 'যোগাযোগ (ইমেইল/ফোন)',
     acceptButton: 'গ্রহণ করুন',
 
@@ -1513,7 +1704,6 @@ export const translations = {
     screenshot: "স্ক্রিনশট",
     refer: "রেফার",
     comingSoon: "শীঘ্রই আসছে...",
-
   },
 
   // 9) Indonesian - id
@@ -1523,13 +1713,23 @@ export const translations = {
     examineWell: 'Periksa dengan Baik',
     useArclight: 'Gunakan Arclight',
     howCanIHelp: 'Bagaimana saya dapat membantu?',
-    alanMistakes: `Alan mungkin melakukan kesalahan. Gunakan penilaian klinis. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan mungkin melakukan kesalahan. Gunakan penilaian klinis. ${new Date().getMonth() + 1}/25,`,
     login: 'Masuk',
     enterPassword: 'Masukkan kata sandi',
     register: 'Daftar',
     name: 'Nama',
     password: 'Kata Sandi (4 digit)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Indonesian) ---
+    aimsPlaceholder: 'Tujuan',
+    aimsEyes: 'Mata',
+    aimsEars: 'Telinga',
+    aimsSkin: 'Kulit',
+    aimsVeterinary: 'Veteriner',
+    aimsChildMaternal: 'Anak/Maternal',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Tenaga Kesehatan',
     nurse: 'Perawat',
     ophthalmicOfficer: 'Petugas Klinis Mata',
@@ -1545,6 +1745,7 @@ export const translations = {
     audiologist: 'Ahli Pendengaran',
     earCarePractitioner: 'Praktisi Perawatan Telinga',
     dermatologist: 'Dokter Kulit',
+    */
 
     instructionsButton: 'Cara menggunakan',
     eyeButton: 'Mata',
@@ -1583,7 +1784,8 @@ export const translations = {
     userName: 'Nama',
     userContact: 'Kontak',
     userRole: 'Peran',
-    userAims: 'Tujuan',
+    userAimsPopupLabel: "Tujuan",
+    // userAims: 'Tujuan',
     userLatLong: 'Lintang & Bujur',
     userArea: 'Wilayah',
     userCountry: 'Negara',
@@ -1593,7 +1795,7 @@ export const translations = {
     geoInfoText:
       'Dengan mengklik "Geolokasi", lokasi (lintang/bujur) yang lebih tepat akan dibagikan. Ini membantu memberikan panduan dan pilihan yang lebih baik.',
 
-    pageTitle: 'Cara memeriksa mata',
+    pageTitle_howToExamineEye: 'Cara memeriksa mata',
     frontOfEyeHeading: 'Bagian Depan Mata',
     frontOfEyeText:
       "Amati dan bandingkan mata: <em>lurus,</em> <em>kanan,</em> <em>kiri,</em> <em>atas,</em> bawah<br><strong><u>Dekatkan dan pegang</u></strong>. Periksa: <em>kelopak mata,</em> <em>konjungtiva,</em> <em>kornea,</em> <em>pupil</em><br>Gunakan dengan <span style='color: orange;'>fluro</span> untuk ulkus kornea atau goresan",
@@ -1603,10 +1805,10 @@ export const translations = {
     backOfEyeHeading: 'Bagian Belakang Mata',
     backOfEyeText:
       'Gunakan mata kanan untuk melihat mata kanan pasien; kiri untuk yang kiri<br>Pasien harus melihat lurus, BUKAN ke arah cahaya; dekati dan cari optic disc (Dilatasi = pandangan terbaik)<br>Periksa cakram: <em>Tepi,</em> <em>Warna,</em> <em>Cangkir</em>. Lacak pembuluh besar, lalu minta pasien melihat langsung ke arah cahaya untuk melihat makula',
-    additionalText:
+    additionalText_eye:
       "Ketahui cakram Anda: normal, <span style='color:red; font-weight:bold;'>bengkak,</span> <span style='color:red;'>pembuluh baru,</span> <span style='color:orange;'>berbentuk cangkir,</span> <span style='color:green;'>pucat</span><br>&gt;Berlatihlah sering&lt;",
 
-    pageTitle: 'Cara memeriksa telinga',
+    pageTitle_howToExamineEar: 'Cara memeriksa telinga',
     allAroundEarHeading: 'Sekitar telinga',
     allAroundEarText:
       'Periksa: <em>pinna, </em><em>tragus, </em><em>mastoid</em> untuk benjolan, rasa nyeri atau cairan<br>Gerakkan pinna dengan lembut, perhatikan apakah ada rasa sakit',
@@ -1616,10 +1818,10 @@ export const translations = {
     tympanicMembraneHeading: 'Membran timpani',
     tympanicMembraneText:
       'Identifikasi pegangan malleus, refleksi cahaya, dan ruang attic<br>Catat: <em>warna,</em> <em>posisi,</em> <em>translucency</em><br>Periksa apakah ada perforasi, cairan atau bekas luka',
-    additionalText:
+    additionalText_ear:
       "Ketahui membran timpani Anda: normal, <span style='color:red; font-weight:bold;'>merah</span>, <span style='color:orange;'>mengembung</span>, <span style='color:green;'>mundur</span>, <span style='color:purple;'>berlubang</span><br>&gt;Berlatihlah sering&lt;",
 
-    pageTitle: 'Cara memeriksa kulit',
+    pageTitle_howToExamineSkin: 'Cara memeriksa kulit',
     generalObservationHeading: 'Pengamatan umum',
     generalObservationText: 'Periksa benjolan, <em>perubahan warna</em>, dan distribusi<br>Raba dengan lembut untuk tekstur, suhu, atau kepekaan',
     uvLightHeading: 'Cahaya UV (Wood’s)',
@@ -1628,10 +1830,10 @@ export const translations = {
     dermoscopyHeading: 'Dermoskopi',
     dermoscopyText:
       '<strong><u>Genggam polarizer Arclight seperti pena</u></strong>, periksa: <strong>ABCDE</strong> (<em>Asimetri</em>, <em>Perbatasan</em>, <em>Warna</em>, <em>Diameter &gt;6mm</em>, <em>Berkembang</em>)<br>Pelajari: PDSBV (<em>Jaringan pigmen</em>, <em>Titik</em>, <em>Garis</em>, <em>Biru-putih</em>, <em>Vaskular</em>)',
-    additionalText:
+    additionalText_skin:
       "Kenali lesi Anda: normal, <span style='color:red;'>mencurigakan</span>, <span style='color:orange;'>meradang</span><br>&gt;Latihlah sering&lt;",
 
-    pageTitle: 'Tentang Alan',
+    pageTitle_aboutAlan: 'Tentang Alan',
     aboutAlanText:
       'Alan adalah asisten diagnostik AI untuk mata, telinga, dan kulit, yang terdiri dari model bahasa dasar dan logika simbolik. Pintar. Serius. Mutakhir.<br><br>Pengetahuan klinis, lokal, dan gambar disesuaikan untuk peran yang berbeda seperti tenaga kesehatan dan dokter umum. Dialog yang ringkas menghasilkan diagnosis dan rencana penatalaksanaan. Penggunaan Arclight terintegrasi secara menyeluruh.<br>',
     aboutAlanListItem1: 'Basis ahli – iklim tropis/panas',
@@ -1680,20 +1882,33 @@ export const translations = {
     instructionsLabelJustRight: 'Pas',
     instructionsLabelTooMuch: 'Terlalu banyak',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan adalah asisten AI untuk pelajar dan bagi mereka yang sesekali menghadapi kasus mata, telinga, atau kulit. Tulis atau bicaralah dengan jelas dan hindari mengungkapkan nama atau detail yang dapat mengidentifikasi.',
     goodLuck: 'Semoga sukses!',
     namePlaceholder: 'Nama',
-    rolePlaceholder: 'Peran',
+    // rolePlaceholder: 'Peran',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Indonesian) ---
     experiencePlaceholder: 'Pengalaman',
+    experienceStudentRefresher: 'Pelajar / penyegaran',
+    experienceConfidentCore: 'Pengetahuan inti percaya diri',
+    experienceExpert: 'Ahli',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 thn',
     experienceOption2: '1-3 thn',
     experienceOption3: '3-7 thn',
     experienceOption4: '>7 thn',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Tujuan',
     aimsOption1: 'Pendapat kedua',
     aimsOption2: 'Pencarian kondisi',
     aimsOption3: 'Komunikasi lebih baik',
+    */
     contactPlaceholder: 'Kontak (email/telepon)',
     acceptButton: 'Terima',
 
@@ -1702,7 +1917,6 @@ export const translations = {
     screenshot: "Tangkap Layar",
     refer: "Rujuk",
     comingSoon: "Segera hadir...",
-
   },
 
   // 10) Swahili - sw
@@ -1712,13 +1926,23 @@ export const translations = {
     examineWell: 'Chunguza Vizuri',
     useArclight: 'Tumia Arclight',
     howCanIHelp: 'Ninawezaje kukusaidia leo?',
-    alanMistakes: `Alan anaweza kukosea. Tumia hukumu ya kliniki. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan anaweza kukosea. Tumia hukumu ya kliniki. ${new Date().getMonth() + 1}/25,`,
     login: 'Ingia',
     enterPassword: 'Weka Nenosiri',
     register: 'Jisajili',
     name: 'Jina',
     password: 'Nenosiri (nambari 4)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Swahili) ---
+    aimsPlaceholder: 'Malengo',
+    aimsEyes: 'Macho',
+    aimsEars: 'Masikio',
+    aimsSkin: 'Ngozi',
+    aimsVeterinary: 'Mifugo',
+    aimsChildMaternal: 'Watoto/Mama',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Mfanyakazi wa Afya',
     nurse: 'Muuguzi',
     ophthalmicOfficer: 'Afisa wa Macho',
@@ -1734,6 +1958,7 @@ export const translations = {
     audiologist: 'Mtaalamu wa Usikivu',
     earCarePractitioner: 'Mtaalamu wa Utunzaji wa Masikio',
     dermatologist: 'Daktari wa Ngozi',
+    */
 
     instructionsButton: 'Jinsi ya kutumia',
     eyeButton: 'Jicho',
@@ -1772,7 +1997,8 @@ export const translations = {
     userName: 'Jina',
     userContact: 'Mawasiliano',
     userRole: 'Wadhifa',
-    userAims: 'Malengo',
+    userAimsPopupLabel: "Malengo",
+    // userAims: 'Malengo',
     userLatLong: 'Lat & Long',
     userArea: 'Eneo',
     userCountry: 'Nchi',
@@ -1781,7 +2007,7 @@ export const translations = {
     geolocationButton: 'Geolokisho',
     geoInfoText: 'Kwa kubofya "Geolokisho" itashirikiwa eneo (lat/long) lenye usahihi zaidi. Hii husaidia kutoa mwongozo na chaguzi bora.',
 
-    pageTitle: 'Jinsi ya kuchunguza jicho',
+    pageTitle_howToExamineEye: 'Jinsi ya kuchunguza jicho',
     frontOfEyeHeading: 'Sehemu ya Mbele ya Jicho',
     frontOfEyeText:
       "Angalia na linganisha macho: <em>moja kwa moja,</em> <em>kulia,</em> <em>kushoto,</em> <em>juu,</em> chini<br><strong><u>Shikamana na karibu</u></strong>. Angalia: <em>mabega,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupilla</em><br>Tumia na <span style='color: orange;'>fluro</span> kwa vidonda vya cornea au mikwaruzo",
@@ -1791,10 +2017,10 @@ export const translations = {
     backOfEyeHeading: 'Sehemu ya Nyuma ya Jicho',
     backOfEyeText:
       'Tumia jicho la kuume kuona jicho la mgonjwa; la kushoto kwa la kushoto<br>Mgonjwa anapaswa kutazama moja kwa moja, SI kuangalia mwanga; karibu na tafuta optic disc (Dilate = mtazamo bora)<br>Angalia disc: <em>Mlango,</em> <em>Rangi,</em> <em>Kombe</em>. Fuata mishipa mikubwa, kisha muombe mgonjwa atazame moja kwa moja mwanga ili kuona macula',
-    additionalText:
+    additionalText_eye:
       "Jua diski zako: kawaida, <span style='color:red; font-weight:bold;'>kuvimba,</span> <span style='color:red;'>mishipa mipya,</span> <span style='color:orange;'>ikikombe,</span> <span style='color:green;'>nyeupe</span><br>&gt;Fanya mazoezi mara kwa mara&lt;",
 
-    pageTitle: 'Jinsi ya kuchunguza sikio',
+    pageTitle_howToExamineEar: 'Jinsi ya kuchunguza sikio',
     allAroundEarHeading: 'Mzunguko wa sikio',
     allAroundEarText:
       'Angalia: <em>pinna, </em><em>tragus, </em><em>mastoid</em> kwa vikoma, unyeti au mtondo<br>Hamisha pinna kwa upole, angalia kama kuna maumivu',
@@ -1804,10 +2030,10 @@ export const translations = {
     tympanicMembraneHeading: 'Ukonononi wa tai',
     tympanicMembraneText:
       'Tambua mkono wa malleus, refleksi ya mwanga, na attic<br>Angalia: <em>rangi,</em> <em>nafasi,</em> <em>uwazi</em><br>Tafuta tukio la pengo, kioevu au alama za kupona',
-    additionalText:
+    additionalText_ear:
       "Jua hali ya tai yako: ya kawaida, <span style='color:red; font-weight:bold;'>nyekundu</span>, <span style='color:orange;'>inayochanua</span>, <span style='color:green;'>imekuruka</span>, <span style='color:purple;'>imepungua</span><br>&gt;Fanya mazoezi mara kwa mara&lt;",
 
-    pageTitle: 'Jinsi ya kuchunguza ngozi',
+    pageTitle_howToExamineSkin: 'Jinsi ya kuchunguza ngozi',
     generalObservationHeading: 'Uchunguzi wa jumla',
     generalObservationText: 'Angalia vikoma, <em>mabadiliko ya rangi</em> na mgawanyo<br>Piga kwa upole ili kuhisi muundo, joto au hisia',
     uvLightHeading: 'Mwanga wa UV (Wood’s)',
@@ -1816,10 +2042,10 @@ export const translations = {
     dermoscopyHeading: 'Dermoskopi',
     dermoscopyText:
       '<strong><u>Shikilia Arclight polariser kama kalamu</u></strong>, angalia: <strong>ABCDE</strong> (<em>Kutokulingana</em>, <em>Mipaka</em>, <em>Rangi</em>, <em>Diamita &gt;6mm</em>, <em>Kubadilika</em>)<br>Soma: PDSBV (<em>Mtandao wa pigimenti</em>, <em>Vidoti</em>, <em>Mstari</em>, <em>Bluu-mweupe</em>, <em>Mishipa</em>)',
-    additionalText:
+    additionalText_skin:
       "Jua dalili yako: ya kawaida, <span style='color:red;'>shaka</span>, <span style='color:orange;'>imevimba</span><br>&gt;Fanya mazoezi mara kwa mara&lt;",
 
-    pageTitle: 'Kuhusu Alan',
+    pageTitle_aboutAlan: 'Kuhusu Alan',
     aboutAlanText:
       'Alan ni msaidizi wa utambuzi wa AI kwa macho, masikio, na ngozi, unaojumuisha modeli ya msingi ya lugha na mantiki ya alama. Mwerevu. Mkali. wa kisasa.<br><br>Maarifa ya kliniki, ya eneo, na picha zimeandaliwa kwa nafasi tofauti kama vile wafanyakazi wa afya na madaktari wa jumla. Mazungumzo mafupi yanazalisha utambuzi na mpango wa usimamizi. Matumizi ya Arclight yamejumuishwa kote.<br>',
     aboutAlanListItem1: 'Msingi wa wataalam – hali ya hewa ya kitropiki/moto',
@@ -1862,25 +2088,39 @@ export const translations = {
       'Mwanamume wa miaka 25, kipande cha ngozi jekundu kwa siku 3. Bila dawa wala tatizo la ngozi hapo awali. Ngozi inauma na kuchanua.',
     instructionsTooMuch_skin:
       "Mwanamume huyu alifika klinikini leo. Aliingia kwenye jengo na ngozi jekundu na anafikiri chakula alichokula kinaathiri ngozi yake. Naona kuchemka na pande za ngozi. Anahitaji msaada—mwanamume mrefu, ngozi jekundu, aliye na wasiwasi kuhusu pigimenti na mshtuko. Anasema, 'Hii ni nini?'",
-    instructionsAdditionalQuery_skin: 'Alan pia anajibu maswali ya ufundishaji kuhusu ngozi: Ni nini Eczema? Naona mtandao wa pigimenti vipi?',
+    instructionsAdditionalQuery_skin:
+      'Alan pia anajibu maswali ya ufundishaji kuhusu ngozi: Ni nini Eczema? Naona mtandao wa pigimenti vipi?',
     instructionsLabelTooLittle: 'Kidogo mno',
     instructionsLabelJustRight: 'Inatosha tu',
     instructionsLabelTooMuch: 'Mingi mno',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan ni msaidizi wa AI kwa wanafunzi na wale ambao mara chache hukutana na kesi za macho, masikio, au ngozi. Andika au sema kwa uwazi na epuka kutoa majina au maelezo yanayoweza kutambulika.',
     goodLuck: 'Bahati njema!',
     namePlaceholder: 'Jina',
-    rolePlaceholder: 'Wadhifa',
+    // rolePlaceholder: 'Wadhifa',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Swahili) ---
     experiencePlaceholder: 'Uzoefu',
+    experienceStudentRefresher: 'Mwanafunzi / Mrejesho',
+    experienceConfidentCore: 'Ujuzi wa Msingi wa Kujiamini',
+    experienceExpert: 'Mtaalamu',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 mwaka',
     experienceOption2: '1-3 mwaka',
     experienceOption3: '3-7 mwaka',
     experienceOption4: '>7 mwaka',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Malengo',
     aimsOption1: 'Maoni ya pili',
     aimsOption2: 'Utafutaji wa hali',
     aimsOption3: 'Wasiliana vyema',
+    */
     contactPlaceholder: 'Mawasiliano (email/simu)',
     acceptButton: 'Kubali',
 
@@ -1889,7 +2129,6 @@ export const translations = {
     screenshot: "Picha ya skrini",
     refer: "Rejelea",
     comingSoon: "Inakuja hivi karibuni...",
-
   },
 
   // 11) Urdu - ur
@@ -1899,13 +2138,23 @@ export const translations = {
     examineWell: 'اچھی طرح معائنہ کریں',
     useArclight: 'Arclight استعمال کریں',
     howCanIHelp: 'میں آپ کی کس طرح مدد کر سکتا ہوں؟',
-    alanMistakes: `\u202A${new Date().getMonth() + 1}/25\u202C ایلن غلطی کر سکتا ہے۔ کلینکل فیصلے کا استعمال کریں۔`,
+    alanMistakes: `\u202Bایلن غلطی کر سکتا ہے۔ کلینکل فیصلے کا استعمال کریں۔ \u202A${new Date().getMonth() + 1}/25\u202C\u202B,`,
     login: 'لاگ ان',
     enterPassword: 'پاس ورڈ درج کریں',
     register: 'رجسٹر',
     name: 'نام',
     password: 'پاس ورڈ (4 ہندسوں کا)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Urdu) ---
+    aimsPlaceholder: 'مقاصد',
+    aimsEyes: 'آنکھیں',
+    aimsEars: 'کان',
+    aimsSkin: 'جلد',
+    aimsVeterinary: 'ویٹرنری',
+    aimsChildMaternal: 'بچہ/ماں',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'صحت کا کارکن',
     nurse: 'نرس',
     ophthalmicOfficer: 'چشم سرجن افسر',
@@ -1921,6 +2170,7 @@ export const translations = {
     audiologist: 'آڈیالوجسٹ',
     earCarePractitioner: 'کان کی دیکھ بھال کرنے والا',
     dermatologist: 'جلد کا ڈاکٹر',
+    */
 
     instructionsButton: 'استعمال کا طریقہ',
     eyeButton: 'آنکھ',
@@ -1959,7 +2209,8 @@ export const translations = {
     userName: 'نام',
     userContact: 'رابطہ',
     userRole: 'کردار',
-    userAims: 'مقاصد',
+    userAimsPopupLabel: "مقاصد",
+    // userAims: 'مقاصد',
     userLatLong: 'طول و عرض بلد',
     userArea: 'علاقہ',
     userCountry: 'ملک',
@@ -1969,7 +2220,7 @@ export const translations = {
     geoInfoText:
       '“جغرافیائی مقام” پر کلک کرنے سے زیادہ درست مقام (عرض بلد/طول بلد) شیئر کیا جائے گا۔ اس سے بہتر رہنمائی اور اختیارات فراہم کرنے میں مدد ملتی ہے۔',
 
-    pageTitle: 'آنکھ کا معائنہ کیسے کریں',
+    pageTitle_howToExamineEye: 'آنکھ کا معائنہ کیسے کریں',
     frontOfEyeHeading: 'آنکھ کا اگلا حصہ',
     frontOfEyeText:
       "آنکھوں کا مشاہدہ اور موازنہ کریں: <em>سیدھا،</em> <em>دائیں،</em> <em>بائیں،</em> <em>اوپر،</em> نیچے<br><strong><u>قریبی مشاہدہ کریں</u></strong>۔ جانچیں: <em>پلکیں،</em> <em>کنجنکٹِوَا،</em> <em>قرنیہ،</em> <em>پپِل</em><br><span style='color: orange;'>فلور</span> کے ساتھ قرنیہ کے السر یا خراش کے لیے استعمال کریں",
@@ -1979,10 +2230,10 @@ export const translations = {
     backOfEyeHeading: 'آنکھ کا پچھلا حصہ',
     backOfEyeText:
       'مریض کی دائیں آنکھ دیکھنے کے لیے دائیں آنکھ استعمال کریں؛ بائیں کے لیے بائیں<br>مریض کو سیدھا دیکھنا چاہیے، روشنی کی طرف نہیں؛ قریب جائیں اور آپٹک ڈسک تلاش کریں (ڈائیلیٹ = بہترین منظر)<br>ڈسک کا مطالعہ کریں: <em>کنارہ،</em> <em>رنگ،</em> <em>کپ</em>. بڑی نالیوں کا پتہ لگائیں، پھر مریض سے براہ راست روشنی کی طرف دیکھنے کو کہیں تاکہ میکولا دیکھی جا سکے',
-    additionalText:
+    additionalText_eye:
       "اپنے ڈسکس کو جانیں: معمول، <span style='color:red; font-weight:bold;'>سوجے ہوئے،</span> <span style='color:red;'>نئی نالیاں،</span> <span style='color:orange;'>کپ شدہ،</span> <span style='color:green;'>مدھم</span><br>&gt;کثرت سے مشق کریں&lt;",
 
-    pageTitle: 'کان کا معائنہ کیسے کریں',
+    pageTitle_howToExamineEar: 'کان کا معائنہ کیسے کریں',
     allAroundEarHeading: 'کان کے گرد',
     allAroundEarText:
       'جانچیں: <em>پِنّا, </em><em>ٹرَیگَس, </em><em>ماسٹوئڈ</em> میں گلٹیاں، نرمی یا اخراج<br>پِنّا کو آہستہ حرکت دیں، کسی درد کا خیال رکھیں',
@@ -1992,10 +2243,10 @@ export const translations = {
     tympanicMembraneHeading: 'طبلی جھلی',
     tympanicMembraneText:
       'ہتھوڑے کے ہینڈل، روشنی کا عکس، اور attic کی شناخت کریں<br>نوٹ کریں: <em>رنگ,</em> <em>مقام,</em> <em>شفافیت</em><br>چھید، سیال یا داغ تلاش کریں',
-    additionalText:
+    additionalText_ear:
       "اپنے ٹی ایم کو جانیں: معمول، <span style='color:red; font-weight:bold;'>سرخ</span>, <span style='color:orange;'>ابھرا ہوا</span>, <span style='color:green;'>گھٹ گیا</span>, <span style='color:purple;'>چھید شدہ</span><br>&gt;بار بار مشق کریں&lt;",
 
-    pageTitle: 'جلد کا معائنہ کیسے کریں',
+    pageTitle_howToExamineSkin: 'جلد کا معائنہ کیسے کریں',
     generalObservationHeading: 'عمومی معائنہ',
     generalObservationText: 'تکلیوں، <em>رنگ میں تبدیلی</em> اور تقسیم کا معائنہ کریں<br>ملائمت سے ساخت، درجہ حرارت یا حساسیت کی جانچ کریں',
     uvLightHeading: 'یو وی (ووڈز) لائٹ',
@@ -2004,10 +2255,10 @@ export const translations = {
     dermoscopyHeading: 'ڈرموسکوپی',
     dermoscopyText:
       '<strong><u>Arclight پولرائزر کو قلم کی طرح پکڑیں</u></strong>, چیک کریں: <strong>ABCDE</strong> (<em>غیر متناسب</em>, <em>حد</em>, <em>رنگ</em>, <em>6mm سے بڑا قطر</em>, <em>بدلتا ہوا</em>)<br>مطالعہ کریں: PDSBV (<em>پیگمنٹ نیٹ ورک</em>, <em>نقطے</em>, <em>لکیریں</em>, <em>نیلا-سفید</em>, <em>خون کی نالی</em>)',
-    additionalText:
+    additionalText_skin:
       "اپنی بیماری کو پہچانیں: معمول، <span style='color:red;'>مشکوک</span>, <span style='color:orange;'>سوجن زدہ</span><br>&gt;باقاعدگی سے مشق کریں&lt;",
 
-    pageTitle: 'عن آلان',
+    pageTitle_aboutAlan: 'ایلن کے بارے میں',
     aboutAlanText:
       'آلان ایک AI آنکھ، کان اور جلد تشخیصی معاون ہے، جس میں بنیادی لسانی ماڈل اور علامتی منطق شامل ہیں۔ ذہین۔ سنجیدہ۔ جدید ترین۔<br><br>کلینیکل، مقامی علم اور تصاویر کو صحت کارکنوں اور جنرل پریکٹیشنرز جیسے مختلف کرداروں کے لیے ڈھالا گیا ہے۔ مختصر مکالمہ تشخیص اور انتظامی منصوبہ تیار کرتا ہے۔ Arclight کا استعمال ہر جگہ شامل ہے۔<br>',
     aboutAlanListItem1: 'ماہر بنیاد – گرم اور استوائی آب و ہوا',
@@ -2033,7 +2284,7 @@ export const translations = {
     instructionsJustRight_eye:
       'مرد 25 سال، آنکھ سرخ 3 دن۔ پہلے کوئی دوا یا آنکھ کا مسئلہ نہیں تھا۔ درد، آنکھ سے پانی، سفید کورنیا ڈاٹ۔ پپیلیں ٹھیک، نظر 6/12 اور 6/6 دوسری آنکھ میں۔',
     instructionsTooMuch_eye:
-      "آج یہ مرد کلینک آیا۔ وہ گاڑی چلاتے ہوئے عمارت میں داخل ہوا اور اس کی آنکھ سرخ ہے، اب وہ سمجھتا ہے کہ کھایا ہوا کھانا اس کی آنکھ کو متاثر کر رہا ہے۔ میں آنکھ سے پانی اور سرخ کنارے دیکھتا ہوں۔ وہ مدد چاہتا ہے—لمبا مرد، آنکھیں پانی والی، کورنیا اور درد کے بارے میں فکر مند۔ وہ پوچھتا ہے، 'یہ کیا ہے؟'",
+      "آج یہ مرد کلینک آیا۔ وہ گاڑی چلاتے ہوئے عمارت میں داخل ہوا اور اس کی آنکھ سرخ ہے، اب وہ سمجھتا ہے کہ کھایا ہوا کھانا اس کی آنکھ کو متاثر کر رہا ہے۔ میں آنکھ سے پانی اور سرخ کنارے دیکھتا ہوں۔ وہ مدد چاہتا ہے—لمبا مرد، آنکھیں پانی والی، کورنیا اور درد کے بارے में فکر مند۔ وہ پوچھتا ہے، 'یہ کیا ہے؟'",
     instructionsAdditionalQuery_eye: 'Alan آنکھ سے متعلق تدریسی سوالات کا بھی جواب دیتا ہے: Iritis کیا ہے؟ میں retina کیسے دیکھوں؟',
     instructionsBackground_ear: '#f2fff2',
     instructionsUseArclight_ear: '<strong>Arclight استعمال کریں:</strong> <strong><em>گھیرے کان، نالی، tympan.</em></strong>',
@@ -2041,7 +2292,7 @@ export const translations = {
     instructionsJustRight_ear:
       'مرد 25 سال، کان سرخ 3 دن۔ پہلے کوئی دوا یا کان کا مسئلہ نہیں تھا۔ درد، کان سے رطوبت۔ سرخ tympan، خراب کان میں سننا دھندلا لیکن دوسری میں ٹھیک۔',
     instructionsTooMuch_ear:
-      "آج یہ مرد کلینک آیا۔ وہ گاڑی چلاتے ہوئے عمارت میں داخل ہوا اور اس کے کان سرخ ہیں، اب وہ سمجھتا ہے کہ کھایا ہوا کھانا اس کے کان کو متاثر کر رہا ہے۔ میں کان سے رطوبت اور سرخ کنارے دیکھتا ہوں۔ وہ مدد چاہتا ہے—لمبا مرد، کان پانی والے، سننے اور درد کے بارے میں فکر مند۔ وہ پوچھتا ہے، 'یہ کیا ہے؟'",
+      "آج یہ مرد کلینک آیا۔ وہ گاڑی چلاتے ہوئے عمارت میں داخل ہوا اور اس کے کان سرخ ہیں، اب وہ سمجھتا ہے کہ کھایا ہوا کھانا اس کے کان کو متاثر کر رہا ہے۔ میں کان سے رطوبت اور سرخ کنارے دیکھتا ہوں۔ وہ مدد چاہتا ہے—لمبا مرد، کان پانی والے، سننے اور درد کے بارے में فکر مند۔ وہ پوچھتا ہے، 'یہ کیا ہے؟'",
     instructionsAdditionalQuery_ear: 'Alan کان سے متعلق تدریسی سوالات کا بھی جواب دیتا ہے: آوٹائٹس میڈیا کیا ہے؟ میں کان کیسے صاف کروں؟',
     instructionsBackground_skin: '#fddfff',
     instructionsUseArclight_skin: '<strong>Arclight استعمال کریں:</strong> <strong><em>UV روشنی، جلد کا معائنہ۔</em></strong>',
@@ -2054,20 +2305,33 @@ export const translations = {
     instructionsLabelJustRight: 'بالکل ٹھیک',
     instructionsLabelTooMuch: 'بہت زیادہ',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan ایک AI معاون ہے جو طلباء اور اُن افراد کے لیے ہے جو کبھی کبھار آنکھ، کان یا جلد کے معاملات دیکھتے ہیں۔ براہ کرم واضح لکھیں یا بولیں اور شناختی نام یا تفصیلات ظاہر کرنے سے گریز کریں۔',
     goodLuck: 'اچھی قسمت!',
     namePlaceholder: 'نام',
-    rolePlaceholder: 'کردار',
+    // rolePlaceholder: 'کردار',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Urdu) ---
     experiencePlaceholder: 'تجربہ',
+    experienceStudentRefresher: 'طالب علم / تازہ کاری',
+    experienceConfidentCore: 'پراعتماد بنیادی علم',
+    experienceExpert: 'ماہر',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 سال',
     experienceOption2: '1-3 سال',
     experienceOption3: '3-7 سال',
     experienceOption4: '>7 سال',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'اہداف',
     aimsOption1: 'دوسرا نظریہ',
     aimsOption2: 'حالت کی تلاش',
     aimsOption3: 'بہتر رابطہ',
+    */
     contactPlaceholder: 'رابطہ (ای میل/فون)',
     acceptButton: 'قبول کریں',
 
@@ -2076,7 +2340,6 @@ export const translations = {
     screenshot: "اسکرین شاٹ",
     refer: "ریفر",
     comingSoon: "جلد آ رہا ہے...",
-
   },
 
   // 12) Persian (Farsi) - fa
@@ -2086,13 +2349,23 @@ export const translations = {
     examineWell: 'خوب معاینه کنید',
     useArclight: 'استفاده از Arclight',
     howCanIHelp: 'چطور می‌توانم کمکتان کنم؟',
-    alanMistakes: `\u202A${new Date().getMonth() + 1}/25\u202C آلن ممکن است اشتباه کند. از قضاوت بالینی استفاده کنید.`,
+    alanMistakes: `\u202Bآلن ممکن است اشتباه کند. از قضاوت بالینی استفاده کنید. \u202A${new Date().getMonth() + 1}/25\u202C\u202B,`,
     login: 'ورود',
     enterPassword: 'رمز عبور را وارد کنید',
     register: 'ثبت‌نام',
     name: 'نام',
     password: 'رمز (4 رقم)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Farsi) ---
+    aimsPlaceholder: 'اهداف',
+    aimsEyes: 'چشم',
+    aimsEars: 'گوش',
+    aimsSkin: 'پوست',
+    aimsVeterinary: 'دامپزشکی',
+    aimsChildMaternal: 'کودک/مادر',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'نیروی بهداشتی',
     nurse: 'پرستار',
     ophthalmicOfficer: 'کارشناس بالینی چشم',
@@ -2108,6 +2381,7 @@ export const translations = {
     audiologist: 'شنوایی‌شناس',
     earCarePractitioner: 'متخصص مراقبت از گوش',
     dermatologist: 'متخصص پوست',
+    */
 
     instructionsButton: 'چگونه استفاده کنیم',
     eyeButton: 'چشم',
@@ -2147,7 +2421,8 @@ export const translations = {
     userName: 'نام',
     userContact: 'اطلاعات تماس',
     userRole: 'نقش',
-    userAims: 'اهداف',
+    userAimsPopupLabel: "اهداف",
+    // userAims: 'اهداف',
     userLatLong: 'عرض و طول جغرافیایی',
     userArea: 'منطقه',
     userCountry: 'کشور',
@@ -2156,7 +2431,7 @@ export const translations = {
     geolocationButton: 'موقعیت‌یابی',
     geoInfoText: 'با کلیک بر روی "موقعیت‌یابی" مکان دقیق‌تری (عرض/طول) به اشتراک گذاشته می‌شود. این به ارائه راهنمایی و گزینه‌های بهتر کمک می‌کند.',
 
-    pageTitle: 'چگونه چشم را معاینه کنیم',
+    pageTitle_howToExamineEye: 'چگونه چشم را معاینه کنیم',
     frontOfEyeHeading: 'قسمت جلوی چشم',
     frontOfEyeText:
       "چشم‌ها را مشاهده و مقایسه کنید: <em>مستقیم،</em> <em>راست،</em> <em>چپ،</em> <em>بالا،</em> پایین<br><strong><u>نزدیک شده و ثابت نگه دارید</u></strong>. بررسی کنید: <em>پلک‌ها،</em> <em>ملتحمه،</em> <em>قرنیه،</em> <em>بؤبؤ</em><br>از <span style='color: orange;'>فلور</span> برای زخم‌های قرنیه یا خط‌خوردگی استفاده کنید",
@@ -2166,10 +2441,10 @@ export const translations = {
     backOfEyeHeading: 'قسمت پشتی چشم',
     backOfEyeText:
       'از چشم راست برای دیدن چشم راست بیمار استفاده کنید؛ برای چشم چپ، چپ<br>بیمار باید مستقیم ببیند نه به سمت نور؛ نزدیک شوید و دیسک بینایی را پیدا کنید (گشادکردن = بهترین دید)<br>دیسک را بررسی کنید: <em>حاشیه،</em> <em>رنگ،</em> <em>کاسه</em>. عروق بزرگ را دنبال کنید، سپس از بیمار بخواهید مستقیم به نور نگاه کند تا ماکولا را ببیند',
-    additionalText:
+    additionalText_eye:
       "دیسک‌های خود را بشناسید: معمولی، <span style='color:red; font-weight:bold;'>متورم،</span> <span style='color:red;'>عروق جدید،</span> <span style='color:orange;'>کاسه‌دار،</span> <span style='color:green;'>رنگ پریده</span><br>&gt;تمرین کنید&lt;",
 
-    pageTitle: 'چگونه گوش را معاینه کنیم',
+    pageTitle_howToExamineEar: 'چگونه گوش را معاینه کنیم',
     allAroundEarHeading: 'اطراف گوش',
     allAroundEarText:
       'بررسی کنید: <em>گوش بیرونی, </em><em>ترَگوس, </em><em>ماستوئید</em> به دنبال توده، حساسیت یا ترشح<br>به آرامی گوش بیرونی را حرکت دهید، به درد توجه کنید',
@@ -2179,10 +2454,10 @@ export const translations = {
     tympanicMembraneHeading: 'غشا تیپانیک',
     tympanicMembraneText:
       'دسته مالئوس، بازتاب نور و آتیک را شناسایی کنید<br>توجه کنید: <em>رنگ,</em> <em>موقعیت,</em> <em>شفافیت</em><br>به دنبال سوراخ، مایع یا زخم باشید',
-    additionalText:
+    additionalText_ear:
       "تی‌ام خود را بشناسید: نرمال، <span style='color:red; font-weight:bold;'>قرمز</span>, <span style='color:orange;'>برآمده</span>, <span style='color:green;'>منقبض</span>, <span style='color:purple;'>سوراخ‌دار</span><br>&gt;تمرین کنید&lt;",
 
-    pageTitle: 'چگونه پوست را معاینه کنیم',
+    pageTitle_howToExamineSkin: 'چگونه پوست را معاینه کنیم',
     generalObservationHeading: 'مشاهده کلی',
     generalObservationText: 'توده‌ها، <em>تغییرات رنگ</em> و توزیع را بررسی کنید<br>به آرامی بافت، دما یا حساسیت را لمس کنید',
     uvLightHeading: 'نور ماوراء بنفش (Wood’s)',
@@ -2191,10 +2466,10 @@ export const translations = {
     dermoscopyHeading: 'درموسکوپی',
     dermoscopyText:
       '<strong><u>Arclight پولاریزر را مانند یک قلم نگه دارید</u></strong>, بررسی کنید: <strong>ABCDE</strong> (<em>نامتقارن</em>, <em>حاشیه</em>, <em>رنگ</em>, <em>قطر &gt;6mm</em>, <em>در حال تغییر</em>)<br>بررسی کنید: PDSBV (<em>شبکه رنگدانه‌ای</em>, <em>نقاط</em>, <em>خطوط</em>, <em>آبی-سفید</em>, <em>عروقی</em>)',
-    additionalText:
+    additionalText_skin:
       "ضایعه خود را بشناسید: طبیعی، <span style='color:red;'>مشکوک</span>, <span style='color:orange;'>التهاب‌دار</span><br>&gt;تمرین کنید&lt;",
 
-    pageTitle: 'درباره آلان',
+    pageTitle_aboutAlan: 'درباره آلان',
     aboutAlanText:
       'آلان یک دستیار تشخیصی هوش مصنوعی برای چشم، گوش و پوست است که شامل یک مدل زبان بنیادی و منطق نمادین می‌باشد. هوشمند. جدی. پیشرفته.<br><br>دانش بالینی، محلی و تصاویر برای نقش‌هایی مانند کارگران بهداشت و پزشکان عمومی به‌طور دقیق تنظیم شده‌اند. گفتگوی مختصر تشخیص و برنامه مدیریت را به همراه دارد. استفاده از Arclight در کل فرآیند تعبیه شده است.<br>',
     aboutAlanListItem1: 'پایه تخصص – اقلیم گرمسیری/داغ',
@@ -2241,20 +2516,33 @@ export const translations = {
     instructionsLabelJustRight: 'کاملاً مناسب',
     instructionsLabelTooMuch: 'بسیار زیاد',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan یک دستیار هوش مصنوعی است برای دانشجویان و کسانی که به ندرت با موارد چشم، گوش یا پوست مواجه می‌شوند. با وضوح بنویسید یا صحبت کنید و از افشای نام‌ها یا جزئیات شناسایی‌کننده اجتناب کنید.',
     goodLuck: 'موفق باشید!',
     namePlaceholder: 'نام',
-    rolePlaceholder: 'نقش',
+    // rolePlaceholder: 'نقش',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Farsi) ---
     experiencePlaceholder: 'تجربه',
+    experienceStudentRefresher: 'دانشجو / بازآموزی',
+    experienceConfidentCore: 'دانش پایه قوی',
+    experienceExpert: 'متخصص',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 سال',
     experienceOption2: '1-3 سال',
     experienceOption3: '3-7 سال',
     experienceOption4: '>7 سال',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'اهداف',
     aimsOption1: 'نظر دوم',
     aimsOption2: 'بررسی وضعیت',
     aimsOption3: 'ارتباط بهتر',
+    */
     contactPlaceholder: 'تماس (ایمیل/تلفن)',
     acceptButton: 'قبول کنید',
 
@@ -2263,7 +2551,6 @@ export const translations = {
     screenshot: "اسکرین شات",
     refer: "ارجاع",
     comingSoon: "به‌ زودی..."
-
   },
 
   // 13) Lingala - ln
@@ -2273,13 +2560,23 @@ export const translations = {
     examineWell: 'Tala malamu',
     useArclight: 'Salela Arclight',
     howCanIHelp: 'Nakoki kosalisa yo ndenge nini?',
-    alanMistakes: `Alan akoki kosala mabunga. Salelá mayele na yo ya bonganga. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan akoki kosala mabunga. Salelá mayele na yo ya bonganga. ${new Date().getMonth() + 1}/25,`,
     login: 'Kɔta',
     enterPassword: 'Tika mpasi ya se (pass)',
     register: 'Kokoma',
     name: 'Kombo',
     password: 'Mpasi ya se (4 mitindo)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Lingala) ---
+    aimsPlaceholder: 'Mikano',
+    aimsEyes: 'Misu',
+    aimsEars: 'Makutu',
+    aimsSkin: 'Pɔ̃ (Akpɔkpɔ)',
+    aimsVeterinary: 'Mifugo (Veterinari)',
+    aimsChildMaternal: 'Bana/Mama',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Mosali ya bokolongono',
     nurse: 'Nɛsɛ',
     ophthalmicOfficer: 'Ofisye ya misu',
@@ -2295,6 +2592,7 @@ export const translations = {
     audiologist: 'Monganga ya koyoka',
     earCarePractitioner: 'Mosungi ya kosalisa matoyi',
     dermatologist: 'Monganga ya pɔ̃',
+    */
 
     instructionsButton: 'Ndenge ya kosalela',
     eyeButton: 'Misu',
@@ -2333,7 +2631,8 @@ export const translations = {
     userName: 'Kombo',
     userContact: 'Nzela ya kokutana',
     userRole: 'Mosala',
-    userAims: 'Mikano',
+    userAimsPopupLabel: "Mikano",
+    // userAims: 'Mikano',
     userLatLong: 'Longitude & Latitude',
     userArea: 'Esika',
     userCountry: 'Ekokwamba',
@@ -2342,7 +2641,7 @@ export const translations = {
     geolocationButton: 'Lokasyon',
     geoInfoText: 'Na kokliká "Lokasyon", esika ya solo (lat/long) ekobimisama malamu. Likambo wana ekosalisa na kopesa mayele mpe ba chwa ya malamu.',
 
-    pageTitle: 'Ndenge ya kotala jiso',
+    pageTitle_howToExamineEye: 'Ndenge ya kotala jiso',
     frontOfEyeHeading: 'Liboso ya Jiso',
     frontOfEyeText:
       "Tala mpe kompara mayebi: <em>mpe na bolamu,</em> <em>na mosika,</em> <em>na mibale,</em> <em>na likolo,</em> na nse<br><strong><u>Zwa mpe kokende koleka</u></strong>. Somba: <em>lipoto,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupille</em><br>Salela na <span style='color: orange;'>fluro</span> mpo na mikakatano ya cornea to mikakatano",
@@ -2352,10 +2651,10 @@ export const translations = {
     backOfEyeHeading: 'Likolo ya Jiso',
     backOfEyeText:
       'Kozala na jeye ya motuya mpo na komona jiso ya moboti; na mosika mpo na komona jiso ya mobali<br>Moboti esengeli kotala lokola ezali te na polele; koluka lisusu optic disc (Dilate = malamu koleka)<br>Lakisa disc: <em>Margine,</em> <em>Loko,</em> <em>Kop</em>. Suivie bilamba minene, sima pesa moboti koyeba na polele mpo na komona macula',
-    additionalText:
+    additionalText_eye:
       "Yeba disko na yo: normal, <span style='color:red; font-weight:bold;'>ekoki kokamwa,</span> <span style='color:red;'>bilamba ya sika,</span> <span style='color:orange;'>ekweli,</span> <span style='color:green;'>mbeya</span><br>&gt;Zala na pratique mingi&lt;",
 
-    pageTitle: 'Ndenge ya kotala ntɔ́ngɔ ya ntɛ́',
+    pageTitle_howToExamineEar: 'Ndenge ya kotala ntɔ́ngɔ ya ntɛ́',
     allAroundEarHeading: 'Na eteni ya ntɛ́',
     allAroundEarText:
       'Tala: <em>pinna, </em><em>tragus, </em><em>mastoid</em> mpo na biloko, ntina to mbulamatata<br>Zwa pinna na bolamu, landa soki ezali na mawa',
@@ -2365,10 +2664,10 @@ export const translations = {
     tympanicMembraneHeading: 'Membrane ya tympanique',
     tympanicMembraneText:
       'Zua mpona ya mélé ya malleus, mosangani ya mwanga, na attic<br>Yeba: <em>eleko,</em> <em>esika,</em> <em>loki ya kotika</em><br>Luka soki ezali na kotika, mayele to mikakatano',
-    additionalText:
+    additionalText_ear:
       "Yeba TM na yo: ya normal, <span style='color:red; font-weight:bold;'>motuya</span>, <span style='color:orange;'>ekokamwa</span>, <span style='color:green;'>ekopesi</span>, <span style='color:purple;'>ekotambwama</span><br>&gt;Zala na pratique mingi&lt;",
 
-    pageTitle: 'Ndenge ya kotala nzoto',
+    pageTitle_howToExamineSkin: 'Ndenge ya kotala nzoto',
     generalObservationHeading: 'Kotala ya ndenge nyonso',
     generalObservationText: 'Tala biloko ya mikuta, <em>mpaya ya lokota</em> mpe boyebi<br>Pona mabɔkɔ mpo na koyeba ndenge, molunge to mawa',
     uvLightHeading: 'Mwangaza ya UV (Wood’s)',
@@ -2377,10 +2676,10 @@ export const translations = {
     dermoscopyHeading: 'Dermoskopi',
     dermoscopyText:
       '<strong><u>Kamata Arclight polariser lokola patano</u></strong>, tala: <strong>ABCDE</strong> (<em>Asymétrie</em>, <em>Limite</em>, <em>Lokota</em>, <em>Diametre &gt;6mm</em>, <em>Ekosangisa</em>)<br>Kende kotala: PDSBV (<em>Neti ya pigment</em>, <em>Ntango</em>, <em>Misala</em>, <em>Bluu-mweupe</em>, <em>Vascular</em>)',
-    additionalText:
+    additionalText_skin:
       "Yeba lesion na yo: ya normal, <span style='color:red; font-weight:bold;'>mosakoli</span>, <span style='color:orange;'>ekuveta</span><br>&gt;Zala na pratique mingi&lt;",
 
-    pageTitle: 'Likoló na Alan',
+    pageTitle_aboutAlan: 'Likoló na Alan',
     aboutAlanText:
       'Alan ezali motambwisi ya mayele ya AI ya kotala miso, matama mpe nzoto, ezali na modèle ya lokota ya liboso mpe logique symbolique. Emonene. Ekolaka makasi. Eza na stat ya sika.<br><br>Mayele ya kliniki, ya mboka mpe bilamba, esalemi malamu mpo na ba rôles lokola ba health workers mpe ba général practitioners. Mabongisi mafupi emema diagnosis mpe plan ya management. Matumelo ya Arclight ezali na kati nyonso.<br>',
     aboutAlanListItem1: 'Base ya ba experts – climat ya tropikal/ya moto',
@@ -2429,20 +2728,33 @@ export const translations = {
     instructionsLabelJustRight: 'malamu',
     instructionsLabelTooMuch: 'miningi mingi',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan ezali motambwisi ya AI mpo na ba étudiant mpe ba moto oyo bakutana na makambo ya miso, matama to nzoto mbala moko. Andika to sema na boyebi mpe epuka kokomisa ba kombo to ba détails. Yeba malamu na kokanisa miso na matama. Bolamu!',
     goodLuck: 'Bolamu!',
     namePlaceholder: 'Kombo',
-    rolePlaceholder: 'Rôle',
+    // rolePlaceholder: 'Rôle',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Lingala) ---
     experiencePlaceholder: 'Boyebi',
+    experienceStudentRefresher: 'Moyekoli / Mopanzi-nsango',
+    experienceConfidentCore: 'Boyebi ya liboso ya kondima',
+    experienceExpert: 'Mokonzi',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 mbula',
     experienceOption2: '1-3 mbula',
     experienceOption3: '3-7 mbula',
     experienceOption4: '>7 mbula',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Bokamwina',
     aimsOption1: 'Eyano ya mibale',
     aimsOption2: 'Koyeba maladi',
     aimsOption3: 'Kolobela malamu',
+    */
     contactPlaceholder: 'Lumikisa (imeyili/telefonu)',
     acceptButton: 'Kobwaka',
 
@@ -2451,7 +2763,6 @@ export const translations = {
     screenshot: "Screenshot",
     refer: "Kotinda",
     comingSoon: "Eyakoya mosika te...",
-
   },
 
   // 14) Hausa - ha
@@ -2461,13 +2772,23 @@ export const translations = {
     examineWell: 'Duba da kyau',
     useArclight: 'Amfani da Arclight',
     howCanIHelp: 'Ta yaya zan iya taimaka maka a yau?',
-    alanMistakes: `Alan na iya yin kuskure. Yi amfani da ƙwarewar likitanci. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan na iya yin kuskure. Yi amfani da ƙwarewar likitanci. ${new Date().getMonth() + 1}/25,`,
     login: 'Shiga',
     enterPassword: 'Shigar da kalmar sirri',
     register: 'Rajista',
     name: 'Suna',
     password: 'Kalmar sirri (lambobi 4)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Hausa) ---
+    aimsPlaceholder: 'Manufofi',
+    aimsEyes: 'Idanu',
+    aimsEars: 'Kunnuwa',
+    aimsSkin: 'Fata',
+    aimsVeterinary: 'Dabbobi',
+    aimsChildMaternal: 'Yara/Mata masu juna biyu',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Ma’aikacin lafiya',
     nurse: 'Nas',
     ophthalmicOfficer: 'Jami’in kula da ido',
@@ -2483,6 +2804,7 @@ export const translations = {
     audiologist: 'Kwararren ji',
     earCarePractitioner: 'Mai kula da kunne',
     dermatologist: 'Likitan fata',
+    */
 
     instructionsButton: 'Yadda ake amfani',
     eyeButton: 'Ido',
@@ -2521,7 +2843,8 @@ export const translations = {
     userName: 'Suna',
     userContact: 'Tuntuɓi',
     userRole: 'Rawa',
-    userAims: 'Manufar',
+    userAimsPopupLabel: "Manufofi",
+    // userAims: 'Manufar',
     userLatLong: 'Lat & Long',
     userArea: 'Yanki',
     userCountry: 'Kasa',
@@ -2531,7 +2854,7 @@ export const translations = {
     geoInfoText:
       'Danna "Gano Wuri" zai raba wurin da ya fi daidai (latitude/longitude). Wannan yana taimakawa wajen ba da cikakken jagora da zaɓuɓɓuka mafi kyau.',
 
-    pageTitle: 'Yadda ake duba ido',
+    pageTitle_howToExamineEye: 'Yadda ake duba ido',
     frontOfEyeHeading: 'Gaban Ido',
     frontOfEyeText:
       "Duba kuma kwatanta idanu: <em>tsaye,</em> <em>dama,</em> <em>hagu,</em> <em>sama,</em> ƙasa<br><strong><u>Riƙe ka kusanto</u></strong>. Duba: <em>mafarkai,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>rini</em><br>Yi amfani da <span style='color: orange;'>fluro</span> don raunukan cornea ko yankewa",
@@ -2541,10 +2864,10 @@ export const translations = {
     backOfEyeHeading: 'Bayan Ido',
     backOfEyeText:
       'Yi amfani da idan dama don ganin idan dama na majinyaci; hagu don hagu<br>Majinyaci dole ya kalli kai tsaye BA zuwa ga haske ba; kusanto ka nemo optic disc (Dilate = mafi kyau gani)<br>Yi nazarin diski: <em>Girman gefe,</em> <em>Launi,</em> <em>Kwano</em>. Bi manyan jijiyoyi, sannan ka ce majinyaci ya kalli haske kai tsaye don ganin macula',
-    additionalText:
+    additionalText_eye:
       "San diskan ka: na al'ada, <span style='color:red; font-weight:bold;'>cunkoshe,</span> <span style='color:red;'>sabon jijiyoyi,</span> <span style='color:orange;'>mai kwano,</span> <span style='color:green;'>mai laushi</span><br>&gt;A yi atisaye sau da yawa&lt;",
 
-    pageTitle: 'Yadda ake duba kunne',
+    pageTitle_howToExamineEar: 'Yadda ake duba kunne',
     allAroundEarHeading: 'Kewaye kunne',
     allAroundEarText:
       'Duba: <em>pinna, </em><em>tragus, </em><em>mastoid</em> don gano kumburi, jin zafi ko zubar ruwa<br>Matsar da pinna a hankali, lura da duk wani radadi',
@@ -2554,10 +2877,10 @@ export const translations = {
     tympanicMembraneHeading: 'Membran tympanik',
     tympanicMembraneText:
       'Gano handle ɗin malleus, hasken madubi, da attic<br>Lura da: <em>launi,</em> <em>matsayi,</em> <em>bayyananniyar gani</em><br>Duba ko akwai ramuka, ruwa ko tabo',
-    additionalText:
+    additionalText_ear:
       "San TM ɗinku: al'ada, <span style='color:red; font-weight:bold;'>ja</span>, <span style='color:orange;'>ƙonawa</span>, <span style='color:green;'>ɗan murɗa</span>, <span style='color:purple;'>rame</span><br>&gt;Yi atisaye akai-akai&lt;",
 
-    pageTitle: 'Yadda ake duba fata',
+    pageTitle_howToExamineSkin: 'Yadda ake duba fata',
     generalObservationHeading: 'Gabaɗaya lura',
     generalObservationText: 'Duba kumburi, <em>canje-canje launi</em> da rabewa<br>Lalle a duba laushi, zafin jiki ko jin zafi',
     uvLightHeading: 'Hasken UV (na Wood)',
@@ -2566,10 +2889,10 @@ export const translations = {
     dermoscopyHeading: 'Dermoskopi',
     dermoscopyText:
       '<strong><u>Riƙe Arclight polariser kamar alƙalami</u></strong>, duba: <strong>ABCDE</strong> (<em>Rarrabe</em>, <em>Iyaka</em>, <em>Launi</em>, <em>Diameter &gt;6mm</em>, <em>Ci gaba</em>)<br>Kalli: PDSBV (<em>Hanyar launi</em>, <em>Dige</em>, <em>Layin zane</em>, <em>Shuɗi-fari</em>, <em>Jijiya</em>)',
-    additionalText:
+    additionalText_skin:
       "San lahani: na al'ada, <span style='color:red;'>mai shakku</span>, <span style='color:orange;'>mai kumburi</span><br>&gt;Yi atisaye sau da yawa&lt;",
 
-    pageTitle: 'Game da Alan',
+    pageTitle_aboutAlan: 'Game da Alan',
     aboutAlanText:
       'Alan wata na’ura ce ta AI wacce ke ba da shawarar duba idanu, kunne da fata, ta haɗa da wani asalin samfurin harshe da kuma alƙalamin ma’ana. Mai kaifin basira. Mai tsauri. A cikin zamani na zamani.<br><br>Ilimin asibiti, na gida da hotuna, an daidaita su domin nau’o’in aiki kamar ma’aikatan lafiya da likitocin gabaɗaya. Tattaunawa mai taƙaitaccen kalma tana samar da ganewar asibiti da tsari na kula. Amfani da Arclight yana nan a ko’ina.<br>',
     aboutAlanListItem1: 'Tushe na ƙwararru – yanayin zafi/tropical',
@@ -2580,7 +2903,7 @@ export const translations = {
     aboutAlanEncouraging: '<strong>Mai ƙarfafawa</strong> – jin tausayawa, malami',
     aboutAlanDate: 'wjw Jan 25',
 
-    instructionsPageTitle: 'Instrucciones (Hausa)',
+    instructionsPageTitle: 'Umarni',
     instructionsIntro:
       'Alan wata na’ura ce ta AI wacce ke ba da taimako ga ɗalibai da waɗanda lokaci-lokaci ke fuskantar matsalolin ido, kunne, ko fata. Rubuta ko yi magana a sarari kuma ka guji bayyana sunaye ko cikakkun bayanai masu gano mutum. Duba cikakken ɓangaren kai/fuska/jiki, ka kuma duba idanu/kunne guda biyu. Sa’a mai kyau!',
     instructionsPatientPrompt: 'Faɗa wa Alan game da marasa lafiya:',
@@ -2617,20 +2940,33 @@ export const translations = {
     instructionsLabelJustRight: 'Daidai',
     instructionsLabelTooMuch: 'Yawa sosai',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan wata na’ura ce ta AI wacce ke ba da taimako ga ɗalibai da waɗanda lokaci-lokaci ke fuskantar matsalolin ido, kunne, ko fata. Rubuta ko yi magana a sarari kuma ka guji bayyana sunaye ko cikakkun bayanai masu gano mutum.',
     goodLuck: 'Inganta!',
     namePlaceholder: 'Sunaye',
-    rolePlaceholder: 'Matsayi',
+    // rolePlaceholder: 'Matsayi',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Hausa) ---
     experiencePlaceholder: 'Kwarewa',
+    experienceStudentRefresher: 'Dalibi / Maimaitawa',
+    experienceConfidentCore: 'Kwararren Ilimi na Asali',
+    experienceExpert: 'Kwararre',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 shekara',
     experienceOption2: '1-3 shekaru',
     experienceOption3: '3-7 shekaru',
     experienceOption4: '>7 shekaru',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Manufa',
     aimsOption1: "Sakon ra'ayi na biyu",
     aimsOption2: 'Binciken hali',
     aimsOption3: 'Sadarwa mafi kyau',
+    */
     contactPlaceholder: 'Tuntuɓi (email/phone)',
     acceptButton: 'Amince',
 
@@ -2639,7 +2975,6 @@ export const translations = {
     screenshot: "Daukar hoton allo",
     refer: "Mika",
     comingSoon: "Zuwa nan ba da jimawa ba...",
-
   },
 
   // 15) Yoruba - yo
@@ -2649,13 +2984,23 @@ export const translations = {
     examineWell: 'Ègbógun Rẹ Dáadáa',
     useArclight: 'Lò Arclight',
     howCanIHelp: 'Báwo ni mo lè ràn ẹ lọ́wọ́ lónìí?',
-    alanMistakes: `Alan lè se aṣiṣe. Lọ́ sí kàyéfì ṣègùn rẹ. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan lè se aṣiṣe. Lọ́ sí kàyéfì ṣègùn rẹ. ${new Date().getMonth() + 1}/25,`,
     login: 'Wọlé',
     enterPassword: 'Tẹ Ọ̀rọ̀ Àgbàrá',
     register: 'Forúkọsílẹ',
     name: 'Orúkọ',
     password: 'Ọ̀rọ̀ Àgbàrá (dígítì 4)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Yoruba) ---
+    aimsPlaceholder: 'Èrò',
+    aimsEyes: 'Ojú',
+    aimsEars: 'Etí',
+    aimsSkin: 'Awọ',
+    aimsVeterinary: 'Ẹranko',
+    aimsChildMaternal: 'Ọmọ/Ìyá',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Oṣiṣẹ ìlera',
     nurse: 'Nọ̀ọ́sù',
     ophthalmicOfficer: 'Oṣiṣẹ Klinikali Ojú',
@@ -2671,6 +3016,7 @@ export const translations = {
     audiologist: 'Onímọ̀ ìgbọ́ràn',
     earCarePractitioner: 'Onímọ̀ ìtọju eètí',
     dermatologist: 'Dókítà Awọ',
+    */
 
     instructionsButton: 'Bí o ṣè lò',
     eyeButton: 'Ojú',
@@ -2709,7 +3055,8 @@ export const translations = {
     userName: 'Orukọ',
     userContact: 'Kan si',
     userRole: 'Iṣẹ',
-    userAims: 'Ero',
+    userAimsPopupLabel: "Èrò",
+    // userAims: 'Ero',
     userLatLong: 'Lat & Long',
     userArea: 'Agbegbe',
     userCountry: 'Orilẹ-ede',
@@ -2718,7 +3065,7 @@ export const translations = {
     geolocationButton: 'Ìpò',
     geoInfoText: 'Títẹ "Ìpò" yóò ṣàfihàn ipo tó péye (latitude/longitude). Èyí yóò ràn é lọwọ láti fúnni ní ìtọ́nisọ́na àti àṣàyàn tó dáa.',
 
-    pageTitle: 'Bá a ṣe ń ṣàyẹ̀wò ojú',
+    pageTitle_howToExamineEye: 'Bá a ṣe ń ṣàyẹ̀wò ojú',
     frontOfEyeHeading: 'Ìpínlẹ̀ ojú tó wà níwájú',
     frontOfEyeText:
       "Ṣàyẹ̀wò kí o sì fi ojú ṣe àfihàn: <em>tító,</em> <em>ọtún,</em> <em>òsì,</em> <em>sórí,</em> ṣìdò<br><strong><u>Mú un sun mọ́ra</u></strong>. Ṣàyẹ̀wò: <em>àmúlùú,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupíl</em><br>Lo <span style='color: orange;'>fluro</span> fún àfiyèsí àwọ̀n àbùkù tàbí ìfọ́lẹ̀ ojú",
@@ -2728,10 +3075,10 @@ export const translations = {
     backOfEyeHeading: 'Ẹ̀hìn ojú',
     backOfEyeText:
       'Lo ojú ọ̀tún láti wo ojú oníbàárà tí ó wà ní ọ̀tún; òsì fún òsì<br>Oníbàárà gbọ́dọ̀ wo taara KÌ í wo ìmọ́lẹ̀; sun mọ́ra kí o sì wa optic disc (Dilate = ìran tó dáa jùlọ)<br>Kọ́ ẹ̀kọ́ nípa disc: <em>Ìlà,</em> <em>Àwọ̀,</em> <em>Ìkòkò</em>. Tẹ̀lé àwọn àtọ́runwá ńlá, lẹ́yìn náà bẹ̀rẹ̀ fún oníbàárà láti wo taara sí ìmọ́lẹ̀ láti rí macula',
-    additionalText:
+    additionalText_eye:
       "Mọ̀ diski rẹ: àtọ̀runwá, <span style='color:red; font-weight:bold;'>tútù,</span> <span style='color:red;'>àtọ̀runwá tuntun,</span> <span style='color:orange;'>ìfìmọ̀,</span> <span style='color:green;'>púpọ̀</span><br>&gt;Ṣe ìdárayá nígbà gbogbo&lt;",
 
-    pageTitle: 'Bá a ṣe ń ṣàyẹ̀wò etí',
+    pageTitle_howToExamineEar: 'Bá a ṣe ń ṣàyẹ̀wò etí',
     allAroundEarHeading: 'Yíká etí',
     allAroundEarText:
       'Ṣàyẹ̀wò: <em>pinna, </em><em>tragus, </em><em>mastoid</em> fún ìfọ̀ràn, ìmọ̀tara-ẹni tàbí ìdápọ̀ omi<br>Gbìmọ̀ pinna pẹ̀lú ìtẹ́lọ́run, fèsì sí ìrora',
@@ -2741,10 +3088,10 @@ export const translations = {
     tympanicMembraneHeading: 'Membrane tímpaniki',
     tympanicMembraneText:
       'Ṣàyẹ̀wò handle malleus, ìtan imọ́lẹ̀, àti attic<br>Fèsì: <em>àwọ̀,</em> <em>ipo,</em> <em>àfihàn</em><br>Ṣàyẹ̀wò fún ìfòkànsìn, omi tàbí àdánidá',
-    additionalText:
+    additionalText_ear:
       "Mọ̀ TM rẹ: bí wọ́n ṣe ń rí, <span style='color:red; font-weight:bold;'>pupa</span>, <span style='color:orange;'>tító</span>, <span style='color:green;'>dín</span>, <span style='color:purple;'>àfọ̀jú</span><br>&gt;Ṣe ìdárayá nígbà gbogbo&lt;",
 
-    pageTitle: 'Bá a ṣe ń ṣàyẹ̀wò àwọ̀ ara',
+    pageTitle_howToExamineSkin: 'Bá a ṣe ń ṣàyẹ̀wò àwọ̀ ara',
     generalObservationHeading: 'Ìfihàn Gbogbogbo',
     generalObservationText: 'Ṣàyẹ̀wò àrà, <em>àtúnṣe àwọ̀</em> àti pínpín<br>Fọwọ́pọ̀n fún àfihàn, ìgbona tàbí ìrora',
     uvLightHeading: 'Imọlẹ UV (Wood’s)',
@@ -2752,11 +3099,11 @@ export const translations = {
       "Ní yara tí kò ní ìmọ́lẹ̀, ṣàyẹ̀wò fun imúlòlùfẹ́ fíìkúsé:<br><span style='color:teal;'>tinea (búlúu-tító)</span>, <span style='color:#FF7F50;'>pityriasis versicolor (osàn-òràngùn)</span>, <span style='color:#FF4040;'>erythrasma (pupa-korali)</span>, <span style='color:blue;'>vitiligo (búlúu-fúnfun)</span>, <span style='color:orange;'>acne (òràngùn-pupa)</span>, <span style='color:#BFEFFF;'>head lice nits (pale-blue)</span>",
     dermoscopyHeading: 'Dermoscopy',
     dermoscopyText:
-      '<strong><u>Hold Arclight polariser like a pen</u></strong> (yàtọ̀ sí àfihàn gẹ́gẹ́ bí ìtàn-imọ́lẹ̀), ṣàyẹ̀wò: <strong>ABCDE</strong> (<em>Àìdápọ̀</em>, <em>Ìpẹ̀yà</em>, <em>Àwọ̀</em>, <em>Ìwọn &gt;6mm</em>, <em>Ìyípadà</em>)<br>Kọ́ ẹ̀kọ́: PDSBV (<em>Àtẹ̀ pigment</em>, <em>Àwọn àfihàn</em>, <em>Laini</em>, <em>Blúù-fúnfun</em>, <em>Àwọn ẹ̀jẹ̀</em>)',
-    additionalText:
+      '<strong><u>(YORUBA: Hold Arclight polariser like a pen)</u></strong>, ṣàyẹ̀wò: <strong>ABCDE</strong> (<em>Àìdápọ̀</em>, <em>Ìpẹ̀yà</em>, <em>Àwọ̀</em>, <em>Ìwọn &gt;6mm</em>, <em>Ìyípadà</em>)<br>Kọ́ ẹ̀kọ́: PDSBV (<em>Àtẹ̀ pigment</em>, <em>Àwọn àfihàn</em>, <em>Laini</em>, <em>Blúù-fúnfun</em>, <em>Àwọn ẹ̀jẹ̀</em>)',
+    additionalText_skin:
       "Mọ̀ lesion rẹ: àtọ̀runwá, <span style='color:red;'>ìbànújẹ</span>, <span style='color:orange;'>oníìfọ̀</span><br>&gt;Ṣe ìdárayá nígbà gbogbo&lt;",
 
-    pageTitle: 'Nipa Alan',
+    pageTitle_aboutAlan: 'Nipa Alan',
     aboutAlanText:
       'Alan jẹ́ olùrànlọ́wọ́ ìtàn-àwòrán AI fún ìtàn ojú, etí àti àwọ̀, tó ní àpẹẹrẹ èdè àkọ́kọ́ àti ọgbọ́n àmi. Ọgbọ́n. Tó ṣe pàtàkì. Ọ̀nà tuntun. <br><br>Ìmọ̀ ìṣègùn, ìmọ̀ agbègbè àti àwòrán ni a ṣe ìtòlẹ́sẹẹsẹ fún ipa bíi àwọn oṣiṣẹ́ ìlera àti àwọn dókítà àgbà. Ìjíròrò kúkúrú ń ṣe àfihàn àìlera àti ètò ìtọ́jú. Lílo Arclight wa ní gbogbo agbègbè.<br>',
     aboutAlanListItem1: 'Ìpìlẹ̀ amòye – afefe gbóná/tropical',
@@ -2767,7 +3114,7 @@ export const translations = {
     aboutAlanEncouraging: '<strong>To ń gbàgbọ́</strong> – ìfaramọ́, olùkọ́',
     aboutAlanDate: 'wjw Jan 25',
 
-    instructionsPageTitle: 'About Alan',
+    instructionsPageTitle: 'Ìtọ́nisọ́nà',
     instructionsIntro:
       'Alan jẹ́ olùrànlọ́wọ́ AI fún àwọn akẹ́kọ̀ọ́ àti àwọn tí kò ní rí ìṣòro ojú, etí tàbí àwọ̀ ní gbogbo igba. Kọ tàbí sọ ní kedere, má ṣe fìdí orúkọ tàbí àlàyé tí yóò jẹ́ kí a mọ ẹni náà múlẹ̀. Wo pátápátá lórí orí/ojú/àwọn apá ara, kí o sì ṣàyẹ̀wò àwọn ojú tàbí etí méjèèjì. Oríire!',
     instructionsPatientPrompt: 'Ṣàlàyé fún Alan nípa aláìlera rẹ:',
@@ -2803,20 +3150,33 @@ export const translations = {
     instructionsLabelJustRight: 'Dáadáa',
     instructionsLabelTooMuch: 'Púpò jù',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan jẹ́ olùrànlọ́wọ́ AI fún àwọn akẹ́kọ̀ọ́ àti àwọn tí kò ní rí ìṣòro ojú, etí tàbí àwọ̀ ní gbogbo igba. Kọ tàbí sọ ní kedere, kí o sì yago fún fífi orúkọ tàbí àlàyé tó lè jẹ́ kí a mọ ẹni náà.',
     goodLuck: 'Oríire!',
     namePlaceholder: 'Orúkọ',
-    rolePlaceholder: 'Ipò',
+    // rolePlaceholder: 'Ipò',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Yoruba) ---
     experiencePlaceholder: 'Ìrírí',
+    experienceStudentRefresher: 'Akẹ́kọ̀ọ́ / Atúnṣe',
+    experienceConfidentCore: 'Ìmọ̀ Pàtàkì Tí ó Dájú',
+    experienceExpert: 'Amòye',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 ọdún',
     experienceOption2: '1-3 ọdún',
     experienceOption3: '3-7 ọdún',
     experienceOption4: '>7 ọdún',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Àfọ̀kànwá',
     aimsOption1: 'Ìmọ̀ràn kejì',
     aimsOption2: 'Àwárí ìṣòro',
     aimsOption3: 'Ìbánisọ̀rọ̀ tó dáa',
+    */
     contactPlaceholder: 'Ìbánisọ̀rọ̀ (imeèlì/foònù)',
     acceptButton: 'Gba',
 
@@ -2825,7 +3185,6 @@ export const translations = {
     screenshot: "Sikirinshọt",
     refer: "Tunlo",
     comingSoon: "Nbo laipẹ...",
-
   },
 
   // 16) Igbo - ig
@@ -2835,13 +3194,23 @@ export const translations = {
     examineWell: 'Leda anya nke ọma',
     useArclight: 'Jiri Arclight',
     howCanIHelp: 'Kedu ka m ga-esi nyere gị aka taa?',
-    alanMistakes: `Alan nwere ike mehiere. Jiri amamihe dọkịta. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan nwere ike mehiere. Jiri amamihe dọkịta. ${new Date().getMonth() + 1}/25,`,
     login: 'Banye',
     enterPassword: 'Tinye okwu nzuzo',
     register: 'Debanye',
     name: 'Aha',
     password: 'Okwu nzuzo (ọnụọgụ 4)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Igbo) ---
+    aimsPlaceholder: 'Ebumnobi',
+    aimsEyes: 'Anya',
+    aimsEars: 'Ntị',
+    aimsSkin: 'Akpụkpọ',
+    aimsVeterinary: 'Anụmanụ',
+    aimsChildMaternal: 'Nwa/Nne',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Orụ ọrụ ahụike',
     nurse: 'Nọọsụ',
     ophthalmicOfficer: 'Ọrụ elekọta anya',
@@ -2857,6 +3226,7 @@ export const translations = {
     audiologist: 'Onye na-elebara ntị anya',
     earCarePractitioner: 'Onye nlekọta ntị',
     dermatologist: 'Dọkịta akpụkpọ',
+    */
 
     instructionsButton: 'Otu esi eji ya',
     eyeButton: 'Anya',
@@ -2896,7 +3266,8 @@ export const translations = {
     userName: 'Aha',
     userContact: 'Kekọrịta',
     userRole: 'Ọrụ',
-    userAims: 'Ebumnobi',
+    userAimsPopupLabel: "Ebumnobi",
+    // userAims: 'Ebumnobi',
     userLatLong: 'Lat & Long',
     userArea: 'Ebe',
     userCountry: 'Mba',
@@ -2905,7 +3276,7 @@ export const translations = {
     geolocationButton: 'Ọnọdụ',
     geoInfoText: 'Ịpị "Ọnọdụ" ga-ekekọrịta ebe dị nkenke (latitude/longitude). Nke a ga-enyere aka inye nduzi na nhọrọ ka mma.',
 
-    pageTitle: 'Otu esi ele anya',
+    pageTitle_howToExamineEye: 'Otu esi ele anya',
     frontOfEyeHeading: "Ụdị Anya N'iru",
     frontOfEyeText:
       "Le anya ma tụnyere: <em>ziri ezi,</em> <em>aka nri,</em> <em>aka ekpe,</em> <em>elu,</em> ala<br><strong><u>Nọ nso ma debe</u></strong>. Lelee: <em>mkpu,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupil</em><br>Jiri <span style='color: orange;'>fluro</span> maka ulcers nke cornea ma ọ bụ ntakịrị mmerụ",
@@ -2915,10 +3286,10 @@ export const translations = {
     backOfEyeHeading: 'Akụkụ azụ nke anya',
     backOfEyeText:
       'Jiri anya nri lee anya nri nke onye ọrịa; nke ekpe maka nke ekpe<br>Onye ọrịa ga-ele anya ozugbo, ọ bụghị n’ụzọ ọkụ; nso chọọ optic disc (Dilate = mma ịhụ)<br>Gụọ disc: <em>Mpaghara,</em> <em>Agba,</em> <em>Ikpuru</em>. Soro akwara ukwu, wee gwa onye ọrịa ka o lee ọkụ ozugbo iji hụ macula',
-    additionalText:
+    additionalText_eye:
       "Mara disc gị: nkịtị, <span style='color:red; font-weight:bold;'>gbawara,</span> <span style='color:red;'>akụkụ ọhụrụ,</span> <span style='color:orange;'>akpọrọ,</span> <span style='color:green;'>ọrọ</span><br>&gt;Mee mgbalị ugboro ugboro&lt;",
 
-    pageTitle: 'Otu esi ele ntị',
+    pageTitle_howToExamineEar: 'Otu esi ele ntị',
     allAroundEarHeading: 'Mpaghara gbara ntị',
     allAroundEarText:
       'Lelee: <em>pinna, </em><em>tragus, </em><em>mastoid</em> maka bọl, ntakịrị mgbu ma ọ bụ mmịpụ<br>Gbaa pinna nwayọ, hụ ma e nwere mgbu',
@@ -2928,10 +3299,10 @@ export const translations = {
     tympanicMembraneHeading: 'Ọkwa tympanic',
     tympanicMembraneText:
       'Chọpụta njide malleus, ìhè na-acha, na attic<br>Cheta: <em>agba,</em> <em>ọnọdụ,</em> <em>ịdị ọcha</em><br>Lelee ma e nwere oghere, mmiri ma ọ bụ akara mmerụ',
-    additionalText:
+    additionalText_ear:
       "Mara TM gị: nke nkịtị, <span style='color:red; font-weight:bold;'>uhie</span>, <span style='color:orange;'>gbasara</span>, <span style='color:green;'>ezughị oke</span>, <span style='color:purple;'>erughị ala</span><br>&gt;Mee mgbalị mgbe niile&lt;",
 
-    pageTitle: 'Otu esi ele akpụkpọ anụ',
+    pageTitle_howToExamineSkin: 'Otu esi ele akpụkpọ anụ',
     generalObservationHeading: 'Nlele zuru oke',
     generalObservationText: 'Lelee mkpụrụ, <em>ngbanwe agba</em> na nkesa<br>Tinye aka nwayọọ iji mata ọdịdị, okpomọkụ ma ọ bụ ntakịrị mgbu',
     uvLightHeading: 'UV (Wood’s) ìhè',
@@ -2940,10 +3311,10 @@ export const translations = {
     dermoscopyHeading: 'Dermoscopy',
     dermoscopyText:
       '<strong><u>Jide Arclight polariser dị ka mkpịsị akwụkwọ</u></strong>, lelee: <strong>ABCDE</strong> (<em>Adịghị nha</em>, <em>Mpaghara</em>, <em>Agba</em>, <em>Obosara &gt;6mm</em>, <em>Ntozu</em>)<br>Gụọ: PDSBV (<em>Netwọkụ pigment</em>, <em>Mpịakọta</em>, <em>Ahịrị</em>, <em>acha anụnụ anụnụ-acha ọcha</em>, <em>Akwa</em>)',
-    additionalText:
+    additionalText_skin:
       "Mara lesion gị: nke nkịtị, <span style='color:red;'>na-atụ ụjọ</span>, <span style='color:orange;'>na-afụ ọkụ</span><br>&gt;Mee mgbalị mgbe niile&lt;",
 
-    pageTitle: 'Banyere Alan',
+    pageTitle_aboutAlan: 'Banyere Alan',
     aboutAlanText:
       "Alan bụ onye enyemaka nyocha AI maka anya, ntị na akpụkpọ anụ, nke nwere: ihe nlereanya asụsụ isi na usoro akara. Amamihe. Nnọọ dịrị gị. Nke a bụ nke kachasị elu.<br><br>Ụmụ ihe ọmụmụ ọgwụ, ihe ọmụma mpaghara na onyonyo, etinyere ha iji kwado ọrụ dị iche iche dịka ndị na-arụ ọrụ ahụike na dọkịta izugbe. Mkparịta ụka dị mkpụmkpụ na-emepụta nyocha na atụmatụ njikwa. Ojiji Arclight dị n'ime ya n'ụdị niile.<br>",
     aboutAlanListItem1: 'Ọdụm nke ọkachamara – ihu igwe tropikal/ọkụ',
@@ -2954,7 +3325,7 @@ export const translations = {
     aboutAlanEncouraging: '<strong>Nkwado</strong> – ekele, onye nkuzi',
     aboutAlanDate: 'wjw Jan 25',
 
-    instructionsPageTitle: 'Banyere ntuziaka',
+    instructionsPageTitle: 'Ntuziaka',
     instructionsIntro:
       'Alan bụ onye enyemaka AI maka ụmụ akwụkwọ na ndị na-ahụkarị ihe gbasara anya, ntị, ma ọ bụ akpụkpọ anụ. Dee ma ọ bụ kwuo nke ọma, ma zere ịkọpụta aha ma ọ bụ nkọwa ndị na-egosi onye ahụ. Lezienụ anya nke ọma n’isi/ihu/akụkụ ahụ, wee nyochaa anya ma ọ bụ ntị abụọ. Nwee ezigbo ọganihu!',
     instructionsPatientPrompt: 'Kọọrọ Alan gbasara ọrịa onye gị:',
@@ -2991,20 +3362,33 @@ export const translations = {
     instructionsLabelJustRight: 'Zuru oke',
     instructionsLabelTooMuch: 'Karịrị oke',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan bụ onye enyemaka AI maka ụmụ akwụkwọ na ndị na-ahụkarị nsogbu anya, ntị ma ọ bụ akpụkpọ anụ. Dee ma ọ bụ kwuo nke ọma ma zere ikpughe aha ma ọ bụ nkọwa nke ga-eme ka a mata onye ahụ.',
     goodLuck: 'Ịga nke ọma!',
     namePlaceholder: 'Aha',
-    rolePlaceholder: 'Ọrụ',
+    // rolePlaceholder: 'Ọrụ',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Igbo) ---
     experiencePlaceholder: 'Ahụmahụ',
+    experienceStudentRefresher: 'Nwa akwukwo / Ntughari',
+    experienceConfidentCore: 'Obi ike isi ihe omuma',
+    experienceExpert: 'Onye okachamara',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 afọ',
     experienceOption2: '1-3 afọ',
     experienceOption3: '3-7 afọ',
     experienceOption4: '>7 afọ',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Ebumnuche',
     aimsOption1: 'Nzọụkwụ nke abụọ',
     aimsOption2: 'Nchọpụta ọrịa',
     aimsOption3: 'Kparịta ụka nke ọma',
+    */
     contactPlaceholder: 'Kpọtụrụ (email/ekwentị)',
     acceptButton: 'Nabata',
 
@@ -3013,7 +3397,6 @@ export const translations = {
     screenshot: "Screenshot",
     refer: "Ziga",
     comingSoon: "Na-abịa ngwa ngwa...",
-
   },
 
   // 17) Zulu - zu
@@ -3023,13 +3406,23 @@ export const translations = {
     examineWell: 'Hlola Kahle',
     useArclight: 'Sebenzisa i-Arclight',
     howCanIHelp: 'Ngingakusiza kanjani namuhla?',
-    alanMistakes: `Alan angase enze amaphutha. Sebenzisa ukuhlola kwezokwelapha. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan angase enze amaphutha. Sebenzisa ukuhlola kwezokwelapha. ${new Date().getMonth() + 1}/25,`,
     login: 'Ngena',
     enterPassword: 'Faka Iphasiwedi',
     register: 'Bhalisa',
     name: 'Igama',
     password: 'Iphasiwedi (izinombolo ezingu-4)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Zulu) ---
+    aimsPlaceholder: 'Izinhloso',
+    aimsEyes: 'Amehlo',
+    aimsEars: 'Izindlebe',
+    aimsSkin: 'Isikhumba',
+    aimsVeterinary: 'Izilwane',
+    aimsChildMaternal: 'Izingane/Omama',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Umsebenzi Wezempilo',
     nurse: 'Unesi',
     ophthalmicOfficer: 'Isisebenzi Sezokwelapha Amehlo',
@@ -3045,6 +3438,7 @@ export const translations = {
     audiologist: 'Isazi Sokuzwa',
     earCarePractitioner: 'Umnakekeli Wendlebe',
     dermatologist: 'Udokotela Wesikhumba',
+    */
 
     instructionsButton: 'Indlela yokusebenzisa',
     eyeButton: 'Ihlo',
@@ -3084,7 +3478,8 @@ export const translations = {
     userName: 'Igama',
     userContact: 'Imininingwane Yokuxhumana',
     userRole: 'Indima',
-    userAims: 'Izinhloso',
+    userAimsPopupLabel: "Izinhloso",
+    // userAims: 'Izinhloso',
     userLatLong: 'Ubude no Ububanzi',
     userArea: 'Indawo',
     userCountry: 'Izwe',
@@ -3094,7 +3489,7 @@ export const translations = {
     geoInfoText:
       'Uma uchofoza "Ukuchazwa Kwesindawo", kuzokwabelana ngendawo enembile (ububanzi/ubude). Lokhu kusiza ekunikezeni iziqondiso nezinketho ezingcono.',
 
-    pageTitle: 'Indlela yokuhlola iso',
+    pageTitle_howToExamineEye: 'Indlela yokuhlola iso',
     frontOfEyeHeading: 'Ingxenye Yokuqala Yeso',
     frontOfEyeText:
       "Bheka uqhathanise amehlo: <em>qondile,</em> <em>kwesokudla,</em> <em>kwesobunxele,</em> <em>phezulu,</em> phansi<br><strong><u>Bamba futhi usondele</u></strong>. Hlola: <em>imiphango,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupil</em><br>Sebenzisa <span style='color: orange;'>fluro</span> kumabhakede noma ukungcolisa i-cornea",
@@ -3104,10 +3499,10 @@ export const translations = {
     backOfEyeHeading: 'Ingemuva Yeso',
     backOfEyeText:
       'Sebenzisa iso elingakwesokudla ukubuka iso lomuntu; kwesokunxele ukubuka isokunxele<br>Umuntu kufanele abheke ngqo, hhayi ebheke ekukhanyeni; sondela bese uthola i-optic disc (Dilate = ukubuka okuhle kakhulu)<br>Bheka i-disc: <em>Umgca,</em> <em>Umbala,</em> <em>Ikhapu</em>. Landela imithambo emikhulu, bese ucela umuntu abheke ngqo ekukhanyeni ukuze abone i-macula',
-    additionalText:
+    additionalText_eye:
       "Yazi ama-disc akho: ajwayelekile, <span style='color:red; font-weight:bold;'>afiphele,</span> <span style='color:red;'>imithambo emisha,</span> <span style='color:orange;'>echotshozwayo,</span> <span style='color:green;'>ayacace</span><br>&gt;Zijwayeze ngokujwayelekile&lt;",
 
-    pageTitle: 'Indlela yokuhlola indlebe',
+    pageTitle_howToExamineEar: 'Indlela yokuhlola indlebe',
     allAroundEarHeading: 'Okuzungezile indlebe',
     allAroundEarText:
       'Hlola: <em>pinna, </em><em>tragus, </em><em>mastoid</em> ukubona amacembe, ukuvuvukala noma ukuphuma kokuqukethwe<br>Cindezela pinna kancane, uqaphele uma kunobuhlungu',
@@ -3117,10 +3512,10 @@ export const translations = {
     tympanicMembraneHeading: 'Ithambo lentlebe',
     tympanicMembraneText:
       'Thola i-handle ye-malleus, ukubonakala kokukhanya, kanye ne-attic<br>Qaphela: <em>umbala,</em> <em>isikhundla,</em> <em>ukucaca</em><br>Bheka ukuphuka, uketshezi noma ukusilela',
-    additionalText:
+    additionalText_ear:
       "Yazi i-TM yakho: evamile, <span style='color:red; font-weight:bold;'>bomvu</span>, <span style='color:orange;'>ekhuphukile</span>, <span style='color:green;'>ehogile</span>, <span style='color:purple;'>ephekiwe</span><br>&gt;Zijwayeze njalo&lt;",
 
-    pageTitle: 'Indlela yokuhlola isikhumba',
+    pageTitle_howToExamineSkin: 'Indlela yokuhlola isikhumba',
     generalObservationHeading: 'Ukubuka okugcwele',
     generalObservationText:
       'Hlola izimpondo, <em>ukushintsha kombala</em> nokusatshalaliswa<br>Thinta kancane ukuze ubone umumo, izinga lokushisa noma ubuhlungu',
@@ -3130,10 +3525,10 @@ export const translations = {
     dermoscopyHeading: 'Dermoskopi',
     dermoscopyText:
       '<strong><u>Bamba i-Arclight polariser njengombhalo</u></strong>, hlola: <strong>ABCDE</strong> (<em>Ukungafani</em>, <em>Umngcele</em>, <em>Umbala</em>, <em>Ububanzi &gt;6mm</em>, <em>Eshintsha</em>)<br>Bheka: PDSBV (<em>Inethi ye-pigment</em>, <em>Amaphuzu</em>, <em>Imigqa</em>, <em>Oluhlaza okwesibhakabhaka-omhlophe</em>, <em>Izicubu zegazi</em>)',
-    additionalText:
+    additionalText_skin:
       "Yazi lesion yakho: evamile, <span style='color:red;'>eyosabekayo</span>, <span style='color:orange;'>eyovuvukileyo</span><br>&gt;Zijwayeze njalo&lt;",
 
-    pageTitle: 'Mayelana noAlan',
+    pageTitle_aboutAlan: 'Mayelana noAlan',
     aboutAlanText:
       'UAlan ungumsizi wezokuhlola we-AI weziso, izindlebe kanye nesikhumba, okuhlanganisa imodeli yolimi eyisisekelo kanye ne-logiki yesimboli. Uhlakaniphile. Unesizotha. Wakamuva.<br><br>Ulwazi lwezokwelapha, lwendawo kanye nezithombe, kulungiselelwe izindima ezihlukene ezifana nabasebenzi bezempilo kanye nodokotela abajwayelekile. Ingxoxo emfushane idala isifo kanye nohlelo lokuphatha. Ukusetshenziswa kwe-Arclight kufakiwe kuyo yonke indawo.<br>',
     aboutAlanListItem1: 'Isisekelo sabachwepheshe – isimo sezulu esishisayo/esifudumele',
@@ -3183,20 +3578,33 @@ export const translations = {
     instructionsLabelJustRight: 'Kulungile',
     instructionsLabelTooMuch: 'Kakhulu kakhulu',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan ungumsizi we-AI wabafundi nalabo abambalwa abahlangabezana nezinkinga zamehlo, izindlebe noma isikhumba. Bhala noma khuluma ngokusobala, ugweme ukubonisa amagama noma imininingwane ebakhomba. Bheka kahle ekhanda, ebusweni noma engxenyeni yomzimba, bese uhlola amehlo/izindlebe zombili.',
     goodLuck: 'Inhlanhla enhle!',
     namePlaceholder: 'Igama',
-    rolePlaceholder: 'Indima',
+    // rolePlaceholder: 'Indima',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Zulu) ---
     experiencePlaceholder: 'Ulwazi',
+    experienceStudentRefresher: 'Umfundi / Ukuvuselela',
+    experienceConfidentCore: 'Ulwazi Oluyisisekelo Oluthembekile',
+    experienceExpert: 'Uchwepheshe',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 unyaka',
     experienceOption2: '1-3 unyaka',
     experienceOption3: '3-7 unyaka',
     experienceOption4: '>7 unyaka',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Izinhloso',
     aimsOption1: 'Umbono wesibili',
     aimsOption2: 'Ukubheka isimo',
     aimsOption3: 'Ukuxhumana kangcono',
+    */
     contactPlaceholder: 'Xhumana (imeyili/umakhalekhukhwini)',
     acceptButton: 'Yamukela',
 
@@ -3205,7 +3613,6 @@ export const translations = {
     screenshot: "Isithombe-skrini",
     refer: "Bhekisa",
     comingSoon: "Kuze maduzane...",
-
   },
 
   // 18) Amharic - am
@@ -3215,13 +3622,23 @@ export const translations = {
     examineWell: 'በጥሞት መመርመር',
     useArclight: 'Arclight ይጠቀሙ',
     howCanIHelp: 'እንዴት ልረዳህ/ልረድሽ?',
-    alanMistakes: `Alan ሊስተዋል ይችላል። ክሊኒካዊ ፍርድ ይጠቀሙ። ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan ሊስተዋል ይችላል። ክሊኒካዊ ፍርድ ይጠቀሙ። ${new Date().getMonth() + 1}/25,`,
     login: 'ግባ',
     enterPassword: 'የማለፊያ ቃል ያስገቡ',
     register: 'መመዝገብ',
     name: 'ስም',
     password: 'የማለፊያ ቃል (4 ዲጂት)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Amharic) ---
+    aimsPlaceholder: 'ዓላማዎች',
+    aimsEyes: 'አይኖች',
+    aimsEars: 'ጆሮዎች',
+    aimsSkin: 'ቆዳ',
+    aimsVeterinary: 'የእንስሳት ህክምና',
+    aimsChildMaternal: 'ህጻን/እናት',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'የጤና ሰራተኛ',
     nurse: 'አስተባባሪ/ነርስ',
     ophthalmicOfficer: 'የዓይን ህክምና ባለሙያ',
@@ -3237,6 +3654,7 @@ export const translations = {
     audiologist: 'የመስማት ባለሙያ',
     earCarePractitioner: 'የጆሮ አግዟ ባለሙያ',
     dermatologist: 'የቆዳ ሀኪም',
+    */
 
     instructionsButton: 'እንዴት እንደሚጠቀሙ',
     eyeButton: 'አይን',
@@ -3275,7 +3693,8 @@ export const translations = {
     userName: 'ስም',
     userContact: 'የመገናኘት መረጃ',
     userRole: 'ተግባር',
-    userAims: 'ዓላማዎች',
+    userAimsPopupLabel: "ዓላማዎች",
+    // userAims: 'ዓላማዎች',
     userLatLong: 'Lat & Long',
     userArea: 'አካባቢ',
     userCountry: 'ሀገር',
@@ -3284,7 +3703,7 @@ export const translations = {
     geolocationButton: 'ቦታ መለኪያ',
     geoInfoText: 'በ"ቦታ መለኪያ" ላይ በመጫን የትክክለኛ ቦታ (የርዝመ/የሰፊነት) ይጋራል። ይህም የተሻለ መምሪያና አማራጭ ስርዓት መስጠት ይረዳል።',
 
-    pageTitle: 'እንዴት ዓይን መፈተን እንደሚገባ',
+    pageTitle_howToExamineEye: 'እንዴት ዓይን መፈተን እንደሚገባ',
     frontOfEyeHeading: 'የዓይን ፊት ክፍል',
     frontOfEyeText:
       "ዓይኖችን ተመልከትና አዛዥ አድርጉ: <em>ቀጥተኛ,</em> <em>ቀኝ,</em> <em>ግራ,</em> <em>ከፍ,</em> ዝቅ<br><strong><u>ቅርብ በሆነ ሁኔታ ይቆዩ</u></strong>። ይፈትኑ: <em>ዕፀ,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupil</em><br>ለcorneal የሆኑ የእብድ ቦታዎች ወይም ጉድለቶች <span style='color: orange;'>fluro</span> ይጠቀሙ",
@@ -3294,10 +3713,10 @@ export const translations = {
     backOfEyeHeading: 'የዓይን ዳር ክፍል',
     backOfEyeText:
       'ቀኝ ዓይን በመጠቀም የታካሚውን ቀኝ ዓይን ይመልከቱ; ግራውን ለግራ ይመልከቱ<br>ታካሚው ቀጥተኛ መመልከት አለበት እንጂ ወደ ብርሃን አይተው። ቅርብ ይሁኑና optic disc ይፈልጉ (Dilate = ምርጥ እይታ)<br>disc ይጥናቀቁ: <em>ጎን,</em> <em>ቀለም,</em> <em>ኩፕ</em>. ትልቅ ደም አቀፎችን ይከተሉ፣ ከዚያም ታካሚውን ቀጥተኛ ወደ ብርሃን ይተው ማኩላን ያዩ ብለው ይጠይቁ',
-    additionalText:
+    additionalText_eye:
       "disc ያውቁ: መለመድ, <span style='color:red; font-weight:bold;'>ተበሳጨ,</span> <span style='color:red;'>አዲስ ደም አቀፎች,</span> <span style='color:orange;'>ተከፍቷ,</span> <span style='color:green;'>ዝቅተኛ</span><br>&gt;በዘመኑ ልምድ ያድርጉ&lt;",
 
-    pageTitle: 'እንዴት ጆሮን መፈተን እንደሚገባ',
+    pageTitle_howToExamineEar: 'እንዴት ጆሮን መፈተን እንደሚገባ',
     allAroundEarHeading: 'የጆሮ ዙሪያ',
     allAroundEarText: 'ይፈትኑ: <em>ፒና, </em><em>ትራግስ, </em><em>ማስቶይድ</em> ለክብ, ስሜት ችግኝ ወይም ማስጠንቀቂያ<br>ፒናን በርካታ ዝርዝር ይንቀሳቀሱ እና ማንኛውንም ህመም ያሳዩ',
     earCanalHeading: 'የጆሮ ትስስር',
@@ -3305,10 +3724,10 @@ export const translations = {
       'ራስን ይጎዱ፣ <strong><u>Arclightን እንደ እቃ ተቆም ይያዙ</u></strong><br>ፒናን ለማየት ለሕዝብ (ታዋቂዎች) ወይም ለልጆች (ታውቂዎች) ወደ ላይ/ወደ ኋላ ይጫኑ<br>ስፔኩለም ያስገቡ (ታዋቂ: 4.5mm, ልጆች: 2.5mm)፣ ጸጉርን ይነጻሉ፣ ከሚያስፈልግ በሌላ በሙሉ ይቀየሩ<br>ይፈልጉ: <em>ጆሮ ስር,</em> <em>ቅርጸ ነጭ,</em> <em>በሽታ</em>',
     tympanicMembraneHeading: 'ጆሮ ጭንቅላት',
     tympanicMembraneText: 'የማሌዎስ እጅ ይወቁ፣ የብርሃን ተመልከትና አቲክን ይለዩ<br>ማስታወቂያ: <em>ቀለም,</em> <em>ቦታ,</em> <em>ግልጽነት</em><br>ፍቺ ፣ ፍሳሽ ወይም ምልክት ይፈልጉ',
-    additionalText:
+    additionalText_ear:
       "የጆሮዎን ጭንቅላት ያውቁ፦ ተፈጥሮ, <span style='color:red; font-weight:bold;'>ቀይ</span>, <span style='color:orange;'>ተነሳሽ</span>, <span style='color:green;'>ተቀንስ</span>, <span style='color:purple;'>ተፈታ</span><br>&gt;ተደጋጋሚ ተሞክሩ&lt;",
 
-    pageTitle: 'እንዴት የቆዳን መፈተን እንደሚገባ',
+    pageTitle_howToExamineSkin: 'እንዴት የቆዳን መፈተን እንደሚገባ',
     generalObservationHeading: 'የጠቅላላ ትንታኔ',
     generalObservationText: 'ቁስል እና <em>ቀለም ለውጦች</em> ያሳዩ፣ ተመን ይፈትኑ<br>በቀስተ ልብ ቆዳውን ይጭሩ ለቅርጸት፣ ሙቀት ወይም ስሜት ይረዱ',
     uvLightHeading: 'የUV (Wood’s) ብርሃን',
@@ -3317,10 +3736,10 @@ export const translations = {
     dermoscopyHeading: 'የቆዳ መሳሪያ አሳይ',
     dermoscopyText:
       '<strong><u>Arclight ፖላራይዘርን እንደ ብራሽ ይይዙ</u></strong>፣ ይፈትኑ: <strong>ABCDE</strong> (<em>ያልተመሳሰሉ</em>, <em>ገደብ</em>, <em>ቀለም</em>, <em>ኮር ላይ &gt;6mm</em>, <em>የሚለዋዋጭ</em>)<br>ይጥኑ: PDSBV (<em>የቀለም ኔትወርክ</em>, <em>ነጥቦች</em>, <em>መስመሮች</em>, <em>ሰማያዊ-ነጭ</em>, <em>የደም ተስፋ</em>)',
-    additionalText:
+    additionalText_skin:
       "የቆዳዎን ሕመም ያውቁ፡ ተፈጥሮ, <span style='color:red; font-weight:bold;'>ተጠላ</span>, <span style='color:orange;'>ተነሳ</span><br>&gt;ተደጋጋሚ ተሞክሩ&lt;",
 
-    pageTitle: 'ስለ Alan',
+    pageTitle_aboutAlan: 'ስለ Alan',
     aboutAlanText:
       'Alan የአይ ፣ ጆሮ እና ቆዳ ምርመራ አስተዳደር ነው፣ በመሠረታዊ ቋንቋ ሞዴል እና በምልክት ሎጂክ የተገነባ ነው። ብልጥ ነው። ጥንቃቄ አለው። ከዘመናዊ ሁኔታ ጋር ይዛል።<br><br>ክሊኒካዊ፣ የአካባቢ እውቀት እና ፎቶዎች ለጤና ሰራተኞች እና ለአጠቃላይ ሐኪሞች ተስማሚ ይሆናሉ። አጭር ውይይት ምርመራ እና የአስተዳደር እቅድ ይፈጥራል። የArclight አጠቃቀም በሙሉ ተካትቷል።<br>',
     aboutAlanListItem1: 'የባለሙያ መሠረት – የሙቀት/የአልጋ አየር',
@@ -3333,7 +3752,7 @@ export const translations = {
 
     instructionsPageTitle: 'መመሪያዎች',
     instructionsIntro:
-      'Alan የአይ፣ ጆሮ እና ቆዳ ምርመራ አስተዳደር ነው፣ ለተማሪዎች እና ከጊዜ ወደ ጊዜ ብቻ የሚታዩ ክስተቶች ይደርሳሉ። በግልጽ ይፃፉ ወይም ይናገሩ፣ እና የሚገልጽ ስሞች ወይም ዝርዝሮች አትገልጹ። ራስ/ፊት/ክፍልን በፍጹም ይመልከቱ እና ሁለቱንም ዓይኖች/ጆሮዎች ይፈትኑ። የተሻለ ሁኔታ ይሁን!',
+      'Alan የአይ፣ ጆሮ እና ቆዳ ምርመራ አስተዳደር ነው፣ ለተማሪዎች እና ከጊዜ ወደ ጊዜ ብቻ የሚታዩ ክስተቶች ይደርሳሉ። በግልጽ ይፃፉ ወይም ይናገሩ、እና የሚገልጽ ስሞች ወይም ዝርዝሮች አትገልጹ። ራስ/ፊት/ክፍልን በፍጹም ይመልከቱ እና ሁለቱንም ዓይኖች/ጆሮዎች ይፈትኑ። የተሻለ ሁኔታ ይሁን!',
     instructionsPatientPrompt: 'ስለ ሕመም ለAlan ይናገሩ፡',
     instructionsPatientDetail1: 'ችግኝ እና መነሻ',
     instructionsPatientDetail2: 'የሚታየው',
@@ -3365,19 +3784,32 @@ export const translations = {
     instructionsLabelJustRight: 'በትክክል',
     instructionsLabelTooMuch: 'በጣም ብዙ',
 
+    // --- Onboarding Page Translations ---
     instructionText: 'Alan የአይ፣ ጆሮ እና ቆዳ ምርመራ አስተዳደር ነው፣ ለተማሪዎች እና ለበጊዜ ብቻ የሚታዩ ክስተቶች። እባክዎ ግልጽ ይፃፉ ወይም ይናገሩ፣ እና ስም ወይም ዝርዝሮችን አትገልጹ።',
     goodLuck: 'ሞገስ ይሁን!',
     namePlaceholder: 'ስም',
-    rolePlaceholder: 'ሚና',
+    // rolePlaceholder: 'ሚና',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Amharic) ---
     experiencePlaceholder: 'ልምድ',
+    experienceStudentRefresher: 'ተማሪ / ማደሻ',
+    experienceConfidentCore: 'በራስ የመተማመን ዋና እውቀት',
+    experienceExpert: 'ባለሙያ',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 ዓመት',
     experienceOption2: '1-3 ዓመት',
     experienceOption3: '3-7 ዓመት',
     experienceOption4: '>7 ዓመት',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'ግብዓት',
     aimsOption1: 'ሁለተኛ አስተያየት',
     aimsOption2: 'ሁኔታ ፍለጋ',
     aimsOption3: 'የተሻለ አውታረ ግንኙነት',
+    */
     contactPlaceholder: 'እውቅ (ኢሜል/ስልክ)',
     acceptButton: 'ተቀበል',
 
@@ -3386,7 +3818,6 @@ export const translations = {
     screenshot: "Screenshot",
     refer: "አስተላለፍ",
     comingSoon: "በቅርቡ...",
-
   },
 
   // 19) Shona - sn
@@ -3396,13 +3827,23 @@ export const translations = {
     examineWell: 'Ongorora Zvakanaka',
     useArclight: 'Shandisa Arclight',
     howCanIHelp: 'Ndingakubatsira sei nhasi?',
-    alanMistakes: `Alan anogona kukanganisa. Shandisa unyanzvi hwekiriniki. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan anogona kukanganisa. Shandisa unyanzvi hwekiriniki. ${new Date().getMonth() + 1}/25,`,
     login: 'Pinda',
     enterPassword: 'Isa password',
     register: 'Nyoresa',
     name: 'Zita',
     password: 'Password (4 digits)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Shona) ---
+    aimsPlaceholder: 'Zvinangwa',
+    aimsEyes: 'Maziso',
+    aimsEars: 'Nzeve',
+    aimsSkin: 'Ganda',
+    aimsVeterinary: 'Zvipfuyo',
+    aimsChildMaternal: 'Mwana/Amai',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Mushandi weutano',
     nurse: 'Mukoti',
     ophthalmicOfficer: 'Mukoti weMaziso/Kiriniki',
@@ -3418,6 +3859,7 @@ export const translations = {
     audiologist: 'Nyanzvi yeKunzwa',
     earCarePractitioner: 'Muiti wekutarisira nzeve',
     dermatologist: 'Chiremba weGanda',
+    */
 
     instructionsButton: 'Maitirwo ekushandisa',
     eyeButton: 'Ziso',
@@ -3456,7 +3898,8 @@ export const translations = {
     userName: 'Zita',
     userContact: 'Kubata',
     userRole: 'Basa',
-    userAims: 'Zvinangwa',
+    userAimsPopupLabel: "Zvinangwa",
+    // userAims: 'Zvinangwa',
     userLatLong: 'Lat & Long',
     userArea: 'Nzvimbo',
     userCountry: 'Nyika',
@@ -3466,7 +3909,7 @@ export const translations = {
     geoInfoText:
       'Pakudzvanya "Kuona Nzvimbo", nzvimbo chaiyo (latitude/longitude) ichagoverwa. Izvi zvinobatsira kupa mirayiridzo uye zvirinani zvakasarudzwa.',
 
-    pageTitle: 'Maitiro ekuongorora ziso',
+    pageTitle_howToExamineEye: 'Maitiro ekuongorora ziso',
     frontOfEyeHeading: 'Kumberi kweZiso',
     frontOfEyeText:
       "Ongorora uye enzanisa maziso: <em>akananga,</em> <em>kurudyi,</em> <em>kuruboshwe,</em> <em>kumusoro,</em> pasi<br><strong><u>Svika pedyo uye rambidza</u></strong>. Ongorora: <em>mavhavha,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupil</em><br>Shandisa <span style='color: orange;'>fluro</span> pakutarisa kukuvadza kana kukuvara kwecornea",
@@ -3476,20 +3919,22 @@ export const translations = {
     backOfEyeHeading: 'Shure kweZiso',
     backOfEyeText:
       'Shandisa ziso rerudyi kuona ziso rerudyi remurwere; reboshwe kuona reboshwe<br>Murwere anofanira kutarisa zvakananga KWETE kuenda kuchiedza; svika pedyo uye tsvaga optic disc (Dilate = kuona kwakanakisa)<br>Ongorora disc: <em>Rutivi,</em> <em>Ruvara,</em> <em>Kapu</em>. Tevera miviri mikuru, wodzoka udzidzise murwere kutarisa zvakananga kuchiedza kuti aone macula',
-    additionalText:
+    additionalText_eye:
       "Ziva madiscs ako: zvakajairika, <span style='color:red; font-weight:bold;'>akuvadzwa,</span> <span style='color:red;'>mitsva miviri,</span> <span style='color:orange;'>akapwanywa,</span> <span style='color:green;'>zvishoma</span><br>&gt;Dzidzira kazhinji&lt;",
 
-    pageTitle: 'Maitiro ekuongorora nzeve',
+    pageTitle_howToExamineEar: 'Maitiro ekuongorora nzeve',
     allAroundEarHeading: 'Nzvimbo yakakomberedza nzeve',
     allAroundEarText:
       'Ongorora: <em>pinna, </em><em>tragus, </em><em>mastoid</em> kuti paine chiumbwa, kusava nyore kana kusvotwa<br>Fambisa pinna zvinyoronyoro, ona kana pane marwadzo',
     earCanalHeading: 'Nzira yenzeve',
     earCanalText:
       'Kakavadza musoro, <strong><u>batidza Arclight senge chinyorwa</u></strong><br>Dhonza pinna kumusoro/kuseri (kuvanhu vakuru) kana kuenda pasi/kuseri (kuvana)<br>Pinza speculum (4.5mm yevakuru, 2.5mm yevana), dzima ntutu, shandura kana zvichidiwa<br>Ongorora: <em>kupera kwewaxa,</em> <em>zvisaririra,</em> <em>hutachiona</em>',
-    additionalText:
+    tympanicMembraneHeading: 'Membranisi yeNzeve',
+    tympanicMembraneText: 'Ziva mbira ya malleus, chiedza chinoratidza, attic<br>Ongorora: <em>ruvara</em>, <em>nzvimbo</em>, <em>kujeka</em><br>Tarisa kuboora, mvura kana mavanga',
+    additionalText_ear:
       "Ziva maTM ako: echinyakare, <span style='color:red; font-weight:bold;'>dzvuku</span>, <span style='color:orange;'>kuwedzera</span>, <span style='color:green;'>kudzorerwa</span>, <span style='color:purple;'>kupwanya</span><br>&gt;Dzidzira kazhinji&lt;",
 
-    pageTitle: 'Maitiro ekuongorora ganda',
+    pageTitle_howToExamineSkin: 'Maitiro ekuongorora ganda',
     generalObservationHeading: 'Kuongorora kwakazara',
     generalObservationText: 'Tarisa mapundu, <em>shanduko dzemavara</em> uye kugoverwa<br>Nyatso pfugama kuti unzwe kusimba, kupisa kana kurwadziwa',
     uvLightHeading: 'UV (Wood’s) mwenje',
@@ -3498,10 +3943,10 @@ export const translations = {
     dermoscopyHeading: 'Dermoskopi',
     dermoscopyText:
       '<strong><u>Bata Arclight polariser senge pen</u></strong>, tarisa: <strong>ABCDE</strong> (<em>Asymmetry</em>, <em>Border</em>, <em>Colour</em>, <em>Diameter &gt;6mm</em>, <em>Evolving</em>)<br>Dzidza: PDSBV (<em>Pigment network</em>, <em>Dots</em>, <em>Streaks</em>, <em>Blue-white</em>, <em>Vascular</em>)',
-    additionalText:
+    additionalText_skin:
       "Ziva chironda chako: chakajairika, <span style='color:red;'>chinofungidzirwa</span>, <span style='color:orange;'>chakarwadza</span><br>&gt;Dzidzira kazhinji&lt;",
 
-    pageTitle: 'NezvaAlan',
+    pageTitle_aboutAlan: 'NezvaAlan',
     aboutAlanText:
       'Alan ishini yeAI inobatsira mukutarisa ziso, nzeve uye ganda, yakavakirwa pamodeli yemutauro yepakutanga uye pfungwa dzemifananidzo. Inofungisisa. Inonyatsoremekedzwa. Yemazuva ano.<br><br>Ruzivo rwechiremba, rwemuno uye mifananidzo, rwakagadzirirwa mabasa akasiyana-siyana akadai sevashandi vezvehutano nevanoongorora. Hurukuro pfupi inoburitsa chirevo uye zano rekutarisira. Kushandiswa kweArclight kwakabatanidzwa zvizere.<br>',
     aboutAlanListItem1: 'Chivako cheunyanzvi – mamiriro ekunze echipisa/tropical',
@@ -3549,20 +3994,33 @@ export const translations = {
     instructionsLabelJustRight: 'Zvakaringana',
     instructionsLabelTooMuch: 'Zvakawandisa',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan ishini yeAI inobatsira vadzidzi uye avo vanowanzosangana nematambudziko emaonero, nzeve kana ganda. Nyora kana taura zvakajeka uye dzivisa kupa mazita kana zvimwe zvinozivikanwa.',
     goodLuck: 'Rombo rakanaka!',
     namePlaceholder: 'Zita',
-    rolePlaceholder: 'Basa',
+    // rolePlaceholder: 'Basa',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Shona) ---
     experiencePlaceholder: 'Zviitiko',
+    experienceStudentRefresher: 'Mudzidzi / Mutsva',
+    experienceConfidentCore: 'Ruzivo rweMusimboti rwakavimbika',
+    experienceExpert: 'Nyanzvi',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 gore',
     experienceOption2: '1-3 makore',
     experienceOption3: '3-7 makore',
     experienceOption4: '>7 makore',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Zvinangwa',
     aimsOption1: 'Pfungwa yechipiri',
     aimsOption2: 'Kutarisa chirwere',
     aimsOption3: 'Kutaurirana zviri nani',
+    */
     contactPlaceholder: 'Bata (email/foni)',
     acceptButton: 'Gamuchira',
 
@@ -3571,7 +4029,6 @@ export const translations = {
     screenshot: "Screenshot",
     refer: "Tumira",
     comingSoon: "Chiri kuuya nokukurumidza...",
-
   },
 
   // 20) Kinyarwanda - rw
@@ -3581,18 +4038,28 @@ export const translations = {
     examineWell: 'Suzuma Neza',
     useArclight: 'Koresha Arclight',
     howCanIHelp: 'Nakora iki kugufasha uyu munsi?',
-    alanMistakes: `Alan ashobora gukosa. Koresha ubushishozi bw’ubuvuzi. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan ashobora gukosa. Koresha ubushishozi bw’ubuvuzi. ${new Date().getMonth() + 1}/25,`,
     login: 'Injira',
     enterPassword: 'Injiza Ijambo ry’Ibanga',
     register: 'Iyandikishe',
     name: 'Izina',
     password: 'Ijambo ry’Ibanga (imibare 4)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Kinyarwanda) ---
+    aimsPlaceholder: 'Intego',
+    aimsEyes: 'Amaso',
+    aimsEars: 'Amatwi',
+    aimsSkin: 'Uruhu',
+    aimsVeterinary: 'Amatungo',
+    aimsChildMaternal: 'Umwana/Umubyeyi',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Umukozi w’Ubuzima',
     nurse: 'Umuforomo',
     ophthalmicOfficer: 'Ushinzwe Ubuvuzi bw’Amaso',
     medicalStudent: 'Umunyeshuri w’Ubuvuzi',
-    physicianAssociate: 'Umufasha w’umuganga', // Approx.
+    physicianAssociate: 'Umufasha w’umuganga', 
     generalPractitioner: 'Umuganga Rusange',
     hospitalDoctor: 'Umuganga w’Ibitaro',
     ophthalmologist: 'Umuganga w’Amaso',
@@ -3603,6 +4070,7 @@ export const translations = {
     audiologist: 'Impuguke mu By’Urwumva',
     earCarePractitioner: 'Uwitaho Amatwi',
     dermatologist: 'Umuganga w’Uruhu',
+    */
 
     instructionsButton: 'Uko bikorwa',
     eyeButton: 'Ijisho',
@@ -3641,7 +4109,8 @@ export const translations = {
     userName: 'Izina',
     userContact: 'Amakuru yo kuvugana',
     userRole: 'Inshingano',
-    userAims: 'Intego',
+    userAimsPopupLabel: "Intego",
+    // userAims: 'Intego',
     userLatLong: 'Lat & Long',
     userArea: 'Agace',
     userCountry: 'Igihugu',
@@ -3651,7 +4120,7 @@ export const translations = {
     geoInfoText:
       'Uko ukanze kuri "Kumenya Aho Uri", hazasangirwa aho uherereye neza (latitude/longitude). Ibi bifasha gutanga inama n\'amahitamo meza.',
 
-    pageTitle: 'Uko wacukumbura ijisho',
+    pageTitle_howToExamineEye: 'Uko wacukumbura ijisho',
     frontOfEyeHeading: "Igice cyo imbere cy'Ijisho",
     frontOfEyeText:
       "Reba ugereranye amaso: <em>by'ukuri,</em> <em>iburyo,</em> <em>ibumoso,</em> <em>hejuru,</em> hepfo<br><strong><u>Fata ube hafi</u></strong>. Saba: <em>amaboko y'ijisho,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupil</em><br>Koreshya <span style='color: orange;'>fluro</span> ku bibazo bya cornea n'udukoko",
@@ -3661,20 +4130,22 @@ export const translations = {
     backOfEyeHeading: "Igice cyo inyuma cy'Ijisho",
     backOfEyeText:
       "Koresha ijisho ry'iburyo urebe ijisho ry'uruhande rw'umusuzumwe; ibumoso ku ibumoso<br>Umusuzumwe agomba kureba neza, ATARI mu rumuri; hafi ugishake optic disc (Dilate = isura nziza)<br>Suzuma disc: <em>Urupapuro,</em> <em>Ibara,</em> <em>Igikombe</em>. Kurikirana imiyoboro minini, hanyuma umusabe kureba neza mu rumuri kugira ngo abone macula",
-    additionalText:
+    additionalText_eye:
       "Menya disc zawe: zisanzwe, <span style='color:red; font-weight:bold;'>zizanye uburibwe,</span> <span style='color:red;'>imiyoboro mishya,</span> <span style='color:orange;'>zifunganye,</span> <span style='color:green;'>zibaye ubururu</span><br>&gt;Itondere kenshi&lt;",
 
-    pageTitle: 'Uko wacukumbura ikibuno',
+    pageTitle_howToExamineEar: 'Uko wacukumbura ikibuno',
     allAroundEarHeading: "Hafi y'ikibuno",
     allAroundEarText:
       'Reba: <em>pinna, </em><em>tragus, </em><em>mastoid</em> niba hari udusabo, ububabare cyangwa gusohora ibimera<br>Himura pinna gahoro, witondere ububabare',
     earCanalHeading: "Inzira y'ikibuno",
     earCanalText:
       'Bikanye umutwe, <strong><u>fata Arclight nko gufata ikaramu</u></strong><br>Hagarika pinna hejuru/inzira (abakuru) cyangwa hasi/inzira (abana)<br>Shyiramo speculum (4.5mm ku bakuru, 2.5mm ku bana), kanda utambuke imisatsi, ujugunye niba bikenewe<br>Shakisha: <em>umuse,</em> <em>ibisigazwa,</em> <em>uburwayi</em>',
-    additionalText:
+    tympanicMembraneHeading: 'Igikoma cy\'ugutwi',
+    tympanicMembraneText: 'Menya aho malleus ifashe, urumuri rugaragara, na attic<br>Reba: <em>ibara</em>, <em>umwanya</em>, <em>uko bigaragara</em><br>Reba niba hari umwenge, amazi cyangwa ibikomere',
+    additionalText_ear:
       "Menya TM yawe: isanzwe, <span style='color:red; font-weight:bold;'>umutuku</span>, <span style='color:orange;'>yarazamutse</span>, <span style='color:green;'>yagarutse</span>, <span style='color:purple;'>yafunze</span><br>&gt;Imenyere buri gihe&lt;",
 
-    pageTitle: 'Uko wagenzura uruhu',
+    pageTitle_howToExamineSkin: 'Uko wagenzura uruhu',
     generalObservationHeading: 'Kugenzura rusange',
     generalObservationText:
       "Reba uduhunda, <em>impinduka z’amarangi</em> ndetse n'ubusakare<br>Gorora buhoro kugira ngo umenye imiterere, ubushyuhe cyangwa ububabare",
@@ -3684,10 +4155,10 @@ export const translations = {
     dermoscopyHeading: 'Dermoscopy',
     dermoscopyText:
       '<strong><u>Fata Arclight polariser nko gufata ikaramu</u></strong>, reba: <strong>ABCDE</strong> (<em>Ubudasa</em>, <em>Imipaka</em>, <em>Ibara</em>, <em>Diameter &gt;6mm</em>, <em>Irimo guhinduka</em>)<br>Soma: PDSBV (<em>Inshundura ya pigment</em>, <em>Amanota</em>, <em>Imirongo</em>, <em>Ubururu-umweru</em>, <em>Imiyoboro</em>)',
-    additionalText:
+    additionalText_skin:
       "Menya agasohoka kawe: gasanzwe, <span style='color:red;'>gashidutse</span>, <span style='color:orange;'>kabyara ubushyuhe</span><br>&gt;Imenyere buri gihe&lt;",
 
-    pageTitle: 'Ibyerekeye Alan',
+    pageTitle_aboutAlan: 'Ibyerekeye Alan',
     aboutAlanText:
       'Alan ni umufasha w’ubwenge bwa mashini mu gupima amaso, amatwi n’uruhu, ugizwe n’imashini y’indimi n’ubwenge bushingiye ku bimenyetso. Uzi neza. Ukomeye. Uri ku rwego rwo hejuru.<br><br>Ubumenyi bw’ubuvuzi, ubw’aho n’amafoto bigenewe inshingano zitandukanye nka abakozi b’ubuzima n’abaganga b’ingenzi. Ikiganiro kigufi gitanga isuzuma n’ingamba z’imicungire. Gukoresha Arclight byashyizwe mu bikorwa hose.<br>',
     aboutAlanListItem1: 'Inyubako y’abahanga – ikirere cy’izuba/cy’akanyamuneza',
@@ -3698,7 +4169,7 @@ export const translations = {
     aboutAlanEncouraging: '<strong>Byongera imbaraga</strong> – impuhwe, umwigisha',
     aboutAlanDate: 'wjw Jan 25',
 
-    instructionsPageTitle: 'Ibyerekeye amabwiriza',
+    instructionsPageTitle: 'Amabwiriza',
     instructionsIntro:
       'Alan ni umufasha wa AI ku banyeshuri ndetse n’abahuye n’ibibazo by’amaso, amatwi cyangwa uruhu rimwe na rimwe. Andika cyangwa vuga neza, wirinde gutangaza amazina cyangwa ibisobanuro bishobora kumenyekana. Reba neza umutwe/ikibuno/igice cy’umubiri, ugenzure amaso/amatwi yombi. Mugire amahirwe masa!',
     instructionsPatientPrompt: 'Bwira Alan ku bijyanye n’umurwayi wawe:',
@@ -3735,20 +4206,33 @@ export const translations = {
     instructionsLabelJustRight: 'Bihagije',
     instructionsLabelTooMuch: 'Byinshi cyane',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan ni umufasha wa AI ku banyeshuri ndetse n’abahura n’ibibazo by’amaso, amatwi cyangwa uruhu rimwe na rimwe. Andika cyangwa uvuge neza kandi wirinde gutangaza amazina cyangwa ibisobanuro bishobora kumenyekana.',
     goodLuck: 'Ubeho neza!',
     namePlaceholder: 'Izina',
-    rolePlaceholder: 'Umwanya',
+    // rolePlaceholder: 'Umwanya',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Kinyarwanda) ---
     experiencePlaceholder: 'Inararibonye',
+    experienceStudentRefresher: 'Umunyeshuri / Ukuvugurura',
+    experienceConfidentCore: 'Ubumenyi bw\'ibanze bwizewe',
+    experienceExpert: 'Impuguke',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 umwaka',
     experienceOption2: '1-3 umwaka',
     experienceOption3: '3-7 umwaka',
     experienceOption4: '>7 umwaka',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Intego',
     aimsOption1: 'Inama ya kabiri',
     aimsOption2: 'Gushakisha ikibazo',
     aimsOption3: 'Kuganira neza',
+    */
     contactPlaceholder: 'Tumenyeshe (imeyili/telefone)',
     acceptButton: 'Emeza',
 
@@ -3757,7 +4241,6 @@ export const translations = {
     screenshot: "Ifoto ya Ekrini",
     refer: "Ohereza",
     comingSoon: "Biraza vuba...",
-
   },
 
   // 21) Chichewa (Malawi) - ny
@@ -3767,18 +4250,28 @@ export const translations = {
     examineWell: 'Fufuzani Bwino',
     useArclight: 'Gwiritsani Ntchito Arclight',
     howCanIHelp: 'Ndingakuthandizeni bwanji lero?',
-    alanMistakes: `Alan angalakwitse. Gwiritsani ntchito chiweruzo cha zamankhwala. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Alan angalakwitse. Gwiritsani ntchito chiweruzo cha zamankhwala. ${new Date().getMonth() + 1}/25,`,
     login: 'Lowani',
     enterPassword: 'Lowetsani Chinsinsi',
     register: 'Lembetsani',
     name: 'Dzina',
     password: 'Chinsinsi (manambala 4)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Chichewa) ---
+    aimsPlaceholder: 'Zolinga',
+    aimsEyes: 'Maso',
+    aimsEars: 'Makutu',
+    aimsSkin: 'Khungu',
+    aimsVeterinary: 'Ziweto',
+    aimsChildMaternal: 'Ana/Amayi',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Wogwira Ntchito Zaumoyo',
     nurse: 'Namwino',
     ophthalmicOfficer: 'Ofesi ya Maso',
     medicalStudent: 'Wophunzira Zachipatala',
-    physicianAssociate: 'Mnthandizi wa dokotala', // Approx.
+    physicianAssociate: 'Mnthandizi wa dokotala', 
     generalPractitioner: 'Dokotala Wamba',
     hospitalDoctor: 'Dokotala wa Chipatala',
     ophthalmologist: 'Dokotala wa Maso',
@@ -3788,7 +4281,8 @@ export const translations = {
     pharmacist: 'Wogwira Mankhwala',
     audiologist: 'Katswiri wa Kumva',
     earCarePractitioner: 'Wosamalira Khutu',
-    dermatologist: 'Dokotala wa Khungu', // Approx.
+    dermatologist: 'Dokotala wa Khungu', 
+    */
 
     instructionsButton: 'Momwe mungagwiritsire ntchito',
     eyeButton: 'Diso',
@@ -3827,7 +4321,8 @@ export const translations = {
     userName: 'Dzina',
     userContact: 'Lumikizanani',
     userRole: 'Udindo',
-    userAims: 'Zolinga',
+    userAimsPopupLabel: "Zolinga",
+    // userAims: 'Zolinga',
     userLatLong: 'Lat & Long',
     userArea: 'Malo',
     userCountry: 'Dziko',
@@ -3837,7 +4332,7 @@ export const translations = {
     geoInfoText:
       'Pomanga pa "Kupeza Malo", malo (latitude/longitude) omwe ndi koyenera adzasonyezedwe. Izi zimathandiza kupereka malangizo ndi zosankha zabwino.',
 
-    pageTitle: 'Momwe Mungasonyeze Dziwitso',
+    pageTitle_howToExamineEye: 'Momwe Mungasonyeze Dziwitso',
     frontOfEyeHeading: 'Chikondi cha Dziwitso (Mbuyo)',
     frontOfEyeText:
       "Onani ndi kulinganiza maonekedwe: <em>zoyenera,</em> <em>kwoyangʼanira,</em> <em>kwosala,</em> <em>pazitsulo,</em> pansi<br><strong><u>Bwera pafupi ndikukhala wosamalira</u></strong>. Onani: <em>mapalpe,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupil</em><br>Gwiritsani ntchito ndi <span style='color: orange;'>fluro</span> pa mavuto a cornea kapena kuwonongeka",
@@ -3847,20 +4342,22 @@ export const translations = {
     backOfEyeHeading: 'Chikondi cha Dziwitso (Chakumbuyo)',
     backOfEyeText:
       "Gwiritsani ntchito kuti muwone dzina la wosanjika; la kumanzere pa la manzere<br>Wosanjika ayenera kuwona mwambo, OSAYENDERA kuwala; bwirani pafupi ndikapeza optic disc (Dilate = kuwona bwino)<br>Dziwani disc: <em>Malire,</em> <em>Mtundu,</em> <em>Chikombe</em>. Tsatirani m'mitundu ya magazi, kenako pempho kwa wosanjika kuti aone macula",
-    additionalText:
+    additionalText_eye:
       "Dziwani mayankho anu: achiwoneka, <span style='color:red; font-weight:bold;'>osafuka,</span> <span style='color:red;'>magazi atsopano,</span> <span style='color:orange;'>osamangidwa,</span> <span style='color:green;'>opanda kuwala</span><br>&gt;Phunzitsani nthawi zonse&lt;",
 
-    pageTitle: 'Momwe Mungasonyeze Nzeve',
+    pageTitle_howToExamineEar: 'Momwe Mungasonyeze Nzeve',
     allAroundEarHeading: 'Zambiri za nzeve',
     allAroundEarText:
       'Onani: <em>pinna, </em><em>tragus, </em><em>mastoid</em> kuti muwone ngati pali zolemera, kusadandaula kapena kusokoneza<br>Sungani pinna mosaphweka, onani ngati pali ululu',
     earCanalHeading: 'Njira ya nzeve',
     earCanalText:
       'Pangira mutu, <strong><u>kamata Arclight monga patani</u></strong><br>Dhonza pinna kupamwamba/ku chabe (aŵa akulu) kapena kupansi/ku chabe (ana)<br>Ikani speculum (4.5mm kwa akulu, 2.5mm kwa ana), panga nthawi kupeza, sinthani ngati zikufunika<br>Onani: <em>chikoma,</em> <em>zambiri,</em> <em>matenda</em>',
-    additionalText:
+    tympanicMembraneHeading: 'Timpaniki Membreni',
+    tympanicMembraneText: 'Zindikirani chogwirira cha malleus, kuwala kowala, ndi attic<br>Zindikirani: <em>mtundu</em>, <em>malo</em>, <em>kuwonekera</em><br>Yang\'anani ngati pali dzenje, madzi kapena zipsera',
+    additionalText_ear:
       "Dziwani mayankho anu: achiwoneka, <span style='color:red; font-weight:bold;'>osafuka</span>, <span style='color:orange;'>magazi atsopano</span>, <span style='color:green;'>osamangidwa</span>, <span style='color:purple;'>opanda kuwala</span><br>&gt;Phunzitsani nthawi zonse&lt;",
 
-    pageTitle: 'Momwe Mungasonyeze Khungu',
+    pageTitle_howToExamineSkin: 'Momwe Mungasonyeze Khungu',
     generalObservationHeading: 'Kuwerengera Wonse',
     generalObservationText:
       'Onani mapundu, <em>kusintha kwa mtundu</em> komanso kugawidwa<br>Pitani mwachikondi kuti mudziwe mawonekedwe, kutentha kapena kusowa mtima',
@@ -3870,10 +4367,10 @@ export const translations = {
     dermoscopyHeading: 'Dermoscopy',
     dermoscopyText:
       '<strong><u>Gwiritsani ntchito Arclight polariser monga patani</u></strong>, onani: <strong>ABCDE</strong> (<em>Asymmetry</em>, <em>Border</em>, <em>Colour</em>, <em>Diameter &gt;6mm</em>, <em>Evolving</em>)<br>Phunzitsani: PDSBV (<em>Pigment network</em>, <em>Dots</em>, <em>Streaks</em>, <em>Blue-white</em>, <em>Vascular</em>)',
-    additionalText:
+    additionalText_skin:
       "Dziwani za lesion yanu: za normal, <span style='color:red;'>zoopseka</span>, <span style='color:orange;'>zopangitsa chisokonezo</span><br>&gt;Phunzitsani nthawi zonse&lt;",
 
-    pageTitle: 'Zokhudza Alan',
+    pageTitle_aboutAlan: 'Zokhudza Alan',
     aboutAlanText:
       'Alan ndi wothandizira wa AI pa kuchunguza maso, matamando ndi khungu, wokhazikitsidwa pa chitsanzo cha chinenero ndi njira za zifanizo. Wadzaza. Wofunikira. Watsopano.<br><br>Chidziwitso cha matibwino, cha mzinda ndi zithunzi, zimapangidwa kuti zikhale zofunikira kwa ntchito monga antchito aumoyo ndi odwala. Kukambirana kwachidule kumapangitsa chidziwitso ndi dongosolo la chithandizo. Kugwiritsa ntchito Arclight kwakhala kuli mkati mwa zonse.<br>',
     aboutAlanListItem1: 'Mphamvu ya akatswiri – mphepo ya tropical/ya kutentha',
@@ -3921,20 +4418,33 @@ export const translations = {
     instructionsLabelJustRight: 'Zokwanira',
     instructionsLabelTooMuch: 'Zambiri kwambiri',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       'Alan ndi muthandizi wa AI kwa ophunzira ndi anthu amene nthawi zina amakhala ndi mavuto a maso, matamando kapena khungu. Lembani kapena fotokozani moyenera, ndipo musatengerepo mazina kapena zambiri zomwe zingadutse kudziwika. Onani bwino mutu, maso kapena mbali ya thupi, ndipo onani maso/matamando awiri. Moni!',
     goodLuck: 'Moni!',
     namePlaceholder: 'Dzina',
-    rolePlaceholder: 'Udindo',
+    // rolePlaceholder: 'Udindo',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Chichewa) ---
     experiencePlaceholder: 'Zachitika',
+    experienceStudentRefresher: 'Wophunzira / Wotsitsimutsa',
+    experienceConfidentCore: 'Chidziwitso Chokhazikika Chokhulupirira',
+    experienceExpert: 'Katswiri',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 chaka',
     experienceOption2: '1-3 chaka',
     experienceOption3: '3-7 chaka',
     experienceOption4: '>7 chaka',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Zolinga',
     aimsOption1: 'Chofunikira cha awiri',
     aimsOption2: 'Kufufuza vuto',
     aimsOption3: 'Kufunikira kulankhulana bwino',
+    */
     contactPlaceholder: 'Lumikizani (email/phone)',
     acceptButton: 'Chitira',
 
@@ -3943,7 +4453,6 @@ export const translations = {
     screenshot: "Chithunzi cha skirini",
     refer: "Tumizirani",
     comingSoon: "Kubwera posachedwa...",
-
   },
 
   // 22) Welsh - cy
@@ -3953,18 +4462,28 @@ export const translations = {
     examineWell: "Archwilio'n Dda",
     useArclight: 'Defnyddio Arclight',
     howCanIHelp: 'Sut gallai helpu chi heddiw?',
-    alanMistakes: `Gall Alan wneud camgymeriadau. Defnyddiwch farn glinigol. ${new Date().getMonth() + 1}/25`,
+    alanMistakes: `Gall Alan wneud camgymeriadau. Defnyddiwch farn glinigol. ${new Date().getMonth() + 1}/25,`,
     login: 'Mewngofnodi',
     enterPassword: 'Rhowch Gyfrinair',
     register: 'Cofrestru',
     name: 'Enw',
     password: 'Cyfrinair (4 rhif)',
 
+    // --- NEW "Aims" Dropdown Translations (Needs review for Welsh) ---
+    aimsPlaceholder: 'Amcanion',
+    aimsEyes: 'Llygaid',
+    aimsEars: 'Clustiau',
+    aimsSkin: 'Croen',
+    aimsVeterinary: 'Milfeddygol',
+    aimsChildMaternal: 'Plentyn/Mamolaeth',
+
+    // --- Old Job Roles Commented Out ---
+    /*
     healthWorker: 'Gweithiwr Iechyd',
     nurse: 'Nyrs',
     ophthalmicOfficer: 'Swyddog Clinigol Llygaid',
     medicalStudent: 'Myfyriwr Meddygol',
-    physicianAssociate: 'Cymhorthydd Meddyg', // Approx.
+    physicianAssociate: 'Cymhorthydd Meddyg', 
     generalPractitioner: 'Ymarferydd Cyffredinol',
     hospitalDoctor: 'Doctor Ysbyty',
     ophthalmologist: 'Ophthalmolegydd',
@@ -3974,7 +4493,8 @@ export const translations = {
     pharmacist: 'Fferyllydd',
     audiologist: 'Awdiolegydd',
     earCarePractitioner: 'Ymarferydd Gofal Clust',
-    dermatologist: 'Dermatolegydd', // Could also be "Arbenigwr Croen"
+    dermatologist: 'Dermatolegydd', 
+    */
 
     instructionsButton: 'Sut i ddefnyddio',
     eyeButton: 'Llygad',
@@ -4013,7 +4533,8 @@ export const translations = {
     userName: 'Enw',
     userContact: 'Cyswllt',
     userRole: 'Rôl',
-    userAims: 'Amcanion',
+    userAimsPopupLabel: "Amcanion",
+    // userAims: 'Amcanion',
     userLatLong: 'Lat & Long',
     userArea: 'Ardal',
     userCountry: 'Gwlad',
@@ -4023,7 +4544,7 @@ export const translations = {
     geoInfoText:
       'Trwy glicio ar "Lleoliad", bydd lleoliad mwy manwl (hyd/orf) yn cael ei rannu. Mae hyn yn helpu i gynnig cyfarwyddiadau ac opsiynau gwell.',
 
-    pageTitle: "Sut i archwilio'r llygad",
+    pageTitle_howToExamineEye: "Sut i archwilio'r llygad",
     frontOfEyeHeading: 'Rhag Llygad',
     frontOfEyeText:
       "Gwyliwch a chymharwch y llygaid: <em>syth,</em> <em>ar y dde,</em> <em>ar y chwith,</em> <em>i fyny,</em> i lawr<br><strong><u>Dal a chynhelwch yn agos</u></strong>. Archwiliwch: <em>plygellau,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupil</em><br>Defnyddiwch gydag <span style='color: orange;'>fluro</span> ar gyfer ysbeidiau cornea neu lawr-gylchoedd",
@@ -4033,20 +4554,22 @@ export const translations = {
     backOfEyeHeading: 'Cefn Llygad',
     backOfEyeText:
       "Defnyddiwch y llygad dde i weld llygad y claf ar y dde; chwith ar y chwith<br>Rhaid i'r claf edrych yn syth NA PHEN Y GWLÂN; cerdrawch yn agos a dod o hyd i'r disc optig (Dilate = gwelwch orau)<br>Astudewch y disc: <em>Ymylon,</em> <em>Lliw,</em> <em>Cwp</em>. Dilynwch y prif fadau, yna gofynnwch i'r claf edrych yn syth i'r golau i weld y macula",
-    additionalText:
-      "Adnabod eich disciau: normal, <span style='color:red; font-weight:bold;'>llwys,</span> <span style='color:red;'>ffad,</span> <span style='color:orange;'>cwp,</span> <span style='color:green;'>lliwynn</span><br>&gt;Ymarfer yn aml&lt;",
+    additionalText_eye:
+      "Adnabod eich disciau: normal, <span style='color:red; font-weight:bold;'>llwys,</span> <span style='color:red;'>ffad,</span> <span style='color:orange;'>cwp,</span> <span style='color:green;'>lliwynn</span><br>>Ymarfer yn aml<",
 
-    pageTitle: "Sut i archwilio'r clust",
+    pageTitle_howToExamineEar: "Sut i archwilio'r clust",
     allAroundEarHeading: 'O amgylch y clust',
     allAroundEarText:
       'Gwirhewch: <em>clust allanol, </em><em>tragus, </em><em>mastoid</em> am guliau, teimladoldeb neu sychder<br>Symudwch y clust yn gynnil, sylwch ar unrhyw boen',
     earCanalHeading: 'Sianel y clust',
     earCanalText:
       "Cymryd y pen, <strong><u>dal Arclight fel ysgrifell</u></strong><br>Tynnu'r clust i fyny/yn ôl (ar gyfer oedolion) neu i lawr/yn ôl (ar gyfer plant)<br>Mewngofnodwch speculum (4.5mm i oedolion, 2.5mm i blant), gwthio drwg, troi os oes angen<br>Chwilio am: <em>cwmpas,</em> <em>gwasgedd,</em> <em>heint</em>",
-    additionalText:
-      "Adnabod eich TM: arferol, <span style='color:red; font-weight:bold;'>coch</span>, <span style='color:orange;'>ymgolli</span>, <span style='color:green;'>ailsefydlu</span>, <span style='color:purple;'>torri</span><br>&gt;Ymarfer yn aml&lt;",
+    tympanicMembraneHeading: 'Bilen y glust',
+    tympanicMembraneText: "Adnabod y ddolen malleus, adlewyrchiad golau, ac atig<br>Nodwch: <em>lliw</em>, <em>lleoliad</em>, <em>tryloywder</em><br>Chwiliwch am dyllu, hylif neu greithiau",
+    additionalText_ear:
+      "Adnabod eich TM: arferol, <span style='color:red; font-weight:bold;'>coch</span>, <span style='color:orange;'>ymgolli</span>, <span style='color:green;'>ailsefydlu</span>, <span style='color:purple;'>torri</span><br>>Ymarfer yn aml<",
 
-    pageTitle: "Sut i archwilio'r croen",
+    pageTitle_howToExamineSkin: "Sut i archwilio'r croen",
     generalObservationHeading: 'Sylw cyffredinol',
     generalObservationText: 'Archwiliwch ganghennau, <em>newidiadau lliw</em> a dosbarthiad<br>Teimlwch yn araf am strwythur, tymheredd neu deimlad',
     uvLightHeading: 'Lliw UV (Wood’s)',
@@ -4054,11 +4577,11 @@ export const translations = {
       "Yn ystafell tywyll, gwirhewch am liw ffater arbennig:<br><span style='color:teal;'>tinea (glas-werdd)</span>, <span style='color:#FF7F50;'>pityriasis versicolor (oren-copper)</span>, <span style='color:#FF4040;'>erythrasma (coral-coch)</span>, <span style='color:blue;'>vitiligo (glas-llen)</span>, <span style='color:orange;'>acne (oren-coch)</span>, <span style='color:#BFEFFF;'>hlafell o glwst (glas-pale)</span>",
     dermoscopyHeading: 'Dermosgop',
     dermoscopyText:
-      '<strong><u>Dal y polariser Arclight fel ysgrifell</u></strong>, gwirhewch: <strong>ABCDE</strong> (<em>Anymateb</em>, <em>Ymylon</em>, <em>Lliw</em>, <em>Diametr &gt;6mm</em>, <em>Yn esblygu</em>)<br>Astudewch: PDSBV (<em>Rhwydwaith pigment</em>, <em>Ptiau</em>, <em>Llinellau</em>, <em>Glas-llen</em>, <em>Vascular</em>)',
-    additionalText:
-      "Adnabod eich lesion: normal, <span style='color:red;'>amheus</span>, <span style='color:orange;'>yn llosgi</span><br>&gt;Ymarfer yn aml&lt;",
+      '<strong><u>Dal y polariser Arclight fel ysgrifell</u></strong>, gwirhewch: <strong>ABCDE</strong> (<em>Anymateb</em>, <em>Ymylon</em>, <em>Lliw</em>, <em>Diametr >6mm</em>, <em>Yn esblygu</em>)<br>Astudewch: PDSBV (<em>Rhwydwaith pigment</em>, <em>Ptiau</em>, <em>Llinellau</em>, <em>Glas-llen</em>, <em>Vascular</em>)',
+    additionalText_skin:
+      "Adnabod eich lesion: normal, <span style='color:red;'>amheus</span>, <span style='color:orange;'>yn llosgi</span><br>>Ymarfer yn aml<",
 
-    pageTitle: 'Ynghylch Alan',
+    pageTitle_aboutAlan: 'Ynghylch Alan',
     aboutAlanText:
       "Mae Alan yn gynorthwy-ydd diagnostig AI ar gyfer llygaid, clust a chroen, sy'n cyfuno model iaith sylfaenol a rhesymeg symbolaidd. Deallus. Difrifol. Ar flaen y technoleg.<br><br>Mae gwybodaeth glinigol, lleol a delweddau wedi'u teilwra i rolau megis gweithwyr iechyd a meddygon cyffredinol. Mae sgwrs gryno yn cynhyrchu diagnosis a chynllun rheoli. Mae defnydd o Arclight wedi'i mewnosod yn gyfan gwbl.<br>",
     aboutAlanListItem1: 'Sylfaen arbenigol – hinsawdd twrteg/tog',
@@ -4107,20 +4630,33 @@ export const translations = {
     instructionsLabelJustRight: 'Yn iawn',
     instructionsLabelTooMuch: 'Rhy fawr',
 
+    // --- Onboarding Page Translations ---
     instructionText:
       "Alan yw cynorthwyydd AI ar gyfer myfyrwyr ac eraill sy'n wynebu achosion llygaid, clust neu gre achlysurol. Ysgrifennwch neu siaradwch yn glir ac osgoi datgelu enwau neu fanylion adnabod.",
     goodLuck: 'Pob lwc!',
     namePlaceholder: 'Enw',
-    rolePlaceholder: 'Rôl',
+    // rolePlaceholder: 'Rôl',
+
+    // --- NEW "Experience" Dropdown Translations (Needs review for Welsh) ---
     experiencePlaceholder: 'Profiad',
+    experienceStudentRefresher: 'Myfyriwr / Adnewyddu',
+    experienceConfidentCore: 'Gwybodaeth graidd hyderus',
+    experienceExpert: 'Arbenigwr',
+    // --- Old Experience Options Commented Out ---
+    /*
     experienceOption1: '<1 bl',
     experienceOption2: '1-3 bl',
     experienceOption3: '3-7 bl',
     experienceOption4: '>7 bl',
+    */
+
+    // --- Old "Aims" Button (multi-select checkboxes) Commented Out ---
+    /*
     aimsButton: 'Nodau',
     aimsOption1: 'Achos yr ail farn',
     aimsOption2: 'Chwilio am gyflwr',
     aimsOption3: "Cysylltu'n well",
+    */
     contactPlaceholder: 'Cysylltu (e-bost/ffôn)',
     acceptButton: 'Derbyn',
 
@@ -4129,7 +4665,6 @@ export const translations = {
     screenshot: "Sgrinlun",
     refer: "Cyfeirio",
     comingSoon: "Ar ddod cyn bo hir..."
-
-  },
+  }
 };
 window.translations = translations;

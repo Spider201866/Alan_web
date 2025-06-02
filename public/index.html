@@ -156,16 +156,23 @@
         "
       />
 
-      <!-- (2) ROLE SELECT: width = 180px, left-aligned -->
+      <!-- (2) AIMS SELECT (formerly ROLE): width = 180px, left-aligned -->
       <select
-        id="job-role-select"
+        id="job-role-select" 
         class="job-role-dropdown"
         style="
           text-align: left;
           width: 220px;
         "
       >
-        <option value="" disabled selected hidden>Role</option>
+        <option value="" disabled selected hidden>Aims</option> <!-- Changed placeholder text -->
+        <option value="Eyes">Eyes</option>
+        <option value="Ears">Ears</option>
+        <option value="Skin">Skin</option>
+        <option value="Veterinary">Veterinary</option>
+        <option value="Child/Maternal">Child/Maternal</option>
+        
+        <!-- 
         <option value="Health worker">Health worker</option>
         <option value="Nurse">Nurse</option>
         <option value="Ophthalmic clinical officer">Ophthalmic clinical officer</option>
@@ -181,6 +188,7 @@
         <option value="Audiologist">Audiologist</option>
         <option value="Ear care practitioner">Ear care practitioner</option>
         <option value="Dermatologist">Dermatologist</option>
+         -->
       </select>
 
       <!-- (3) EXPERIENCE SELECT: width = 180px, left-aligned -->
@@ -193,50 +201,12 @@
         "
       >
         <option value="" disabled selected hidden>Experience</option>
-        <option value="<1 yr">&lt;1 yr</option>
-        <option value="1-3 yr">1-3 yr</option>
-        <option value="3-7 yr">3-7 yr</option>
-        <option value=">7 yr">&gt;7 yr</option>
+        <option value="Student / refresher">Student / refresher</option>
+        <option value="Confident core knowledge">Confident core knowledge</option>
+        <option value="Expert">Expert</option>
       </select>
 
-      <!-- (4) AIMS BUTTON: width = 180px, left-aligned -->
-      <div class="focus-container">
-        <button
-          id="focusToggleBtn"
-          class="focus-button"
-          style="
-            display: inline-flex;
-            align-items: center;
-            justify-content: flex-start;
-            text-align: left;
-            appearance: none;
-            -webkit-appearance: none;
-            width: 220px;
-          "
-          onclick="document.getElementById('focusDropdown').classList.toggle('hidden'); event.stopPropagation();"
-        >
-          Aims
-        </button>
-        <div
-          id="focusDropdown"
-          class="focus-dropdown hidden"
-          style="position: relative"
-        >
-          <!-- The close icon (X) has been removed -->
-          <label>
-            <input type="checkbox" name="focus" value="Second opinion" />
-            <span class="aims-label-text">Second opinion</span>
-          </label>
-          <label>
-            <input type="checkbox" name="focus" value="Condition lookup" />
-            <span class="aims-label-text">Condition lookup</span>
-          </label>
-          <label>
-            <input type="checkbox" name="focus" value="Communicate better" />
-            <span class="aims-label-text">Communicate better</span>
-          </label>
-        </div>
-      </div>
+      <!-- (4) AIMS BUTTON REMOVED -->
 
       <!-- (5) CONTACT INPUT: width = 180px, left-aligned -->
       <input
@@ -277,33 +247,13 @@
     </div>
     <!-- END ONBOARDING SCREEN -->
 
-    <script>
-      // Clicking anywhere outside the dropdown or the Aims button will close the dropdown
-      document.addEventListener('click', function(e) {
-        var dropdown = document.getElementById('focusDropdown');
-        var toggleBtn = document.getElementById('focusToggleBtn');
-        if (!dropdown.classList.contains('hidden') &&
-            !dropdown.contains(e.target) &&
-            !toggleBtn.contains(e.target)) {
-          dropdown.classList.add('hidden');
-        }
-      });
-      
-      // Prevent click events on the dropdown from bubbling up
-      document.getElementById('focusDropdown').addEventListener('click', function(e) {
-        e.stopPropagation();
-      });
-    </script>
-
     <!-- ===================================================================== -->
     <!-- BLACK SCREEN OVERLAY (Transition to Home) -->
     <!-- ===================================================================== -->
-<!-- BLACK SCREEN OVERLAY (Transition to Home) -->
 <div 
   class="black-screen" 
   id="blackScreen" 
   style="
-    /* Your existing overlay rules */
     position: fixed; 
     top: 0; 
     left: 0; 
@@ -314,30 +264,20 @@
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s, opacity 1s ease;
-    
-    /* Make it a flex container so content is centred */
     display: flex; 
     justify-content: center; 
     align-items: center;
   "
 >
-  <!-- Constrain the iframe to a smaller clamp size, so it doesn't fill phone screens -->
   <iframe
     id="triangleFrame"
     src="triangle.html"
     style="
       border: none;
-      /* On very small screens, width/height can go as low as 180px 
-         Then up to 50vw or 300px, whichever is smaller 
-         Adjust numbers to taste */
       width: clamp(180px, 50vw, 300px);
       height: clamp(180px, 50vw, 300px);
-
-      /* Keep existing transitions for the scale/blur effect */
       transform: scale(1);
       transition: transform 4s ease-in-out, filter 4s ease-in-out;
-
-      /* Centre the transform origin */
       transform-origin: center center;
     "
   ></iframe>
@@ -359,19 +299,13 @@
       const splashScreenRef = document.querySelector('.splash-screen');
       const instructionRef = document.querySelector('.instruction-screen');
       const blackScreen = document.getElementById('blackScreen');
-
-      // Instead of selecting <img> from blackScreen, select the iframe by ID
-      const skyImage = document.getElementById('triangleFrame');
+      const skyImage = document.getElementById('triangleFrame'); 
 
       const nameInput = document.getElementById('nameInput');
-      const jobSelectElement = document.getElementById('job-role-select');
+      const jobSelectElement = document.getElementById('job-role-select'); // This ID now refers to the "Aims" dropdown
       const experienceSelect = document.getElementById('experience-select');
       const contactInput = document.getElementById('contactInput');
       const acceptButton = document.getElementById('acceptButton');
-
-      const focusToggleBtn = document.getElementById('focusToggleBtn');
-      const focusDropdown = document.getElementById('focusDropdown');
-      const focusCheckboxes = document.querySelectorAll('#focusDropdown input[name="focus"]');
 
       let ipLatitude = 'Not set';
       let ipLongitude = 'Not set';
@@ -379,7 +313,6 @@
       let ipArea = 'Not set';
       let ipISO2 = 'Not set';
 
-      // Classification Arrays (2-letter ISO)
       const classificationLookup = {
         HI: ['QA', 'MO', 'LU', 'SG', 'BN', 'IE', 'NO', 'KW', 'AE', 'CH', 'HK', 'SM', 'US', 'SA', 'NL', 'IS', 'BH', 'SE', 'DE', 'AU', 'TW', 'DK', 'AT', 'CA', 'BE', 'OM', 'FI', 'GB', 'FR', 'JP', 'MT', 'KR', 'NZ', 'ES', 'IT', 'PR', 'CY', 'IL', 'CZ'],
         MI: ['GQ', 'SI', 'SK', 'LT', 'EE', 'TT', 'PT', 'PL', 'HU', 'MY', 'SC', 'RU', 'GR', 'LV', 'KN', 'AG', 'TR', 'KZ', 'BS', 'CL', 'PA', 'HR', 'RO', 'UY', 'MU', 'BG', 'AR', 'IR', 'MX', 'LB', 'GA', 'MV', 'TM', 'BY', 'BW', 'TH', 'CN', 'BR', 'ZA', 'IN'],
@@ -387,9 +320,6 @@
         VLI: ['AO', 'CG', 'MM', 'NG', 'NI', 'WS', 'MD', 'TO', 'HN', 'TL', 'GH', 'SD', 'BD', 'MR', 'KH', 'ZM', 'LS', 'CI', 'TV', 'PG', 'KG', 'DJ', 'KE', 'MH', 'FM', 'CM', 'TZ', 'ST', 'TJ', 'VU', 'NP', 'SN', 'TD', 'UG', 'YE', 'ZW', 'BJ', 'ML', 'SB', 'ET', 'RW', 'GN', 'KI', 'AF', 'BF', 'HT', 'GW', 'SL', 'GM', 'SS', 'TG', 'KM', 'MG', 'ER', 'MZ', 'MW', 'NE', 'LR', 'BI', 'CD', 'CF']
       };
 
-      /**
-       * Determines and sets the selectedAgent value in localStorage based on classification and role.
-       */
       function setSelectedAgent() {
         let selectedAgent = 'Unknown';
         const classification = localStorage.getItem('classification') || 'Unknown';
@@ -404,20 +334,12 @@
         } else if (roleClass === ' (P)' && ['LI', 'VLI'].includes(classification)) {
           selectedAgent = 'Agent 4';
         }
-
         localStorage.setItem('selectedAgent', selectedAgent);
       }
 
-      /*********************************************/
-      /*         HELPER FUNCTIONS                */
-      /*********************************************/
-      // 1) Splash Screen Animation & Next Screen Logic
       function showSplashScreenAndThen() {
-        // Show the splash screen (which was initially hidden)
         splashScreenRef.classList.remove('hidden');
         splashScreenRef.classList.add('visible');
-
-        // Run splash animation
         const logo1 = document.getElementById('logo1');
         const logo2 = document.getElementById('logo2');
         logo1.style.transform = 'scale(0.8)';
@@ -426,51 +348,40 @@
           logo1.style.transform = 'scale(1)';
           logo2.style.transform = 'rotateX(0deg)';
         }, 100);
-
-        // After animation, hide splash and show the next screen based on verification
         setTimeout(() => {
           splashScreenRef.classList.remove('visible');
           splashScreenRef.classList.add('hidden');
-
           if (localStorage.getItem('verified') === 'true') {
-            // If verified, show onboarding/instruction screen
             instructionRef.classList.remove('hidden');
             instructionRef.classList.add('visible');
           } else {
-            // Otherwise, show password entry screen
             passwordScreen.classList.remove('hidden');
             passwordScreen.classList.add('visible');
           }
         }, 4000);
       }
 
-      // 2) Fetch IP-Based Location
       function fetchIPBasedLocation() {
         fetch('https://ipapi.co/json/')
-          .then((response) => response.json())
-          .then((data) => {
+          .then(response => response.json())
+          .then(data => {
             if (data) {
               ipLatitude = data.latitude || 'Not set';
               ipLongitude = data.longitude || 'Not set';
               ipCountry = data.country_name || 'Not set';
               ipArea = data.city || 'Not set';
               ipISO2 = (data.country || 'Not set').toUpperCase();
-
               localStorage.setItem('latitude', ipLatitude);
               localStorage.setItem('longitude', ipLongitude);
               localStorage.setItem('country', ipCountry);
               localStorage.setItem('area', ipArea);
               localStorage.setItem('iso2', ipISO2);
-
               storeClassifications(ipISO2);
             }
           })
-          .catch((error) => {
-            console.error('Error fetching IP-based location:', error);
-          });
+          .catch(error => console.error('Error fetching IP-based location:', error));
       }
 
-      // 3) Classify User Country
       function storeClassifications(iso2) {
         let classification = 'Unknown';
         for (const [key, values] of Object.entries(classificationLookup)) {
@@ -482,27 +393,20 @@
         localStorage.setItem('classification', classification);
       }
 
-      // 4) Form Readiness Check
       function checkSelections() {
-        jobSelectElement.style.color = jobSelectElement.value ? 'blue' : 'grey';
+        jobSelectElement.style.color = jobSelectElement.value ? 'blue' : 'grey'; // jobSelectElement now "Aims"
         experienceSelect.style.color = experienceSelect.value ? 'blue' : 'grey';
         nameInput.style.color = nameInput.value.trim().length >= 2 ? 'blue' : 'grey';
-
-        const isAnyFocusSelected = Array.from(focusCheckboxes).some((cb) => cb.checked);
-        focusToggleBtn.classList.toggle('entered', isAnyFocusSelected);
-
+        
         acceptButton.disabled = !(
           nameInput.value.trim() &&
-          jobSelectElement.value &&
+          jobSelectElement.value && // Checks if an "Aim" is selected
           experienceSelect.value &&
-          isAnyFocusSelected &&
           contactInput.value.trim()
         );
       }
 
-      // 5) Initialise Event Listeners
       function initEventListeners() {
-        // Setup the iframe animation the same way the sky image was done
         skyImage.style.transform = 'scale(1)';
         skyImage.style.transition = 'transform 4s ease-in-out, filter 4s ease-in-out';
 
@@ -514,33 +418,15 @@
           checkSelections();
         });
 
-        jobSelectElement.addEventListener('change', checkSelections);
+        jobSelectElement.addEventListener('change', checkSelections); // jobSelectElement now "Aims"
         experienceSelect.addEventListener('change', checkSelections);
         contactInput.addEventListener('input', () => {
           contactInput.classList.toggle('entered', contactInput.value.trim() !== '');
           checkSelections();
         });
 
-        focusToggleBtn.addEventListener('click', () => {
-          focusDropdown.classList.toggle('hidden');
-          focusDropdown.classList.toggle('visible');
-        });
-
-        document.addEventListener('click', (event) => {
-          if (!focusDropdown.contains(event.target) && event.target !== focusToggleBtn) {
-            focusDropdown.classList.add('hidden');
-            focusDropdown.classList.remove('visible');
-          }
-        });
-
-        focusCheckboxes.forEach((checkbox) => {
-          checkbox.addEventListener('change', checkSelections);
-        });
-
-        // Accept button click
         acceptButton.addEventListener('click', handleAccept);
 
-        // Password input and submit events
         passwordInput.addEventListener('input', () => {
           passwordSubmitBtn.disabled = passwordInput.value.trim() === '';
           passwordError.style.display = 'none';
@@ -548,37 +434,29 @@
         passwordSubmitBtn.addEventListener('click', verifyPassword);
       }
 
-      // 6) Verify Password (Client-Side Check)
       function verifyPassword() {
         const entered = passwordInput.value.trim();
-
         fetch('/fetch-records', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ password: entered }),
         })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error('Invalid password');
-            }
+          .then(response => {
+            if (!response.ok) throw new Error('Invalid password');
             localStorage.setItem('verified', 'true');
             passwordScreen.classList.remove('visible');
             passwordScreen.classList.add('hidden');
-            // Show onboarding screen after successful verification
             instructionRef.classList.remove('hidden');
             instructionRef.classList.add('visible');
           })
-          .catch((err) => {
+          .catch(err => {
             passwordError.style.display = 'block';
             passwordInput.value = '';
             passwordSubmitBtn.disabled = true;
-            setTimeout(() => {
-              passwordError.style.display = 'none';
-            }, 3000);
+            setTimeout(() => { passwordError.style.display = 'none'; }, 3000);
           });
       }
 
-      // 7) Handle Accept (Onboarding Completion & Transition to Home)
       function handleAccept() {
         const rawName = nameInput.value.trim();
         const nameIsValid = /^[A-Za-z'\- ]{2,20}$/.test(rawName);
@@ -588,49 +466,40 @@
         }
 
         localStorage.setItem('name', rawName);
-        localStorage.setItem('selectedJobRole', jobSelectElement.value);
+        localStorage.setItem('selectedJobRole', jobSelectElement.value); // Storing selected "Aim" under selectedJobRole key
         localStorage.setItem('selectedExperience', experienceSelect.value);
 
-        // Set role classification
         let roleClass;
-        const jobRole = jobSelectElement.value;
-        switch (jobRole) {
-          case 'Health worker':
-          case 'Nurse':
-          case 'Medical student':
-          case 'Hospital doctor':
-          case 'General practitioner':
-          case 'Physician associate':
-          case 'Ophthalmologist':
-          case 'ENT specialist':
-          case 'Dermatologist':
+        const selectedAim = jobSelectElement.value; // This is the new "Aim" value
+        
+        // CRITICAL: Adjust this logic based on how new "Aims" map to (M) or (P)
+        switch (selectedAim) {
+          case 'Eyes':
+          case 'Ears':
+          case 'Skin':
+          case 'Child/Maternal': // Example: Assuming Child/Maternal is Medical
             roleClass = ' (M)';
             break;
-          default:
-            roleClass = ' (P)';
+          case 'Veterinary': // Example: Assuming Veterinary is Paramedical or other
+            roleClass = ' (P)'; 
+            break;
+          default: // Default or if an Aim doesn't clearly map
+            roleClass = ' (P)'; // Or ' (M)' or handle as unknown
             break;
         }
         localStorage.setItem('roleClassification', roleClass);
-
-        const selectedFocusValues = Array.from(focusCheckboxes)
-          .filter((cb) => cb.checked)
-          .map((cb) => cb.value);
-        localStorage.setItem('selectedFocus', JSON.stringify(selectedFocusValues));
         localStorage.setItem('contactInfo', contactInput.value);
 
         if (!localStorage.getItem('sessionId')) {
           localStorage.setItem('sessionId', `user-${Date.now()}`);
         }
-
-        // Set the selectedAgent before constructing the userInfo object
         setSelectedAgent();
 
         const userInfo = {
           sessionId: localStorage.getItem('sessionId'),
           name: rawName,
-          role: jobSelectElement.value,
+          role: jobSelectElement.value, // This will be the "Aim" (e.g., "Eyes", "Veterinary")
           experience: experienceSelect.value,
-          focus: selectedFocusValues,
           latitude: localStorage.getItem('latitude'),
           longitude: localStorage.getItem('longitude'),
           country: localStorage.getItem('country'),
@@ -648,72 +517,47 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(userInfo)
         })
-          .then((resp) => resp.text())
-          .then((data) => {
-            console.log('Record saved:', data);
-          })
-          .catch((err) => {
-            console.error('Error saving record:', err);
-          });
+          .then(resp => resp.text())
+          .then(data => console.log('Record saved:', data))
+          .catch(err => console.error('Error saving record:', err));
 
         const sessionId = localStorage.getItem('sessionId') || 'no-session-id';
-
-        console.log('About to call Flowise API with sessionId:', sessionId);
         fetch('https://flowiseai-railway-production-fecf.up.railway.app/api/v1/prediction/75b5edc0-4e39-441b-ba7a-eb6cb404b69a', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             question: 'Hello, how can I help?',
-            overrideConfig: {
-              sessionId: sessionId
-            }
+            overrideConfig: { sessionId: sessionId }
           })
         })
           .then(response => response.json())
           .then(data => console.log('Flowise API response:', data))
           .catch(error => console.error('Error:', error));
 
-        // Transition animation before going to home page
         blackScreen.style.visibility = 'visible';
         blackScreen.style.opacity = 1;
-        setTimeout(() => {
-          
-          
-        }, 200);
-
+        setTimeout(() => {}, 200);
         setTimeout(() => {
           blackScreen.style.opacity = 0;
-          setTimeout(() => {
-            window.location.href = 'home.html';
-          }, 250);
+          setTimeout(() => { window.location.href = 'home.html'; }, 250);
         }, 6000);
       }
 
-      // 8) Main Initialization
       function main() {
-        // Start by showing the splash screen.
         showSplashScreenAndThen();
         fetchIPBasedLocation();
         initEventListeners();
 
-        // Language selector setup
         const indexLangButton = document.getElementById('index-language-button');
         const indexLangDropdown = document.getElementById('index-language-dropdown');
-
         indexLangButton.addEventListener('click', () => {
-          if (indexLangDropdown.style.display === 'none' || indexLangDropdown.style.display === '') {
-            indexLangDropdown.style.display = 'block';
-          } else {
-            indexLangDropdown.style.display = 'none';
-          }
+          indexLangDropdown.style.display = (indexLangDropdown.style.display === 'none' || indexLangDropdown.style.display === '') ? 'block' : 'none';
         });
-
-        indexLangDropdown.querySelectorAll('li').forEach((item) => {
+        indexLangDropdown.querySelectorAll('li').forEach(item => {
           item.addEventListener('click', () => {
             const chosenLang = item.getAttribute('data-value');
             localStorage.setItem('preferredLanguage', chosenLang);
             updateIndexLanguageDisplays(chosenLang);
-            console.log('User chose language:', chosenLang);
             indexLangDropdown.style.display = 'none';
           });
         });
@@ -721,78 +565,66 @@
 
       document.addEventListener('DOMContentLoaded', main);
 
-      // 9) Update Translatable Onboarding Texts
       function updateIndexLanguageDisplays(lang) {
-        // Update password screen texts
-        document.getElementById('password-title').textContent = translations[lang].passwordTitle;
-        document.getElementById('passwordInput').placeholder = translations[lang].passwordPlaceholder;
-        document.getElementById('passwordError').textContent = translations[lang].passwordErrorMsg;
-        document.getElementById('passwordSubmitBtn').textContent = translations[lang].passwordSubmitBtn;
-        document.getElementById('noCodeLine').innerHTML = translations[lang].noCodeLine;
+        if (!window.translations || !window.translations[lang]) {
+          console.warn(`Translations for language '${lang}' not found.`);
+          return;
+        }
+        const currentTranslations = window.translations[lang];
 
-        // Update onboarding/instruction screen texts
-        document.getElementById('instruction-text').textContent = translations[lang].instructionText;
-        document.getElementById('good-luck').textContent = translations[lang].goodLuck;
-        document.getElementById('nameInput').placeholder = translations[lang].namePlaceholder;
+        document.getElementById('password-title').textContent = currentTranslations.passwordTitle;
+        document.getElementById('passwordInput').placeholder = currentTranslations.passwordPlaceholder;
+        document.getElementById('passwordError').textContent = currentTranslations.passwordErrorMsg;
+        document.getElementById('passwordSubmitBtn').textContent = currentTranslations.passwordSubmitBtn;
+        document.getElementById('noCodeLine').innerHTML = currentTranslations.noCodeLine;
 
-        // Update Role dropdown's first (disabled) option
-        document.querySelector('#job-role-select option[disabled]').textContent = translations[lang].rolePlaceholder;
+        document.getElementById('instruction-text').textContent = currentTranslations.instructionText;
+        document.getElementById('good-luck').textContent = currentTranslations.goodLuck;
+        document.getElementById('nameInput').placeholder = currentTranslations.namePlaceholder;
 
-        // Update Job Role options
-        const roleOptions = document.querySelectorAll('#job-role-select option:not([disabled])');
-        roleOptions.forEach((option) => {
-          const mapping = {
-            'Health worker': translations[lang].healthWorker,
-            Nurse: translations[lang].nurse,
-            'Ophthalmic clinical officer': translations[lang].ophthalmicOfficer,
-            'Medical student': translations[lang].medicalStudent,
-            'Physician associate': translations[lang].physicianAssociate,
-            'General practitioner': translations[lang].generalPractitioner,
-            'Hospital doctor': translations[lang].hospitalDoctor,
-            Ophthalmologist: translations[lang].ophthalmologist,
-            Optometrist: translations[lang].optometrist,
-            Orthoptist: translations[lang].orthoptist,
-            'ENT specialist': translations[lang].entSpecialist,
-            Pharmacist: translations[lang].pharmacist,
-            Audiologist: translations[lang].audiologist,
-            'Ear care practitioner': translations[lang].earCarePractitioner,
-            Dermatologist: translations[lang].dermatologist,
-          };
-          if (mapping[option.value]) {
-            option.textContent = mapping[option.value];
+        // Update "Aims" dropdown (formerly "Role")
+        // Use a new translation key for "Aims" placeholder, e.g., aimsPlaceholder
+        document.querySelector('#job-role-select option[disabled]').textContent = currentTranslations.aimsPlaceholder || 'Aims'; 
+
+        // Update new "Aims" options
+        const aimsOptionsMapping = {
+          "Eyes": currentTranslations.aimsEyes,
+          "Ears": currentTranslations.aimsEars,
+          "Skin": currentTranslations.aimsSkin,
+          "Veterinary": currentTranslations.aimsVeterinary,
+          "Child/Maternal": currentTranslations.aimsChildMaternal
+        };
+        document.querySelectorAll('#job-role-select option:not([disabled])').forEach(option => {
+          // Only update if it's one of the new "Aims" options
+          if (aimsOptionsMapping[option.value]) {
+            option.textContent = aimsOptionsMapping[option.value];
+          } else if (!option.outerHTML.includes("<!--")) { 
+            // Fallback for new options if translation missing, but skip commented out ones
+            option.textContent = option.value; 
           }
         });
+        
+        // Logic for old job role translations is still here but won't apply to visible options
+        // const roleOptions = document.querySelectorAll('#job-role-select option:not([disabled])');
+        // roleOptions.forEach((option) => { ... }); // This part is now less relevant for visible items
 
-        // Update Experience dropdown's first (disabled) option
-        document.querySelector('#experience-select option[disabled]').textContent = translations[lang].experiencePlaceholder;
-
-        // Update Experience options
-        const expOptions = document.querySelectorAll('#experience-select option');
-        if (expOptions.length >= 5) {
-          expOptions[1].textContent = translations[lang].experienceOption1;
-          expOptions[2].textContent = translations[lang].experienceOption2;
-          expOptions[3].textContent = translations[lang].experienceOption3;
-          expOptions[4].textContent = translations[lang].experienceOption4;
-        }
-
-        // Update Aims button text
-        document.getElementById('focusToggleBtn').textContent = translations[lang].aimsButton;
-
-        // Update Aims dropdown checkbox labels
-        const aimsLabelSpans = document.querySelectorAll('#focusDropdown .aims-label-text');
-        if (aimsLabelSpans.length >= 3) {
-          aimsLabelSpans[0].textContent = translations[lang].aimsOption1;
-          aimsLabelSpans[1].textContent = translations[lang].aimsOption2;
-          aimsLabelSpans[2].textContent = translations[lang].aimsOption3;
-        }
-
-        // Update Contact input placeholder
+        document.querySelector('#experience-select option[disabled]').textContent = currentTranslations.experiencePlaceholder;
+        const expOptionsMapping = {
+          "Student / refresher": currentTranslations.experienceStudentRefresher,
+          "Confident core knowledge": currentTranslations.experienceConfidentCore,
+          "Expert": currentTranslations.experienceExpert
+        };
+        document.querySelectorAll('#experience-select option:not([disabled])').forEach(option => {
+          if (expOptionsMapping[option.value]) {
+            option.textContent = expOptionsMapping[option.value];
+          } else {
+            option.textContent = option.value; 
+          }
+        });
+        
         const contactInputEl = document.getElementById('contactInput');
-        contactInputEl.value = '';
-        contactInputEl.placeholder = translations[lang].contactPlaceholder;
-
-        // Update Accept button text
-        document.getElementById('acceptButton').textContent = translations[lang].acceptButton;
+        contactInputEl.placeholder = currentTranslations.contactPlaceholder;
+        document.getElementById('acceptButton').textContent = currentTranslations.acceptButton;
       }
     </script>
   </body>
