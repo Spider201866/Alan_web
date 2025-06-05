@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- Omit lang="en" so we don’t force English on refresh. -->
+<html>
 <head>
   <meta charset="UTF-8">
-  <!-- Use a standard mobile viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Alan</title>
 
-  <!-- Load html2canvas -->
+  <!-- html2canvas -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-  <!-- Optional module to set favicons/meta (if you have it) -->
+  <!-- Favicons/meta if needed -->
   <script type="module">
     import { faviconAndMetaSetup } from './faviconAndMeta.js';
     faviconAndMetaSetup();
   </script>
 
-  <!-- CSS: external file plus any prefetch or fonts -->
+  <!-- CSS + fonts -->
   <link rel="stylesheet" href="styles.css">
   <link rel="prefetch" href="atomsblue.jpg" as="image">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -28,74 +28,20 @@
     rel="stylesheet"
   >
 
-  <!-- “closer.js” if needed -->
+  <!-- closer.js if you use it -->
   <script type="module" src="closer.js"></script>
 
-  <!-- Inline styling that does not appear in your styles.css -->
+  <!-- Inline styling if not in styles.css -->
   <style>
-    /* The flash-blue class briefly highlights the background in light-blue */
-    .flash-blue {
-      background-color: #cde8ff;
-      transition: background-color 1s ease-out;
-    }
 
-    /* Info button styling inside the side menu or inline */
-    .info-button {
-      margin-left: 5px;
-      background-color: #777;
-      color: #fff;
-      border-radius: 4px;
-      width: 24px;
-      height: 24px;
-      font-size: 16px;
-      font-weight: bold;
-      line-height: 24px;
-      text-align: center;
-      cursor: pointer;
-      border: none;
-    } 
-
-    /* Mini-modal styling */
-    .mini-modal {
-      position: fixed;
-      z-index: 9999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.4);
-    }
-    .modal-content {
-      background-color: #fefefe;
-      margin: 15% auto;
-      max-width: 400px;
-      padding: 20px;
-      border-radius: 6px;
-      position: relative;
-      box-sizing: border-box;
-      overflow: visible;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    .close {
-      float: right;
-      font-size: 24px;
-      cursor: pointer;
-    }
-    .popup-content p {
-      margin: 4px 0;
-      padding: 0;
-      line-height: 1.5;
-    }
-    
   </style>
-</head> 
 
+  <!-- language.js -->
+  <script type="module" src="language.js"></script>
+</head>
 <body>
-  <!-- Page-container for a sticky footer approach if needed -->
   <div class="page-container">
-
-    <!-- HEADER AREA WITH TITLE, SUBTITLE, MENU ICON -->
+    <!-- HEADER -->
     <div class="chatbot-header">
       <div class="flex-spacer"></div>
       <div>
@@ -107,18 +53,12 @@
       <div class="flex-spacer"></div>
     </div>
 
-    <!-- The “hamburger” icon to toggle the side menu -->
+    <!-- Hamburger menu + side menu -->
     <div class="menu-icon"></div>
-
-    <!-- SIDE MENU: hidden by default, toggled by JS changing left:-370px to 0px -->
     <div class="side-menu">
       <div style="display: flex; margin-bottom: 10px;">
-        <div>
-          <button id="instructions-button" class="button red pulse">How to use</button>
-        </div>
+        <button id="instructions-button" class="button red pulse">How to use</button>
       </div>
-
-      <!-- EYE / EAR / SKIN Buttons -->
       <div style="display: flex; margin-bottom: 10px;">
         <button
           id="eye-button"
@@ -146,7 +86,6 @@
         </button>
       </div>
 
-      <!-- Videos / Atoms / Tools / Language -->
       <div style="display: flex; margin-bottom: 10px; align-items: center;">
         <a
           href="https://www.youtube.com/@arclightproject"
@@ -176,7 +115,7 @@
           Tools
         </button>
 
-        <!-- Language Button and custom dropdown -->
+        <!-- Language button / dropdown -->
         <div style="position: relative;">
           <button
             class="button grey"
@@ -188,8 +127,7 @@
               width: 32px;
               height: 32px;
             "
-          >
-          </button>
+          ></button>
           <div
             id="language-dropdown"
             style="
@@ -209,9 +147,7 @@
               line-height: 1.2;
             "
           >
-            <ul
-              style="margin: 0; padding: 0; list-style: none;"
-            >
+            <ul style="margin: 0; padding: 0; list-style: none;">
               <li data-value="en" style="padding: 6px; cursor: pointer;"><strong>English</strong> (English)</li>
               <li data-value="zh" style="padding: 6px; cursor: pointer;"><strong>中文</strong> (Chinese)</li>
               <li data-value="hi" style="padding: 6px; cursor: pointer;"><strong>हिन्दी</strong> (Hindi)</li>
@@ -239,10 +175,9 @@
         </div>
       </div>
 
-      <!-- Arclight / Links / About -->
       <div style="display: flex; margin-bottom: 10px;">
         <a
-          href="https://medicine.st-andrews.ac.uk/arclight/"
+          href="https://arclightprojectshop.co.uk/"
           style="text-decoration: none;"
         >
           <button
@@ -270,22 +205,16 @@
         </button>
       </div>
 
-      <!-- Chat Links, hidden by default -->
+      <!-- Hidden chat links if needed -->
       <div style="display: none; flex-direction: column; width: 100%; margin-top: 20px;">
         <a href="#" data-chat-id="chat1" class="chat-link">Chat 1</a>
         <a href="#" data-chat-id="chat2" class="chat-link">Chat 2</a>
-        <a href="#" data-chat-id="chat3" class="chat-link">Chat 3</a>
-        <a href="#" data-chat-id="chat4" class="chat-link">Chat 4</a>
-        <a href="#" data-chat-id="chat5" class="chat-link">Chat 5</a>
-        <a href="#" data-chat-id="chat6" class="chat-link">Chat 6</a>
+        <!-- etc. -->
       </div>
     </div><!-- end side-menu -->
 
-    <!-- CONTENT WRAPPER WITH LOGO/TEXT/ANIMATION -->
-    <div
-      class="content-wrapper"
-      style="display: flex; flex-direction: column; justify-content: flex-start; min-height: 20vh; font-weight: bold;"
-    >
+    <!-- MAIN CONTENT -->
+    <div class="content-wrapper" style="display: flex; flex-direction: column; justify-content: flex-start; min-height: 20vh; font-weight: bold;">
       <div
         class="logo-and-text-container"
         style="text-align: center; line-height: 1.0; padding-top: 20px;"
@@ -303,8 +232,7 @@
           id="sub-text"
           class="centered-content"
           style="font-size: 16px; color: black; font-weight: 900; padding-bottom: 5px;"
-        >
-        </p>
+        ></p>
       </div>
       <div class="animation-container" id="animationContainer">
         <img
@@ -315,118 +243,124 @@
       </div>
     </div>
 
-    <!-- boxes.html embedded in an <object> -->
     <object
       type="text/html"
       data="boxes.html"
       id="boxesFrame"
       style="width:100%; height:100px; overflow:auto; border:none;"
-    >
-    </object>
+    ></object>
 
-    <!-- MAIN-WRAPPER holds the chatbot and condition details -->
     <div class="main-wrapper">
+      <!-- FLOWISE chatbot -->
       <div class="chatbot-container">
         <flowise-fullchatbot></flowise-fullchatbot>
       </div>
 
-      <!-- Container for the injected muted.html -->
-      <div id="muted-buttons"></div>
-      <script src="muted.js"></script>
-      <script>
-        fetch('muted.html')
-          .then(res => res.text())
-          .then(html => {
-            document.getElementById('muted-buttons').innerHTML = html;
-            initMutedButtons();
-          })
-          .catch(err => console.error('Error loading muted.html:', err));
-      </script>
+<!-- somewhere in home.html, the container: -->
+<div id="muted-buttons"></div>
 
-      <!-- Condition data -->
+<script>
+  function fetchMutedSnippet() {
+    return fetch('muted.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('muted-buttons').innerHTML = html;
+        
+        // Now that #images, #refer, #screenshot are in the DOM:
+        initMutedButtons(); // from muted.js
+
+        // Then do language if you like:
+        const storedLang = localStorage.getItem('preferredLanguage') || 'en';
+        updateMutedButtons(storedLang);
+      })
+      .catch(err => console.error('Error:', err));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchMutedSnippet();
+  });
+
+  window.addEventListener('pageshow', () => {
+    fetchMutedSnippet();
+  });
+</script>
+
+<!-- Then ensure you include muted.js below (non-module) so it is accessible -->
+<script src="muted.js"></script>
+
+
+      <!-- Condition placeholders -->
       <div class="detected-condition"></div>
       <img id="condition-image" alt="" style="max-width: 100%; height: auto;" />
       <p id="condition-description"></p>
     </div><!-- end main-wrapper -->
 
-    <!-- FOOTER with Alan’s disclaimer. This can be sticky if your CSS flex setup in styles.css has:
-         .page-container { display:flex; flex-direction:column; min-height:100vh; }
-         .main-wrapper { flex:1; } -->
     <footer class="chatbot-version">
       Alan can make mistakes, double check everything
     </footer>
-
   </div><!-- end .page-container -->
 
-<!-- The user-info popup, hidden off to the right initially -->
-<div id="popup">
-  <span class="popup-close" onclick="closePopup()">&times;</span>
-  <div class="popup-content" id="popup-content">
-    <!-- We'll fill this with user info or geolocation data in JS -->
-  </div>
+  <!-- POPUP + GEOLOCATION -->
+  <div id="popup">
+    <span class="popup-close" onclick="closePopup()">×</span>
+    <div class="popup-content" id="popup-content"></div>
 
-  <!-- Geolocation UI, if used, also inside the popup -->
-  <div style="text-align: center; margin-top: 10px; position: relative;">
-    <button id="geolocation-button" class="button grey" style="font-size: 14px;">Check Location</button>
-    <button 
-      id="geo-info-button"
-      style="
-        background-color: #fff;
-        color: #000;
-        border: 1px solid #000;
-        border-radius: 8px;
-        padding: 4px 8px;
-        cursor: pointer;
-        font-size: 14px;
-      "
-    >
-      i
-    </button>
-    <p
-      id="location-info"
-      style="display:none; margin-top: 5px; font-size:12px;"
-    ></p>
-    <div 
-      id="geo-info-popup" 
-      style="
-        display: none;
-        position: absolute;
-        left: 50%;
-        top: 120%;
-        transform: translateX(-50%);
-        width: 250px;
-        max-width: none;
-        background: #fefefe;
-        border: 1px solid #000;
-        padding: 10px;
-        border-radius: 10px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      "
-    >
-      <p id="geoInfoText" style="font-size: 14px; margin: 0;">
-        Additional info...
-      </p>
+    <div style="text-align: center; margin-top: 10px; position: relative;">
+      <button id="geolocation-button" class="button grey" style="font-size: 14px;">Check Location</button>
+      <button 
+        id="geo-info-button"
+        style="
+          background-color: #fff;
+          color: #000;
+          border: 1px solid #000;
+          border-radius: 8px;
+          padding: 4px 8px;
+          cursor: pointer;
+          font-size: 14px;
+        "
+      >
+        i
+      </button>
+      <p
+        id="location-info"
+        style="display:none; margin-top: 5px; font-size:12px;"
+      ></p>
+      <div 
+        id="geo-info-popup" 
+        style="
+          display: none;
+          position: absolute;
+          left: 50%;
+          top: 120%;
+          transform: translateX(-50%);
+          width: 250px;
+          max-width: none;
+          background: #fefefe;
+          border: 1px solid #000;
+          padding: 10px;
+          border-radius: 10px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+          z-index: 10; /* Ensure it's above other elements in the popup */
+        "
+      >
+        <p id="geoInfoText" style="font-size: 14px; margin: 0;">
+          Additional info...
+        </p>
+      </div>
     </div>
   </div>
-</div>
 
-
-  <!-- SINGLE SCRIPT BLOCK AT BOTTOM, TYPE=MODULE -->
+  <!-- SINGLE SCRIPT BLOCK -->
   <script type="module">
-    /* ============================================
-       MODULE IMPORTS
-    =============================================*/
     import { translations } from './language.js';
     import { faviconAndMetaSetup } from './faviconAndMeta.js';
     import './closer.js';
     import './listener-module.js';
 
-    // If needed, re-run your favicon setup
+    // Re-run favicon if needed
     faviconAndMetaSetup();
 
-    /* ============================================
-       GLOBAL DOM REFERENCES
-    =============================================*/
+    // Grab references
     const menuIcon = document.querySelector('.menu-icon');
     const sideMenu = document.querySelector('.side-menu');
     const instructionsButton = document.getElementById('instructions-button');
@@ -435,34 +369,148 @@
     const conditionImage = document.getElementById('condition-image');
     const popup = document.getElementById('popup');
     const popupClose = document.querySelector('.popup-close');
-    const popupContent = document.getElementById('popup-content');
-    const additionalText = document.getElementById('additional-text');
-    const subText = document.getElementById('sub-text');
     const chatbotVersion = document.querySelector('.chatbot-version');
-    const mainContent = document.getElementById('mainContent');
+    const boxesFrameEl = document.getElementById('boxesFrame');
 
-    // For user info
-    const storedName = localStorage.getItem('name') || 'User';
-    const classification = localStorage.getItem('classification') || 'Unknown';
-    const roleClassification = localStorage.getItem('roleClassification') || '';
-    const iso_a3 = localStorage.getItem('iso_a3') || 'Not set';
-
-    // Reset side menu on page show
-      window.addEventListener('pageshow', () => {
+    // Side menu resets on pageshow
+    window.addEventListener('pageshow', () => {
       sideMenu.style.left = '-370px';
       menuIcon.classList.remove('open');
-    });
-
-    // Re-fetch agent
-    window.addEventListener('pageshow', () => {
-      // sideMenu.style.left = '-300px'; // Remove or comment out this line
       selectAgentAndFetch();
+      pushLocalStorageToServer();
     });
 
+    // If user re-focuses tab, we push again
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        pushLocalStorageToServer();
+      }
+    });
 
-    /* ============================================
-       HELPER FUNCTIONS
-    =============================================*/
+    // If the page was loaded from back/forward cache:
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) {
+        fetchMutedSnippet();
+      }
+    });
+
+    // DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', main);
+
+    // MAIN function
+    function main() {
+      const storedLang = localStorage.getItem('preferredLanguage') || 'en';
+      updateLanguageDisplays(storedLang);
+      updateMutedButtons(storedLang);
+
+      setupMenuIcon();
+      setupInstructionsButton();
+      setupNameIcon();
+      showGreeting();
+      setupGeolocationButton();
+      setupGeoInfoButton(); // <-- Called here
+
+      if (localStorage.getItem('instructionsClicked') === 'true') {
+        updateButtonStyle(instructionsButton);
+      }
+
+      if (conditionImage) {
+        conditionImage.addEventListener('click', () => toggleZoom(conditionImage));
+      } 
+    }
+
+    /* ================== LANGUAGE DROPDOWN =================== */
+    languageButton.addEventListener('click', () => {
+      languageDropdown.style.display = (languageDropdown.style.display === 'none') ? 'block' : 'none';
+    });
+    languageDropdown.querySelectorAll('li').forEach(item => {
+      item.addEventListener('click', () => {
+        const chosenLang = item.getAttribute('data-value');
+        localStorage.setItem('preferredLanguage', chosenLang);
+        updateLanguageDisplays(chosenLang);
+        updateMutedButtons(chosenLang); 
+        languageDropdown.style.display = 'none';
+      });
+    });
+
+    /* ================== MENU ICON =================== */
+    function setupMenuIcon() {
+      menuIcon.addEventListener('click', function() {
+        this.classList.toggle('open');
+        sideMenu.style.left = (sideMenu.style.left === '0px') ? '-370px' : '0px';
+      });
+    }
+
+    /* ================== INSTRUCTIONS =================== */
+    function setupInstructionsButton() {
+      instructionsButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        localStorage.setItem('instructionsClicked', 'true');
+        updateButtonStyle(this);
+        setTimeout(() => {
+          window.location.href = 'instructions.html';
+        }, 300);
+      });
+    }
+    function updateButtonStyle(button) {
+      button.classList.remove('pulse');
+      button.style.backgroundColor = 'grey';
+      button.style.color = 'white';
+    }
+
+/* =====================================
+   NAME ICON & POPUP SETUP
+===================================== */
+function setupNameIcon() {
+  const storedName = localStorage.getItem('name') || 'User';
+  const initialLetter = storedName.charAt(0).toUpperCase();
+
+  const nameIcon = document.createElement('div');
+  nameIcon.className = 'name-icon';
+  nameIcon.textContent = initialLetter;
+  document.querySelector('.chatbot-header').appendChild(nameIcon);
+
+  nameIcon.addEventListener('click', togglePopup);
+  popupClose.addEventListener('click', closePopup);
+}
+
+function togglePopup() {
+  if (popup.style.right === '0px') {
+    closePopup();
+  } else {
+    openPopup();
+  }
+}
+
+function openPopup() {
+  document.getElementById('popup-content').innerHTML = buildPopupContent();
+  popup.style.right = '0';
+}
+
+function closePopup() {
+  popup.style.right = '-350px';
+  // Also hide the geo info popup if it's open
+  const geoInfoPopup = document.getElementById('geo-info-popup');
+  if (geoInfoPopup) {
+      geoInfoPopup.style.display = 'none';
+  }
+}
+
+
+    /* ================== GREETING =================== */
+    function showGreeting() {
+      const name = localStorage.getItem('name');
+      const subTextEl = document.getElementById('sub-text');
+      if (name) {
+        let firstName = name.split(' ')[0];
+        firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+        subTextEl.innerText = `${firstName}, what can I help with?`;
+      } else {
+        subTextEl.innerText = 'what can I help with?';
+      }
+    }
+
+    /* ================== ZOOM IMAGE =================== */
     function toggleZoom(image) {
       if (image.style.height === '200px') {
         image.style.height = 'auto';
@@ -474,42 +522,22 @@
         image.style.cursor = 'zoom-in';
       }
     }
-        function openPopup() {
-      popupContent.innerHTML = buildPopupContent();
-      // Only change the 'right' to bring it onscreen
-      popup.style.right = '0';
-    }
 
-    function closePopup() {
-      // Slide it offscreen again
-      popup.style.right = '-350px';
-    }
-
+    /* ================== POPUP CONTENT =================== */
     function buildPopupContent() {
       const lang = localStorage.getItem('preferredLanguage') || 'en';
       const name = localStorage.getItem('name') || 'Not set';
-      const role = localStorage.getItem('selectedJobRole') || 'Not set';
+      const role = localStorage.getItem('selectedJobRole') || 'Not set'; // This now holds the "Aim"
       const experience = localStorage.getItem('selectedExperience') || 'Not set';
       const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
       const longitude = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
       const country = localStorage.getItem('country') || 'Not set';
       const iso2 = localStorage.getItem('iso2') || 'Not set';
       const classification = localStorage.getItem('classification') || 'Unknown';
-      const roleClass = localStorage.getItem('roleClassification') || '';
+      const roleClass = localStorage.getItem('roleClassification') || ''; // This is (M) or (P)
       const area = localStorage.getItem('area') || 'Not set';
       const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
       const selectedAgent = localStorage.getItem('selectedAgent') || 'Unknown';
-      const focusRaw = localStorage.getItem('selectedFocus');
-      let aims;
-      if (focusRaw) {
-        try {
-          aims = JSON.parse(focusRaw).join(', ');
-        } catch {
-          aims = 'Not set';
-        }
-      } else {
-        aims = 'Not set';
-      }
 
       const now = new Date();
       const day = String(now.getDate()).padStart(2, '0');
@@ -521,309 +549,54 @@
       const currDT = `${day}/${month}/${year}, ${hours}:${mins}:${secs}`;
 
       return `
-        <h2>${translations[lang].userInfoTitle}</h2>
-        <p><strong>${translations[lang].userName}:</strong> ${name}</p>
-        <p><strong>${translations[lang].userContact}:</strong> ${contactInfo}</p>
-        <p><strong>${translations[lang].userRole}:</strong> ${role}, ${experience}, ${roleClass}</p>
-        <p><strong>${translations[lang].userAims}:</strong> ${aims}</p>
+        <h2>${translations[lang].userInfoTitle || 'User Information'}</h2>
+        <p><strong>${translations[lang].userName || 'Name'}:</strong> ${name}</p>
+        <p><strong>${translations[lang].userContact || 'Contact'}:</strong> ${contactInfo}</p>
+        <p><strong>${translations[lang].userAimsPopupLabel || 'Aims'}:</strong> ${role}, ${experience}${roleClass ? ', ' + roleClass : ''}</p> 
         <p id="latLongSection" style="color: grey;">
-          <strong>${translations[lang].userLatLong}:</strong> ${latitude}, ${longitude}
+          <strong>${translations[lang].userLatLong || 'Lat/Long'}:</strong> ${latitude}, ${longitude}
         </p>
         <p id="areaSection" style="color: grey;">
-          <strong>${translations[lang].userArea}:</strong> ${area}
+          <strong>${translations[lang].userArea || 'Area'}:</strong> ${area}
         </p>
         <p id="countrySection" style="color: grey;">
-          <strong>${translations[lang].userCountry}:</strong> ${country}, ${iso2}, ${classification}
+          <strong>${translations[lang].userCountry || 'Country'}:</strong> ${country}, ${iso2}, ${classification}
         </p>
         <p style="color: grey;">
-          <em><strong>${translations[lang].userVersion}:</strong> 1.0, ${selectedAgent}</em>
+          <em><strong>${translations[lang].userVersion || 'Version'}:</strong> 1.0, ${selectedAgent}</em>
         </p>
         <p style="color: grey;">
-          <em><strong>${translations[lang].userDateTime}:</strong> ${currDT}</em>
+          <em><strong>${translations[lang].userDateTime || 'Date/Time'}:</strong> ${currDT}</em>
         </p>
       `;
     }
-    function flashBlueOnUpdate() {
-      const latLongEl = document.getElementById('latLongSection');
-      const areaEl = document.getElementById('areaSection');
-      const countryEl = document.getElementById('countrySection');
-      if (latLongEl) latLongEl.classList.add('flash-blue');
-      if (areaEl) areaEl.classList.add('flash-blue');
-      if (countryEl) countryEl.classList.add('flash-blue');
-      setTimeout(() => {
-        if (latLongEl) latLongEl.classList.remove('flash-blue');
-        if (areaEl) areaEl.classList.remove('flash-blue');
-        if (countryEl) countryEl.classList.remove('flash-blue');
-      }, 2000);
-    }
-    function containsEastAsianSurname(nameParts) {
-      const eastAsianSurnames = [
-        'Li','Wang','Zhang','Liu','Chen','Yang','Huang','Zhao','Wu','Zhou','Xu','Sun','Ma','Zhu','Hu','Guo','He','Gao','Lin','Luo',
-        'Zheng','Liang','Song','Tang','Han','Feng','Yu','Dong','Xiao','Cheng','Cao','Yuan','Deng','Xue','Fu','Shen','Peng','Lu','Jiang',
-        'Cui','Wei','Kang','Qian','Yin','Hao','Fan','Bai','Tan','Meng','Qin','Xiong','Shi','Shao','Mao','Pan','Tian','Dai','Fang','Qiu',
-        'Ruan','Gong','Mo','Jin','Bian','Chang','Liao','Zhuo','Cen','Zuo','Hong','Ming','Zhan','Yao','Yan','Shan','Chai','Ji','Gu','Lei',
-        'Ding','Wan','Mei','Qi','Pei','Miao','Jing','Ge','Lai','You','Bao','Mi','Duan','Kou','Ning','Pi','Shang','Xiang','Sato','Suzuki',
-        'Takahashi','Tanaka','Watanabe','Ito','Yamamoto','Nakamura','Kobayashi','Kato','Yoshida','Yamada','Sasaki','Yamaguchi','Matsumoto',
-        'Inoue','Kimura','Shimizu','Hayashi','Saito','Sakamoto','Shibata','Yokoyama','Ueda','Mori','Endo','Fujita','Okada','Ishikawa',
-        'Nakajima','Kaneko','Maeda','Harada','Iwasaki','Murakami','Otsuka','Tsuchiya','Miyazaki','Kojima','Kudo','Sakai','Takeuchi','Ishii',
-        'Fukuda','Miyamoto','Ueno','Sugiyama','Hirano','Arai','Masuda','Tamura','Oshima','Hara','Matsuda','Ono','Matsuoka','Ishida','Morita',
-        'Takagi','Yoshikawa','Taniguchi','Takada','Fujimoto','Kinoshita','Matsuo','Oda','Shinoda','Sugawara','Kuroda','Ando','Hattori','Nakano',
-        'Hosokawa','Miyahara','Shimada','Kawaguchi','Hamamoto','Yamashita','Okamura','Higuchi','Nagano','Tsuda','Otsubo','Ishizuka','Seki',
-        'Kubo','Miyake','Mizuno','Nakamoto','Nakao','Fukushima','Nakagawa','Kawai','Onishi','Koyama','Kitamura','Kuwahara','Hasegawa','Aoyama',
-        'Matsushima','Toyoda','Arakawa','Kondo','Kitagawa','Miyata','Uchida','Komatsu','Nagata','Yasuda','Oikawa','Kashiwagi','Higashi','Fukui',
-        'Kishimoto','Tsuchida','Hoshino','Ueno','Sugiyama'
-      ];
-      return nameParts.some(part => eastAsianSurnames.includes(part));
-    }
-    function updateLanguageDisplays(lang) {
-      document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
-      document.getElementById('good-history').textContent = translations[lang].goodHistory;
-      document.getElementById('examine-well').textContent = translations[lang].examineWell;
-      document.getElementById('use-arclight').textContent = translations[lang].useArclight;
-      chatbotVersion.textContent = translations[lang].alanMistakes;
+    
+    /* ================== GEO INFO BUTTON & POPUP =================== */
+    function setupGeoInfoButton() {
+      const geoInfoButton = document.getElementById('geo-info-button');
+      const geoInfoPopup = document.getElementById('geo-info-popup');
 
-      document.getElementById('instructions-button').textContent = translations[lang].instructionsButton;
-      document.getElementById('eye-button').textContent = translations[lang].eyeButton;
-      document.getElementById('ear-button').textContent = translations[lang].earButton;
-      document.getElementById('skin-button').textContent = translations[lang].skinButton;
-      document.getElementById('videos-button').textContent = translations[lang].videosButton;
-      document.getElementById('atoms-button').textContent = translations[lang].atomsButton;
-      document.getElementById('tools-button').textContent = translations[lang].toolsButton;
-      document.getElementById('arclight-project-button').textContent = translations[lang].arclightProjectButton;
-      document.getElementById('links-button').textContent = translations[lang].linksButton;
-      document.getElementById('about-button').textContent = translations[lang].aboutButton;
-
-      const geoButton = document.getElementById('geolocation-button');
-      if (geoButton) {
-        geoButton.textContent = translations[lang].geolocationButton;
-      }
-      const geoInfoEl = document.getElementById('geoInfoText');
-      if (geoInfoEl) {
-        geoInfoEl.textContent = translations[lang].geoInfoText;
-      }
-      const name = localStorage.getItem('name') || '';
-      if (name) {
-        let firstName = name.split(' ')[0];
-        firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-        document.getElementById('sub-text').textContent = `${firstName}, ${translations[lang].howCanIHelp}`;
-      } else {
-        document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
-      }
-      const boxesFrame = document.getElementById('boxesFrame');
-      if (boxesFrame && boxesFrame.contentDocument) {
-        const boxesDoc = boxesFrame.contentDocument;
-        if (boxesDoc.getElementById('eyeMarqueeLine1a')) {
-          boxesDoc.getElementById('eyeMarqueeLine1a').textContent = translations[lang].eyeMarqueeLine1;
-          boxesDoc.getElementById('eyeMarqueeLine2a').textContent = translations[lang].eyeMarqueeLine2;
-          boxesDoc.getElementById('eyeMarqueeLine3a').textContent = translations[lang].eyeMarqueeLine3;
-          boxesDoc.getElementById('eyeMarqueeLine4a').textContent = translations[lang].eyeMarqueeLine4;
-          boxesDoc.getElementById('eyeMarqueeLine5a').textContent = translations[lang].eyeMarqueeLine5;
-          boxesDoc.getElementById('eyeMarqueeLine6a').textContent = translations[lang].eyeMarqueeLine6;
-          boxesDoc.getElementById('eyeMarqueeLine7a').textContent = translations[lang].eyeMarqueeLine7;
-
-          boxesDoc.getElementById('eyeMarqueeLine1b').textContent = translations[lang].eyeMarqueeLine1;
-          boxesDoc.getElementById('eyeMarqueeLine2b').textContent = translations[lang].eyeMarqueeLine2;
-          boxesDoc.getElementById('eyeMarqueeLine3b').textContent = translations[lang].eyeMarqueeLine3;
-          boxesDoc.getElementById('eyeMarqueeLine4b').textContent = translations[lang].eyeMarqueeLine4;
-          boxesDoc.getElementById('eyeMarqueeLine5b').textContent = translations[lang].eyeMarqueeLine5;
-          boxesDoc.getElementById('eyeMarqueeLine6b').textContent = translations[lang].eyeMarqueeLine6;
-          boxesDoc.getElementById('eyeMarqueeLine7b').textContent = translations[lang].eyeMarqueeLine7;
-        }
-        if (boxesDoc.getElementById('earMarqueeLine1a')) {
-          boxesDoc.getElementById('earMarqueeLine1a').textContent = translations[lang].earMarqueeLine1;
-          boxesDoc.getElementById('earMarqueeLine2a').textContent = translations[lang].earMarqueeLine2;
-          boxesDoc.getElementById('earMarqueeLine3a').textContent = translations[lang].earMarqueeLine3;
-          boxesDoc.getElementById('earMarqueeLine4a').textContent = translations[lang].earMarqueeLine4;
-          boxesDoc.getElementById('earMarqueeLine5a').textContent = translations[lang].earMarqueeLine5;
-          boxesDoc.getElementById('earMarqueeLine6a').textContent = translations[lang].earMarqueeLine6;
-          boxesDoc.getElementById('earMarqueeLine7a').textContent = translations[lang].earMarqueeLine7;
-
-          boxesDoc.getElementById('earMarqueeLine1b').textContent = translations[lang].earMarqueeLine1;
-          boxesDoc.getElementById('earMarqueeLine2b').textContent = translations[lang].earMarqueeLine2;
-          boxesDoc.getElementById('earMarqueeLine3b').textContent = translations[lang].earMarqueeLine3;
-          boxesDoc.getElementById('earMarqueeLine4b').textContent = translations[lang].earMarqueeLine4;
-          boxesDoc.getElementById('earMarqueeLine5b').textContent = translations[lang].earMarqueeLine5;
-          boxesDoc.getElementById('earMarqueeLine6b').textContent = translations[lang].earMarqueeLine6;
-          boxesDoc.getElementById('earMarqueeLine7b').textContent = translations[lang].earMarqueeLine7;
-        } 
-      }
-    }
-    function updateButtonStyle(button) {
-      button.classList.remove('pulse');
-      button.style.backgroundColor = 'grey';
-      button.style.color = 'white';
-    }
-
-    /* ============================================
-       MAIN INIT
-    =============================================*/
-    document.addEventListener('DOMContentLoaded', main);
-
-    function main() {
-  console.log('DOMContentLoaded event fired');
-
-  const storedLang = localStorage.getItem('preferredLanguage') || 'en';
-  updateLanguageDisplays(storedLang);
-
-  setupMenuIcon();
-  setupInstructionsButton();
-  setupNameIcon();
-
-  if (localStorage.getItem('instructionsClicked') === 'true') {
-    updateButtonStyle(instructionsButton);
-  }
-  showGreeting();
-  conditionImage.addEventListener('click', () => toggleZoom(conditionImage));
-  selectAgentAndFetch();
-  setupGeolocationButton();
-}
-
-
-    // Hide animations when chatbot is clicked
-    function hideAnimations() {
-      const animationContainer = document.getElementById('animationContainer');
-      const boxesFrame = document.getElementById('boxesFrame');
-      const subTextEl = document.getElementById('sub-text');
-      if (animationContainer) {
-        animationContainer.style.display = 'none';
-      }
-      if (boxesFrame) {
-        boxesFrame.style.display = 'none';
-      }
-      if (subTextEl) {
-        subTextEl.style.display = 'none';
-      }
-    }
-    const chatbotContainer = document.querySelector('.chatbot-container');
-    if (chatbotContainer) {
-      chatbotContainer.addEventListener('click', hideAnimations);
-    }
-    const chatbotElement = document.querySelector('flowise-fullchatbot');
-    if (chatbotElement && chatbotElement.shadowRoot) {
-      const chatInput = chatbotElement.shadowRoot.querySelector('input');
-      if (chatInput) {
-        chatInput.addEventListener('focus', hideAnimations);
-      }
-    }
-
-    // Menu icon toggling side menu
-    function setupMenuIcon() {
-    menuIcon.addEventListener('click', function() {
-      this.classList.toggle('open');
-      sideMenu.style.left = (sideMenu.style.left === '0px') ? '-370px' : '0px';
-    });
-  }
-
-    // Language dropdown
-    languageButton.addEventListener('click', () => {
-      languageDropdown.style.display = (languageDropdown.style.display === 'none') ? 'block' : 'none';
-    });
-    const boxesFrameEl = document.getElementById('boxesFrame');
-    if (boxesFrameEl) {
-      boxesFrameEl.addEventListener('load', () => {
-        console.log('boxes.html finished loading.');
-        const currentLang = localStorage.getItem('preferredLanguage') || 'en';
-        updateLanguageDisplays(currentLang);
-      });
-    }
-    languageDropdown.querySelectorAll('li').forEach(item => {
-      item.addEventListener('click', () => {
-        const chosenLang = item.getAttribute('data-value');
-        localStorage.setItem('preferredLanguage', chosenLang);
-        updateLanguageDisplays(chosenLang);
-        languageDropdown.style.display = 'none';
-      });
-    });
-    function setupInstructionsButton() {
-      instructionsButton.addEventListener('click', function(event) {
-        event.preventDefault();
-        localStorage.setItem('instructionsClicked', 'true');
-        updateButtonStyle(this);
-        setTimeout(() => {
-          window.location.href = 'instructions.html';
-        }, 300);
-      });
-    }
-    function setupNameIcon() {
-      const initialLetter = storedName.charAt(0).toUpperCase();
-      const nameIcon = document.createElement('div');
-      nameIcon.className = 'name-icon';
-      nameIcon.textContent = initialLetter;
-      document.querySelector('.chatbot-header').appendChild(nameIcon);
-      nameIcon.addEventListener('click', () => {
-        if (popup.style.display === 'block' && popup.style.right === '0px') {
-          closePopup();
-        } else {
-          openPopup();
-        }
-      });
-      popupClose.addEventListener('click', closePopup);
-    }
-    function showGreeting() {
-      let name = localStorage.getItem('name');
-      const subTextEl = document.getElementById('sub-text');
-      if (name) {
-        let nameParts = name.split(' ');
-        let firstName = '';
-        if (containsEastAsianSurname(nameParts)) {
-          firstName = nameParts[nameParts.length - 1];
-        } else {
-          firstName = nameParts[0];
-        }
-        firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-        subTextEl.innerText = `${firstName}, what can I help with??`;
-      } else {
-        console.error('Name not found in local storage');
-        subTextEl.innerText = 'what can I help with?';
-      }
-    }
-    async function fetchAreaFromLatLong(lat, lng) {
-      try {
-        const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`;
-        const resp = await fetch(url);
-        const data = await resp.json();
-        const cityName = data.city || data.locality || data.principalSubdivision || 'Unknown';
-        return cityName;
-      } catch (err) {
-        console.warn('Area fetch failed:', err);
-        return 'Unknown';
-      }
-    }
-    function updateServerGeolocation() {
-      const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
-      const updatedData = {
-        sessionId: sessionId,
-        latitude: localStorage.getItem('latitude'),
-        longitude: localStorage.getItem('longitude'),
-        area: localStorage.getItem('area'),
-        name: localStorage.getItem('name'),
-        role: localStorage.getItem('selectedJobRole'),
-        experience: localStorage.getItem('selectedExperience'),
-        focus: localStorage.getItem('selectedFocus')
-          ? JSON.parse(localStorage.getItem('selectedFocus'))
-          : [],
-        country: localStorage.getItem('country'),
-        iso2: localStorage.getItem('iso2'),
-        classification: localStorage.getItem('classification'),
-        roleClassification: localStorage.getItem('roleClassification'),
-        contactInfo: localStorage.getItem('contactInfo'),
-        version: localStorage.getItem('version') || '1.0',
-        selectedAgent: localStorage.getItem('selectedAgent'),
-        dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
-      };
-      fetch('https://alan.up.railway.app/record-info', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedData)
-      })
-        .then(response => response.text())
-        .then(data => {
-          console.log('Server updated with geolocation data:', data);
-        })
-        .catch(err => {
-          console.error('Error updating server:', err);
+      if (geoInfoButton && geoInfoPopup) {
+        geoInfoButton.addEventListener('click', (event) => {
+          event.stopPropagation(); 
+          if (geoInfoPopup.style.display === 'none' || geoInfoPopup.style.display === '') {
+            geoInfoPopup.style.display = 'block';
+          } else {
+            geoInfoPopup.style.display = 'none';
+          }
         });
+
+        document.addEventListener('click', (event) => {
+          if (geoInfoPopup.style.display === 'block' &&
+              event.target !== geoInfoButton &&
+              !geoInfoPopup.contains(event.target)) {
+            geoInfoPopup.style.display = 'none';
+          }
+        });
+      }
     }
+
+    /* ================== GEOLOCATION =================== */
     function setupGeolocationButton() {
       const geolocationButton = document.getElementById('geolocation-button');
       const locationInfo = document.getElementById('location-info');
@@ -838,14 +611,18 @@
               localStorage.setItem('longitude', longitude);
               locationInfo.innerText = `Updated location: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
               locationInfo.style.display = 'block';
+
               const areaName = await fetchAreaFromLatLong(latitude, longitude);
               localStorage.setItem('area', areaName);
-              popupContent.innerHTML = buildPopupContent();
+
+              document.getElementById('popup-content').innerHTML = buildPopupContent();
               flashBlueOnUpdate();
               updateServerGeolocation();
+
               setTimeout(() => {
                 geolocationButton.style.backgroundColor = 'grey';
-              }, 2000);
+                locationInfo.style.display = 'none'; 
+              }, 3000);
             },
             (error) => {
               switch (error.code) {
@@ -853,7 +630,7 @@
                   locationInfo.innerText = 'User denied geolocation.';
                   break;
                 case error.POSITION_UNAVAILABLE:
-                  locationInfo.innerText = 'Location information unavailable.';
+                  locationInfo.innerText = 'Location info unavailable.';
                   break;
                 case error.TIMEOUT:
                   locationInfo.innerText = 'Request timed out.';
@@ -864,188 +641,44 @@
               locationInfo.style.display = 'block';
               setTimeout(() => {
                 geolocationButton.style.backgroundColor = 'grey';
-              }, 2000);
+                locationInfo.style.display = 'none';
+              }, 3000);
             }
           );
         } else {
-          locationInfo.innerText = 'Geolocation not supported by this browser.';
+          locationInfo.innerText = 'Geolocation not supported.';
           locationInfo.style.display = 'block';
           setTimeout(() => {
             geolocationButton.style.backgroundColor = 'grey';
-          }, 2000);
+            locationInfo.style.display = 'none';
+          }, 3000);
         }
       });
     }
-
-    /* ============================================
-       AGENT SELECTION
-    =============================================*/
-    function selectAgentAndFetch() {
-      let chatbotModuleUrl = '';
-      let selectedAgent = 'Unknown';
-      const classification = localStorage.getItem('classification') || 'Unknown';
-      const roleClass = localStorage.getItem('roleClassification') || '';
-
-      if (roleClass === ' (M)' && ['HI','MI'].includes(classification)) {
-        chatbotModuleUrl = './agent1-chatbot-module.js';
-        selectedAgent = 'Agent 1';
-      } else if (roleClass === ' (M)' && ['LI','VLI'].includes(classification)) {
-        chatbotModuleUrl = './agent3-chatbot-module.js';
-        selectedAgent = 'Agent 3';
-      } else if (roleClass === ' (P)' && ['HI','MI'].includes(classification)) {
-        chatbotModuleUrl = './agent2-chatbot-module.js';
-        selectedAgent = 'Agent 2';
-      } else if (roleClass === ' (P)' && ['LI','VLI'].includes(classification)) {
-        chatbotModuleUrl = './agent4-chatbot-module.js';
-        selectedAgent = 'Agent 4';
-      }
-      localStorage.setItem('selectedAgent', selectedAgent);
-
-      if (!localStorage.getItem('sessionId')) {
-        localStorage.setItem('sessionId', Date.now().toString());
-      }
-      const sessionId = localStorage.getItem('sessionId');
-      console.log('Classification:', classification);
-      console.log('Role Classification:', roleClass);
-      console.log('Selected Agent:', selectedAgent);
-
-      if (localStorage.getItem('infoRecorded') === 'true' && selectedAgent !== 'Unknown') {
-        updateServerWithAgent(selectedAgent, sessionId);
-      }
-      if (chatbotModuleUrl) {
-        import(chatbotModuleUrl)
-          .then(module => {
-            const initChatbot = module.initChatbot || (module.default && module.default.initChatbot);
-            if (typeof initChatbot === 'function') {
-              initChatbot();
-              console.log(`Loaded module: ${chatbotModuleUrl}`);
-            } else {
-              console.error('Error loading chatbot module: initChatbot function not found.');
-            }
-          })
-          .catch(error => {
-            console.error('Error loading chatbot module:', error);
-          });
-      } else {
-        console.error('No matching chatbot module found.');
+    async function fetchAreaFromLatLong(lat, lng) {
+      try {
+        const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`;
+        const resp = await fetch(url);
+        const data = await resp.json();
+        return data.city || data.locality || data.principalSubdivision || 'Unknown';
+      } catch (err) {
+        console.warn('Area fetch failed:', err);
+        return 'Unknown';
       }
     }
-    function updateServerWithAgent(selectedAgent, sessionId) {
-      const name = localStorage.getItem('name') || '';
-      const role = localStorage.getItem('selectedJobRole') || '';
-      const experience = localStorage.getItem('selectedExperience') || '';
-      const focusRaw = localStorage.getItem('selectedFocus');
-      let focusArray;
-      if (focusRaw) {
-        try {
-          focusArray = JSON.parse(focusRaw);
-        } catch {
-          focusArray = [];
-        }
-      } else {
-        focusArray = [];
-      }
-      const latitude = localStorage.getItem('latitude') || '';
-      const longitude = localStorage.getItem('longitude') || '';
-      const country = localStorage.getItem('country') || '';
-      const iso2 = localStorage.getItem('iso2') || localStorage.getItem('iso_2') || '';
-      const classification = localStorage.getItem('classification') || '';
-      const roleClassification = localStorage.getItem('roleClassification') || '';
-      const area = localStorage.getItem('area') || '';
-      const contactInfo = localStorage.getItem('contactInfo') || '';
-      const version = localStorage.getItem('version') || '1.0';
-      const dateTime = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
-
-      const updatedUserInfo = {
-        sessionId,
-        name,
-        role,
-        experience,
-        focus: focusArray,
-        latitude,
-        longitude,
-        country,
-        iso2,
-        classification,
-        roleClassification,
-        area,
-        contactInfo,
-        version,
-        dateTime,
-        selectedAgent
-      };
-      fetch('https://alan.up.railway.app/record-info', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedUserInfo)
-      })
-        .then(response => response.text())
-        .then(data => {
-          console.log('Updated Successfully:', data);
-        })
-        .catch(error => {
-          console.error('Error updating data:', error);
-        });
+    function flashBlueOnUpdate() {
+      const latLongEl = document.getElementById('latLongSection');
+      const areaEl = document.getElementById('areaSection');
+      const countryEl = document.getElementById('countrySection');
+      if (latLongEl) latLongEl.classList.add('flash-blue');
+      if (areaEl) areaEl.classList.add('flash-blue');
+      if (countryEl) countryEl.classList.add('flash-blue');
+      setTimeout(() => {
+        latLongEl?.classList.remove('flash-blue');
+        areaEl?.classList.remove('flash-blue');
+        countryEl?.classList.remove('flash-blue');
+      }, 2000);
     }
-    function pushLocalStorageToServer() {
-      const selectedAgent = localStorage.getItem('selectedAgent') || 'Agent 1';
-      const sessionId = localStorage.getItem('sessionId') || 'no-session-id';
-      updateServerWithAgent(selectedAgent, sessionId);
-    }
-
-    // Trigger on each page load/refresh
-    window.addEventListener('pageshow', () => {
-      pushLocalStorageToServer();
-    });
-    // Also trigger whenever the tab becomes visible again
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) {
-        console.log('Page became visible again. pushLocalStorageToServer()');
-        pushLocalStorageToServer();
-      }
-    });
-
-    // Geo popup events
-    const geoInfoButton = document.getElementById('geo-info-button');
-    const geoInfoPopup = document.getElementById('geo-info-popup');
-    geoInfoButton.addEventListener('mousedown', showInfoPopup);
-    geoInfoButton.addEventListener('mouseup', hideInfoPopup);
-    geoInfoButton.addEventListener('mouseleave', hideInfoPopup);
-    geoInfoButton.addEventListener('touchstart', showInfoPopup);
-    geoInfoButton.addEventListener('touchend', hideInfoPopup);
-    geoInfoButton.addEventListener('touchcancel', hideInfoPopup);
-    function showInfoPopup() {
-      geoInfoPopup.style.display = 'block';
-    }
-    function hideInfoPopup() {
-      geoInfoPopup.style.display = 'none';
-    }
-
-    // Load a default agent if that is your fallback
-  // Keep your code that forcibly reloads if the page is shown from cache:
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted) {
-      // We need this so your menu does not break
-      window.location.reload();
-    }
-  });
-
-  // On DOMContentLoaded, first re-apply the user’s chosen language, 
-  // then import your agent script.
-  document.addEventListener('DOMContentLoaded', () => {
-    // Step A: Re-apply language from localStorage (so we are not stuck in English)
-    const storedLang = localStorage.getItem('preferredLanguage') || 'en';
-    updateLanguageDisplays(storedLang);
-
-    // Step B: Then (and only then) import your default agent
-    import('./agent1-chatbot-module.js')
-      .then(module => {
-        module.initChatbot();
-      })
-      .catch(error => console.error('Error loading agent module:', error));
-  });
-
-
   </script>
 </body>
 </html>

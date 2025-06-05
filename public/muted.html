@@ -1,30 +1,18 @@
+<!-- muted.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Page title -->
-  <title>Muted Buttons with Icons</title>
-  
-  <!-- Inline CSS to style the buttons and popups -->
+  <title>Muted Buttons</title>
   <style>
-    body {
-      background: white;
-      font-size: 7pt; 
-      font-family: "Calibri", sans-serif;
-      margin: 20px;
-    }
-    
-    /* Container for all buttons, arranged in a row */
+    /* Same styling you already have */
     .button-container {
       display: flex;
       gap: 10px;
       align-items: center;
       justify-content: center;
-      padding-bottom: 5px; /* This ensures extra spacing at bottom */
+      padding-bottom: 5px;
     }
-
-    
-    /* Base styling for each button (grey text, light border, rounded corners) */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -37,124 +25,90 @@
       color: grey;
       margin: 0;
     }
-    
-    /* A small container for the inline SVG icons within each button */
     .btn .icon {
       margin-right: 6px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
     }
-    
-    /* Force all icons to a uniform size */
     .btn .icon svg {
       width: 16px;
       height: 16px;
     }
-    
-    /* Wrapper around a button that has an associated popup element */
     .btn-wrapper {
       position: relative;
       display: inline-block;
     }
-    
-    /* The popup box that appears above a button */
     .popup {
-  position: absolute;
-  /* Position above the button, anchored in the centre horizontally */
-  top: -50px;  
-  left: 50%;
-  transform: translateX(-50%);
-  
-  /* Limit width so it remains small */
-  max-width: 75px;
-  
-  /* Add some padding and border styling */
-  padding: 4px 8px;
-  border: 1px solid rgb(215,215,215);
-  border-radius: 16px;
-  background: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-
-  /* Make the text red and centre it horizontally + vertically */
-  color: red;
-  font-size: 8pt;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  /* Hidden by default, revealed in your script with .style.display = "flex" (or "block") */
-  display: none;
-  z-index: 9999; /* Ensures popup stays on top */
-}
-
-    
-    /* Thumbnail styling if needed for displayed images */
-    #thumbnail-container img {
-      width: 100px;
-      height: auto;
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 75px;
+      padding: 4px 8px;
       border: 1px solid rgb(215,215,215);
       border-radius: 16px;
-      margin-top: 10px;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      color: red;
+      font-size: 8pt;
+      text-align: center;
+      display: none;
+      z-index: 9999;
     }
   </style>
 </head>
 <body>
-  <!-- Main container to centre the set of buttons -->
   <div style="text-align: center;">
     <div class="button-container">
-      <!-- Images button -->
+
+      <!-- Images -->
       <button id="images" class="btn">
         <span class="icon">
-          <!-- Icon for 'Images' button -->
+          <!-- Icon SVG for images -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#99CC99">
             <path d="M21 19V5H3v14h18zm0-16a2 2 0 012 2v14a2 2 0 01-2 2H3a2 2 0 01-2-2V5a2 2 0 012-2h18zM8.5 13.5l2.5 3.01L15.5 11l4.5 6H4l4.5-6.5z"/>
           </svg>
         </span>
-        <span data-i18n="images">Images</span>
+        <span class="text-part">Images</span>
       </button>
-      
-      <!-- Help button, takes user to instructions.html -->
+
+      <!-- Help -->
       <button id="help" class="btn" onclick="window.location.href='instructions.html'">
         <span class="icon">
-          <!-- Icon for 'Help' button -->
+          <!-- Icon SVG for help -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#CC6666">
             <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm.88 15h-1.75v-1.75h1.75V17zm1.88-6.5c-.28.28-.53.53-.53.97v1h-1.75v-1c0-.65.28-1.18.75-1.65.47-.47 1.03-.94 1.03-1.85 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 1.47-.76 2.21-1.74 3.19z"/>
           </svg>
         </span>
-        <span data-i18n="help">Help</span>
+        <span class="text-part">Help</span>
       </button>
-      
-      <!-- Screenshot button -->
+
+      <!-- Screenshot -->
       <button id="screenshot" class="btn">
         <span class="icon">
-          <!-- Icon for 'Screenshot' button -->
+          <!-- Icon SVG for screenshot -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFCC66">
             <path d="M12 5a3 3 0 013 3h4v11H5V8h4a3 3 0 013-3zm0 2a1 1 0 100 2 1 1 0 000-2zm-1 4a3 3 0 116 0 3 3 0 01-6 0z"/>
           </svg>
         </span>
-        <span data-i18n="screenshot">Screenshot</span>
+        <span class="text-part">Screenshot</span>
       </button>
-      
-      <!-- Refer button with associated popup -->
+
+      <!-- Refer -->
       <div class="btn-wrapper">
         <button id="refer" class="btn">
           <span class="icon">
-            <!-- Icon for 'Refer' button -->
+            <!-- Icon SVG for refer -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#CC99CC">
               <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7a3.19 3.19 0 000-1.39l7.05-4.11a3 3 0 10-.84-1.44L8.11 9.16a3 3 0 100 5.68l7.13 4.17a3 3 0 10.74-1.39z"/>
             </svg>
           </span>
-          <span data-i18n="refer">Refer</span>
+          <span class="text-part">Refer</span>
         </button>
-        <!-- Popup that appears for 5 seconds when the Refer button is clicked/touched -->
-        <div id="refer-popup" class="popup">Coming Soon...</div>
+        <div id="refer-popup" class="popup" style="display: none;">
+          Coming Soon...
+        </div>
       </div>
+
     </div>
   </div>
-
-  <!-- A container for thumbnails or images if needed -->
-  <div id="thumbnail-container"></div>
 </body>
 </html>
