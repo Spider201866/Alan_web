@@ -679,6 +679,234 @@ function closePopup() {
         countryEl?.classList.remove('flash-blue');
       }, 2000);
     }
+    function updateServerGeolocation() {
+      const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
+      const updatedData = {
+        sessionId,
+        latitude: localStorage.getItem('latitude'),
+        longitude: localStorage.getItem('longitude'),
+        area: localStorage.getItem('area'),
+        name: localStorage.getItem('name'),
+        role: localStorage.getItem('selectedJobRole'),
+        experience: localStorage.getItem('selectedExperience'),
+        focus: localStorage.getItem('selectedFocus')
+          ? JSON.parse(localStorage.getItem('selectedFocus'))
+          : [],
+        country: localStorage.getItem('country'),
+        iso2: localStorage.getItem('iso2'),
+        classification: localStorage.getItem('classification'),
+        roleClassification: localStorage.getItem('roleClassification'),
+        contactInfo: localStorage.getItem('contactInfo'),
+        version: localStorage.getItem('version') || '1.0',
+        selectedAgent: localStorage.getItem('selectedAgent'),
+        dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
+      };
+      fetch('https://alan.up.railway.app/record-info', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData)
+      })
+        .then(response => response.text())
+        .then(data => {
+          console.log('Server updated with geolocation data:', data);
+        })
+        .catch(err => {
+          console.error('Error updating server:', err);
+        });
+    }
+
+    /* ================== SELECT AGENT / FLOWISE CHATBOT =================== */
+    function selectAgentAndFetch() {
+      let chatbotModuleUrl = '';
+      let selectedAgent = 'Unknown';
+      const classification = localStorage.getItem('classification') || 'Unknown';
+      const roleClass = localStorage.getItem('roleClassification') || '';
+
+      if (roleClass === ' (M)' && ['HI','MI'].includes(classification)) {
+        chatbotModuleUrl = './agent1-chatbot-module.js';
+        selectedAgent = 'Agent 1';
+      } else if (roleClass === ' (M)' && ['LI','VLI'].includes(classification)) {
+        chatbotModuleUrl = './agent3-chatbot-module.js';
+        selectedAgent = 'Agent 3';
+      } else if (roleClass === ' (P)' && ['HI','MI'].includes(classification)) {
+        chatbotModuleUrl = './agent2-chatbot-module.js';
+        selectedAgent = 'Agent 2';
+      } else if (roleClass === ' (P)' && ['LI','VLI'].includes(classification)) {
+        chatbotModuleUrl = './agent4-chatbot-module.js';
+        selectedAgent = 'Agent 4';
+      }
+      localStorage.setItem('selectedAgent', selectedAgent);
+
+      if (!localStorage.getItem('sessionId')) {
+        localStorage.setItem('sessionId', Date.now().toString());
+      }
+      if (localStorage.getItem('infoRecorded') === 'true' && selectedAgent !== 'Unknown') {
+        updateServerWithAgent(selectedAgent, localStorage.getItem('sessionId'));
+      }
+
+      if (chatbotModuleUrl) {
+        import(chatbotModuleUrl)
+          .then(mod => {
+            const initChatbot = mod.initChatbot;
+            if (typeof initChatbot === 'function') {
+              initChatbot();
+              console.log(`Loaded module: ${chatbotModuleUrl}`);
+            } else {
+              console.error('initChatbot function not found in agent script.');
+            }
+          })
+          .catch(error => {
+            console.error('Error loading chatbot module:', error);
+          });
+      } else {
+        console.error('No matching chatbot module found.');
+      }
+    }
+    function updateServerWithAgent(selectedAgent, sessionId) {
+      const name = localStorage.getItem('name') || '';
+      const role = localStorage.getItem('selectedJobRole') || '';
+      const experience = localStorage.getItem('selectedExperience') || '';
+      const focusRaw = localStorage.getItem('selectedFocus');
+      let focusArray = [];
+      if (focusRaw) {
+        try {
+          focusArray = JSON.parse(focusRaw);
+        } catch {
+          focusArray = [];
+        }
+      }
+      const latitude = localStorage.getItem('latitude') || '';
+      const longitude = localStorage.getItem('longitude') || '';
+      const country = localStorage.getItem('country') || '';
+      const iso2 = localStorage.getItem('iso2') || '';
+      const classification = localStorage.getItem('classification') || '';
+      const roleClassification = localStorage.getItem('roleClassification') || '';
+      const area = localStorage.getItem('area') || '';
+      const contactInfo = localStorage.getItem('contactInfo') || '';
+      const version = localStorage.getItem('version') || '1.0';
+      const dateTime = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
+
+      const updatedUserInfo = {
+        sessionId, name, role, experience, focus: focusArray, latitude, longitude, country, iso2, classification, roleClassification, area, contactInfo, version, dateTime, selectedAgent
+      };
+      fetch('https://alan.up.railway.app/record-info', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedUserInfo)
+      })
+        .then(response => response.text())
+        .then(data => { console.log('Updated Successfully:', data); })
+        .catch(error => { console.error('Error updating data:', error); });
+    }
+    function pushLocalStorageToServer() {
+      const selectedAgent = localStorage.getItem('selectedAgent') || 'Agent 1';
+      const sessionId = localStorage.getItem('sessionId') || 'no-session-id';
+      updateServerWithAgent(selectedAgent, sessionId);
+    }
+
+    if (boxesFrameEl) {
+      boxesFrameEl.addEventListener('load', () => {
+        const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+        updateLanguageDisplays(currentLang);
+      });
+    }
+
+    window.updateMutedButtons = function(lang) {
+      if (!translations || !translations[lang]) {
+        console.warn(`[updateMutedButtons] Translations for ${lang} not found.`);
+        return;
+      }
+      const imagesText = document.querySelector('#images .text-part');
+      if (imagesText) imagesText.textContent = translations[lang].images;
+      const helpText = document.querySelector('#help .text-part');
+      if (helpText) helpText.textContent = translations[lang].help;
+      const screenshotText = document.querySelector('#screenshot .text-part');
+      if (screenshotText) screenshotText.textContent = translations[lang].screenshot;
+      const referText = document.querySelector('#refer .text-part');
+      if (referText) referText.textContent = translations[lang].refer;
+      const referPopup = document.getElementById('refer-popup');
+      if (referPopup) referPopup.textContent = translations[lang].comingSoon;
+    };
+
+function updateLanguageDisplays(lang) {
+  if (!translations || !translations[lang]) {
+    console.warn(`Translations for ${lang} not found in updateLanguageDisplays.`);
+    return;
+  }
+  document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
+  document.getElementById('good-history').textContent = translations[lang].goodHistory;
+  document.getElementById('examine-well').textContent = translations[lang].examineWell;
+  document.getElementById('use-arclight').textContent = translations[lang].useArclight;
+  chatbotVersion.textContent = translations[lang].alanMistakes;
+
+  document.getElementById('instructions-button').textContent = translations[lang].instructionsButton;
+  document.getElementById('eye-button').textContent = translations[lang].eyeButton;
+  document.getElementById('ear-button').textContent = translations[lang].earButton;
+  document.getElementById('skin-button').textContent = translations[lang].skinButton;
+  document.getElementById('videos-button').textContent = translations[lang].videosButton;
+  document.getElementById('atoms-button').textContent = translations[lang].atomsButton;
+  document.getElementById('tools-button').textContent = translations[lang].toolsButton;
+  document.getElementById('arclight-project-button').textContent = translations[lang].arclightProjectButton;
+  document.getElementById('links-button').textContent = translations[lang].linksButton;
+  document.getElementById('about-button').textContent = translations[lang].aboutButton;
+
+  const userName = localStorage.getItem('name') || '';
+  if (userName) {
+    let firstName = userName.split(' ')[0];
+    firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+    document.getElementById('sub-text').textContent = `${firstName}, ${translations[lang].howCanIHelp}`;
+  } else {
+    document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
+  }
+
+  if (boxesFrameEl && boxesFrameEl.contentDocument) {
+    const boxesDoc = boxesFrameEl.contentDocument;
+    const eyeLines = ['eyeMarqueeLine1', 'eyeMarqueeLine2', 'eyeMarqueeLine3', 'eyeMarqueeLine4', 'eyeMarqueeLine5', 'eyeMarqueeLine6', 'eyeMarqueeLine7'];
+    const earLines = ['earMarqueeLine1', 'earMarqueeLine2', 'earMarqueeLine3', 'earMarqueeLine4', 'earMarqueeLine5', 'earMarqueeLine6', 'earMarqueeLine7'];
+
+    eyeLines.forEach(lineKey => {
+      if (boxesDoc.getElementById(`${lineKey}a`)) {
+        boxesDoc.getElementById(`${lineKey}a`).textContent = translations[lang][lineKey];
+        boxesDoc.getElementById(`${lineKey}b`).textContent = translations[lang][lineKey];
+      }
+    });
+    earLines.forEach(lineKey => {
+      if (boxesDoc.getElementById(`${lineKey}a`)) {
+        boxesDoc.getElementById(`${lineKey}a`).textContent = translations[lang][lineKey];
+        boxesDoc.getElementById(`${lineKey}b`).textContent = translations[lang][lineKey];
+      }
+    });
+  } 
+  
+  // Translate geo-info-popup text
+  const geoInfoTextEl = document.getElementById('geoInfoText');
+  if (geoInfoTextEl) {
+    geoInfoTextEl.textContent = translations[lang].geoInfoPopupText || "Location data helps us understand usage and improve Alan. Your IP address provides an approximate country/city on first load. You can optionally provide more precise GPS data using the 'Check Location' button. This data is handled as per our privacy guidelines.";
+  }
+}  
+
+document.addEventListener('DOMContentLoaded', () => {
+  const chatbotContainer = document.querySelector('.chatbot-container');
+  const boxesFrame = document.getElementById('boxesFrame');
+  if (chatbotContainer && boxesFrame) {
+    chatbotContainer.addEventListener('click', () => {
+      boxesFrame.style.display = 'none';
+    });
+  }
+ 
+  const chatbotTitle = document.querySelector('.chatbot-title');
+  if (chatbotTitle) {
+    chatbotTitle.classList.remove('flip-horizontally');
+    void chatbotTitle.offsetWidth; 
+    chatbotTitle.classList.add('flip-horizontally');
+  }
+});
+
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  });
   </script>
 </body>
 </html>
