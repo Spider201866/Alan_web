@@ -4,7 +4,6 @@ agent2-chatbot-module.js
 agent3-chatbot-module.js
 agent4-chatbot-module.js
 AP.png
-app.py
 apple-icon-60x60.png
 archive_geolocation_code.js
 atoms.html
@@ -14,14 +13,12 @@ black.png
 boxes.html
 closer.js
 conditions
-create_hash.py
 ear.html
 eye.html
 eyeor.gif
 faviconAndMeta.js
 favicons
 folderList.txt
-hashed_password.txt
 home.html
 howtouseeye.png
 imagesWithText.js
@@ -43,4 +40,3 @@ styles_index.css
 triangle.png
 view-records.html
 weblinks.html
-__pycache__

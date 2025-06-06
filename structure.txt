@@ -7568,7 +7568,6 @@
 16/12/2024  18:37             2,151 agent3-chatbot-module.js
 16/12/2024  18:37             2,155 agent4-chatbot-module.js
 02/10/2024  21:00            39,387 AP.png
-19/05/2024  11:01             1,096 app.py
 01/04/2024  12:42             2,255 apple-icon-60x60.png
 10/01/2025  16:18             1,741 archive_geolocation_code.js
 15/04/2024  18:17             1,599 atoms.html
@@ -7578,13 +7577,11 @@
 09/05/2024  19:34             4,522 boxes.html
 11/06/2024  19:53             2,378 closer.js
 03/04/2024  09:24    <DIR>          conditions
-19/05/2024  11:21               338 create_hash.py
 15/04/2024  17:50             2,023 ear.html
 15/04/2024  17:50             2,264 eye.html
 11/06/2024  18:29           275,057 eyeor.gif
 29/03/2024  15:17             2,104 faviconAndMeta.js
 02/04/2024  07:58    <DIR>          favicons
-19/05/2024  10:52               162 hashed_password.txt
 12/01/2025  20:13            34,242 home.html
 14/04/2024  10:31           470,522 howtouseeye.png
 25/04/2024  17:18               715 imagesWithText.js
@@ -7606,7 +7603,6 @@
 02/04/2024  13:42             7,713 triangle.png
 09/12/2024  19:58             9,673 view-records.html
 14/04/2024  11:54             2,821 weblinks.html
-19/05/2024  11:17    <DIR>          __pycache__
               42 File(s)      5,816,273 bytes
 
  Directory of C:\Users\William\Desktop\AlanUI\public\conditions
@@ -7650,7 +7646,6 @@
 01/04/2024  12:42             2,397 ms-icon-70x70.png
               27 File(s)        110,832 bytes
 
- Directory of C:\Users\William\Desktop\AlanUI\public\__pycache__
 
 19/05/2024  11:17    <DIR>          .
 19/05/2024  11:17    <DIR>          ..
