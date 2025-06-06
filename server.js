@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
@@ -9,23 +10,30 @@ const port = process.env.PORT || 3000;
 /*********************************************/
 /* 1) Master password + optional one-time    */
 /*********************************************/
-const MASTER_PASSWORD = "662023"; // never changes
+const MASTER_PASSWORD = process.env.MASTER_PASSWORD || '662023';
 
-let ONE_TIME_PASSWORDS = new Set([
-  "slitlamp286",
-  "fundus512",
-  "pinna304",
-  "slitlamp286",
-  "fundus512",
-  "retina728",
-  "cornea203",
-  "jobson892",
-  "otoscope414",
-  "earcare917",
-  "auricle345",
-  "skincheck112",
-  "dermatol559",
-]);
+let ONE_TIME_PASSWORDS;
+if (process.env.ONE_TIME_PASSWORDS) {
+  ONE_TIME_PASSWORDS = new Set(
+    process.env.ONE_TIME_PASSWORDS.split(',').map((p) => p.trim()).filter(Boolean)
+  );
+} else {
+  ONE_TIME_PASSWORDS = new Set([
+    'slitlamp286',
+    'fundus512',
+    'pinna304',
+    'slitlamp286',
+    'fundus512',
+    'retina728',
+    'cornea203',
+    'jobson892',
+    'otoscope414',
+    'earcare917',
+    'auricle345',
+    'skincheck112',
+    'dermatol559',
+  ]);
+}
 
 /*********************************************/
 /* 2) Standard Setup                         */
