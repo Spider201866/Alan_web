@@ -85,10 +85,10 @@ export const translations = {
     eyeMarqueeLine7: 'Mother worried about baby as noticed white pupil, no vision in eye.',
 
     earMarqueeLine1: 'What is otitis media?',
-    earMarqueeLine2: 'Can I see the tympanic menbrane with my Arclight?',
+    earMarqueeLine2: 'Can I see the tympanic membrane with my Arclight?',
     earMarqueeLine3: 'Lad 16, sore pinna, 2 day, itchy, hearing is good',
     earMarqueeLine4: 'Tell me about syringing',
-    earMarqueeLine5: 'Do I refer mastoditis urgently?',
+    earMarqueeLine5: 'Do I refer mastoiditis urgently?',
     earMarqueeLine6: 'Man 73yr, hearing poor. Poor view of canal. I just see wax',
     earMarqueeLine7: 'Infant no response to voice. Been months',
 
