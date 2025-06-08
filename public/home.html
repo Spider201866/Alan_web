@@ -204,13 +204,6 @@
           About
         </button>
       </div>
-
-      <!-- Hidden chat links if needed -->
-      <div style="display: none; flex-direction: column; width: 100%; margin-top: 20px;">
-        <a href="#" data-chat-id="chat1" class="chat-link">Chat 1</a>
-        <a href="#" data-chat-id="chat2" class="chat-link">Chat 2</a>
-        <!-- etc. -->
-      </div>
     </div><!-- end side-menu -->
 
     <!-- MAIN CONTENT -->
@@ -251,45 +244,29 @@
     ></object>
 
     <div class="main-wrapper">
-      <!-- FLOWISE chatbot -->
       <div class="chatbot-container">
         <flowise-fullchatbot></flowise-fullchatbot>
       </div>
 
-<!-- somewhere in home.html, the container: -->
-<div id="muted-buttons"></div>
+      <div id="muted-buttons"></div>
 
-<script>
-  function fetchMutedSnippet() {
-    return fetch('muted.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('muted-buttons').innerHTML = html;
-        
-        // Now that #images, #refer, #screenshot are in the DOM:
-        initMutedButtons(); // from muted.js
+      <script>
+        function fetchMutedSnippet() {
+          return fetch('muted.html')
+            .then(res => res.text())
+            .then(html => {
+              document.getElementById('muted-buttons').innerHTML = html;
+              initMutedButtons();
+              const storedLang = localStorage.getItem('preferredLanguage') || 'en';
+              updateAllLanguage(storedLang);
+            })
+            .catch(err => console.error('Error:', err));
+        }
+        document.addEventListener('DOMContentLoaded', fetchMutedSnippet);
+        window.addEventListener('pageshow', fetchMutedSnippet);
+      </script>
+      <script src="muted.js"></script>
 
-        // Then do language if you like:
-        const storedLang = localStorage.getItem('preferredLanguage') || 'en';
-        updateMutedButtons(storedLang);
-      })
-      .catch(err => console.error('Error:', err));
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    fetchMutedSnippet();
-  });
-
-  window.addEventListener('pageshow', () => {
-    fetchMutedSnippet();
-  });
-</script>
-
-<!-- Then ensure you include muted.js below (non-module) so it is accessible -->
-<script src="muted.js"></script>
-
-
-      <!-- Condition placeholders -->
       <div class="detected-condition"></div>
       <img id="condition-image" alt="" style="max-width: 100%; height: auto;" />
       <p id="condition-description"></p>
@@ -340,7 +317,7 @@
           padding: 10px;
           border-radius: 10px;
           box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-          z-index: 10; /* Ensure it's above other elements in the popup */
+          z-index: 10;
         "
       >
         <p id="geoInfoText" style="font-size: 14px; margin: 0;">
@@ -354,86 +331,72 @@
   <script type="module">
     import { translations } from './language.js';
     import { faviconAndMetaSetup } from './faviconAndMeta.js';
+    import { initChatbot } from './agent1-chatbot-module.js';
     import './closer.js';
     import './listener-module.js';
 
-    // Re-run favicon if needed
     faviconAndMetaSetup();
 
-    // Grab references
     const menuIcon = document.querySelector('.menu-icon');
     const sideMenu = document.querySelector('.side-menu');
     const instructionsButton = document.getElementById('instructions-button');
     const languageButton = document.getElementById('language-button');
     const languageDropdown = document.getElementById('language-dropdown');
-    const conditionImage = document.getElementById('condition-image');
     const popup = document.getElementById('popup');
     const popupClose = document.querySelector('.popup-close');
-    const chatbotVersion = document.querySelector('.chatbot-version');
-    const boxesFrameEl = document.getElementById('boxesFrame');
-
-    // Side menu resets on pageshow
+    
     window.addEventListener('pageshow', () => {
       sideMenu.style.left = '-370px';
       menuIcon.classList.remove('open');
-      selectAgentAndFetch();
       pushLocalStorageToServer();
     });
 
-    // If user re-focuses tab, we push again
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) {
         pushLocalStorageToServer();
       }
     });
 
-    // If the page was loaded from back/forward cache:
     window.addEventListener('pageshow', (event) => {
       if (event.persisted) {
         fetchMutedSnippet();
       }
     });
 
-    // DOMContentLoaded
     document.addEventListener('DOMContentLoaded', main);
 
-    // MAIN function
     function main() {
       const storedLang = localStorage.getItem('preferredLanguage') || 'en';
-      updateLanguageDisplays(storedLang);
-      updateMutedButtons(storedLang);
+      updateAllLanguage(storedLang);
 
+      initChatbot();
       setupMenuIcon();
       setupInstructionsButton();
       setupNameIcon();
-      showGreeting();
       setupGeolocationButton();
-      setupGeoInfoButton(); // <-- Called here
+      setupGeoInfoButton();
 
       if (localStorage.getItem('instructionsClicked') === 'true') {
         updateButtonStyle(instructionsButton);
       }
-
-      if (conditionImage) {
-        conditionImage.addEventListener('click', () => toggleZoom(conditionImage));
-      } 
     }
 
-    /* ================== LANGUAGE DROPDOWN =================== */
-    languageButton.addEventListener('click', () => {
-      languageDropdown.style.display = (languageDropdown.style.display === 'none') ? 'block' : 'none';
+    languageButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        languageDropdown.style.display = (languageDropdown.style.display === 'none') ? 'block' : 'none';
+    });
+    document.addEventListener('click', () => {
+        languageDropdown.style.display = 'none';
     });
     languageDropdown.querySelectorAll('li').forEach(item => {
       item.addEventListener('click', () => {
         const chosenLang = item.getAttribute('data-value');
         localStorage.setItem('preferredLanguage', chosenLang);
-        updateLanguageDisplays(chosenLang);
-        updateMutedButtons(chosenLang); 
+        updateAllLanguage(chosenLang); 
         languageDropdown.style.display = 'none';
       });
     });
 
-    /* ================== MENU ICON =================== */
     function setupMenuIcon() {
       menuIcon.addEventListener('click', function() {
         this.classList.toggle('open');
@@ -441,7 +404,6 @@
       });
     }
 
-    /* ================== INSTRUCTIONS =================== */
     function setupInstructionsButton() {
       instructionsButton.addEventListener('click', function(e) {
         e.preventDefault();
@@ -458,120 +420,84 @@
       button.style.color = 'white';
     }
 
-/* =====================================
-   NAME ICON & POPUP SETUP
-===================================== */
-function setupNameIcon() {
-  const storedName = localStorage.getItem('name') || 'User';
-  const initialLetter = storedName.charAt(0).toUpperCase();
-
-  const nameIcon = document.createElement('div');
-  nameIcon.className = 'name-icon';
-  nameIcon.textContent = initialLetter;
-  document.querySelector('.chatbot-header').appendChild(nameIcon);
-
-  nameIcon.addEventListener('click', togglePopup);
-  popupClose.addEventListener('click', closePopup);
-}
-
-function togglePopup() {
-  if (popup.style.right === '0px') {
-    closePopup();
-  } else {
-    openPopup();
-  }
-}
-
-function openPopup() {
-  document.getElementById('popup-content').innerHTML = buildPopupContent();
-  popup.style.right = '0';
-}
-
-function closePopup() {
-  popup.style.right = '-350px';
-  // Also hide the geo info popup if it's open
-  const geoInfoPopup = document.getElementById('geo-info-popup');
-  if (geoInfoPopup) {
-      geoInfoPopup.style.display = 'none';
-  }
-}
-
-
-    /* ================== GREETING =================== */
-    function showGreeting() {
-      const name = localStorage.getItem('name');
-      const subTextEl = document.getElementById('sub-text');
-      if (name) {
-        let firstName = name.split(' ')[0];
-        firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-        subTextEl.innerText = `${firstName}, what can I help with?`;
-      } else {
-        subTextEl.innerText = 'what can I help with?';
-      }
+    function setupNameIcon() {
+      const storedName = localStorage.getItem('name') || 'User';
+      const initialLetter = storedName.charAt(0).toUpperCase();
+      const nameIcon = document.createElement('div');
+      nameIcon.className = 'name-icon';
+      nameIcon.textContent = initialLetter;
+      document.querySelector('.chatbot-header').appendChild(nameIcon);
+      nameIcon.addEventListener('click', togglePopup);
+      popupClose.addEventListener('click', closePopup);
     }
 
-    /* ================== ZOOM IMAGE =================== */
-    function toggleZoom(image) {
-      if (image.style.height === '200px') {
-        image.style.height = 'auto';
-        image.style.maxWidth = 'none';
-        image.style.cursor = 'zoom-out';
-      } else {
-        image.style.height = '200px';
-        image.style.maxWidth = '100%';
-        image.style.cursor = 'zoom-in';
-      }
+    function togglePopup() {
+      if (popup.style.right === '0px') closePopup();
+      else openPopup();
     }
 
-    /* ================== POPUP CONTENT =================== */
+    function openPopup() {
+      document.getElementById('popup-content').innerHTML = buildPopupContent();
+      popup.style.right = '0';
+    }
+
+    function closePopup() {
+      popup.style.right = '-350px';
+      const geoInfoPopup = document.getElementById('geo-info-popup');
+      if (geoInfoPopup) geoInfoPopup.style.display = 'none';
+    }
+
     function buildPopupContent() {
       const lang = localStorage.getItem('preferredLanguage') || 'en';
+      const t = window.translations[lang] || window.translations.en;
+
       const name = localStorage.getItem('name') || 'Not set';
-      const role = localStorage.getItem('selectedJobRole') || 'Not set'; // This now holds the "Aim"
-      const experience = localStorage.getItem('selectedExperience') || 'Not set';
+      const role = localStorage.getItem('selectedJobRole') || 'Not set';
+      const experienceValue = localStorage.getItem('selectedExperience') || 'Not set';
       const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
       const longitude = (parseFloat(localStorage.getItem('longitude')) || 0).toFixed(6);
       const country = localStorage.getItem('country') || 'Not set';
       const iso2 = localStorage.getItem('iso2') || 'Not set';
       const classification = localStorage.getItem('classification') || 'Unknown';
-      const roleClass = localStorage.getItem('roleClassification') || ''; // This is (M) or (P)
+      const roleClass = localStorage.getItem('roleClassification') || '';
       const area = localStorage.getItem('area') || 'Not set';
       const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
-      const selectedAgent = localStorage.getItem('selectedAgent') || 'Unknown';
+      
+      const experienceKeyMap = {
+        'Student / refresher': 'experienceStudentRefresher',
+        'Confident core knowledge': 'experienceConfidentCore',
+        'Expert': 'experienceExpert'
+      };
+      const experienceTranslationKey = experienceKeyMap[experienceValue] || '';
+      const experience = t[experienceTranslationKey] || experienceValue;
 
       const now = new Date();
-      const day = String(now.getDate()).padStart(2, '0');
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const year = now.getFullYear();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const mins = String(now.getMinutes()).padStart(2, '0');
-      const secs = String(now.getSeconds()).padStart(2, '0');
-      const currDT = `${day}/${month}/${year}, ${hours}:${mins}:${secs}`;
+      const currDT = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}, ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
 
       return `
-        <h2>${translations[lang].userInfoTitle || 'User Information'}</h2>
-        <p><strong>${translations[lang].userName || 'Name'}:</strong> ${name}</p>
-        <p><strong>${translations[lang].userContact || 'Contact'}:</strong> ${contactInfo}</p>
-        <p><strong>${translations[lang].userAimsPopupLabel || 'Aims'}:</strong> ${role}, ${experience}${roleClass ? ', ' + roleClass : ''}</p> 
+        <h2>${t.userInfoTitle || 'User Information'}</h2>
+        <p><strong>${t.userName || 'Name'}:</strong> ${name}</p>
+        <p><strong>${t.userContact || 'Contact'}:</strong> ${contactInfo}</p>
+        <p><strong>${t.userAimsPopupLabel || 'Aims'}:</strong> ${role}${roleClass ? ', ' + roleClass : ''}</p> 
+        <p><strong>${t.userExperiencePopupLabel || 'Experience'}:</strong> ${experience}</p>
         <p id="latLongSection" style="color: grey;">
-          <strong>${translations[lang].userLatLong || 'Lat/Long'}:</strong> ${latitude}, ${longitude}
+          <strong>${t.userLatLong || 'Lat/Long'}:</strong> ${latitude}, ${longitude}
         </p>
         <p id="areaSection" style="color: grey;">
-          <strong>${translations[lang].userArea || 'Area'}:</strong> ${area}
+          <strong>${t.userArea || 'Area'}:</strong> ${area}
         </p>
         <p id="countrySection" style="color: grey;">
-          <strong>${translations[lang].userCountry || 'Country'}:</strong> ${country}, ${iso2}, ${classification}
+          <strong>${t.userCountry || 'Country'}:</strong> ${country}, ${iso2}, ${classification}
         </p>
         <p style="color: grey;">
-          <em><strong>${translations[lang].userVersion || 'Version'}:</strong> 1.0, ${selectedAgent}</em>
+          <em><strong>${t.userVersion || 'Version'}:</strong> 1.0</em>
         </p>
         <p style="color: grey;">
-          <em><strong>${translations[lang].userDateTime || 'Date/Time'}:</strong> ${currDT}</em>
+          <em><strong>${t.userDateTime || 'Date/Time'}:</strong> ${currDT}</em>
         </p>
       `;
     }
     
-    /* ================== GEO INFO BUTTON & POPUP =================== */
     function setupGeoInfoButton() {
       const geoInfoButton = document.getElementById('geo-info-button');
       const geoInfoPopup = document.getElementById('geo-info-popup');
@@ -579,24 +505,17 @@ function closePopup() {
       if (geoInfoButton && geoInfoPopup) {
         geoInfoButton.addEventListener('click', (event) => {
           event.stopPropagation(); 
-          if (geoInfoPopup.style.display === 'none' || geoInfoPopup.style.display === '') {
-            geoInfoPopup.style.display = 'block';
-          } else {
-            geoInfoPopup.style.display = 'none';
-          }
+          geoInfoPopup.style.display = (geoInfoPopup.style.display === 'none' || geoInfoPopup.style.display === '') ? 'block' : 'none';
         });
 
         document.addEventListener('click', (event) => {
-          if (geoInfoPopup.style.display === 'block' &&
-              event.target !== geoInfoButton &&
-              !geoInfoPopup.contains(event.target)) {
+          if (geoInfoPopup.style.display === 'block' && !geoInfoPopup.contains(event.target) && event.target !== geoInfoButton) {
             geoInfoPopup.style.display = 'none';
           }
         });
       }
     }
 
-    /* ================== GEOLOCATION =================== */
     function setupGeolocationButton() {
       const geolocationButton = document.getElementById('geolocation-button');
       const locationInfo = document.getElementById('location-info');
@@ -617,7 +536,7 @@ function closePopup() {
 
               document.getElementById('popup-content').innerHTML = buildPopupContent();
               flashBlueOnUpdate();
-              updateServerGeolocation();
+              pushLocalStorageToServer();
 
               setTimeout(() => {
                 geolocationButton.style.backgroundColor = 'grey';
@@ -625,19 +544,12 @@ function closePopup() {
               }, 3000);
             },
             (error) => {
-              switch (error.code) {
-                case error.PERMISSION_DENIED:
-                  locationInfo.innerText = 'User denied geolocation.';
-                  break;
-                case error.POSITION_UNAVAILABLE:
-                  locationInfo.innerText = 'Location info unavailable.';
-                  break;
-                case error.TIMEOUT:
-                  locationInfo.innerText = 'Request timed out.';
-                  break;
-                default:
-                  locationInfo.innerText = 'An unknown error occurred.';
-              }
+              const errorMessages = {
+                [error.PERMISSION_DENIED]: 'User denied geolocation.',
+                [error.POSITION_UNAVAILABLE]: 'Location info unavailable.',
+                [error.TIMEOUT]: 'Request timed out.'
+              };
+              locationInfo.innerText = errorMessages[error.code] || 'An unknown error occurred.';
               locationInfo.style.display = 'block';
               setTimeout(() => {
                 geolocationButton.style.backgroundColor = 'grey';
@@ -662,26 +574,26 @@ function closePopup() {
         const data = await resp.json();
         return data.city || data.locality || data.principalSubdivision || 'Unknown';
       } catch (err) {
-        console.warn('Area fetch failed:', err);
         return 'Unknown';
       }
     }
     function flashBlueOnUpdate() {
-      const latLongEl = document.getElementById('latLongSection');
-      const areaEl = document.getElementById('areaSection');
-      const countryEl = document.getElementById('countrySection');
-      if (latLongEl) latLongEl.classList.add('flash-blue');
-      if (areaEl) areaEl.classList.add('flash-blue');
-      if (countryEl) countryEl.classList.add('flash-blue');
+      const sections = ['latLongSection', 'areaSection', 'countrySection'];
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.classList.add('flash-blue');
+      });
       setTimeout(() => {
-        latLongEl?.classList.remove('flash-blue');
-        areaEl?.classList.remove('flash-blue');
-        countryEl?.classList.remove('flash-blue');
+        sections.forEach(id => {
+          const el = document.getElementById(id);
+          if(el) el.classList.remove('flash-blue');
+        });
       }, 2000);
     }
-    function updateServerGeolocation() {
+
+    function pushLocalStorageToServer() {
       const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
-      const updatedData = {
+      const userInfo = {
         sessionId,
         latitude: localStorage.getItem('latitude'),
         longitude: localStorage.getItem('longitude'),
@@ -689,224 +601,129 @@ function closePopup() {
         name: localStorage.getItem('name'),
         role: localStorage.getItem('selectedJobRole'),
         experience: localStorage.getItem('selectedExperience'),
-        focus: localStorage.getItem('selectedFocus')
-          ? JSON.parse(localStorage.getItem('selectedFocus'))
-          : [],
         country: localStorage.getItem('country'),
         iso2: localStorage.getItem('iso2'),
         classification: localStorage.getItem('classification'),
         roleClassification: localStorage.getItem('roleClassification'),
         contactInfo: localStorage.getItem('contactInfo'),
-        version: localStorage.getItem('version') || '1.0',
-        selectedAgent: localStorage.getItem('selectedAgent'),
+        version: '1.0',
         dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
       };
       fetch('https://alan.up.railway.app/record-info', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedData)
+        body: JSON.stringify(userInfo)
       })
         .then(response => response.text())
-        .then(data => {
-          console.log('Server updated with geolocation data:', data);
-        })
-        .catch(err => {
-          console.error('Error updating server:', err);
-        });
+        .then(data => console.log('Server data pushed:', data))
+        .catch(err => console.error('Error pushing data:', err));
     }
 
-    /* ================== SELECT AGENT / FLOWISE CHATBOT =================== */
-    function selectAgentAndFetch() {
-      let chatbotModuleUrl = '';
-      let selectedAgent = 'Unknown';
-      const classification = localStorage.getItem('classification') || 'Unknown';
-      const roleClass = localStorage.getItem('roleClassification') || '';
-
-      if (roleClass === ' (M)' && ['HI','MI'].includes(classification)) {
-        chatbotModuleUrl = './agent1-chatbot-module.js';
-        selectedAgent = 'Agent 1';
-      } else if (roleClass === ' (M)' && ['LI','VLI'].includes(classification)) {
-        chatbotModuleUrl = './agent3-chatbot-module.js';
-        selectedAgent = 'Agent 3';
-      } else if (roleClass === ' (P)' && ['HI','MI'].includes(classification)) {
-        chatbotModuleUrl = './agent2-chatbot-module.js';
-        selectedAgent = 'Agent 2';
-      } else if (roleClass === ' (P)' && ['LI','VLI'].includes(classification)) {
-        chatbotModuleUrl = './agent4-chatbot-module.js';
-        selectedAgent = 'Agent 4';
-      }
-      localStorage.setItem('selectedAgent', selectedAgent);
-
-      if (!localStorage.getItem('sessionId')) {
-        localStorage.setItem('sessionId', Date.now().toString());
-      }
-      if (localStorage.getItem('infoRecorded') === 'true' && selectedAgent !== 'Unknown') {
-        updateServerWithAgent(selectedAgent, localStorage.getItem('sessionId'));
-      }
-
-      if (chatbotModuleUrl) {
-        import(chatbotModuleUrl)
-          .then(mod => {
-            const initChatbot = mod.initChatbot;
-            if (typeof initChatbot === 'function') {
-              initChatbot();
-              console.log(`Loaded module: ${chatbotModuleUrl}`);
-            } else {
-              console.error('initChatbot function not found in agent script.');
-            }
-          })
-          .catch(error => {
-            console.error('Error loading chatbot module:', error);
-          });
-      } else {
-        console.error('No matching chatbot module found.');
-      }
-    }
-    function updateServerWithAgent(selectedAgent, sessionId) {
-      const name = localStorage.getItem('name') || '';
-      const role = localStorage.getItem('selectedJobRole') || '';
-      const experience = localStorage.getItem('selectedExperience') || '';
-      const focusRaw = localStorage.getItem('selectedFocus');
-      let focusArray = [];
-      if (focusRaw) {
-        try {
-          focusArray = JSON.parse(focusRaw);
-        } catch {
-          focusArray = [];
+    function showGreeting() {
+        const name = localStorage.getItem('name');
+        const subTextEl = document.getElementById('sub-text');
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        const t = window.translations[lang] || window.translations.en;
+        
+        if (name) {
+            let firstName = name.split(' ')[0];
+            firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+            subTextEl.innerText = `${firstName}, ${t.howCanIHelp}`;
+        } else {
+            subTextEl.innerText = t.howCanIHelp;
         }
-      }
-      const latitude = localStorage.getItem('latitude') || '';
-      const longitude = localStorage.getItem('longitude') || '';
-      const country = localStorage.getItem('country') || '';
-      const iso2 = localStorage.getItem('iso2') || '';
-      const classification = localStorage.getItem('classification') || '';
-      const roleClassification = localStorage.getItem('roleClassification') || '';
-      const area = localStorage.getItem('area') || '';
-      const contactInfo = localStorage.getItem('contactInfo') || '';
-      const version = localStorage.getItem('version') || '1.0';
-      const dateTime = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
-
-      const updatedUserInfo = {
-        sessionId, name, role, experience, focus: focusArray, latitude, longitude, country, iso2, classification, roleClassification, area, contactInfo, version, dateTime, selectedAgent
-      };
-      fetch('https://alan.up.railway.app/record-info', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedUserInfo)
-      })
-        .then(response => response.text())
-        .then(data => { console.log('Updated Successfully:', data); })
-        .catch(error => { console.error('Error updating data:', error); });
-    }
-    function pushLocalStorageToServer() {
-      const selectedAgent = localStorage.getItem('selectedAgent') || 'Agent 1';
-      const sessionId = localStorage.getItem('sessionId') || 'no-session-id';
-      updateServerWithAgent(selectedAgent, sessionId);
     }
 
-    if (boxesFrameEl) {
-      boxesFrameEl.addEventListener('load', () => {
-        const currentLang = localStorage.getItem('preferredLanguage') || 'en';
-        updateLanguageDisplays(currentLang);
-      });
-    }
-
-    window.updateMutedButtons = function(lang) {
-      if (!translations || !translations[lang]) {
-        console.warn(`[updateMutedButtons] Translations for ${lang} not found.`);
+    function updateAllLanguage(lang) {
+      if (!window.translations || !window.translations[lang]) {
+        console.warn(`Translations for '${lang}' not found.`);
         return;
       }
-      const imagesText = document.querySelector('#images .text-part');
-      if (imagesText) imagesText.textContent = translations[lang].images;
-      const helpText = document.querySelector('#help .text-part');
-      if (helpText) helpText.textContent = translations[lang].help;
-      const screenshotText = document.querySelector('#screenshot .text-part');
-      if (screenshotText) screenshotText.textContent = translations[lang].screenshot;
-      const referText = document.querySelector('#refer .text-part');
-      if (referText) referText.textContent = translations[lang].refer;
-      const referPopup = document.getElementById('refer-popup');
-      if (referPopup) referPopup.textContent = translations[lang].comingSoon;
-    };
+      const t = window.translations[lang];
 
-function updateLanguageDisplays(lang) {
-  if (!translations || !translations[lang]) {
-    console.warn(`Translations for ${lang} not found in updateLanguageDisplays.`);
-    return;
-  }
-  document.querySelector('.chatbot-subtitle').textContent = translations[lang].eyesEars;
-  document.getElementById('good-history').textContent = translations[lang].goodHistory;
-  document.getElementById('examine-well').textContent = translations[lang].examineWell;
-  document.getElementById('use-arclight').textContent = translations[lang].useArclight;
-  chatbotVersion.textContent = translations[lang].alanMistakes;
+      // --- THE FIX IS HERE ---
+      // I am using a more robust way to get elements and setting the geoInfoText directly.
+      const elementTranslations = {
+          '.chatbot-subtitle': 'eyesEars',
+          '#good-history': 'goodHistory',
+          '#examine-well': 'examineWell',
+          '#use-arclight': 'useArclight',
+          '.chatbot-version': 'alanMistakes',
+          '#instructions-button': 'instructionsButton',
+          '#eye-button': 'eyeButton',
+          '#ear-button': 'earButton',
+          '#skin-button': 'skinButton',
+          '#videos-button': 'videosButton',
+          '#atoms-button': 'atomsButton',
+          '#tools-button': 'toolsButton',
+          '#arclight-project-button': 'arclightProjectButton',
+          '#links-button': 'linksButton',
+          '#about-button': 'aboutButton'
+      };
 
-  document.getElementById('instructions-button').textContent = translations[lang].instructionsButton;
-  document.getElementById('eye-button').textContent = translations[lang].eyeButton;
-  document.getElementById('ear-button').textContent = translations[lang].earButton;
-  document.getElementById('skin-button').textContent = translations[lang].skinButton;
-  document.getElementById('videos-button').textContent = translations[lang].videosButton;
-  document.getElementById('atoms-button').textContent = translations[lang].atomsButton;
-  document.getElementById('tools-button').textContent = translations[lang].toolsButton;
-  document.getElementById('arclight-project-button').textContent = translations[lang].arclightProjectButton;
-  document.getElementById('links-button').textContent = translations[lang].linksButton;
-  document.getElementById('about-button').textContent = translations[lang].aboutButton;
-
-  const userName = localStorage.getItem('name') || '';
-  if (userName) {
-    let firstName = userName.split(' ')[0];
-    firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-    document.getElementById('sub-text').textContent = `${firstName}, ${translations[lang].howCanIHelp}`;
-  } else {
-    document.getElementById('sub-text').textContent = translations[lang].howCanIHelp;
-  }
-
-  if (boxesFrameEl && boxesFrameEl.contentDocument) {
-    const boxesDoc = boxesFrameEl.contentDocument;
-    const eyeLines = ['eyeMarqueeLine1', 'eyeMarqueeLine2', 'eyeMarqueeLine3', 'eyeMarqueeLine4', 'eyeMarqueeLine5', 'eyeMarqueeLine6', 'eyeMarqueeLine7'];
-    const earLines = ['earMarqueeLine1', 'earMarqueeLine2', 'earMarqueeLine3', 'earMarqueeLine4', 'earMarqueeLine5', 'earMarqueeLine6', 'earMarqueeLine7'];
-
-    eyeLines.forEach(lineKey => {
-      if (boxesDoc.getElementById(`${lineKey}a`)) {
-        boxesDoc.getElementById(`${lineKey}a`).textContent = translations[lang][lineKey];
-        boxesDoc.getElementById(`${lineKey}b`).textContent = translations[lang][lineKey];
+      for(const [selector, key] of Object.entries(elementTranslations)) {
+          const el = document.querySelector(selector);
+          if(el) el.textContent = t[key];
       }
-    });
-    earLines.forEach(lineKey => {
-      if (boxesDoc.getElementById(`${lineKey}a`)) {
-        boxesDoc.getElementById(`${lineKey}a`).textContent = translations[lang][lineKey];
-        boxesDoc.getElementById(`${lineKey}b`).textContent = translations[lang][lineKey];
+      
+      // Explicitly set the Geo Info Text to prevent errors
+      const geoInfoTextEl = document.getElementById('geoInfoText');
+      if (geoInfoTextEl) {
+          geoInfoTextEl.textContent = t.geoInfoPopupText || "Location data helps us understand usage and improve Alan. Your IP address provides an approximate country/city on first load. You can optionally provide more precise GPS data using the 'Check Location' button. This data is handled as per our privacy guidelines.";
       }
-    });
-  } 
-  
-  // Translate geo-info-popup text
-  const geoInfoTextEl = document.getElementById('geoInfoText');
-  if (geoInfoTextEl) {
-    geoInfoTextEl.textContent = translations[lang].geoInfoPopupText || "Location data helps us understand usage and improve Alan. Your IP address provides an approximate country/city on first load. You can optionally provide more precise GPS data using the 'Check Location' button. This data is handled as per our privacy guidelines.";
-  }
-}  
+      // --- END OF FIX ---
+      
+      showGreeting(); // Update greeting with new language
 
-document.addEventListener('DOMContentLoaded', () => {
-  const chatbotContainer = document.querySelector('.chatbot-container');
-  const boxesFrame = document.getElementById('boxesFrame');
-  if (chatbotContainer && boxesFrame) {
-    chatbotContainer.addEventListener('click', () => {
-      boxesFrame.style.display = 'none';
-    });
-  }
- 
-  const chatbotTitle = document.querySelector('.chatbot-title');
-  if (chatbotTitle) {
-    chatbotTitle.classList.remove('flip-horizontally');
-    void chatbotTitle.offsetWidth; 
-    chatbotTitle.classList.add('flip-horizontally');
-  }
-});
-
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted) {
-      window.location.reload();
+      // Update Muted Buttons
+      const mutedButtonTranslations = {
+        '#images .text-part': 'images',
+        '#help .text-part': 'help',
+        '#screenshot .text-part': 'screenshot',
+        '#refer .text-part': 'refer',
+        '#refer-popup': 'comingSoon'
+      };
+      for(const [selector, key] of Object.entries(mutedButtonTranslations)) {
+        const el = document.querySelector(selector);
+        if(el) el.textContent = t[key];
+      }
+      
+      // Update Marquee
+      const boxesFrame = document.getElementById('boxesFrame');
+      if (boxesFrame && boxesFrame.contentDocument) {
+        const boxesDoc = boxesFrame.contentDocument;
+        const marqueeLines = ['eyeMarqueeLine1', 'eyeMarqueeLine2', 'eyeMarqueeLine3', 'eyeMarqueeLine4', 'eyeMarqueeLine5', 'eyeMarqueeLine6', 'eyeMarqueeLine7', 'earMarqueeLine1', 'earMarqueeLine2', 'earMarqueeLine3', 'earMarqueeLine4', 'earMarqueeLine5', 'earMarqueeLine6', 'earMarqueeLine7'];
+        marqueeLines.forEach(lineKey => {
+          const elA = boxesDoc.getElementById(`${lineKey}a`);
+          if (elA) elA.textContent = t[lineKey];
+          const elB = boxesDoc.getElementById(`${lineKey}b`);
+          if (elB) elB.textContent = t[lineKey];
+        });
+      }
     }
-  });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const chatbotContainer = document.querySelector('.chatbot-container');
+      const boxesFrame = document.getElementById('boxesFrame');
+      if (chatbotContainer && boxesFrame) {
+        chatbotContainer.addEventListener('click', () => {
+          boxesFrame.style.display = 'none';
+        });
+      }
+    
+      const chatbotTitle = document.querySelector('.chatbot-title');
+      if (chatbotTitle) {
+        chatbotTitle.classList.remove('flip-horizontally');
+        void chatbotTitle.offsetWidth; 
+        chatbotTitle.classList.add('flip-horizontally');
+      }
+    });
+
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    });
   </script>
 </body>
 </html>

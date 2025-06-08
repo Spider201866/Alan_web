@@ -12,6 +12,102 @@
       // Make translations available globally.
       window.translations = translations;
     </script>
+
+    <!-- ===================================================================== -->
+    <!-- DEFINITIVE, PIXEL-PERFECT CSS FOR ALL ONBOARDING FORM FIELDS -->
+    <!-- ===================================================================== -->
+    <style>
+      /* --- UNIFIED STYLE FOR ALL FORM FIELDS FOR CONSISTENT SPACING AND APPEARANCE --- */
+      .onboarding-field {
+        display: flex;
+        align-items: center;
+        width: 220px;
+        height: 50px;
+        margin: 10px auto; /* THE ONLY SOURCE OF MARGINS FOR EVEN SPACING */
+        padding: 0 15px;
+        font-size: 16px;
+        color: grey; /* Default placeholder color */
+        background-color: #fff;
+        border: 2px solid #ccc;
+        border-radius: 14px;
+        box-sizing: border-box;
+        position: relative;
+        -webkit-appearance: none;
+        appearance: none;
+        text-align: left;
+        font-family: sans-serif;
+      }
+
+      /* --- Style for the custom multi-select dropdown --- */
+      .custom-multiselect-container {
+        padding: 0; /* The container itself has no padding, the inner box does */
+        cursor: pointer;
+      }
+      .custom-multiselect-container .select-box {
+        display: flex; /* These three lines ensure vertical centering */
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        padding: 0 15px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      
+      /* --- Add identical dropdown arrow to select and custom div --- */
+      .experience-dropdown,
+      .custom-multiselect-container {
+        background-image: url('data:image/svg+xml;utf8,<svg fill="%233e3e3e" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 24px;
+        padding-right: 40px;
+      }
+      
+      select.experience-dropdown {
+        padding-left: 13px;
+        cursor: pointer;
+      }
+
+      /* --- Checkbox dropdown panel --- */
+      .custom-multiselect-container .checkboxes {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ccc;
+        border-top: none;
+        border-radius: 0 0 14px 14px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        padding: 10px;
+        text-align: left;
+      }
+      .custom-multiselect-container .checkboxes label {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        cursor: pointer;
+        color: #333;
+        font-size: 16px;
+      }
+      .custom-multiselect-container .checkboxes label:hover {
+        background-color: #f0f0f0;
+      }
+      .custom-multiselect-container .checkboxes input[type="checkbox"] {
+        margin-right: 10px;
+        transform: scale(1.2);
+      }
+
+      /* --- Style for active/selected fields --- */
+      .onboarding-field.is-active {
+        color: blue;
+        border-color: blue;
+      }
+    </style>
   </head>
   <body>
 <!-- ===================================================================== -->
@@ -87,7 +183,7 @@
 
   <!-- Password Screen Heading -->
   <h2 id="password-title" style="margin-bottom: 40px; font-weight: normal; font-size: 17px; text-align: center;">
-    Enter your <span style="font-weight: bold; font-family: 'Quicksand', sans-serif"><span style="color: red">Al</span>an</span> invitation password
+    Enter your Alan password
   </h2>
 
   <!-- Password Input and Submit Button -->
@@ -142,86 +238,47 @@
 
       <p id="good-luck" class="good-luck" style="text-align: center">Good luck!</p>
 
-      <!-- (1) NAME INPUT: width = 180px, left-aligned -->
+      <!-- (1) NAME INPUT -->
       <input
         type="text"
         id="nameInput"
-        class="name-input"
+        class="onboarding-field"
         placeholder="Name"
         title="2-20 letters, spaces, apostrophes or hyphens only"
-        style="
-          color: grey;
-          text-align: left;
-          width: 220px;
-        "
       />
 
-      <!-- (2) AIMS SELECT (formerly ROLE): width = 180px, left-aligned -->
-      <select
-        id="job-role-select" 
-        class="job-role-dropdown"
-        style="
-          text-align: left;
-          width: 220px;
-        "
-      >
-        <option value="" disabled selected hidden>Aims</option> <!-- Changed placeholder text -->
-        <option value="Eyes">Eyes</option>
-        <option value="Ears">Ears</option>
-        <option value="Skin">Skin</option>
-        <option value="Veterinary">Veterinary</option>
-        <option value="Child/Maternal">Child/Maternal</option>
-        
-        <!-- 
-        <option value="Health worker">Health worker</option>
-        <option value="Nurse">Nurse</option>
-        <option value="Ophthalmic clinical officer">Ophthalmic clinical officer</option>
-        <option value="Medical student">Medical student</option>
-        <option value="Physician associate">Physician associate</option>
-        <option value="General practitioner">General practitioner</option>
-        <option value="Hospital doctor">Hospital doctor</option>
-        <option value="Ophthalmologist">Ophthalmologist</option>
-        <option value="Optometrist">Optometrist</option>
-        <option value="Orthoptist">Orthoptist</option>
-        <option value="ENT specialist">ENT specialist</option>
-        <option value="Pharmacist">Pharmacist</option>
-        <option value="Audiologist">Audiologist</option>
-        <option value="Ear care practitioner">Ear care practitioner</option>
-        <option value="Dermatologist">Dermatologist</option>
-         -->
-      </select>
-
-      <!-- (3) EXPERIENCE SELECT: width = 180px, left-aligned -->
+      <!-- (2) AIMS MULTI-SELECT DROPDOWN -->
+      <div id="job-role-select" class="onboarding-field custom-multiselect-container">
+        <div class="select-box">
+          <span id="aims-select-text">Aims</span>
+        </div>
+        <div class="checkboxes" id="aims-checkboxes">
+          <label><input type="checkbox" value="Eyes" /> Eyes</label>
+          <label><input type="checkbox" value="Ears" /> Ears</label>
+          <label><input type="checkbox" value="Skin" /> Skin</label>
+          <label><input type="checkbox" value="Veterinary" /> Veterinary</label>
+          <label><input type="checkbox" value="Child/Maternal" /> Child/Maternal</label>
+        </div>
+      </div>
+      
+      <!-- (3) EXPERIENCE SELECT -->
       <select
         id="experience-select"
-        class="experience-dropdown"
-        style="
-          text-align: left;
-          width: 220px;
-        "
+        class="onboarding-field experience-dropdown"
       >
         <option value="" disabled selected hidden>Experience</option>
-        <option value="Student / refresher">Student / refresher</option>
-        <option value="Confident core knowledge">Confident core knowledge</option>
+        <option value="Student / refresher">Student / Refresher</option>
+        <option value="Confident core knowledge">Good core knowledge</option>
         <option value="Expert">Expert</option>
       </select>
-
-      <!-- (4) AIMS BUTTON REMOVED -->
-
-      <!-- (5) CONTACT INPUT: width = 180px, left-aligned -->
+      
+      <!-- (5) CONTACT INPUT -->
       <input
         type="text"
         id="contactInput"
-        class="contact-input"
+        class="onboarding-field"
         placeholder="Contact (email/phone)"
         autocomplete="off"
-        autocorrect="off"
-        autocapitalize="off"
-        spellcheck="false"
-        style="
-          text-align: left;
-          width: 220px;
-        "
       />
 
       <br /><br /><br />
@@ -302,16 +359,15 @@
       const skyImage = document.getElementById('triangleFrame'); 
 
       const nameInput = document.getElementById('nameInput');
-      const jobSelectElement = document.getElementById('job-role-select'); // This ID now refers to the "Aims" dropdown
+      const jobSelectElement = document.getElementById('job-role-select');
+      const checkboxesContainer = jobSelectElement.querySelector('.checkboxes');
+      const aimsSelectText = document.getElementById('aims-select-text');
+
       const experienceSelect = document.getElementById('experience-select');
       const contactInput = document.getElementById('contactInput');
       const acceptButton = document.getElementById('acceptButton');
-
-      let ipLatitude = 'Not set';
-      let ipLongitude = 'Not set';
-      let ipCountry = 'Not set';
-      let ipArea = 'Not set';
-      let ipISO2 = 'Not set';
+      
+      let aimsDropdownExpanded = false;
 
       const classificationLookup = {
         HI: ['QA', 'MO', 'LU', 'SG', 'BN', 'IE', 'NO', 'KW', 'AE', 'CH', 'HK', 'SM', 'US', 'SA', 'NL', 'IS', 'BH', 'SE', 'DE', 'AU', 'TW', 'DK', 'AT', 'CA', 'BE', 'OM', 'FI', 'GB', 'FR', 'JP', 'MT', 'KR', 'NZ', 'ES', 'IT', 'PR', 'CY', 'IL', 'CZ'],
@@ -319,23 +375,6 @@
         LI: ['BB', 'ME', 'AZ', 'CR', 'IQ', 'DO', 'PW', 'MK', 'RS', 'DZ', 'GD', 'CO', 'SR', 'LC', 'PE', 'LK', 'EG', 'MN', 'JO', 'AL', 'VE', 'ID', 'DM', 'XK', 'NR', 'TN', 'VC', 'NA', 'BA', 'EC', 'GE', 'SZ', 'FJ', 'LY', 'PY', 'JM', 'AM', 'SV', 'BT', 'UA', 'MA', 'BZ', 'GY', 'PH', 'GT', 'BO', 'LA', 'UZ', 'CV', 'VN', 'PK'],
         VLI: ['AO', 'CG', 'MM', 'NG', 'NI', 'WS', 'MD', 'TO', 'HN', 'TL', 'GH', 'SD', 'BD', 'MR', 'KH', 'ZM', 'LS', 'CI', 'TV', 'PG', 'KG', 'DJ', 'KE', 'MH', 'FM', 'CM', 'TZ', 'ST', 'TJ', 'VU', 'NP', 'SN', 'TD', 'UG', 'YE', 'ZW', 'BJ', 'ML', 'SB', 'ET', 'RW', 'GN', 'KI', 'AF', 'BF', 'HT', 'GW', 'SL', 'GM', 'SS', 'TG', 'KM', 'MG', 'ER', 'MZ', 'MW', 'NE', 'LR', 'BI', 'CD', 'CF']
       };
-
-      function setSelectedAgent() {
-        let selectedAgent = 'Unknown';
-        const classification = localStorage.getItem('classification') || 'Unknown';
-        const roleClass = localStorage.getItem('roleClassification') || '';
-
-        if (roleClass === ' (M)' && ['HI', 'MI'].includes(classification)) {
-          selectedAgent = 'Agent 1';
-        } else if (roleClass === ' (M)' && ['LI', 'VLI'].includes(classification)) {
-          selectedAgent = 'Agent 3';
-        } else if (roleClass === ' (P)' && ['HI', 'MI'].includes(classification)) {
-          selectedAgent = 'Agent 2';
-        } else if (roleClass === ' (P)' && ['LI', 'VLI'].includes(classification)) {
-          selectedAgent = 'Agent 4';
-        }
-        localStorage.setItem('selectedAgent', selectedAgent);
-      }
 
       function showSplashScreenAndThen() {
         splashScreenRef.classList.remove('hidden');
@@ -366,17 +405,13 @@
           .then(response => response.json())
           .then(data => {
             if (data) {
-              ipLatitude = data.latitude || 'Not set';
-              ipLongitude = data.longitude || 'Not set';
-              ipCountry = data.country_name || 'Not set';
-              ipArea = data.city || 'Not set';
-              ipISO2 = (data.country || 'Not set').toUpperCase();
-              localStorage.setItem('latitude', ipLatitude);
-              localStorage.setItem('longitude', ipLongitude);
-              localStorage.setItem('country', ipCountry);
-              localStorage.setItem('area', ipArea);
-              localStorage.setItem('iso2', ipISO2);
-              storeClassifications(ipISO2);
+              localStorage.setItem('latitude', data.latitude || 'Not set');
+              localStorage.setItem('longitude', data.longitude || 'Not set');
+              localStorage.setItem('country', data.country_name || 'Not set');
+              localStorage.setItem('area', data.city || 'Not set');
+              const iso2 = (data.country || 'Not set').toUpperCase();
+              localStorage.setItem('iso2', iso2);
+              storeClassifications(iso2);
             }
           })
           .catch(error => console.error('Error fetching IP-based location:', error));
@@ -394,22 +429,22 @@
       }
 
       function checkSelections() {
-        jobSelectElement.style.color = jobSelectElement.value ? 'blue' : 'grey'; // jobSelectElement now "Aims"
-        experienceSelect.style.color = experienceSelect.value ? 'blue' : 'grey';
-        nameInput.style.color = nameInput.value.trim().length >= 2 ? 'blue' : 'grey';
+        const anyAimChecked = checkboxesContainer.querySelectorAll('input:checked').length > 0;
+        jobSelectElement.classList.toggle('is-active', anyAimChecked);
+
+        const experienceSelected = !!experienceSelect.value;
+        experienceSelect.classList.toggle('is-active', experienceSelected);
+
+        const nameEntered = nameInput.value.trim().length >= 2;
+        nameInput.classList.toggle('is-active', nameEntered);
+
+        const contactEntered = !!contactInput.value.trim();
+        contactInput.classList.toggle('is-active', contactEntered);
         
-        acceptButton.disabled = !(
-          nameInput.value.trim() &&
-          jobSelectElement.value && // Checks if an "Aim" is selected
-          experienceSelect.value &&
-          contactInput.value.trim()
-        );
+        acceptButton.disabled = !(nameEntered && anyAimChecked && experienceSelected && contactEntered);
       }
 
       function initEventListeners() {
-        skyImage.style.transform = 'scale(1)';
-        skyImage.style.transition = 'transform 4s ease-in-out, filter 4s ease-in-out';
-
         nameInput.addEventListener('input', (e) => {
           e.target.value = e.target.value.replace(/[^A-Za-z'\- ]/g, '');
           if (e.target.value.length > 20) {
@@ -418,13 +453,26 @@
           checkSelections();
         });
 
-        jobSelectElement.addEventListener('change', checkSelections); // jobSelectElement now "Aims"
-        experienceSelect.addEventListener('change', checkSelections);
-        contactInput.addEventListener('input', () => {
-          contactInput.classList.toggle('entered', contactInput.value.trim() !== '');
-          checkSelections();
+        jobSelectElement.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            checkboxesContainer.style.display = aimsDropdownExpanded ? 'none' : 'block';
+            aimsDropdownExpanded = !aimsDropdownExpanded;
         });
 
+        document.addEventListener('click', () => {
+            checkboxesContainer.style.display = 'none';
+            aimsDropdownExpanded = false;
+        });
+        
+        checkboxesContainer.addEventListener('change', () => {
+            const checkedItems = Array.from(checkboxesContainer.querySelectorAll('input:checked'));
+            const selectedTexts = checkedItems.map(item => item.parentElement.textContent.trim());
+            aimsSelectText.textContent = selectedTexts.length > 0 ? selectedTexts.join(', ') : 'Aims';
+            checkSelections();
+        });
+
+        experienceSelect.addEventListener('change', checkSelections);
+        contactInput.addEventListener('input', checkSelections);
         acceptButton.addEventListener('click', handleAccept);
 
         passwordInput.addEventListener('input', () => {
@@ -432,6 +480,8 @@
           passwordError.style.display = 'none';
         });
         passwordSubmitBtn.addEventListener('click', verifyPassword);
+        
+        checkSelections();
       }
 
       function verifyPassword() {
@@ -441,20 +491,18 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ password: entered }),
         })
-          .then(response => {
-            if (!response.ok) throw new Error('Invalid password');
-            localStorage.setItem('verified', 'true');
-            passwordScreen.classList.remove('visible');
-            passwordScreen.classList.add('hidden');
-            instructionRef.classList.remove('hidden');
-            instructionRef.classList.add('visible');
-          })
-          .catch(err => {
-            passwordError.style.display = 'block';
-            passwordInput.value = '';
-            passwordSubmitBtn.disabled = true;
-            setTimeout(() => { passwordError.style.display = 'none'; }, 3000);
-          });
+        .then(response => {
+          if (!response.ok) throw new Error('Invalid password');
+          localStorage.setItem('verified', 'true');
+          passwordScreen.classList.add('hidden');
+          instructionRef.classList.remove('hidden');
+        })
+        .catch(err => {
+          passwordError.style.display = 'block';
+          passwordInput.value = '';
+          passwordSubmitBtn.disabled = true;
+          setTimeout(() => { passwordError.style.display = 'none'; }, 3000);
+        });
       }
 
       function handleAccept() {
@@ -465,50 +513,36 @@
           return;
         }
 
+        const checkedAims = Array.from(checkboxesContainer.querySelectorAll('input:checked')).map(cb => cb.value);
         localStorage.setItem('name', rawName);
-        localStorage.setItem('selectedJobRole', jobSelectElement.value); // Storing selected "Aim" under selectedJobRole key
+        localStorage.setItem('selectedJobRole', checkedAims.join(', '));
         localStorage.setItem('selectedExperience', experienceSelect.value);
+        localStorage.setItem('contactInfo', contactInput.value);
 
-        let roleClass;
-        const selectedAim = jobSelectElement.value; // This is the new "Aim" value
-        
-        // CRITICAL: Adjust this logic based on how new "Aims" map to (M) or (P)
-        switch (selectedAim) {
-          case 'Eyes':
-          case 'Ears':
-          case 'Skin':
-          case 'Child/Maternal': // Example: Assuming Child/Maternal is Medical
-            roleClass = ' (M)';
-            break;
-          case 'Veterinary': // Example: Assuming Veterinary is Paramedical or other
-            roleClass = ' (P)'; 
-            break;
-          default: // Default or if an Aim doesn't clearly map
-            roleClass = ' (P)'; // Or ' (M)' or handle as unknown
-            break;
+        let roleClass = '(P)';
+        if (checkedAims.length > 0 && !checkedAims.includes('Veterinary')) {
+          roleClass = '(M)';
         }
         localStorage.setItem('roleClassification', roleClass);
-        localStorage.setItem('contactInfo', contactInput.value);
 
         if (!localStorage.getItem('sessionId')) {
           localStorage.setItem('sessionId', `user-${Date.now()}`);
         }
-        setSelectedAgent();
 
         const userInfo = {
           sessionId: localStorage.getItem('sessionId'),
           name: rawName,
-          role: jobSelectElement.value, // This will be the "Aim" (e.g., "Eyes", "Veterinary")
+          role: checkedAims.join(', '),
           experience: experienceSelect.value,
           latitude: localStorage.getItem('latitude'),
           longitude: localStorage.getItem('longitude'),
           country: localStorage.getItem('country'),
           iso2: localStorage.getItem('iso2'),
           classification: localStorage.getItem('classification'),
+          roleClassification: roleClass,
           area: localStorage.getItem('area'),
           contactInfo: contactInput.value,
-          version: localStorage.getItem('version') || '1.0',
-          selectedAgent: localStorage.getItem('selectedAgent'),
+          version: '1.0',
           dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
         };
 
@@ -517,30 +551,15 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(userInfo)
         })
-          .then(resp => resp.text())
-          .then(data => console.log('Record saved:', data))
-          .catch(err => console.error('Error saving record:', err));
-
-        const sessionId = localStorage.getItem('sessionId') || 'no-session-id';
-        fetch('https://flowiseai-railway-production-fecf.up.railway.app/api/v1/prediction/75b5edc0-4e39-441b-ba7a-eb6cb404b69a', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            question: 'Hello, how can I help?',
-            overrideConfig: { sessionId: sessionId }
-          })
-        })
-          .then(response => response.json())
-          .then(data => console.log('Flowise API response:', data))
-          .catch(error => console.error('Error:', error));
-
+        .then(resp => resp.text())
+        .then(data => console.log('Record saved:', data))
+        .catch(err => console.error('Error saving record:', err));
+        
         blackScreen.style.visibility = 'visible';
         blackScreen.style.opacity = 1;
-        setTimeout(() => {}, 200);
         setTimeout(() => {
-          blackScreen.style.opacity = 0;
-          setTimeout(() => { window.location.href = 'home.html'; }, 250);
-        }, 6000);
+          window.location.href = 'home.html';
+        }, 6250);
       }
 
       function main() {
@@ -550,8 +569,12 @@
 
         const indexLangButton = document.getElementById('index-language-button');
         const indexLangDropdown = document.getElementById('index-language-dropdown');
-        indexLangButton.addEventListener('click', () => {
+        indexLangButton.addEventListener('click', (e) => {
+          e.stopPropagation();
           indexLangDropdown.style.display = (indexLangDropdown.style.display === 'none' || indexLangDropdown.style.display === '') ? 'block' : 'none';
+        });
+        document.addEventListener('click', () => {
+          indexLangDropdown.style.display = 'none';
         });
         indexLangDropdown.querySelectorAll('li').forEach(item => {
           item.addEventListener('click', () => {
@@ -566,65 +589,58 @@
       document.addEventListener('DOMContentLoaded', main);
 
       function updateIndexLanguageDisplays(lang) {
-        if (!window.translations || !window.translations[lang]) {
-          console.warn(`Translations for language '${lang}' not found.`);
-          return;
-        }
-        const currentTranslations = window.translations[lang];
-
-        document.getElementById('password-title').textContent = currentTranslations.passwordTitle;
-        document.getElementById('passwordInput').placeholder = currentTranslations.passwordPlaceholder;
-        document.getElementById('passwordError').textContent = currentTranslations.passwordErrorMsg;
-        document.getElementById('passwordSubmitBtn').textContent = currentTranslations.passwordSubmitBtn;
-        document.getElementById('noCodeLine').innerHTML = currentTranslations.noCodeLine;
-
-        document.getElementById('instruction-text').textContent = currentTranslations.instructionText;
-        document.getElementById('good-luck').textContent = currentTranslations.goodLuck;
-        document.getElementById('nameInput').placeholder = currentTranslations.namePlaceholder;
-
-        // Update "Aims" dropdown (formerly "Role")
-        // Use a new translation key for "Aims" placeholder, e.g., aimsPlaceholder
-        document.querySelector('#job-role-select option[disabled]').textContent = currentTranslations.aimsPlaceholder || 'Aims'; 
-
-        // Update new "Aims" options
-        const aimsOptionsMapping = {
-          "Eyes": currentTranslations.aimsEyes,
-          "Ears": currentTranslations.aimsEars,
-          "Skin": currentTranslations.aimsSkin,
-          "Veterinary": currentTranslations.aimsVeterinary,
-          "Child/Maternal": currentTranslations.aimsChildMaternal
+        if (!window.translations || !window.translations[lang]) return;
+        
+        const t = window.translations[lang];
+        
+        const elementTranslations = {
+          'password-title': 'passwordTitle',
+          'passwordError': 'passwordErrorMsg',
+          'passwordSubmitBtn': 'passwordSubmitBtn',
+          'instruction-text': 'instructionText',
+          'good-luck': 'goodLuck',
+          'acceptButton': 'acceptButton'
         };
-        document.querySelectorAll('#job-role-select option:not([disabled])').forEach(option => {
-          // Only update if it's one of the new "Aims" options
-          if (aimsOptionsMapping[option.value]) {
-            option.textContent = aimsOptionsMapping[option.value];
-          } else if (!option.outerHTML.includes("<!--")) { 
-            // Fallback for new options if translation missing, but skip commented out ones
-            option.textContent = option.value; 
-          }
+
+        for (const [id, key] of Object.entries(elementTranslations)) {
+          const el = document.getElementById(id);
+          if(el) el.textContent = t[key];
+        }
+
+        document.getElementById('passwordInput').placeholder = t.passwordPlaceholder;
+        document.getElementById('noCodeLine').innerHTML = t.noCodeLine;
+        document.getElementById('nameInput').placeholder = t.namePlaceholder;
+        document.getElementById('contactInput').placeholder = t.contactPlaceholder;
+
+        const aimsSelectText = document.getElementById('aims-select-text');
+        if (checkboxesContainer.querySelectorAll('input:checked').length === 0) {
+            aimsSelectText.textContent = t.aimsPlaceholder || 'Aims';
+        }
+        
+        const aimsTranslations = {
+          "Eyes": "aimsEyes", "Ears": "aimsEars", "Skin": "aimsSkin", 
+          "Veterinary": "aimsVeterinary", "Child/Maternal": "aimsChildMaternal"
+        };
+        checkboxesContainer.querySelectorAll('label').forEach(label => {
+            const checkbox = label.querySelector('input');
+            const translationKey = aimsTranslations[checkbox.value];
+            if (label.childNodes[1] && t[translationKey]) {
+                label.childNodes[1].nodeValue = ' ' + t[translationKey];
+            }
         });
         
-        // Logic for old job role translations is still here but won't apply to visible options
-        // const roleOptions = document.querySelectorAll('#job-role-select option:not([disabled])');
-        // roleOptions.forEach((option) => { ... }); // This part is now less relevant for visible items
-
-        document.querySelector('#experience-select option[disabled]').textContent = currentTranslations.experiencePlaceholder;
+        document.querySelector('#experience-select option[disabled]').textContent = t.experiencePlaceholder;
         const expOptionsMapping = {
-          "Student / refresher": currentTranslations.experienceStudentRefresher,
-          "Confident core knowledge": currentTranslations.experienceConfidentCore,
-          "Expert": currentTranslations.experienceExpert
+          "Student / refresher": "experienceStudentRefresher",
+          "Confident core knowledge": "experienceConfidentCore",
+          "Expert": "experienceExpert"
         };
         document.querySelectorAll('#experience-select option:not([disabled])').forEach(option => {
-          if (expOptionsMapping[option.value]) {
-            option.textContent = expOptionsMapping[option.value];
-          } else {
-            option.textContent = option.value; 
+          const translationKey = expOptionsMapping[option.value];
+          if (t[translationKey]) {
+            option.textContent = t[translationKey];
           }
         });
-        
-        const contactInputEl = document.getElementById('contactInput');
-        contactInputEl.placeholder = currentTranslations.contactPlaceholder;
-        document.getElementById('acceptButton').textContent = currentTranslations.acceptButton;
       }
     </script>
   </body>
