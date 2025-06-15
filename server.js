@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors'); // <--- 1. REQUIRE THE CORS PACKAGE
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -30,8 +31,20 @@ let ONE_TIME_PASSWORDS = new Set([
 /*********************************************/
 /* 2) Standard Setup                         */
 /*********************************************/
+
+// <--- 2. USE THE CORS MIDDLEWARE
+// This should be placed before your route definitions.
+// It tells the server to add the 'Access-Control-Allow-Origin' header to all responses.
+app.use(cors()); 
+
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// <--- 3. HANDLE PREFLIGHT REQUESTS
+// The browser sends an 'OPTIONS' request before a 'POST' or 'PUT' to check permissions.
+// The cors() middleware usually handles this, but explicitly adding it is good practice.
+app.options('*', cors()); // enable pre-flight for all routes
+
 
 // Serve your main pages
 app.get('/', (req, res) => {
@@ -109,6 +122,7 @@ app.post('/record-info', (req, res) => {
   });
 });
 
+
 /*********************************************/
 /* 4) Fetch Single Active Record (POST)      */
 /*    /fetch-records                         */
@@ -158,6 +172,7 @@ app.post('/fetch-records', (req, res) => {
   });
 });
 
+
 /*********************************************/
 /* 5) Fetch Full History (POST)              */
 /*    /fetch-history                         */
@@ -206,12 +221,14 @@ app.post('/fetch-history', (req, res) => {
   });
 });
 
+
 /*********************************************/
 /* 6) Start the server                       */
 /*********************************************/
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
 });
+
 
 /*********************************************/
 /* HELPER: Append or Update user-history.json*/

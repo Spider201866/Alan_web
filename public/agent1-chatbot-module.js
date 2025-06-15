@@ -2,8 +2,10 @@
 
 import Chatbot from 'https://cdn.jsdelivr.net/npm/flowise-embed@latest/dist/web.js';
 
-export function initChatbot() {
-  const sessionId = localStorage.getItem('sessionId') || 'no-session-id';
+// MODIFICATION 1: The function now accepts a 'sessionId' from the outside.
+export function initChatbot(sessionId) {
+  // MODIFICATION 2: Use the provided sessionId first, with fallbacks.
+  const sessionToUse = sessionId || localStorage.getItem('sessionId') || `fallback-${Date.now()}`;
 
   // Ensure a container exists – adjust the selector if needed
   const container = document.querySelector('.chatbot-container');
@@ -25,7 +27,9 @@ export function initChatbot() {
   Chatbot.initFull({
     chatflowid: '094d6797-5b02-4f13-862a-418cd7755cf9',
     apiHost: 'https://flowiseai-railway-production-fecf.up.railway.app',
-    userId: sessionId,
+    // MODIFICATION 3: Use our new variable for the sessionId.
+    // The property name is `sessionId` for chat history persistence.
+    sessionId: sessionToUse,
     theme: {
       button: {
         backgroundColor: '#ffffff',
