@@ -250,21 +250,7 @@
 
       <div id="muted-buttons"></div>
 
-      <script>
-        function fetchMutedSnippet() {
-          return fetch('muted.html')
-            .then(res => res.text())
-            .then(html => {
-              document.getElementById('muted-buttons').innerHTML = html;
-              initMutedButtons();
-              const storedLang = localStorage.getItem('preferredLanguage') || 'en';
-              updateAllLanguage(storedLang);
-            })
-            .catch(err => console.error('Error:', err));
-        }
-        document.addEventListener('DOMContentLoaded', fetchMutedSnippet);
-        window.addEventListener('pageshow', fetchMutedSnippet);
-      </script>
+      
       <script src="muted.js"></script>
 
       <div class="detected-condition"></div>
@@ -279,7 +265,7 @@
 
   <!-- POPUP + GEOLOCATION -->
   <div id="popup">
-    <span class="popup-close" onclick="closePopup()">×</span>
+    <span class="popup-close">×</span>
     <div class="popup-content" id="popup-content"></div>
 
     <div style="text-align: center; margin-top: 10px; position: relative;">
@@ -366,6 +352,7 @@
     document.addEventListener('DOMContentLoaded', main);
 
     function main() {
+      fetchMutedSnippet();
       const storedLang = localStorage.getItem('preferredLanguage') || 'en';
       updateAllLanguage(storedLang);
 
@@ -379,6 +366,24 @@
       if (localStorage.getItem('instructionsClicked') === 'true') {
         updateButtonStyle(instructionsButton);
       }
+    }
+
+    // =============================================
+    // ======  ADDED: fetchMutedSnippet() HERE  ======
+    // =============================================
+    function fetchMutedSnippet() {
+      fetch('muted.html')
+        .then(res => res.text())
+        .then(html => {
+          const mutedContainer = document.getElementById('muted-buttons');
+          if (mutedContainer) mutedContainer.innerHTML = html;
+          if (typeof initMutedButtons === 'function') {
+            initMutedButtons();
+          }
+          const storedLang = localStorage.getItem('preferredLanguage') || 'en';
+          updateAllLanguage(storedLang);
+        })
+        .catch(err => console.error('Error fetching muted.html:', err));
     }
 
     languageButton.addEventListener('click', (e) => {
@@ -426,9 +431,19 @@
       const nameIcon = document.createElement('div');
       nameIcon.className = 'name-icon';
       nameIcon.textContent = initialLetter;
-      document.querySelector('.chatbot-header').appendChild(nameIcon);
+
+      const header = document.querySelector('.chatbot-header');
+      if (header) {
+        header.appendChild(nameIcon);
+      }
+
+      // Add the listener for the icon that opens/toggles the popup
       nameIcon.addEventListener('click', togglePopup);
-      popupClose.addEventListener('click', closePopup);
+
+      // THIS IS THE FIX - ADD THE LISTENER TO THE 'X'
+      if (popupClose) {
+        popupClose.addEventListener('click', closePopup);
+      }
     }
 
     function togglePopup() {
