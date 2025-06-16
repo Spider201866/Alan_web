@@ -134,11 +134,10 @@ function createButtons (condition) {
   row.style.cssText =
     'display:flex;flex-wrap:wrap;justify-content:center;gap:15px';
 
-  const make = (label, colour, url) => {
+  const make = (label, color, url) => {
     const b = document.createElement('button');
-    b.className = 'button';
     b.style.cssText =
-      `background:${colour};color:black;font-size:14px;border:2px solid black;padding:6px 10px`;
+      `background:${color};color:black;font-size:14px;border:2px solid black;padding:6px 10px`;
     b.textContent = label;
     b.onclick = () => window.open(url, '_blank');
     return b;

@@ -6,43 +6,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Alan</title> <!-- Sujin 10th 6 2025 -->
 
-  <!-- html2canvas -->
+  <!-- External Dependencies -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-
-  <!-- Favicons/meta if needed -->
-  <script type="module">
-    import { faviconAndMetaSetup } from './faviconAndMeta.js';
-    faviconAndMetaSetup();
-  </script>
-
-  <!-- CSS + fonts -->
   <link rel="stylesheet" href="styles.css">
   <link rel="prefetch" href="atomsblue.jpg" as="image">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"
-    rel="stylesheet"
-  >
-
-  <!-- closer.js if you use it -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- External JS Modules -->
+  <script type="module" src="faviconAndMeta.js"></script>
   <script type="module" src="closer.js"></script>
+  <script type="module" src="language.js"></script>
+  <script src="muted.js"></script>
 
-  <!-- Inline styling if not in styles.css -->
+  <!-- Inline Styles -->
   <style>
-
+    /* Placeholder for any inline styles if needed */
   </style>
 
-  <!-- language.js -->
-  <script type="module" src="language.js"></script>
 </head>
 <body>
   <div class="page-container">
     <!-- HEADER -->
-    <div class="chatbot-header">
+    <header class="chatbot-header">
       <div class="flex-spacer"></div>
       <div>
         <div class="chatbot-title">
@@ -51,102 +39,28 @@
         <div class="chatbot-subtitle">Eyes, Ears, Skin</div>
       </div>
       <div class="flex-spacer"></div>
-    </div>
+    </header>
 
-    <!-- Hamburger menu + side menu -->
+    <!-- SIDE MENU -->
     <div class="menu-icon"></div>
-    <div class="side-menu">
+    <nav class="side-menu">
       <div style="display: flex; margin-bottom: 10px;">
         <button id="instructions-button" class="button red pulse">How to use</button>
       </div>
       <div style="display: flex; margin-bottom: 10px;">
-        <button
-          id="eye-button"
-          class="button"
-          style="margin-right: 10px; background-color: rgb(134, 162, 255); border: 2px solid black; color: black;"
-          onclick="window.location.href='eye.html';"
-        >
-          Eye
-        </button>
-        <button
-          id="ear-button"
-          class="button"
-          style="margin-right: 10px; background-color: rgb(133, 255, 133); border: 2px solid black; color: black;"
-          onclick="window.location.href='ear.html';"
-        >
-          Ear
-        </button>
-        <button
-          id="skin-button"
-          class="button"
-          style="background-color: #efafff; border: 2px solid black; color: black;"
-          onclick="window.location.href='skin.html';"
-        >
-          Skin
-        </button>
+        <button id="eye-button" class="button" style="margin-right: 10px; background-color: rgb(134, 162, 255); border: 2px solid black; color: black;" onclick="window.location.href='eye.html';">Eye</button>
+        <button id="ear-button" class="button" style="margin-right: 10px; background-color: rgb(133, 255, 133); border: 2px solid black; color: black;" onclick="window.location.href='ear.html';">Ear</button>
+        <button id="skin-button" class="button" style="background-color: #efafff; border: 2px solid black; color: black;" onclick="window.location.href='skin.html';">Skin</button>
       </div>
-
       <div style="display: flex; margin-bottom: 10px; align-items: center;">
-        <a
-          href="https://www.youtube.com/@arclightproject"
-          style="text-decoration: none;"
-        >
-          <button
-            id="videos-button"
-            class="button grey"
-            style="margin-right: 10px;"
-          >
-            Videos
-          </button>
+        <a href="https://www.youtube.com/@arclightproject" style="text-decoration: none;">
+          <button id="videos-button" class="button grey" style="margin-right: 10px;">Videos</button>
         </a>
-        <button
-          id="atoms-button"
-          class="button grey"
-          style="margin-right: 10px;"
-          onclick="window.location.href='atoms.html';"
-        >
-          Atoms
-        </button>
-        <button
-          id="tools-button"
-          class="button grey"
-          style="margin-right: 10px;"
-        >
-          Tools
-        </button>
-
-        <!-- Language button / dropdown -->
+        <button id="atoms-button" class="button grey" style="margin-right: 10px;" onclick="window.location.href='atoms.html';">Atoms</button>
+        <button id="tools-button" class="button grey" style="margin-right: 10px;">Tools</button>
         <div style="position: relative;">
-          <button
-            class="button grey"
-            id="language-button"
-            style="
-              background: url('lang.jpg') no-repeat center center;
-              background-size: cover;
-              border: 2px solid #3e3e3e;
-              width: 32px;
-              height: 32px;
-            "
-          ></button>
-          <div
-            id="language-dropdown"
-            style="
-              display: none;
-              position: absolute;
-              top: 40px;
-              left: 50%;
-              transform: translateX(-50%);
-              background: #fff;
-              border: 1px solid #ccc;
-              z-index: 9999;
-              min-width: 220px;
-              white-space: nowrap;
-              max-height: 350px;
-              overflow-y: auto;
-              font-size: 14px;
-              line-height: 1.2;
-            "
-          >
+          <button class="button grey" id="language-button" style="background: url('lang.jpg') no-repeat center center; background-size: cover; border: 2px solid #3e3e3e; width: 32px; height: 32px;"></button>
+          <div id="language-dropdown" style="display: none; position: absolute; top: 40px; left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid #ccc; z-index: 9999; min-width: 220px; white-space: nowrap; max-height: 350px; overflow-y: auto; font-size: 14px; line-height: 1.2;">
             <ul style="margin: 0; padding: 0; list-style: none;">
               <li data-value="en" style="padding: 6px; cursor: pointer;"><strong>English</strong> (English)</li>
               <li data-value="zh" style="padding: 6px; cursor: pointer;"><strong>中文</strong> (Chinese)</li>
@@ -174,161 +88,79 @@
           </div>
         </div>
       </div>
-
       <div style="display: flex; margin-bottom: 10px;">
-        <a
-          href="https://arclightprojectshop.co.uk/"
-          style="text-decoration: none;"
-        >
-          <button
-            id="arclight-project-button"
-            class="button grey"
-            style="margin-right: 10px;"
-          >
-            Arclight Project
-          </button>
+        <a href="https://arclightprojectshop.co.uk/" style="text-decoration: none;">
+          <button id="arclight-project-button" class="button grey" style="margin-right: 10px;">Arclight Project</button>
         </a>
-        <button
-          id="links-button"
-          class="button grey"
-          style="margin-right: 10px;"
-          onclick="window.location.href='weblinks.html';"
-        >
-          Links
-        </button>
-        <button
-          id="about-button"
-          class="button grey"
-          onclick="location.href='aboutalan.html';"
-        >
-          About
-        </button>
-
+        <button id="links-button" class="button grey" style="margin-right: 10px;" onclick="window.location.href='weblinks.html';">Links</button>
+        <button id="about-button" class="button grey" onclick="location.href='aboutalan.html';">About</button>
       </div>
-              <!-- CHAT HISTORY – appears under the current buttons -->
-<div id="chat-history" class="chat-history">
-  <h3>Chat History</h3>
-  <ul id="chat-history-list"></ul>
-</div>
-    </div><!-- end side-menu -->
+      <div id="chat-history" class="chat-history">
+        <h3>Chat History</h3>
+        <ul id="chat-history-list"></ul>
+      </div>
+    </nav>
 
     <!-- MAIN CONTENT -->
-    <div class="content-wrapper" style="display: flex; flex-direction: column; justify-content: flex-start; min-height: 20vh; font-weight: bold;">
-      <div
-        class="logo-and-text-container"
-        style="text-align: center; line-height: 1.0; padding-top: 20px;"
-      >
-        <p
-          id="additional-text"
-          class="grey-text"
-          style="font-size: 15px; color: grey; margin-top: 0px;"
-        >
+    <main class="content-wrapper" style="display: flex; flex-direction: column; justify-content: flex-start; min-height: 20vh; font-weight: bold;">
+      <div class="logo-and-text-container" style="text-align: center; line-height: 1.0; padding-top: 20px;">
+        <p id="additional-text" class="grey-text" style="font-size: 15px; color: grey; margin-top: 0px;">
           <span id="good-history">Good History</span> |
           <span id="examine-well">Examine Well</span> |
           <span id="use-arclight">Use Arclight</span>
         </p>
-        <p
-          id="sub-text"
-          class="centered-content"
-          style="font-size: 16px; color: black; font-weight: 900; padding-bottom: 5px;"
-        ></p>
+        <p id="sub-text" class="centered-content" style="font-size: 16px; color: black; font-weight: 900; padding-bottom: 5px;"></p>
       </div>
       <div class="animation-container" id="animationContainer">
-        <img
-          src="./eyeor.gif"
-          alt="Eyeor Animation"
-          style="opacity: 0; transition: opacity 2s;"
-        >
+        <img src="./eyeor.gif" alt="Eyeor Animation" style="opacity: 0; transition: opacity 2s;">
       </div>
-    </div>
+    </main>
 
-    <object
-      type="text/html"
-      data="boxes.html"
-      id="boxesFrame"
-      style="width:100%; height:100px; overflow:auto; border:none;"
-    ></object>
+    <object type="text/html" data="boxes.html" id="boxesFrame" style="width:100%; height:100px; overflow:auto; border:none;"></object>
 
     <div class="main-wrapper">
       <div class="chatbot-container">
         <flowise-fullchatbot></flowise-fullchatbot>
       </div>
-
       <div id="muted-buttons"></div>
-
-      
-      <script src="muted.js"></script>
-
       <div class="detected-condition"></div>
-      <img id="condition-image" alt="" style="max-width: 100%; height: auto;" />
+      <img id="condition-image" alt="" style="max-width: 100%; height: auto;">
       <p id="condition-description"></p>
-    </div><!-- end main-wrapper -->
+    </div>
 
     <footer class="chatbot-version">
       Alan can make mistakes, double check everything
     </footer>
-  </div><!-- end .page-container -->
-
-  <!-- POPUP + GEOLOCATION -->
-  <div id="popup">
-    <span class="popup-close">×</span>
-    <div class="popup-content" id="popup-content"></div>
-
-    <div style="text-align: center; margin-top: 10px; position: relative;">
-      <button id="geolocation-button" class="button grey" style="font-size: 14px;">Check Location</button>
-      <button 
-        id="geo-info-button"
-        style="
-          background-color: #fff;
-          color: #000;
-          border: 1px solid #000;
-          border-radius: 8px;
-          padding: 4px 8px;
-          cursor: pointer;
-          font-size: 14px;
-        "
-      >
-        i
-      </button>
-      <p
-        id="location-info"
-        style="display:none; margin-top: 5px; font-size:12px;"
-      ></p>
-      <div 
-        id="geo-info-popup" 
-        style="
-          display: none;
-          position: absolute;
-          left: 50%;
-          top: 120%;
-          transform: translateX(-50%);
-          width: 250px;
-          max-width: none;
-          background: #fefefe;
-          border: 1px solid #000;
-          padding: 10px;
-          border-radius: 10px;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-          z-index: 10;
-        "
-      >
-        <p id="geoInfoText" style="font-size: 14px; margin: 0;">
-          Additional info...
-        </p>
-      </div>
-    </div>
   </div>
 
-  <!-- SINGLE SCRIPT BLOCK -->
+  <!-- POPUP -->
+  <aside id="popup">
+    <span class="popup-close">×</span>
+    <div class="popup-content" id="popup-content"></div>
+    <div style="text-align: center; margin-top: 10px; position: relative;">
+      <button id="geolocation-button" class="button grey" style="font-size: 14px;">Check Location</button>
+      <button id="geo-info-button" style="background-color: #fff; color: #000; border: 1px solid #000; border-radius: 8px; padding: 4px 8px; cursor: pointer; font-size: 14px;">i</button>
+      <p id="location-info" style="display:none; margin-top: 5px; font-size:12px;"></p>
+      <div id="geo-info-popup" style="display: none; position: absolute; left: 50%; top: 120%; transform: translateX(-50%); width: 250px; max-width: none; background: #fefefe; border: 1px solid #000; padding: 10px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); z-index: 10;">
+        <p id="geoInfoText" style="font-size: 14px; margin: 0;">Additional info...</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- SCRIPT BLOCK -->
   <script type="module">
+    // NOTE: This script depends on external modules:
+    // - language.js (for `translations`)
+    // - faviconAndMeta.js (for `faviconAndMetaSetup`)
+    // - agent1-chatbot-module.js (for `initChatbot`)
+    // - closer.js and listener-module.js (for event listeners)
     import { translations } from './language.js';
     import { faviconAndMetaSetup } from './faviconAndMeta.js';
     import { initChatbot } from './agent1-chatbot-module.js';
     import './closer.js';
     import './listener-module.js';
 
-    faviconAndMetaSetup();
-
+    // DOM Elements
     const menuIcon = document.querySelector('.menu-icon');
     const sideMenu = document.querySelector('.side-menu');
     const instructionsButton = document.getElementById('instructions-button');
@@ -337,49 +169,30 @@
     const popup = document.getElementById('popup');
     const popupClose = document.querySelector('.popup-close');
     
-    window.addEventListener('pageshow', () => {
-      sideMenu.style.left = '-370px';
-      menuIcon.classList.remove('open');
-      pushLocalStorageToServer();
-    });
-
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) {
-        pushLocalStorageToServer();
-      }
-    });
-
-    window.addEventListener('pageshow', (event) => {
-      if (event.persisted) {
-        fetchMutedSnippet();
-      }
-    });
-
-    document.addEventListener('DOMContentLoaded', main);
-
+    // Core Functions
     function main() {
       fetchMutedSnippet();
       const storedLang = localStorage.getItem('preferredLanguage') || 'en';
       updateAllLanguage(storedLang);
 
+      faviconAndMetaSetup();
       initChatbot();
       setupMenuIcon();
       setupInstructionsButton();
       setupNameIcon();
       setupGeolocationButton();
       setupGeoInfoButton();
+      setupLanguageControls();
+      setupChatbotInteraction();
 
       if (localStorage.getItem('instructionsClicked') === 'true') {
         updateButtonStyle(instructionsButton);
       }
     }
 
-    // =============================================
-    // ======  ADDED: fetchMutedSnippet() HERE  ======
-    // =============================================
     function fetchMutedSnippet() {
       fetch('muted.html')
-        .then(res => res.text())
+        .then(res => res.ok ? res.text() : Promise.reject('File not found'))
         .then(html => {
           const mutedContainer = document.getElementById('muted-buttons');
           if (mutedContainer) mutedContainer.innerHTML = html;
@@ -392,22 +205,75 @@
         .catch(err => console.error('Error fetching muted.html:', err));
     }
 
-    languageButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        languageDropdown.style.display = (languageDropdown.style.display === 'none') ? 'block' : 'none';
-    });
-    document.addEventListener('click', () => {
-        languageDropdown.style.display = 'none';
-    });
-    languageDropdown.querySelectorAll('li').forEach(item => {
-      item.addEventListener('click', () => {
-        const chosenLang = item.getAttribute('data-value');
-        localStorage.setItem('preferredLanguage', chosenLang);
-        updateAllLanguage(chosenLang); 
-        languageDropdown.style.display = 'none';
-      });
-    });
+    function updateAllLanguage(lang) {
+      if (!window.translations || !window.translations[lang]) {
+        console.warn(`Translations for '${lang}' not found. Check language.js.`);
+        return;
+      }
+      const t = window.translations[lang];
+      const elementTranslations = {
+          '.chatbot-subtitle': 'eyesEars', '#good-history': 'goodHistory', '#examine-well': 'examineWell',
+          '#use-arclight': 'useArclight', '.chatbot-version': 'alanMistakes', '#instructions-button': 'instructionsButton',
+          '#eye-button': 'eyeButton', '#ear-button': 'earButton', '#skin-button': 'skinButton', '#videos-button': 'videosButton',
+          '#atoms-button': 'atomsButton', '#tools-button': 'toolsButton', '#arclight-project-button': 'arclightProjectButton',
+          '#links-button': 'linksButton', '#about-button': 'aboutButton'
+      };
+      for(const [selector, key] of Object.entries(elementTranslations)) {
+          const el = document.querySelector(selector);
+          if(el) el.textContent = t[key];
+      }
+      const geoInfoTextEl = document.getElementById('geoInfoText');
+      if (geoInfoTextEl) {
+          // *** THIS IS THE CORRECTED LINE ***
+          geoInfoTextEl.textContent = t.geoInfoPopupText || "Location data helps us understand usage and improve Alan. Your IP address provides an approximate country/city on first load. You can optionally provide more precise GPS data using the 'Check Location' button. This data is handled as per our privacy guidelines.";
+      }
+      showGreeting();
+      const mutedButtonTranslations = {
+        '#images .text-part': 'images', '#help .text-part': 'help', '#screenshot .text-part': 'screenshot',
+        '#refer .text-part': 'refer', '#refer-popup': 'comingSoon'
+      };
+      for(const [selector, key] of Object.entries(mutedButtonTranslations)) {
+        const el = document.querySelector(selector);
+        if(el) el.textContent = t[key];
+      }
+      const boxesFrame = document.getElementById('boxesFrame');
+      if (boxesFrame && boxesFrame.contentDocument) {
+        const boxesDoc = boxesFrame.contentDocument;
+        const marqueeLines = ['eyeMarqueeLine1', 'eyeMarqueeLine2', 'eyeMarqueeLine3', 'eyeMarqueeLine4', 'eyeMarqueeLine5', 'eyeMarqueeLine6', 'eyeMarqueeLine7', 'earMarqueeLine1', 'earMarqueeLine2', 'earMarqueeLine3', 'earMarqueeLine4', 'earMarqueeLine5', 'earMarqueeLine6', 'earMarqueeLine7'];
+        marqueeLines.forEach(lineKey => {
+          const elA = boxesDoc.getElementById(`${lineKey}a`); if (elA) elA.textContent = t[lineKey];
+          const elB = boxesDoc.getElementById(`${lineKey}b`); if (elB) elB.textContent = t[lineKey];
+        });
+      }
+    }
 
+    function showGreeting() {
+        const name = localStorage.getItem('name');
+        const subTextEl = document.getElementById('sub-text');
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        if (!window.translations || !window.translations[lang]) return;
+        const t = window.translations[lang];
+        if (name) {
+            let firstName = name.split(' ')[0];
+            firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+            subTextEl.innerText = `${firstName}, ${t.howCanIHelp}`;
+        } else {
+            subTextEl.innerText = t.howCanIHelp;
+        }
+    }
+
+    function pushLocalStorageToServer() {
+      const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
+      const userInfo = {
+        sessionId, latitude: localStorage.getItem('latitude'), longitude: localStorage.getItem('longitude'), area: localStorage.getItem('area'), name: localStorage.getItem('name'), role: localStorage.getItem('selectedJobRole'), experience: localStorage.getItem('selectedExperience'), country: localStorage.getItem('country'), iso2: localStorage.getItem('iso2'), classification: localStorage.getItem('classification'), roleClassification: localStorage.getItem('roleClassification'), contactInfo: localStorage.getItem('contactInfo'), version: '1.0', dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
+      };
+      fetch('https://alan.up.railway.app/record-info', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(userInfo) })
+        .then(response => response.text())
+        .then(data => console.log('Server data pushed:', data))
+        .catch(err => console.error('Error pushing data:', err));
+    }
+
+    // UI Setup Functions
     function setupMenuIcon() {
       menuIcon.addEventListener('click', function() {
         this.classList.toggle('open');
@@ -420,11 +286,10 @@
         e.preventDefault();
         localStorage.setItem('instructionsClicked', 'true');
         updateButtonStyle(this);
-        setTimeout(() => {
-          window.location.href = 'instructions.html';
-        }, 300);
+        setTimeout(() => window.location.href = 'instructions.html', 300);
       });
     }
+
     function updateButtonStyle(button) {
       button.classList.remove('pulse');
       button.style.backgroundColor = 'grey';
@@ -433,35 +298,17 @@
 
     function setupNameIcon() {
       const storedName = localStorage.getItem('name') || 'User';
-      const initialLetter = storedName.charAt(0).toUpperCase();
       const nameIcon = document.createElement('div');
       nameIcon.className = 'name-icon';
-      nameIcon.textContent = initialLetter;
-
+      nameIcon.textContent = storedName.charAt(0).toUpperCase();
       const header = document.querySelector('.chatbot-header');
-      if (header) {
-        header.appendChild(nameIcon);
-      }
-
-      // Add the listener for the icon that opens/toggles the popup
+      if (header) header.appendChild(nameIcon);
       nameIcon.addEventListener('click', togglePopup);
-
-      // THIS IS THE FIX - ADD THE LISTENER TO THE 'X'
-      if (popupClose) {
-        popupClose.addEventListener('click', closePopup);
-      }
+      if (popupClose) popupClose.addEventListener('click', closePopup);
     }
 
-    function togglePopup() {
-      if (popup.style.right === '0px') closePopup();
-      else openPopup();
-    }
-
-    function openPopup() {
-      document.getElementById('popup-content').innerHTML = buildPopupContent();
-      popup.style.right = '0';
-    }
-
+    function togglePopup() { popup.style.right === '0px' ? closePopup() : openPopup(); }
+    function openPopup() { document.getElementById('popup-content').innerHTML = buildPopupContent(); popup.style.right = '0'; }
     function closePopup() {
       popup.style.right = '-350px';
       const geoInfoPopup = document.getElementById('geo-info-popup');
@@ -470,8 +317,8 @@
 
     function buildPopupContent() {
       const lang = localStorage.getItem('preferredLanguage') || 'en';
-      const t = window.translations[lang] || window.translations.en;
-
+      if (!window.translations || !window.translations[lang]) return '';
+      const t = window.translations[lang];
       const name = localStorage.getItem('name') || 'Not set';
       const role = localStorage.getItem('selectedJobRole') || 'Not set';
       const experienceValue = localStorage.getItem('selectedExperience') || 'Not set';
@@ -483,52 +330,21 @@
       const roleClass = localStorage.getItem('roleClassification') || '';
       const area = localStorage.getItem('area') || 'Not set';
       const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
-      
-      const experienceKeyMap = {
-        'Student / refresher': 'experienceStudentRefresher',
-        'Confident core knowledge': 'experienceConfidentCore',
-        'Expert': 'experienceExpert'
-      };
-      const experienceTranslationKey = experienceKeyMap[experienceValue] || '';
-      const experience = t[experienceTranslationKey] || experienceValue;
-
+      const experienceKeyMap = { 'Student / refresher': 'experienceStudentRefresher', 'Confident core knowledge': 'experienceConfidentCore', 'Expert': 'experienceExpert' };
+      const experience = t[experienceKeyMap[experienceValue]] || experienceValue;
       const now = new Date();
       const currDT = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}, ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-
-      return `
-        <h2>${t.userInfoTitle || 'User Information'}</h2>
-        <p><strong>${t.userName || 'Name'}:</strong> ${name}</p>
-        <p><strong>${t.userContact || 'Contact'}:</strong> ${contactInfo}</p>
-        <p><strong>${t.userAimsPopupLabel || 'Aims'}:</strong> ${role}${roleClass ? ', ' + roleClass : ''}</p> 
-        <p><strong>${t.userExperiencePopupLabel || 'Experience'}:</strong> ${experience}</p>
-        <p id="latLongSection" style="color: grey;">
-          <strong>${t.userLatLong || 'Lat/Long'}:</strong> ${latitude}, ${longitude}
-        </p>
-        <p id="areaSection" style="color: grey;">
-          <strong>${t.userArea || 'Area'}:</strong> ${area}
-        </p>
-        <p id="countrySection" style="color: grey;">
-          <strong>${t.userCountry || 'Country'}:</strong> ${country}, ${iso2}, ${classification}
-        </p>
-        <p style="color: grey;">
-          <em><strong>${t.userVersion || 'Version'}:</strong> 1.0</em>
-        </p>
-        <p style="color: grey;">
-          <em><strong>${t.userDateTime || 'Date/Time'}:</strong> ${currDT}</em>
-        </p>
-      `;
+      return `<h2>${t.userInfoTitle || 'User Information'}</h2><p><strong>${t.userName || 'Name'}:</strong> ${name}</p><p><strong>${t.userContact || 'Contact'}:</strong> ${contactInfo}</p><p><strong>${t.userAimsPopupLabel || 'Aims'}:</strong> ${role}${roleClass ? ', ' + roleClass : ''}</p> <p><strong>${t.userExperiencePopupLabel || 'Experience'}:</strong> ${experience}</p><p id="latLongSection" style="color: grey;"><strong>${t.userLatLong || 'Lat/Long'}:</strong> ${latitude}, ${longitude}</p><p id="areaSection" style="color: grey;"><strong>${t.userArea || 'Area'}:</strong> ${area}</p><p id="countrySection" style="color: grey;"><strong>${t.userCountry || 'Country'}:</strong> ${country}, ${iso2}, ${classification}</p><p style="color: grey;"><em><strong>${t.userVersion || 'Version'}:</strong> 1.0</em></p><p style="color: grey;"><em><strong>${t.userDateTime || 'Date/Time'}:</strong> ${currDT}</em></p>`;
     }
-    
+
     function setupGeoInfoButton() {
       const geoInfoButton = document.getElementById('geo-info-button');
       const geoInfoPopup = document.getElementById('geo-info-popup');
-
       if (geoInfoButton && geoInfoPopup) {
         geoInfoButton.addEventListener('click', (event) => {
-          event.stopPropagation(); 
+          event.stopPropagation();
           geoInfoPopup.style.display = (geoInfoPopup.style.display === 'none' || geoInfoPopup.style.display === '') ? 'block' : 'none';
         });
-
         document.addEventListener('click', (event) => {
           if (geoInfoPopup.style.display === 'block' && !geoInfoPopup.contains(event.target) && event.target !== geoInfoButton) {
             geoInfoPopup.style.display = 'none';
@@ -551,200 +367,89 @@
               localStorage.setItem('longitude', longitude);
               locationInfo.innerText = `Updated location: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
               locationInfo.style.display = 'block';
-
               const areaName = await fetchAreaFromLatLong(latitude, longitude);
               localStorage.setItem('area', areaName);
-
               document.getElementById('popup-content').innerHTML = buildPopupContent();
               flashBlueOnUpdate();
               pushLocalStorageToServer();
-
-              setTimeout(() => {
-                geolocationButton.style.backgroundColor = 'grey';
-                locationInfo.style.display = 'none'; 
-              }, 3000);
+              setTimeout(() => { geolocationButton.style.backgroundColor = 'grey'; locationInfo.style.display = 'none'; }, 3000);
             },
             (error) => {
-              const errorMessages = {
-                [error.PERMISSION_DENIED]: 'User denied geolocation.',
-                [error.POSITION_UNAVAILABLE]: 'Location info unavailable.',
-                [error.TIMEOUT]: 'Request timed out.'
-              };
+              const errorMessages = { [error.PERMISSION_DENIED]: 'User denied geolocation.', [error.POSITION_UNAVAILABLE]: 'Location info unavailable.', [error.TIMEOUT]: 'Request timed out.' };
               locationInfo.innerText = errorMessages[error.code] || 'An unknown error occurred.';
               locationInfo.style.display = 'block';
-              setTimeout(() => {
-                geolocationButton.style.backgroundColor = 'grey';
-                locationInfo.style.display = 'none';
-              }, 3000);
+              setTimeout(() => { geolocationButton.style.backgroundColor = 'grey'; locationInfo.style.display = 'none'; }, 3000);
             }
           );
         } else {
           locationInfo.innerText = 'Geolocation not supported.';
           locationInfo.style.display = 'block';
-          setTimeout(() => {
-            geolocationButton.style.backgroundColor = 'grey';
-            locationInfo.style.display = 'none';
-          }, 3000);
+          setTimeout(() => { geolocationButton.style.backgroundColor = 'grey'; locationInfo.style.display = 'none'; }, 3000);
         }
       });
     }
+
     async function fetchAreaFromLatLong(lat, lng) {
       try {
         const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`;
         const resp = await fetch(url);
         const data = await resp.json();
         return data.city || data.locality || data.principalSubdivision || 'Unknown';
-      } catch (err) {
-        return 'Unknown';
-      }
+      } catch (err) { return 'Unknown'; }
     }
+
     function flashBlueOnUpdate() {
-      const sections = ['latLongSection', 'areaSection', 'countrySection'];
-      sections.forEach(id => {
+      ['latLongSection', 'areaSection', 'countrySection'].forEach(id => {
         const el = document.getElementById(id);
-        if(el) el.classList.add('flash-blue');
+        if(el) { el.classList.add('flash-blue'); setTimeout(() => el.classList.remove('flash-blue'), 2000); }
       });
-      setTimeout(() => {
-        sections.forEach(id => {
-          const el = document.getElementById(id);
-          if(el) el.classList.remove('flash-blue');
+    }
+    
+    function setupLanguageControls() {
+        languageButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            languageDropdown.style.display = (languageDropdown.style.display === 'none') ? 'block' : 'none';
         });
-      }, 2000);
+        document.addEventListener('click', () => languageDropdown.style.display = 'none');
+        languageDropdown.querySelectorAll('li').forEach(item => {
+          item.addEventListener('click', () => {
+            const chosenLang = item.getAttribute('data-value');
+            localStorage.setItem('preferredLanguage', chosenLang);
+            updateAllLanguage(chosenLang); 
+            languageDropdown.style.display = 'none';
+          });
+        });
     }
-
-    function pushLocalStorageToServer() {
-      const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
-      const userInfo = {
-        sessionId,
-        latitude: localStorage.getItem('latitude'),
-        longitude: localStorage.getItem('longitude'),
-        area: localStorage.getItem('area'),
-        name: localStorage.getItem('name'),
-        role: localStorage.getItem('selectedJobRole'),
-        experience: localStorage.getItem('selectedExperience'),
-        country: localStorage.getItem('country'),
-        iso2: localStorage.getItem('iso2'),
-        classification: localStorage.getItem('classification'),
-        roleClassification: localStorage.getItem('roleClassification'),
-        contactInfo: localStorage.getItem('contactInfo'),
-        version: '1.0',
-        dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
-      };
-      fetch('https://alan.up.railway.app/record-info', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userInfo)
-      })
-        .then(response => response.text())
-        .then(data => console.log('Server data pushed:', data))
-        .catch(err => console.error('Error pushing data:', err));
-    }
-
-    function showGreeting() {
-        const name = localStorage.getItem('name');
-        const subTextEl = document.getElementById('sub-text');
-        const lang = localStorage.getItem('preferredLanguage') || 'en';
-        const t = window.translations[lang] || window.translations.en;
-        
-        if (name) {
-            let firstName = name.split(' ')[0];
-            firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-            subTextEl.innerText = `${firstName}, ${t.howCanIHelp}`;
-        } else {
-            subTextEl.innerText = t.howCanIHelp;
+    
+    function setupChatbotInteraction() {
+        const chatbotContainer = document.querySelector('.chatbot-container');
+        const boxesFrame = document.getElementById('boxesFrame');
+        if (chatbotContainer && boxesFrame) {
+            chatbotContainer.addEventListener('click', () => { boxesFrame.style.display = 'none'; });
+        }
+        const chatbotTitle = document.querySelector('.chatbot-title');
+        if (chatbotTitle) {
+            chatbotTitle.classList.remove('flip-horizontally');
+            void chatbotTitle.offsetWidth; 
+            chatbotTitle.classList.add('flip-horizontally');
         }
     }
 
-    function updateAllLanguage(lang) {
-      if (!window.translations || !window.translations[lang]) {
-        console.warn(`Translations for '${lang}' not found.`);
-        return;
-      }
-      const t = window.translations[lang];
-
-      // --- THE FIX IS HERE ---
-      // I am using a more robust way to get elements and setting the geoInfoText directly.
-      const elementTranslations = {
-          '.chatbot-subtitle': 'eyesEars',
-          '#good-history': 'goodHistory',
-          '#examine-well': 'examineWell',
-          '#use-arclight': 'useArclight',
-          '.chatbot-version': 'alanMistakes',
-          '#instructions-button': 'instructionsButton',
-          '#eye-button': 'eyeButton',
-          '#ear-button': 'earButton',
-          '#skin-button': 'skinButton',
-          '#videos-button': 'videosButton',
-          '#atoms-button': 'atomsButton',
-          '#tools-button': 'toolsButton',
-          '#arclight-project-button': 'arclightProjectButton',
-          '#links-button': 'linksButton',
-          '#about-button': 'aboutButton'
-      };
-
-      for(const [selector, key] of Object.entries(elementTranslations)) {
-          const el = document.querySelector(selector);
-          if(el) el.textContent = t[key];
-      }
-      
-      // Explicitly set the Geo Info Text to prevent errors
-      const geoInfoTextEl = document.getElementById('geoInfoText');
-      if (geoInfoTextEl) {
-          geoInfoTextEl.textContent = t.geoInfoPopupText || "Location data helps us understand usage and improve Alan. Your IP address provides an approximate country/city on first load. You can optionally provide more precise GPS data using the 'Check Location' button. This data is handled as per our privacy guidelines.";
-      }
-      // --- END OF FIX ---
-      
-      showGreeting(); // Update greeting with new language
-
-      // Update Muted Buttons
-      const mutedButtonTranslations = {
-        '#images .text-part': 'images',
-        '#help .text-part': 'help',
-        '#screenshot .text-part': 'screenshot',
-        '#refer .text-part': 'refer',
-        '#refer-popup': 'comingSoon'
-      };
-      for(const [selector, key] of Object.entries(mutedButtonTranslations)) {
-        const el = document.querySelector(selector);
-        if(el) el.textContent = t[key];
-      }
-      
-      // Update Marquee 
-      const boxesFrame = document.getElementById('boxesFrame');
-      if (boxesFrame && boxesFrame.contentDocument) {
-        const boxesDoc = boxesFrame.contentDocument;
-        const marqueeLines = ['eyeMarqueeLine1', 'eyeMarqueeLine2', 'eyeMarqueeLine3', 'eyeMarqueeLine4', 'eyeMarqueeLine5', 'eyeMarqueeLine6', 'eyeMarqueeLine7', 'earMarqueeLine1', 'earMarqueeLine2', 'earMarqueeLine3', 'earMarqueeLine4', 'earMarqueeLine5', 'earMarqueeLine6', 'earMarqueeLine7'];
-        marqueeLines.forEach(lineKey => {
-          const elA = boxesDoc.getElementById(`${lineKey}a`);
-          if (elA) elA.textContent = t[lineKey];
-          const elB = boxesDoc.getElementById(`${lineKey}b`);
-          if (elB) elB.textContent = t[lineKey];
-        });
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const chatbotContainer = document.querySelector('.chatbot-container');
-      const boxesFrame = document.getElementById('boxesFrame');
-      if (chatbotContainer && boxesFrame) {
-        chatbotContainer.addEventListener('click', () => {
-          boxesFrame.style.display = 'none';
-        });
-      }
-    
-      const chatbotTitle = document.querySelector('.chatbot-title');
-      if (chatbotTitle) {
-        chatbotTitle.classList.remove('flip-horizontally');
-        void chatbotTitle.offsetWidth; 
-        chatbotTitle.classList.add('flip-horizontally');
-      }
-    });
-
+    // Event Listeners
     window.addEventListener('pageshow', (event) => {
-      if (event.persisted) {
-        window.location.reload();
-      }
+      sideMenu.style.left = '-370px';
+      menuIcon.classList.remove('open');
+      pushLocalStorageToServer();
+      if (event.persisted) { fetchMutedSnippet(); }
+      if (event.persisted) { window.location.reload(); }
     });
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) pushLocalStorageToServer();
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', main);
   </script>
 </body>
 </html>
