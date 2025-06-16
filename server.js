@@ -113,9 +113,11 @@ app.post(
 );
 
 // --- 4. START SERVER ---
-app.listen(port, () =>
-  console.log(`Server running at http://localhost:${port}/`),
-);
+if (require.main === module) {
+  app.listen(port, () =>
+    console.log(`Server running at http://localhost:${port}/`),
+  );
+}
 
 // --- 5. HELPER FUNCTIONS ---
 /**
@@ -163,3 +165,6 @@ async function appendToHistory(newRecord) {
   await fs.writeFile(historyPath, JSON.stringify(history, null, 2));
   console.log("Appended/updated user-history.json");
 }
+
+// Export app and helpers for testing
+module.exports = { app, readJsonFile, appendToHistory };

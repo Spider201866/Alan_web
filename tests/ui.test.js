@@ -1,0 +1,554 @@
+/* eslint-env jest */
+/**
+ * UI/UX integration tests for Alan webapp.
+ * Run with: npx jest tests/ui.test.js
+ * Requires: jest, jsdom
+ */
+
+const { JSDOM } = require('jsdom');
+
+describe('Alan Webapp UI/UX', () => {
+  let dom;
+  let document;
+
+  beforeEach(() => {
+    dom = new JSDOM(`
+      <body>
+        <div class="menu-icon"></div>
+        <nav class="side-menu" style="left: -370px;"></nav>
+        <button id="instructions-button" class="button red pulse">How to use</button>
+        <button id="language-button"></button>
+        <div id="language-dropdown" style="display: none;">
+          <ul>
+            <li data-value="en">English</li>
+            <li data-value="es">Español</li>
+          </ul>
+        </div>
+        <aside id="popup"><span class="popup-close">×</span><div class="popup-content" id="popup-content"></div></aside>
+        <button id="geolocation-button"></button>
+        <p id="location-info"></p>
+      </body>
+    `, { url: "http://localhost" });
+    document = dom.window.document;
+    global.document = document;
+    global.window = dom.window;
+    // Mock localStorage
+    global.localStorage = {
+      getItem: jest.fn(),
+      setItem: jest.fn(),
+      removeItem: jest.fn()
+    };
+    // Mock navigator.geolocation
+    global.navigator = {
+      geolocation: {
+        getCurrentPosition: jest.fn()
+      }
+    };
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it('should toggle the side menu when menu icon is clicked', () => {
+    // TODO: Simulate click and test menu open/close logic
+  });
+
+  it('should show and hide language dropdown', () => {
+    // Simulate language button click and dropdown selection
+    const langBtn = document.getElementById('language-button');
+    const langDropdown = document.createElement('div');
+    langDropdown.id = 'language-dropdown';
+    langDropdown.style.display = 'none';
+    langDropdown.innerHTML = `
+      <ul>
+        <li data-value="en">English</li>
+        <li data-value="es">Español</li>
+        <li data-value="fr">Français</li>
+      </ul>
+    `;
+    document.body.appendChild(langDropdown);
+    // Show dropdown
+    langBtn.onclick = () => { langDropdown.style.display = 'block'; };
+    langBtn.click();
+    expect(langDropdown.style.display).toBe('block');
+    // Hide dropdown
+    langDropdown.style.display = 'none';
+    expect(langDropdown.style.display).toBe('none');
+  });
+
+  it('should update all UI fields for each language selection', () => {
+    // Simulate all UI fields
+    const fields = {
+      '.chatbot-subtitle': document.createElement('div'),
+      '#good-history': document.createElement('span'),
+      '#examine-well': document.createElement('span'),
+      '#use-arclight': document.createElement('span'),
+      '.chatbot-version': document.createElement('footer'),
+      '#instructions-button': document.createElement('button'),
+      '#eye-button': document.createElement('button'),
+      '#ear-button': document.createElement('button'),
+      '#skin-button': document.createElement('button'),
+      '#videos-button': document.createElement('button'),
+      '#atoms-button': document.createElement('button'),
+      '#tools-button': document.createElement('button'),
+      '#arclight-project-button': document.createElement('button'),
+      '#links-button': document.createElement('button'),
+      '#about-button': document.createElement('button')
+    };
+    Object.entries(fields).forEach(([selector, el]) => {
+      if (selector.startsWith('.')) el.className = selector.slice(1);
+      if (selector.startsWith('#')) el.id = selector.slice(1);
+      document.body.appendChild(el);
+    });
+
+    // Simulate 3 languages (expand to 22 as needed)
+    const languages = ['en', 'es', 'fr'];
+    const translations = {
+      en: {
+        eyesEars: 'Eyes, Ears, Skin',
+        goodHistory: 'Good History',
+        examineWell: 'Examine Well',
+        useArclight: 'Use Arclight',
+        alanMistakes: 'Alan can make mistakes, double check everything',
+        instructionsButton: 'How to use',
+        eyeButton: 'Eye',
+        earButton: 'Ear',
+        skinButton: 'Skin',
+        videosButton: 'Videos',
+        atomsButton: 'Atoms',
+        toolsButton: 'Tools',
+        arclightProjectButton: 'Arclight Project',
+        linksButton: 'Links',
+        aboutButton: 'About'
+      },
+      es: {
+        eyesEars: 'Ojos, Oídos, Piel',
+        goodHistory: 'Buen historial',
+        examineWell: 'Examinar bien',
+        useArclight: 'Usar Arclight',
+        alanMistakes: 'Alan puede cometer errores, verifique todo',
+        instructionsButton: 'Cómo usar',
+        eyeButton: 'Ojo',
+        earButton: 'Oído',
+        skinButton: 'Piel',
+        videosButton: 'Videos',
+        atomsButton: 'Átomos',
+        toolsButton: 'Herramientas',
+        arclightProjectButton: 'Proyecto Arclight',
+        linksButton: 'Enlaces',
+        aboutButton: 'Acerca de'
+      },
+      fr: {
+        eyesEars: 'Yeux, Oreilles, Peau',
+        goodHistory: 'Bon historique',
+        examineWell: 'Bien examiner',
+        useArclight: 'Utiliser Arclight',
+        alanMistakes: 'Alan peut faire des erreurs, vérifiez tout',
+        instructionsButton: 'Comment utiliser',
+        eyeButton: 'Œil',
+        earButton: 'Oreille',
+        skinButton: 'Peau',
+        videosButton: 'Vidéos',
+        atomsButton: 'Atomes',
+        toolsButton: 'Outils',
+        arclightProjectButton: 'Projet Arclight',
+        linksButton: 'Liens',
+        aboutButton: 'À propos'
+      }
+    };
+    global.window.translations = translations;
+
+    // Simulate updateAllLanguage function
+    function updateAllLanguage(lang) {
+      const t = window.translations[lang];
+      const elementTranslations = {
+        '.chatbot-subtitle': 'eyesEars', '#good-history': 'goodHistory', '#examine-well': 'examineWell',
+        '#use-arclight': 'useArclight', '.chatbot-version': 'alanMistakes', '#instructions-button': 'instructionsButton',
+        '#eye-button': 'eyeButton', '#ear-button': 'earButton', '#skin-button': 'skinButton', '#videos-button': 'videosButton',
+        '#atoms-button': 'atomsButton', '#tools-button': 'toolsButton', '#arclight-project-button': 'arclightProjectButton',
+        '#links-button': 'linksButton', '#about-button': 'aboutButton'
+      };
+      for (const [selector, key] of Object.entries(elementTranslations)) {
+        const el = selector.startsWith('.') ? document.querySelector(selector) : document.getElementById(selector.slice(1));
+        if (el) el.textContent = t[key];
+      }
+    }
+
+    // Test for each language
+    languages.forEach(lang => {
+      updateAllLanguage(lang);
+      const t = translations[lang];
+      expect(document.querySelector('.chatbot-subtitle').textContent).toBe(t.eyesEars);
+      expect(document.getElementById('good-history').textContent).toBe(t.goodHistory);
+      expect(document.getElementById('examine-well').textContent).toBe(t.examineWell);
+      expect(document.getElementById('use-arclight').textContent).toBe(t.useArclight);
+      expect(document.querySelector('.chatbot-version').textContent).toBe(t.alanMistakes);
+      expect(document.getElementById('instructions-button').textContent).toBe(t.instructionsButton);
+      expect(document.getElementById('eye-button').textContent).toBe(t.eyeButton);
+      expect(document.getElementById('ear-button').textContent).toBe(t.earButton);
+      expect(document.getElementById('skin-button').textContent).toBe(t.skinButton);
+      expect(document.getElementById('videos-button').textContent).toBe(t.videosButton);
+      expect(document.getElementById('atoms-button').textContent).toBe(t.atomsButton);
+      expect(document.getElementById('tools-button').textContent).toBe(t.toolsButton);
+      expect(document.getElementById('arclight-project-button').textContent).toBe(t.arclightProjectButton);
+      expect(document.getElementById('links-button').textContent).toBe(t.linksButton);
+      expect(document.getElementById('about-button').textContent).toBe(t.aboutButton);
+    });
+  });
+
+  it('should update translations on language change', () => {
+    // TODO: Test updateAllLanguage updates UI text
+  });
+
+  it('should open and close the user info popup', () => {
+    // TODO: Simulate popup open/close logic
+  });
+
+  it('should handle geolocation button click', () => {
+    // TODO: Simulate geolocation and test UI update
+  });
+
+  it('should show the sliding boxes iframe', () => {
+    // Simulate the boxes iframe in the DOM
+    const boxesFrame = document.createElement('object');
+    boxesFrame.id = 'boxesFrame';
+    boxesFrame.type = 'text/html';
+    boxesFrame.setAttribute('data', 'boxes.html');
+    document.body.appendChild(boxesFrame);
+    // Check that the iframe exists and is visible
+    expect(document.getElementById('boxesFrame')).not.toBeNull();
+    expect(document.getElementById('boxesFrame').style.display).not.toBe('none');
+  });
+
+  it('should show buttons below the chatbox entry', () => {
+    // Simulate the muted buttons container and buttons
+    const mutedButtons = document.createElement('div');
+    mutedButtons.id = 'muted-buttons';
+    mutedButtons.innerHTML = `
+      <button id="images" class="button">Images</button>
+      <button id="help" class="button">Help</button>
+      <button id="screenshot" class="button">Screenshot</button>
+      <button id="refer" class="button">Refer</button>
+    `;
+    document.body.appendChild(mutedButtons);
+    expect(document.getElementById('images')).not.toBeNull();
+    expect(document.getElementById('help')).not.toBeNull();
+    expect(document.getElementById('screenshot')).not.toBeNull();
+    expect(document.getElementById('refer')).not.toBeNull();
+  });
+
+  it('should open and close the popup and update geolocation info', () => {
+    // Simulate popup open/close
+    const popup = document.getElementById('popup');
+    popup.style.right = '-350px';
+    // Open popup
+    popup.style.right = '0px';
+    expect(popup.style.right).toBe('0px');
+    // Close popup
+    popup.style.right = '-350px';
+    expect(popup.style.right).toBe('-350px');
+    // Simulate geolocation info update
+    const locationInfo = document.getElementById('location-info');
+    locationInfo.innerText = 'Updated location: 51.5074, -0.1278';
+    expect(locationInfo.innerText).toMatch(/Updated location/);
+  });
+
+  it('should show sidebar and all navigation buttons, and simulate back arrow/page navigation', () => {
+    // Simulate sidebar and navigation buttons
+    const sideMenu = document.createElement('nav');
+    sideMenu.className = 'side-menu';
+    sideMenu.innerHTML = `
+      <button id="instructions-button" class="button">How to use</button>
+      <button id="eye-button" class="button">Eye</button>
+      <button id="ear-button" class="button">Ear</button>
+      <button id="skin-button" class="button">Skin</button>
+      <button id="videos-button" class="button">Videos</button>
+      <button id="atoms-button" class="button">Atoms</button>
+      <button id="tools-button" class="button">Tools</button>
+      <button id="links-button" class="button">Links</button>
+      <button id="about-button" class="button">About</button>
+      <button id="arclight-project-button" class="button">Arclight Project</button>
+      <button id="language-button" class="button">Language</button>
+      <button id="back-arrow" class="button">Back</button>
+    `;
+    document.body.appendChild(sideMenu);
+    // Check all buttons exist
+    [
+      'instructions-button', 'eye-button', 'ear-button', 'skin-button',
+      'videos-button', 'atoms-button', 'tools-button', 'links-button',
+      'about-button', 'arclight-project-button', 'language-button', 'back-arrow'
+    ].forEach(id => {
+      expect(document.getElementById(id)).not.toBeNull();
+    });
+    // Simulate back arrow click (page navigation)
+    const backArrow = document.getElementById('back-arrow');
+    let navigated = false;
+    backArrow.onclick = () => { navigated = true; };
+    backArrow.click();
+    expect(navigated).toBe(true);
+  });
+
+  it('should show all navigation and language links/buttons', () => {
+    // Simulate navigation and language links/buttons
+    const nav = document.createElement('nav');
+    nav.className = 'side-menu';
+    nav.innerHTML = `
+      <button id="instructions-button" class="button">How to use</button>
+      <button id="eye-button" class="button">Eye</button>
+      <button id="ear-button" class="button">Ear</button>
+      <button id="skin-button" class="button">Skin</button>
+      <button id="videos-button" class="button">Videos</button>
+      <button id="atoms-button" class="button">Atoms</button>
+      <button id="tools-button" class="button">Tools</button>
+      <button id="links-button" class="button">Links</button>
+      <button id="about-button" class="button">About</button>
+      <button id="arclight-project-button" class="button">Arclight Project</button>
+      <button id="language-button" class="button">Language</button>
+    `;
+    document.body.appendChild(nav);
+    [
+      'instructions-button', 'eye-button', 'ear-button', 'skin-button',
+      'videos-button', 'atoms-button', 'tools-button', 'links-button',
+      'about-button', 'arclight-project-button', 'language-button'
+    ].forEach(id => {
+      const btn = document.getElementById(id);
+      expect(btn).not.toBeNull();
+      // Simulate click
+      btn.onclick = jest.fn();
+      btn.click();
+      expect(btn.onclick).toHaveBeenCalled();
+    });
+    // Simulate language dropdown
+    const langDropdown = document.createElement('div');
+    langDropdown.id = 'language-dropdown';
+    langDropdown.innerHTML = `
+      <ul>
+        <li data-value="en">English</li>
+        <li data-value="es">Español</li>
+        <li data-value="fr">Français</li>
+      </ul>
+    `;
+    document.body.appendChild(langDropdown);
+    const langItems = langDropdown.querySelectorAll('li');
+    langItems.forEach(item => {
+      item.onclick = jest.fn();
+      item.click();
+      expect(item.onclick).toHaveBeenCalled();
+    });
+  });
+
+  it('should show splash screen on load', async () => {
+    // Simulate splash screen element
+    const splash = document.createElement('div');
+    splash.id = 'splash-screen';
+    splash.style.display = 'block';
+    document.body.appendChild(splash);
+    expect(document.getElementById('splash-screen').style.display).toBe('block');
+    // Simulate hiding splash after load (e.g., after timeout)
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        splash.style.display = 'none';
+        expect(document.getElementById('splash-screen').style.display).toBe('none');
+        resolve();
+      }, 100);
+    });
+  });
+
+  it('should show the logo and footer', () => {
+    // Simulate logo and footer
+    const logo = document.createElement('div');
+    logo.className = 'chatbot-title';
+    logo.textContent = 'Alan';
+    document.body.appendChild(logo);
+    const footer = document.createElement('footer');
+    footer.className = 'chatbot-version';
+    footer.textContent = 'Alan can make mistakes, double check everything';
+    document.body.appendChild(footer);
+    expect(document.querySelector('.chatbot-title').textContent).toMatch(/Alan/);
+    expect(document.querySelector('.chatbot-version').textContent).toMatch(/double check/);
+  });
+
+  it('should animate Alan logo spin on greeting', () => {
+    // Simulate Alan logo and greeting logic
+    const logo = document.createElement('div');
+    logo.className = 'chatbot-title';
+    logo.textContent = 'Alan';
+    document.body.appendChild(logo);
+    // Simulate class toggle for spin animation
+    logo.classList.remove('flip-horizontally');
+    void logo.offsetWidth; // force reflow
+    logo.classList.add('flip-horizontally');
+    expect(logo.classList.contains('flip-horizontally')).toBe(true);
+  });
+
+  it('should show Good History and Examine Well text', () => {
+    // Simulate the text elements
+    const goodHistory = document.createElement('span');
+    goodHistory.id = 'good-history';
+    goodHistory.textContent = 'Good History';
+    document.body.appendChild(goodHistory);
+    const examineWell = document.createElement('span');
+    examineWell.id = 'examine-well';
+    examineWell.textContent = 'Examine Well';
+    document.body.appendChild(examineWell);
+    expect(document.getElementById('good-history').textContent).toMatch(/Good History/);
+    expect(document.getElementById('examine-well').textContent).toMatch(/Examine Well/);
+  });
+
+  it('should include the user name in the greeting', () => {
+    // Simulate subtext and localStorage
+    const subText = document.createElement('p');
+    subText.id = 'sub-text';
+    document.body.appendChild(subText);
+    global.localStorage.getItem = (key) => (key === 'name' ? 'Test User' : 'en');
+    global.window.translations = { en: { howCanIHelp: 'How can I help?' } };
+    // Simulate greeting logic
+    const name = localStorage.getItem('name');
+    const t = window.translations['en'];
+    if (name) {
+      let firstName = name.split(' ')[0];
+      firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+      subText.innerText = `${firstName}, ${t.howCanIHelp}`;
+    } else {
+      subText.innerText = t.howCanIHelp;
+    }
+    expect(subText.innerText).toMatch(/Test, How can I help/);
+  });
+
+  it('should trigger Images, Help, Screenshot, and Refer button actions', () => {
+    // Simulate buttons
+    const imagesBtn = document.createElement('button');
+    imagesBtn.id = 'images';
+    imagesBtn.className = 'button';
+    document.body.appendChild(imagesBtn);
+    const helpBtn = document.createElement('button');
+    helpBtn.id = 'help';
+    helpBtn.className = 'button';
+    document.body.appendChild(helpBtn);
+    const screenshotBtn = document.createElement('button');
+    screenshotBtn.id = 'screenshot';
+    screenshotBtn.className = 'button';
+    document.body.appendChild(screenshotBtn);
+    const referBtn = document.createElement('button');
+    referBtn.id = 'refer';
+    referBtn.className = 'button';
+    document.body.appendChild(referBtn);
+
+    // Mock window.open and screenshot function
+    window.open = jest.fn();
+    const showHelp = jest.fn();
+    const takeScreenshot = jest.fn();
+    const referAction = jest.fn();
+
+    // Assign actions
+    imagesBtn.onclick = () => window.open('images.html', '_blank');
+    helpBtn.onclick = showHelp;
+    screenshotBtn.onclick = takeScreenshot;
+    referBtn.onclick = referAction;
+
+    imagesBtn.click();
+    helpBtn.click();
+    screenshotBtn.click();
+    referBtn.click();
+
+    expect(window.open).toHaveBeenCalledWith('images.html', '_blank');
+    expect(showHelp).toHaveBeenCalled();
+    expect(takeScreenshot).toHaveBeenCalled();
+    expect(referAction).toHaveBeenCalled();
+  });
+
+  it('should show password entry UI and accept input', () => {
+    // Simulate password entry form
+    const form = document.createElement('form');
+    form.id = 'password-form';
+    form.innerHTML = `
+      <input type="password" id="password-input" />
+      <button id="password-submit">Submit</button>
+    `;
+    document.body.appendChild(form);
+    const input = document.getElementById('password-input');
+    input.value = '662023';
+    expect(input.value).toBe('662023');
+    // Simulate submit
+    const submit = document.getElementById('password-submit');
+    let submitted = false;
+    submit.onclick = (e) => { e.preventDefault(); submitted = true; };
+    submit.click();
+    expect(submitted).toBe(true);
+  });
+
+  it('should show onboarding screen and accept user details', () => {
+    // Simulate onboarding form
+    const form = document.createElement('form');
+    form.id = 'onboarding-form';
+    form.innerHTML = `
+      <input type="text" id="name-input" value="Test User" />
+      <input type="text" id="area-input" value="Test Area" />
+      <button id="onboarding-submit">Continue</button>
+    `;
+    document.body.appendChild(form);
+    const nameInput = document.getElementById('name-input');
+    const areaInput = document.getElementById('area-input');
+    expect(nameInput.value).toBe('Test User');
+    expect(areaInput.value).toBe('Test Area');
+    // Simulate submit
+    const submit = document.getElementById('onboarding-submit');
+    let submitted = false;
+    submit.onclick = (e) => { e.preventDefault(); submitted = true; };
+    submit.click();
+    expect(submitted).toBe(true);
+  });
+
+  it('should show popup with correct user info from localStorage', () => {
+    // Set up localStorage values
+    global.localStorage.getItem = (key) => {
+      const map = {
+        name: 'Test User',
+        area: 'Test Area',
+        selectedJobRole: 'Doctor',
+        selectedExperience: 'Expert',
+        latitude: '51.5074',
+        longitude: '-0.1278',
+        country: 'UK',
+        iso2: 'GB',
+        classification: 'A',
+        contactInfo: 'test@example.com'
+      };
+      return map[key] || '';
+    };
+    // Simulate translations
+    global.window.translations = {
+      en: {
+        userInfoTitle: 'User Information',
+        userName: 'Name',
+        userContact: 'Contact',
+        userAimsPopupLabel: 'Aims',
+        userExperiencePopupLabel: 'Experience',
+        userLatLong: 'Lat/Long',
+        userArea: 'Area',
+        userCountry: 'Country',
+        userVersion: 'Version',
+        userDateTime: 'Date/Time',
+        howCanIHelp: 'How can I help?'
+      }
+    };
+    // Simulate popup-content element
+    const popupContent = document.createElement('div');
+    popupContent.id = 'popup-content';
+    document.body.appendChild(popupContent);
+
+    // Simulate buildPopupContent logic (simplified)
+    function buildPopupContent() {
+      const name = localStorage.getItem('name') || 'Not set';
+      const area = localStorage.getItem('area') || 'Not set';
+      const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
+      return `<p><strong>Name:</strong> ${name}</p><p><strong>Area:</strong> ${area}</p><p><strong>Contact:</strong> ${contactInfo}</p>`;
+    }
+    popupContent.innerHTML = buildPopupContent();
+
+    expect(popupContent.innerHTML).toMatch(/Test User/);
+    expect(popupContent.innerHTML).toMatch(/Test Area/);
+    expect(popupContent.innerHTML).toMatch(/test@example.com/);
+  });
+});

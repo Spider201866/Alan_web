@@ -1,0 +1,10 @@
+[
+  {
+    "sessionId": "test-session",
+    "latitude": 1.23,
+    "longitude": 4.56,
+    "dateTime": "2025-06-16T20:00:00Z",
+    "area": "Test Area",
+    "refreshCount": 1
+  }
+]
