@@ -2,7 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <!-- FIX: Re-enabled scaling and set initial scale for better responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Continuous Infinite Loop in Both Directions</title>
 
     <style>
@@ -19,7 +20,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        user-select: none;
+        /* FIX: Removed user-select: none to allow text copying */
       }
 
       .marquee {
@@ -34,16 +35,23 @@
         margin-bottom: 0;
       }
 
-      .marquee-content {
-        display: flex;
-        animation: scroll-right 60s linear infinite;
-      }
+      .marquee-content,
       .marquee-content-reverse {
         display: flex;
-        animation: scroll-left 60s linear infinite;
       }
 
-      @keyframes scroll-right {
+      /* FIX: Encapsulated animations in a media query for accessibility */
+      @media (prefers-reduced-motion: no-preference) {
+        .marquee-content {
+          animation: scroll-left 60s linear infinite;
+        }
+        .marquee-content-reverse {
+          animation: scroll-right 60s linear infinite;
+        }
+      }
+
+      /* NOTE: Renamed for clarity */
+      @keyframes scroll-left { /* Content moves from right to left */
         0% {
           transform: translateX(0);
         }
@@ -51,7 +59,7 @@
           transform: translateX(-50%);
         }
       }
-      @keyframes scroll-left {
+      @keyframes scroll-right { /* Content moves from left to right */
         0% {
           transform: translateX(-50%);
         }
@@ -79,21 +87,9 @@
   </head>
 
   <body>
-    <!-- 
-    **********************************************
-    *    FIRST MARQUEE (Left -> Right) (Eye)    *
-    **********************************************
-    .marquee-content-reverse => scroll-left animation
-  -->
     <div class="marquee">
       <div class="marquee-content-reverse">
-        <!-- 
-        EYE LINES: 
-        - First set (IDs end in "a")
-        - Second set (IDs end in "b")
-      -->
-
-        <!-- EYE lines, FIRST copy (IDs: eyeMarqueeLine1a, etc) -->
+        <!-- EYE lines, FIRST copy -->
         <div class="box" id="eyeMarqueeLine1a">What is glaucoma?</div>
         <div class="box" id="eyeMarqueeLine2a">How do I see the optic disc with the Arclight?</div>
         <div class="box" id="eyeMarqueeLine3a">Man 25, red eye, 3 day, photophobia, VA down a little</div>
@@ -102,7 +98,7 @@
         <div class="box" id="eyeMarqueeLine6a">Woman 65, vision poor, no glasses. Front eye OK, cloudy pupil</div>
         <div class="box" id="eyeMarqueeLine7a">Mother worried about baby as noticed white pupil, no vision in eye.</div>
 
-        <!-- EYE lines, SECOND copy (IDs: eyeMarqueeLine1b, etc) -->
+        <!-- EYE lines, SECOND copy (for seamless loop) -->
         <div class="box" id="eyeMarqueeLine1b">What is glaucoma?</div>
         <div class="box" id="eyeMarqueeLine2b">How do I see the optic disc with the Arclight?</div>
         <div class="box" id="eyeMarqueeLine3b">Man 25, red eye, 3 day, photophobia, VA down a little</div>
@@ -113,32 +109,21 @@
       </div>
     </div>
 
-    <!-- 
-    **********************************************
-    *   SECOND MARQUEE (Right -> Left) (Ear)    *
-    **********************************************
-    .marquee-content => scroll-right animation
-  -->
     <div class="marquee">
       <div class="marquee-content">
-        <!-- 
-        EAR LINES:
-        - First set (IDs end in "a")
-        - Second set (IDs end in "b")
-      -->
-
-        <!-- EAR lines, FIRST copy (IDs: earMarqueeLine1a, etc) -->
+        <!-- EAR lines, FIRST copy -->
         <div class="box" id="earMarqueeLine1a">What is otitis media?</div>
-        <div class="box" id="earMarqueeLine2a">Can I see the tympanic menbrane with my Arclight?</div>
+        <!-- FIX: Corrected typo "menbrane" to "membrane" -->
+        <div class="box" id="earMarqueeLine2a">Can I see the tympanic membrane with my Arclight?</div>
         <div class="box" id="earMarqueeLine3a">Lad 16, sore pinna, 2 day, itchy, hearing is good</div>
         <div class="box" id="earMarqueeLine4a">Tell me about syringing</div>
         <div class="box" id="earMarqueeLine5a">Do I refer mastoditis urgently?</div>
         <div class="box" id="earMarqueeLine6a">Man 73yr, hearing poor. Poor view of canal. I just see wax</div>
         <div class="box" id="earMarqueeLine7a">Infant no response to voice. Been months</div>
 
-        <!-- EAR lines, SECOND copy (IDs: earMarqueeLine1b, etc) -->
+        <!-- EAR lines, SECOND copy (for seamless loop) -->
         <div class="box" id="earMarqueeLine1b">What is otitis media?</div>
-        <div class="box" id="earMarqueeLine2b">Can I see the tympanic menbrane with my Arclight?</div>
+        <div class="box" id="earMarqueeLine2b">Can I see the tympanic membrane with my Arclight?</div>
         <div class="box" id="earMarqueeLine3b">Lad 16, sore pinna, 2 day, itchy, hearing is good</div>
         <div class="box" id="earMarqueeLine4b">Tell me about syringing</div>
         <div class="box" id="earMarqueeLine5b">Do I refer mastoditis urgently?</div>

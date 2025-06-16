@@ -2,255 +2,180 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- VIEWPORT & PAGE SETTINGS -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Instructions</title>
-    <!-- Load the translations object from language.js -->
-    <script type="module" src="language.js"></script>
+    <!-- Translations object embedded for a single-file solution -->
+    <script>
+      window.translations = {
+        en: {
+          instructionsPageTitle: 'Instructions',
+          instructionsIntro: `Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying names or details. Look fully around head/face/body part and examine both eyes/ears. Good luck!`,
+          instructionsPatientPrompt: `Tell Alan about your patient's:`,
+          instructionsPatientDetail1: 'problem & onset',
+          instructionsPatientDetail2: 'what you see',
+          instructionsPatientDetail3: 'vision & pupils',
+          instructionsPatientDetail4: 'age, sex, medication',
+          instructionsBackground_eye: '#dfe7ff',
+          instructionsBackground_ear: '#ffefd5',
+          instructionsBackground_skin: '#e0ffff',
+          instructionsUseArclight_eye: `<strong>Use Arclight:</strong> <strong><em>front, fundal reflex, back of eye.</em></strong>`,
+          instructionsUseArclight_ear: `<strong>Use Arclight:</strong> <strong><em>canal, eardrum.</em></strong>`,
+          instructionsUseArclight_skin: `<strong>Use Arclight:</strong> <strong><em>UV light, dermoscopy.</em></strong>`,
+          instructionsLabelTooLittle: 'Too little',
+          instructionsLabelJustRight: 'Just right',
+          instructionsLabelTooMuch: 'Too much',
+          instructionsTooLittle_eye: 'man red eye what?',
+          instructionsJustRight_eye: `Man 25yr, red eye 3 day. No meds or eye prob before. Pain, watering, White cornea dot. Pupils OK, Vision 6/12 6/6 other`,
+          instructionsTooMuch_eye: `This man came into clinics today. He drove into the building with a red eye, now he thinks the food he ate is affecting his eye. I see watering, red edges, you know? He wants help. Tall man, watery eyes, worried about cornea and pain. He says, "What is this?"`,
+          instructionsAdditionalQuery_eye: `Alan also answers eye teaching/learning queries: What is Iritis? How do I see the retina?`,
+          instructionsTooLittle_ear: 'child ear pain',
+          instructionsJustRight_ear: 'Girl 4yr, R ear pain 2 days. Fever, pulling ear. TM red, bulging. Not crying now. No discharge.',
+          instructionsTooMuch_ear: `My daughter has an earache, she was fine yesterday but today she keeps touching her right ear and she had a temperature earlier. I looked inside but I can't see anything. What do you think is wrong with her?`,
+          instructionsAdditionalQuery_ear: 'Alan also answers ear teaching/learning queries: What is otitis media?',
+          instructionsTooLittle_skin: 'rash on arm',
+          instructionsJustRight_skin: `Woman 30yr, itchy rash on arm 1 week. Spreading slowly. Annular lesion with central clearing. No fever, feels well.`,
+          instructionsTooMuch_skin: `I have this weird circular rash on my forearm, it started small but it's getting bigger. It doesn't hurt but it's really itchy. I haven't used any new soaps or anything. It's been there for about a week.`,
+          instructionsAdditionalQuery_skin: `Alan also answers skin teaching/learning queries: What is tinea? How to use a Woods light?`,
+        },
+      };
+    </script>
     <style>
-      /* Global layout and typography */
-      body,
-      html {
-        margin: 0;
-        padding: 0;
+      /* --- Identical to original styles, with flexbox fix --- */
+      body, html {
+        margin: 0; padding: 0; height: 100%; /* Ensure full height */
         font-family: 'Calibri Light', Arial, sans-serif;
-        font-size: 15px;
-        background-color: white;
+        font-size: 15px; background-color: white;
       }
-      /* Top App Bar */
-      #appBar {
+      /* FIX: Make body a flex container to manage height */
+      body {
         display: flex;
-        align-items: center;
-        background-color: black;
-        color: white;
+        flex-direction: column;
+      }
+      #appBar {
+        display: flex; align-items: center;
+        background-color: black; color: white;
         padding: 10px 20px;
+        flex-shrink: 0; /* Prevent header from shrinking */
       }
-      /* Page Title */
       #pageTitle {
-        text-align: center;
-        margin: 0 auto;
-        font-size: 24px;
+        text-align: center; margin: 0 auto; font-size: 24px;
       }
-      /* Back Arrow */
       #backArrow {
-        color: white;
-        font-size: 32px;
-        font-weight: bold;
-        cursor: pointer;
-        padding-right: 20px;
+        background: none; border: none; font-family: inherit;
+        color: white; font-size: 32px; font-weight: bold;
+        cursor: pointer; padding-right: 20px;
       }
-      /* Main Content */
       #content {
-        padding: 5px 25px 25px 25px;
-        background-color: #dfe7ff;
+        padding: 5px 25px 25px 25px; background-color: #dfe7ff;
+        flex-grow: 1; /* FIX: This makes the content area fill remaining vertical space */
       }
-      /* Introductory text (full width) */
       #introText {
-        margin-bottom: 20px;
-        font-size: 15px;
-        text-align: justify;
+        margin-bottom: 20px; font-size: 15px; text-align: justify;
       }
-      /* Wrap Section: only this vertical region reserves space for buttons */
       #wrapSection {
-        overflow: hidden; /* Establish block formatting context for floats */
-        margin-bottom: 25px;
-        padding-right: 0; /* Remove extra right padding in this section */
+        overflow: hidden; margin-bottom: 25px; padding-right: 0;
       }
-      /* Switch Container: floated right with negative right margin on desktop */
       #switchContainer {
-        float: right;
-        width: 100px; /* Reserved area width */
-        text-align: center;
-        padding: 10px;
-        border-radius: 15px;
-        margin-left: 0;
-        margin-right: -25px; /* Negative margin to pull it flush on larger screens */
-        margin-top: -10px; /* Move switches up by 10px */
+        float: right; width: 100px; text-align: center;
+        padding: 10px; border-radius: 15px;
+        margin-left: 0; margin-right: -25px; margin-top: -10px;
       }
       .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 180px;
+        position: relative; display: inline-block;
+        width: 60px; height: 180px;
       }
-      .switch input {
-        display: none;
-      }
+      .switch input { display: none; }
       .switch-label {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        width: 60px;
-        height: 60px;
-        font-weight: bold;
-        color: black;
-        background-color: white;
-        transition:
-          background-color 0.3s,
-          box-shadow 0.3s;
-        border-radius: 20px; /* Rounded square effect */
-        border: 1px solid black;
-        margin-bottom: 10px;
-        white-space: nowrap; /* Prevent wrapping */
-        overflow: hidden; /* Hide extra text */
-        text-overflow: ellipsis; /* Ellipsis for long text */
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; width: 60px; height: 60px;
+        font-weight: bold; color: black; background-color: white;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        border-radius: 20px; border: 1px solid black;
+        margin-bottom: 10px; white-space: nowrap;
+        overflow: hidden; text-overflow: ellipsis;
       }
       .switch-label:hover {
-        background-color: #e0e0e0;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        background-color: #e0e0e0; box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
       }
       .switch input:checked + .switch-label {
-        background-color: black;
-        color: white;
-        border-color: black;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        background-color: black; color: white;
+        border-color: black; box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
       }
-
-      /* Clear floats after the wrap section */
-      .clear {
-        clear: both;
-      }
-      /* Text classes */
-      .infoText,
-      .redText,
-      .italicText,
-      .boldText,
-      .justify {
-        margin-bottom: 15px;
-      }
-      .redText {
-        color: red;
-      }
-      .italicText {
-        font-style: italic;
-      }
-      .boldText {
-        font-weight: bold;
-      }
-      .justify {
-        text-align: justify;
-      }
-      /* Additional Examples */
-      #additionalExamples p {
-        margin-bottom: 10px;
-        font-size: 13px;
-        color: #333;
-      }
+      .clear { clear: both; }
+      .boldText { font-weight: bold; }
+      .justify { text-align: justify; }
+      #additionalExamples p { margin-bottom: 10px; font-size: 13px; color: #333; }
       #additionalExamples strong {
-        display: block;
-        font-weight: bold;
-        margin-bottom: -10px;
-        line-height: 1.2;
+        display: block; font-weight: bold;
+        margin-bottom: -10px; line-height: 1.2;
       }
       #additionalExamples span {
-        display: block;
-        margin-left: 10px;
-        margin-top: 0;
-        line-height: 1.2;
+        display: block; margin-left: 10px;
+        margin-top: 0; line-height: 1.2;
       }
-      .infoText {
-        padding-left: 60px;
-        color: black;
-      }
-      .infoText li {
-        line-height: 1.2;
-        margin-bottom: 2px;
-      }
-      .listText {
-        display: block;
-        margin-left: 10px;
-        color: red;
-      }
-      hr {
-        border: none;
-        height: 2px;
-        background-color: #ccc;
-        margin-top: 20px;
-        margin-bottom: 20px;
-      }
+      .infoText { padding-left: 60px; color: black; }
+      .infoText li { list-style-type: none; line-height: 1.2; margin-bottom: 2px; }
+      .listText { color: red; }
+      hr { border: none; height: 2px; background-color: #ccc; margin: 20px 0; }
+      #useArclight { margin-top: 20px; }
+      #additionalQuery { padding-top: 5px; color: blue; font-size: 15px; }
       @media (max-width: 600px) {
         #switchContainer {
-          width: 80px;
-          margin-left: 0;
-          margin-right: 0; /* Remove negative margin on mobile */
-          margin-top: -10px;
+          width: 80px; margin-left: 0; margin-right: 0; margin-top: -10px;
         }
       }
     </style>
   </head>
   <body>
-    <!-- TOP APP BAR -->
-    <div id="appBar">
-      <div id="backArrow" onclick="history.back()">&#x2190;</div>
+    <!-- TOP APP BAR with accessible button -->
+    <header id="appBar">
+      <button id="backArrow" aria-label="Go Back">←</button>
       <h1 id="pageTitle">Instructions</h1>
-    </div>
+    </header>
     <!-- MAIN CONTENT AREA -->
-    <div id="content">
-      <!-- Introductory paragraph: full width -->
-      <p id="introText">
-        Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying
-        names or details. Look fully around head/face/body part and examine both eyes/ears. Good luck!
-      </p>
-      <!-- Wrap Section: this vertical region reserves the button area -->
+    <main id="content">
+      <p id="introText"></p>
       <div id="wrapSection">
-        <!-- Switch Container: floated right, pulled flush on desktop and repositioned on mobile -->
         <div id="switchContainer">
           <div class="switch">
-            <input type="radio" name="option" id="optionEye" value="eye" checked onchange="toggleContent()" />
+            <input type="radio" name="option" id="optionEye" value="eye" checked />
             <label for="optionEye" class="switch-label" title="Eye">Eye</label>
-            <input type="radio" name="option" id="optionEar" value="ear" onchange="toggleContent()" />
+            <input type="radio" name="option" id="optionEar" value="ear" />
             <label for="optionEar" class="switch-label" title="Ear">Ear</label>
-            <input type="radio" name="option" id="optionSkin" value="skin" onchange="toggleContent()" />
+            <input type="radio" name="option" id="optionSkin" value="skin" />
             <label for="optionSkin" class="switch-label" title="Skin">Skin</label>
           </div>
         </div>
-        <!-- Text that wraps around the float -->
         <div id="wrapText">
-          <p id="patientPrompt" class="boldText">Tell Alan about your patient's:</p>
+          <p id="patientPrompt" class="boldText"></p>
           <ul class="infoText">
-            <li id="patientDetail1"><span class="listText">problem &amp; onset</span></li>
-            <li id="patientDetail2"><span class="listText">what you see</span></li>
-            <li id="patientDetail3"><span class="listText">vision &amp; pupils</span></li>
-            <li id="patientDetail4"><span class="listText">age, sex, medication</span></li>
+            <li id="patientDetail1"></li>
+            <li id="patientDetail2"></li>
+            <li id="patientDetail3"></li>
+            <li id="patientDetail4"></li>
           </ul>
-          <p id="useArclight" style="margin-top: 20px">
-            <strong>Use Arclight:</strong> <strong><em>front, fundal reflex, back of eye.</em></strong>
-          </p>
+          <p id="useArclight"></p>
           <hr />
           <div id="additionalExamples" class="justify">
-            <p>
-              <strong id="labelTooLittle">Too little</strong><br />
-              <span id="tooLittle">man red eye what?</span>
-            </p>
-            <p>
-              <strong id="labelJustRight">Just right</strong><br />
-              <span id="justRight">
-                Man 25yr, red eye 3 day. No meds or eye prob before. Pain, watering, White cornea dot. Pupils OK, Vision 6/12 6/6 other
-              </span>
-            </p>
-            <p>
-              <strong id="labelTooMuch">Too much</strong><br />
-              <span id="tooMuch">
-                This man came into clinics today. He drove into the building with a red eye, now he thinks the food he ate is affecting his eye. I see
-                watering, red edges, you know? He wants help. Tall man, watery eyes, worried about cornea and pain. He says, "What is this?"
-              </span>
-            </p>
-            <p id="additionalQuery" style="padding-top: 5px; color: blue; font-size: 15px">
-              Alan also answers eye teaching/learning queries: What is Iritis? How do I see the retina?
-            </p>
+            <p><strong id="labelTooLittle"></strong><br /><span id="tooLittle"></span></p>
+            <p><strong id="labelJustRight"></strong><br /><span id="justRight"></span></p>
+            <p><strong id="labelTooMuch"></strong><br /><span id="tooMuch"></span></p>
+            <p id="additionalQuery"></p>
           </div>
         </div>
         <div class="clear"></div>
       </div>
-      <!-- Additional full-width content could follow here -->
-    </div>
+    </main>
 
-    <!-- INLINE SCRIPT: Update static text from translations and override toggleContent -->
+    <!-- SCRIPT with unobtrusive event listeners -->
     <script>
-      var trans; // Global translation object for the current language
+      var trans;
 
       document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('backArrow').addEventListener('click', function() { history.back(); });
+        document.querySelectorAll('input[name="option"]').forEach(function(radio) {
+          radio.addEventListener('change', toggleContent);
+        });
         updatePageTranslations();
       });
 
@@ -267,20 +192,22 @@
           document.getElementById('pageTitle').textContent = trans.instructionsPageTitle;
           document.getElementById('introText').innerHTML = trans.instructionsIntro;
           document.getElementById('patientPrompt').textContent = trans.instructionsPatientPrompt;
-          document.getElementById('patientDetail1').textContent = trans.instructionsPatientDetail1;
-          document.getElementById('patientDetail2').textContent = trans.instructionsPatientDetail2;
-          document.getElementById('patientDetail3').textContent = trans.instructionsPatientDetail3;
-          document.getElementById('patientDetail4').textContent = trans.instructionsPatientDetail4;
-          // Set default Arclight text
-          document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_default;
-          // Update additional examples subtitles and content via toggleContent
+          document.getElementById('patientDetail1').innerHTML = `<span class="listText">${trans.instructionsPatientDetail1}</span>`;
+          document.getElementById('patientDetail2').innerHTML = `<span class="listText">${trans.instructionsPatientDetail2}</span>`;
+          document.getElementById('patientDetail3').innerHTML = `<span class="listText">${trans.instructionsPatientDetail3}</span>`;
+          document.getElementById('patientDetail4').innerHTML = `<span class="listText">${trans.instructionsPatientDetail4}</span>`;
           toggleContent();
         }
       }
-
+      
       function toggleContent() {
         var option = document.querySelector('input[name="option"]:checked').value;
         if (!trans) return;
+
+        document.getElementById('labelTooLittle').textContent = trans.instructionsLabelTooLittle;
+        document.getElementById('labelJustRight').textContent = trans.instructionsLabelJustRight;
+        document.getElementById('labelTooMuch').textContent = trans.instructionsLabelTooMuch;
+
         if (option === 'eye') {
           document.getElementById('content').style.backgroundColor = trans.instructionsBackground_eye;
           document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_eye;
@@ -288,10 +215,6 @@
           document.getElementById('justRight').textContent = trans.instructionsJustRight_eye;
           document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_eye;
           document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_eye;
-          // Update subtitles:
-          document.getElementById('labelTooLittle').textContent = trans.instructionsLabelTooLittle;
-          document.getElementById('labelJustRight').textContent = trans.instructionsLabelJustRight;
-          document.getElementById('labelTooMuch').textContent = trans.instructionsLabelTooMuch;
         } else if (option === 'ear') {
           document.getElementById('content').style.backgroundColor = trans.instructionsBackground_ear;
           document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_ear;
@@ -299,10 +222,6 @@
           document.getElementById('justRight').textContent = trans.instructionsJustRight_ear;
           document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_ear;
           document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_ear;
-          // Update subtitles:
-          document.getElementById('labelTooLittle').textContent = trans.instructionsLabelTooLittle;
-          document.getElementById('labelJustRight').textContent = trans.instructionsLabelJustRight;
-          document.getElementById('labelTooMuch').textContent = trans.instructionsLabelTooMuch;
         } else if (option === 'skin') {
           document.getElementById('content').style.backgroundColor = trans.instructionsBackground_skin;
           document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_skin;
@@ -310,10 +229,6 @@
           document.getElementById('justRight').textContent = trans.instructionsJustRight_skin;
           document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_skin;
           document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_skin;
-          // Update subtitles:
-          document.getElementById('labelTooLittle').textContent = trans.instructionsLabelTooLittle;
-          document.getElementById('labelJustRight').textContent = trans.instructionsLabelJustRight;
-          document.getElementById('labelTooMuch').textContent = trans.instructionsLabelTooMuch;
         }
       }
     </script>

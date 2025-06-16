@@ -4,10 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eye Exam</title>
-    <!-- Load the translations object from language.js -->
-    <script type="module" src="language.js"></script>
+    <!-- Translations object embedded for a single-file solution -->
+    <script>
+      window.translations = {
+        en: {
+          pageTitle: 'How to examine the eye',
+          frontOfEyeHeading: 'Front of Eye',
+          frontOfEyeText: `Observe and compare eyes: <em>straight,</em> <em>right,</em> <em>left,</em> <em>up,</em> down<br /><strong><u>Hold & get close</u></strong>. Examine: <em>lids,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupil</em><br />Use with <span class="orange">fluro</span> for corneal ulcers or scratches`,
+          fundalReflexHeading: 'Fundal Reflex',
+          fundalReflexText: `<em>Dim</em> room, baby happy; at arms-length – compare reflexes<br />Equal: <em>Brightness,</em> <em>Colour,</em> <em>Shape</em><br />Go closer for details: <em>Scar, cataract, RB, Vit Haem</em>`,
+          backOfEyeHeading: 'Back of Eye',
+          backOfEyeText: `Use right eye to view patient's right eye; left for left<br />Patient must look straight NOT at light; get close and find optic disc (Dilate = best view)<br />Study disc: <em>Margin,</em> <em>Colour,</em> <em>Cup</em>. Track big vessels, then ask patient to look directly into the light to see macula`,
+          additionalText: `Know your discs: normal, <span class="red"><strong>swollen</strong></span>, <span class="red">new vessels</span>, <span class="orange">cupped</span>, <span class="green">pale</span><br />>Practice often<`,
+        },
+      };
+    </script>
     <style>
-      /* Global page layout and typography */
+      /* --- Identical to original styles, with minimal additions --- */
       body {
         font-family: 'Calibri Light', Arial, sans-serif;
         background-color: white;
@@ -15,7 +28,6 @@
         margin: 0;
         padding: 0;
       }
-      /* Top app bar styling */
       #appBar {
         display: flex;
         align-items: center;
@@ -23,60 +35,60 @@
         color: white;
         padding: 10px 20px;
       }
-      /* Back arrow */
+      /* IMPROVEMENT: Target a <button> but make it look like the old <div> */
       #backArrow {
+        background: none; border: none; font-family: inherit; /* Reset button styles */
         color: white;
         font-size: 32px;
         font-weight: bold;
         cursor: pointer;
         padding-right: 20px;
       }
-      /* Page title (centered) */
       #pageTitle {
         text-align: center;
         margin: 0 auto;
         font-size: 24px;
       }
-      /* Main content styling */
       #eyeExamText {
         padding: 15px;
         line-height: 1.4em;
       }
-      /* Section headings */
       #frontOfEyeHeading,
       #fundalReflexHeading,
       #backOfEyeHeading {
         margin-top: 16px;
         margin-bottom: 8px;
+        font-size: 1.17em; /* Default h3 size */
+        font-weight: bold; /* Default h3 weight */
       }
-      /* Paragraphs */
       #frontOfEyeText,
       #fundalReflexText,
       #backOfEyeText,
       #additionalText {
         margin-bottom: 8px;
       }
+      /* IMPROVEMENT: Reusable classes to replace inline styles */
+      .red { color: red; font-weight: bold; }
+      .orange { color: orange; }
+      .green { color: green; }
     </style>
   </head>
   <body>
-    <!-- Top App Bar -->
+    <!-- Top App Bar with accessible button -->
     <div id="appBar">
-      <div id="backArrow" onclick="history.back()">&#x2190;</div>
+      <button id="backArrow" aria-label="Go Back">←</button>
       <h1 id="pageTitle">How to examine the eye</h1>
     </div>
 
     <!-- Main Content Area -->
     <div id="eyeExamText">
-      <!-- Front of Eye Section -->
       <h3 id="frontOfEyeHeading">Front of Eye</h3>
       <p id="frontOfEyeText">
         Observe and compare eyes: <em>straight,</em> <em>right,</em> <em>left,</em> <em>up,</em> down<br />
-        <strong><u>Hold &amp; get close</u></strong
-        >. Examine: <em>lids,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupil</em><br />
-        Use with <span style="color: orange">fluro</span> for corneal ulcers or scratches
+        <strong><u>Hold & get close</u></strong>. Examine: <em>lids,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupil</em><br />
+        Use with <span class="orange">fluro</span> for corneal ulcers or scratches
       </p>
 
-      <!-- Fundal Reflex Section -->
       <h3 id="fundalReflexHeading">Fundal Reflex</h3>
       <p id="fundalReflexText">
         <em>Dim</em> room, baby happy; at arms-length – compare reflexes<br />
@@ -84,7 +96,6 @@
         Go closer for details: <em>Scar, cataract, RB, Vit Haem</em>
       </p>
 
-      <!-- Back of Eye Section -->
       <h3 id="backOfEyeHeading">Back of Eye</h3>
       <p id="backOfEyeText">
         Use right eye to view patient's right eye; left for left<br />
@@ -92,28 +103,15 @@
         Study disc: <em>Margin,</em> <em>Colour,</em> <em>Cup</em>. Track big vessels, then ask patient to look directly into the light to see macula
       </p>
 
-      <!-- Additional Information -->
       <p id="additionalText">
-        Know your discs: normal, <span style="color: red; font-weight: bold">swollen</span>, <span style="color: red">new vessels</span>,
-        <span style="color: orange">cupped</span>, <span style="color: green">pale</span><br />
-        &gt;Practice often&lt;
+        Know your discs: normal, <span class="red">swollen</span>, <span class="red">new vessels</span>,
+        <span class="orange">cupped</span>, <span class="green">pale</span><br />
+        >Practice often<
       </p>
     </div>
 
-    <!-- Inline JavaScript to update text using the translations object -->
+    <!-- Script with unobtrusive event listener -->
     <script>
-      // Call the update function on page load
-      document.addEventListener('DOMContentLoaded', function () {
-        updatePageTranslations();
-      });
-
-      // Also listen for storage changes (useful if the change is made in another tab)
-      window.addEventListener('storage', function (e) {
-        if (e.key === 'preferredLanguage') {
-          updatePageTranslations();
-        }
-      });
-
       function updatePageTranslations() {
         var lang = localStorage.getItem('preferredLanguage') || 'en';
         var t = window.translations && window.translations[lang];
@@ -128,6 +126,17 @@
           document.getElementById('additionalText').innerHTML = t.additionalText;
         }
       }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('backArrow').addEventListener('click', function() { history.back(); });
+        updatePageTranslations();
+      });
+
+      window.addEventListener('storage', function (e) {
+        if (e.key === 'preferredLanguage') {
+          updatePageTranslations();
+        }
+      });
     </script>
   </body>
 </html>

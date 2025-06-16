@@ -4,10 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About Alan</title>
-    <!-- Load the translations object from language.js -->
-    <script type="module" src="language.js"></script>
+    <!-- Translations object embedded for a single-file solution -->
+    <script>
+      window.translations = {
+        en: {
+          pageTitle: 'About Alan',
+          aboutAlanText: `Alan is an AI eye, ear and skin diagnostic assistant, comprising: a foundation language model and symbolic logic. Smart. Serious. State of the art.<br /><br />Clinical, local knowledge and images, are tailored to different roles such as health workers and general practitioners. Concise dialogue generates a diagnosis and management plan. Use of the arclight is embedded throughout.<br />`,
+          aboutAlanListItem1: 'Expert base – tropical/hot climate',
+          aboutAlanListItem2: 'Arclight aware',
+          aboutAlanEfficient: '<strong>Efficient</strong> – concise, plain language',
+          aboutAlanEasy: '<strong>Easy-to-use</strong> – app, voice, vision',
+          aboutAlanExplainable: '<strong>Explainable</strong> – facts/rules, images',
+          aboutAlanEncouraging: '<strong>Encouraging</strong> – empathy, teacher',
+          aboutAlanDate: '<br /><br />wjw Jan 25',
+        },
+      };
+    </script>
     <style>
-      /* Global layout and typography */
+      /* --- Identical to original styles, with minimal additions --- */
       body {
         font-family: 'Calibri Light', Arial, sans-serif;
         background-color: white;
@@ -15,7 +29,6 @@
         margin: 0;
         padding: 0;
       }
-      /* App bar styling */
       #appBar {
         display: flex;
         align-items: center;
@@ -23,46 +36,52 @@
         color: white;
         padding: 10px 20px;
       }
-      /* Back arrow */
+      /* IMPROVEMENT: Target a <button> but make it look like the old <div> */
       #backArrow {
+        background: none; border: none; font-family: inherit; /* Reset button styles */
         color: white;
         font-size: 32px;
         font-weight: bold;
         cursor: pointer;
         padding-right: 20px;
       }
-      /* Page title */
       #pageTitle {
         text-align: center;
         margin: 0 auto;
         font-size: 24px;
       }
-      /* Main container for About Alan content */
       #aboutAlan {
         padding: 15px;
         margin-top: -10px;
       }
-      /* Logo container */
       #logoContainer {
         text-align: center;
         margin: -10px;
       }
-      /* Content area */
+      /* IMPROVEMENT: Style for logo moved here from inline */
+      #logoImage {
+        max-width: 120px;
+        height: auto;
+        margin-bottom: -10px;
+      }
       #aboutAlanContent {
         margin-top: 10px;
       }
-      /* Paragraph styling */
       #aboutAlanText,
       #aboutAlanEfficient,
       #aboutAlanEasy,
       #aboutAlanExplainable,
-      #aboutAlanEncouraging,
-      #aboutAlanDate {
+      #aboutAlanEncouraging {
         font-size: 15px;
         text-align: justify;
         margin-bottom: 16px;
       }
-      /* List styling */
+      /* IMPROVEMENT: Style for date moved here from inline */
+      #aboutAlanDate {
+        font-size: 12px;
+        text-align: justify;
+        margin-bottom: 16px;
+      }
       #aboutAlanList {
         padding-left: 20px;
         margin-bottom: 16px;
@@ -73,14 +92,9 @@
       .highlight {
         color: red;
       }
-      /* Animation for logo (optional) */
       @keyframes smoothFlip360 {
-        from {
-          transform: rotateY(0deg);
-        }
-        to {
-          transform: rotateY(180deg);
-        }
+        from { transform: rotateY(0deg); }
+        to { transform: rotateY(180deg); }
       }
       .flip-horizontally {
         animation: smoothFlip360 1.5s ease-out forwards;
@@ -88,16 +102,17 @@
     </style>
   </head>
   <body>
-    <!-- Top App Bar -->
+    <!-- Top App Bar with accessible button -->
     <div id="appBar">
-      <div id="backArrow" onclick="history.back()">&#x2190;</div>
+      <button id="backArrow" aria-label="Go Back">←</button>
       <h1 id="pageTitle">About Alan</h1>
     </div>
 
-    <!-- Main About Alan Content -->
+    <!-- Main About Alan Content (structure preserved) -->
     <div id="aboutAlan">
       <div id="logoContainer">
-        <img src="bigredt.png" alt="Big Red T Logo" id="logoImage" style="max-width: 120px; height: auto; margin-bottom: -10px" />
+        <!-- Inline style removed from image -->
+        <img src="bigredt.png" alt="Big Red T Logo" id="logoImage" />
       </div>
       <div id="aboutAlanContent">
         <p id="aboutAlanText">
@@ -114,16 +129,20 @@
         <p id="aboutAlanEasy"><strong>Easy-to-use</strong> – app, voice, vision</p>
         <p id="aboutAlanExplainable"><strong>Explainable</strong> – facts/rules, images</p>
         <p id="aboutAlanEncouraging"><strong>Encouraging</strong> – empathy, teacher</p>
-        <p id="aboutAlanDate" style="font-size: 12px"><br /><br />wjw Jan 25</p>
+        <!-- Inline style removed from date paragraph -->
+        <p id="aboutAlanDate"><br /><br />wjw Jan 25</p>
       </div>
     </div>
 
-    <!-- Inline JavaScript to update the page text using translations -->
+    <!-- Script with unobtrusive event listener -->
     <script>
-      // Update on page load
       document.addEventListener('DOMContentLoaded', function () {
+        // IMPROVEMENT: Event listener added here
+        document.getElementById('backArrow').addEventListener('click', function() { history.back(); });
+
         updatePageTranslations();
-        // Optionally, trigger a logo flip after a delay
+        
+        // Logo animation logic is preserved
         setTimeout(function () {
           var logoImage = document.getElementById('logoImage');
           if (logoImage) {
@@ -132,7 +151,6 @@
         }, 1000);
       });
 
-      // Listen for storage changes (if language is changed in another tab)
       window.addEventListener('storage', function (e) {
         if (e.key === 'preferredLanguage') {
           updatePageTranslations();

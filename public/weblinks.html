@@ -4,110 +4,103 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web Links</title>
-
-    <!-- 
-    **********************************************
-    *                 PAGE STYLES               *
-    **********************************************
-    - Black top app bar with white text & back arrow
-    - Links section with faint blue links
-    - Intro paragraph centered at the top
-  -->
     <style>
-      /* Global page layout and typography */
       body {
         font-family: 'Calibri Light', Arial, sans-serif;
-        background-color: white; /* White background for the page */
-        color: black; /* Black text color for the page */
+        background-color: white;
+        color: black;
         margin: 0;
         padding: 0;
       }
 
-      /* Top bar (app bar) styling */
-      #appBar {
-        display: flex; /* Using flexbox to align items */
-        align-items: center; /* Center items vertically */
-        background-color: black; /* Black background for the app bar */
-        color: white; /* White text color for the app bar */
-        padding: 10px 20px; /* Consistent padding for height */
+      /* FIX: Changed #appBar to the semantic <header> element */
+      .app-bar {
+        display: flex;
+        align-items: center;
+        background-color: black;
+        color: white;
+        padding: 10px 15px; /* Adjusted padding slightly */
       }
 
-      /* Centered page title in the app bar */
-      #pageTitle {
+      .page-title {
+        flex-grow: 1; /* Allows title to take up space */
         text-align: center;
-        margin: 0 auto; /* Centers title within the flex container */
-        font-size: 24px; /* Font size for page title */
+        margin: 0;
+        font-size: 24px;
       }
 
-      /* Back arrow on the left side */
-      #backArrow {
-        color: white; /* White back arrow */
-        font-size: 32px; /* Size of the back arrow */
-        font-weight: bold; /* Makes the arrow thicker */
-        position: relative; /* Works within flex layout */
+      /* FIX: Changed #backArrow to a <button> element for accessibility */
+      .back-arrow {
+        color: white;
+        font-size: 24px; /* Adjusted for better balance */
+        font-weight: bold;
         cursor: pointer;
-        padding-right: 20px; /* Visual spacing on the right */
+        /* Remove default button styling */
+        background: none;
+        border: none;
+        padding: 0 15px 0 0;
       }
 
-      /* Main links container */
-      #links {
+      /* FIX: Using <main> for primary content */
+      main {
         padding: 20px;
-        display: block; /* Display links in a block layout */
       }
-      #links a {
-        display: block;
-        margin-bottom: 10px;
-        color: #0037ff; /* Faint blue color for links */
-        text-decoration: none; /* Remove underline */
+      
+      .link-intro {
+        text-align: center;
+        margin-bottom: 20px;
       }
 
-      /* Intro text above the links */
-      #linkIntro {
-        text-align: center;
-        margin-top: 20px; /* Spacing above intro text */
-        margin-bottom: 20px; /* Spacing below intro text */
+      /* FIX: Changed #links to an <ol> for a semantic list */
+      .links-list {
+        list-style-position: inside; /* Keeps numbers aligned with text */
+        padding-left: 0; /* Removes default padding */
+      }
+      .links-list li {
+        margin-bottom: 10px;
+      }
+      .links-list a {
+        color: #0037ff;
+        text-decoration: none;
+      }
+
+      /* FIX: Added hover/focus state for better usability */
+      .links-list a:hover,
+      .links-list a:focus {
+        text-decoration: underline;
       }
     </style>
   </head>
 
   <body>
-    <!-- 
-    **********************************************
-    *              TOP APP BAR                  *
-    **********************************************
-    - Contains the back arrow & page title
-  -->
-    <div id="appBar">
-      <div id="backArrow" onclick="history.back()">&#x2190;</div>
-      <!-- Back arrow -->
-      <h1 id="pageTitle">Web Links</h1>
-      <!-- Page Title -->
-    </div>
+    <!-- FIX: Using <header> for the top bar -->
+    <header class="app-bar">
+      <!-- FIX: Using a <button> for actions. It is now keyboard-focusable. -->
+      <button type="button" id="backButton" class="back-arrow" aria-label="Go back">←</button>
+      <h1 class="page-title">Web Links</h1>
+    </header>
 
-    <!-- 
-    **********************************************
-    *              LINKS INTRO                  *
-    **********************************************
-    - Brief introductory message about the links
-  -->
-    <div id="linkIntro">
-      <p>Here are some interesting links...</p>
-    </div>
+    <!-- FIX: Using <main> for the main content area -->
+    <main>
+      <p class="link-intro">Here are some interesting links...</p>
 
-    <!-- 
-    **********************************************
-    *               LINKS SECTION               *
-    **********************************************
-    - Provides a series of links
-  -->
-    <div id="links">
-      <a href="https://www.youtube.com/watch?v=OgDjOazTt1o">1) Neurology | David Nicholl, Birmingham, UK</a>
-      <a href="https://www.youtube.com/watch?v=QsD5T4m7ynQ&feature=youtu.be">2) Cat / Paediatric Eye Examination</a>
-      <a href="https://www.youtube.com/watch?v=y04qoQE43T8">3) Arclight in Rwanda | German Rotary Club</a>
-      <a href="https://www.youtube.com/watch?v=dBp6boMB0Lo">4) How to use Arclight | Dr Md. Yeamli Khan, Bangladesh</a>
-      <a href="https://www.youtube.com/watch?v=eYgDzum3z4c">5) Arclight In Africa | The Fred Hollows Foundation, Australia</a>
-      <a href="https://youtu.be/RDpTy8X_pVI">6) Arclight in 60 Seconds | University of St Andrews</a>
-      <a href="https://www.afro.who.int/sites/default/files/2018-06/WEB-2835-OMS-Afro-PrimaryEyeCaretrainingmanual-20180406.pdf">7) WHO</a>
-    </div>
+      <!-- FIX: Using an ordered list (<ol>) for the links -->
+      <ol class="links-list">
+        <li><a href="https://www.youtube.com/watch?v=OgDjOazTt1o">Neurology | David Nicholl, Birmingham, UK</a></li>
+        <li><a href="https://www.youtube.com/watch?v=QsD5T4m7ynQ&feature=youtu.be">Cat / Paediatric Eye Examination</a></li>
+        <li><a href="https://www.youtube.com/watch?v=y04qoQE43T8">Arclight in Rwanda | German Rotary Club</a></li>
+        <li><a href="https://www.youtube.com/watch?v=dBp6boMB0Lo">How to use Arclight | Dr Md. Yeamli Khan, Bangladesh</a></li>
+        <li><a href="https://www.youtube.com/watch?v=eYgDzum3z4c">Arclight In Africa | The Fred Hollows Foundation, Australia</a></li>
+        <li><a href="https://youtu.be/RDpTy8X_pVI">Arclight in 60 Seconds | University of St Andrews</a></li>
+        <li><a href="https://www.afro.who.int/sites/default/files/2018-06/WEB-2835-OMS-Afro-PrimaryEyeCaretrainingmanual-20180406.pdf">WHO Primary Eye Care Training Manual</a></li>
+      </ol>
+    </main>
+
+    <!-- FIX: Separated behavior (JS) from structure (HTML) -->
+    <script>
+      document.getElementById('backButton').addEventListener('click', () => {
+        history.back();
+      });
+    </script>
   </body>
 </html>

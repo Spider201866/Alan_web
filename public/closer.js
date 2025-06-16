@@ -1,75 +1,52 @@
 // closer.js
 
 /**
- * Runs once the page (window) is fully loaded.
+ * A helper function that creates a delay using a Promise.
+ * This is the key to cleaning up nested setTimeouts.
+ * @param {number} ms - The delay in milliseconds.
  */
-window.onload = function () {
-  // Remove 'hidden' if your mainContent starts hidden in CSS
-  // document.getElementById('mainContent').classList.remove('hidden');
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
-  // Start the Eyeor fade-in/fade-out sequence
+/**
+ * Runs once the page is fully loaded, initiating the animations.
+ */
+window.onload = () => {
   showAnimation();
-
-  // After 2s, start the highlight sequence on Good/Examine/Arclight
-  setTimeout(anotherFunction, 2000);
-
-  // Scroll to the top
+  setTimeout(highlightSequence, 2000); // Start the highlight sequence after 2s
   window.scrollTo(0, 0);
 };
 
 /**
- * showAnimation():
- * 1. Reveal #animationContainer (the Eyeor GIF container).
- * 2. Fade image in fully.
- * 3. Keep it visible for 6 seconds.
- * 4. Fade out over 2 seconds, then hide the container.
+ * Fades the Eyeor GIF in and out.
  */
-function showAnimation() {
+async function showAnimation() {
   const container = document.getElementById('animationContainer');
-  if (!container) return;
-  container.style.display = 'flex'; // or 'block'
-
-  const image = container.querySelector('img');
+  const image = container?.querySelector('img'); // Optional chaining is more concise
   if (!image) return;
 
-  // Fade in
+  container.style.display = 'flex';
   image.style.opacity = 1;
 
-  // After 6s, fade out, then hide container
-  setTimeout(() => {
-    image.style.opacity = 0;
-    setTimeout(() => {
-      container.style.display = 'none';
-    }, 2000); // match the 2s CSS transition
-  }, 6000);
+  await delay(6000); // Keep it visible for 6 seconds
+
+  image.style.opacity = 0;
+  await delay(2000); // Wait for the 2s CSS fade-out transition
+
+  container.style.display = 'none';
 }
 
 /**
- * anotherFunction():
- * Sequentially highlight #good-history, #examine-well, #use-arclight in red, then revert to grey.
+ * Sequentially highlights key text elements.
  */
-function anotherFunction() {
-  const goodHistory = document.getElementById('good-history');
-  const examineWell = document.getElementById('examine-well');
-  const useArclight = document.getElementById('use-arclight');
+async function highlightSequence() {
+  const ids = ['good-history', 'examine-well', 'use-arclight'];
 
-  if (!goodHistory || !examineWell || !useArclight) return;
-
-  // Turn #good-history red, then grey
-  goodHistory.style.color = 'red';
-  setTimeout(() => {
-    goodHistory.style.color = 'grey';
-
-    // Turn #examine-well red, then grey
-    examineWell.style.color = 'red';
-    setTimeout(() => {
-      examineWell.style.color = 'grey';
-
-      // Turn #use-arclight red, then grey
-      useArclight.style.color = 'red';
-      setTimeout(() => {
-        useArclight.style.color = 'grey';
-      }, 1000);
-    }, 1000);
-  }, 1000);
+  for (const id of ids) {
+    const element = document.getElementById(id);
+    if (element) {
+      element.style.color = 'red';
+      await delay(1000); // Wait 1 second
+      element.style.color = 'grey';
+    }
+  }
 }
