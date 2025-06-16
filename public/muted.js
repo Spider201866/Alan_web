@@ -1,189 +1,158 @@
 // muted.js
 
-// Track whether the images button is currently showing the sub-image buttons
-let imagesButtonClicked = false
+// Wait until the document is ready, then wire the buttons
+document.addEventListener('DOMContentLoaded', initMutedButtons);
 
 /**
- * Called only after muted.html is in the DOM. 
- * Attaches Refer, Screenshot, and Images button events.
+ * Attach Refer, Screenshot and Images button events
  */
 function initMutedButtons() {
-  // 1) REFER
-  const referButton = document.getElementById("refer")
-  const popup = document.getElementById("refer-popup")
+  // REFER
+  const referButton = document.getElementById('refer');
+  const popup = document.getElementById('refer-popup');
+
   if (referButton && popup) {
-    function showPopup(e) {
-      e.preventDefault()
-      e.stopPropagation()
-      console.log("Refer button activated")
+    const showPopup = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('Refer button activated');
 
-      if (popup.hideTimeout) clearTimeout(popup.hideTimeout)
-      popup.style.display = "block"
+      if (popup.hideTimeout) clearTimeout(popup.hideTimeout);
+      popup.style.display = 'block';
       popup.hideTimeout = setTimeout(() => {
-        popup.style.display = "none"
-      }, 3000)
-    }
-    referButton.addEventListener("click", showPopup)
-    referButton.addEventListener("touchstart", showPopup)
+        popup.style.display = 'none';
+      }, 3000);
+    };
+
+    referButton.addEventListener('click', showPopup);
+    referButton.addEventListener('touchstart', showPopup);
   } else {
-    console.warn("Refer button or popup element not found.")
+    console.warn('Refer button or popup element not found.');
   }
 
-  // 2) SCREENSHOT
-  const screenshotButton = document.getElementById("screenshot")
+  // SCREENSHOT
+  const screenshotButton = document.getElementById('screenshot');
   if (screenshotButton) {
-    screenshotButton.addEventListener("click", takeScreenshot)
+    screenshotButton.addEventListener('click', takeScreenshot);
   } else {
-    console.warn("Screenshot button not found.")
+    console.warn('Screenshot button not found.');
   }
 
-  // 3) IMAGES
-  const imagesButton = document.getElementById("images")
+  // IMAGES
+  const imagesButton = document.getElementById('images');
   if (imagesButton) {
-    imagesButton.addEventListener("click", () => {
-      console.log("Images button clicked.")
+    imagesButton.addEventListener('click', () => {
+      console.log('Images button clicked.');
+      const existingContainer = document.getElementById('chat-end-buttons');
 
-      // If the sub-image buttons are already showing, remove them
-      const existingContainer = document.getElementById("chat-end-buttons")
       if (existingContainer) {
-        removeChatEndButtons()
-        imagesButtonClicked = false
+        removeChatEndButtons();
       } else {
-        // Otherwise, show them
-        imagesButtonClicked = true
-        removeChatEndButtons()       // ensure no duplicates
-        createButtonsWithText("")    // pass "" or a condition name if you want
+        removeChatEndButtons();      // tidy up any strays
+        createButtonsWithText('');
       }
-    })
+    });
   } else {
-    console.warn("Images button not found in the DOM.")
+    console.warn('Images button not found in the DOM.');
   }
 }
 
 /**
- * Use html2canvas to capture the screen, then auto-download screenshot.png
+ * Capture the screen using html2canvas then trigger a download
+ * Make sure the library is loaded, e.g. via
+ * <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
  */
+/* global html2canvas */
 function takeScreenshot() {
-  if (typeof html2canvas === "undefined") {
-    console.error("html2canvas is not loaded.")
-    return
+  if (typeof html2canvas === 'undefined') {
+    console.error('html2canvas is not loaded.');
+    return;
   }
+
   html2canvas(document.body)
-    .then(canvas => {
-      const dataURL = canvas.toDataURL("image/png")
-      const link = document.createElement("a")
-      link.href = dataURL
-      link.download = "screenshot.png"
-      link.click()
-      link.remove()
+    .then((canvas) => {
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = 'screenshot.png';
+      link.click();
+      link.remove();
     })
-    .catch(err => {
-      console.error("Screenshot capture failed:", err)
-    })
+    .catch((err) => {
+      console.error('Screenshot capture failed:', err);
+    });
 }
 
 /**
- * Removes any existing container for sub-image buttons
+ * Remove any existing sub-image button container
  */
 function removeChatEndButtons() {
-  const oldContainer = document.getElementById("chat-end-buttons")
-  if (oldContainer) oldContainer.remove()
+  document.getElementById('chat-end-buttons')?.remove();
 }
 
 /**
- * Creates and inserts the sub-image button container
- * (e.g. Ophthalmology, ENT, Dermatology)
+ * Create and insert the sub-image button container
+ * @param {string} condition
  */
-function createButtonsWithText(condition) {
-  // Avoid duplicates
-  if (document.getElementById("chat-end-buttons")) return
+function createButtonsWithText(condition = '') {
+  if (document.getElementById('chat-end-buttons')) return;
 
-  // The container
-  const container = document.createElement("div")
-  container.id = "chat-end-buttons"
-  container.style.display = "flex"
-  container.style.flexDirection = "column"
-  container.style.alignItems = "center"
-  container.style.marginTop = "-20px"
-  container.style.marginBottom = "35px"
-  container.style.transition = "margin-top 0.3s"
+  const container = document.createElement('div');
+  Object.assign(container.style, {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: '-20px',
+    marginBottom: '35px',
+    transition: 'margin-top 0.3s',
+  });
+  container.id = 'chat-end-buttons';
 
-  // A small headline
-  const textLine = document.createElement("div")
-  if (condition) {
-    textLine.innerHTML = `Find <strong>${condition}</strong> images on these sites`
-  } else {
-    textLine.textContent = "Find images on these sites"
-  }
-  textLine.style.fontSize = "14px"
-  textLine.style.marginBottom = "10px"
-  container.appendChild(textLine)
+  const textLine = document.createElement('div');
+  textLine.innerHTML = condition
+    ? `Find <strong>${condition}</strong> images on these sites`
+    : 'Find images on these sites';
+  Object.assign(textLine.style, { fontSize: '14px', marginBottom: '10px' });
+  container.appendChild(textLine);
 
-  // Row of 3 site buttons
-  const buttonsRow = document.createElement("div")
-  buttonsRow.style.display = "flex"
-  buttonsRow.style.flexWrap = "wrap"
-  buttonsRow.style.justifyContent = "center"
-  buttonsRow.style.gap = "15px"
+  const buttonsRow = document.createElement('div');
+  Object.assign(buttonsRow.style, {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: '15px',
+  });
 
-  // 1) Ophthalmology
-  const ophButton = document.createElement("button")
-  ophButton.className = "button"
-  ophButton.style.backgroundColor = "rgb(134, 162, 255)"
-  ophButton.style.color = "black"
-  ophButton.style.fontSize = "14px"
-  ophButton.style.border = "2px solid black"
-  ophButton.style.padding = "6px 10px"
-  ophButton.textContent = "Ophthalmology"
-  ophButton.addEventListener("click", () => {
-    window.open("https://eyewiki.org/Main_Page", "_blank")
-  })
+  buttonsRow.appendChild(createSiteButton('Ophthalmology', 'rgb(134, 162, 255)', 'https://eyewiki.org/Main_Page'));
+  buttonsRow.appendChild(createSiteButton('ENT', 'rgb(133, 255, 133)', 'https://www.otoscape.com/image-atlas.html'));
+  buttonsRow.appendChild(createSiteButton('Dermatology', '#efafff', 'https://dermnetnz.org/images'));
 
-  // 2) ENT
-  const entButton = document.createElement("button")
-  entButton.className = "button"
-  entButton.style.backgroundColor = "rgb(133, 255, 133)"
-  entButton.style.color = "black"
-  entButton.style.fontSize = "14px"
-  entButton.style.border = "2px solid black"
-  entButton.style.padding = "6px 10px"
-  entButton.textContent = "ENT"
-  entButton.addEventListener("click", () => {
-    window.open("ent.html", "_blank")
-  })
+  container.appendChild(buttonsRow);
 
-  // 3) Dermatology
-  const dermButton = document.createElement("button")
-  dermButton.className = "button"
-  dermButton.style.backgroundColor = "#efafff"
-  dermButton.style.color = "black"
-  dermButton.style.fontSize = "14px"
-  dermButton.style.border = "2px solid black"
-  dermButton.style.padding = "6px 10px"
-  dermButton.textContent = "Dermatology"
-  dermButton.addEventListener("click", () => {
-    window.open("https://dermnetnz.org/images", "_blank")
-  })
+  const footer = document.querySelector('footer.chatbot-version');
+  if (footer) footer.parentNode.insertBefore(container, footer);
+  else document.body.appendChild(container);
 
-  // Append them
-  buttonsRow.appendChild(ophButton)
-  buttonsRow.appendChild(entButton)
-  buttonsRow.appendChild(dermButton)
-  container.appendChild(buttonsRow)
-
-  // Insert above the "Alan can make mistakes..." line if found
-  const footer = document.querySelector("footer.chatbot-version")
-  if (footer) {
-    footer.parentNode.insertBefore(container, footer)
-  } else {
-    document.body.appendChild(container)
-  }
-
-  // If it's too tall, remove negative margin
   setTimeout(() => {
-    const rect = container.getBoundingClientRect()
-    if (rect.bottom > window.innerHeight) {
-      container.style.marginTop = "0px"
+    if (container.getBoundingClientRect().bottom > window.innerHeight) {
+      container.style.marginTop = '0px';
     }
-  }, 100)
+  });
+}
+
+/**
+ * Helper to build a styled site button
+ */
+function createSiteButton(label, background, url) {
+  const button = document.createElement('button');
+  button.className = 'button';
+  Object.assign(button.style, {
+    backgroundColor: background,
+    color: 'black',
+    fontSize: '14px',
+    border: '2px solid black',
+    padding: '6px 10px',
+  });
+  button.textContent = label;
+  button.addEventListener('click', () => window.open(url, '_blank'));
+  return button;
 }

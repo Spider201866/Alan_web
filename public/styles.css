@@ -342,24 +342,22 @@ button {
 }
 
 /* ==============================
-   SIDE MENU (SLIDE-IN)
+   SIDE MENU (SLIDE-IN) - CORRECTED
 ============================== */
-
 .side-menu {
   position: fixed;
-  left: -370px; /* Start off-screen */
-  top: 10px; /* Add px for clarity */
-  min-width: 300px; /* Minimum width remains 300px */
-  width: auto; /* Width will expand as needed */
-  max-width: 400px; /* Optional: Limit maximum width */
+  left: -330px; /* IMPORTANT: Make this slightly more than your width */
+  top: 10px;
+  width: 320px; /* THIS IS THE KEY: A fixed width */
   height: 100%;
   background-color: #f4f4f4;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
   transition: left 0.5s ease;
-  padding-top: 60px;
+  padding: 60px 15px 15px 15px; /* Top, R/L, Bottom padding */
+  box-sizing: border-box;       /* Ensures padding doesn't add to the width */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; /* This stays, to center your buttons! */
   z-index: 1000;
 }
 
@@ -853,3 +851,33 @@ html, body {
   line-height: 1.5;
 }
 
+/* tidy, text-only history - FINAL VERSION */
+#chat-history-list {
+  list-style: none;
+  margin-top: 15px; /* Adds space between buttons and chat */
+  padding: 0 5px;   /* Gives a little horizontal breathing room */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  /* --- ADD THESE LINES TO CONTROL LAYOUT --- */
+  width: 100%;                /* Use the full width of the sidebar */
+  align-self: stretch;        /* CRITICAL: Overrides the parent's "align-items: center" */
+  flex-grow: 1;               /* Tells the list to fill all available vertical space */
+  overflow-y: auto;           /* Adds a vertical scrollbar ONLY if needed */
+  overflow-x: hidden;         /* Prevents any horizontal scrolling */
+}
+
+/* This rule is still correct and necessary */
+#chat-history-list li {
+  max-width: 95%; /* You can make this a little bigger now */
+  padding: 0 2px;
+  font-size: 12px;
+  line-height: 1;
+  overflow-wrap: break-word; /* For modern browsers */
+  word-wrap: break-word;     /* Fallback for older browsers */
+}
+
+/* These alignment rules are perfect, leave them as they are */
+#chat-history-list .user-msg { text-align: right; margin-left: auto; }
+#chat-history-list .bot-msg  { text-align: left;  margin-right: auto; }
