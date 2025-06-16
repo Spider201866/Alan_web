@@ -118,7 +118,7 @@ function parseDiagnosis() {
   // TODO: Implement diagnosis parsing logic
 }
 
-// --- 5. IMAGE-SITE BUTTONS ---
+// --- 5. IMAGE-SITE BUTTONS --- 
 
 
 // --- 6. MAIN "IMAGES" BUTTON TOGGLE ---
