@@ -1,33 +1,38 @@
 // listener-module.js
-// Builds a duplicate-free chat history, parses diagnoses, and manages image-site buttons.
+// Builds a persistent, duplicate-free chat history log in the sidebar,
+// parses diagnoses, and manages image-site buttons.
 
 export let imagesButtonClicked = false;
 
 // --- SETTINGS ---
-const MAX_HISTORY_LINES = 50;      // Rows to keep in the sidebar.
-const MAX_SNIPPET_WORDS = 35;      // Words to show before truncating.
+const MAX_HISTORY_LINES = 100;
+const MAX_SNIPPET_WORDS = 35;
+const STORAGE_KEY = 'alan-sidebar-log';
 const normalise = s => s.replace(/\s+/g, ' ').trim().toLowerCase();
 
-// --- 1. INITIALIZE OBSERVERS ---
+// --- 1. INITIALIZE OBSERVERS & LOAD HISTORY ---
 export function initChatbotListeners() {
+  loadPreviousHistory();
+
   setTimeout(() => {
     const host = document.querySelector('flowise-fullchatbot');
     if (!host) { console.error('Flowise host not found'); return; }
     const root = host.shadowRoot;
     if (!root) { console.error('Cannot access Flowise shadow root'); return; }
 
-    // Rebuild sidebar on any change to the chat.
     new MutationObserver(() => requestAnimationFrame(syncSidebar))
       .observe(root, { childList: true, subtree: true });
 
-    syncSidebar(); // Initial draw.
+    syncSidebar();
   }, 700);
 }
 
-// --- 2. SYNC CHAT HISTORY TO SIDEBAR ---
+// --- 2. SYNC CURRENT CHAT TO SIDEBAR ---
 function syncSidebar() {
   const list = document.getElementById('chat-history-list');
   if (!list) return;
+
+  list.querySelectorAll('.current-session').forEach(el => el.remove());
 
   const bubbles = [...document.querySelector('flowise-fullchatbot').shadowRoot.querySelectorAll('[class*="guest-container"],[class*="host-container"]')];
   const seen = new Set();
@@ -43,93 +48,85 @@ function syncSidebar() {
   });
 
   const view = lines.slice(-MAX_HISTORY_LINES);
-  list.innerHTML = ''; // Clear previous history.
   view.forEach(({ user, text }) => {
     const li = document.createElement('li');
-    li.className = user ? 'user-msg' : 'bot-msg';
+    li.className = (user ? 'user-msg' : 'bot-msg') + ' current-session';
     li.textContent = truncate(text, MAX_SNIPPET_WORDS);
     list.appendChild(li);
   });
 
-  list.parentElement.scrollTop = list.parentElement.scrollHeight; // Scroll to bottom.
+  list.parentElement.scrollTop = list.parentElement.scrollHeight;
 
-  // Check the last bot message for a diagnosis.
   const lastBot = [...view].reverse().find(l => !l.user);
   if (lastBot && /good luck!/i.test(lastBot.text)) parseDiagnosis(lastBot.text);
 }
 
-// --- 3. PARSE DIAGNOSIS & CREATE BUTTONS ---
-function parseDiagnosis(txt) {
-  const diagnosisLine = txt.split(/good luck!/i)[0].trim().split('\n').reverse().find(s => /is most likely/i.test(s));
-  if (!diagnosisLine) return;
+// --- 3. LOAD & SAVE HISTORY LOG ---
+function loadPreviousHistory() {
+  const list = document.getElementById('chat-history-list');
+  if (!list) return;
 
-  const condition = diagnosisLine.split(/is most likely/i)[0].trim().replace(/\.$/, '');
-  if (condition) {
-    removeChatEndButtons();
-    createButtons(condition);
+  const savedLog = localStorage.getItem(STORAGE_KEY);
+  if (!savedLog) return;
+
+  try {
+    const lines = JSON.parse(savedLog);
+    if (!lines || lines.length === 0) return;
+
+    lines.forEach(({ user, text }) => {
+      const li = document.createElement('li');
+      li.className = user ? 'user-msg' : 'bot-msg';
+      li.textContent = text;
+      list.appendChild(li);
+    });
+
+    if (lines.length > 0) {
+      const separator = document.createElement('li');
+      separator.textContent = '--- New Session ---';
+      separator.style.cssText = 'text-align:center; color: #999; font-size:10px; margin: 5px 0; font-style:italic;';
+      list.appendChild(separator);
+    }
+  } catch (e) {
+    console.error("Could not parse saved chat history:", e);
+    localStorage.removeItem(STORAGE_KEY); // Clear corrupted data
   }
 }
 
-// --- 4. IMAGE-SITE BUTTONS ---
-function createButtons(condition) {
-  if (document.getElementById('chat-end-buttons')) return;
+function saveFullHistory() {
+  const list = document.getElementById('chat-history-list');
+  if (!list) return;
 
-  const container = document.createElement('div');
-  container.id = 'chat-end-buttons';
-  container.style.cssText = `display:flex; flex-direction:column; align-items:center; margin-top:-20px; margin-bottom:35px; transition:margin-top .3s`;
+  const allListItems = [...list.querySelectorAll('.user-msg, .bot-msg')];
+  if (allListItems.length === 0) {
+    // If the list is empty, make sure we clear storage
+    localStorage.removeItem(STORAGE_KEY);
+    return;
+  }
+  
+  const fullLog = allListItems.map(li => ({
+    user: li.classList.contains('user-msg'),
+    text: li.textContent
+  }));
 
-  const text = document.createElement('div');
-  text.innerHTML = condition ? `Find <strong>${condition}</strong> images on these sites` : 'Find images on these sites';
-  text.style.cssText = 'font-size:14px; margin-bottom:10px';
-  container.appendChild(text);
-
-  const row = document.createElement('div');
-  row.style.cssText = 'display:flex; flex-wrap:wrap; justify-content:center; gap:15px';
-
-  const makeButton = (label, color, url) => {
-    const btn = document.createElement('button');
-    btn.textContent = label;
-    btn.style.cssText = `background:${color}; color:black; font-size:14px; border:2px solid black; padding:6px 10px; cursor:pointer;`;
-    btn.onclick = () => window.open(url, '_blank');
-    return btn;
-  };
-
-  row.appendChild(makeButton('Ophthalmology', 'rgb(134,162,255)', 'https://eyewiki.org/Main_Page'));
-  row.appendChild(makeButton('ENT', 'rgb(133,255,133)', 'https://www.otoscape.com/image-atlas.html'));
-  row.appendChild(makeButton('Dermatology', '#efafff', 'https://dermnetnz.org/images'));
-  container.appendChild(row);
-
-  // Insert buttons before footer, or at end of body as fallback.
-  const footer = document.querySelector('.chatbot-version');
-  (footer?.parentNode || document.body).insertBefore(container, footer || null);
-
-  setTimeout(() => { // Adjust margin if container is off-screen.
-    if (container.getBoundingClientRect().bottom > window.innerHeight) container.style.marginTop = '0';
-  }, 100);
+  console.log('Saving history to localStorage...', fullLog.length, 'lines'); // For debugging
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(fullLog.slice(-MAX_HISTORY_LINES)));
 }
 
-function removeChatEndButtons() {
-  document.getElementById('chat-end-buttons')?.remove();
+// --- 4. PARSE DIAGNOSIS & CREATE BUTTONS ---
+// --- 4. PARSE DIAGNOSIS & CREATE BUTTONS ---
+function parseDiagnosis() {
+  // TODO: Implement diagnosis parsing logic
 }
 
-// --- 5. MAIN "IMAGES" BUTTON TOGGLE ---
+// --- 5. IMAGE-SITE BUTTONS ---
+
+
+// --- 6. MAIN "IMAGES" BUTTON TOGGLE ---
 export function attachImagesButton() {
-  const btn = document.getElementById('images');
-  if (!btn) { console.warn('Images button (#images) not found'); return; }
-
-  btn.addEventListener('click', () => {
-    const buttonsExist = !!document.getElementById('chat-end-buttons');
-    imagesButtonClicked = !buttonsExist;
-    
-    if (buttonsExist) {
-      removeChatEndButtons();
-    } else {
-      createButtons(''); // Create buttons without a specific condition.
-    }
-  });
+  // TODO: Implement images button logic
 }
 
-// --- 6. HELPERS & INITIALIZER ---
+// --- 7. HELPERS & INITIALIZER ---
 function truncate(msg, maxWords) {
   const words = msg.split(/\s+/);
   return words.length > maxWords ? words.slice(0, maxWords).join(' ') + '…' : msg;
@@ -138,4 +135,18 @@ function truncate(msg, maxWords) {
 document.addEventListener('DOMContentLoaded', () => {
   console.log('listener-module ready');
   initChatbotListeners();
+
+
+
+  
+  // ** REPLACED with more reliable events **
+  // This saves when the user switches tabs or closes the page.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      saveFullHistory();
+    }
+  });
+
+  // This is a final fallback for older browsers or specific closing methods.
+  window.addEventListener('pagehide', saveFullHistory, false);
 });

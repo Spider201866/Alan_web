@@ -765,7 +765,7 @@ html, body {
   position: fixed !important;
   top: 80px;
   right: -350px;      /* must be negative at least your chosen width */
-  width: 300px;       /* pick how wide you want the popout */
+  width: 250px;       /* pick how wide you want the popout */
   display: block !important;
   background-color: #f1f1f1;
   border-radius: 30px 0 0 30px;
@@ -851,33 +851,70 @@ html, body {
   line-height: 1.5;
 }
 
-/* tidy, text-only history - FINAL VERSION */
-#chat-history-list {
-  list-style: none;
-  margin-top: 15px; /* Adds space between buttons and chat */
-  padding: 0 5px;   /* Gives a little horizontal breathing room */
+/* ─────────────────────────────────────────────
+   SIDEBAR • CHAT HISTORY
+   • Flex column so lower items can grow/shrink
+   • Scrollbar appears only when content taller
+   • Compact, legible message lines
+   ─────────────────────────────────────────── */
+
+/* 1. Whole side-menu column */
+.side-menu {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-
-  /* --- ADD THESE LINES TO CONTROL LAYOUT --- */
-  width: 100%;                /* Use the full width of the sidebar */
-  align-self: stretch;        /* CRITICAL: Overrides the parent's "align-items: center" */
-  flex-grow: 1;               /* Tells the list to fill all available vertical space */
-  overflow-y: auto;           /* Adds a vertical scrollbar ONLY if needed */
-  overflow-x: hidden;         /* Prevents any horizontal scrolling */
+  /* keep your existing width / colours / position rules here */
 }
 
-/* This rule is still correct and necessary */
+/* 2. Chat-history wrapper (adds scrollbar) */
+.chat-history {
+  flex: 1 1 auto;      /* grow and shrink within the column */
+  min-height: 0;       /* vital flexbox quirk – allows shrinking */
+  overflow-y: auto;    /* vertical scrollbar as needed */
+  overflow-x: hidden;  /* never scroll sideways */
+  margin-top: 10px;    /* breathing space above the log */
+}
+
+/* 3. Unordered list that holds the messages */
+#chat-history-list {
+  list-style: none;          /* no bullet points */
+  padding: 0 2px;            /* slight side padding */
+  margin: 0;                 /* no extra spacing */
+  display: flex;
+  flex-direction: column;
+  gap: 1px;                  /* tiny gap between lines */
+}
+
+/* 4. All message lines */
 #chat-history-list li {
-  max-width: 95%; /* You can make this a little bigger now */
-  padding: 0 2px;
-  font-size: 12px;
-  line-height: 1;
-  overflow-wrap: break-word; /* For modern browsers */
-  word-wrap: break-word;     /* Fallback for older browsers */
+  font-size: 11px;
+  line-height: 1.25;
+  max-width: 95%;
+  overflow-wrap: break-word; /* stop long URLs blowing layout */
 }
 
-/* These alignment rules are perfect, leave them as they are */
-#chat-history-list .user-msg { text-align: right; margin-left: auto; }
-#chat-history-list .bot-msg  { text-align: left;  margin-right: auto; }
+/* 5. User messages – right aligned, blue */
+#chat-history-list .user-msg {
+  margin-left: auto;         /* push to the right */
+  text-align: right;
+  color: #007bff;           /* readable blue (UK spelling kept) */
+  color:  #007bff;           /* actual CSS property */
+  font-weight: 500;
+}
+
+/* 6. Bot messages – left aligned, dark grey */
+#chat-history-list .bot-msg {
+  margin-right: auto;        /* push to the left */
+  text-align: left;
+  color: #333;
+}
+
+/* 7. Session separator */
+.session-separator {
+  text-align: centre;        /* UK spelling kept but invalid – use 'center' */
+  text-align: center;
+  color: #999;              /* UK spelling kept but invalid – use 'color' */
+  color:  #777;
+  font-weight: 700;
+  font-size: 11px;
+  margin: 5px 0;
+}
