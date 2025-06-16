@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Muted Buttons</title>
   <style>
-    /* Style for the main container, moved from inline HTML */
+    /* Style for the main container */
     .main-container {
       text-align: center;
     }
@@ -17,20 +17,19 @@
       padding-bottom: 5px;
     }
     .btn {
+      /* This now applies identically to all elements */
       display: inline-flex;
       align-items: center;
       background: white;
       font-size: 10pt;
+      font-family: inherit; /* Force inheritance from body */
       border: 1px solid rgb(225,225,225);
       padding: 8px 10px;
       cursor: pointer;
       border-radius: 16px;
       color: grey;
       margin: 0;
-    }
-    /* Ensure <a> tags styled as buttons have no underline */
-    a.btn {
-      text-decoration: none;
+      text-decoration: none; /* Add this to style the <a> tag correctly */
     }
     .btn .icon {
       margin-right: 6px;
@@ -63,7 +62,6 @@
   </style>
 </head>
 <body>
-  <!-- Inline style removed -->
   <div class="main-container">
     <div class="button-container">
 
@@ -75,8 +73,8 @@
         <span class="text-part">Images</span>
       </button>
 
-      <!-- Help (Now a semantic link, styled as a button) -->
-      <a id="help" class="btn" href="instructions.html">
+      <!-- HELP IS NOW AN ANCHOR (LINK) for navigation, styled as a button -->
+      <a href="instructions.html" id="help" class="btn">
         <span class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#CC6666"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm.88 15h-1.75v-1.75h1.75V17zm1.88-6.5c-.28.28-.53.53-.53.97v1h-1.75v-1c0-.65.28-1.18.75-1.65.47-.47 1.03-.94 1.03-1.85 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 1.47-.76 2.21-1.74 3.19z"/></svg>
         </span>
@@ -106,6 +104,5 @@
 
     </div>
   </div>
-  <!-- NO SCRIPT BLOCK ADDED, as functionality is handled by an external script in your app. -->
 </body>
 </html>

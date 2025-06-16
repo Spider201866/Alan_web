@@ -1,282 +1,119 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
+const fs = require('fs').promises; // Use the promise-based version of fs
 const path = require('path');
-const cors = require('cors'); // <--- 1. REQUIRE THE CORS PACKAGE
+const cors = require('cors');
 
+// --- 1. CONFIGURATION ---
 const app = express();
 const port = process.env.PORT || 3000;
-
-/*********************************************/
-/* 1) Master password + optional one-time    */
-/*********************************************/
-const MASTER_PASSWORD = "662023"; // never changes
-
+const MASTER_PASSWORD = "662023";
 let ONE_TIME_PASSWORDS = new Set([
-  "slitlamp286",
-  "fundus512",
-  "pinna304",
-  "slitlamp286",
-  "fundus512",
-  "retina728",
-  "cornea203",
-  "jobson892",
-  "otoscope414",
-  "earcare917",
-  "auricle345",
-  "skincheck112",
+  "slitlamp286", "fundus512", "pinna304", "retina728", "cornea203",
+  "jobson892", "otoscope414", "earcare917", "auricle345", "skincheck112",
   "dermatol559",
 ]);
 
-/*********************************************/
-/* 2) Standard Setup                         */
-/*********************************************/
-
-// <--- 2. USE THE CORS MIDDLEWARE
-// This should be placed before your route definitions.
-// It tells the server to add the 'Access-Control-Allow-Origin' header to all responses.
-app.use(cors()); 
-
+// --- 2. MIDDLEWARE ---
+app.use(cors()); // Enable CORS for all routes
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.options('*', cors()); // Enable pre-flight requests
 
-// <--- 3. HANDLE PREFLIGHT REQUESTS
-// The browser sends an 'OPTIONS' request before a 'POST' or 'PUT' to check permissions.
-// The cors() middleware usually handles this, but explicitly adding it is good practice.
-app.options('*', cors()); // enable pre-flight for all routes
-
-
-// Serve your main pages
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-app.get('/view-records', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'view-records.html'));
-});
-
-/*********************************************/
-/* 3) Storing Single Active Record           */
-/*    (POST /record-info)                    */
-/*********************************************/
 /**
- * This endpoint overwrites user-info.json with ONE single "active" record.
- * Then it also appends or merges that record into user-history.json.
+ * Middleware: Validates master or one-time password.
  */
-app.post('/record-info', (req, res) => {
-  let {
-    sessionId,
-    name,
-    role,
-    experience,
-    focus,
-    latitude,
-    longitude,
-    country,
-    iso2,
-    classification,
-    area,
-    contactInfo,
-    dateTime,
-    version,
-    selectedAgent
-  } = req.body;
-
-  // If no sessionId is provided, create a fallback
-  if (!sessionId) {
-    sessionId = `fallback-${Date.now()}`;
-  }
-
-  // Build the single record
-  const singleRecord = {
-    sessionId,
-    name,
-    role,
-    experience,
-    focus,
-    latitude,
-    longitude,
-    country,
-    iso2,
-    classification,
-    area,
-    contactInfo,
-    dateTime,
-    version,
-    selectedAgent,
-    refreshCount: 1
-  };
-
-  const filePath = path.join(__dirname, 'user-info.json');
-
-  // 1) Overwrite user-info.json with exactly one record
-  fs.writeFile(filePath, JSON.stringify([singleRecord], null, 2), (writeErr) => {
-    if (writeErr) {
-      console.error("Error writing user-info.json:", writeErr);
-      return res.status(500).send('Error saving data');
-    }
-
-    // 2) Append or update user-history.json for the full log
-    appendToHistory(singleRecord);
-
-    res.send('OK');
-  });
-});
-
-
-/*********************************************/
-/* 4) Fetch Single Active Record (POST)      */
-/*    /fetch-records                         */
-/*********************************************/
-/**
- * Validates the password, then returns the single-element array
- * from user-info.json (the "active" record).
- * Flowise uses this to see just the one current record.
- */
-app.post('/fetch-records', (req, res) => {
-  console.log("Received in /fetch-records:", req.body);
-
+function validatePassword(req, res, next) {
   const { password } = req.body;
-
-  // Validate password
-  if (password === MASTER_PASSWORD) {
-    // proceed
-  } else if (ONE_TIME_PASSWORDS.has(password)) {
-    ONE_TIME_PASSWORDS.delete(password);
-    // proceed
-  } else {
-    return res.status(401).send('Invalid password');
+  if (password === MASTER_PASSWORD || ONE_TIME_PASSWORDS.has(password)) {
+    if (ONE_TIME_PASSWORDS.has(password)) {
+      ONE_TIME_PASSWORDS.delete(password);
+    }
+    return next(); // Password is valid, proceed to the next handler
   }
+  res.status(401).send('Invalid password');
+}
 
-  const filePath = path.join(__dirname, 'user-info.json');
-
-  fs.readFile(filePath, (err, data) => {
-    if (err) {
-      if (err.code === 'ENOENT') {
-        // If no file yet, return empty array
-        return res.json([]);
-      }
-      console.error("Error reading user-info.json:", err);
-      return res.status(500).send('Error reading user info');
-    }
-
-    let records;
-    try {
-      records = JSON.parse(data);
-    } catch (parseErr) {
-      console.error("Could not parse user-info.json:", parseErr);
-      return res.json([]);
-    }
-
-    // Return whatever is in that file (usually 1 record in an array)
-    res.json(records);
-  });
-});
-
-
-/*********************************************/
-/* 5) Fetch Full History (POST)              */
-/*    /fetch-history                         */
-/*********************************************/
 /**
- * Validates the password, then returns the entire array
- * from user-history.json. This is for your 'view-records.html' or
- * admin page to see the full log of all sessions.
+ * Middleware: A simple error handler for async routes.
  */
-app.post('/fetch-history', (req, res) => {
-  console.log("Received in /fetch-history:", req.body);
+const handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 
-  const { password } = req.body;
+// --- 3. ROUTES ---
+// Serve main pages
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+app.get('/view-records', (req, res) => res.sendFile(path.join(__dirname, 'public', 'view-records.html')));
 
-  // Validate password
-  if (password === MASTER_PASSWORD) {
-    // proceed
-  } else if (ONE_TIME_PASSWORDS.has(password)) {
-    ONE_TIME_PASSWORDS.delete(password);
-    // proceed
-  } else {
-    return res.status(401).send('Invalid password');
+/**
+ * Route: Overwrite the active record and append/update the history.
+ */
+app.post('/record-info', handleErrors(async (req, res) => {
+  const record = { ...req.body, refreshCount: 1 };
+  if (!record.sessionId) record.sessionId = `fallback-${Date.now()}`;
+
+  await fs.writeFile(path.join(__dirname, 'user-info.json'), JSON.stringify([record], null, 2));
+  await appendToHistory(record);
+  res.send('OK');
+}));
+
+/**
+ * Route: Fetch the single active record. Used by Flowise.
+ */
+app.post('/fetch-records', validatePassword, handleErrors(async (req, res) => {
+  res.json(await readJsonFile(path.join(__dirname, 'user-info.json')));
+}));
+
+/**
+ * Route: Fetch the full user history. Used for admin view.
+ */
+app.post('/fetch-history', validatePassword, handleErrors(async (req, res) => {
+  res.json(await readJsonFile(path.join(__dirname, 'user-history.json')));
+}));
+
+// --- 4. START SERVER ---
+app.listen(port, () => console.log(`Server running at http://localhost:${port}/`));
+
+// --- 5. HELPER FUNCTIONS ---
+/**
+ * Helper: Reads a JSON file safely, returning [] if it doesn't exist or is invalid.
+ * @param {string} filePath - Path to the JSON file.
+ */
+async function readJsonFile(filePath) {
+  try {
+    const data = await fs.readFile(filePath);
+    return JSON.parse(data);
+  } catch (err) {
+    if (err.code === 'ENOENT') return []; // File not found, return empty array.
+    console.error(`Error reading or parsing ${filePath}:`, err);
+    return []; // Invalid JSON or other read error, return empty array.
   }
+}
 
-  const historyPath = path.join(__dirname, 'user-history.json');
-
-  fs.readFile(historyPath, (err, data) => {
-    if (err) {
-      if (err.code === 'ENOENT') {
-        // If no history file yet, return empty
-        return res.json([]);
-      }
-      console.error("Error reading user-history.json:", err);
-      return res.status(500).send('Error reading user history');
-    }
-
-    let fullHistory;
-    try {
-      fullHistory = JSON.parse(data);
-    } catch (parseErr) {
-      console.error("Could not parse user-history.json:", parseErr);
-      return res.json([]);
-    }
-
-    res.json(fullHistory);
-  });
-});
-
-
-/*********************************************/
-/* 6) Start the server                       */
-/*********************************************/
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}/`);
-});
-
-
-/*********************************************/
-/* HELPER: Append or Update user-history.json*/
-/*********************************************/
 /**
- * If we find an existing record with the same sessionId, we increment refreshCount
- * and update fields. If not, we push a new entry.
+ * Helper: Appends a new record to history or updates an existing one.
+ * @param {object} newRecord - The record to add or update.
  */
-function appendToHistory(newRecord) {
+async function appendToHistory(newRecord) {
   const historyPath = path.join(__dirname, 'user-history.json');
+  const history = await readJsonFile(historyPath);
 
-  fs.readFile(historyPath, (err, data) => {
-    let historyArray = [];
-    if (!err) {
-      try {
-        historyArray = JSON.parse(data);
-      } catch (parseErr) {
-        console.error("Could not parse user-history.json:", parseErr);
-        historyArray = [];
-      }
-    }
+  const existingIndex = history.findIndex(item => item.sessionId === newRecord.sessionId);
 
-    // Find an item with the same sessionId
-    const existingIndex = historyArray.findIndex(
-      (item) => item.sessionId === newRecord.sessionId
-    );
-
-    if (existingIndex >= 0) {
-      // We found an existing record => increment refreshCount
-      const existingItem = historyArray[existingIndex];
-      existingItem.refreshCount = (existingItem.refreshCount || 1) + 1;
-      // Optionally update fields with the new data
-      existingItem.dateTime     = newRecord.dateTime;
-      existingItem.latitude     = newRecord.latitude;
-      existingItem.longitude    = newRecord.longitude;
-      existingItem.area         = newRecord.area;
-      // etc. if you want them refreshed
-    } else {
-      // Different session => push a new entry
-      historyArray.push(newRecord);
-    }
-
-    fs.writeFile(historyPath, JSON.stringify(historyArray, null, 2), (writeErr) => {
-      if (writeErr) {
-        console.error("Error writing user-history.json:", writeErr);
-      } else {
-        console.log("Appended/updated user-history.json");
-      }
+  if (existingIndex >= 0) {
+    // Update existing record: increment refreshCount and update key fields.
+    const existing = history[existingIndex];
+    existing.refreshCount = (existing.refreshCount || 1) + 1;
+    Object.assign(existing, {
+      dateTime: newRecord.dateTime,
+      latitude: newRecord.latitude,
+      longitude: newRecord.longitude,
+      area: newRecord.area,
     });
-  });
+  } else {
+    // Add new record to history.
+    history.push(newRecord);
+  }
+
+  await fs.writeFile(historyPath, JSON.stringify(history, null, 2));
+  console.log("Appended/updated user-history.json");
 }
