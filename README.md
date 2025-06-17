@@ -1,12 +1,11 @@
 # Alan Web Server
 
-This project provides a simple Express server with endpoints for recording and retrieving user information. A small Flask application in `public/app.py` is also included for basic password checks.
+This project provides a simple Express server with endpoints for recording and retrieving user information.
 
 ## Prerequisites
 
 - Node.js >=16 (tested with v22.16.0)
 - npm to install packages
-- Python >=3 if you want to run `public/app.py` or the helper script `public/create_hash.py`
 
 ## Installation
 
