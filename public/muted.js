@@ -8,17 +8,14 @@ document.addEventListener('DOMContentLoaded', initMutedButtons);
  */
 function initMutedButtons() {
   // REFER
-  const referButton = document.getElementById('refer'), popup = document.getElementById('refer-popup');
-  if (referButton && popup) {
-    const showPopup = (e) => {
+  const referButton = document.getElementById('refer');
+  if (referButton) {
+    const goToReferral = (e) => {
       e.preventDefault(); e.stopPropagation();
-      console.log('Refer button activated');
-      if (popup.hideTimeout) clearTimeout(popup.hideTimeout); // Reset timer on new click
-      popup.style.display = 'block';
-      popup.hideTimeout = setTimeout(() => { popup.style.display = 'none'; }, 3000);
+      window.location.href = 'referral.html';
     };
-    referButton.addEventListener('click', showPopup);
-    referButton.addEventListener('touchstart', showPopup);
+    referButton.addEventListener('click', goToReferral);
+    referButton.addEventListener('touchstart', goToReferral);
   }
 
   // SCREENSHOT
