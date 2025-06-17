@@ -1,30 +1,32 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const fs = require("fs").promises; // Use the promise-based version of fs
-const path = require("path");
-const cors = require("cors");
-const crypto = require("crypto");
-require("dotenv").config();
+const express = require('express');
+const bodyParser = require('body-parser');
+const fs = require('fs').promises; // Use the promise-based version of fs
+const path = require('path');
+const cors = require('cors');
+const crypto = require('crypto');
+const rateLimit = require('express-rate-limit');
+require('dotenv').config();
 
 // --- 1. CONFIGURATION ---
 const app = express();
 const port = process.env.PORT || 3000;
-const MASTER_PASSWORD_HASH = process.env.MASTER_PASSWORD_HASH || "";
+const MASTER_PASSWORD_HASH = process.env.MASTER_PASSWORD_HASH || '';
 let ONE_TIME_PASSWORDS = new Set(
-  (process.env.ONE_TIME_PASSWORD_HASHES || "").split(",").filter(Boolean),
+  (process.env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean),
 );
+const limiter = rateLimit({ windowMs: 60 * 1000, max: 20 });
 
 // --- 2. MIDDLEWARE ---
 app.use(cors()); // Enable CORS for all routes
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "public")));
-app.options("*", cors()); // Enable pre-flight requests
+app.use(express.static(path.join(__dirname, 'public')));
+app.options('*', cors()); // Enable pre-flight requests
 
 /**
  * Middleware: Validates master or one-time password.
  */
-function hashPassword(str = "") {
-  return crypto.createHash("sha256").update(str).digest("hex");
+function hashPassword(str = '') {
+  return crypto.createHash('sha256').update(str).digest('hex');
 }
 
 function validatePassword(req, res, next) {
@@ -36,7 +38,8 @@ function validatePassword(req, res, next) {
     }
     return next(); // Password is valid, proceed to the next handler
   }
-  res.status(401).send("Invalid password");
+  console.warn(`Invalid password attempt from ${req.ip}`);
+  res.status(401).send('Invalid password');
 }
 
 /**
@@ -49,44 +52,44 @@ function validateRecord(req, res, next) {
   const r = req.body;
   const errors = [];
   if (r.latitude !== undefined && isNaN(parseFloat(r.latitude)))
-    errors.push("latitude must be numeric");
+    errors.push('latitude must be numeric');
   if (r.longitude !== undefined && isNaN(parseFloat(r.longitude)))
-    errors.push("longitude must be numeric");
-  if (r.sessionId !== undefined && typeof r.sessionId !== "string")
-    errors.push("sessionId must be a string");
-  if (r.dateTime !== undefined && typeof r.dateTime !== "string")
-    errors.push("dateTime must be a string");
-  if (r.area !== undefined && typeof r.area !== "string")
-    errors.push("area must be a string");
+    errors.push('longitude must be numeric');
+  if (r.sessionId !== undefined && typeof r.sessionId !== 'string')
+    errors.push('sessionId must be a string');
+  if (r.dateTime !== undefined && typeof r.dateTime !== 'string')
+    errors.push('dateTime must be a string');
+  if (r.area !== undefined && typeof r.area !== 'string')
+    errors.push('area must be a string');
   if (errors.length) return res.status(400).json({ errors });
   next();
 }
 
 // --- 3. ROUTES ---
 // Serve main pages
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-app.get("/view-records", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "view-records.html"));
+app.get('/view-records', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'view-records.html'));
 });
 
 /**
  * Route: Overwrite the active record and append/update the history.
  */
 app.post(
-  "/record-info",
+  '/record-info',
   validateRecord,
   handleErrors(async (req, res) => {
     const record = { ...req.body, refreshCount: 1 };
     if (!record.sessionId) record.sessionId = `fallback-${Date.now()}`;
 
     await fs.writeFile(
-      path.join(__dirname, "user-info.json"),
+      path.join(__dirname, 'user-info.json'),
       JSON.stringify([record], null, 2),
     );
     await appendToHistory(record);
-    res.send("OK");
+    res.send('OK');
   }),
 );
 
@@ -94,10 +97,11 @@ app.post(
  * Route: Fetch the single active record. Used by Flowise.
  */
 app.post(
-  "/fetch-records",
+  '/fetch-records',
+  limiter,
   validatePassword,
   handleErrors(async (req, res) => {
-    res.json(await readJsonFile(path.join(__dirname, "user-info.json")));
+    res.json(await readJsonFile(path.join(__dirname, 'user-info.json')));
   }),
 );
 
@@ -105,10 +109,11 @@ app.post(
  * Route: Fetch the full user history. Used for admin view.
  */
 app.post(
-  "/fetch-history",
+  '/fetch-history',
+  limiter,
   validatePassword,
   handleErrors(async (req, res) => {
-    res.json(await readJsonFile(path.join(__dirname, "user-history.json")));
+    res.json(await readJsonFile(path.join(__dirname, 'user-history.json')));
   }),
 );
 
@@ -129,7 +134,7 @@ async function readJsonFile(filePath) {
     const data = await fs.readFile(filePath);
     return JSON.parse(data);
   } catch (err) {
-    if (err.code === "ENOENT") return []; // File not found, return empty array.
+    if (err.code === 'ENOENT') return []; // File not found, return empty array.
     console.error(`Error reading or parsing ${filePath}:`, err);
     return []; // Invalid JSON or other read error, return empty array.
   }
@@ -140,7 +145,7 @@ async function readJsonFile(filePath) {
  * @param {object} newRecord - The record to add or update.
  */
 async function appendToHistory(newRecord) {
-  const historyPath = path.join(__dirname, "user-history.json");
+  const historyPath = path.join(__dirname, 'user-history.json');
   const history = await readJsonFile(historyPath);
 
   const existingIndex = history.findIndex(
@@ -163,7 +168,7 @@ async function appendToHistory(newRecord) {
   }
 
   await fs.writeFile(historyPath, JSON.stringify(history, null, 2));
-  console.log("Appended/updated user-history.json");
+  console.log('Appended/updated user-history.json');
 }
 
 // Export app and helpers for testing
