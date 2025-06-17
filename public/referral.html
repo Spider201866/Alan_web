@@ -18,20 +18,41 @@
     body {
       font-family: Calibri, Arial, sans-serif;
       margin: 0;
-      padding: 20px 10px;
+      padding: 0;
       background: #f9f9f9;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       min-height: 100vh;
     }
 
-    .main-title {
-      font-size: 24px;
+    #appBar {
+      display: flex;
+      align-items: center;
+      background-color: black;
+      color: white;
+      padding: 10px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    #backArrow {
+      background: none; border: none; font-family: inherit;
+      color: white;
+      font-size: 32px;
       font-weight: bold;
-      color: #333;
-      margin-bottom: 20px;
+      cursor: pointer;
+      padding-right: 20px;
+      line-height: 1;
+    }
+    #pageTitle {
       text-align: center;
+      margin: 0 auto;
+      font-size: 20px;
+    }
+
+    .content-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 10px;
     }
 
     .card {
@@ -43,7 +64,7 @@
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       padding: 20px;
       box-sizing: border-box;
-      margin-bottom: 20px;
+      margin-bottom: 20px; /* Space between card and preview section title */
     }
 
     .top-input-line {
@@ -53,7 +74,14 @@
       align-items: flex-start;
     }
     .top-input-group { display: flex; flex-direction: column; flex-shrink: 1; flex-basis: 0; }
-    .top-input-group label { font-size: 11px; color: #555; margin-bottom: 2px; display: block; white-space: nowrap; }
+    .top-input-group label {
+        font-size: 11px;
+        color: #444;
+        margin-bottom: 2px;
+        display: block;
+        white-space: nowrap;
+        font-weight: bold;
+    }
     .top-input-group input[type="text"],
     .top-input-group input[type="tel"],
     .top-input-group select {
@@ -86,6 +114,18 @@
 
     textarea#ref-dx { height: 110px; resize: vertical; }
 
+    /* New style for the heading above the preview box */
+    .preview-section-title {
+        font-size: 16px; /* Slightly smaller than main title */
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px; /* Space before the preview box */
+        width: 380px; /* Match card width for alignment */
+        max-width: 100%;
+        text-align: left; /* Or center if preferred */
+        box-sizing: border-box;
+    }
+
     .text-preview-container {
       width: 380px;
       max-width: 100%;
@@ -95,8 +135,8 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       padding: 15px;
+      /* .text-preview-title styles removed from here */
     }
-    .text-preview-title { font-size: 14px; font-weight: bold; color: #555; margin-bottom: 8px; }
     .text-preview-content {
       font-family: Consolas, "Courier New", monospace;
       font-size: 13px;
@@ -129,124 +169,150 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-  <h1 class="main-title">Referral</h1>
-
-  <div class="card">
-    <div class="top-input-line">
-      <div class="top-input-group id-group"> <label for="ref-id">ID</label> <input id="ref-id" type="text" placeholder="Enter ID" /> </div>
-      <div class="top-input-group tel-group"> <label for="ref-tel">Telephone</label> <input id="ref-tel" type="tel" placeholder="Enter Tel" /> </div>
-      <div class="top-input-group age-group"> <label for="ref-age">Age</label> <input id="ref-age" type="text" placeholder="Yrs" /> </div>
-      <div class="top-input-group sex-group">
-        <label for="ref-sex">M/F</label>
-        <select id="ref-sex">
-          <option value="" disabled selected hidden></option> <!-- "Select" text removed -->
-          <option value="M">M</option>
-          <option value="F">F</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="switch-wrap">
-      <label class="switch"> <input id="screen-switch" type="checkbox" /> <span class="slider"></span> </label>
-      <span id="screen-label">Screening: no problems</span>
-    </div>
-
-    <label for="ref-priority">Referral priority</label>
-    <select id="ref-priority">
-      <option value="" disabled selected hidden></option>
-      <option value="Managed">Managed – no referral</option>
-      <option value="Routine">Routine (weeks)</option>
-      <option value="Soon">Soon (days)</option>
-      <option value="Emergency">Emergency (today)</option>
-    </select>
-
-    <label for="ref-dx">Provisional diagnosis (free text)</label>
-    <textarea id="ref-dx" placeholder="Sub-conjunctival haemorrhage likely – sudden, bright-red patch, no pain or vision change. David Jones (Hightown clinic)"></textarea>
+  <div id="appBar">
+    <button id="backArrow" aria-label="Go Back">←</button>
+    <h1 id="pageTitle">Referral</h1>
   </div>
 
-  <div class="text-preview-container">
-    <div class="text-preview-title">Live Text Preview:</div>
-    <div id="textPreviewContent" class="text-preview-content"></div>
-    <i class="fas fa-copy copy-btn-preview" id="copyPreviewText" title="Copy preview format"></i>
+  <div class="content-container">
+    <div class="card">
+      <div class="top-input-line">
+        <div class="top-input-group id-group"> <label for="ref-id">ID</label> <input id="ref-id" type="text" /> </div>
+        <div class="top-input-group tel-group"> <label for="ref-tel">Telephone</label> <input id="ref-tel" type="tel" /> </div>
+        <div class="top-input-group age-group"> <label for="ref-age">Age</label> <input id="ref-age" type="text" /> </div>
+        <div class="top-input-group sex-group">
+          <label for="ref-sex">M/F</label>
+          <select id="ref-sex">
+            <option value="" disabled selected hidden></option>
+            <option value="M">M</option>
+            <option value="F">F</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="switch-wrap">
+        <label class="switch"> <input id="screen-switch" type="checkbox" /> <span class="slider"></span> </label>
+        <span id="screen-label">Screening: No problems</span>
+      </div>
+
+      <label for="ref-priority">Priority</label>
+      <select id="ref-priority">
+        <option value="" disabled selected hidden></option>
+        <option value="Managed">Managed – notification only</option>
+        <option value="Routine">Routine (weeks)</option>
+        <option value="Soon">Soon/When possible (days)</option>
+        <option value="Emergency">Emergency/Urgent (today)</option>
+      </select>
+
+      <label for="ref-dx">Provisional diagnosis (free text)</label>
+      <textarea id="ref-dx" placeholder="eg Sub-conjunctival haemorrhage – sudden, bright-red patch, no pain or vision change. {problem & onset; what you saw; vision & pupils/hearing/odour; medication} David Jones (Hightown clinic)"></textarea>
+    </div>
+
+    <!-- New Title for the Preview Section -->
+    <h3 class="preview-section-title">Text Preview:</h3>
+    <div class="text-preview-container">
+      <!-- Old title div removed from here -->
+      <div id="textPreviewContent" class="text-preview-content"></div>
+      <i class="fas fa-copy copy-btn-preview" id="copyPreviewText" title="Copy preview format"></i>
+    </div>
   </div>
 
   <script>
-    const refIdInput = document.getElementById('ref-id');
-    const refTelInput = document.getElementById('ref-tel');
-    const refAgeInput = document.getElementById('ref-age');
-    const refSexSelect = document.getElementById('ref-sex');
-    const screenSwitch = document.getElementById('screen-switch');
-    const screenLabel = document.getElementById('screen-label');
-    const refPrioritySelect = document.getElementById('ref-priority');
-    const refDxTextarea = document.getElementById('ref-dx');
-    const textPreviewContentEl = document.getElementById('textPreviewContent');
-    const copyPreviewTextBtn = document.getElementById('copyPreviewText');
-
-    function updateReferralPriorityColor() {
-      const selectedValue = refPrioritySelect.value;
-      refPrioritySelect.classList.remove('priority-green', 'priority-orange', 'priority-red');
-      if (selectedValue === "Managed" || selectedValue === "Routine") refPrioritySelect.classList.add('priority-green');
-      else if (selectedValue === "Soon") refPrioritySelect.classList.add('priority-orange');
-      else if (selectedValue === "Emergency") refPrioritySelect.classList.add('priority-red');
-    }
-
-    function generateCompactReferralText() {
-      const idVal = refIdInput.value.trim() || 'N/A';
-      const telVal = refTelInput.value.trim() || 'N/A';
-      const ageVal = refAgeInput.value.trim() || 'N/A';
-      const sexVal = refSexSelect.value || '';
-      const screeningStatus = screenSwitch.checked ? 'Fail' : 'No Problems';
-      let priorityVal = 'N/A';
-      if (refPrioritySelect.value && refPrioritySelect.options[refPrioritySelect.selectedIndex]) {
-          priorityVal = refPrioritySelect.options[refPrioritySelect.selectedIndex].text.replace(/\s*\(.*?\)\s*/g, '').trim();
-      } else if (refPrioritySelect.value) { priorityVal = refPrioritySelect.value; }
-      const dxVal = refDxTextarea.value.trim() || 'N/A';
-      const line1 = `ID: ${idVal}; Tel: ${telVal}; Age: ${ageVal}${sexVal}`;
-      const line2 = `Screening: ${screeningStatus}; Priority: ${priorityVal}`;
-      return `${line1}\n${line2}\nDx: ${dxVal}`;
-    }
-
-    function updateTextPreview() {
-      const compactText = generateCompactReferralText();
-      textPreviewContentEl.textContent = compactText;
-    }
-
-    function showCopyFeedback(element, successMessage = 'Copied!', originalIconClass = 'fa-copy', successIconClass = 'fa-check') {
-        const originalColor = element.style.color;
-        element.classList.remove('fas', originalIconClass);
-        element.classList.add('fas', successIconClass);
-        element.style.color = 'var(--green-dark)';
-        setTimeout(() => {
-            element.classList.remove('fas', successIconClass);
-            element.classList.add('fas', originalIconClass);
-            element.style.color = originalColor || 'var(--primary)';
-        }, 1500);
-    }
-
-    screenSwitch.addEventListener('change', () => {
-      screenLabel.textContent = 'Screening: ' + (screenSwitch.checked ? 'fail' : 'no problems');
-      updateTextPreview();
+    document.addEventListener('DOMContentLoaded', function () {
+      const backArrowButton = document.getElementById('backArrow');
+      if (backArrowButton) {
+          backArrowButton.addEventListener('click', function() {
+            history.back();
+          });
+      }
+      initializeForm();
     });
 
-    refPrioritySelect.addEventListener('change', () => {
+    function initializeForm() {
+      const refIdInput = document.getElementById('ref-id');
+      const refTelInput = document.getElementById('ref-tel');
+      const refAgeInput = document.getElementById('ref-age');
+      const refSexSelect = document.getElementById('ref-sex');
+      const screenSwitch = document.getElementById('screen-switch');
+      const screenLabel = document.getElementById('screen-label');
+      const refPrioritySelect = document.getElementById('ref-priority');
+      const refDxTextarea = document.getElementById('ref-dx');
+      const textPreviewContentEl = document.getElementById('textPreviewContent');
+      const copyPreviewTextBtn = document.getElementById('copyPreviewText');
+
+      function updateReferralPriorityColor() {
+        const selectedValue = refPrioritySelect.value;
+        refPrioritySelect.classList.remove('priority-green', 'priority-orange', 'priority-red');
+        if (selectedValue === "Managed" || selectedValue === "Routine") refPrioritySelect.classList.add('priority-green');
+        else if (selectedValue === "Soon") refPrioritySelect.classList.add('priority-orange');
+        else if (selectedValue === "Emergency") refPrioritySelect.classList.add('priority-red');
+      }
+
+      function generateCompactReferralText() {
+        const idVal = refIdInput.value.trim() || 'N/A';
+        const telVal = refTelInput.value.trim() || 'N/A';
+        const ageVal = refAgeInput.value.trim() || 'N/A';
+        const sexVal = refSexSelect.value || '';
+        const screeningStatus = screenSwitch.checked ? 'Fail' : 'No Problems';
+        let priorityVal = 'N/A';
+        if (refPrioritySelect.value && refPrioritySelect.options[refPrioritySelect.selectedIndex]) {
+            priorityVal = refPrioritySelect.options[refPrioritySelect.selectedIndex].text.replace(/\s*\(.*?\)\s*/g, '').trim();
+        } else if (refPrioritySelect.value) { priorityVal = refPrioritySelect.value; }
+        const dxVal = refDxTextarea.value.trim() || 'N/A';
+        const line1 = `ID: ${idVal}; Tel: ${telVal}; Age: ${ageVal}${sexVal}`;
+        const line2 = `Screening: ${screeningStatus}; Priority: ${priorityVal}`;
+        return `${line1}\n${line2}\nDx: ${dxVal}`;
+      }
+
+      function updateTextPreview() {
+        const compactText = generateCompactReferralText();
+        if (textPreviewContentEl) {
+            textPreviewContentEl.textContent = compactText;
+        }
+      }
+
+      function showCopyFeedback(element, successMessage = 'Copied!', originalIconClass = 'fa-copy', successIconClass = 'fa-check') {
+          if (!element) return;
+          const originalColor = element.style.color;
+          element.classList.remove('fas', originalIconClass);
+          element.classList.add('fas', successIconClass);
+          element.style.color = 'var(--green-dark)';
+          setTimeout(() => {
+              element.classList.remove('fas', successIconClass);
+              element.classList.add('fas', originalIconClass);
+              element.style.color = originalColor || 'var(--primary)';
+          }, 1500);
+      }
+
+      if (screenSwitch) {
+        screenSwitch.addEventListener('change', () => {
+          screenLabel.textContent = 'Screening: ' + (screenSwitch.checked ? 'fail' : 'no problems');
+          updateTextPreview();
+        });
+      }
+      if (refPrioritySelect) {
+        refPrioritySelect.addEventListener('change', () => {
+          updateReferralPriorityColor();
+          updateTextPreview();
+        });
+      }
+      [refIdInput, refTelInput, refAgeInput, refDxTextarea].forEach(input => {
+        if (input) input.addEventListener('input', updateTextPreview);
+      });
+      if (refSexSelect) refSexSelect.addEventListener('change', updateTextPreview);
+      if (copyPreviewTextBtn) {
+        copyPreviewTextBtn.addEventListener('click', () => {
+          if (textPreviewContentEl) {
+            const compactTextToCopy = textPreviewContentEl.textContent;
+            navigator.clipboard.writeText(compactTextToCopy)
+              .then(() => showCopyFeedback(copyPreviewTextBtn, 'Copied!'))
+              .catch(() => alert('Preview text copy failed.'));
+          }
+        });
+      }
       updateReferralPriorityColor();
       updateTextPreview();
-    });
-
-    [refIdInput, refTelInput, refAgeInput, refDxTextarea].forEach(input => {
-      input.addEventListener('input', updateTextPreview);
-    });
-    refSexSelect.addEventListener('change', updateTextPreview);
-
-    copyPreviewTextBtn.addEventListener('click', () => {
-      const compactTextToCopy = textPreviewContentEl.textContent;
-      navigator.clipboard.writeText(compactTextToCopy)
-        .then(() => showCopyFeedback(copyPreviewTextBtn, 'Copied!'))
-        .catch(() => alert('Preview text copy failed.'));
-    });
-
-    updateReferralPriorityColor();
-    updateTextPreview();
+    }
   </script>
 </body>
 </html>
