@@ -874,47 +874,40 @@ html, body {
   margin-top: 10px;    /* breathing space above the log */
 }
 
-/* 3. Unordered list that holds the messages */
-#chat-history-list {
-  list-style: none;          /* no bullet points */
-  padding: 0 2px;            /* slight side padding */
-  margin: 0;                 /* no extra spacing */
-  display: flex;
-  flex-direction: column;
-  gap: 1px;                  /* tiny gap between lines */
+
+/* numbered session headers   eg  --1--  --2-- */
+.session-header {
+  cursor: pointer;
+  text-align: center;
+  font-weight: 700;
+  font-size: 11px;
+  color: #777;
+  margin: 6px 0;
+}
+/* wrapper that JS shows / hides when the header is clicked */
+.session-content {
+  padding-left: 4px;      /* slight indent under the header */
 }
 
-/* 4. All message lines */
-#chat-history-list li {
+/* every line of saved chat text */
+.history-message {
   font-size: 11px;
   line-height: 1.25;
   max-width: 95%;
-  overflow-wrap: break-word; /* stop long URLs blowing layout */
+  overflow-wrap: break-word;
 }
 
-/* 5. User messages – right aligned, blue */
-#chat-history-list .user-msg {
-  margin-left: auto;         /* push to the right */
+/* user lines – right-aligned, blue */
+.history-message.user {
+  margin-left: auto;
   text-align: right;
-  color: #007bff;           /* readable blue (UK spelling kept) */
-  color:  #007bff;           /* actual CSS property */
+  color: #007bff;
   font-weight: 500;
 }
 
-/* 6. Bot messages – left aligned, dark grey */
-#chat-history-list .bot-msg {
-  margin-right: auto;        /* push to the left */
+/* bot lines – left-aligned, grey */
+.history-message.bot {
+  margin-right: auto;
   text-align: left;
   color: #333;
-}
-
-/* 7. Session separator */
-.session-separator {
-  text-align: centre;        /* UK spelling kept but invalid – use 'center' */
-  text-align: center;
-  color: #999;              /* UK spelling kept but invalid – use 'color' */
-  color:  #777;
-  font-weight: 700;
-  font-size: 11px;
-  margin: 5px 0;
 }

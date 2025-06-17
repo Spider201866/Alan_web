@@ -96,21 +96,10 @@
         <button id="links-button" class="button grey" style="margin-right: 10px;" onclick="window.location.href='weblinks.html';">Links</button>
         <button id="about-button" class="button grey" onclick="location.href='aboutalan.html';">About</button>
       </div>
-      <div id="chat-history" class="chat-history">
-        <h3>Chat History</h3>
-        <ul id="chat-history-list"></ul>
-      </div>
-      <!-- In index.html, inside the <nav class="side-menu"> -->
 
-<!-- In index.html, inside the <nav class="side-menu"> -->
+<!-- Sidebar chat history (collapsible sessions) -->
+<div id="chatHistorySidebar" class="sidebar-history"></div>
 
-<div id="chat-history" class="chat-history">
-  <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 5px;">
-    <h3>Chat History</h3>
-    <button id="clear-history-btn" title="Clear All Chat History" style="background:none; border:none; font-size:16px; cursor:pointer; padding:0;">🗑️</button>
-  </div>
-  <ul id="chat-history-list"></ul>
-</div>
     </nav>
 
     <!-- MAIN CONTENT -->
@@ -274,16 +263,48 @@
         }
     }
 
-    function pushLocalStorageToServer() {
-      const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
-      const userInfo = {
-        sessionId, latitude: localStorage.getItem('latitude'), longitude: localStorage.getItem('longitude'), area: localStorage.getItem('area'), name: localStorage.getItem('name'), role: localStorage.getItem('selectedJobRole'), experience: localStorage.getItem('selectedExperience'), country: localStorage.getItem('country'), iso2: localStorage.getItem('iso2'), classification: localStorage.getItem('classification'), roleClassification: localStorage.getItem('roleClassification'), contactInfo: localStorage.getItem('contactInfo'), version: '1.0', dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
-      };
-      fetch('https://alan.up.railway.app/record-info', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(userInfo) })
-        .then(response => response.text())
-        .then(data => console.log('Server data pushed:', data))
-        .catch(err => console.error('Error pushing data:', err));
-    }
+function pushLocalStorageToServer() {
+  const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
+
+  /* core fields – always present */
+  const payload = {
+    sessionId,
+    name:               localStorage.getItem('name')                 || null,
+    role:               localStorage.getItem('selectedJobRole')      || null,
+    experience:         localStorage.getItem('selectedExperience')   || null,
+    country:            localStorage.getItem('country')              || null,
+    iso2:               localStorage.getItem('iso2')                 || null,
+    classification:     localStorage.getItem('classification')       || null,
+    roleClassification: localStorage.getItem('roleClassification')   || null,
+    contactInfo:        localStorage.getItem('contactInfo')          || null,
+    version: '1.0',
+    dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
+  };
+
+  /* optional geo fields – only add when valid */
+  const lat  = localStorage.getItem('latitude');
+  const lon  = localStorage.getItem('longitude');
+  const area = localStorage.getItem('area');
+
+  if (lat && !isNaN(lat))           payload.latitude  = +lat;   // number
+  if (lon && !isNaN(lon))           payload.longitude = +lon;   // number
+  if (area && area.trim() !== '')   payload.area      = area;   // string
+
+  /* nothing to send?  bail out rather than hit the API */
+  if (!payload.latitude && !payload.longitude && !payload.area) {
+    console.log('[Info] No geo data yet – skipping server push');
+    return;
+  }
+
+  fetch('https://alan.up.railway.app/record-info', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify(payload)
+  })
+    .then(res => res.ok ? res.text() : res.text().then(t => { throw t; }))
+    .then(data => console.log('Server data pushed:', data))
+    .catch(err  => console.error('Error pushing data:', err));
+}
 
     // UI Setup Functions
     function setupMenuIcon() {
