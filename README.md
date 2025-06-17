@@ -41,3 +41,36 @@ Returns the single record from `user-info.json`. The request must include a vali
 ### POST /fetch-history
 
 Returns the full contents of `user-history.json` after validating the supplied password. Useful for viewing the complete log of sessions.
+
+## Public Directory Structure
+
+The `public/` directory contains the following files and folders:
+
+```
+aboutalan.html
+agent1-chatbot-module.js
+atoms.html
+boxes.html
+closer.js
+ear.html
+eye.html
+faviconAndMeta.js
+home.html
+index.html
+instructions.html
+language.js
+listener-module.js
+muted.html
+muted.js
+referral.html
+skin.html
+styles_index.css
+styles.css
+triangle.html
+view-records.html
+weblinks.html
+favicons/
+images/
+```
+
+_Last updated: 2025-06-17 (referral.html added to reflect new content)._

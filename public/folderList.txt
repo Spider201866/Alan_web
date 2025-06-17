@@ -13,6 +13,7 @@ language.js
 listener-module.js
 muted.html
 muted.js
+referral.html
 skin.html
 styles_index.css
 styles.css

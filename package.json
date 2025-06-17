@@ -2,7 +2,8 @@
   "name": "your-project-name",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server.js"
+"start": "node server.js",
+"test": "jest --verbose"
   },
   "dependencies": {
     "@upstash/redis": "^1.31.1",
@@ -16,6 +17,7 @@
   "license": "MIT",
   "main": "server.js",
   "devDependencies": {
+    "jest": "^30.0.0",
     "jsdom": "^26.1.0",
     "prettier": "^3.4.2",
     "supertest": "^7.1.1"

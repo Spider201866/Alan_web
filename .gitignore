@@ -1,0 +1,25 @@
+# Dependency directories
+node_modules/
+vscode-alanui-launcher/node_modules/
+
+# Build output
+out/
+dist/
+*.log
+
+# VSCode settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Compiled files
+*.tsbuildinfo
+
+# Package lock files (optional, if you want to ignore them)
+# package-lock.json
+# yarn.lock
+
+# Ignore VSIX packages
+*.vsix

@@ -1,0 +1,38 @@
+{
+  "name": "alanui-launcher",
+  "displayName": "Launch Alan on Local 3000",
+  "description": "Adds a status bar button to run 'npm start' and open Alan on http://localhost:3000 in your browser.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.50.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "alanui-launcher.startAndOpen",
+        "title": "Launch Alan on Local 3000"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.6",
+    "@types/vscode": "^1.50.0",
+    "typescript": "^4.0.3",
+    "vscode": "^1.1.37",
+    "vscode-test": "^1.4.0"
+  }
+}
