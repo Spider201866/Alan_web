@@ -8,6 +8,7 @@
     :root {
       --border-colour: #d0d0d0;
       --primary: #0064d2;
+      --primary-light: #e7f0fa;
       --green-light: #C8E6C9;
       --green-dark: #2E7D32;
       --orange-light: #FFECB3;
@@ -23,80 +24,43 @@
       min-height: 100vh;
     }
 
-    #appBar {
-      display: flex;
-      align-items: center;
-      background-color: black;
-      color: white;
-      padding: 10px 20px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    #backArrow {
-      background: none; border: none; font-family: inherit;
-      color: white;
-      font-size: 32px;
-      font-weight: bold;
-      cursor: pointer;
-      padding-right: 20px;
-      line-height: 1;
-    }
-    #pageTitle {
-      text-align: center;
-      margin: 0 auto;
-      font-size: 20px;
-    }
-
-    .content-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px 10px;
-    }
-
-    .card {
-      background: #ffffff;
-      border: 1px solid var(--border-colour);
-      border-radius: 12px;
-      width: 380px;
-      max-width: 100%;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      box-sizing: border-box;
-      margin-bottom: 20px; /* Space between card and preview section title */
-    }
-
-    .top-input-line {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 18px;
-      align-items: flex-start;
-    }
-    .top-input-group { display: flex; flex-direction: column; flex-shrink: 1; flex-basis: 0; }
-    .top-input-group label {
-        font-size: 11px;
-        color: #444;
-        margin-bottom: 2px;
-        display: block;
-        white-space: nowrap;
-        font-weight: bold;
-    }
+    #appBar { /* ... existing styles ... */ }
+    #backArrow { /* ... existing styles ... */ }
+    #pageTitle { /* ... existing styles ... */ }
+    .content-container { /* ... existing styles ... */ }
+    .card { /* ... existing styles ... */ }
+    .top-input-line { /* ... existing styles ... */ }
+    .top-input-group { /* ... existing styles ... */ }
+    .top-input-group label { /* ... existing styles ... */ }
     .top-input-group input[type="text"],
     .top-input-group input[type="tel"],
-    .top-input-group select {
-        width: 100%; padding: 5px 6px; font-size: 13px; border: 1px solid #e0e0e0;
-        border-radius: 4px; box-sizing: border-box; background-color: #fdfdfd; line-height: 1.4;
-    }
+    .top-input-group select { /* ... existing styles ... */ }
+    .top-input-group.id-group { /* ... existing styles ... */ }
+    .top-input-group.tel-group { /* ... existing styles ... */ }
+    .top-input-group.age-group { /* ... existing styles ... */ }
+    .top-input-group.sex-group { /* ... existing styles ... */ }
+    /* (Keep all existing styles from the previous version for brevity) */
+    #appBar { display: flex; align-items: center; background-color: black; color: white; padding: 10px 20px; position: sticky; top: 0; z-index: 100; }
+    #backArrow { background: none; border: none; font-family: inherit; color: white; font-size: 32px; font-weight: bold; cursor: pointer; padding-right: 20px; line-height: 1; }
+    #pageTitle { text-align: center; margin: 0 auto; font-size: 20px; }
+    .content-container { display: flex; flex-direction: column; align-items: center; padding: 20px 10px; }
+    .card { background: #ffffff; border: 1px solid var(--border-colour); border-radius: 12px; width: 380px; max-width: 100%; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); padding: 20px; box-sizing: border-box; margin-bottom: 20px; }
+    .top-input-line { display: flex; gap: 8px; margin-bottom: 18px; align-items: flex-start; }
+    .top-input-group { display: flex; flex-direction: column; flex-shrink: 1; flex-basis: 0; }
+    .top-input-group label { font-size: 11px; color: #444; margin-bottom: 2px; display: block; white-space: nowrap; font-weight: bold; }
+    .top-input-group input[type="text"], .top-input-group input[type="tel"], .top-input-group select { width: 100%; padding: 5px 6px; font-size: 13px; border: 1px solid #e0e0e0; border-radius: 4px; box-sizing: border-box; background-color: #fdfdfd; line-height: 1.4; }
     .top-input-group.id-group { flex-grow: 2; min-width: 50px; }
     .top-input-group.tel-group { flex-grow: 2.5; min-width: 70px; }
     .top-input-group.age-group { flex-grow: 1; min-width: 45px; }
     .top-input-group.sex-group { flex-grow: 1.2; min-width: 55px; }
 
 
-    label:not(.switch):not(.top-input-group label) { font-size: 13px; display: block; margin-bottom: 4px; margin-top: 12px; }
+    label:not(.switch):not(.top-input-group label):not(.dx-label) { /* Exclude new dx-label */
+        font-size: 13px; display: block; margin-bottom: 4px; margin-top: 12px;
+    }
     .top-input-line + .switch-wrap,
-    .top-input-line + label:not(.switch):not(.top-input-group label) { margin-top: 0; }
+    .top-input-line + .dx-label-wrapper, /* Target new wrapper */
+    .top-input-line + label:not(.switch):not(.top-input-group label):not(.dx-label) { margin-top: 0; }
 
     input[type="text"]:not(.top-input-group input),
     input[type="tel"]:not(.top-input-group input),
@@ -112,55 +76,40 @@
     input#screen-switch:checked + .slider { background-color: var(--red-light); }
     input#screen-switch:checked + .slider:before { transform: translateX(22px); }
 
+    /* Styles for Diagnosis Label and Example Button */
+    .dx-label-wrapper {
+        display: flex;
+        justify-content: space-between; /* Pushes label and button to opposite ends */
+        align-items: center; /* Vertically aligns them */
+        margin-bottom: 4px; /* Space before textarea */
+        margin-top: 12px; /* Space above this section */
+    }
+    .dx-label { /* Style for the actual label text */
+        font-size: 13px;
+        margin-bottom: 0; /* Remove default label margin */
+    }
+    .btn-example {
+        font-size: 11px;
+        padding: 2px 6px;
+        background-color: var(--primary-light);
+        color: var(--primary);
+        border: 1px solid var(--primary);
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .btn-example:hover {
+        background-color: #d1e3f8;
+    }
+
+
     textarea#ref-dx { height: 110px; resize: vertical; }
 
-    /* New style for the heading above the preview box */
-    .preview-section-title {
-        font-size: 16px; /* Slightly smaller than main title */
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 10px; /* Space before the preview box */
-        width: 380px; /* Match card width for alignment */
-        max-width: 100%;
-        text-align: left; /* Or center if preferred */
-        box-sizing: border-box;
-    }
-
-    .text-preview-container {
-      width: 380px;
-      max-width: 100%;
-      box-sizing: border-box;
-      position: relative;
-      background-color: #f0f0f0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 15px;
-      /* .text-preview-title styles removed from here */
-    }
-    .text-preview-content {
-      font-family: Consolas, "Courier New", monospace;
-      font-size: 13px;
-      white-space: pre-wrap;
-      word-break: break-word;
-      line-height: 1.5;
-      color: #333;
-      min-height: 70px;
-      padding-bottom: 30px;
-    }
-
-    .copy-btn-preview {
-      position: absolute;
-      right: 15px;
-      bottom: 12px;
-      font-size: 20px;
-      color: var(--primary);
-      cursor: pointer;
-      opacity: .75;
-      transition: opacity .2s, color .2s;
-      z-index: 10;
-    }
+    .preview-section-title { font-size: 16px; font-weight: bold; color: #333; margin-bottom: 10px; width: 380px; max-width: 100%; text-align: left; box-sizing: border-box; }
+    .text-preview-container { width: 380px; max-width: 100%; box-sizing: border-box; position: relative; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 8px; padding: 15px; }
+    .text-preview-content { font-family: Consolas, "Courier New", monospace; font-size: 13px; white-space: pre-wrap; word-break: break-word; line-height: 1.5; color: #333; min-height: 3em; padding-bottom: 30px; }
+    .copy-btn-preview { position: absolute; right: 15px; bottom: 12px; font-size: 20px; color: var(--primary); cursor: pointer; opacity: .75; transition: opacity .2s, color .2s; z-index: 10; }
     .copy-btn-preview:hover { opacity: 1; }
-
     select#ref-priority.priority-green { background-color: var(--green-light) !important; color: var(--green-dark) !important; border-color: var(--green-dark) !important; }
     select#ref-priority.priority-orange { background-color: var(--orange-light) !important; color: var(--orange-dark) !important; border-color: var(--orange-dark) !important; }
     select#ref-priority.priority-red { background-color: var(--red-light) !important; color: var(--red-dark) !important; border-color: var(--red-dark) !important; }
@@ -204,14 +153,15 @@
         <option value="Emergency">Emergency/Urgent (today)</option>
       </select>
 
-      <label for="ref-dx">Provisional diagnosis (free text)</label>
+      <div class="dx-label-wrapper">
+        <label for="ref-dx" class="dx-label">Provisional diagnosis (free text)</label>
+        <button id="btnLoadExample" class="btn-example">Example</button>
+      </div>
       <textarea id="ref-dx" placeholder="eg Sub-conjunctival haemorrhage – sudden, bright-red patch, no pain or vision change. {problem & onset; what you saw; vision & pupils/hearing/odour; medication} David Jones (Hightown clinic)"></textarea>
     </div>
 
-    <!-- New Title for the Preview Section -->
     <h3 class="preview-section-title">Text Preview:</h3>
     <div class="text-preview-container">
-      <!-- Old title div removed from here -->
       <div id="textPreviewContent" class="text-preview-content"></div>
       <i class="fas fa-copy copy-btn-preview" id="copyPreviewText" title="Copy preview format"></i>
     </div>
@@ -221,9 +171,7 @@
     document.addEventListener('DOMContentLoaded', function () {
       const backArrowButton = document.getElementById('backArrow');
       if (backArrowButton) {
-          backArrowButton.addEventListener('click', function() {
-            history.back();
-          });
+          backArrowButton.addEventListener('click', function() { history.back(); });
       }
       initializeForm();
     });
@@ -239,6 +187,7 @@
       const refDxTextarea = document.getElementById('ref-dx');
       const textPreviewContentEl = document.getElementById('textPreviewContent');
       const copyPreviewTextBtn = document.getElementById('copyPreviewText');
+      const btnLoadExample = document.getElementById('btnLoadExample'); // New button
 
       function updateReferralPriorityColor() {
         const selectedValue = refPrioritySelect.value;
@@ -259,16 +208,15 @@
             priorityVal = refPrioritySelect.options[refPrioritySelect.selectedIndex].text.replace(/\s*\(.*?\)\s*/g, '').trim();
         } else if (refPrioritySelect.value) { priorityVal = refPrioritySelect.value; }
         const dxVal = refDxTextarea.value.trim() || 'N/A';
-        const line1 = `ID: ${idVal}; Tel: ${telVal}; Age: ${ageVal}${sexVal}`;
-        const line2 = `Screening: ${screeningStatus}; Priority: ${priorityVal}`;
-        return `${line1}\n${line2}\nDx: ${dxVal}`;
+        const part1 = `ID: ${idVal}; Tel: ${telVal}; Age: ${ageVal}${sexVal}`;
+        const part2 = `Screening: ${screeningStatus}; Priority: ${priorityVal}`;
+        const part3 = `Dx: ${dxVal}`;
+        return `${part1}; ${part2}; ${part3}`;
       }
 
       function updateTextPreview() {
         const compactText = generateCompactReferralText();
-        if (textPreviewContentEl) {
-            textPreviewContentEl.textContent = compactText;
-        }
+        if (textPreviewContentEl) textPreviewContentEl.textContent = compactText;
       }
 
       function showCopyFeedback(element, successMessage = 'Copied!', originalIconClass = 'fa-copy', successIconClass = 'fa-check') {
@@ -284,9 +232,32 @@
           }, 1500);
       }
 
+      function updateScreeningLabel() {
+          if (screenLabel) { // Check if screenLabel exists
+            screenLabel.textContent = 'Screening: ' + (screenSwitch.checked ? 'Fail' : 'No Problems');
+          }
+      }
+
+      // Load Example Data Function
+      function loadExampleData() {
+        refIdInput.value = "2772";
+        refTelInput.value = "07445 667 2111";
+        refAgeInput.value = "67";
+        refSexSelect.value = "F";
+        screenSwitch.checked = true; // For "Fail"
+        refPrioritySelect.value = "Routine"; // Matches the value attribute of the option
+        refDxTextarea.value = "Cataract\nReflex is dark; Vision hazy for years - 6/18 R+L, N12; Pupils black and react; No meds\n\nDavid Jones (The Clinic)";
+
+        // Trigger updates
+        updateScreeningLabel();
+        updateReferralPriorityColor();
+        updateTextPreview();
+      }
+
+
       if (screenSwitch) {
         screenSwitch.addEventListener('change', () => {
-          screenLabel.textContent = 'Screening: ' + (screenSwitch.checked ? 'fail' : 'no problems');
+          updateScreeningLabel();
           updateTextPreview();
         });
       }
@@ -300,6 +271,7 @@
         if (input) input.addEventListener('input', updateTextPreview);
       });
       if (refSexSelect) refSexSelect.addEventListener('change', updateTextPreview);
+
       if (copyPreviewTextBtn) {
         copyPreviewTextBtn.addEventListener('click', () => {
           if (textPreviewContentEl) {
@@ -310,6 +282,13 @@
           }
         });
       }
+
+      if (btnLoadExample) { // Add listener for the new button
+        btnLoadExample.addEventListener('click', loadExampleData);
+      }
+
+      // Initial calls
+      updateScreeningLabel(); // Ensure label is correct on load
       updateReferralPriorityColor();
       updateTextPreview();
     }
