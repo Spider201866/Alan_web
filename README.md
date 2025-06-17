@@ -17,6 +17,17 @@ npm install
 
 If your environment restricts network access the install may fail, in which case ensure all packages are available locally.
 
+## Environment Variables
+
+Create a `.env` file or set the following variables before starting the server:
+
+```
+MASTER_PASSWORD_HASH=<sha256 hash of your master password>
+ONE_TIME_PASSWORD_HASHES=<comma-separated sha256 hashes of one-time passwords>
+```
+
+An example file is provided at `.env.example`.
+
 ## Running the server
 
 Start the Express application with:

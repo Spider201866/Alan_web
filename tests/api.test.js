@@ -16,6 +16,7 @@ describe('API Endpoints', () => {
   // Use a temp directory for test data
   let tempDir;
   let originalJoin;
+  let otp;
 
   beforeAll(async () => {
     // Set up a valid password hash before requiring the app
@@ -23,6 +24,10 @@ describe('API Endpoints', () => {
     const password = 'testpass';
     const hash = crypto.createHash('sha256').update(password).digest('hex');
     process.env.MASTER_PASSWORD_HASH = hash;
+
+    otp = 'onetimer';
+    const otpHash = crypto.createHash('sha256').update(otp).digest('hex');
+    process.env.ONE_TIME_PASSWORD_HASHES = otpHash;
 
     tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-test-'));
     // Patch path.join in server.js to redirect data files to tempDir
@@ -51,7 +56,7 @@ describe('API Endpoints', () => {
         latitude: 1.23,
         longitude: 4.56,
         dateTime: '2025-06-16T20:00:00Z',
-        area: 'Test Area'
+        area: 'Test Area',
       };
       const res = await request(app)
         .post('/record-info')
@@ -85,11 +90,18 @@ describe('API Endpoints', () => {
       // Use the password set in beforeAll
       const password = 'testpass';
       // Write test user-info.json
-      const testRecord = { sessionId: 'abc', latitude: 1, longitude: 2, dateTime: 'now', area: 'Test' };
-      await fs.writeFile(path.join(tempDir, 'user-info.json'), JSON.stringify([testRecord], null, 2));
-      const res = await request(app)
-        .post('/fetch-records')
-        .send({ password });
+      const testRecord = {
+        sessionId: 'abc',
+        latitude: 1,
+        longitude: 2,
+        dateTime: 'now',
+        area: 'Test',
+      };
+      await fs.writeFile(
+        path.join(tempDir, 'user-info.json'),
+        JSON.stringify([testRecord], null, 2),
+      );
+      const res = await request(app).post('/fetch-records').send({ password });
       expect(res.statusCode).toBe(200);
       expect(res.body).toEqual([testRecord]);
     });
@@ -102,7 +114,17 @@ describe('API Endpoints', () => {
         .send({ password: 'wrong' });
       expect(res.statusCode).toBe(401);
     });
-    // Add more tests as above
+    it('should accept a one-time password only once', async () => {
+      const res1 = await request(app)
+        .post('/fetch-history')
+        .send({ password: otp });
+      expect(res1.statusCode).toBe(200);
+
+      const res2 = await request(app)
+        .post('/fetch-history')
+        .send({ password: otp });
+      expect(res2.statusCode).toBe(401);
+    });
   });
 });
 
@@ -121,12 +143,19 @@ describe('Helper Functions', () => {
       latitude: 0,
       longitude: 0,
       dateTime: '2025-06-16T21:00:00Z',
-      area: 'Test Area'
+      area: 'Test Area',
     };
     await expect(appendToHistory(record)).resolves.not.toThrow();
     // Restore original writeFile
     require('fs').promises.writeFile = originalWriteFile;
   });
+
+  it('readJsonFile returns [] for corrupted JSON', async () => {
+    const badPath = path.join(tempDir, 'bad.json');
+    await fs.writeFile(badPath, '{ not-json }');
+    const data = await readJsonFile(badPath);
+    expect(data).toEqual([]);
+  });
 });
 
-// TODO: Add tests for one-time password logic, file corruption, and edge cases.
+// Additional edge cases covered: one-time password consumption and corrupt JSON files.
