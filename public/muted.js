@@ -15,7 +15,6 @@ function initMutedButtons() {
       window.location.href = 'referral.html';
     };
     referButton.addEventListener('click', goToReferral);
-    referButton.addEventListener('touchstart', goToReferral);
   }
 
   // SCREENSHOT
