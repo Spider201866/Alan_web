@@ -270,19 +270,19 @@ describe('Alan Webapp UI/UX', () => {
       <button id="about-button" class="button">About</button>
       <button id="arclight-project-button" class="button">Arclight Project</button>
       <button id="language-button" class="button">Language</button>
-      <button id="back-arrow" class="button">Back</button>
+      <button class="back-arrow button">Back</button>
     `;
     document.body.appendChild(sideMenu);
     // Check all buttons exist
     [
       'instructions-button', 'eye-button', 'ear-button', 'skin-button',
       'videos-button', 'atoms-button', 'tools-button', 'links-button',
-      'about-button', 'arclight-project-button', 'language-button', 'back-arrow'
+      'about-button', 'arclight-project-button', 'language-button'
     ].forEach(id => {
       expect(document.getElementById(id)).not.toBeNull();
     });
     // Simulate back arrow click (page navigation)
-    const backArrow = document.getElementById('back-arrow');
+    const backArrow = document.querySelector('.back-arrow');
     let navigated = false;
     backArrow.onclick = () => { navigated = true; };
     backArrow.click();
