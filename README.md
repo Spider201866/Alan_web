@@ -1,47 +1,131 @@
-# Alan Web Server
+# AlanUI Secure Record Server
 
-This project provides a simple Express server with endpoints for recording and retrieving user information.
+A secure, local-first backend and static frontend for collecting, storing, and retrieving sensitive user records. Designed for medical, research, or privacy-focused applications, AlanUI ensures robust authentication, data validation, and user privacy without external databases or user accounts.
+
+---
+
+## Table of Contents
+
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Security & Authentication](#security--authentication)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Environment Setup](#environment-setup)
+- [Running the Server](#running-the-server)
+- [API Endpoints](#api-endpoints)
+- [Project Structure](#project-structure)
+- [Public Directory Contents](#public-directory-contents)
+- [Development & Testing](#development--testing)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Project Overview
+
+AlanUI Secure Record Server provides a secure backend for collecting, storing, and retrieving user records, with robust authentication and data validation. It is designed to protect user privacy and data integrity, supporting both admin and user flows with appropriate access controls.
+
+## Features
+
+- Accepts user record submissions via HTTP endpoints or frontend UI
+- Stores the most recent record and maintains a full history
+- Authenticates sensitive endpoints using a master password or one-time passwords (OTPs)
+- Securely stores authentication credentials (SHA-256 hashes only)
+- Validates all incoming record data for correct types and structure
+- Serves static frontend files for user interaction and record viewing
+- Simple, local deployment—no external database or user account management
+
+## Security & Authentication
+
+- **All authentication is server-side**: No sensitive data is exposed to the frontend.
+- **Passwords are never stored or transmitted in plain text**: Only SHA-256 hashes are used, stored in the `.env` file.
+- **Sensitive endpoints require authentication**: Access to records/history is protected by a master password or OTP, both verified via hash comparison.
+- **No user registration or account management**: All access is controlled via environment variables.
 
 ## Prerequisites
 
 - Node.js >=16 (tested with v22.16.0)
-- npm to install packages
+- npm
 
 ## Installation
 
-Run `npm install` to install the Node dependencies. This downloads Express, body-parser, and other packages from package.json.
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-If your environment restricts network access the install may fail, in which case ensure all packages are available locally.
+## Environment Setup
 
-## Running the server
+Create a `.env` file in the project root with the following variables:
 
-Start the Express application with:
+```
+MASTER_PASSWORD_HASH=your_sha256_hash
+OTP_HASHES=comma,separated,sha256,hashes
+```
+
+- **MASTER_PASSWORD_HASH**: SHA-256 hash of your chosen master password.
+- **OTP_HASHES**: Comma-separated list of SHA-256 hashes for one-time passwords (optional, for temporary access).
+
+**Note:** Never store or transmit plain-text passwords. Use a tool like `echo -n "yourpassword" | sha256sum` to generate hashes.
+
+## Running the Server
+
+Start the server:
 
 ```bash
 npm start
 ```
 
-This runs `node server.js` and serves the site at [http://localhost:3000/](http://localhost:3000/).
+The server will be available at [http://localhost:3000/](http://localhost:3000/).
 
-## Endpoints
+## API Endpoints
 
-### POST /record-info
+### `POST /record-info`
 
-Stores a single "active" record in `user-info.json` and appends or updates the entry in `user-history.json`.
+- **Description:** Submit a new user record.
+- **Request Body:** JSON object with required fields (validated for type/structure).
+- **Authentication:** Not required.
+- **Effect:** Stores the record in `user-info.json` and appends to `user-history.json`.
 
-### POST /fetch-records
+### `POST /fetch-records`
 
-Returns the single record from `user-info.json`. The request must include a valid password. One-time passwords are consumed on use.
+- **Description:** Retrieve the most recent user record.
+- **Request Body:** `{ "password": "your_password" }`
+- **Authentication:** Required (master password or valid OTP).
+- **Effect:** Returns the contents of `user-info.json`. OTPs are consumed on use.
 
-### POST /fetch-history
+### `POST /fetch-history`
 
-Returns the full contents of `user-history.json` after validating the supplied password. Useful for viewing the complete log of sessions.
+- **Description:** Retrieve the full record history.
+- **Request Body:** `{ "password": "your_password" }`
+- **Authentication:** Required (master password or valid OTP).
+- **Effect:** Returns the contents of `user-history.json`.
 
-## Public Directory Structure
+#### Example Request
+
+```bash
+curl -X POST http://localhost:3000/fetch-records \
+  -H "Content-Type: application/json" \
+  -d '{"password":"your_password"}'
+```
+
+## Project Structure
+
+```
+AlanUI/
+├── public/                # Static frontend files (HTML, JS, CSS, images)
+├── server.js              # Main Express server
+├── user-info.json         # Stores the most recent record
+├── user-history.json      # Stores the full record history
+├── .env                   # Environment variables (hashed credentials)
+├── package.json           # Project metadata and scripts
+├── README.md              # Project documentation
+└── memory-bank/           # Project context and documentation
+```
+
+## Public Directory Contents
 
 The `public/` directory contains the following files and folders:
 
@@ -69,7 +153,49 @@ triangle.html
 view-records.html
 weblinks.html
 favicons/
+    android-chrome-192x192.png
+    android-chrome-512x512.png
+    apple-icon-60x60.png
+    apple-touch-icon.png
+    favicon-16x16.png
+    favicon-32x32.png
+    manifest.json
 images/
+    allergic_conjunctivitis.jpg
+    AP.png
+    atomsblue.jpg
+    bigredt.png
+    eyeor.gif
+    howtouseeye.png
+    iritis.jpg
+    lang.jpg
+    Q.png
+    triangle.png
 ```
 
-_Last updated: 2025-06-17 (referral.html added to reflect new content)._
+## Development & Testing
+
+- All server logic is in `server.js`.
+- Data is stored locally in JSON files; no external database required.
+- To run tests (if available):
+
+```bash
+npm test
+```
+
+- See `tests/` for example test files.
+
+## Contributing
+
+1. Fork the repository and create a new branch.
+2. Make your changes, following the existing code patterns and style.
+3. Add or update tests as needed.
+4. Submit a pull request with a clear description of your changes.
+
+## License
+
+This project is provided for educational and research purposes. See LICENSE file if present.
+
+---
+
+_Last updated: 2025-06-18_

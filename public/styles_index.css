@@ -18,7 +18,121 @@ html {
 }
 
 /* ==============================
-   BLACK SCREEN OVERLAY 
+   HIDE / SHOW SCREEN UTILITIES
+============================== */
+
+/* For hiding and showing screens */
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    visibility 0s 0.5s,
+    opacity 0.5s linear;
+}
+.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s linear;
+}
+
+/* ==============================
+   CONTAINER SCREENS
+============================== */
+
+/* Common container for splash and instruction screens */
+.splash-screen,
+.instruction-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* ==============================
+   SPLASH SCREEN & ANIMATIONS
+============================== */
+
+/* Smooth transition for images and text */
+.splash-screen img,
+.splash-screen p {
+  transition: transform 3s ease-in-out;
+  margin: 20px 0;
+}
+
+/* Splash screen image specifics */
+.splash-screen img {
+  width: 30vw;
+  max-width: 150px;
+  height: auto;
+  margin-bottom: 60px;
+  transform-origin: center;
+  -webkit-transform-origin: center; /* For older browsers */
+}
+
+/* Splash screen paragraph text */
+.splash-screen p {
+  font-size: calc(12px + 1vmin);
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 60px;
+}
+
+/* Logo styling (part of splash screen) */
+#logo2 {
+  width: 50vw;
+  max-width: 300px;
+  margin-bottom: 60px;
+}
+
+/* Zoom keyframes */
+@keyframes zoomEffect {
+  from {
+    transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+}
+
+/* When splash screen is visible, apply zoom animation */
+.splash-screen.visible img {
+  animation: zoomEffect 3s ease-in-out forwards;
+}
+
+/* ==============================
+   INSTRUCTION SCREEN
+============================== */
+
+/* White background container with scroll if needed */
+.instruction-screen {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  overflow: auto;
+  box-sizing: border-box;
+}
+.instruction-screen p {
+  font-size: 16px;
+  margin: 10px 20px;
+  color: #333;
+}
+.instruction-screen p.good-luck {
+  margin-bottom: 20px;
+}
+
+/* ==============================
+   BLACK SCREEN OVERLAY
 ============================== */
 
 /* Black screen overlay for the zoom-out transition */
@@ -48,120 +162,6 @@ html {
   transition:
     transform 4s ease-in-out,
     filter 4s ease-in-out;
-}
-
-/* ==============================
-   HIDE / SHOW SCREEN UTILITIES
-============================== */
-
-/* For hiding and showing screens */
-.hidden {
-  visibility: hidden;
-  opacity: 0;
-  transition:
-    visibility 0s 0.5s,
-    opacity 0.5s linear;
-}
-.visible {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.5s linear;
-}
-
-/* ==============================
-   SPLASH SCREEN ANIMATIONS
-============================== */
-
-/* Smooth transition for images and text */
-.splash-screen img,
-.splash-screen p {
-  transition: transform 3s ease-in-out;
-  margin: 20px 0;
-}
-
-/* Splash screen image specifics */
-.splash-screen img {
-  width: 30vw;
-  max-width: 150px;
-  height: auto;
-  margin-bottom: 60px;
-  transform-origin: center;
-  -webkit-transform-origin: center; /* For older browsers */
-}
-
-/* Zoom keyframes */
-@keyframes zoomEffect {
-  from {
-    transform: scale(0.8);
-    -webkit-transform: scale(0.8);
-  }
-  to {
-    transform: scale(1);
-    -webkit-transform: scale(1);
-  }
-}
-
-/* When splash screen is visible, apply zoom animation */
-.splash-screen.visible img {
-  animation: zoomEffect 3s ease-in-out forwards;
-}
-
-/* ==============================
-   CONTAINER SCREENS
-============================== */
-
-/* Common container for splash and instruction screens */
-.splash-screen,
-.instruction-screen {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-/* Logo styling */
-#logo2 {
-  width: 50vw;
-  max-width: 300px;
-  margin-bottom: 60px;
-}
-
-/* Splash screen paragraph text */
-.splash-screen p {
-  font-size: calc(12px + 1vmin);
-  font-weight: bold;
-  font-style: italic;
-  margin-top: 60px;
-}
-
-/* ==============================
-   INSTRUCTION SCREEN
-============================== */
-
-/* White background container with scroll if needed */
-.instruction-screen {
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  overflow: auto;
-  box-sizing: border-box;
-}
-.instruction-screen p {
-  font-size: 16px;
-  margin: 10px 20px;
-  color: #333;
-}
-.instruction-screen p.good-luck {
-  margin-bottom: 20px;
 }
 
 /* ==============================

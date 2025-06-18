@@ -24,7 +24,6 @@
       min-height: 100vh;
     }
 
-    /* (Keep all existing styles from the previous version for brevity) */
     #appBar { display: flex; align-items: center; background-color: black; color: white; padding: 10px 20px; position: sticky; top: 0; z-index: 100; }
     #backArrow { background: none; border: none; font-family: inherit; color: white; font-size: 32px; font-weight: bold; cursor: pointer; padding-right: 20px; line-height: 1; }
     #pageTitle { text-align: center; margin: 0 auto; font-size: 20px; }
@@ -40,11 +39,11 @@
     .top-input-group.sex-group { flex-grow: 1.2; min-width: 55px; }
 
 
-    label:not(.switch):not(.top-input-group label):not(.dx-label) { /* Exclude new dx-label */
+    label:not(.switch):not(.top-input-group label):not(.dx-label) {
         font-size: 13px; display: block; margin-bottom: 4px; margin-top: 12px;
     }
     .top-input-line + .switch-wrap,
-    .top-input-line + .dx-label-wrapper, /* Target new wrapper */
+    .top-input-line + .dx-label-wrapper,
     .top-input-line + label:not(.switch):not(.top-input-group label):not(.dx-label) { margin-top: 0; }
 
     input[type="text"]:not(.top-input-group input),
@@ -61,17 +60,16 @@
     input#screen-switch:checked + .slider { background-color: var(--red-light); }
     input#screen-switch:checked + .slider:before { transform: translateX(22px); }
 
-    /* Styles for Diagnosis Label and Example Button */
     .dx-label-wrapper {
         display: flex;
-        justify-content: space-between; /* Pushes label and button to opposite ends */
-        align-items: center; /* Vertically aligns them */
-        margin-bottom: 4px; /* Space before textarea */
-        margin-top: 12px; /* Space above this section */
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+        margin-top: 12px;
     }
-    .dx-label { /* Style for the actual label text */
+    .dx-label {
         font-size: 13px;
-        margin-bottom: 0; /* Remove default label margin */
+        margin-bottom: 0;
     }
     .btn-example {
         font-size: 11px;
@@ -87,10 +85,29 @@
         background-color: #d1e3f8;
     }
 
-
     textarea#ref-dx { height: 110px; resize: vertical; }
 
-    .preview-section-title { font-size: 16px; font-weight: bold; color: #333; margin-bottom: 10px; width: 380px; max-width: 100%; text-align: left; box-sizing: border-box; }
+    .preview-section-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 5px;
+      width: 380px;
+      max-width: 100%;
+      text-align: left;
+      box-sizing: border-box;
+    }
+    .char-count-info {
+      font-size: 11px;
+      color: #555;
+      margin-top: -2px;
+      margin-bottom: 8px;
+      width: 380px;
+      max-width: 100%;
+      text-align: left;
+      box-sizing: border-box;
+      font-family: Calibri, Arial, sans-serif;
+    }
     .text-preview-container { width: 380px; max-width: 100%; box-sizing: border-box; position: relative; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 8px; padding: 15px; }
     .text-preview-content { font-family: Consolas, "Courier New", monospace; font-size: 13px; white-space: pre-wrap; word-break: break-word; line-height: 1.5; color: #333; min-height: 3em; padding-bottom: 30px; }
     .copy-btn-preview { position: absolute; right: 15px; bottom: 12px; font-size: 20px; color: var(--primary); cursor: pointer; opacity: .75; transition: opacity .2s, color .2s; z-index: 10; }
@@ -126,7 +143,7 @@
 
       <div class="switch-wrap">
         <label class="switch"> <input id="screen-switch" type="checkbox"><span class="slider"></span> </label>
-        <span id="screen-label">Screening: No problems</span>
+        <span id="screen-label">Screening: No problems</span> <!-- Will be updated by JS to Pass/Fail -->
       </div>
 
       <label for="ref-priority">Priority</label>
@@ -142,10 +159,11 @@
         <label for="ref-dx" class="dx-label">Provisional diagnosis (free text)</label>
         <button id="btnLoadExample" class="btn-example" type="button">Example</button>
       </div>
-      <textarea id="ref-dx" placeholder="eg Sub-conjunctival haemorrhage – sudden, bright-red patch, no pain or vision change. {problem & onset; what you saw; vision & pupils/hearing/odour; medication} David Jones (Hightown clinic)"></textarea>
+      <textarea id="ref-dx" placeholder="eg SUB-CONJUNTIVAL HAEMORRHAGE – sudden, bright-red patch, no pain or vision change. {problem & onset; what you saw; vision & pupils/hearing/odour; medication} D Smith (Hightown Clinic)"></textarea>
     </div>
 
     <h3 class="preview-section-title">Text Preview:</h3>
+    <p id="textPreviewCharCountInfo" class="char-count-info"></p>
     <div class="text-preview-container">
       <div id="textPreviewContent" class="text-preview-content"></div>
       <i class="fas fa-copy copy-btn-preview" id="copyPreviewText" title="Copy preview format"></i>
@@ -171,8 +189,9 @@
       const refPrioritySelect = document.getElementById('ref-priority');
       const refDxTextarea = document.getElementById('ref-dx');
       const textPreviewContentEl = document.getElementById('textPreviewContent');
+      const textPreviewCharCountInfoEl = document.getElementById('textPreviewCharCountInfo');
       const copyPreviewTextBtn = document.getElementById('copyPreviewText');
-      const btnLoadExample = document.getElementById('btnLoadExample'); // New button
+      const btnLoadExample = document.getElementById('btnLoadExample');
 
       function updateReferralPriorityColor() {
         const selectedValue = refPrioritySelect.value;
@@ -184,24 +203,69 @@
 
       function generateCompactReferralText() {
         const idVal = refIdInput.value.trim() || 'N/A';
-        const telVal = refTelInput.value.trim() || 'N/A';
+        let telVal = refTelInput.value.trim() || 'N/A';
+        if (telVal !== 'N/A') {
+            telVal = telVal.replace(/\s+/g, ''); 
+        }
         const ageVal = refAgeInput.value.trim() || 'N/A';
         const sexVal = refSexSelect.value || '';
-        const screeningStatus = screenSwitch.checked ? 'Fail' : 'No Problems';
-        let priorityVal = 'N/A';
+        
+        const screeningValue = screenSwitch.checked ? 'Fail' : 'Pass'; 
+
+        let priorityDisplay = 'N/A';
         if (refPrioritySelect.value && refPrioritySelect.options[refPrioritySelect.selectedIndex]) {
-            priorityVal = refPrioritySelect.options[refPrioritySelect.selectedIndex].text.replace(/\s*\(.*?\)\s*/g, '').trim();
-        } else if (refPrioritySelect.value) { priorityVal = refPrioritySelect.value; }
-        const dxVal = refDxTextarea.value.trim() || 'N/A';
-        const part1 = `ID: ${idVal}; Tel: ${telVal}; Age: ${ageVal}${sexVal}`;
-        const part2 = `Screening: ${screeningStatus}; Priority: ${priorityVal}`;
-        const part3 = `Dx: ${dxVal}`;
-        return `${part1}; ${part2}; ${part3}`;
+            const selectedOption = refPrioritySelect.options[refPrioritySelect.selectedIndex];
+            if (selectedOption.value) { 
+                let fullText = selectedOption.text.trim();
+                const timeframeMatch = fullText.match(/\((weeks|days|today)\)/i);
+
+                if (timeframeMatch) {
+                    priorityDisplay = fullText.replace(timeframeMatch[0], `(${timeframeMatch[1].toUpperCase()})`);
+                } else {
+                    priorityDisplay = selectedOption.value; 
+                }
+            }
+        }
+        
+        let dxVal = refDxTextarea.value.trim();
+        if (dxVal === '') {
+          dxVal = 'N/A';
+        } else {
+          dxVal = dxVal.replace(/(\r\n|\n|\r)+/g, ' ');
+          dxVal = dxVal.replace(/\s\s+/g, ' ');
+          // No longer adding a period after a single initial for names like "D Smith"
+        }
+
+        const part1 = `ID:${idVal}`;
+        const part2 = `T:${telVal}`;
+        const part3 = `A:${ageVal}${sexVal}`;
+        const part4 = screeningValue;
+        const part5 = priorityDisplay;
+        const part6 = `Dx: ${dxVal}`; // Added space after Dx:
+        
+        return [part1, part2, part3, part4, part5, part6].join('; ');
       }
 
       function updateTextPreview() {
         const compactText = generateCompactReferralText();
-        if (textPreviewContentEl) textPreviewContentEl.textContent = compactText;
+        if (textPreviewContentEl) {
+            textPreviewContentEl.textContent = compactText;
+        }
+
+        if (textPreviewCharCountInfoEl) { 
+            const len = compactText.length;
+            const smsLimitSingle = 160;
+            let message = `[${len} character${len === 1 ? '' : 's'}`;
+
+            if (len <= smsLimitSingle) {
+                message += ` - fits in 1 text message]`;
+                textPreviewCharCountInfoEl.style.color = 'var(--green-dark)';
+            } else {
+                message += ` - exceeds ${smsLimitSingle} chars, may use multiple SMS]`;
+                textPreviewCharCountInfoEl.style.color = 'var(--red-dark)';
+            }
+            textPreviewCharCountInfoEl.textContent = message;
+        }
       }
 
       function showCopyFeedback(element, successMessage = 'Copied!', originalIconClass = 'fa-copy', successIconClass = 'fa-check') {
@@ -218,27 +282,25 @@
       }
 
       function updateScreeningLabel() {
-          if (screenLabel) { // Check if screenLabel exists
-            screenLabel.textContent = 'Screening: ' + (screenSwitch.checked ? 'Fail' : 'No Problems');
+          if (screenLabel) {
+            // Updated to show Pass/Fail
+            screenLabel.textContent = 'Screening: ' + (screenSwitch.checked ? 'Fail' : 'Pass');
           }
       }
 
-      // Load Example Data Function
       function loadExampleData() {
         refIdInput.value = "2772";
         refTelInput.value = "07445 667 2111";
         refAgeInput.value = "67";
         refSexSelect.value = "F";
-        screenSwitch.checked = true; // For "Fail"
-        refPrioritySelect.value = "Routine"; // Matches the value attribute of the option
-        refDxTextarea.value = "Cataract\nReflex is dark; Vision hazy for years - 6/18 R+L, N12; Pupils black and react; No meds\n\nDavid Jones (The Clinic)";
+        screenSwitch.checked = true; 
+        refPrioritySelect.value = "Routine"; 
+        refDxTextarea.value = "CATARACT. Reflex dark; VA hazy yrs 6/18 R+L, N12; Pupils black + react; No meds. \n\nD Smith (Hightown)";
 
-        // Trigger updates
         updateScreeningLabel();
         updateReferralPriorityColor();
         updateTextPreview();
       }
-
 
       if (screenSwitch) {
         screenSwitch.addEventListener('change', () => {
@@ -268,12 +330,12 @@
         });
       }
 
-      if (btnLoadExample) { // Add listener for the new button
+      if (btnLoadExample) {
         btnLoadExample.addEventListener('click', loadExampleData);
       }
 
       // Initial calls
-      updateScreeningLabel(); // Ensure label is correct on load
+      updateScreeningLabel();
       updateReferralPriorityColor();
       updateTextPreview();
     }

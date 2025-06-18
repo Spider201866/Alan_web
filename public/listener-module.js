@@ -1,13 +1,7 @@
-/* listener-module.js  •  21 Jun 2025
+/* listener-module.js
    ─────────────────────────────────────────────────────────────────────────
    Persistent chat history with collapsible, numbered sessions.
-   • New session on page-load or when Flowise “Reset Chat” is pressed.
-   • Strong de-duplication:
-        ¬ identical text from the same role never stored twice
-        ¬ streaming bot chunks merged into one final line
-   • Each session bubble shows a small copy icon (bottom-right):
-        ¬ click copies that session’s text to the clipboard.
-   • All data lives only in browser localStorage (key alan-chat-history-v2).
+   (Based on user-provided structure with enhancements for UI/UX)
    ----------------------------------------------------------------------- */
 
 export let imagesButtonClicked = false;
@@ -21,40 +15,44 @@ const normalise = s => s
   .trim()
   .toLowerCase();
 
-/* add copy button inside a just-created session container */
-/* add copy button inside a just-created session container */
+/* add copy button inside a session container */
 function makeCopyButton(container, sess) {
-  // use a Font Awesome icon instead of a base-64 SVG
   const btn = document.createElement('i');
-  btn.className = 'fa-regular fa-copy copy-btn';   // FA5/6 regular style
+  btn.className = 'fa-regular fa-copy copy-btn'; // Font Awesome icon
   btn.title = 'Copy this session';
 
   btn.addEventListener('click', ev => {
-    ev.stopPropagation();                          // don’t toggle collapse
+    ev.stopPropagation(); 
     const text = sess.messages.map(m => m.text).join('\n');
     navigator.clipboard.writeText(text)
       .then(() => {
+        // Original opacity feedback
         btn.style.opacity = '1';
-        setTimeout(() => (btn.style.opacity = '.55'), 600);
+        setTimeout(() => (btn.style.opacity = '.55'), 600); // .55 as in your image example for default
       })
-      .catch(() => alert('Copy failed'));
+      .catch(() => alert('Copy failed. Check browser permissions.'));
   });
 
   container.appendChild(btn);
 }
 
-
-/* ── initialise history (or seed) ─────────────────────────────────────── */
+/* ── initialise history (or seed if empty) ────────────────────────────── */
 let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-if (!history.sessions) history = { sessionCounter: 0, sessions: [] };
+if (!history.sessions || !Array.isArray(history.sessions)) {
+  history = { sessionCounter: 0, sessions: [] };
+}
 
+// Start a new session on page load if one doesn't exist for CURRENT_ID,
+// or continue the last one if page was reloaded.
+// The logic for incrementing sessionCounter was here in your provided code
+// and it's key for creating a new session each time.
 history.sessionCounter += 1;
 let CURRENT_ID = history.sessionCounter;
 history.sessions.push({ id: CURRENT_ID, messages: [] });
 localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
-console.log('%c[History] ready', 'color:#0b0', history);
+console.log('%c[History] Ready. Current Session ID:', 'color:#008000', CURRENT_ID, history);
 
-let storedKeys = new Set();                // duplicate filter for this session
+let storedKeys = new Set(); // For de-duplication within the CURRENT_ID session
 
 /* ── bootstrap when DOM loaded ─────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -62,162 +60,232 @@ document.addEventListener('DOMContentLoaded', () => {
   attachFlowiseObservers();
 });
 
-/* ── observe Flowise ──────────────────────────────────────────────────── */
+/* ── observe Flowise chatbot for messages and reset actions ───────────── */
 function attachFlowiseObservers() {
   const host = document.querySelector('flowise-fullchatbot');
-  if (!host) { console.error('[Flowise] host not found'); return; }
-  const root = host.shadowRoot;
-  if (!root) { console.error('[Flowise] cannot access shadow root'); return; }
+  if (!host) { console.error('[History] Flowise host element not found.'); return; }
+  
+  let attempts = 0;
+  const maxAttempts = 20; 
+  const intervalId = setInterval(() => {
+    attempts++;
+    if (host.shadowRoot) {
+      clearInterval(intervalId);
+      const root = host.shadowRoot;
+      console.log('%c[History] Flowise shadowRoot accessed.', 'color:#008000');
 
-  /* bubbles */
-  new MutationObserver(handleBubbleChanges)
-    .observe(root, { childList: true, subtree: true });
-  handleBubbleChanges();
+      new MutationObserver(handleBubbleChanges)
+        .observe(root, { childList: true, subtree: true });
+      handleBubbleChanges(); 
 
-  /* Reset-chat button */
-  const hookReset = () => {
-    const btn = root.querySelector('button[title="Reset Chat"]');
-    if (btn && !btn.dataset.historyHooked) {
-      btn.dataset.historyHooked = 'true';
-      btn.addEventListener('click', () => {
-        console.log('%c[Reset] click detected', 'color:#f90');
-        startNewSession();
-      });
-      console.log('%c[Reset] button hooked', 'color:#09c');
+      const hookResetButton = () => {
+        const resetButton = root.querySelector('button[title="Reset Chat"]');
+        if (resetButton && !resetButton.dataset.historyHooked) {
+          resetButton.dataset.historyHooked = 'true'; 
+          resetButton.addEventListener('click', () => {
+            console.log('%c[History] Flowise "Reset Chat" detected.', 'color:#ffa500');
+            startNewSession();
+          });
+          console.log('%c[History] Flowise "Reset Chat" button hooked.', 'color:#00ced1');
+        }
+      };
+      hookResetButton(); 
+      new MutationObserver(hookResetButton) 
+        .observe(root, { childList: true, subtree: true });
+
+    } else if (attempts >= maxAttempts) {
+      clearInterval(intervalId);
+      console.error('[History] Failed to access Flowise shadowRoot after multiple attempts.');
     }
-  };
-  hookReset();
-  new MutationObserver(hookReset).observe(root, { childList: true, subtree: true });
+  }, 100);
 }
 
-/* ── bubble scan ───────────────────────────────────────────────────────── */
+/* ── scan Flowise for new message bubbles ─────────────────────────────── */
 function handleBubbleChanges() {
   const host = document.querySelector('flowise-fullchatbot');
-  if (!host) return;
+  if (!host || !host.shadowRoot) return;
 
   host.shadowRoot
       .querySelectorAll('[class*="guest-container"],[class*="host-container"]')
-      .forEach(bub => {
-        const raw = bub.textContent.trim();
-        if (!raw) return;
-        const role = /\bguest-container\b/i.test(bub.className) ? 'user' : 'bot';
-        saveMessage(role, raw);
+      .forEach(bubbleElement => {
+        const rawText = bubbleElement.textContent.trim();
+        if (!rawText) return; 
+
+        const role = /\bguest-container\b/i.test(bubbleElement.className) ? 'user' : 'bot';
+        saveMessage(role, rawText);
       });
 }
 
-/* ── new session ───────────────────────────────────────────────────────── */
+/* ── start a new chat session ─────────────────────────────────────────── */
 function startNewSession() {
+  // This function is called by Flowise "Reset Chat" or potentially other triggers
+  // It ensures a new session is correctly set up in 'history' and the sidebar
   history.sessionCounter += 1;
   CURRENT_ID = history.sessionCounter;
-  const sess = { id: CURRENT_ID, messages: [] };
-  history.sessions.push(sess);
+  const newSession = { id: CURRENT_ID, messages: [] };
+  history.sessions.push(newSession);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
 
-  storedKeys = new Set();
+  storedKeys.clear(); 
 
-  console.log('%c[Session] started --' + CURRENT_ID + '--', 'color:#0af');
+  console.log(`%c[History] New session started: ID ${CURRENT_ID}`, 'color:#007bff');
 
-  const side = document.getElementById('chatHistorySidebar');
-  if (!side) return;
+  const sidebar = document.getElementById('chatHistorySidebar');
+  if (!sidebar) { console.error("[History] Sidebar element not found for new session."); return; }
 
-  const header = document.createElement('div');
-  header.className = 'session-header';
-  header.textContent = `--${CURRENT_ID}--`;
+  const headerElement = document.createElement('div');
+  headerElement.className = 'session-header';
+  headerElement.textContent = `--${CURRENT_ID}--`;
 
-  const container = document.createElement('div');
-  container.id = `session-${CURRENT_ID}`;
-  container.className = 'session-content';
-  makeCopyButton(container, sess);
+  const contentContainer = document.createElement('div');
+  contentContainer.id = `session-${CURRENT_ID}`;
+  contentContainer.className = 'session-content empty-session-content'; // Mark as empty
+  makeCopyButton(contentContainer, newSession); 
 
-  header.addEventListener('click', () => {
-    container.style.display =
-      container.style.display === 'none' ? 'block' : 'none';
+  headerElement.addEventListener('click', () => {
+    contentContainer.style.display =
+      contentContainer.style.display === 'none' ? 'block' : 'none';
   });
 
-  side.appendChild(header);
-  side.appendChild(container);
-  header.scrollIntoView({ block: 'nearest' });
+  sidebar.appendChild(headerElement);
+  sidebar.appendChild(contentContainer);
+  headerElement.scrollIntoView({ behavior: 'auto', block: 'nearest' }); 
 }
 
-/* ── save / merge / de-dupe ───────────────────────────────────────────── */
+/* ── save message, merge streaming bot chunks, de-duplicate ─────────── */
 function saveMessage(role, text) {
-  const sess = history.sessions[history.sessions.length - 1];
-  const last = sess.messages[sess.messages.length - 1];
-  const norm = normalise(text);
-
-  if (storedKeys.has(role + '|' + norm)) return;            // exact dup
-
-  /* merge streaming bot chunks */
-  if (role === 'bot' && last && last.role === 'bot') {
-    const prevNorm = normalise(last.text);
-    if (prevNorm.startsWith(norm) || norm.startsWith(prevNorm)) {
-      const better = text.length > last.text.length ? text : last.text;
-      last.text = better;
-
-      const cont = document.getElementById(`session-${CURRENT_ID}`);
-      if (cont && cont.lastChild) cont.lastChild.textContent = better;
-
-      storedKeys.add(role + '|' + normalise(better));
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
-      return;
+  const currentSession = history.sessions.find(s => s.id === CURRENT_ID);
+  if (!currentSession) {
+    // This could happen if a message arrives before startNewSession fully completes for CURRENT_ID
+    // Or if CURRENT_ID somehow gets out of sync.
+    // Let's try to find the latest session as a fallback.
+    const latestSession = history.sessions[history.sessions.length -1];
+    if (latestSession && latestSession.id === CURRENT_ID) {
+        // It was just a timing issue, proceed with latestSession as currentSession
+    } else {
+        console.error(`[History] Critical: Current session ${CURRENT_ID} not found. Message "${text}" for role "${role}" cannot be saved.`);
+        return;
     }
   }
 
-  /* new line */
-  sess.messages.push({ role, text });
-  storedKeys.add(role + '|' + norm);
+
+  const lastMessage = currentSession.messages[currentSession.messages.length - 1];
+  const normalizedText = normalise(text);
+
+  if (storedKeys.has(role + '|' + normalizedText)) return;
+
+  if (role === 'bot' && lastMessage && lastMessage.role === 'bot') {
+    const prevNormalizedText = normalise(lastMessage.text);
+    if (normalizedText.startsWith(prevNormalizedText) || prevNormalizedText.startsWith(normalizedText)) {
+      const betterText = text.length > lastMessage.text.length ? text : lastMessage.text;
+      
+      if (normalise(lastMessage.text) !== normalise(betterText)) {
+        storedKeys.delete(role + '|' + normalise(lastMessage.text)); 
+        lastMessage.text = betterText;
+        storedKeys.add(role + '|' + normalise(betterText)); 
+
+        const sessionContentDiv = document.getElementById(`session-${CURRENT_ID}`);
+        if (sessionContentDiv) {
+          const botMessageElements = sessionContentDiv.querySelectorAll('.history-message.bot');
+          if (botMessageElements.length > 0) {
+            botMessageElements[botMessageElements.length - 1].textContent = betterText;
+          }
+        }
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+      return; 
+    }
+  }
+
+  currentSession.messages.push({ role, text });
+  storedKeys.add(role + '|' + normalizedText);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
   appendLineToSidebar(CURRENT_ID, role, text);
 }
 
-/* ── sidebar rendering ────────────────────────────────────────────────── */
+/* ── render all sessions to the sidebar ───────────────────────────────── */
 function renderSidebar() {
-  const side = document.getElementById('chatHistorySidebar');
-  if (!side) return;
-  side.innerHTML = '';
+  const sidebar = document.getElementById('chatHistorySidebar');
+  if (!sidebar) { console.error("[History] Sidebar element not found for rendering."); return; }
+  sidebar.innerHTML = ''; 
 
-  history.sessions.forEach(sess => {
-    const header = document.createElement('div');
-    header.className = 'session-header';
-    header.textContent = `--${sess.id}--`;
+  history.sessions.forEach(session => {
+    const headerElement = document.createElement('div');
+    headerElement.className = 'session-header';
+    headerElement.textContent = `--${session.id}--`;
 
-    const container = document.createElement('div');
-    container.id = `session-${sess.id}`;
-    container.className = 'session-content';
-    if (sess.id !== CURRENT_ID) container.style.display = 'none';
+    const contentContainer = document.createElement('div');
+    contentContainer.id = `session-${session.id}`;
+    contentContainer.className = 'session-content';
 
-    makeCopyButton(container, sess);
-    sess.messages.forEach(m => appendLine(container, m.role, m.text));
+    if (session.messages.length === 0) {
+      contentContainer.classList.add('empty-session-content');
+    }
 
-    header.addEventListener('click', () => {
-      container.style.display =
-        container.style.display === 'none' ? 'block' : 'none';
+    if (session.id !== CURRENT_ID) {
+      contentContainer.style.display = 'none'; // Collapse old sessions
+    } else {
+      contentContainer.style.display = 'block'; // Ensure current is open
+      storedKeys.clear(); // Reset for current session on initial render
+      session.messages.forEach(msg => storedKeys.add(msg.role + '|' + normalise(msg.text)));
+    }
+
+    makeCopyButton(contentContainer, session);
+    session.messages.forEach(message => appendLine(contentContainer, message.role, message.text));
+
+    headerElement.addEventListener('click', () => {
+      // Toggle display of the associated content container
+      const targetContent = document.getElementById(`session-${session.id}`);
+      if (targetContent) {
+        targetContent.style.display =
+          targetContent.style.display === 'none' ? 'block' : 'none';
+      }
     });
 
-    side.appendChild(header);
-    side.appendChild(container);
-
-    if (sess.id === CURRENT_ID)
-      sess.messages.forEach(m => storedKeys.add(m.role + '|' + normalise(m.text)));
+    sidebar.appendChild(headerElement);
+    sidebar.appendChild(contentContainer);
   });
+
+  const currentSessionHeader = sidebar.querySelector(`#session-${CURRENT_ID}`)?.previousElementSibling;
+  if (currentSessionHeader) {
+      currentSessionHeader.scrollIntoView({ behavior: 'auto', block: 'nearest' });
+  }
 }
 
-function appendLineToSidebar(id, role, text) {
-  const cont = document.getElementById(`session-${id}`);
-  if (cont) appendLine(cont, role, text);
+/* ── append a new message line to a specific session in the sidebar ───── */
+function appendLineToSidebar(sessionId, role, text) {
+  const sessionContentDiv = document.getElementById(`session-${sessionId}`);
+  if (sessionContentDiv) {
+    appendLine(sessionContentDiv, role, text);
+    sessionContentDiv.classList.remove('empty-session-content'); // Now has content
+  }
 }
 
-function appendLine(cont, role, text) {
-  const line = document.createElement('div');
-  line.className = `history-message ${role}`;
-  line.textContent = text;
-  cont.appendChild(line);
+/* ── create and append a DOM element for a message line ──────────────── */
+function appendLine(sessionContentDiv, role, text) {
+  const lineElement = document.createElement('div');
+  lineElement.className = `history-message ${role}`; 
+  lineElement.textContent = text;
+  sessionContentDiv.appendChild(lineElement);
+
+  if (sessionContentDiv.style.display !== 'none' && sessionContentDiv.id === `session-${CURRENT_ID}`) {
+    sessionContentDiv.scrollTop = sessionContentDiv.scrollHeight;
+  }
 }
 
-/* exported helpers for external modules */
-export function attachImagesButton() {}
+/* --- Exported functions --- */
+export function attachImagesButton() {
+  // To be implemented if needed
+}
+
 export function resetSidebarHistory() {
-  history    = { sessionCounter: 0, sessions: [] };
-  CURRENT_ID = 0;
-  storedKeys = new Set();
+  console.log('%c[History] Resetting in-memory sidebar history state.', 'color:#ff0000');
+  history = { sessionCounter: 0, sessions: [] };
+  CURRENT_ID = 0; 
+  storedKeys.clear();
+  // The actual localStorage.removeItem and DOM clearing (sidebar.innerHTML = '')
+  // is handled by the clearHistoryBtn event listener in the main HTML/script.
+  // This function is for resetting the module's internal variables.
+  // After this, the main script should ideally call startNewSession() or renderSidebar()
+  // if an immediate visual update of a new empty session is desired without a page reload.
 }
