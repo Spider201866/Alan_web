@@ -14,6 +14,7 @@
     <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
     <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
     <link rel="manifest" href="favicons/manifest.json">
+    <link rel="stylesheet" href="styles.css">
     <script type="module" src="faviconAndMeta.js"></script>
     <style>
       body,
@@ -24,28 +25,6 @@
         display: flex;
         flex-direction: column;
         font-family: 'Calibri Light', Arial, sans-serif;
-      }
-      #appBar {
-        display: flex;
-        align-items: center;
-        background-color: black;
-        color: white;
-        padding: 10px 20px;
-        flex-shrink: 0; /* Prevents header from shrinking */
-      }
-      #pageTitle {
-        text-align: center;
-        margin: 0 auto;
-        font-size: 24px;
-      }
-      /* IMPROVEMENT: Style the button to look identical to the old div */
-      .back-arrow {
-        background: none; border: none; font-family: inherit;
-        color: white;
-        font-size: 32px;
-        font-weight: bold;
-        cursor: pointer;
-        padding-right: 20px;
       }
       #imageContainer {
         flex-grow: 1; /* Takes up all available vertical space */
@@ -69,11 +48,6 @@
     **********************************************
     - Contains back arrow & title
   -->
-    <header id="appBar">
-      <button class="back-arrow" aria-label="Go Back">←</button>
-      <h1 id="pageTitle">Atoms</h1>
-    </header>
-
     <!-- 
     **********************************************
     *           IMAGE CONTAINER                 *
@@ -85,12 +59,10 @@
 <img src="images/atomsblue.jpg" alt="Blue Atoms Image" />
     </main>
     
-    <!-- Script with unobtrusive event listener -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const backBtn = document.querySelector('.back-arrow');
-        if (backBtn) backBtn.addEventListener('click', function() { history.back(); });
-      });
+    <script type="module">
+      import { initPage } from './page-template.js';
+      // This page has no translations, so we don't pass a function.
+      initPage('Atoms');
     </script>
   </body>
 </html>

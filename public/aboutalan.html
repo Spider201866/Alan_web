@@ -14,6 +14,7 @@
     <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
     <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
     <link rel="manifest" href="favicons/manifest.json">
+    <link rel="stylesheet" href="styles.css">
     <script type="module" src="faviconAndMeta.js"></script>
     <!-- Translations object embedded for a single-file solution -->
     <script>
@@ -39,27 +40,6 @@
         color: black;
         margin: 0;
         padding: 0;
-      }
-      #appBar {
-        display: flex;
-        align-items: center;
-        background-color: black;
-        color: white;
-        padding: 10px 20px;
-      }
-      /* IMPROVEMENT: Target a <button> but make it look like the old <div> */
-      .back-arrow {
-        background: none; border: none; font-family: inherit;
-        color: white;
-        font-size: 32px;
-        font-weight: bold;
-        cursor: pointer;
-        padding-right: 20px;
-      }
-      #pageTitle {
-        text-align: center;
-        margin: 0 auto;
-        font-size: 24px;
       }
       #aboutAlan {
         padding: 15px;
@@ -113,12 +93,6 @@
     </style>
   </head>
   <body>
-    <!-- Top App Bar with accessible button -->
-    <div id="appBar">
-      <button class="back-arrow" aria-label="Go Back">←</button>
-      <h1 id="pageTitle">About Alan</h1>
-    </div>
-
     <!-- Main About Alan Content (structure preserved) -->
     <main id="aboutAlan">
       <header id="logoContainer">
@@ -143,16 +117,32 @@
       </section>
     </main>
 
-    <!-- Script with unobtrusive event listener -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        // Standardized back button event binding
-        const backBtn = document.querySelector('.back-arrow');
-        if (backBtn) backBtn.addEventListener('click', function() { history.back(); });
+    <script type="module">
+      import { initPage } from './page-template.js';
 
-        updatePageTranslations();
-        
-        // Logo animation logic is preserved
+      // This is the function that knows how to translate THIS specific page
+      function applyTranslations() {
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        const t = window.translations && window.translations[lang];
+        if (!t) return;
+
+        // We no longer need to update the pageTitle here, the template does it.
+        // We just need to handle the content unique to this page.
+        document.getElementById('aboutAlanText').innerHTML = t.aboutAlanText;
+        document.getElementById('aboutAlanListItem1').textContent = t.aboutAlanListItem1;
+        document.getElementById('aboutAlanListItem2').textContent = t.aboutAlanListItem2;
+        document.getElementById('aboutAlanEfficient').innerHTML = t.aboutAlanEfficient;
+        document.getElementById('aboutAlanEasy').innerHTML = t.aboutAlanEasy;
+        document.getElementById('aboutAlanExplainable').innerHTML = t.aboutAlanExplainable;
+        document.getElementById('aboutAlanEncouraging').innerHTML = t.aboutAlanEncouraging;
+        document.getElementById('aboutAlanDate').innerHTML = t.aboutAlanDate;
+      }
+
+      // Initialize the page with its title and its specific translation function
+      initPage('About Alan', applyTranslations);
+
+      // Logo animation logic is preserved
+      document.addEventListener('DOMContentLoaded', function () {
         setTimeout(function () {
           var logoImage = document.getElementById('logoImage');
           if (logoImage) {
@@ -160,28 +150,6 @@
           }
         }, 1000);
       });
-
-      window.addEventListener('storage', function (e) {
-        if (e.key === 'preferredLanguage') {
-          updatePageTranslations();
-        }
-      });
-
-      function updatePageTranslations() {
-        var lang = localStorage.getItem('preferredLanguage') || 'en';
-        var t = window.translations && window.translations[lang];
-        if (t) {
-          document.getElementById('pageTitle').textContent = t.pageTitle;
-          document.getElementById('aboutAlanText').innerHTML = t.aboutAlanText;
-          document.getElementById('aboutAlanListItem1').textContent = t.aboutAlanListItem1;
-          document.getElementById('aboutAlanListItem2').textContent = t.aboutAlanListItem2;
-          document.getElementById('aboutAlanEfficient').innerHTML = t.aboutAlanEfficient;
-          document.getElementById('aboutAlanEasy').innerHTML = t.aboutAlanEasy;
-          document.getElementById('aboutAlanExplainable').innerHTML = t.aboutAlanExplainable;
-          document.getElementById('aboutAlanEncouraging').innerHTML = t.aboutAlanEncouraging;
-          document.getElementById('aboutAlanDate').innerHTML = t.aboutAlanDate;
-        }
-      }
     </script>
   </body>
 </html>

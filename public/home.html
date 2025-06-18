@@ -50,19 +50,19 @@
       <div style="display: flex; margin-bottom: 10px;">
         <button id="instructions-button" class="button red pulse">How to use</button>
       </div>
-      <div style="display: flex; margin-bottom: 10px;">
-        <button id="eye-button" class="button" style="margin-right: 10px; background-color: rgb(134, 162, 255); border: 2px solid black; color: black;" onclick="window.location.href='eye.html';">Eye</button>
-        <button id="ear-button" class="button" style="margin-right: 10px; background-color: rgb(133, 255, 133); border: 2px solid black; color: black;" onclick="window.location.href='ear.html';">Ear</button>
-        <button id="skin-button" class="button" style="background-color: #efafff; border: 2px solid black; color: black;" onclick="window.location.href='skin.html';">Skin</button>
+      <div class="menu-row">
+        <button id="eye-button" class="button btn-colored btn-eye" onclick="window.location.href='eye.html';">Eye</button>
+        <button id="ear-button" class="button btn-colored btn-ear" onclick="window.location.href='ear.html';">Ear</button>
+        <button id="skin-button" class="button btn-colored btn-skin" onclick="window.location.href='skin.html';">Skin</button>
       </div>
-      <div style="display: flex; margin-bottom: 10px; align-items: center;">
-        <a href="https://www.youtube.com/@arclightproject" style="text-decoration: none;">
-          <button id="videos-button" class="button grey" style="margin-right: 10px;">Videos</button>
+      <div class="menu-row">
+        <a href="https://www.youtube.com/@arclightproject" class="menu-link">
+          <button id="videos-button" class="button grey">Videos</button>
         </a>
-        <button id="atoms-button" class="button grey" style="margin-right: 10px;" onclick="window.location.href='atoms.html';">Atoms</button>
-        <button id="tools-button" class="button grey" style="margin-right: 10px;">Tools</button>
-        <div style="position: relative;">
-<button class="button grey" id="language-button" style="background: url('images/lang.jpg') no-repeat center center; background-size: cover; border: 2px solid #3e3e3e; width: 32px; height: 32px;"></button>
+        <button id="atoms-button" class="button grey" onclick="window.location.href='atoms.html';">Atoms</button>
+        <button id="tools-button" class="button grey">Tools</button>
+        <div class="language-container">
+          <button class="button btn-lang" id="language-button"></button>
           <div id="language-dropdown" style="display: none; position: absolute; top: 40px; left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid #ccc; z-index: 9999; min-width: 220px; white-space: nowrap; max-height: 350px; overflow-y: auto; font-size: 14px; line-height: 1.2;">
             <ul style="margin: 0; padding: 0; list-style: none;">
               <li data-value="en" style="padding: 6px; cursor: pointer;"><strong>English</strong> (English)</li>
@@ -119,17 +119,17 @@
     </nav>
 
     <!-- MAIN CONTENT -->
-    <main class="content-wrapper" style="display: flex; flex-direction: column; justify-content: flex-start; min-height: 20vh; font-weight: bold;">
-      <div class="logo-and-text-container" style="text-align: center; line-height: 1.0; padding-top: 20px;">
-        <p id="additional-text" class="grey-text" style="font-size: 15px; color: grey; margin-top: 0px;">
+    <main class="content-wrapper">
+      <div class="logo-and-text-container">
+        <p id="additional-text" class="grey-text">
           <span id="good-history">Good History</span> |
           <span id="examine-well">Examine Well</span> |
           <span id="use-arclight">Use Arclight</span>
         </p>
-        <p id="sub-text" class="centered-content" style="font-size: 16px; color: black; font-weight: 900; padding-bottom: 5px;"></p>
+        <p id="sub-text" class="centered-content"></p>
       </div>
       <div class="animation-container" id="animationContainer">
-<img src="images/eyeor.gif" alt="Eyeor Animation" style="opacity: 0; transition: opacity 2s;">
+        <img src="images/eyeor.gif" alt="Eyeor Animation" class="fade-in-out">
       </div>
     </main>
 

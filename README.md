@@ -127,6 +127,17 @@ AlanUI/
 
 ## Public Directory Contents
 
+## Frontend Code Quality & Consistency
+
+- All HTML files use semantic HTML5 structure: <header>, <main>, <nav>, <section>, and <button> are used appropriately for accessibility and clarity.
+- Every HTML file begins with a slimline file-level comment including the date: `<!-- Alan UI - filename | 18th June 2025, WJW -->`
+- Comments are neat, informative, and consistent—no placeholders or unnecessary comments remain.
+- All back buttons use a standardized `.back-arrow` class and consistent event binding with `document.addEventListener('DOMContentLoaded', ...)`.
+- All JavaScript event binding uses `DOMContentLoaded` for reliability and consistency.
+- Navigation and quick action areas use <nav> where appropriate.
+- The codebase is fully accessible, maintainable, and follows modern HTML5 and documentation best practices.
+
+
 The `public/` directory contains the following files and folders:
 
 ```

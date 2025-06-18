@@ -14,6 +14,7 @@
     <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
     <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
     <link rel="manifest" href="favicons/manifest.json">
+    <link rel="stylesheet" href="styles.css">
     <script type="module" src="faviconAndMeta.js"></script>
     <!-- Translations object embedded -->
     <script>
@@ -67,27 +68,8 @@
         display: flex;
         flex-direction: column;
       }
-      #appBar {
-        display: flex; align-items: center;
-        background-color: black; color: white;
-        padding: 10px 20px;
-        flex-shrink: 0;
-      }
-      #pageTitle {
-        text-align: center; margin: 0 auto; font-size: 24px;
-      }
-      #backArrow {
-        background: none; border: none; font-family: inherit;
-        color: white; font-size: 32px; font-weight: bold;
-        cursor: pointer; padding-right: 20px;
-      }
       #content {
-        padding: 5px 25px 25px 25px; background-color: #dfe7ff;
-        flex-grow: 1;
-        overflow-y: auto; /* Added for scrolling if content is too long */
-      }
-      #introText {
-        margin-bottom: 20px; font-size: 15px; text-align: justify;
+        padding: 8px 20px 20px 20px;
       }
       #wrapSection {
         overflow: hidden; margin-bottom: 25px; padding-right: 0;
@@ -145,10 +127,6 @@
     </style>
   </head>
   <body>
-    <header id="appBar">
-      <button id="backArrow" aria-label="Go Back">←</button>
-      <h1 id="pageTitle">Instructions</h1>
-    </header>
     <main id="content">
       <p id="introText"></p>
       <div id="wrapSection">
@@ -183,24 +161,11 @@
       </div>
     </main>
 
-    <script>
-      var trans;
+    <script type="module">
+      import { initPage } from './page-template.js';
 
-      document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('backArrow').addEventListener('click', function() { history.back(); });
-        document.querySelectorAll('input[name="option"]').forEach(function(radio) {
-          radio.addEventListener('change', toggleContent);
-        });
-        updatePageTranslations();
-      });
-
-      window.addEventListener('storage', function (e) {
-        if (e.key === 'preferredLanguage') {
-          updatePageTranslations();
-        }
-      });
-
-      function updatePageTranslations() {
+      function applyTranslationsAndToggle() {
+        var trans;
         var lang = localStorage.getItem('preferredLanguage') || 'en';
         trans = window.translations && window.translations[lang];
         if (trans) {
@@ -218,56 +183,63 @@
         } else {
           console.error("Translations not found for language:", lang);
         }
-      }
-      
-      function toggleContent() {
-        var option = document.querySelector('input[name="option"]:checked').value;
-        
-        if (!trans) {
-            console.warn("toggleContent called before translations (trans) are loaded.");
-            var lang = localStorage.getItem('preferredLanguage') || 'en';
-            trans = window.translations && window.translations[lang];
-            if (!trans) {
-                console.error("Failed to load translations in toggleContent. Aborting.");
-                return; 
-            }
+
+        document.querySelectorAll('input[name="option"]').forEach(function(radio) {
+          radio.addEventListener('change', toggleContent);
+        });
+
+        function toggleContent() {
+          var option = document.querySelector('input[name="option"]:checked').value;
+          
+          if (!trans) {
+              console.warn("toggleContent called before translations (trans) are loaded.");
+              var lang = localStorage.getItem('preferredLanguage') || 'en';
+              trans = window.translations && window.translations[lang];
+              if (!trans) {
+                  console.error("Failed to load translations in toggleContent. Aborting.");
+                  return; 
+              }
+          }
+
+          document.getElementById('labelTooLittle').textContent = trans.instructionsLabelTooLittle;
+          document.getElementById('labelJustRight').textContent = trans.instructionsLabelJustRight;
+          document.getElementById('labelTooMuch').textContent = trans.instructionsLabelTooMuch;
+
+          let patientDetail3Text = trans.instructionsPatientDetail3; // Default for Eye
+
+          if (option === 'eye') {
+            document.getElementById('content').style.backgroundColor = trans.instructionsBackground_eye;
+            document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_eye;
+            document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_eye;
+            document.getElementById('justRight').textContent = trans.instructionsJustRight_eye;
+            document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_eye;
+            document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_eye;
+            // patientDetail3Text is already set to the default (eye version)
+          } else if (option === 'ear') {
+            document.getElementById('content').style.backgroundColor = trans.instructionsBackground_ear;
+            document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_ear;
+            document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_ear;
+            document.getElementById('justRight').textContent = trans.instructionsJustRight_ear;
+            document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_ear;
+            document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_ear;
+            patientDetail3Text = trans.instructionsPatientDetail3_ear_specific; // Use specific ear text
+          } else if (option === 'skin') {
+            document.getElementById('content').style.backgroundColor = trans.instructionsBackground_skin;
+            document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_skin;
+            document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_skin;
+            document.getElementById('justRight').textContent = trans.instructionsJustRight_skin;
+            document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_skin;
+            document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_skin;
+            patientDetail3Text = trans.instructionsPatientDetail3_skin_specific; // Use specific skin text
+          }
+
+          // Update patientDetail3 with the determined text
+          document.getElementById('patientDetail3').innerHTML = `<span class="listText">${patientDetail3Text}</span>`;
         }
-
-        document.getElementById('labelTooLittle').textContent = trans.instructionsLabelTooLittle;
-        document.getElementById('labelJustRight').textContent = trans.instructionsLabelJustRight;
-        document.getElementById('labelTooMuch').textContent = trans.instructionsLabelTooMuch;
-
-        let patientDetail3Text = trans.instructionsPatientDetail3; // Default for Eye
-
-        if (option === 'eye') {
-          document.getElementById('content').style.backgroundColor = trans.instructionsBackground_eye;
-          document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_eye;
-          document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_eye;
-          document.getElementById('justRight').textContent = trans.instructionsJustRight_eye;
-          document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_eye;
-          document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_eye;
-          // patientDetail3Text is already set to the default (eye version)
-        } else if (option === 'ear') {
-          document.getElementById('content').style.backgroundColor = trans.instructionsBackground_ear;
-          document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_ear;
-          document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_ear;
-          document.getElementById('justRight').textContent = trans.instructionsJustRight_ear;
-          document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_ear;
-          document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_ear;
-          patientDetail3Text = trans.instructionsPatientDetail3_ear_specific; // Use specific ear text
-        } else if (option === 'skin') {
-          document.getElementById('content').style.backgroundColor = trans.instructionsBackground_skin;
-          document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_skin;
-          document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_skin;
-          document.getElementById('justRight').textContent = trans.instructionsJustRight_skin;
-          document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_skin;
-          document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_skin;
-          patientDetail3Text = trans.instructionsPatientDetail3_skin_specific; // Use specific skin text
-        }
-
-        // Update patientDetail3 with the determined text
-        document.getElementById('patientDetail3').innerHTML = `<span class="listText">${patientDetail3Text}</span>`;
       }
+
+      // Initialize the page with its title and its specific translation/toggle function
+      initPage('Instructions', applyTranslationsAndToggle);
     </script>
   </body>
 </html>

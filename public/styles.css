@@ -945,3 +945,176 @@ flowise-fullchatbot { /* From sticky footer section */
   -webkit-appearance: none !important;
   appearance: none !important;
 }
+
+/* ==============================
+   HOME PAGE REFACTOR CLASSES
+============================== */
+
+/* Button styles for the side menu */
+.side-menu .btn-colored {
+  border: 2px solid black;
+  color: black;
+}
+
+.side-menu .btn-eye { background-color: rgb(134, 162, 255); }
+.side-menu .btn-ear { background-color: rgb(133, 255, 133); }
+.side-menu .btn-skin { background-color: #efafff; }
+.side-menu .btn-lang {
+  background: url('images/lang.jpg') no-repeat center center;
+  background-size: cover;
+  border: 2px solid #3e3e3e;
+  width: 32px;
+  height: 32px;
+}
+
+/* Utility classes for menu rows and links */
+.menu-row {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.menu-row .button {
+  margin-right: 10px;
+}
+.menu-row .button:last-child {
+  margin-right: 0;
+}
+.menu-link {
+  text-decoration: none;
+}
+.language-container {
+  position: relative;
+}
+
+/* Main content area classes */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 20vh;
+  font-weight: bold;
+}
+
+.logo-and-text-container {
+  text-align: center;
+  line-height: 1.0;
+  padding-top: 20px;
+}
+
+#additional-text {
+  font-size: 15px;
+  color: grey;
+  margin-top: 0px;
+}
+
+#sub-text {
+  font-size: 16px;
+  color: black;
+  font-weight: 900;
+  padding-bottom: 5px;
+}
+
+/* Animation image fade-in/out */
+.animation-container img.fade-in-out {
+  opacity: 0;
+  transition: opacity 2s;
+}
+
+/* ==============================
+   SHARED APP BAR & BACK ARROW
+============================== */
+#appBar {
+  display: flex;
+  align-items: center;
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  font-family: 'Calibri Light', Arial, sans-serif !important;
+  font-size: 16px !important;
+  box-sizing: content-box !important;
+}
+.back-arrow {
+  background: none;
+  border: none;
+  font-family: inherit;
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+  cursor: pointer;
+  padding-right: 20px;
+  line-height: 1;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#pageTitle {
+  text-align: center;
+  margin: 0 auto;
+  font-size: 24px;
+  font-family: 'Calibri Light', Arial, sans-serif !important;
+  font-weight: normal !important;
+  flex: 1;
+  line-height: 1.2;
+}
+
+/* ─── Referral form – top row (ID · Telephone · Age · M/F) ────────────────── */
+
+/* Whole row */
+.top-input-line{
+    display:flex!important;
+    gap:6px!important;                 /* keeps total width < 360 px */
+    margin-bottom:18px!important;
+    align-items:flex-end!important;    /* bottoms perfectly level */
+}
+
+/* Wrapper for each mini-field */
+.top-input-group{
+    display:flex!important;
+    flex-direction:column!important;
+    flex-shrink:0!important;           /* stop unwanted growth */
+}
+
+/* Fixed column widths */
+.top-input-group.id-group {  flex:0 0 46px!important;  } /* ID */
+.top-input-group.tel-group { flex:0 0 120px!important; } /* Telephone */
+.top-input-group.age-group { flex:0 0 50px!important;  } /* Age */
+.top-input-group.sex-group { flex:0 0 60px!important;  } /* M/F */
+
+/* Labels */
+.top-input-group label{
+    font-size:11px!important;
+    font-weight:bold!important;
+    color:#444!important;
+    line-height:16px!important;
+    margin:0 0 2px 0!important;
+    white-space:nowrap!important;
+}
+
+/* Inputs and the M/F drop-down */
+.top-input-group input[type="text"],
+.top-input-group input[type="tel"],
+.top-input-group select{
+    width:100%!important;
+    height:36px!important;
+    padding:5px 6px!important;
+    font-size:13px!important;
+    line-height:1.4!important;
+    border:1px solid #e0e0e0!important;
+    border-radius:4px!important;
+    background-color:#fdfdfd!important;
+    box-sizing:border-box!important;
+    min-width:0!important;            /* lets them squeeze if the user zooms */
+}
+
+/* ID input – slimmer side padding */
+.top-input-group.id-group input{
+    padding-left:4px!important;
+    padding-right:4px!important;
+}
+
+/* Keep the select sitting on the same baseline */
+.top-input-group select{vertical-align:bottom!important;}
+
+

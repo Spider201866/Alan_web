@@ -14,6 +14,7 @@
     <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
     <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
     <link rel="manifest" href="favicons/manifest.json">
+    <link rel="stylesheet" href="styles.css">
     <script type="module" src="faviconAndMeta.js"></script>
     <!-- Translations object embedded for a single-file solution -->
     <script>
@@ -39,35 +40,10 @@
         margin: 0;
         padding: 0;
       }
-      #appBar {
-        display: flex;
-        align-items: center;
-        background-color: black;
-        color: white;
-        padding: 10px 20px;
-        font-family: 'Calibri Light', Arial, sans-serif !important;
-        font-size: 16px !important;
-        box-sizing: content-box !important;
-      }
-      /* IMPROVEMENT: Target a <button> but make it look like the old <div> */
-      .back-arrow {
-        background: none; border: none; font-family: inherit; /* Reset button styles */
-        color: white;
-        font-size: 32px;
-        font-weight: bold;
-        cursor: pointer;
-        padding-right: 20px;
-      }
-      #pageTitle {
-        text-align: center;
-        margin: 0 auto;
-        font-size: 24px;
-        font-family: 'Calibri Light', Arial, sans-serif !important;
-        font-weight: normal !important;
-      }
       #earExamText {
         padding: 15px;
         line-height: 1.4em;
+        text-align: justify;
       }
       #earExamText h3 {
         margin-top: 16px;
@@ -84,12 +60,6 @@
     </style>
   </head>
   <body>
-    <!-- Top App Bar with accessible button -->
-    <div id="appBar">
-      <button class="back-arrow" aria-label="Go Back">←</button>
-      <h1 id="pageTitle">How to examine the ear</h1>
-    </div>
-
     <!-- Main Content Area -->
     <div id="earExamText">
       <h3 id="allAroundEarHeading">All around ear</h3>
@@ -120,34 +90,28 @@
       </p>
     </div>
 
-    <!-- Script with unobtrusive event listener -->
-    <script>
-      function updatePageTranslations() {
-        var lang = localStorage.getItem('preferredLanguage') || 'en';
-        var t = window.translations && window.translations[lang];
-        if (t) {
-          document.getElementById('pageTitle').textContent = t.pageTitle;
-          document.getElementById('allAroundEarHeading').textContent = t.allAroundEarHeading;
-          document.getElementById('allAroundEarText').innerHTML = t.allAroundEarText;
-          document.getElementById('earCanalHeading').textContent = t.earCanalHeading;
-          document.getElementById('earCanalText').innerHTML = t.earCanalText;
-          document.getElementById('tympanicMembraneHeading').textContent = t.tympanicMembraneHeading;
-          document.getElementById('tympanicMembraneText').innerHTML = t.tympanicMembraneText;
-          document.getElementById('additionalText').innerHTML = t.additionalText;
-        }
+    <script type="module">
+      import { initPage } from './page-template.js';
+
+      // This is the function that knows how to translate THIS specific page
+      function applyTranslations() {
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        const t = window.translations && window.translations[lang];
+        if (!t) return;
+
+        // We no longer need to update the pageTitle here, the template does it.
+        // We just need to handle the content unique to this page.
+        document.getElementById('allAroundEarHeading').textContent = t.allAroundEarHeading;
+        document.getElementById('allAroundEarText').innerHTML = t.allAroundEarText;
+        document.getElementById('earCanalHeading').textContent = t.earCanalHeading;
+        document.getElementById('earCanalText').innerHTML = t.earCanalText;
+        document.getElementById('tympanicMembraneHeading').textContent = t.tympanicMembraneHeading;
+        document.getElementById('tympanicMembraneText').innerHTML = t.tympanicMembraneText;
+        document.getElementById('additionalText').innerHTML = t.additionalText;
       }
 
-      document.addEventListener('DOMContentLoaded', function () {
-        const backBtn = document.querySelector('.back-arrow');
-        if (backBtn) backBtn.addEventListener('click', function() { history.back(); });
-        updatePageTranslations();
-      });
-
-      window.addEventListener('storage', function (e) {
-        if (e.key === 'preferredLanguage') {
-          updatePageTranslations();
-        }
-      });
+      // Initialize the page with its title and its specific translation function
+      initPage('How to examine the ear', applyTranslations);
     </script>
   </body>
 </html>

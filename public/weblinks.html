@@ -24,32 +24,10 @@
         padding: 0;
       }
 
-      /* FIX: Changed #appBar to the semantic <header> element */
-      .app-bar {
-        display: flex;
-        align-items: center;
-        background-color: black;
-        color: white;
-        padding: 10px 15px; /* Adjusted padding slightly */
-      }
 
-      .page-title {
-        flex-grow: 1; /* Allows title to take up space */
-        text-align: center;
-        margin: 0;
-        font-size: 24px;
-      }
-
-      /* FIX: Changed #backArrow to a <button> element for accessibility */
-      .back-arrow {
-        color: white;
-        font-size: 24px; /* Adjusted for better balance */
-        font-weight: bold;
-        cursor: pointer;
-        /* Remove default button styling */
-        background: none;
-        border: none;
-        padding: 0 15px 0 0;
+      /* FIX: Using <main> for primary content */
+      main {
+        padding: 20px;
       }
 
       /* FIX: Using <main> for primary content */
@@ -84,13 +62,6 @@
   </head>
 
   <body>
-    <!-- FIX: Using <header> for the top bar -->
-    <header class="app-bar">
-      <!-- FIX: Using a <button> for actions. It is now keyboard-focusable. -->
-      <button type="button" id="backButton" class="back-arrow" aria-label="Go back">←</button>
-      <h1 class="page-title">Web Links</h1>
-    </header>
-
     <!-- FIX: Using <main> for the main content area -->
     <main>
       <p class="link-intro">Here are some interesting links...</p>
@@ -107,11 +78,10 @@
       </ol>
     </main>
 
-    <!-- FIX: Separated behavior (JS) from structure (HTML) -->
-    <script>
-      document.getElementById('backButton').addEventListener('click', () => {
-        history.back();
-      });
+    <script type="module">
+      import { initPage } from './page-template.js';
+      // This page has no translations, so we don't pass a function.
+      initPage('Web Links');
     </script>
   </body>
 </html>

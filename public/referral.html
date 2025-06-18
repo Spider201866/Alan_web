@@ -1,21 +1,31 @@
-<!-- Alan UI - referral.html | 18th June 2025, WJW -->
+<!-- Alan UI - referral.html | 18th June 2025, WJW (Refactored & Complete) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Referral Form: Submit patient details for referral using Alan's AI assistant. Includes ID, contact, age, sex, priority, and diagnosis." />
-  <title>Referral Form</title>
+  <title>Referral</title>
   
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Favicons -->
   <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32">
   <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
   <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
   <link rel="manifest" href="favicons/manifest.json">
-  <script type="module" src="faviconAndMeta.js"></script>
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <!-- Internal Stylesheet for this page -->
   <style>
+    /* ==============================
+       1. VARIABLES & GLOBAL STYLES
+    ============================== */
     :root {
       --border-colour: #d0d0d0;
       --primary: #0064d2;
@@ -27,136 +37,180 @@
       --red-light: #FFCDD2;
       --red-dark: #C62828;
     }
+
     body {
       font-family: Calibri, Arial, sans-serif;
       margin: 0;
       padding: 0;
       background: #f9f9f9;
       min-height: 100vh;
+      color: #333;
     }
 
-    #appBar { display: flex; align-items: center; background-color: black; color: white; padding: 10px 20px; position: sticky; top: 0; z-index: 100; }
-    #backArrow { background: none; border: none; font-family: inherit; color: white; font-size: 32px; font-weight: bold; cursor: pointer; padding-right: 20px; line-height: 1; }
-    #pageTitle { text-align: center; margin: 0 auto; font-size: 20px; }
-    .content-container { display: flex; flex-direction: column; align-items: center; padding: 20px 10px; }
-    .card { background: #ffffff; border: 1px solid var(--border-colour); border-radius: 12px; width: 380px; max-width: 100%; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); padding: 20px; box-sizing: border-box; margin-bottom: 20px; }
-    .top-input-line { display: flex; gap: 8px; margin-bottom: 18px; align-items: flex-start; }
-    .top-input-group { display: flex; flex-direction: column; flex-shrink: 1; flex-basis: 0; }
-    .top-input-group label { font-size: 11px; color: #444; margin-bottom: 2px; display: block; white-space: nowrap; font-weight: bold; }
-    .top-input-group input[type="text"], .top-input-group input[type="tel"], .top-input-group select { width: 100%; padding: 5px 6px; font-size: 13px; border: 1px solid #e0e0e0; border-radius: 4px; box-sizing: border-box; background-color: #fdfdfd; line-height: 1.4; }
-    .top-input-group.id-group { flex-grow: 2; min-width: 50px; }
-    .top-input-group.tel-group { flex-grow: 2.5; min-width: 70px; }
-    .top-input-group.age-group { flex-grow: 1; min-width: 45px; }
-    .top-input-group.sex-group { flex-grow: 1.2; min-width: 55px; }
+    /* ==============================
+       2. APP BAR (Header)
+    ============================== */
+    #appBar {
+      display: flex;
+      align-items: center;
+      background-color: black;
+      color: white;
+      padding: 10px 20px;
+      font-family: 'Calibri Light', Arial, sans-serif !important;
+      font-size: 16px !important;
+      box-sizing: content-box !important;
+    }
+    .back-arrow {
+      background: none;
+      border: none;
+      font-family: inherit;
+      color: white;
+      font-size: 32px;
+      font-weight: bold;
+      cursor: pointer;
+      padding-right: 20px;
+    }
+    #pageTitle {
+      text-align: center;
+      margin: 0 auto;
+      font-size: 24px;
+      font-family: 'Calibri Light', Arial, sans-serif !important;
+      font-weight: normal !important;
+    }
 
+    /* ==============================
+       3. LAYOUT CONTAINERS
+    ============================== */
+    .content-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 10px;
+    }
 
+    .card {
+      background: #ffffff;
+      border: 1px solid var(--border-colour);
+      border-radius: 12px;
+      width: 380px;
+      max-width: 100%;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+    }
+    
+    /* ========================================================
+       4. TOP ROW INPUT ALIGNMENT (The Original Fix)
+    ======================================================== */
+    .top-input-line {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      align-items: flex-end;
+    }
+
+    .top-input-group {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .top-input-group.id-group  { flex: 2;   min-width: 50px; }
+    .top-input-group.tel-group { flex: 2.5; min-width: 70px; }
+    .top-input-group.age-group { flex: 1;   min-width: 45px; }
+    .top-input-group.sex-group { flex: 1.2; min-width: 55px; }
+    
+    .top-input-group label {
+      font-size: 11px;
+      color: #444;
+      margin-bottom: 2px;
+      font-weight: bold;
+    }
+    
+    .top-input-group input[type="text"],
+    .top-input-group input[type="tel"],
+    .top-input-group select {
+      width: 100%;
+      height: 32px;
+      padding: 5px 6px;
+      font-size: 13px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      background-color: #fdfdfd;
+      box-sizing: border-box;
+    }
+
+    /* ==============================
+       5. OTHER FORM ELEMENTS
+    ============================== */
     label:not(.switch):not(.top-input-group label):not(.dx-label) {
         font-size: 13px; display: block; margin-bottom: 4px; margin-top: 12px;
     }
-    .top-input-line + .switch-wrap,
-    .top-input-line + .dx-label-wrapper,
-    .top-input-line + label:not(.switch):not(.top-input-group label):not(.dx-label) { margin-top: 0; }
 
     input[type="text"]:not(.top-input-group input),
     input[type="tel"]:not(.top-input-group input),
     select:not(.top-input-group select),
-    textarea { width: 100%; padding: 7px 8px; border: 1px solid var(--border-colour); border-radius: 6px; font-size: 13px; box-sizing: border-box; margin-bottom: 12px; background-color: #fff; color: #333; }
-
-    .switch-wrap { display: flex; align-items: center; margin-bottom: 12px; margin-top: 0; }
+    textarea {
+      width: 100%; padding: 7px 8px; border: 1px solid var(--border-colour); border-radius: 6px; font-size: 13px; box-sizing: border-box; margin-bottom: 12px; background-color: #fff;
+    }
+    
+    textarea#ref-dx { height: 110px; resize: vertical; }
+    
+    /* ==============================
+       6. COMPONENTS (SWITCH, BUTTONS, ETC)
+    ============================== */
+    .switch-wrap { display: flex; align-items: center; margin-bottom: 12px; margin-top: 4px; }
     .switch-wrap span#screen-label { margin-left: 8px; font-size: 13px; }
-    .switch { position: relative; display: inline-block; width: 44px; height: 22px; margin-bottom: 0; }
+    .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
     .switch input { display: none; }
     .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--green-light); transition: .3s; border-radius: 22px; }
     .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background: #fff; transition: .3s; border-radius: 50%; }
     input#screen-switch:checked + .slider { background-color: var(--red-light); }
     input#screen-switch:checked + .slider:before { transform: translateX(22px); }
 
-    .dx-label-wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 4px;
-        margin-top: 12px;
-    }
-    .dx-label {
-        font-size: 13px;
-        margin-bottom: 0;
-    }
-    .btn-example {
-        font-size: 11px;
-        padding: 2px 6px;
-        background-color: var(--primary-light);
-        color: var(--primary);
-        border: 1px solid var(--primary);
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-    .btn-example:hover {
-        background-color: #d1e3f8;
-    }
-
-    textarea#ref-dx { height: 110px; resize: vertical; }
-
-    .preview-section-title {
-      font-size: 16px;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 5px;
-      width: 380px;
-      max-width: 100%;
-      text-align: left;
-      box-sizing: border-box;
-    }
-    .char-count-info {
-      font-size: 11px;
-      color: #555;
-      margin-top: -2px;
-      margin-bottom: 8px;
-      width: 380px;
-      max-width: 100%;
-      text-align: left;
-      box-sizing: border-box;
-      font-family: Calibri, Arial, sans-serif;
-    }
-    .text-preview-container { width: 380px; max-width: 100%; box-sizing: border-box; position: relative; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 8px; padding: 15px; }
-    .text-preview-content { font-family: Consolas, "Courier New", monospace; font-size: 13px; white-space: pre-wrap; word-break: break-word; line-height: 1.5; color: #333; min-height: 3em; padding-bottom: 30px; }
-    .copy-btn-preview { position: absolute; right: 15px; bottom: 12px; font-size: 20px; color: var(--primary); cursor: pointer; opacity: .75; transition: opacity .2s, color .2s; z-index: 10; }
-    .copy-btn-preview:hover { opacity: 1; }
+    select#ref-priority { transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
     select#ref-priority.priority-green { background-color: var(--green-light) !important; color: var(--green-dark) !important; border-color: var(--green-dark) !important; }
     select#ref-priority.priority-orange { background-color: var(--orange-light) !important; color: var(--orange-dark) !important; border-color: var(--orange-dark) !important; }
     select#ref-priority.priority-red { background-color: var(--red-light) !important; color: var(--red-dark) !important; border-color: var(--red-dark) !important; }
-    select#ref-priority { transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
+    
+    .dx-label-wrapper { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; margin-top: 12px; }
+    .dx-label { font-size: 13px; margin: 0; }
+    .btn-example { font-size: 11px; padding: 2px 6px; background-color: var(--primary-light); color: var(--primary); border: 1px solid var(--primary); border-radius: 4px; cursor: pointer; font-weight: bold; }
+    .btn-example:hover { background-color: #d1e3f8; }
+
+    /* ==============================
+       7. TEXT PREVIEW SECTION
+    ============================== */
+    .preview-section-title { font-size: 16px; font-weight: bold; margin-bottom: 5px; width: 380px; max-width: 100%; }
+    .char-count-info { font-size: 11px; color: #555; margin-top: -2px; margin-bottom: 8px; width: 380px; max-width: 100%; }
+    .text-preview-container { width: 380px; max-width: 100%; box-sizing: border-box; position: relative; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 8px; padding: 15px; }
+    .text-preview-content { font-family: Consolas, "Courier New", monospace; font-size: 13px; white-space: pre-wrap; word-break: break-word; min-height: 3em; padding-bottom: 30px; }
+    .copy-btn-preview { position: absolute; right: 15px; bottom: 12px; font-size: 20px; color: var(--primary); cursor: pointer; opacity: .75; transition: opacity .2s, color .2s; }
+    .copy-btn-preview:hover { opacity: 1; }
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 <body>
-  <header id="appBar">
-    <button id="backArrow" aria-label="Go Back" type="button">←</button>
-    <h1 id="pageTitle">Referral</h1>
-  </header>
+  <script type="module">
+    import { initPage } from './page-template.js';
+    initPage('Referral');
+  </script>
+  <!-- AppBar will be injected by page-template.js -->
 
   <main class="content-container">
     <div class="card">
+      
       <div class="top-input-line">
-        <div class="top-input-group id-group"> <label for="ref-id">ID</label> <input id="ref-id" type="text"> </div>
-        <div class="top-input-group tel-group"> <label for="ref-tel">Telephone</label> <input id="ref-tel" type="tel"> </div>
-        <div class="top-input-group age-group"> <label for="ref-age">Age</label> <input id="ref-age" type="text"> </div>
-        <div class="top-input-group sex-group">
-          <label for="ref-sex">M/F</label>
-          <select id="ref-sex">
-            <option value="" disabled selected hidden></option>
-            <option value="M">M</option>
-            <option value="F">F</option>
-          </select>
-        </div>
+        <div class="top-input-group id-group"><label for="ref-id">ID</label><input id="ref-id" type="text"></div>
+        <div class="top-input-group tel-group"><label for="ref-tel">Telephone</label><input id="ref-tel" type="tel"></div>
+        <div class="top-input-group age-group"><label for="ref-age">Age</label><input id="ref-age" type="text"></div>
+        <div class="top-input-group sex-group"><label for="ref-sex">M/F</label><select id="ref-sex"><option value="" disabled selected hidden></option><option value="M">M</option><option value="F">F</option></select></div>
       </div>
-
+      
       <div class="switch-wrap">
-        <label class="switch"> <input id="screen-switch" type="checkbox"><span class="slider"></span> </label>
-        <span id="screen-label">Screening: No problems</span> <!-- Will be updated by JS to Pass/Fail -->
+        <label class="switch"><input id="screen-switch" type="checkbox"><span class="slider"></span></label>
+        <span id="screen-label">Screening: No problems</span>
       </div>
-
+      
       <label for="ref-priority">Priority</label>
       <select id="ref-priority">
         <option value="" disabled selected hidden></option>
@@ -165,28 +219,28 @@
         <option value="Soon">Soon/When possible (days)</option>
         <option value="Emergency">Emergency/Urgent (today)</option>
       </select>
-
+      
       <div class="dx-label-wrapper">
         <label for="ref-dx" class="dx-label">Provisional diagnosis (free text)</label>
         <button id="btnLoadExample" class="btn-example" type="button">Example</button>
       </div>
       <textarea id="ref-dx" placeholder="eg SUB-CONJUNTIVAL HAEMORRHAGE – sudden, bright-red patch, no pain or vision change. {problem & onset; what you saw; vision & pupils/hearing/odour; medication} D Smith (Hightown Clinic)"></textarea>
+
     </div>
 
     <h3 class="preview-section-title">Text Preview:</h3>
     <p id="textPreviewCharCountInfo" class="char-count-info"></p>
+
     <div class="text-preview-container">
       <div id="textPreviewContent" class="text-preview-content"></div>
       <i class="fas fa-copy copy-btn-preview" id="copyPreviewText" title="Copy preview format"></i>
     </div>
+
   </main>
 
   <script>
+    // The JavaScript remains the same as before
     document.addEventListener('DOMContentLoaded', function () {
-      const backArrowButton = document.getElementById('backArrow');
-      if (backArrowButton) {
-          backArrowButton.addEventListener('click', function() { history.back(); });
-      }
       initializeForm();
     });
 
@@ -207,96 +261,61 @@
       function updateReferralPriorityColor() {
         const selectedValue = refPrioritySelect.value;
         refPrioritySelect.classList.remove('priority-green', 'priority-orange', 'priority-red');
-        if (selectedValue === "Managed" || selectedValue === "Routine") refPrioritySelect.classList.add('priority-green');
-        else if (selectedValue === "Soon") refPrioritySelect.classList.add('priority-orange');
-        else if (selectedValue === "Emergency") refPrioritySelect.classList.add('priority-red');
+        if (selectedValue === "Managed" || selectedValue === "Routine") { refPrioritySelect.classList.add('priority-green'); } 
+        else if (selectedValue === "Soon") { refPrioritySelect.classList.add('priority-orange'); } 
+        else if (selectedValue === "Emergency") { refPrioritySelect.classList.add('priority-red'); }
       }
 
       function generateCompactReferralText() {
         const idVal = refIdInput.value.trim() || 'N/A';
-        let telVal = refTelInput.value.trim() || 'N/A';
-        if (telVal !== 'N/A') {
-            telVal = telVal.replace(/\s+/g, ''); 
-        }
+        let telVal = refTelInput.value.trim().replace(/\s+/g, '') || 'N/A';
         const ageVal = refAgeInput.value.trim() || 'N/A';
         const sexVal = refSexSelect.value || '';
+        const screeningValue = screenSwitch.checked ? 'Fail' : 'Pass';
         
-        const screeningValue = screenSwitch.checked ? 'Fail' : 'Pass'; 
-
         let priorityDisplay = 'N/A';
         if (refPrioritySelect.value && refPrioritySelect.options[refPrioritySelect.selectedIndex]) {
             const selectedOption = refPrioritySelect.options[refPrioritySelect.selectedIndex];
-            if (selectedOption.value) { 
+            if (selectedOption.value) {
                 let fullText = selectedOption.text.trim();
                 const timeframeMatch = fullText.match(/\((weeks|days|today)\)/i);
-
-                if (timeframeMatch) {
-                    priorityDisplay = fullText.replace(timeframeMatch[0], `(${timeframeMatch[1].toUpperCase()})`);
-                } else {
-                    priorityDisplay = selectedOption.value; 
-                }
+                priorityDisplay = timeframeMatch ? fullText.replace(timeframeMatch[0], `(${timeframeMatch[1].toUpperCase()})`) : selectedOption.value;
             }
         }
         
-        let dxVal = refDxTextarea.value.trim();
-        if (dxVal === '') {
-          dxVal = 'N/A';
-        } else {
-          dxVal = dxVal.replace(/(\r\n|\n|\r)+/g, ' ');
-          dxVal = dxVal.replace(/\s\s+/g, ' ');
-          // No longer adding a period after a single initial for names like "D Smith"
-        }
+        let dxVal = refDxTextarea.value.trim().replace(/(\r\n|\n|\r)+/g, ' ').replace(/\s\s+/g, ' ') || 'N/A';
 
-        const part1 = `ID:${idVal}`;
-        const part2 = `T:${telVal}`;
-        const part3 = `A:${ageVal}${sexVal}`;
-        const part4 = screeningValue;
-        const part5 = priorityDisplay;
-        const part6 = `Dx: ${dxVal}`; // Added space after Dx:
-        
-        return [part1, part2, part3, part4, part5, part6].join('; ');
+        return [`ID:${idVal}`, `T:${telVal}`, `A:${ageVal}${sexVal}`, screeningValue, priorityDisplay, `Dx: ${dxVal}`].join('; ');
       }
 
       function updateTextPreview() {
         const compactText = generateCompactReferralText();
-        if (textPreviewContentEl) {
-            textPreviewContentEl.textContent = compactText;
+        textPreviewContentEl.textContent = compactText;
+        
+        const len = compactText.length;
+        const smsLimitSingle = 160;
+        let message = `[${len} character${len === 1 ? '' : 's'}`;
+        
+        if (len <= smsLimitSingle) {
+            message += ` - fits in 1 text message]`;
+            textPreviewCharCountInfoEl.style.color = 'var(--green-dark)';
+        } else {
+            message += ` - exceeds ${smsLimitSingle} chars, may use multiple SMS]`;
+            textPreviewCharCountInfoEl.style.color = 'var(--red-dark)';
         }
-
-        if (textPreviewCharCountInfoEl) { 
-            const len = compactText.length;
-            const smsLimitSingle = 160;
-            let message = `[${len} character${len === 1 ? '' : 's'}`;
-
-            if (len <= smsLimitSingle) {
-                message += ` - fits in 1 text message]`;
-                textPreviewCharCountInfoEl.style.color = 'var(--green-dark)';
-            } else {
-                message += ` - exceeds ${smsLimitSingle} chars, may use multiple SMS]`;
-                textPreviewCharCountInfoEl.style.color = 'var(--red-dark)';
-            }
-            textPreviewCharCountInfoEl.textContent = message;
-        }
+        textPreviewCharCountInfoEl.textContent = message;
       }
 
-      function showCopyFeedback(element, successMessage = 'Copied!', originalIconClass = 'fa-copy', successIconClass = 'fa-check') {
-          if (!element) return;
-          const originalColor = element.style.color;
-          element.classList.remove('fas', originalIconClass);
-          element.classList.add('fas', successIconClass);
-          element.style.color = 'var(--green-dark)';
-          setTimeout(() => {
-              element.classList.remove('fas', successIconClass);
-              element.classList.add('fas', originalIconClass);
-              element.style.color = originalColor || 'var(--primary)';
-          }, 1500);
+      function showCopyFeedback(element) {
+        if (!element) return;
+        element.classList.remove('fa-copy'); element.classList.add('fa-check'); element.style.color = 'var(--green-dark)';
+        setTimeout(() => {
+            element.classList.remove('fa-check'); element.classList.add('fa-copy'); element.style.color = 'var(--primary)';
+        }, 1500);
       }
 
       function updateScreeningLabel() {
-          if (screenLabel) {
-            // Updated to show Pass/Fail
-            screenLabel.textContent = 'Screening: ' + (screenSwitch.checked ? 'Fail' : 'Pass');
-          }
+        screenLabel.textContent = 'Screening: ' + (screenSwitch.checked ? 'Fail' : 'Pass');
       }
 
       function loadExampleData() {
@@ -304,51 +323,24 @@
         refTelInput.value = "07445 667 2111";
         refAgeInput.value = "67";
         refSexSelect.value = "F";
-        screenSwitch.checked = true; 
-        refPrioritySelect.value = "Routine"; 
+        screenSwitch.checked = true;
+        refPrioritySelect.value = "Routine";
         refDxTextarea.value = "CATARACT. Reflex dark; VA hazy yrs 6/18 R+L, N12; Pupils black + react; No meds. \n\nD Smith (Hightown)";
-
-        updateScreeningLabel();
-        updateReferralPriorityColor();
-        updateTextPreview();
+        updateScreeningLabel(); updateReferralPriorityColor(); updateTextPreview();
       }
 
-      if (screenSwitch) {
-        screenSwitch.addEventListener('change', () => {
-          updateScreeningLabel();
-          updateTextPreview();
-        });
-      }
-      if (refPrioritySelect) {
-        refPrioritySelect.addEventListener('change', () => {
-          updateReferralPriorityColor();
-          updateTextPreview();
-        });
-      }
-      [refIdInput, refTelInput, refAgeInput, refDxTextarea].forEach(input => {
-        if (input) input.addEventListener('input', updateTextPreview);
+      [refIdInput, refTelInput, refAgeInput, refDxTextarea, refSexSelect, refPrioritySelect, screenSwitch].forEach(element => {
+          element.addEventListener('input', updateTextPreview);
+          element.addEventListener('change', updateTextPreview);
       });
-      if (refSexSelect) refSexSelect.addEventListener('change', updateTextPreview);
+      screenSwitch.addEventListener('change', updateScreeningLabel);
+      refPrioritySelect.addEventListener('change', updateReferralPriorityColor);
+      copyPreviewTextBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(textPreviewContentEl.textContent).then(() => showCopyFeedback(copyPreviewTextBtn)).catch(() => alert('Failed to copy text.'));
+      });
+      btnLoadExample.addEventListener('click', loadExampleData);
 
-      if (copyPreviewTextBtn) {
-        copyPreviewTextBtn.addEventListener('click', () => {
-          if (textPreviewContentEl) {
-            const compactTextToCopy = textPreviewContentEl.textContent;
-            navigator.clipboard.writeText(compactTextToCopy)
-              .then(() => showCopyFeedback(copyPreviewTextBtn, 'Copied!'))
-              .catch(() => alert('Preview text copy failed.'));
-          }
-        });
-      }
-
-      if (btnLoadExample) {
-        btnLoadExample.addEventListener('click', loadExampleData);
-      }
-
-      // Initial calls
-      updateScreeningLabel();
-      updateReferralPriorityColor();
-      updateTextPreview();
+      updateScreeningLabel(); updateReferralPriorityColor(); updateTextPreview();
     }
   </script>
 </body>
