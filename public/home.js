@@ -17,6 +17,7 @@ const languageButton = document.getElementById('language-button');
 const languageDropdown = document.getElementById('language-dropdown');
 const popup = document.getElementById('popup');
 const popupClose = document.querySelector('.popup-close');
+const overlay = document.getElementById('modal-overlay');
 
 // Accessibility: Focus traps for modal and side menu
 const popupFocusTrap = new FocusTrap(popup);
@@ -41,6 +42,14 @@ function main() {
   if (localStorage.getItem('instructionsClicked') === 'true') {
     updateButtonStyle(instructionsButton);
   }
+
+  // Add overlay and Escape key event listeners for closing popups/menus
+  overlay.addEventListener('click', closeAllPopups);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeAllPopups();
+    }
+  });
 }
 
 function fetchMutedSnippet() {
@@ -158,22 +167,57 @@ function pushLocalStorageToServer() {
 }
 
 // UI Setup Functions
+/**
+ * Closes all active popups and the overlay. This is our central cleanup function.
+ */
+function closeAllPopups() {
+  // Close side menu if it's open
+  if (sideMenu.style.left === '0px') {
+    menuIcon.classList.remove('open');
+    sideMenu.style.left = '-370px';
+    sideMenuFocusTrap.deactivate();
+  }
+
+  // Close user info popup if it's open
+  if (popup.style.right === '0px') {
+    popup.style.right = '-350px';
+    popupFocusTrap.deactivate();
+  }
+  
+  // Hide the overlay
+  overlay.style.display = 'none';
+}
+
+// NEW openPopup function
+function openPopup() {
+  // Close any other popups first
+  closeAllPopups();
+  
+  document.getElementById('popup-content').innerHTML = buildPopupContent();
+  popup.style.right = '0';
+  overlay.style.display = 'block';
+  popupFocusTrap.activate();
+}
+
+// NEW closePopup function
+function closePopup() {
+  closeAllPopups();
+}
+
+// NEW setupMenuIcon function
 function setupMenuIcon() {
   menuIcon.addEventListener('click', function() {
-    this.classList.toggle('open');
-    const overlay = document.getElementById('modal-overlay');
-    const isOpening = sideMenu.style.left !== '0px';
-    if (isOpening) {
+    const isCurrentlyOpen = this.classList.contains('open');
+    
+    // Always close everything first to reset the state
+    closeAllPopups();
+    
+    // If it was closed, now we open it
+    if (!isCurrentlyOpen) {
+      this.classList.add('open');
       sideMenu.style.left = '0px';
-      if (overlay) overlay.style.display = 'block';
+      overlay.style.display = 'block';
       sideMenuFocusTrap.activate();
-    } else {
-      sideMenu.style.left = '-370px';
-      sideMenuFocusTrap.deactivate();
-      // Only hide overlay if popup is not open
-      if (overlay && (popup.style.right === '' || popup.style.right === '-350px')) {
-        overlay.style.display = 'none';
-      }
     }
   });
 }
@@ -205,23 +249,6 @@ function setupNameIcon() {
 }
 
 function togglePopup() { popup.style.right === '0px' ? closePopup() : openPopup(); }
-function openPopup() {
-  document.getElementById('popup-content').innerHTML = buildPopupContent();
-  popup.style.right = '0';
-  // Show modal overlay
-  const overlay = document.getElementById('modal-overlay');
-  if (overlay) overlay.style.display = 'block';
-  popupFocusTrap.activate();
-}
-function closePopup() {
-  popup.style.right = '-350px';
-  // Hide modal overlay
-  const overlay = document.getElementById('modal-overlay');
-  if (overlay) overlay.style.display = 'none';
-  popupFocusTrap.deactivate();
-  const geoInfoPopup = document.getElementById('geo-info-popup');
-  if (geoInfoPopup) geoInfoPopup.style.display = 'none';
-}
 
 function buildPopupContent() {
   const lang = localStorage.getItem('preferredLanguage') || 'en';

@@ -188,7 +188,7 @@ p {
   position: fixed;
   top: calc(42px - 12.5px); /* Precisely centres the icon vertically */
   left: 20px;
-  z-index: 1100;
+  z-index: 10001; /* This makes it clickable over the overlay */
 }
 .menu-icon.active {
   color: black; /* Change icon color to black when active */
@@ -306,7 +306,7 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center; /* This stays, to center your buttons! */
-  z-index: 10000; /* Ensure side menu is above modal overlay */
+  z-index: 10000; /* High, but below the icon that closes it */
 }
 
 /* SIDEBAR OVERLAY */
@@ -1121,7 +1121,7 @@ flowise-fullchatbot { /* From sticky footer section */
 #modal-overlay {
   display: none;
   position: fixed;
-  z-index: 9998;
+  z-index: 9998; /* This is the base layer for popups */
   top: 0;
   left: 0;
   width: 100vw;
