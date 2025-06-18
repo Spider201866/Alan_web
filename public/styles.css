@@ -306,7 +306,7 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center; /* This stays, to center your buttons! */
-  z-index: 1000;
+  z-index: 10000; /* Ensure side menu is above modal overlay */
 }
 
 /* SIDEBAR OVERLAY */
@@ -1117,4 +1117,15 @@ flowise-fullchatbot { /* From sticky footer section */
 /* Keep the select sitting on the same baseline */
 .top-input-group select{vertical-align:bottom!important;}
 
-
+/* Modal overlay for popup accessibility */
+#modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.35);
+  pointer-events: auto;
+}

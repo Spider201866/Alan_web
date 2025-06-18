@@ -47,6 +47,22 @@ The following pages use the shared appbar and are visually/structurally consiste
 
 ---
 
+## Keyboard Accessibility: Focus Trap
+
+A reusable focus trap system is implemented for all modals and side menus to ensure keyboard users can navigate the app efficiently.
+
+- The `public/focus-trap.js` module provides a `FocusTrap` class.
+- This is used in `home.js` to trap focus within the user info popup and the side menu when they are open.
+- The trap:
+  - Moves focus to the first focusable element when the modal/menu opens.
+  - Cycles focus with Tab/Shift+Tab within the modal/menu.
+  - Closes the modal/menu with Escape and returns focus to the trigger.
+- To use for new modals, instantiate `new FocusTrap(yourModalElement)` and call `.activate()`/`.deactivate()` on open/close.
+
+This feature significantly improves accessibility and user experience for keyboard and assistive technology users.
+
+---
+
 ## Accessibility
 
 ### Marquee Content

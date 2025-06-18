@@ -7,6 +7,7 @@ import { faviconAndMetaSetup } from './faviconAndMeta.js';
 import { initChatbot } from './agent1-chatbot-module.js';
 import './closer.js';
 import './listener-module.js';
+import { FocusTrap } from './focus-trap.js';
 
 // DOM Elements
 const menuIcon = document.querySelector('.menu-icon');
@@ -16,6 +17,10 @@ const languageButton = document.getElementById('language-button');
 const languageDropdown = document.getElementById('language-dropdown');
 const popup = document.getElementById('popup');
 const popupClose = document.querySelector('.popup-close');
+
+// Accessibility: Focus traps for modal and side menu
+const popupFocusTrap = new FocusTrap(popup);
+const sideMenuFocusTrap = new FocusTrap(sideMenu);
 
 // Core Functions
 function main() {
@@ -156,7 +161,20 @@ function pushLocalStorageToServer() {
 function setupMenuIcon() {
   menuIcon.addEventListener('click', function() {
     this.classList.toggle('open');
-    sideMenu.style.left = (sideMenu.style.left === '0px') ? '-370px' : '0px';
+    const overlay = document.getElementById('modal-overlay');
+    const isOpening = sideMenu.style.left !== '0px';
+    if (isOpening) {
+      sideMenu.style.left = '0px';
+      if (overlay) overlay.style.display = 'block';
+      sideMenuFocusTrap.activate();
+    } else {
+      sideMenu.style.left = '-370px';
+      sideMenuFocusTrap.deactivate();
+      // Only hide overlay if popup is not open
+      if (overlay && (popup.style.right === '' || popup.style.right === '-350px')) {
+        overlay.style.display = 'none';
+      }
+    }
   });
 }
 
@@ -187,9 +205,20 @@ function setupNameIcon() {
 }
 
 function togglePopup() { popup.style.right === '0px' ? closePopup() : openPopup(); }
-function openPopup() { document.getElementById('popup-content').innerHTML = buildPopupContent(); popup.style.right = '0'; }
+function openPopup() {
+  document.getElementById('popup-content').innerHTML = buildPopupContent();
+  popup.style.right = '0';
+  // Show modal overlay
+  const overlay = document.getElementById('modal-overlay');
+  if (overlay) overlay.style.display = 'block';
+  popupFocusTrap.activate();
+}
 function closePopup() {
   popup.style.right = '-350px';
+  // Hide modal overlay
+  const overlay = document.getElementById('modal-overlay');
+  if (overlay) overlay.style.display = 'none';
+  popupFocusTrap.deactivate();
   const geoInfoPopup = document.getElementById('geo-info-popup');
   if (geoInfoPopup) geoInfoPopup.style.display = 'none';
 }
