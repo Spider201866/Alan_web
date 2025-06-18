@@ -4,7 +4,16 @@
     <meta charset="UTF-8" />
     <title>Alan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Alan: AI onboarding and login. Start using the AI assistant for eyes, ears, and skin. Secure access and language selection." />
     <link rel="stylesheet" href="styles_index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
+    <link rel="manifest" href="favicons/manifest.json">
+    <script type="module" src="faviconAndMeta.js"></script>
 
     <!-- External JS modules will be loaded as-is -->
     <script type="module">
@@ -60,10 +69,12 @@
         <!-- ===================================================================== -->
         <section class="password-screen hidden" id="passwordScreen" style="position: relative">
             <div style="text-align: center; margin-bottom: 60px">
-                <div id="language-selector-text" style="cursor: pointer; margin-bottom: 10px; font-size: 14px; color: #000" onclick="document.getElementById('index-language-button').click()">
-                    中文, हिन्दी, Español, العربية, Français...
-                </div>
-<button id="index-language-button" title="Choose language" style="background: url('images/lang.jpg') no-repeat center center; background-size: cover; width: 64px; height: 64px; border: 3px solid #3e3e3e; cursor: pointer;"></button>
+<div id="language-selector-text" style="margin-bottom: 6px; font-size: 14px; color: #000; text-align: center; cursor: pointer;" aria-label="Open language selector" onclick="document.getElementById('index-language-button').click()">
+    中文, हिन्दी, Español, العربية, Français...
+</div>
+<div style="display: flex; justify-content: center;">
+  <button id="index-language-button" title="Choose language" style="background: url('images/lang.jpg') no-repeat center center; background-size: cover; width: 64px; height: 64px; border: 3px solid #3e3e3e; cursor: pointer;"></button>
+</div>
                 <div id="index-language-dropdown" style="display: none; position: absolute; top: 40px; left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid #ccc; z-index: 9999; min-width: 220px; white-space: nowrap; max-height: 350px; overflow-y: auto; font-size: 14px; line-height: 1.2;">
                     <ul style="margin: 0; padding: 0; list-style: none">
                         <li data-value="en" style="padding: 6px; cursor: pointer"><strong>English</strong> (English)</li>
