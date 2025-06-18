@@ -1,3 +1,4 @@
+<!-- Alan UI - aboutalan.html | 18th June 2025, WJW -->
 <!doctype html>
 <html lang="en">
   <head>
@@ -47,8 +48,8 @@
         padding: 10px 20px;
       }
       /* IMPROVEMENT: Target a <button> but make it look like the old <div> */
-      #backArrow {
-        background: none; border: none; font-family: inherit; /* Reset button styles */
+      .back-arrow {
+        background: none; border: none; font-family: inherit;
         color: white;
         font-size: 32px;
         font-weight: bold;
@@ -114,17 +115,16 @@
   <body>
     <!-- Top App Bar with accessible button -->
     <div id="appBar">
-      <button id="backArrow" aria-label="Go Back">←</button>
+      <button class="back-arrow" aria-label="Go Back">←</button>
       <h1 id="pageTitle">About Alan</h1>
     </div>
 
     <!-- Main About Alan Content (structure preserved) -->
-    <div id="aboutAlan">
-      <div id="logoContainer">
-        <!-- Inline style removed from image -->
-<img src="images/bigredt.png" alt="Big Red T Logo" id="logoImage" />
-      </div>
-      <div id="aboutAlanContent">
+    <main id="aboutAlan">
+      <header id="logoContainer">
+        <img src="images/bigredt.png" alt="Big Red T Logo" id="logoImage" />
+      </header>
+      <section id="aboutAlanContent">
         <p id="aboutAlanText">
           Alan is an AI eye, ear and skin diagnostic assistant, comprising: a foundation language model and symbolic logic. Smart. Serious. State of
           the art.<br /><br />
@@ -139,16 +139,16 @@
         <p id="aboutAlanEasy"><strong>Easy-to-use</strong> – app, voice, vision</p>
         <p id="aboutAlanExplainable"><strong>Explainable</strong> – facts/rules, images</p>
         <p id="aboutAlanEncouraging"><strong>Encouraging</strong> – empathy, teacher</p>
-        <!-- Inline style removed from date paragraph -->
         <p id="aboutAlanDate"><br /><br />wjw Jan 25</p>
-      </div>
-    </div>
+      </section>
+    </main>
 
     <!-- Script with unobtrusive event listener -->
     <script>
       document.addEventListener('DOMContentLoaded', function () {
-        // IMPROVEMENT: Event listener added here
-        document.getElementById('backArrow').addEventListener('click', function() { history.back(); });
+        // Standardized back button event binding
+        const backBtn = document.querySelector('.back-arrow');
+        if (backBtn) backBtn.addEventListener('click', function() { history.back(); });
 
         updatePageTranslations();
         

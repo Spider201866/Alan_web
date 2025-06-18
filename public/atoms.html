@@ -1,3 +1,4 @@
+<!-- Alan UI - atoms.html | 18th June 2025, WJW -->
 <!doctype html>
 <html lang="en">
   <head>
@@ -38,7 +39,7 @@
         font-size: 24px;
       }
       /* IMPROVEMENT: Style the button to look identical to the old div */
-      #backArrow {
+      .back-arrow {
         background: none; border: none; font-family: inherit;
         color: white;
         font-size: 32px;
@@ -69,7 +70,7 @@
     - Contains back arrow & title
   -->
     <header id="appBar">
-      <button id="backArrow" aria-label="Go Back">←</button>
+      <button class="back-arrow" aria-label="Go Back">←</button>
       <h1 id="pageTitle">Atoms</h1>
     </header>
 
@@ -87,9 +88,8 @@
     <!-- Script with unobtrusive event listener -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('backArrow').addEventListener('click', function() {
-          history.back();
-        });
+        const backBtn = document.querySelector('.back-arrow');
+        if (backBtn) backBtn.addEventListener('click', function() { history.back(); });
       });
     </script>
   </body>

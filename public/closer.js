@@ -10,11 +10,11 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 /**
  * Runs once the page is fully loaded, initiating the animations.
  */
-window.onload = () => {
+document.addEventListener('DOMContentLoaded', () => {
   showAnimation();
   setTimeout(highlightSequence, 2000); // Start the highlight sequence after 2s
   window.scrollTo(0, 0);
-};
+});
 
 /**
  * Fades the Eyeor GIF in and out.

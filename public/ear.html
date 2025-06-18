@@ -1,3 +1,4 @@
+<!-- Alan UI - ear.html | 18th June 2025, WJW -->
 <!doctype html>
 <html lang="en">
   <head>
@@ -49,7 +50,7 @@
         box-sizing: content-box !important;
       }
       /* IMPROVEMENT: Target a <button> but make it look like the old <div> */
-      #backArrow {
+      .back-arrow {
         background: none; border: none; font-family: inherit; /* Reset button styles */
         color: white;
         font-size: 32px;
@@ -85,7 +86,7 @@
   <body>
     <!-- Top App Bar with accessible button -->
     <div id="appBar">
-      <button id="backArrow" aria-label="Go Back">←</button>
+      <button class="back-arrow" aria-label="Go Back">←</button>
       <h1 id="pageTitle">How to examine the ear</h1>
     </div>
 
@@ -137,7 +138,8 @@
       }
 
       document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('backArrow').addEventListener('click', function() { history.back(); });
+        const backBtn = document.querySelector('.back-arrow');
+        if (backBtn) backBtn.addEventListener('click', function() { history.back(); });
         updatePageTranslations();
       });
 
