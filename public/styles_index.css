@@ -1,45 +1,56 @@
-/* ==============================
-   BODY / HTML BASE STYLES
-============================== */
+/* Alan UI - styles_index.css | Corrected & Improved Version */
 
-/* Basic page styling */
+/* =====================================================================
+   1. VARIABLES & BASE STYLES
+===================================================================== */
+:root {
+  --field-width: 230px;
+  --field-height: 50px;
+  --field-border-radius: 14px;
+  --field-border-color: #ccc;
+  --field-border-color-active: #007bff;
+  --color-placeholder: #6c757d;
+  --color-text-active: #0056b3;
+  --color-background-main: #f0f0f0;
+  --color-background-form: #ffffff;
+  --button-color-primary: #007bff;
+  --button-color-disabled: #ccc;
+}
+
 body,
 html {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Prevent scrollbars */
-  display: flex;
-  justify-content: center; /* Centre content horizontally */
-  align-items: center; /* Centre content vertically */
   font-family: 'Calibri Light', Arial, sans-serif;
-  background-color: #f0f0f0;
+  background-color: var(--color-background-main);
   box-sizing: border-box;
 }
 
-/* ==============================
-   HIDE / SHOW SCREEN UTILITIES
-============================== */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-/* For hiding and showing screens */
+/* =====================================================================
+   2. SCREEN & TRANSITION UTILITIES
+===================================================================== */
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition:
-    visibility 0s 0.5s,
-    opacity 0.5s linear;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
+
 .visible {
   visibility: visible;
   opacity: 1;
   transition: opacity 0.5s linear;
 }
 
-/* ==============================
-   CONTAINER SCREENS
-============================== */
-
-/* Common container for splash and instruction screens */
+/* =====================================================================
+   3. PAGE-LEVEL CONTAINERS
+===================================================================== */
 .splash-screen,
 .instruction-screen {
   position: absolute;
@@ -52,246 +63,150 @@ html {
   justify-content: center;
   align-items: center;
   text-align: center;
-}
-
-/* ==============================
-   SPLASH SCREEN & ANIMATIONS
-============================== */
-
-/* Smooth transition for images and text */
-.splash-screen img,
-.splash-screen p {
-  transition: transform 3s ease-in-out;
-  margin: 20px 0;
-}
-
-/* Splash screen image specifics */
-.splash-screen img {
-  width: 30vw;
-  max-width: 150px;
-  height: auto;
-  margin-bottom: 60px;
-  transform-origin: center;
-  -webkit-transform-origin: center; /* For older browsers */
-}
-
-/* Splash screen paragraph text */
-.splash-screen p {
-  font-size: calc(12px + 1vmin);
-  font-weight: bold;
-  font-style: italic;
-  margin-top: 60px;
-}
-
-/* Logo styling (part of splash screen) */
-#logo2 {
-  width: 50vw;
-  max-width: 300px;
-  margin-bottom: 60px;
-}
-
-/* Zoom keyframes */
-@keyframes zoomEffect {
-  from {
-    transform: scale(0.8);
-    -webkit-transform: scale(0.8);
-  }
-  to {
-    transform: scale(1);
-    -webkit-transform: scale(1);
-  }
-}
-
-/* When splash screen is visible, apply zoom animation */
-.splash-screen.visible img {
-  animation: zoomEffect 3s ease-in-out forwards;
-}
-
-/* ==============================
-   INSTRUCTION SCREEN
-============================== */
-
-/* White background container with scroll if needed */
-.instruction-screen {
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  overflow: auto;
   box-sizing: border-box;
 }
-.instruction-screen p {
-  font-size: 16px;
-  margin: 10px 20px;
-  color: #333;
-}
-.instruction-screen p.good-luck {
-  margin-bottom: 20px;
+
+.instruction-screen {
+  padding: 20px;
+  background-color: var(--color-background-form);
+  overflow-y: auto;
 }
 
-/* ==============================
-   BLACK SCREEN OVERLAY
-============================== */
-
-/* Black screen overlay for the zoom-out transition */
 .black-screen {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background-color: black;
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-in-out;
 }
-.black-screen.visible {
-  visibility: visible;
-  opacity: 1;
-}
-.black-screen img {
-  width: auto;
-  max-width: 30%;
+
+/* =====================================================================
+   4. SPLASH SCREEN SPECIFICS
+===================================================================== */
+.splash-screen img {
+  width: 30vw; max-width: 150px;
   height: auto;
-  filter: blur(20px);
-  transition:
-    transform 4s ease-in-out,
-    filter 4s ease-in-out;
+  margin: 20px 0;
+  transform-origin: center;
+  transition: transform 3s ease-in-out;
+}
+#logo2 {
+  width: 50vw; max-width: 300px;
+  margin-bottom: 40px;
+}
+.splash-screen p {
+  font-size: calc(14px + 1vmin);
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 40px;
+}
+.splash-screen.visible img {
+  animation: zoomEffect 3s ease-in-out forwards;
+}
+@keyframes zoomEffect {
+  from { transform: scale(0.8); }
+  to { transform: scale(1); }
 }
 
-/* ==============================
-   BUTTON STYLING
-============================== */
+/* =====================================================================
+   5. ONBOARDING FORM & FIELDS
+===================================================================== */
 
-/* The blue buttons (Accept etc.) */
+/* Common styles for all input/select fields */
+.onboarding-field {
+  display: flex; align-items: center;
+  width: var(--field-width); height: var(--field-height);
+  margin: 10px auto; padding: 0 15px;
+  font-size: 16px; font-family: inherit;
+  color: var(--color-placeholder);
+  background-color: var(--color-background-form);
+  border: 2px solid var(--field-border-color);
+  border-radius: var(--field-border-radius);
+  box-sizing: border-box; position: relative;
+  appearance: none; -webkit-appearance: none;
+  text-align: left;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.onboarding-field.is-active {
+  color: var(--color-text-active);
+  border-color: var(--field-border-color-active);
+}
+
+/* --- Dropdown Arrow Styling --- */
+.experience-dropdown,
+.custom-multiselect-container {
+  cursor: pointer;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%233e3e3e" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 24px;
+  padding-right: 45px;
+}
+select.experience-dropdown {
+  padding-left: 15px;
+}
+
+/* --- Aims Multi-Select Dropdown --- */
+.custom-multiselect-container { padding: 0; }
+.custom-multiselect-container .select-box {
+  display: flex; align-items: center;
+  height: 100%; width: 100%;
+  padding: 0 15px;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+.custom-multiselect-container .checkboxes {
+  display: none; position: absolute;
+  top: 100%; left: 0; right: 0;
+  background: var(--color-background-form);
+  border: 1px solid var(--field-border-color); border-top: none;
+  border-radius: 0 0 var(--field-border-radius) var(--field-border-radius);
+  max-height: 200px; overflow-y: auto;
+  z-index: 1000; padding: 10px;
+  text-align: left;
+}
+.custom-multiselect-container .checkboxes label {
+  display: flex; align-items: center;
+  padding: 8px; cursor: pointer;
+  color: #333; font-size: 16px;
+  border-radius: 6px;
+}
+.custom-multiselect-container .checkboxes label:hover {
+  background-color: var(--color-background-main);
+}
+.custom-multiselect-container .checkboxes input[type="checkbox"] {
+  margin-right: 12px; transform: scale(1.2); flex-shrink: 0;
+}
+
+/* =====================================================================
+   6. BUTTONS (Restored)
+===================================================================== */
+
+/* General button style for this page */
 button {
   padding: 10px 20px;
   font-size: 16px;
   color: white;
-  background-color: #007bff;
+  background-color: var(--button-color-primary);
   border: none;
-  border-radius: 15px;
+  border-radius: 15px; /* Restoring your original button border-radius */
   cursor: pointer;
-}
-
-/* Disabled button state */
-button:disabled {
-  background-color: #ccc;
-}
-
-/* ==============================
-   INPUTS / SELECTS / DROPDOWNS
-============================== */
-
-/* White background inputs & dropdowns (Role, Experience, Geolocation, Name, Contact) */
-select,
-.geo-button,
-.name-input,
-.contact-input {
-  padding: 4px 20px;
-  font-size: 14px;
-  color: grey;
-  background-color: white;
-  border: 1px solid grey;
-  border-radius: 15px;
-  width: 230px;
-  box-sizing: border-box;
-  text-align: center;
-  margin-bottom: 20px;
-  cursor: pointer;
-}
-
-/* Keep the black arrow icon for SELECTs */
-select {
+  transition: background-color 0.2s;
+  -webkit-appearance: none;
   appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 25px;
-  max-height: 300px;
-  line-height: 1.2;
 }
 
-/* Make geolocation button text turn blue after it is clicked */
-.geo-button.clicked {
-  color: blue;
-}
-/* Turn text blue after name and contact input are entered */
-.name-input.entered,
-.contact-input.entered {
-  color: blue;
+/* Disabled state for ANY button on this page */
+button:disabled {
+  background-color: var(--button-color-disabled);
+  cursor: not-allowed;
 }
 
-/* Updated Focus Button with centred text and dropdown arrow */
-.focus-button {
-  padding: 4px 20px;
-  font-size: 14px;
-  color: grey; /* Same grey as placeholders */
-  background-color: white;
-  border: 1px solid grey;
-  border-radius: 15px;
-  width: 230px;
-  box-sizing: border-box;
-  text-align: center; /* Centre the text */
-  margin-bottom: 20px;
-  cursor: pointer;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="16px" height="16px"><path d="M7 10l5 5 5-5H7z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 10px center; /* Adjust position of the arrow */
-  background-size: 25px; /* Adjust arrow size */
-  padding-right: 25px; /* Ensure the arrow does not overlap text */
-  line-height: 1.2; /* Improve vertical alignment of text */
-  display: flex;
-  justify-content: center; /* Centre text horizontally */
-  align-items: center; /* Centre text vertically */
-}
-
-/* Turn text blue when any checkbox is selected */
-.focus-button.entered {
-  color: blue;
-}
-
-/* ==============================
-   FOCUS DROPDOWN CHECKBOXES
-============================== */
-
-/* Absolutely positioned dropdown for checkboxes so the page does not jump */
-.focus-container {
-  position: relative;
-}
-.focus-dropdown.hidden {
-  display: none;
-}
-.focus-dropdown.visible {
-  display: block;
-  position: absolute;
-  background-color: #fff;
-  border: 1px solid grey;
-  border-radius: 10px;
-  padding: 10px;
-  z-index: 999;
-  width: 230px;
-  box-sizing: border-box; /* Ensure padding does not affect width */
-}
-
-/* Style each checkbox item */
-.focus-dropdown label {
-  display: flex;
-  align-items: center; /* Vertically centre checkbox and label text */
-  justify-content: flex-start; /* Align text and checkbox to the left */
-  font-size: 14px;
-  margin: 10px 0; /* Add spacing between items */
-  cursor: pointer;
-  color: grey;
-}
-.focus-dropdown input[type='checkbox'] {
-  margin-right: 10px; /* Space between checkbox and label */
-  width: 14px; /* Adjust width for smaller size */
-  height: 14px; /* Adjust height for smaller size */
-  vertical-align: middle; /* Align checkbox with label text */
+/* Specific styling for the Accept button, if needed, can go here.
+   Currently, it inherits the general `button` style which is correct. */
+#acceptButton {
+  /* Example of a specific override if you wanted it: */
+  /* font-weight: bold; */
 }

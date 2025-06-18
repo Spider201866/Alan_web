@@ -95,6 +95,10 @@ app.post(
  */
 app.post(
   "/fetch-records",
+  (req, res, next) => {
+    console.log("FETCH-RECORDS BODY:", req.body);
+    next();
+  },
   validatePassword,
   handleErrors(async (req, res) => {
     res.json(await readJsonFile(path.join(__dirname, "user-info.json")));
@@ -165,6 +169,12 @@ async function appendToHistory(newRecord) {
   await fs.writeFile(historyPath, JSON.stringify(history, null, 2));
   console.log("Appended/updated user-history.json");
 }
+
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, _next) => {
+  console.error("GLOBAL ERROR:", err);
+  res.status(400).send("Bad Request: " + err.message);
+});
 
 // Export app and helpers for testing
 module.exports = { app, readJsonFile, appendToHistory };
