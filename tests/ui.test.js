@@ -44,7 +44,83 @@ describe('Alan Webapp UI/UX', () => {
         getCurrentPosition: jest.fn()
       }
     };
+});
+
+// Accessibility tests for marquee duplication in boxes.html
+describe('Accessibility: Marquee duplication in boxes.html', () => {
+  it('should set aria-hidden="true" on all duplicated marquee elements (IDs ending in "b")', () => {
+    // Simulate the DOM structure of boxes.html
+    const dom = new JSDOM(`
+      <section class="marquee">
+        <div class="marquee-content-reverse">
+          <div class="box" id="eyeMarqueeLine1a">What is glaucoma?</div>
+          <div class="box" id="eyeMarqueeLine1b" aria-hidden="true">What is glaucoma?</div>
+          <div class="box" id="eyeMarqueeLine2a">How do I see the optic disc with the Arclight?</div>
+          <div class="box" id="eyeMarqueeLine2b" aria-hidden="true">How do I see the optic disc with the Arclight?</div>
+        </div>
+      </section>
+      <section class="marquee">
+        <div class="marquee-content">
+          <div class="box" id="earMarqueeLine1a">What is otitis media?</div>
+          <div class="box" id="earMarqueeLine1b" aria-hidden="true">What is otitis media?</div>
+          <div class="box" id="earMarqueeLine2a">Can I see the tympanic membrane with my Arclight?</div>
+          <div class="box" id="earMarqueeLine2b" aria-hidden="true">Can I see the tympanic membrane with my Arclight?</div>
+        </div>
+      </section>
+    `);
+    const document = dom.window.document;
+    // Select all elements with id ending in "b"
+    const duplicatedBoxes = Array.from(document.querySelectorAll('.box[id$="b"]'));
+    duplicatedBoxes.forEach(box => {
+      expect(box.getAttribute('aria-hidden')).toBe('true');
+    });
   });
+});
+
+// Accessibility tests for icon-only buttons
+describe('Accessibility: Icon-only buttons have aria-labels', () => {
+  it('should have aria-label on icon-only language button in home.html', () => {
+    const dom = new JSDOM(`
+      <button class="button btn-lang" id="language-button" aria-label="Change language"></button>
+    `);
+    const document = dom.window.document;
+    const btn = document.getElementById('language-button');
+    expect(btn).not.toBeNull();
+    expect(btn.getAttribute('aria-label')).toBe('Change language');
+  });
+
+  it('should have aria-label on icon-only language button in index.html', () => {
+    const dom = new JSDOM(`
+      <button id="index-language-button" title="Choose language" aria-label="Change language"></button>
+    `);
+    const document = dom.window.document;
+    const btn = document.getElementById('index-language-button');
+    expect(btn).not.toBeNull();
+    expect(btn.getAttribute('aria-label')).toBe('Change language');
+  });
+
+  it('should have aria-label on icon-only clear history button in home.html', () => {
+    const dom = new JSDOM(`
+      <button id="clearHistoryBtn" title="Delete all chat history" aria-label="Delete all chat history">
+        <svg></svg>
+      </button>
+    `);
+    const document = dom.window.document;
+    const btn = document.getElementById('clearHistoryBtn');
+    expect(btn).not.toBeNull();
+    expect(btn.getAttribute('aria-label')).toBe('Delete all chat history');
+  });
+
+  it('should have aria-label on icon-only geo-info button in home.html', () => {
+    const dom = new JSDOM(`
+      <button id="geo-info-button" aria-label="Show location info">i</button>
+    `);
+    const document = dom.window.document;
+    const btn = document.getElementById('geo-info-button');
+    expect(btn).not.toBeNull();
+    expect(btn.getAttribute('aria-label')).toBe('Show location info');
+  });
+});
 
   afterEach(() => {
     jest.resetAllMocks();

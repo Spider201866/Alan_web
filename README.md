@@ -44,3 +44,34 @@ The following pages use the shared appbar and are visually/structurally consiste
 2. Ensure `<link rel="stylesheet" href="styles.css">` is included in the `<head>`.
 3. Do **not** add local appbar/back-arrow/pageTitle CSS or markup.
 4. For justified main content, use `text-align: justify;` on your main content container.
+
+---
+
+## Accessibility
+
+### Marquee Content
+
+- All duplicated marquee content (used for seamless scrolling) in `boxes.html` must have `aria-hidden="true"` on the duplicated elements (IDs ending in "b"). This ensures screen readers do not read the same content twice.
+
+### Icon-only Buttons
+
+- All icon-only buttons (buttons with no visible text, only an icon or image) must have an appropriate `aria-label` attribute describing their action. This applies to language selection, clear history, and similar buttons in `home.html`, `index.html`, and elsewhere.
+
+---
+
+## Accessibility Testing
+
+Automated accessibility tests are included in `tests/ui.test.js` to enforce these requirements.
+
+- **Marquee Accessibility:** Tests verify that all duplicated marquee elements in `boxes.html` have `aria-hidden="true"`.
+- **Icon-only Button Accessibility:** Tests verify that all icon-only buttons in `home.html` and `index.html` have the correct `aria-label` attributes.
+
+### Running the Accessibility Tests
+
+To run the accessibility and UI tests:
+
+```bash
+npx jest tests/ui.test.js
+```
+
+These tests use [Jest](https://jestjs.io/) and [jsdom](https://github.com/jsdom/jsdom). Make sure both are installed in your project dependencies.

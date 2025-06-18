@@ -44,6 +44,9 @@ This folder contains automated tests for the Alan webapp, covering backend API, 
     17. Shows password entry UI and accepts input
     18. Shows onboarding screen and accepts user details
     19. Shows popup with correct user info from localStorage
+    20. **Accessibility:**
+        - Verifies all duplicated marquee elements in `boxes.html` (IDs ending in "b") have `aria-hidden="true"`.
+        - Verifies all icon-only buttons in `home.html` and `index.html` have the correct `aria-label` attributes.
 
 ## Setup
 
@@ -77,6 +80,7 @@ This folder contains automated tests for the Alan webapp, covering backend API, 
 - Backend tests use a temporary directory for all data, so your real files are never touched.
 - Frontend and UI tests use jsdom to simulate the DOM and localStorage.
 - All major user flows, UI elements, and backend logic are covered.
+- **Accessibility requirements are enforced by automated tests in `ui.test.js`.**
 - For full browser/E2E automation, consider Playwright or Cypress.
 
 ## Expanding the Suite
