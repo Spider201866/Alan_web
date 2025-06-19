@@ -5,6 +5,13 @@ const path = require("path");
 const cors = require("cors");
 const crypto = require("crypto");
 require("dotenv").config();
+const SALT = process.env.PASSWORD_SALT;
+if (!SALT) {
+  console.error("CRITICAL: PASSWORD_SALT is not defined in the .env file. Exiting.");
+  process.exit(1); // Stop the server if the salt is missing
+}
+const { Mutex } = require("async-mutex");
+const fileWriteMutex = new Mutex();
 
 // --- 1. CONFIGURATION ---
 const app = express();
@@ -24,7 +31,7 @@ app.options("*", cors()); // Enable pre-flight requests
  * Middleware: Validates master or one-time password.
  */
 function hashPassword(str = "") {
-  return crypto.createHash("sha256").update(str).digest("hex");
+  return crypto.createHash("sha256").update(str + SALT).digest("hex");
 }
 
 function validatePassword(req, res, next) {
@@ -144,30 +151,35 @@ async function readJsonFile(filePath) {
  * @param {object} newRecord - The record to add or update.
  */
 async function appendToHistory(newRecord) {
-  const historyPath = path.join(__dirname, "user-history.json");
-  const history = await readJsonFile(historyPath);
+  const release = await fileWriteMutex.acquire();
+  try {
+    const historyPath = path.join(__dirname, "user-history.json");
+    const history = await readJsonFile(historyPath);
 
-  const existingIndex = history.findIndex(
-    (item) => item.sessionId === newRecord.sessionId,
-  );
+    const existingIndex = history.findIndex(
+      (item) => item.sessionId === newRecord.sessionId,
+    );
 
-  if (existingIndex >= 0) {
-    // Update existing record: increment refreshCount and update key fields.
-    const existing = history[existingIndex];
-    existing.refreshCount = (existing.refreshCount || 1) + 1;
-    Object.assign(existing, {
-      dateTime: newRecord.dateTime,
-      latitude: newRecord.latitude,
-      longitude: newRecord.longitude,
-      area: newRecord.area,
-    });
-  } else {
-    // Add new record to history.
-    history.push(newRecord);
+    if (existingIndex >= 0) {
+      // Update existing record: increment refreshCount and update key fields.
+      const existing = history[existingIndex];
+      existing.refreshCount = (existing.refreshCount || 1) + 1;
+      Object.assign(existing, {
+        dateTime: newRecord.dateTime,
+        latitude: newRecord.latitude,
+        longitude: newRecord.longitude,
+        area: newRecord.area,
+      });
+    } else {
+      // Add new record to history.
+      history.push(newRecord);
+    }
+
+    await fs.writeFile(historyPath, JSON.stringify(history, null, 2));
+    console.log("Appended/updated user-history.json");
+  } finally {
+    release();
   }
-
-  await fs.writeFile(historyPath, JSON.stringify(history, null, 2));
-  console.log("Appended/updated user-history.json");
 }
 
 // eslint-disable-next-line no-unused-vars

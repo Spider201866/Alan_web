@@ -2,11 +2,12 @@
   "name": "your-project-name",
   "version": "1.0.0",
   "scripts": {
-"start": "node server.js",
-"test": "jest --verbose"
+    "start": "node server.js",
+    "test": "jest --verbose"
   },
   "dependencies": {
     "@upstash/redis": "^1.31.1",
+    "async-mutex": "^0.5.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
