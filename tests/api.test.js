@@ -1,3 +1,5 @@
+/* Alan UI - api.test.js | 19th June 2025, WJW */
+
 /* eslint-env jest */
 /**
  * API and backend helper tests for Alan webapp.
@@ -18,17 +20,32 @@ let originalJoin;
 describe('API Endpoints', () => {
   // Use a temp directory for test data
 
+  let originalMasterPasswordHashAtStart;
+  let originalPasswordSaltAtStart;
+  let originalOneTimePasswordHashesAtStart;
+
   beforeAll(async () => {
-    // Set up a valid password hash and salt before requiring the app
+    // Store original environment variables
+    originalMasterPasswordHashAtStart = process.env.MASTER_PASSWORD_HASH;
+    originalPasswordSaltAtStart = process.env.PASSWORD_SALT;
+    originalOneTimePasswordHashesAtStart = process.env.ONE_TIME_PASSWORD_HASHES;
+
+    // Set up a valid password hash and salt for the main test suite
     const crypto = require('crypto');
     const password = 'testpass';
     const salt = 'testsalt';
     process.env.PASSWORD_SALT = salt;
-    const hash = crypto.createHash('sha256').update(password + salt).digest('hex');
+    const hash = crypto
+      .createHash('sha256')
+      .update(password + salt)
+      .digest('hex');
     process.env.MASTER_PASSWORD_HASH = hash;
 
     const otp = 'onetimetest';
-    const otpHash = crypto.createHash('sha256').update(otp + salt).digest('hex');
+    const otpHash = crypto
+      .createHash('sha256')
+      .update(otp + salt)
+      .digest('hex');
     process.env.ONE_TIME_PASSWORD_HASHES = otpHash;
 
     tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-test-'));
@@ -50,9 +67,15 @@ describe('API Endpoints', () => {
     path.join = originalJoin;
     // Clean up tempDir
     await fs.rm(tempDir, { recursive: true, force: true });
+
+    // Restore original environment variables after all tests in this file
+    process.env.MASTER_PASSWORD_HASH = originalMasterPasswordHashAtStart;
+    process.env.PASSWORD_SALT = originalPasswordSaltAtStart;
+    process.env.ONE_TIME_PASSWORD_HASHES = originalOneTimePasswordHashesAtStart;
   });
+
   describe('POST /record-info', () => {
-    it('should accept a valid record and write to user-info.json and user-history.json', async () => {
+    it('should accept a valid record and write to user-info.json and user-history.json with trailing newline', async () => {
       const record = {
         sessionId: 'test-session',
         latitude: 1.23,
@@ -66,7 +89,14 @@ describe('API Endpoints', () => {
         .set('Accept', 'application/json');
       expect(res.statusCode).toBe(200);
       expect(res.text).toBe('OK');
-      // Optionally, check that files were written (mock fs in real tests)
+
+      // Verify user-info.json has trailing newline
+      const userInfoContent = await fs.readFile(path.join(tempDir, 'user-info.json'), 'utf8');
+      expect(userInfoContent.endsWith('\n')).toBe(true);
+
+      // Verify user-history.json has trailing newline
+      const userHistoryContent = await fs.readFile(path.join(tempDir, 'user-history.json'), 'utf8');
+      expect(userHistoryContent.endsWith('\n')).toBe(true);
     });
 
     it('should reject invalid records', async () => {
@@ -99,7 +129,7 @@ describe('API Endpoints', () => {
       };
       await fs.writeFile(
         path.join(tempDir, 'user-info.json'),
-        JSON.stringify([testRecord], null, 2)
+        JSON.stringify([testRecord], null, 2) + '\n' // Ensure test data also has newline
       );
       const res = await request(app).post('/fetch-records').send({ password });
       expect(res.statusCode).toBe(200);
@@ -170,13 +200,19 @@ describe('One-Time Password Logic', () => {
   const crypto = require('crypto');
   const otp = 'onetimetest';
   const salt = 'testsalt';
-  const otpHash = crypto.createHash('sha256').update(otp + salt).digest('hex');
+  const otpHash = crypto
+    .createHash('sha256')
+    .update(otp + salt)
+    .digest('hex');
   let otpTempDir;
   let otpApp;
 
   beforeAll(async () => {
     process.env.PASSWORD_SALT = salt;
-    process.env.MASTER_PASSWORD_HASH = crypto.createHash('sha256').update('testpass' + salt).digest('hex');
+    process.env.MASTER_PASSWORD_HASH = crypto
+      .createHash('sha256')
+      .update('testpass' + salt)
+      .digest('hex');
     process.env.ONE_TIME_PASSWORD_HASHES = otpHash;
 
     otpTempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-otp-test-'));
@@ -216,7 +252,7 @@ describe('One-Time Password Logic', () => {
     }
     await fs.writeFile(
       path.join(otpTempDir, 'user-info.json'),
-      JSON.stringify([testRecord], null, 2)
+      JSON.stringify([testRecord], null, 2) + '\n'
     );
     const res = await request(otpApp).post('/fetch-records').send({ password: otp });
     if (res.statusCode !== 200 || JSON.stringify(res.body) !== JSON.stringify([testRecord])) {

@@ -1,3 +1,5 @@
+<!-- Alan UI - tests/README.md | 19th June 2025, WJW -->
+
 # Alan Webapp Test Suite
 
 ## Formatting
@@ -15,22 +17,25 @@ This folder contains automated tests for the Alan webapp, covering backend API, 
 
 ## Structure
 
-- `api.test.js` — Backend API, authentication, OTP, rate limiting, and helper function tests (Jest + Supertest)
-  - Isolated test data (no pollution of real files; OTP and rate limiting tests use separate temp directories and server instances for full isolation)
+- `api.test.js` — Backend API, authentication (legacy), rate limiting, and helper function tests (Jest + Supertest)
+  - Isolated test data (no pollution of real files; rate limiting tests use separate temp directories and server instances for full isolation)
   - **Tests:**
-    1. Accepts a valid record and writes to user-info.json and user-history.json
-    2. Rejects invalid records
-    3. Rejects requests with invalid password (/fetch-records)
-    4. Accepts valid password and returns user-info.json
-    5. Requires a valid password (/fetch-history)
-    6. readJsonFile returns [] for missing file
-    7. appendToHistory can be called with a record
+    1. Accepts a valid record and writes to user-info.json and user-history.json (legacy)
+    2. Rejects invalid records (legacy)
+    3. Rejects requests with invalid password (/fetch-records) (legacy)
+    4. Accepts valid password and returns user-info.json (legacy)
+    5. Requires a valid password (/fetch-history) (legacy)
+    6. `readJsonFile` returns `[]` for missing file (legacy)
+    7. `appendToHistory` can be called with a record (legacy)
     8. Rate limiting: returns 429 after exceeding allowed requests
-    9. One-Time Password (OTP) logic:
+    9. One-Time Password (OTP) logic (legacy):
        - Accepts a valid OTP for /fetch-records (single-use)
        - Rejects reuse of an OTP
        - Rejects invalid, empty, or malformed OTPs
-    10. All major authentication, rate limiting, and edge case flows are covered
+    10. All major authentication (legacy), rate limiting, and edge case flows are covered
+    11. Verifies JSON files (`user-info.json`, `user-history.json`) are written with a trailing newline.
+    12. Confirms `body-parser` is no longer a dependency and `express.json()` is used.
+    (Note: The server has critical checks at startup to ensure important settings like `MASTER_PASSWORD_HASH` and `PASSWORD_SALT` are present. If they're missing, the server is designed to stop immediately. Automating tests for this specific "server-stopping" behavior is complex in our current test setup. Therefore, these critical startup checks should be **manually verified** by developers when setting up or deploying the server, by intentionally trying to run it without these settings to confirm it exits as expected.)
 
 - `chatbot.test.js` — Frontend chatbot and sidebar logic (Jest + jsdom)
   - **Tests:**
@@ -95,9 +100,9 @@ This folder contains automated tests for the Alan webapp, covering backend API, 
 ## Notes
 
 - Backend tests use a temporary directory for all data, so your real files are never touched.
-- OTP and rate limiting tests are fully isolated in their own temp directories and server instances to prevent data pollution between suites.
+- Rate limiting tests are fully isolated in their own temp directories and server instances to prevent data pollution between suites.
 - Frontend and UI tests use jsdom to simulate the DOM and localStorage.
-- All major user flows, UI elements, authentication, rate limiting, OTP, and backend logic are covered.
+- All major user flows, UI elements, rate limiting, and backend logic are covered. Legacy authentication and record handling tests are still present but noted as such.
 - **Accessibility requirements are enforced by automated tests in `ui.test.js`.**
 - For full browser/E2E automation, consider Playwright or Cypress.
 

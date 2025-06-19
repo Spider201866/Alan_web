@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const fs = require('fs').promises; // Use the promise-based version of fs
 const path = require('path');
 const cors = require('cors');
@@ -13,6 +12,7 @@ if (!SALT) {
 const { Mutex } = require('async-mutex');
 const fileWriteMutex = new Mutex();
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 
 // --- Configuration ---
 const app = express();
@@ -25,17 +25,24 @@ const limiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
-if (process.env.NODE_ENV !== 'test') {
-  app.use(limiter);
+const MASTER_PASSWORD_HASH = process.env.MASTER_PASSWORD_HASH;
+if (!MASTER_PASSWORD_HASH) {
+  console.error('CRITICAL: MASTER_PASSWORD_HASH is not defined in the .env file. Exiting.');
+  process.exit(1); // Stop the server if the master password hash is missing
 }
-const MASTER_PASSWORD_HASH = process.env.MASTER_PASSWORD_HASH || '';
 let ONE_TIME_PASSWORDS = new Set(
   (process.env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean)
 );
 
 // --- Global Middleware ---
+app.use(
+  helmet({
+    contentSecurityPolicy: false, // Temporarily disable CSP to debug
+    scriptSrcAttr: ["'unsafe-inline'"], // Explicitly allow inline event handlers
+  })
+);
 app.use(cors()); // Enable CORS for all routes
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.options('*', cors()); // Enable pre-flight requests
 
@@ -113,12 +120,16 @@ app.get('/view-records', (req, res) => {
  */
 app.post(
   '/record-info',
+  limiter, // Apply rate limiting to this specific route
   validateRecord,
   handleErrors(async (req, res) => {
     const record = { ...req.body, refreshCount: 1 };
     if (!record.sessionId) record.sessionId = `fallback-${Date.now()}`;
 
-    await fs.writeFile(path.join(__dirname, 'user-info.json'), JSON.stringify([record], null, 2));
+    await fs.writeFile(
+      path.join(__dirname, 'user-info.json'),
+      JSON.stringify([record], null, 2) + '\n'
+    );
     await appendToHistory(record);
     res.send('OK');
   })
@@ -131,6 +142,7 @@ app.post(
  */
 app.post(
   '/fetch-records',
+  limiter, // Apply rate limiting to this specific route
   (req, res, next) => {
     if (process.env.NODE_ENV !== 'production') {
       console.log('FETCH-RECORDS BODY:', req.body);
@@ -150,6 +162,7 @@ app.post(
  */
 app.post(
   '/fetch-history',
+  limiter, // Apply rate limiting to this specific route
   validatePassword,
   handleErrors(async (req, res) => {
     res.json(await readJsonFile(path.join(__dirname, 'user-history.json')));
@@ -206,7 +219,7 @@ async function appendToHistory(newRecord) {
       history.push(newRecord);
     }
 
-    await fs.writeFile(historyPath, JSON.stringify(history, null, 2));
+    await fs.writeFile(historyPath, JSON.stringify(history, null, 2) + '\n');
     if (process.env.NODE_ENV !== 'production') {
       console.log('Appended/updated user-history.json');
     }

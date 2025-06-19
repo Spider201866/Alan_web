@@ -1,3 +1,5 @@
+<!-- Alan UI - README.md | 19th June 2025, WJW -->
+
 # Project Overview & Recent Updates
 
 ---
@@ -39,12 +41,14 @@ This project uses [Prettier](https://prettier.io/) for consistent code formattin
   npm run format
   ```
   (Available in both the root and `Alan_web` directories.)
+- An `.editorconfig` file is also included to enforce consistent indentation and line endings across different editors.
 
 ## Security
 
-[express-rate-limit](https://www.npmjs.com/package/express-rate-limit) is used in both server.js files to protect the server from excessive or abusive requests.
-- Each IP is limited to 100 requests per 15 minutes.
-- This helps prevent basic denial-of-service attacks and abuse.
+- **Rate Limiting:** [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) is used in `server.js` to protect specific API endpoints from excessive or abusive requests. Each IP is limited to 100 requests per 15 minutes, helping prevent basic denial-of-service attacks and abuse.
+- **Security Headers:** [Helmet](https://helmetjs.github.io/) is used in `server.js` to set various HTTP response headers, enhancing the application's security against common web vulnerabilities like XSS, clickjacking, and insecure connections. The Content Security Policy (CSP) is configured to allow necessary external resources (CDNs, Flowise backend, IP API) and inline scripts/styles.
+- **Environment Variable Validation:** Critical environment variables (`MASTER_PASSWORD_HASH`, `PASSWORD_SALT`) are validated at server startup in `server.js` to prevent the server from running with missing credentials.
+- **JSON File Integrity:** JSON data files (`user-info.json`, `user-history.json`) are ensured to have a trailing newline character for improved compatibility with various tools.
 
 ## Project Structure
 

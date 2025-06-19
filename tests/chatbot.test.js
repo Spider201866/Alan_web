@@ -1,4 +1,6 @@
-/* eslint-env jest */
+/* Alan UI - chatbot.test.js | 19th June 2025, WJW */
+
+ /* eslint-env jest */
 /**
  * Frontend chatbot and sidebar tests for Alan webapp.
  * Run with: npx jest tests/chatbot.test.js

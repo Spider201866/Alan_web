@@ -1,4 +1,6 @@
-/* eslint-env jest */
+/* Alan UI - ui.test.js | 19th June 2025, WJW */
+
+ /* eslint-env jest */
 /**
  * UI/UX integration tests for Alan webapp.
  * Run with: npx jest tests/ui.test.js
