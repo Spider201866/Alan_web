@@ -70,6 +70,10 @@
       }
       #content {
         padding: 8px 20px 20px 20px;
+        min-height: 100vh;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
       }
       #wrapSection {
         overflow: hidden; margin-bottom: 25px; padding-right: 0;
@@ -151,9 +155,18 @@
           <p id="useArclight"></p>
           <hr />
           <div id="additionalExamples" class="justify">
-            <p><strong id="labelTooLittle"></strong><br /><span id="tooLittle"></span></p>
-            <p><strong id="labelJustRight"></strong><br /><span id="justRight"></span></p>
-            <p><strong id="labelTooMuch"></strong><br /><span id="tooMuch"></span></p>
+            <p>
+              <span class="block" id="labelTooLittle" style="font-weight:bold"></span>
+              <span class="block" id="tooLittle"></span>
+            </p>
+            <p>
+              <span class="block" id="labelJustRight" style="font-weight:bold"></span>
+              <span class="block" id="justRight"></span>
+            </p>
+            <p>
+              <span class="block" id="labelTooMuch" style="font-weight:bold"></span>
+              <span class="block" id="tooMuch"></span>
+            </p>
             <p id="additionalQuery"></p>
           </div>
         </div>
