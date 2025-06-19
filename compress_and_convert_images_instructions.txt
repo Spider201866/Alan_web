@@ -1,0 +1,34 @@
+# Image Compression and WebP Conversion Instructions
+
+To compress all .png, .jpg, and .gif images and convert them to WebP for better performance, follow these steps:
+
+## 1. Install cwebp (WebP conversion tool)
+Download from: https://developers.google.com/speed/webp/download
+
+## 2. Open Command Prompt and run the following commands from your project root:
+
+REM Compress and convert all images in public/images/
+cd public\images
+
+FOR %f IN (*.png *.jpg *.jpeg *.gif) DO (
+  cwebp -q 80 "%f" -o "%~nf.webp"
+)
+
+REM Compress and convert all images in public/favicons/
+cd ..\favicons
+
+FOR %f IN (*.png *.jpg *.jpeg *.gif) DO (
+  cwebp -q 80 "%f" -o "%~nf.webp"
+)
+
+## 3. (Optional) Use an image compression tool (e.g., TinyPNG, ImageOptim) to further compress the original .png/.jpg files.
+
+## 4. Update HTML files to use WebP images with fallback to original formats, e.g.:
+<picture>
+  <source srcset="images/yourimage.webp" type="image/webp">
+  <img src="images/yourimage.png" alt="Description">
+</picture>
+
+## 5. Test all pages to ensure images display correctly in all browsers.
+
+---
