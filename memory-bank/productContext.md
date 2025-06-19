@@ -1,29 +1,29 @@
 # Product Context
 
 ## Why This Project Exists
-AlanUI Secure Record Server was created to securely collect, store, and manage sensitive user records for medical or research applications. The system is designed to ensure that only authorized users can access or modify records, protecting user privacy and data integrity.
+The AlanUI Web Chatbot was created to provide accessible and relevant health information, specifically for eye, skin, and ear conditions, to users in Low and Middle-Income Countries (LMICs). It aims to serve as a readily available resource for basic health queries.
 
 ## Problems It Solves
-- Prevents unauthorized access to sensitive user data by requiring hashed password authentication.
-- Eliminates the risk of plain-text password exposure by storing only SHA-256 hashes in environment variables.
-- Ensures data consistency and integrity by validating all incoming record submissions for correct types and structure.
-- Provides a simple, local solution for record management without the complexity of external databases or user accounts.
+- Provides immediate access to health information for users in LMICs who may have limited access to healthcare professionals.
+- Offers a simple, web-based interface for health queries without requiring complex setups or accounts.
+- Ensures information is presented in an accessible manner, catering to diverse user needs.
+- Protects the server from abuse through rate limiting.
 
 ## How It Should Work
-- Users submit records via a frontend interface or API endpoint.
-- The server validates the structure and types of submitted data before accepting it.
-- Sensitive endpoints (fetching records/history) require authentication using a master password or a one-time password, both verified via SHA-256 hash comparison.
-- The most recent record is stored in user-info.json, and all records are appended to user-history.json.
-- Admins can view the full history after authenticating.
+- Users interact with the chatbot via a static frontend interface.
+- The chatbot leverages a Flowise agent powered by Google Gemini 2.5 Flash (a 30k token LLM) to process user queries related to eye, skin, and ear health. This agent incorporates advanced role, logic, memory, and security features within its prompt to provide relevant and intelligent information.
+- Frontend pages utilize a shared appbar pattern (`public/page-template.js` and `public/styles.css`) for consistent navigation and layout.
+- Modals and side menus implement a focus trap system (`public/focus-trap.js`) to ensure keyboard accessibility.
+- Server endpoints are protected by `express-rate-limit` to prevent excessive or abusive requests.
 
 ## User Experience Goals
-- Fast, reliable record submission and retrieval.
-- Clear error messages for invalid data or failed authentication.
-- No need for users to manage accounts; access is controlled via secure passwords.
-- Simple, intuitive frontend for both users and admins.
+- Fast, reliable, and intuitive chatbot interaction, powered by an advanced LLM for more nuanced responses.
+- Clear, accurate, and easy-to-understand health information, with the ability to maintain context and apply complex logic.
+- Simple, consistent, and accessible frontend for all users, with a shared appbar and uniform page layouts.
+- Enhanced keyboard accessibility for all interactive elements, including modals and menus.
 - Minimal configuration required for deployment and operation.
 
 ## Security and Privacy
-- All authentication is handled server-side; no sensitive data is exposed to the frontend.
-- Passwords are never stored or transmitted in plain text.
-- Only authorized users can access or modify records.
+- The project focuses on providing information and does not handle sensitive user records or authentication.
+- Server endpoints are protected by `express-rate-limit` to prevent excessive or abusive requests (100 requests per 15 minutes per IP).
+- Frontend accessibility ensures sensitive content (e.g., duplicated marquee content) is hidden from screen readers where appropriate, and interactive elements have proper `aria-label` attributes.

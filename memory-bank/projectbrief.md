@@ -1,33 +1,36 @@
 # Project Brief
 
 ## Project Name
-AlanUI Secure Record Server
+AlanUI Web Chatbot
 
 ## Purpose
-To provide a secure backend server for collecting, storing, and retrieving user records, with robust authentication and data validation.
+To provide a web-based chatbot for users, especially in Low and Middle-Income Countries (LMICs), focusing on eye, skin, and ear health information.
 
 ## Core Requirements
-- Accept user record submissions via HTTP endpoints.
-- Store the most recent record and maintain a history of all records.
-- Authenticate access to sensitive endpoints using a master password or one-time passwords.
-- Store authentication credentials securely (hashed, not plain-text).
-- Validate incoming record data for correct types and structure.
-- Serve static frontend files for user interaction and record viewing.
+- Serve static frontend files for user interaction.
+- Provide chatbot functionality for eye, skin, and ear related queries.
+- Ensure accessibility for users, including keyboard navigation and screen reader compatibility.
+- Maintain a consistent and intuitive user interface across all pages.
+- Implement basic security measures like rate limiting for server endpoints.
 
 ## Goals
-- Ensure user data is protected through secure authentication and validation.
-- Prevent unauthorized access to sensitive data (records/history).
+- Deliver accurate and helpful information to users regarding eye, skin, and ear health.
+- Ensure a smooth and accessible user experience.
 - Maintain a clean, maintainable, and extensible codebase.
-- Provide clear error handling and feedback for invalid requests.
-- Support both admin and user flows with appropriate access controls.
+- Provide clear error handling and feedback for invalid requests or server issues.
+- Support easy deployment and minimal configuration.
 
 ## Out of Scope
-- No user registration or account management (passwords are managed via environment variables).
-- No external database integration (data is stored in local JSON files).
-- No frontend authentication (all security is handled server-side).
+- No user registration or account management.
+- No external database integration (data is primarily static or handled by the chatbot logic).
+- No complex backend record storage (the focus is on the chatbot interaction).
+- No advanced AI/ML for chatbot responses (responses are likely rule-based or pre-defined).
 
 ## Current Status
-- Server authenticates using SHA-256 hashed passwords stored in environment variables.
-- Record submissions are validated for expected data types.
-- All routes and middleware are implemented in a single server.js file.
-- .env file contains only hashed credentials, never plain-text passwords.
+- Static frontend files are served.
+- Frontend pages utilize a shared appbar pattern for consistent navigation and layout.
+- A reusable focus trap system is implemented for modals and side menus, enhancing keyboard accessibility.
+- Accessibility requirements for marquee content and icon-only buttons are enforced.
+- Server endpoints are protected by `express-rate-limit`.
+- Automated tests cover UI and accessibility aspects.
+- Code formatting is enforced using Prettier.

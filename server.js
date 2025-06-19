@@ -14,7 +14,7 @@ const { Mutex } = require('async-mutex');
 const fileWriteMutex = new Mutex();
 const rateLimit = require('express-rate-limit');
 
-// --- 1. CONFIGURATION ---
+// --- Configuration ---
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -33,14 +33,17 @@ let ONE_TIME_PASSWORDS = new Set(
   (process.env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean)
 );
 
-// --- 2. MIDDLEWARE ---
+// --- Global Middleware ---
 app.use(cors()); // Enable CORS for all routes
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.options('*', cors()); // Enable pre-flight requests
 
+// --- Authentication Middleware (Legacy) ---
 /**
- * Middleware: Validates master or one-time password.
+ * Helper: Hashes a given string using SHA-256 with a salt.
+ * @param {string} str - The string to hash.
+ * @returns {string} The SHA-256 hash.
  */
 function hashPassword(str = '') {
   return crypto
@@ -49,6 +52,11 @@ function hashPassword(str = '') {
     .digest('hex');
 }
 
+/**
+ * Middleware: Validates master or one-time password.
+ * This middleware is part of the legacy "Secure Record Server" functionality
+ * and is not directly used by the primary chatbot interface.
+ */
 function validatePassword(req, res, next) {
   const { password } = req.body;
   const hashed = hashPassword(password);
@@ -61,11 +69,18 @@ function validatePassword(req, res, next) {
   res.status(401).send('Invalid password');
 }
 
+// --- Utility Middleware ---
 /**
  * Middleware: A simple error handler for async routes.
+ * Catches errors from async route handlers and passes them to the global error handler.
  */
 const handleErrors = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 
+/**
+ * Middleware: Validates the structure and types of incoming record data.
+ * This middleware is part of the legacy "Secure Record Server" functionality
+ * and is not directly used by the primary chatbot interface.
+ */
 function validateRecord(req, res, next) {
   const r = req.body;
   const errors = [];
@@ -82,8 +97,8 @@ function validateRecord(req, res, next) {
   next();
 }
 
-// --- 3. ROUTES ---
-// Serve main pages
+// --- Routes ---
+// Serve main frontend pages
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -93,6 +108,8 @@ app.get('/view-records', (req, res) => {
 
 /**
  * Route: Overwrite the active record and append/update the history.
+ * This route is part of the legacy "Secure Record Server" functionality
+ * and is not directly used by the primary chatbot interface.
  */
 app.post(
   '/record-info',
@@ -108,12 +125,16 @@ app.post(
 );
 
 /**
- * Route: Fetch the single active record. Used by Flowise.
+ * Route: Fetch the single active record. Used by Flowise (legacy functionality).
+ * This route is part of the legacy "Secure Record Server" functionality
+ * and is not directly used by the primary chatbot interface.
  */
 app.post(
   '/fetch-records',
   (req, res, next) => {
-    console.log('FETCH-RECORDS BODY:', req.body);
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('FETCH-RECORDS BODY:', req.body);
+    }
     next();
   },
   validatePassword,
@@ -123,7 +144,9 @@ app.post(
 );
 
 /**
- * Route: Fetch the full user history. Used for admin view.
+ * Route: Fetch the full user history. Used for admin view (legacy functionality).
+ * This route is part of the legacy "Secure Record Server" functionality
+ * and is not directly used by the primary chatbot interface.
  */
 app.post(
   '/fetch-history',
@@ -133,14 +156,15 @@ app.post(
   })
 );
 
-// --- 4. START SERVER ---
+// --- Server Initialization ---
 if (require.main === module) {
   app.listen(port, () => console.log(`Server running at http://localhost:${port}/`));
 }
 
-// --- 5. HELPER FUNCTIONS ---
+// --- Helper Functions (Legacy Data Handling) ---
 /**
  * Helper: Reads a JSON file safely, returning [] if it doesn't exist or is invalid.
+ * This helper is part of the legacy "Secure Record Server" functionality.
  * @param {string} filePath - Path to the JSON file.
  */
 async function readJsonFile(filePath) {
@@ -156,6 +180,7 @@ async function readJsonFile(filePath) {
 
 /**
  * Helper: Appends a new record to history or updates an existing one.
+ * This helper is part of the legacy "Secure Record Server" functionality.
  * @param {object} newRecord - The record to add or update.
  */
 async function appendToHistory(newRecord) {
@@ -182,17 +207,20 @@ async function appendToHistory(newRecord) {
     }
 
     await fs.writeFile(historyPath, JSON.stringify(history, null, 2));
-    console.log('Appended/updated user-history.json');
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Appended/updated user-history.json');
+    }
   } finally {
     release();
   }
 }
 
+// --- Global Error Handling ---
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, _next) => {
   console.error('GLOBAL ERROR:', err);
   res.status(400).send('Bad Request: ' + err.message);
 });
 
-// Export app and helpers for testing
+// --- Exports for Testing ---
 module.exports = { app, readJsonFile, appendToHistory };
