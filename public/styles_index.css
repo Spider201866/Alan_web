@@ -206,7 +206,7 @@ button:disabled {
 
 /* Specific styling for the Accept button, if needed, can go here.
    Currently, it inherits the general `button` style which is correct. */
-#acceptButton {
-  /* Example of a specific override if you wanted it: */
-  /* font-weight: bold; */
-}
+/* #acceptButton {
+  Example of a specific override if you wanted it:
+  font-weight: bold;
+} */

@@ -1,105 +1,41 @@
-/* ==============================
-   GLOBAL RESETS / BASE STYLES
-============================== */
+/* Alan UI - Main Styles | Stage 2: Reorganized Version */
 
-/* Resets margin/padding on body/html and sets up flex layout */
-body,
-html {
+/* =====================================================================
+   1. GLOBAL RESETS & BASE STYLES
+===================================================================== */
+html, body {
   margin: 0;
   padding: 0;
   height: 100%;
   display: flex;
   flex-direction: column;
   font-family: 'Calibri Light', Arial, sans-serif;
-}
-
-/* Make sure body/html do not override our flex container */
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
-/* Prevent horizontal scrolling or centring issues */
-html, body {
-  margin: 0;
-  padding: 0;
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden; /* ensures no huge horizontal area */
+  overflow-x: hidden;
 }
-
-/* Helper class to hide elements */
-.hidden {
-  display: none;
-}
-
-/* Same .hidden duplicated below - used to hide elements */
-.hidden {
-  display: none;
-}
-.visible {
-  display: block;
-}
-
-/* HIDDEN / LINKS - (Only .hidden part, links part moved to UI Components) */
-.hidden {
-  display: none;
-}
-
-/* ==============================
-   PARAGRAPHS
-============================== */
 
 p {
   margin: 20px 0;
 }
 
-/* Duplicate grey-text (also below) */
-.grey-text {
-  color: grey;
+
+/* =====================================================================
+   2. UTILITY CLASSES
+===================================================================== */
+.hidden {
+  display: none;
 }
 
-.grey-text {
-  color: rgb(162, 162, 162);
+.visible {
+  display: block;
 }
 
-/* Duplicate grey-text (already declared above) */
 .grey-text {
   color: grey;
   font-size: 14px;
 }
 
-
-/* ==============================
-   PAGE LAYOUT & MAIN STRUCTURE
-============================== */
-
-/* This container will fill the entire viewport height. */
-.page-container {
-  display: flex;
-  flex-direction: column;
-
-}
-
-/* The main content area grows to fill leftover vertical space,
-   pushing the footer to the bottom if content is short. */
-.main-wrapper {
-  flex: 1; /* This is what keeps the footer “sticky” at the bottom */
-  display: block; /* or flex, if you need more layout. */
-  margin: 0;
-  padding: 0;
-}
-
-/* Main content wrapper for page layout */
-#mainContent {
-  position: relative;
-  padding: 0px 10px 0px 10px; /* Increase right/left padding to avoid overlap */
-  font-size: 14px;
-}
-
-/* CONTENT CENTRING */
-/* Centres content horizontally in a block-level context */
 .centered-content {
   display: block;
   margin: 0 auto;
@@ -107,17 +43,41 @@ p {
   font-size: 20px;
 }
 
-/* The footer sits at the bottom if content is short, or is pushed further down if content is tall. */
+.tooltip-item {
+  cursor: pointer;
+}
+
+
+/* =====================================================================
+   3. PAGE LAYOUT & MAIN STRUCTURE
+===================================================================== */
+.page-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-wrapper {
+  flex: 1;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+#mainContent {
+  position: relative;
+  padding: 0px 10px 0px 10px;
+  font-size: 14px;
+}
+
 .chatbot-version {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
-
   margin: 0;
   padding: 10px 0;
   text-align: center;
-  background: #fff; /* or any color you want */
+  background: #fff;
   font-size: 12px;
   color: #8d8d8d;
   font-style: italic;
@@ -125,44 +85,28 @@ p {
 }
 
 
-/* ==============================
-   HEADER & CORE NAVIGATION ELEMENTS
-============================== */
+/* =====================================================================
+   4. HEADER, APP BAR & NAVIGATION
+===================================================================== */
 
-/* HEADER & TITLE STYLES */
-/* Header container, centering content horizontally and vertically */
+/* --- Main Chatbot Header --- */
 .chatbot-header {
   display: flex;
-  justify-content: center; /* Initially centres everything */
+  justify-content: center;
   align-items: center;
   padding: 0 30px;
   background-color: black;
   color: white;
-  position: relative; /* Allows absolute positioning within */
+  position: relative;
 }
+.chatbot-header .red { color: #f44336ff; }
+.chatbot-header .black { color: black; }
+.chatbot-header .white, .chatbot-header { color: white; }
+.chatbot-header .grey, .divider { color: grey; }
 
-/* Header text color variants */
-.chatbot-header .red {
-  color: #f44336ff;
-}
-.chatbot-header .black {
-  color: black;
-}
-.chatbot-header .white,
-.chatbot-header {
-  color: white;
-}
-.chatbot-header .grey,
-.divider {
-  color: grey;
-}
-
-/* Title/subtitle wrapper for centring text */
 .title-and-subtitle {
   text-align: center;
 }
-
-/* CHATBOT TITLE / SUBTITLE */
 .chatbot-title {
   font-size: 30px;
   font-weight: bold;
@@ -170,859 +114,16 @@ p {
   text-align: center;
   padding-top: 8px;
   font-family: 'Quicksand', Arial, sans-serif;
-  z-index: 2000; /* Set a high z-index to ensure it appears above other elements */
+  z-index: 2000;
 }
 .chatbot-subtitle {
   font-size: 11px;
   margin-top: 0;
-  margin-top: 0;
   color: grey;
-  padding: 0px 20px 10px 20px; /* top, right, bottom, left */
+  padding: 0px 20px 10px 20px;
 }
 
-/* MENU ICON (TOP LEFT) */
-.menu-icon {
-  cursor: pointer;
-  font-size: 25px; /* Icon's approximate height based on the font-size */
-  color: white;
-  position: fixed;
-  top: calc(42px - 12.5px); /* Precisely centres the icon vertically */
-  left: 20px;
-  z-index: 10001; /* This makes it clickable over the overlay */
-}
-.menu-icon.active {
-  color: black; /* Change icon color to black when active */
-}
-
-/* MENU ICON ADJUSTMENTS */
-.menu-icon {
-  position: relative;
-  display: inline-block;
-  width: 25px; /* Width of the top line */
-  height: 20px; /* Total height of the icon */
-  cursor: pointer;
-  top: -45px; /* Adjust this value to move the icon upwards */
-}
-.menu-icon::before,
-.menu-icon::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  height: 3px; /* Thickness of the lines */
-  background-color: rgb(255, 255, 255); /* Colour of the lines */
-  transition: background-color 0.3s; /* Smooth transition */
-}
-.menu-icon::before {
-  top: 0; /* Position of the top line */
-  width: 100%; /* Full width top line */
-}
-.menu-icon::after {
-  top: 16px; /* Position of the bottom line */
-  width: 60%; /* Width of the bottom line */
-}
-.menu-icon.open::before,
-.menu-icon.open::after {
-  background-color: rgb(0, 0, 0); /* Change lines to black when menu is open */
-}
-
-/* NAME ICON (SMALL CIRCLE) */
-.name-icon {
-  width: 25px;
-  height: 25px;
-  background-color: rgb(145, 158, 145);
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: bold;
-  position: absolute;
-  top: 22px; /* Adjust to align vertically with the speech icon */
-  right: 23px; /* Adjust distance from the right edge */
-  z-index: 1000; /* Ensure it is above other elements */
-  user-select: none; /* Make text non-selectable */
-}
-
-/* LANGUAGE SELECTOR */
-/* Positions the language selector at bottom-right, fixed */
-.language-selector {
-  position: fixed;
-  right: 23px;
-  bottom: 20px;
-  display: flex;
-  align-items: center;
-}
-
-/* Custom dropdown appearance */
-.language-dropdown {
-  appearance: none;
-  background-color: rgba(255, 255, 255, 0); /* Make the text color transparent */
-  color: rgba(255, 255, 255, 0); /* Make the text color transparent */
-  font-size: 12px;
-  border: 1px solid #ffffff;
-  border-radius: 10px;
-  padding: 10px 0px 7px 10px; /* Even smaller right padding */
-  background-image: url('./images/lang.jpg');
-  background-repeat: no-repeat;
-  background-position: right -1px center; /* Adjust if necessary */
-  background-size: 25px 25px;
-  width: 60px;
-  text-align: left;
-}
-.language-dropdown:focus {
-  outline: none;
-  border: 1px solid #ffffff;
-}
-.language-dropdown option {
-  background-color: white; /* Ensures a consistent background color */
-  color: black; /* Text color for better contrast */
-  padding-left: 5px; /* Reduces the left padding */
-  text-align: left; /* Aligns the text to the left */
-}
-
-/* Tooltip pointer styling */
-.tooltip-item {
-  cursor: pointer;
-}
-
-
-/* ==============================
-   SIDE NAVIGATION, MENUS & SIDEBARS
-============================== */
-
-/* SIDE MENU (SLIDE-IN) - CORRECTED */
-.side-menu {
-  position: fixed;
-  left: -330px; /* IMPORTANT: Make this slightly more than your width */
-  top: 10px;
-  width: 320px; /* THIS IS THE KEY: A fixed width */
-  height: 100%;
-  background-color: #f4f4f4;
-  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
-  transition: left 0.5s ease;
-  padding: 60px 15px 15px 15px; /* Top, R/L, Bottom padding */
-  box-sizing: border-box;       /* Ensures padding doesn't add to the width */
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* This stays, to center your buttons! */
-  z-index: 10000; /* High, but below the icon that closes it */
-}
-
-/* SIDEBAR OVERLAY */
-.sidebar {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 2001; /* Ensures the sidebar is on top of all other elements */
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
-.sidebar a {
-  padding: 10px 15px;
-  text-decoration: none;
-  font-size: 18px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-.sidebar a:hover {
-  color: #f1f1f1;
-}
-.sidebar .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-  color: white; /* Ensure the close button is visible */
-}
-
-/* Button to open the overlay sidebar */
-.openbtn {
-  font-size: 20px;
-  cursor: pointer;
-  background-color: white; /* Changed background color to white */
-  color: #464646; /* Changed text color to black */
-  padding: 10px 15px;
-  border: none;
-  position: fixed;
-  top: 90px; /* Moved further down */
-  left: -3px;
-  z-index: 1000; /* Higher than sidebar to ensure visibility */
-  display: flex;
-  align-items: center;
-}
-.openbtn:hover {
-  background-color: #f1f1f1;
-}
-.openbtn .icon {
-  font-size: 20px;
-  margin-right: 10px;
-  color: #464646; /* Changed icon color to black */
-}
-
-/* SIDE MENU CHAT LINKS */
-.side-menu .chat-link {
-  display: block;
-  width: 50px; /* Ensure it fits within the padding */
-  background-color: #ffffff;
-  padding: 10px;
-  border-radius: 12px;
-  margin: 5px 10px; /* Adjust top, bottom, left, and right margins */
-  text-align: center;
-  color: inherit;
-  text-decoration: none;
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
-}
-.side-menu .chat-link:hover {
-  background-color: #ccc; /* Change background on hover */
-}
-.side-menu hr {
-  width: 100%;
-  border: 1px solid #ddd;
-  margin: 5px 0;
-}
-
-/* ─────────────────────────────────────────────
-   SIDEBAR • CHAT HISTORY  (complete CSS block)
-   One rounded “bubble” per **session**,
-   plain single-line entries inside.
-   ─────────────────────────────────────────── */
-
-/* 1. Whole side-menu column */
-.side-menu {
-  display: flex;
-  flex-direction: column;
-  /* keep any width / colour / position rules you already set */
-}
-
-/* 2. Scroll wrapper (was .chat-history; now #chatHistorySidebar) */
-#chatHistorySidebar {
-  flex: 1 1 auto;      /* grow & shrink within column */
-  min-height: 0;       /* vital flexbox quirk */
-  overflow-y: auto;    /* vertical scrollbar as needed */
-  overflow-x: hidden;  /* never scroll sideways */
-  margin-top: 10px;    /* breathing space above log */
-}
-
-/* 3. Numbered session headers  e.g. --1--  --2-- (Modified for button-like appearance) */
-.session-header {
-  cursor: pointer;
-  text-align: center;
-  font-weight: 700; /* Bolder for button text */
-  font-size: 12px;  /* Slightly larger font */
-  color: #555;     /* Darker grey for better contrast on button */
-  margin: 8px 5px 0 5px; /* Top margin, and some horizontal margin to not touch edges */
-  padding: 5px 10px; /* Vertical and horizontal padding to make it feel like a button */
-  background-color: #f0f0f0; /* Light grey background, common for buttons */
-  border: 1px solid #ccc;    /* Standard button border */
-  border-radius: 5px;       /* Rounded corners for button feel */
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Subtle shadow for depth */
-  display: block; /* Make it a block to control width better if needed, or inline-block */
-  transition: background-color 0.2s, box-shadow 0.2s; /* Smooth transitions for hover */
-}
-
-/* 4. Session container – whole chat in one rounded bubble */
-.session-content {
-  padding: 8px 10px;
-  margin-bottom: 8px;          /* gap below each session bubble */
-  background: #fafafa;         /* light neutral fill */
-  border: 1px solid #d0d0d0;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;                    /* tiny gap between the plain lines inside */
-}
-
-/* 5. Every stored line of text (kept simple) */
-.history-message {
-  font-size: 11px;
-  line-height: 1.25;
-  max-width: 95%;
-  overflow-wrap: break-word;   /* stop long URLs blowing layout */
-}
-
-/* 6. User lines – right-aligned, blue */
-.history-message.user {
-  margin-left: auto;
-  text-align: right;
-  color: #007bff;            /* UK spelling kept but invalid; use US spelling */
-  color:  #007bff;
-  font-weight: 500;
-}
-
-/* 7. Bot lines – left-aligned, dark grey */
-.history-message.bot {
-  margin-right: auto;
-  text-align: left;
-  color: #333;
-}
-
-/* make the column use flex so the bin can stick to the bottom */
-.side-menu {
-  display: flex;
-  flex-direction: column;
-}
-
-/* let the scroll area fill all free space */
-#chatHistorySidebar {
-  flex: 1 1 auto;   /* already present – keep it */
-  overflow-y: auto; /* already present – keep it */
-}
-
-/* push the bin to the bottom and give it a bit of air */
-.bin-btn {
-  margin-top: auto;          /* ← the trick: takes remaining space */
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px 0 10px 0;     /* bottom padding so it isn’t flush */
-  align-self: center;        /* centre horizontally */
-}
-
-/* keep the side-menu clear of the fixed footer (footer ≈ 40 px high) */
-.side-menu {
-  height: calc(100% - 40px);  /* 100 % viewport minus footer height */
-  bottom: 40px;               /* ensures the column ends above footer */
-}
-
-/* make the chat-history area stop scrolling a little sooner too */
-#chatHistorySidebar {
-  padding-bottom: 50px;       /* spare room for bin + comfort gap */
-}
-
-/* make each bubble the containing block for absolute children */
-.session-content { position: relative; }
-
-.copy-btn {
-  position: absolute;
-  right: 6px;
-  bottom: 6px;
-  font-size: 16px;    /* ← use font size for the FA icon */
-  color: #777;
-  cursor: pointer;
-  opacity: .55;
-  transition: opacity .2s;
-}
-.copy-btn:hover { opacity: 1; color: #333; }
-
-
-/* ==============================
-   MODALS, POPUPS, DROPDOWNS
-============================== */
-
-/* DROPDOWN CONTENT */
-.dropdown-content {
-  display: none; /* Hidden by default */
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-.dropdown-content a {
-  color: black;
-  padding: 8px 16px;
-  text-decoration: none;
-  display: block;
-}
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-
-/* MODAL OVERLAY */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
-  z-index: 2; /* Sit on top */
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-.modal-content { /* First instance of modal-content */
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-  box-shadow:
-    0 4px 8px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  text-align: center;
-}
-.close-button {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-.close-button:hover,
-.close-button:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* Mini Modal & related styles */
-.info-button {
-  margin-left: 5px;
-  background-color: #777;
-  color: #fff;
-  border-radius: 4px;
-  width: 24px;
-  height: 24px;
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 24px;
-  text-align: center;
-  cursor: pointer;
-  border: none;
-}
-.mini-modal {
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.4);
-}
-.modal-content { /* Second instance of modal-content */
-  background-color: #fefefe;
-  margin: 15% auto;
-  max-width: 400px;
-  padding: 20px;
-  border-radius: 6px;
-  position: relative;
-  box-sizing: border-box;
-  overflow: visible;
-  max-height: 90vh;
-  overflow-y: auto;
-}
-.close {
-  float: right;
-  font-size: 24px;
-  cursor: pointer;
-}
-.popup-content p { /* This was grouped with mini-modal styles, relates to popup content */
-  margin: 4px 0;
-  padding: 0;
-  line-height: 1.5;
-}
-
-/* POPUP SLIDE-OUT */
-.popup {
-  display: none; /* Hide by default */
-  position: fixed; /* Position fixed to the right side */
-  top: 80px;
-  right: -300px; /* Start off-screen to the right */
-  width: 300px; /* Set a fixed width for the slide-out menu */
-  height: 50%; /* Full height */
-  background-color: rgb(242, 242, 242);
-  padding: 40px;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 1001;
-  border-radius: 18px 0 0 18px; /* Rounded corners on the left side */
-  text-align: left;
-  transition: right 0.3s ease; /* Smooth transition */
-}
-.popup h2 {
-  margin-top: 0;
-}
-.popup-content {
-  margin-bottom: 10px;
-}
-.popup-close {
-  cursor: pointer;
-  color: #696969;
-  font-size: 30px;
-  position: absolute;
-  top: 10px;
-  left: 15px; /* Position close button on the left */
-}
-.popup-close:hover {
-  color: black;
-}
-
-/* Force #popup to be pinned off the right edge at normal width */
-#popup {
-  position: fixed !important;
-  top: 80px;
-  right: -350px;      /* must be negative at least your chosen width */
-  width: 250px;       /* pick how wide you want the popout */
-  display: block !important;
-  background-color: #f1f1f1;
-  border-radius: 30px 0 0 30px;
-  box-shadow: -2px 0 6px rgba(0,0,0,0.2);
-  padding: 20px;
-  box-sizing: border-box;
-  font-size: 12px;
-  color: #000;
-  z-index: 9999;
-  transition: right 0.4s ease; /* so it slides smoothly */
-}
-/* The close “X” at top-right of the popup */
-.popup-close { /* This is a re-declaration/override for popup-close */
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 30px;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  color: #666;
-}
-/* Your popup-content area is normal text below the close button */
-.popup-content { /* This is a re-declaration/override for popup-content */
-  margin-top: 40px;
-  line-height: 1.4;
-  color: #000;
-}
-
-
-/* ==============================
-   BUTTONS & FORMS
-============================== */
-
-/* FORM ELEMENTS */
-input,
-button {
-  margin: 10px;
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-}
-button { /* General button styling from FORM ELEMENTS */
-  cursor: pointer;
-  background-color: #007bff;
-  color: white;
-}
-
-/* BUTTON LABELS / SPACING */
-/* Example label styling */
-.button-label {
-  color: black;
-  text-align: center;
-  display: block;
-  margin-bottom: 1px; /* Reduced for closer appearance */
-  line-height: 0.8; /* Adjust line height if necessary */
-}
-.button { /* General .button styling from BUTTON LABELS / SPACING */
-  margin-top: 0px; /* Ensure no extra space above the button */
-  padding-top: 5px; /* Adjust padding if needed to align better visually */
-}
-
-/* BUTTON COLOUR VARIANTS */
-.button,
-.button.green,
-.button.grey {
-  margin: 4px;
-  border: none;
-  border-radius: 12px;
-  padding: 9px 11px;
-  cursor: pointer;
-  font-size: 14px;
-  color: white; /* Adjusted for visibility */
-}
-
-/* Default (blue) button */
-.button { /* .button styling from BUTTON COLOUR VARIANTS */
-  background-color: #2196f3ff; /* Default blue background */
-}
-/* Green button variant */
-.button.green {
-  background-color: #4ec94e; /* Faint green */
-}
-/* Grey button variant */
-.button.grey {
-  background-color: rgb(181, 181, 181); /* Grey */
-}
-/* Red button variant (for instructions) */
-.button.red {
-  background-color: #ff0000; /* Red background for the Instructions button */
-  color: white; /* White text color for better readability */
-  border-radius: 12px;
-  border: 2px solid black; /* Adds a thin black border around the button */
-}
-
-/* Inactive button styling */
-.button.inactive-button {
-  background-color: grey;
-  color: white;
-  animation: none;
-}
-
-
-/* ==============================
-   CHATBOT SPECIFIC ELEMENTS
-============================== */
-
-/* CHATBOT CONTAINER */
-.chatbot-container {
-  margin-top: 0;
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-flowise-fullchatbot {
-  display: block; /* Ensure it behaves as a block element */
-  min-height: 300px; /* Force a minimum height (adjust as needed) */
-  z-index: 10; /* Bring it to the front if overlapping elements exist */
-}
-
-/* The chatbot container: no forced min-height, so it shrinks if content is small. */
-.chatbot-container { /* From sticky footer section */
-  margin: 0;
-  padding: 0;
-  /* If you used flex before, remove it or keep if needed.
-     E.g. flex-grow: 0; align-items: flex-start; */
-}
-
-/* Flowise’s own forced min-height can be relaxed or removed. */
-flowise-fullchatbot { /* From sticky footer section */
-  min-height: auto !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* Ensures the Flowise chatbot's bot-message is visible */
-.flowise-chatbot .bot-message {
-  display: block !important;
-  color: #000000 !important; /* Ensure text is visible in black */
-  opacity: 1 !important;
-  background-color: #ffffff !important; /* White background for visibility */
-}
-
-
-/* ==============================
-   OTHER UI COMPONENTS & SECTIONS
-============================== */
-
-/* DETECTED CONDITION */
-.detected-condition,
-#condition-description {
-  color: rgb(0, 0, 0);
-  text-align: center;
-  padding-left: 40px; /* Add padding to the left */
-  padding-right: 40px; /* Add padding to the right */
-}
-.access-screen,
-#registrationSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* HIDDEN / LINKS - (Link part, .hidden part already grouped) */
-.register-link,
-.login-link {
-  cursor: pointer;
-  color: blue;
-  text-decoration: underline;
-  font-size: 0.9em; /* Smaller than the main text */
-  margin-top: 20px;
-}
-
-/* DISPLAYED JOB ROLE */
-#displayed-job-role {
-  font-size: 8px;
-  color: grey;
-  text-align: right;
-  flex-grow: 1; /* Ensures it uses available space to align right */
-}
-
-/* BOXES FRAME */
-#boxesFrame {
-  width: 100%;
-  height: 100px; /* Adjust based on the content's height */
-  border: 0;
-  overflow: hidden;
-  background-color: transparent;
-}
-.object-container {
-  width: 100%;
-  overflow: hidden;
-}
-.object-container iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
-}
-
-
-/* ==============================
-   ANIMATIONS & KEYFRAMES
-============================== */
-
-/* KEYFRAMES */
-@keyframes smoothFlip360 {
-  from {
-    transform: rotateY(0deg);
-  }
-  to {
-    transform: rotateY(360deg);
-  }
-}
-
-/* PULSE KEYFRAME */
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-/* IMAGE ANIMATION CONTAINER - Keyframe part */
-@keyframes fadeinout {
-  0% {
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-/* CLASSES / ANIMATIONS */
-/* Class to animate a horizontal flip */
-.flip-horizontally {
-  animation: smoothFlip360 1.5s ease-out forwards;
-}
-
-/* For repeated pulsing animation */
-.pulse {
-  animation: pulse 1s infinite;
-}
-
-/* IMAGE ANIMATION CONTAINER - Class part */
-.animation-container {
-  display: none; /* Initially hidden */
-  justify-content: center;
-  align-items: center;
-  padding-top: 10px;
-}
-.animation-container img {
-  width: 70px; /* Adjust the width as needed */
-  height: auto;
-}
-
-.flash-blue {
-  background-color: #cde8ff;
-  transition: background-color 1s ease-out;
-}
-
-
-/* ==============================
-   TESTS & OVERRIDES
-============================== */
-
-/* TEST OVERRIDE */
-.instruction-screen button {
-  background: red !important;
-  text-align: left !important;
-  -webkit-appearance: none !important;
-  appearance: none !important;
-}
-
-/* ==============================
-   HOME PAGE REFACTOR CLASSES
-============================== */
-
-/* Button styles for the side menu */
-.side-menu .btn-colored {
-  border: 2px solid black;
-  color: black;
-}
-
-.side-menu .btn-eye { background-color: rgb(134, 162, 255); }
-.side-menu .btn-ear { background-color: rgb(133, 255, 133); }
-.side-menu .btn-skin { background-color: #efafff; }
-.side-menu .btn-lang {
-  background: url('images/lang.jpg') no-repeat center center;
-  background-size: cover;
-  border: 2px solid #3e3e3e;
-  width: 32px;
-  height: 32px;
-}
-
-/* Utility classes for menu rows and links */
-.menu-row {
-  display: flex;
-  margin-bottom: 10px;
-  align-items: center;
-}
-.menu-row .button {
-  margin-right: 10px;
-}
-.menu-row .button:last-child {
-  margin-right: 0;
-}
-.menu-link {
-  text-decoration: none;
-}
-.language-container {
-  position: relative;
-}
-
-/* Main content area classes */
-.content-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  min-height: 20vh;
-  font-weight: bold;
-}
-
-.logo-and-text-container {
-  text-align: center;
-  line-height: 1.0;
-  padding-top: 20px;
-}
-
-#additional-text {
-  font-size: 15px;
-  color: grey;
-  margin-top: 0px;
-}
-
-#sub-text {
-  font-size: 16px;
-  color: black;
-  font-weight: 900;
-  padding-bottom: 5px;
-}
-
-/* Animation image fade-in/out */
-.animation-container img.fade-in-out {
-  opacity: 0;
-  transition: opacity 2s;
-}
-
-/* ==============================
-   SHARED APP BAR & BACK ARROW
-============================== */
+/* --- Shared App Bar --- */
 #appBar {
   display: flex;
   align-items: center;
@@ -1059,30 +160,562 @@ flowise-fullchatbot { /* From sticky footer section */
   line-height: 1.2;
 }
 
-/* ─── Referral form – top row (ID · Telephone · Age · M/F) ────────────────── */
-
-/* Whole row */
-.top-input-line{
-    display:flex!important;
-    gap:6px!important;                 /* keeps total width < 360 px */
-    margin-bottom:18px!important;
-    align-items:flex-end!important;    /* bottoms perfectly level */
+/* --- Menu Icon (Two-Line Burger) - Kept as two separate blocks --- */
+.menu-icon {
+  cursor: pointer;
+  font-size: 25px;
+  color: white;
+  position: fixed;
+  top: calc(42px - 12.5px);
+  left: 20px;
+  z-index: 10001;
+}
+.menu-icon.active {
+  color: black;
+}
+.menu-icon {
+  position: relative;
+  display: inline-block;
+  width: 25px;
+  height: 20px;
+  cursor: pointer;
+  top: -45px;
+}
+.menu-icon::before, .menu-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  height: 3px;
+  background-color: rgb(255, 255, 255);
+  transition: background-color 0.3s;
+}
+.menu-icon::before { top: 0; width: 100%; }
+.menu-icon::after { top: 16px; width: 60%; }
+.menu-icon.open::before, .menu-icon.open::after {
+  background-color: rgb(0, 0, 0);
 }
 
-/* Wrapper for each mini-field */
+/* --- Other Header Icons --- */
+.name-icon {
+  width: 25px;
+  height: 25px;
+  background-color: rgb(145, 158, 145);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  top: 22px;
+  right: 23px;
+  z-index: 1000;
+  user-select: none;
+}
+.language-selector {
+  position: fixed;
+  right: 23px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+.language-dropdown {
+  appearance: none;
+  background-color: rgba(255, 255, 255, 0);
+  color: rgba(255, 255, 255, 0);
+  font-size: 12px;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  padding: 10px 0px 7px 10px;
+  background-image: url('./images/lang.jpg');
+  background-repeat: no-repeat;
+  background-position: right -1px center;
+  background-size: 25px 25px;
+  width: 60px;
+  text-align: left;
+}
+.language-dropdown:focus {
+  outline: none;
+  border: 1px solid #ffffff;
+}
+.language-dropdown option {
+  background-color: white;
+  color: black;
+  padding-left: 5px;
+  text-align: left;
+}
+.language-container {
+  position: relative;
+}
+
+/* =====================================================================
+   5. SIDE MENU & SIDEBARS
+===================================================================== */
+
+/* --- Main Side Menu Container --- */
+.side-menu {
+  position: fixed;
+  left: -330px;
+  top: 10px;
+  width: 320px;
+  background-color: #f4f4f4;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
+  transition: left 0.5s ease;
+  padding: 60px 15px 15px 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10000;
+  height: calc(100% - 40px);
+  bottom: 40px;
+}
+.side-menu .chat-link {
+  display: block;
+  width: 50px;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 12px;
+  margin: 5px 10px;
+  text-align: center;
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+.side-menu .chat-link:hover {
+  background-color: #ccc;
+}
+.side-menu hr {
+  width: 100%;
+  border: 1px solid #ddd;
+  margin: 5px 0;
+}
+.menu-link {
+  text-decoration: none;
+}
+.menu-row {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.menu-row .button {
+  margin-right: 10px;
+}
+.menu-row .button:last-child {
+  margin-right: 0;
+}
+
+
+/* --- Chat History (in Side Menu) --- */
+#chatHistorySidebar {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 10px;
+  padding-bottom: 50px;
+}
+.session-header {
+  cursor: pointer;
+  text-align: center;
+  font-weight: 700;
+  font-size: 12px;
+  color: #555;
+  margin: 8px 5px 0 5px;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  display: block;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+.session-content {
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  background: #fafafa;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
+}
+.history-message {
+  font-size: 11px;
+  line-height: 1.25;
+  max-width: 95%;
+  overflow-wrap: break-word;
+}
+.history-message.user {
+  margin-left: auto;
+  text-align: right;
+  color: #007bff;
+  font-weight: 500;
+}
+.history-message.bot {
+  margin-right: auto;
+  text-align: left;
+  color: #333;
+}
+.bin-btn {
+  margin-top: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 0 10px 0;
+  align-self: center;
+}
+.copy-btn {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  font-size: 16px;
+  color: #777;
+  cursor: pointer;
+  opacity: .55;
+  transition: opacity .2s;
+}
+.copy-btn:hover {
+  opacity: 1;
+  color: #333;
+}
+
+
+/* --- Generic Sidebar (Overlay Style) --- */
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 2001;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+.sidebar a {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  color: white;
+}
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: white;
+  color: #464646;
+  padding: 10px 15px;
+  border: none;
+  position: fixed;
+  top: 90px;
+  left: -3px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+.openbtn:hover {
+  background-color: #f1f1f1;
+}
+.openbtn .icon {
+  font-size: 20px;
+  margin-right: 10px;
+  color: #464646;
+}
+
+
+/* =====================================================================
+   6. MODALS, POPUPS & DROPDOWNS
+===================================================================== */
+
+/* --- Generic Modal --- */
+#modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.35);
+  pointer-events: auto;
+}
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  max-width: 400px;
+  border-radius: 6px;
+  position: relative;
+  box-sizing: border-box;
+  overflow: visible;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close-button:hover,
+.close-button:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.close {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+.mini-modal {
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+}
+
+
+/* --- Slide-out Popup (Kept as separate overrides) --- */
+.popup {
+  display: none;
+  position: fixed;
+  top: 80px;
+  right: -300px;
+  width: 300px;
+  height: 50%;
+  background-color: rgb(242, 242, 242);
+  padding: 40px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  border-radius: 18px 0 0 18px;
+  text-align: left;
+  transition: right 0.3s ease;
+}
+.popup h2 {
+  margin-top: 0;
+}
+.popup-content {
+  margin-bottom: 10px;
+}
+.popup-close {
+  cursor: pointer;
+  color: #696969;
+  font-size: 30px;
+  position: absolute;
+  top: 10px;
+  left: 15px;
+}
+.popup-close:hover {
+  color: black;
+}
+#popup {
+  position: fixed !important;
+  top: 80px;
+  right: -350px;
+  width: 250px;
+  display: block !important;
+  background-color: #f1f1f1;
+  border-radius: 30px 0 0 30px;
+  box-shadow: -2px 0 6px rgba(0,0,0,0.2);
+  padding: 20px;
+  box-sizing: border-box;
+  font-size: 12px;
+  color: #000;
+  z-index: 9999;
+  transition: right 0.4s ease;
+}
+#popup .popup-content {
+  margin-top: 40px;
+  line-height: 1.4;
+  color: #000;
+}
+#popup .popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: #666;
+}
+.popup-content p {
+  margin: 4px 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
+
+/* --- Dropdowns --- */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.dropdown-content a {
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+
+/* =====================================================================
+   7. BUTTONS & FORMS
+===================================================================== */
+
+/* --- General Form Elements --- */
+input,
+button {
+  margin: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+button {
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+}
+
+/* --- .button Class & Variants --- */
+.button,
+.button.green,
+.button.grey {
+  margin: 4px;
+  border: none;
+  border-radius: 12px;
+  padding: 9px 11px;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+}
+.button {
+  margin-top: 0px;
+  padding-top: 5px; /* Note: padding is overridden by the rule above */
+  background-color: #2196f3ff;
+}
+.button.green {
+  background-color: #4ec94e;
+}
+.button.grey {
+  background-color: rgb(181, 181, 181);
+}
+.button.red {
+  background-color: #ff0000;
+  color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+}
+.button.inactive-button {
+  background-color: grey;
+  color: white;
+  animation: none;
+}
+
+/* --- Specific Button Implementations --- */
+.button-label {
+  color: black;
+  text-align: center;
+  display: block;
+  margin-bottom: 1px;
+  line-height: 0.8;
+}
+.info-button {
+  margin-left: 5px;
+  background-color: #777;
+  color: #fff;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 24px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+}
+.side-menu .btn-colored {
+  border: 2px solid black;
+  color: black;
+}
+.side-menu .btn-eye { background-color: rgb(134, 162, 255); }
+.side-menu .btn-ear { background-color: rgb(133, 255, 133); }
+.side-menu .btn-skin { background-color: #efafff; }
+.side-menu .btn-lang {
+  background: url('images/lang.jpg') no-repeat center center;
+  background-size: cover;
+  border: 2px solid #3e3e3e;
+  width: 32px;
+  height: 32px;
+}
+.instruction-screen button {
+  background: red !important;
+  text-align: left !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+/* --- Referral Form (Top Row) --- */
+.top-input-line{
+    display:flex!important;
+    gap:6px!important;
+    margin-bottom:18px!important;
+    align-items:flex-end!important;
+}
 .top-input-group{
     display:flex!important;
     flex-direction:column!important;
-    flex-shrink:0!important;           /* stop unwanted growth */
+    flex-shrink:0!important;
 }
+.top-input-group.id-group { flex:0 0 46px!important; }
+.top-input-group.tel-group { flex:0 0 120px!important; }
+.top-input-group.age-group { flex:0 0 50px!important; }
+.top-input-group.sex-group { flex:0 0 60px!important; }
 
-/* Fixed column widths */
-.top-input-group.id-group {  flex:0 0 46px!important;  } /* ID */
-.top-input-group.tel-group { flex:0 0 120px!important; } /* Telephone */
-.top-input-group.age-group { flex:0 0 50px!important;  } /* Age */
-.top-input-group.sex-group { flex:0 0 60px!important;  } /* M/F */
-
-/* Labels */
 .top-input-group label{
     font-size:11px!important;
     font-weight:bold!important;
@@ -1091,8 +724,6 @@ flowise-fullchatbot { /* From sticky footer section */
     margin:0 0 2px 0!important;
     white-space:nowrap!important;
 }
-
-/* Inputs and the M/F drop-down */
 .top-input-group input[type="text"],
 .top-input-group input[type="tel"],
 .top-input-group select{
@@ -1105,27 +736,150 @@ flowise-fullchatbot { /* From sticky footer section */
     border-radius:4px!important;
     background-color:#fdfdfd!important;
     box-sizing:border-box!important;
-    min-width:0!important;            /* lets them squeeze if the user zooms */
+    min-width:0!important;
 }
-
-/* ID input – slimmer side padding */
 .top-input-group.id-group input{
     padding-left:4px!important;
     padding-right:4px!important;
 }
+.top-input-group select{
+    vertical-align:bottom!important;
+}
 
-/* Keep the select sitting on the same baseline */
-.top-input-group select{vertical-align:bottom!important;}
 
-/* Modal overlay for popup accessibility */
-#modal-overlay {
+/* =====================================================================
+   8. MISCELLANEOUS COMPONENTS
+===================================================================== */
+/* --- Chatbot Specific --- */
+.chatbot-container {
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+flowise-fullchatbot {
+  display: block;
+  z-index: 10;
+  min-height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.flowise-chatbot .bot-message {
+  display: block !important;
+  color: #000000 !important;
+  opacity: 1 !important;
+  background-color: #ffffff !important;
+}
+
+
+/* --- Other UI Sections --- */
+.access-screen, #registrationSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.register-link, .login-link {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+  font-size: 0.9em;
+  margin-top: 20px;
+}
+.detected-condition, #condition-description {
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+#displayed-job-role {
+  font-size: 8px;
+  color: grey;
+  text-align: right;
+  flex-grow: 1;
+}
+#boxesFrame {
+  width: 100%;
+  height: 100px;
+  border: 0;
+  overflow: hidden;
+  background-color: transparent;
+}
+.object-container {
+  width: 100%;
+  overflow: hidden;
+}
+.object-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 20vh;
+  font-weight: bold;
+}
+.logo-and-text-container {
+  text-align: center;
+  line-height: 1.0;
+  padding-top: 20px;
+}
+#additional-text {
+  font-size: 15px;
+  color: grey;
+  margin-top: 0px;
+}
+#sub-text {
+  font-size: 16px;
+  color: black;
+  font-weight: 900;
+  padding-bottom: 5px;
+}
+
+/* =====================================================================
+   9. ANIMATIONS & KEYFRAMES
+===================================================================== */
+.flip-horizontally {
+  animation: smoothFlip360 1.5s ease-out forwards;
+}
+.pulse {
+  animation: pulse 1s infinite;
+}
+.flash-blue {
+  background-color: #cde8ff;
+  transition: background-color 1s ease-out;
+}
+.animation-container {
   display: none;
-  position: fixed;
-  z-index: 9998; /* This is the base layer for popups */
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.35);
-  pointer-events: auto;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+}
+.animation-container img {
+  width: 70px;
+  height: auto;
+}
+.animation-container img.fade-in-out {
+  opacity: 0;
+  transition: opacity 2s;
+}
+
+@keyframes smoothFlip360 {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+@keyframes fadeinout {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
 }
