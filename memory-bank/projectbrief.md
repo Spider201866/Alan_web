@@ -13,14 +13,14 @@ To provide a web-based chatbot for users, especially in Low and Middle-Income Co
 - Provide chatbot functionality for eye, skin, and ear related queries.
 - Ensure accessibility for users, including keyboard navigation and screen reader compatibility.
 - Maintain a consistent and intuitive user interface across all pages.
-- Implement basic security measures like rate limiting for server endpoints.
+- Implement robust security measures, including Content Security Policy (CSP) and rate limiting.
 
 ## Goals
 - Deliver accurate and helpful information to users regarding eye, skin, and ear health.
-- Ensure a smooth and accessible user experience.
-- Maintain a clean, maintainable, and extensible codebase.
-- Provide clear error handling and feedback for invalid requests or server issues.
-- Support easy deployment and minimal configuration.
+- Ensure a smooth, accessible, and performant user experience.
+- Maintain a clean, maintainable, and extensible codebase with clear development guidelines.
+- Provide clear error handling and user feedback for API interactions, invalid requests, or server issues.
+- Support easy deployment and minimal configuration, with specified development environment requirements.
 
 ## Out of Scope
 - No user registration or account management.
@@ -32,7 +32,13 @@ To provide a web-based chatbot for users, especially in Low and Middle-Income Co
 - Static frontend files are served.
 - Frontend pages utilize a shared appbar pattern for consistent navigation and layout.
 - A reusable focus trap system is implemented for modals and side menus, enhancing keyboard accessibility.
-- Accessibility requirements for marquee content and icon-only buttons are enforced.
+- Accessibility requirements for marquee content, icon-only buttons, and "skip to content" links are enforced.
 - Server endpoints are protected by `express-rate-limit`.
-- Automated tests cover UI and accessibility aspects.
-- Code formatting is enforced using Prettier.
+- Content Security Policy (CSP) is configured using Helmet for enhanced security.
+- Automated tests cover UI, accessibility, and backend aspects.
+- Code formatting is enforced using Prettier, with check and write scripts.
+- ESLint is configured for code quality checks.
+- Node.js version is specified for consistent development environments.
+- API error handling has been improved for user-facing feedback.
+- A custom 404 page is implemented for unknown routes.
+- Favicon preloading is implemented for performance.

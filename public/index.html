@@ -21,10 +21,10 @@
     <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
     <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png" />
     <link rel="manifest" href="favicons/manifest.json" />
-    <script type="module" src="scripts/faviconAndMeta.js"></script>
+    <script type="module" src="scripts/faviconAndMeta.js" defer></script>
 
     <!-- External JS modules will be loaded as-is -->
-    <script type="module">
+    <script type="module" defer>
       import { translations } from './scripts/language.js';
       window.translations = translations; // Make translations globally available
     </script>
@@ -448,6 +448,6 @@
     <!-- ===================================================================== -->
     <!-- MAIN SCRIPT -->
     <!-- ===================================================================== -->
-    <script src="scripts/index.js"></script>
+    <script src="scripts/index.js" defer></script>
   </body>
 </html>

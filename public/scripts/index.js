@@ -24,205 +24,10 @@ const acceptButton = document.getElementById('acceptButton');
 let aimsDropdownExpanded = false;
 const classificationLookup = {
   /* Data unchanged */
-  HI: [
-    'QA',
-    'MO',
-    'LU',
-    'SG',
-    'BN',
-    'IE',
-    'NO',
-    'KW',
-    'AE',
-    'CH',
-    'HK',
-    'SM',
-    'US',
-    'SA',
-    'NL',
-    'IS',
-    'BH',
-    'SE',
-    'DE',
-    'AU',
-    'TW',
-    'DK',
-    'AT',
-    'CA',
-    'BE',
-    'OM',
-    'FI',
-    'GB',
-    'FR',
-    'JP',
-    'MT',
-    'KR',
-    'NZ',
-    'ES',
-    'IT',
-    'PR',
-    'CY',
-    'IL',
-    'CZ',
-  ],
-  MI: [
-    'GQ',
-    'SI',
-    'SK',
-    'LT',
-    'EE',
-    'TT',
-    'PT',
-    'PL',
-    'HU',
-    'MY',
-    'SC',
-    'RU',
-    'GR',
-    'LV',
-    'KN',
-    'AG',
-    'TR',
-    'KZ',
-    'BS',
-    'CL',
-    'PA',
-    'HR',
-    'RO',
-    'UY',
-    'MU',
-    'BG',
-    'AR',
-    'IR',
-    'MX',
-    'LB',
-    'GA',
-    'MV',
-    'TM',
-    'BY',
-    'BW',
-    'TH',
-    'CN',
-    'BR',
-    'ZA',
-    'IN',
-  ],
-  LI: [
-    'BB',
-    'ME',
-    'AZ',
-    'CR',
-    'IQ',
-    'DO',
-    'PW',
-    'MK',
-    'RS',
-    'DZ',
-    'GD',
-    'CO',
-    'SR',
-    'LC',
-    'PE',
-    'LK',
-    'EG',
-    'MN',
-    'JO',
-    'AL',
-    'VE',
-    'ID',
-    'DM',
-    'XK',
-    'NR',
-    'TN',
-    'VC',
-    'NA',
-    'BA',
-    'EC',
-    'GE',
-    'SZ',
-    'FJ',
-    'LY',
-    'PY',
-    'JM',
-    'AM',
-    'SV',
-    'BT',
-    'UA',
-    'MA',
-    'BZ',
-    'GY',
-    'PH',
-    'GT',
-    'BO',
-    'LA',
-    'UZ',
-    'CV',
-    'VN',
-    'PK',
-  ],
-  VLI: [
-    'AO',
-    'CG',
-    'MM',
-    'NG',
-    'NI',
-    'WS',
-    'MD',
-    'TO',
-    'HN',
-    'TL',
-    'GH',
-    'SD',
-    'BD',
-    'MR',
-    'KH',
-    'ZM',
-    'LS',
-    'CI',
-    'TV',
-    'PG',
-    'KG',
-    'DJ',
-    'KE',
-    'MH',
-    'FM',
-    'CM',
-    'TZ',
-    'ST',
-    'TJ',
-    'VU',
-    'NP',
-    'SN',
-    'TD',
-    'UG',
-    'YE',
-    'ZW',
-    'BJ',
-    'ML',
-    'SB',
-    'ET',
-    'RW',
-    'GN',
-    'KI',
-    'AF',
-    'BF',
-    'HT',
-    'GW',
-    'SL',
-    'GM',
-    'SS',
-    'TG',
-    'KM',
-    'MG',
-    'ER',
-    'MZ',
-    'MW',
-    'NE',
-    'LR',
-    'BI',
-    'CD',
-    'CF',
-  ],
+  HI: ['QA', 'MO', 'LU', 'SG', 'BN', 'IE', 'NO', 'KW', 'AE', 'CH', 'HK', 'SM', 'US', 'SA', 'NL', 'IS', 'BH', 'SE', 'DE', 'AU', 'TW', 'DK', 'AT', 'CA', 'BE', 'OM', 'FI', 'GB', 'FR', 'JP', 'MT', 'KR', 'NZ', 'ES', 'IT', 'PR', 'CY', 'IL', 'CZ'],
+  MI: ['GQ', 'SI', 'SK', 'LT', 'EE', 'TT', 'PT', 'PL', 'HU', 'MY', 'SC', 'RU', 'GR', 'LV', 'KN', 'AG', 'TR', 'KZ', 'BS', 'CL', 'PA', 'HR', 'RO', 'UY', 'MU', 'BG', 'AR', 'IR', 'MX', 'LB', 'GA', 'MV', 'TM', 'BY', 'BW', 'TH', 'CN', 'BR', 'ZA', 'IN'],
+  LI: ['BB', 'ME', 'AZ', 'CR', 'IQ', 'DO', 'PW', 'MK', 'RS', 'DZ', 'GD', 'CO', 'SR', 'LC', 'PE', 'LK', 'EG', 'MN', 'JO', 'AL', 'VE', 'ID', 'DM', 'XK', 'NR', 'TN', 'VC', 'NA', 'BA', 'EC', 'GE', 'SZ', 'FJ', 'LY', 'PY', 'JM', 'AM', 'SV', 'BT', 'UA', 'MA', 'BZ', 'GY', 'PH', 'GT', 'BO', 'LA', 'UZ', 'CV', 'VN', 'PK'],
+  VLI: ['AO', 'CG', 'MM', 'NG', 'NI', 'WS', 'MD', 'TO', 'HN', 'TL', 'GH', 'SD', 'BD', 'MR', 'KH', 'ZM', 'LS', 'CI', 'TV', 'PG', 'KG', 'DJ', 'KE', 'MH', 'FM', 'CM', 'TZ', 'ST', 'TJ', 'VU', 'NP', 'SN', 'TD', 'UG', 'YE', 'ZW', 'BJ', 'ML', 'SB', 'ET', 'RW', 'GN', 'KI', 'AF', 'BF', 'HT', 'GW', 'SL', 'GM', 'SS', 'TG', 'KM', 'MG', 'ER', 'MZ', 'MW', 'NE', 'LR', 'BI', 'CD', 'CF'],
 };
 
 // Entry Point
@@ -312,9 +117,29 @@ function fetchIPBasedLocation() {
         const iso2 = (data.country || 'Not set').toUpperCase();
         localStorage.setItem('iso2', iso2);
         storeClassifications(iso2);
+      } else {
+        // If data is null or empty, display a message to the user
+        const locationInfoDiv = document.getElementById('locationInfo');
+        if (locationInfoDiv) {
+          locationInfoDiv.textContent = 'Could not determine your location.';
+          locationInfoDiv.style.display = 'block';
+          locationInfoDiv.style.color = 'red';
+          locationInfoDiv.style.textAlign = 'center';
+          locationInfoDiv.style.marginTop = '10px';
+        }
       }
     })
-    .catch(() => {});
+    .catch((error) => {
+      console.error('Error fetching IP-based location:', error);
+      const locationInfoDiv = document.getElementById('locationInfo');
+      if (locationInfoDiv) {
+        locationInfoDiv.textContent = 'Could not determine your location due to an error.';
+        locationInfoDiv.style.display = 'block';
+        locationInfoDiv.style.color = 'red';
+        locationInfoDiv.style.textAlign = 'center';
+        locationInfoDiv.style.marginTop = '10px';
+      }
+    });
 }
 
 function storeClassifications(iso2) {
@@ -341,7 +166,8 @@ function verifyPassword() {
       passwordScreen.classList.add('hidden');
       instructionRef.classList.remove('hidden');
     })
-    .catch(() => {
+    .catch((error) => {
+      console.error('Error verifying password:', error);
       passwordError.style.display = 'block';
       passwordInput.value = '';
       passwordSubmitBtn.disabled = true;
@@ -375,7 +201,9 @@ function pushDataToServer(name, aims, roleClass) {
   })
     .then((resp) => resp.text())
     .then((data) => console.log('Record saved:', data))
-    .catch(() => {});
+    .catch((error) => {
+      console.error('Error pushing data to server:', error);
+    });
 }
 
 /*********************************************/

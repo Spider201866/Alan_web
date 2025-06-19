@@ -51,6 +51,32 @@ p {
 /* =====================================================================
    3. UTILITY CLASSES
 ===================================================================== */
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 9999;
+  background-color: #007bff;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.skip-to-content:focus {
+  left: 50%;
+  top: 10px;
+  width: auto;
+  height: auto;
+  transform: translateX(-50%);
+  outline: 2px solid #0056b3;
+  outline-offset: 2px;
+}
+
 .hidden {
   display: none;
 }

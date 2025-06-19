@@ -284,4 +284,12 @@ describe('One-Time Password Logic', () => {
   });
 });
 
+describe('404 Not Found Handler', () => {
+  it('should return 404 for unknown routes', async () => {
+    const res = await request(app).get('/non-existent-route');
+    expect(res.statusCode).toBe(404);
+    expect(res.headers['content-type']).toMatch(/text\/html/); // Expecting HTML for 404 page
+  });
+});
+
 // TODO: Add tests for file corruption and additional edge cases.

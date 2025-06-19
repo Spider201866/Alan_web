@@ -12,8 +12,11 @@
     <title>Alan</title>
     <!-- Sujin 10th 6 2025 -->
 
+    <!-- Favicon Preload -->
+    <link rel="preload" href="favicons/favicon-32x32.png" as="image">
+
     <!-- External Dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
     <link rel="stylesheet" href="styles/styles.css" />
     <link rel="prefetch" href="images/atomsblue.jpg" as="image" />
     <link
@@ -30,11 +33,10 @@
     />
 
     <!-- External JS Modules -->
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <script type="module" src="scripts/faviconAndMeta.js"></script>
-    <script type="module" src="scripts/closer.js"></script>
-    <script type="module" src="scripts/language.js"></script>
-    <script src="scripts/muted.js"></script>
+    <script type="module" src="scripts/faviconAndMeta.js" defer></script>
+    <script type="module" src="scripts/closer.js" defer></script>
+    <script type="module" src="scripts/language.js" defer></script>
+    <script src="scripts/muted.js" defer></script>
 
     <!-- Inline Styles -->
     <style>
@@ -42,6 +44,7 @@
     </style>
   </head>
   <body>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
     <div class="page-container">
       <!-- HEADER -->
       <header class="chatbot-header">
@@ -246,7 +249,7 @@
       </nav>
 
       <!-- MAIN CONTENT -->
-      <main class="content-wrapper">
+      <main id="main-content" class="content-wrapper">
         <div class="logo-and-text-container">
           <p id="additional-text" class="grey-text">
             <span id="good-history">Good History</span> |
@@ -402,6 +405,6 @@
     </aside>
 
     <!-- SCRIPT BLOCK -->
-    <script type="module" src="scripts/home.js"></script>
+    <script type="module" src="scripts/home.js" defer></script>
   </body>
 </html>

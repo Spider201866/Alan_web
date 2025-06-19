@@ -17,15 +17,19 @@ The AlanUI Web Chatbot was created to provide accessible and relevant health inf
 - Frontend pages utilize a shared appbar pattern (`public/page-template.js` and `public/styles.css`) for consistent navigation and layout.
 - Modals and side menus implement a focus trap system (`public/focus-trap.js`) to ensure keyboard accessibility.
 - Server endpoints are protected by `express-rate-limit` to prevent excessive or abusive requests.
+- A custom 404 page is served for unknown routes, providing a better user experience.
+- API data fetching includes robust error handling to inform users of issues gracefully.
 
 ## User Experience Goals
 - Fast, reliable, and intuitive chatbot interaction, powered by an advanced LLM for more nuanced responses.
 - Clear, accurate, and easy-to-understand health information, with the ability to maintain context and apply complex logic.
-- Simple, consistent, and accessible frontend for all users, with a shared appbar and uniform page layouts.
+- Simple, consistent, and accessible frontend for all users, with a shared appbar, uniform page layouts, and "skip to content" links.
 - Enhanced keyboard accessibility for all interactive elements, including modals and menus.
-- Minimal configuration required for deployment and operation.
+- Improved page load performance through favicon preloading and deferred script loading.
+- Minimal configuration required for deployment and operation, with clear environment variable setup instructions.
 
 ## Security and Privacy
 - The project focuses on providing information and does not handle sensitive user records or authentication.
 - Server endpoints are protected by `express-rate-limit` to prevent excessive or abusive requests (100 requests per 15 minutes per IP).
+- Content Security Policy (CSP) is enforced via Helmet to mitigate XSS and other injection attacks, whitelisting necessary external resources.
 - Frontend accessibility ensures sensitive content (e.g., duplicated marquee content) is hidden from screen readers where appropriate, and interactive elements have proper `aria-label` attributes.

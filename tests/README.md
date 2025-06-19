@@ -6,10 +6,14 @@
 
 All test files (and the rest of the codebase) are formatted using [Prettier](https://prettier.io/) for consistency.
 - To automatically format all test files, run:
-  ```
+  ```bash
   npm run format
   ```
-  (Available in both the root and `Alan_web` directories.)
+  (Available from the project root.)
+- To check formatting without writing changes (useful for CI/CD pipelines), run:
+  ```bash
+  npm run format:check
+  ```
 
 ---
 
@@ -35,6 +39,7 @@ This folder contains automated tests for the Alan webapp, covering backend API, 
     10. All major authentication (legacy), rate limiting, and edge case flows are covered
     11. Verifies JSON files (`user-info.json`, `user-history.json`) are written with a trailing newline.
     12. Confirms `body-parser` is no longer a dependency and `express.json()` is used.
+    13. Returns 404 for unknown routes, serving the custom 404 page.
     (Note: The server has critical checks at startup to ensure important settings like `MASTER_PASSWORD_HASH` and `PASSWORD_SALT` are present. If they're missing, the server is designed to stop immediately. Automating tests for this specific "server-stopping" behavior is complex in our current test setup. Therefore, these critical startup checks should be **manually verified** by developers when setting up or deploying the server, by intentionally trying to run it without these settings to confirm it exits as expected.)
 
 - `chatbot.test.js` — Frontend chatbot and sidebar logic (Jest + jsdom)
@@ -50,51 +55,57 @@ This folder contains automated tests for the Alan webapp, covering backend API, 
     2. Shows and hides language dropdown
     3. Updates all UI fields for each language selection (covers all fields for each language)
     4. Updates translations on language change
-    4. Opens and closes the user info popup
-    5. Handles geolocation button click
-    6. Shows the sliding boxes iframe
-    7. Shows buttons below the chatbox entry
-    8. Opens and closes the popup and updates geolocation info
-    9. Shows sidebar and all navigation buttons, simulates back arrow/page navigation
-    10. Shows all navigation and language links/buttons
-    11. Shows splash screen on load and auto-hide after timeout
-    12. Shows the logo and footer
-    13. Animates Alan logo spin on greeting
-    14. Shows Good History and Examine Well text
-    15. Includes the user name in the greeting
-    16. Triggers Images, Help, Screenshot, and Refer button actions
-    17. Shows password entry UI and accepts input
-    18. Shows onboarding screen and accepts user details
-    19. Shows popup with correct user info from localStorage
-    20. **Accessibility:**
+    5. Opens and closes the user info popup
+    6. Handles geolocation button click
+    7. Shows the sliding boxes iframe
+    8. Shows buttons below the chatbox entry
+    9. Opens and closes the popup and updates geolocation info
+    10. Shows sidebar and all navigation buttons, simulates back arrow/page navigation
+    11. Shows all navigation and language links/buttons
+    12. Shows splash screen on load and auto-hide after timeout
+    13. Shows the logo and footer
+    14. Animates Alan logo spin on greeting
+    15. Shows Good History and Examine Well text
+    16. Includes the user name in the greeting
+    17. Triggers Images, Help, Screenshot, and Refer button actions
+    18. Shows password entry UI and accepts input
+    19. Shows onboarding screen and accepts user details
+    20. Shows popup with correct user info from localStorage
+    21. **Accessibility:**
         - Verifies all duplicated marquee elements in `boxes.html` (IDs ending in "b") have `aria-hidden="true"`.
         - Verifies all icon-only buttons in `home.html` and `index.html` have the correct `aria-label` attributes.
+        - Has a "skip to content" link that targets the main content and becomes visible on focus.
+    22. **API Error Handling:**
+        - Displays an error message if IP-based location data is unavailable.
+        - Displays an error message if fetching IP-based location fails.
 
 ## Setup
 
 1. **Install dependencies (from project root):**
    ```bash
-   npm install --save-dev jest supertest jsdom
+   npm install
    ```
+   (This will install `jest`, `supertest`, `jsdom`, `eslint`, and `prettier` as dev dependencies.)
 
-2. **(Optional) Add a test script to your package.json:**
-   ```json
-   "scripts": {
-     "test": "jest"
-   }
-   ```
+2. **Node.js Version:**
+   - Ensure you are using Node.js version 20.0.0 or higher. You can use `nvm` (Node Version Manager) and `nvm use` in the project root, as specified in the `.nvmrc` file.
 
 ## Running Tests
 
 - To run all tests in detail (recommended):
   ```bash
-  npx jest --verbose
+  npm test
   ```
+  (This script also runs `format:check` before executing tests.)
 - To run a specific test file:
   ```bash
-  npx jest --verbose tests/api.test.js
-  npx jest --verbose tests/chatbot.test.js
-  npx jest --verbose tests/ui.test.js
+  npx jest tests/api.test.js
+  npx jest tests/chatbot.test.js
+  npx jest tests/ui.test.js
+  ```
+- To run ESLint for code quality checks:
+  ```bash
+  npm run lint
   ```
 
 ## Notes

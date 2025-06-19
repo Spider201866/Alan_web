@@ -50,6 +50,25 @@ This project uses [Prettier](https://prettier.io/) for consistent code formattin
 - **Environment Variable Validation:** Critical environment variables (`MASTER_PASSWORD_HASH`, `PASSWORD_SALT`) are validated at server startup in `server.js` to prevent the server from running with missing credentials.
 - **JSON File Integrity:** JSON data files (`user-info.json`, `user-history.json`) are ensured to have a trailing newline character for improved compatibility with various tools.
 
+### Environment Variables (.env)
+
+This project uses environment variables for sensitive information and configuration. A `.env.example` file is provided as a template.
+
+To set up your environment variables:
+1. Create a new file named `.env` in the root directory of the project.
+2. Copy the contents of `.env.example` into your new `.env` file.
+3. Replace the placeholder values with your actual credentials and configurations.
+
+Example `.env.example`:
+```
+MASTER_PASSWORD_HASH=your_master_password_hash_here
+PASSWORD_SALT=your_password_salt_here
+ONE_TIME_PASSWORD_HASHES=
+PORT=3000
+```
+
+**Important:** Do not commit your `.env` file to version control. It is already included in `.gitignore`.
+
 ## Project Structure
 
 The main public directory is organized as follows:
@@ -197,3 +216,13 @@ npx jest tests/ui.test.js
 ```
 
 These tests use [Jest](https://jestjs.io/) and [jsdom](https://github.com/jsdom/jsdom). Make sure both are installed in your project dependencies.
+
+---
+
+## Cleanup & Reset
+
+To reset local data or clean up test files:
+
+- **Resetting User Data:** To clear `user-info.json` and `user-history.json` (used by the legacy record server), you can simply delete these files from the project root. They will be recreated as empty files on the next server startup or data submission.
+- **Resetting One-Time Passwords:** One-time passwords are managed in the `.env` file. To reset them, modify the `ONE_TIME_PASSWORD_HASHES` variable in your `.env` file.
+- **Cleaning Test Artifacts:** Automated tests are designed to clean up after themselves. If any temporary test files persist, they are typically located in `tests/temp/` and can be safely deleted.

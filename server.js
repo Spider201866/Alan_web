@@ -37,7 +37,16 @@ let ONE_TIME_PASSWORDS = new Set(
 // --- Global Middleware ---
 app.use(
   helmet({
-    contentSecurityPolicy: false, // Temporarily disable CSP to debug
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", 'https://cdn.jsdelivr.net', 'https://alan.up.railway.app', 'https://ipapi.co', "'unsafe-inline'"],
+        styleSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googleapis.com', "'unsafe-inline'"],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        imgSrc: ["'self'", 'data:'],
+        connectSrc: ["'self'", 'https://alan.up.railway.app', 'https://ipapi.co'],
+      },
+    },
     scriptSrcAttr: ["'unsafe-inline'"], // Explicitly allow inline event handlers
   })
 );
@@ -227,6 +236,12 @@ async function appendToHistory(newRecord) {
     release();
   }
 }
+
+// --- Global Error Handling ---
+// --- 404 Not Found Handler ---
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+});
 
 // --- Global Error Handling ---
 // eslint-disable-next-line no-unused-vars
