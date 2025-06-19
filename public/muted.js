@@ -1,3 +1,5 @@
+// Alan UI - muted.js | 19th June 2025, WJW
+
 // muted.js
 
 // Wait until the document is ready, then wire the buttons

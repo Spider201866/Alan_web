@@ -1,3 +1,5 @@
+// Alan UI - home.js | 19th June 2025, WJW
+
 // NOTE: This script depends on external modules:
 // - language.js (for `translations`)
 // - faviconAndMeta.js (for `faviconAndMetaSetup`)

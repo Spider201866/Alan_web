@@ -1,3 +1,5 @@
+// Alan UI - language.js | 19th June 2025, WJW
+
 /**
  * translations.js
  * ------------------------------------------------------------
@@ -85,10 +87,10 @@ export const translations = {
     eyeMarqueeLine7: 'Mother worried about baby as noticed white pupil, no vision in eye.',
 
     earMarqueeLine1: 'What is otitis media?',
-    earMarqueeLine2: 'Can I see the tympanic menbrane with my Arclight?',
+    earMarqueeLine2: 'Can I see the tympanic membrane with my Arclight?',
     earMarqueeLine3: 'Lad 16, sore pinna, 2 day, itchy, hearing is good',
     earMarqueeLine4: 'Tell me about syringing',
-    earMarqueeLine5: 'Do I refer mastoditis urgently?',
+    earMarqueeLine5: 'Do I refer mastoiditis urgently?',
     earMarqueeLine6: 'Man 73yr, hearing poor. Poor view of canal. I just see wax',
     earMarqueeLine7: 'Infant no response to voice. Been months',
 
@@ -201,7 +203,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations ---
     experiencePlaceholder: 'Experience',
     experienceStudentRefresher: 'Student / refresher',
-    experienceConfidentCore: 'Good core knowledge',
+    experienceConfidentCore: 'Confident core knowledge',
     experienceExpert: 'Expert',
     // --- Old Experience Options Commented Out ---
     /*
@@ -280,7 +282,7 @@ export const translations = {
     linksButton: '链接',
     aboutButton: '关于',
 
-    passwordTitle: '请输入您的 Alan 密码',
+    passwordTitle: '请输入您的 Alan 邀请密码',
     passwordPlaceholder: '密码',
     passwordErrorMsg: '密码无效，请重试',
     passwordSubmitBtn: '提交',
@@ -485,7 +487,7 @@ export const translations = {
     linksButton: 'लिंक',
     aboutButton: 'के बारे में',
 
-    passwordTitle: 'Alan का पासवर्ड दर्ज करें',
+    passwordTitle: 'Alan का आमंत्रण पासवर्ड दर्ज करें',
     passwordPlaceholder: 'पासवर्ड',
     passwordErrorMsg: 'अमान्य पासवर्ड। कृपया पुनः प्रयास करें',
     passwordSubmitBtn: 'सबमिट',
@@ -618,7 +620,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations ---
     experiencePlaceholder: 'अनुभव',
     experienceStudentRefresher: 'छात्र / पुनश्चर्या',
-    experienceConfidentCore: 'अच्छा मूल ज्ञान',
+    experienceConfidentCore: 'आत्मविश्वासी मूल ज्ञान',
     experienceExpert: 'विशेषज्ञ',
     // --- Old Experience Options Commented Out ---
     /*
@@ -697,7 +699,7 @@ export const translations = {
     linksButton: 'Enlaces',
     aboutButton: 'Acerca de',
 
-    passwordTitle: 'Ingrese su contraseña de Alan',
+    passwordTitle: 'Ingrese su contraseña de invitación de Alan',
     passwordPlaceholder: 'Contraseña',
     passwordErrorMsg: 'Contraseña inválida. Inténtalo de nuevo',
     passwordSubmitBtn: 'Enviar',
@@ -831,7 +833,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations ---
     experiencePlaceholder: 'Experiencia',
     experienceStudentRefresher: 'Estudiante / actualización',
-    experienceConfidentCore: 'Buen conocimiento básico',
+    experienceConfidentCore: 'Conocimiento básico sólido',
     experienceExpert: 'Experto',
     // --- Old Experience Options Commented Out ---
     /*
@@ -910,7 +912,7 @@ export const translations = {
     linksButton: 'روابط',
     aboutButton: 'حول',
 
-    passwordTitle: 'أدخل كلمة مرور Alan',
+    passwordTitle: 'أدخل كلمة مرور دعوة Alan',
     passwordPlaceholder: 'كلمة المرور',
     passwordErrorMsg: 'كلمة مرور غير صحيحة. حاول مرة أخرى',
     passwordSubmitBtn: 'إرسال',
@@ -1040,7 +1042,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Arabic) ---
     experiencePlaceholder: 'الخبرة',
     experienceStudentRefresher: 'طالب / تحديث',
-    experienceConfidentCore: 'معرفة أساسية جيدة',
+    experienceConfidentCore: 'معرفة أساسية واثقة',
     experienceExpert: 'خبير',
     // --- Old Experience Options Commented Out ---
     /*
@@ -1119,7 +1121,7 @@ export const translations = {
     linksButton: 'Liens',
     aboutButton: 'À propos',
 
-    passwordTitle: 'Entrez votre mot de passe Alan',
+    passwordTitle: 'Entrez votre mot de passe d’invitation Alan',
     passwordPlaceholder: 'Mot de passe',
     passwordErrorMsg: 'Mot de passe invalide. Veuillez réessayer',
     passwordSubmitBtn: 'Valider',
@@ -1335,7 +1337,7 @@ export const translations = {
     linksButton: 'Links',
     aboutButton: 'Sobre',
 
-    passwordTitle: 'Digite a senha do Alan',
+    passwordTitle: 'Digite a senha de convite do Alan',
     passwordPlaceholder: 'Senha',
     passwordErrorMsg: 'Senha inválida. Tente novamente',
     passwordSubmitBtn: 'Enviar',
@@ -1469,7 +1471,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Portuguese) ---
     experiencePlaceholder: 'Experiência',
     experienceStudentRefresher: 'Estudante / reciclagem',
-    experienceConfidentCore: 'Bom conhecimento básico',
+    experienceConfidentCore: 'Conhecimento central confiante',
     experienceExpert: 'Perito',
     // --- Old Experience Options Commented Out ---
     /*
@@ -1548,7 +1550,7 @@ export const translations = {
     linksButton: 'লিংক',
     aboutButton: 'সম্বন্ধে',
 
-    passwordTitle: 'Alan পাসওয়ার্ড লিখুন',
+    passwordTitle: 'Alan আমন্ত্রণ পাসওয়ার্ড লিখুন',
     passwordPlaceholder: 'পাসওয়ার্ড',
     passwordErrorMsg: 'ভুল পাসওয়ার্ড। আবার চেষ্টা করুন',
     passwordSubmitBtn: 'জমা দিন',
@@ -1679,7 +1681,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Bangla) ---
     experiencePlaceholder: 'অভিজ্ঞতা',
     experienceStudentRefresher: 'ছাত্র / রিফ্রেশার',
-    experienceConfidentCore: 'अच्छा मूल ज्ञान',
+    experienceConfidentCore: 'আত্মবিশ্বাসী মূল জ্ঞান',
     experienceExpert: 'বিশেষজ্ঞ',
     // --- Old Experience Options Commented Out ---
     /*
@@ -1758,7 +1760,7 @@ export const translations = {
     linksButton: 'Tautan',
     aboutButton: 'Tentang',
 
-    passwordTitle: 'Masukkan kata sandi Alan',
+    passwordTitle: 'Masukkan kata sandi undangan Alan',
     passwordPlaceholder: 'Kata Sandi',
     passwordErrorMsg: 'Kata sandi tidak valid. Coba lagi',
     passwordSubmitBtn: 'Kirim',
@@ -1892,7 +1894,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Indonesian) ---
     experiencePlaceholder: 'Pengalaman',
     experienceStudentRefresher: 'Pelajar / penyegaran',
-    experienceConfidentCore: 'Pengetahuan inti yang baik',
+    experienceConfidentCore: 'Pengetahuan inti percaya diri',
     experienceExpert: 'Ahli',
     // --- Old Experience Options Commented Out ---
     /*
@@ -1971,7 +1973,7 @@ export const translations = {
     linksButton: 'Viungo',
     aboutButton: 'Kuhusu',
 
-    passwordTitle: 'Weka nenosiri la Alan',
+    passwordTitle: 'Weka nenosiri la mwaliko wa Alan',
     passwordPlaceholder: 'Nenosiri',
     passwordErrorMsg: 'Nenosiri si sahihi. Jaribu tena',
     passwordSubmitBtn: 'Wasilisha',
@@ -2104,7 +2106,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Swahili) ---
     experiencePlaceholder: 'Uzoefu',
     experienceStudentRefresher: 'Mwanafunzi / Mrejesho',
-    experienceConfidentCore: 'Ujuzi Mzuri wa Msingi',
+    experienceConfidentCore: 'Ujuzi wa Msingi wa Kujiamini',
     experienceExpert: 'Mtaalamu',
     // --- Old Experience Options Commented Out ---
     /*
@@ -2183,7 +2185,7 @@ export const translations = {
     linksButton: 'روابط',
     aboutButton: 'کے بارے میں',
 
-    passwordTitle: 'Alan کا پاس ورڈ درج کریں',
+    passwordTitle: 'Alan کی دعوتی پاس ورڈ درج کریں',
     passwordPlaceholder: 'پاس ورڈ',
     passwordErrorMsg: 'غلط پاس ورڈ۔ دوبارہ کوشش کریں',
     passwordSubmitBtn: 'جمع کروائیں',
@@ -2315,7 +2317,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Urdu) ---
     experiencePlaceholder: 'تجربہ',
     experienceStudentRefresher: 'طالب علم / تازہ کاری',
-    experienceConfidentCore: 'اچھا بنیادی علم',
+    experienceConfidentCore: 'پراعتماد بنیادی علم',
     experienceExpert: 'ماہر',
     // --- Old Experience Options Commented Out ---
     /*
@@ -2394,7 +2396,7 @@ export const translations = {
     linksButton: 'لینک‌ها',
     aboutButton: 'درباره',
 
-    passwordTitle: 'رمز عبور Alan را وارد کنید',
+    passwordTitle: 'رمز عبور دعوت Alan را وارد کنید',
     passwordPlaceholder: 'رمز عبور',
     passwordErrorMsg: 'رمز عبور نامعتبر است. لطفاً دوباره تلاش کنید',
     passwordSubmitBtn: 'ارسال',
@@ -2605,7 +2607,7 @@ export const translations = {
     linksButton: 'Minɔkɔ',
     aboutButton: 'Likambo etali',
 
-    passwordTitle: 'Tika mpasi ya se ya Alan',
+    passwordTitle: 'Tika mpasi ya se ya invitasyon Alan',
     passwordPlaceholder: 'Mpasi ya se (Password)',
     passwordErrorMsg: 'Mpasi ya se ezali malamu te. Simba lisusu',
     passwordSubmitBtn: 'Tinda',
@@ -2738,7 +2740,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Lingala) ---
     experiencePlaceholder: 'Boyebi',
     experienceStudentRefresher: 'Moyekoli / Mopanzi-nsango',
-    experienceConfidentCore: 'Boyebi ya liboso ya malamu',
+    experienceConfidentCore: 'Boyebi ya liboso ya kondima',
     experienceExpert: 'Mokonzi',
     // --- Old Experience Options Commented Out ---
     /*
@@ -2817,7 +2819,7 @@ export const translations = {
     linksButton: 'Mahada',
     aboutButton: 'Game da',
 
-    passwordTitle: 'Shigar da kalmar sirri ta Alan',
+    passwordTitle: 'Shigar da kalmar sirri ta gayyatar Alan',
     passwordPlaceholder: 'Kalmar sirri',
     passwordErrorMsg: 'Kalmar sirri ba daidai ba. Gwada sake',
     passwordSubmitBtn: 'Aika',
@@ -2950,7 +2952,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Hausa) ---
     experiencePlaceholder: 'Kwarewa',
     experienceStudentRefresher: 'Dalibi / Maimaitawa',
-    experienceConfidentCore: 'Kyakkyawan Ilimi na Asali',
+    experienceConfidentCore: 'Kwararren Ilimi na Asali',
     experienceExpert: 'Kwararre',
     // --- Old Experience Options Commented Out ---
     /*
@@ -3029,7 +3031,7 @@ export const translations = {
     linksButton: 'Ìjápọ̀',
     aboutButton: 'Nítorí',
 
-    passwordTitle: 'Tẹ ọ̀rọ̀ àgbàrá (password) Alan rẹ',
+    passwordTitle: 'Tẹ ọ̀rọ̀ àgbàrá (password) ipè Alan rẹ',
     passwordPlaceholder: 'Ọ̀rọ̀ Àgbàrá',
     passwordErrorMsg: 'Ọ̀rọ̀ àgbàrá rẹ kò tọ́. Jọwọ tún gbìyànjú',
     passwordSubmitBtn: 'Fẹ̀yìn',
@@ -3160,7 +3162,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Yoruba) ---
     experiencePlaceholder: 'Ìrírí',
     experienceStudentRefresher: 'Akẹ́kọ̀ọ́ / Atúnṣe',
-    experienceConfidentCore: 'Ìmọ̀ Pàtàkì Tí ó Dára',
+    experienceConfidentCore: 'Ìmọ̀ Pàtàkì Tí ó Dájú',
     experienceExpert: 'Amòye',
     // --- Old Experience Options Commented Out ---
     /*
@@ -3372,7 +3374,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Igbo) ---
     experiencePlaceholder: 'Ahụmahụ',
     experienceStudentRefresher: 'Nwa akwukwo / Ntughari',
-    experienceConfidentCore: 'Ezi isi ihe ọmụma',
+    experienceConfidentCore: 'Obi ike isi ihe omuma',
     experienceExpert: 'Onye okachamara',
     // --- Old Experience Options Commented Out ---
     /*
@@ -3451,7 +3453,7 @@ export const translations = {
     linksButton: 'Izixhumanisi',
     aboutButton: 'Mayelana',
 
-    passwordTitle: 'Faka iphasiwedi ka-Alan',
+    passwordTitle: 'Faka iphasiwedi yokumenywa kuka-Alan',
     passwordPlaceholder: 'Iphasiwedi',
     passwordErrorMsg: 'Iphasiwedi ayilungile. Zama futhi',
     passwordSubmitBtn: 'Thumela',
@@ -3588,7 +3590,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Zulu) ---
     experiencePlaceholder: 'Ulwazi',
     experienceStudentRefresher: 'Umfundi / Ukuvuselela',
-    experienceConfidentCore: 'Ulwazi Oluyisisekelo Oluhle',
+    experienceConfidentCore: 'Ulwazi Oluyisisekelo Oluthembekile',
     experienceExpert: 'Uchwepheshe',
     // --- Old Experience Options Commented Out ---
     /*
@@ -3667,7 +3669,7 @@ export const translations = {
     linksButton: 'ሊንኮች',
     aboutButton: 'ስለ',
 
-    passwordTitle: 'የAlan ፓስወርድ አስገባ',
+    passwordTitle: 'የAlan ግብዣ ፓስወርድ አስገባ',
     passwordPlaceholder: 'ፓስወርድ',
     passwordErrorMsg: 'ፓስወርዱ አይገባም። እባክህ እንደገና ፍትሽ',
     passwordSubmitBtn: 'አስረክብ',
@@ -3793,7 +3795,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Amharic) ---
     experiencePlaceholder: 'ልምድ',
     experienceStudentRefresher: 'ተማሪ / ማደሻ',
-    experienceConfidentCore: 'ጥሩ ዋና እውቀት',
+    experienceConfidentCore: 'በራስ የመተማመን ዋና እውቀት',
     experienceExpert: 'ባለሙያ',
     // --- Old Experience Options Commented Out ---
     /*
@@ -3872,7 +3874,7 @@ export const translations = {
     linksButton: 'Zvidziviriro (Links)',
     aboutButton: 'Nezve',
 
-    passwordTitle: 'Isa password raAlan',
+    passwordTitle: 'Isa password yekukokwa kwaAlan',
     passwordPlaceholder: 'Password',
     passwordErrorMsg: 'Password haina kunaka. Edzazve',
     passwordSubmitBtn: 'Tumira',
@@ -4004,7 +4006,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Shona) ---
     experiencePlaceholder: 'Zviitiko',
     experienceStudentRefresher: 'Mudzidzi / Mutsva',
-    experienceConfidentCore: 'Ruzivo rweMusimboti rwakanaka',
+    experienceConfidentCore: 'Ruzivo rweMusimboti rwakavimbika',
     experienceExpert: 'Nyanzvi',
     // --- Old Experience Options Commented Out ---
     /*
@@ -4083,7 +4085,7 @@ export const translations = {
     linksButton: 'Ihuza',
     aboutButton: 'Ibyerekeye',
 
-    passwordTitle: 'Injiza ijambo-banga rya Alan',
+    passwordTitle: 'Injiza ijambo-banga ryo gutumirwa rya Alan',
     passwordPlaceholder: 'Ijambo-banga',
     passwordErrorMsg: 'Ijambo-banga ntabwo rikoreshwa. Ongera ugerageze',
     passwordSubmitBtn: 'Emeza',
@@ -4216,7 +4218,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Kinyarwanda) ---
     experiencePlaceholder: 'Inararibonye',
     experienceStudentRefresher: 'Umunyeshuri / Ukuvugurura',
-    experienceConfidentCore: 'Ubumenyi bw\'ibanze bwiza',
+    experienceConfidentCore: 'Ubumenyi bw\'ibanze bwizewe',
     experienceExpert: 'Impuguke',
     // --- Old Experience Options Commented Out ---
     /*
@@ -4295,7 +4297,7 @@ export const translations = {
     linksButton: 'Maulalo',
     aboutButton: 'Zokhudza',
 
-    passwordTitle: 'Lowetsani mawu obisika a Alan',
+    passwordTitle: 'Lowetsani mawu obisika a Alan invitation',
     passwordPlaceholder: 'Mawu obisika',
     passwordErrorMsg: 'Mawu obisika sailakwa. Yesaninso',
     passwordSubmitBtn: 'Tumizani',
@@ -4428,7 +4430,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Chichewa) ---
     experiencePlaceholder: 'Zachitika',
     experienceStudentRefresher: 'Wophunzira / Wotsitsimutsa',
-    experienceConfidentCore: 'Chidziwitso Chokhazikika Chabwino',
+    experienceConfidentCore: 'Chidziwitso Chokhazikika Chokhulupirira',
     experienceExpert: 'Katswiri',
     // --- Old Experience Options Commented Out ---
     /*
@@ -4507,7 +4509,7 @@ export const translations = {
     linksButton: 'Dolenni',
     aboutButton: 'Amdanom',
 
-    passwordTitle: 'Rhowch eich cyfrinair Alan',
+    passwordTitle: 'Rhowch eich cyfrinair gwahoddiad Alan',
     passwordPlaceholder: 'Cyfrinair',
     passwordErrorMsg: 'Cyfrinair anghywir. Rhowch gynnig arall arni',
     passwordSubmitBtn: 'Gyflwyno',
@@ -4640,7 +4642,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Welsh) ---
     experiencePlaceholder: 'Profiad',
     experienceStudentRefresher: 'Myfyriwr / Adnewyddu',
-    experienceConfidentCore: 'Gwybodaeth graidd dda',
+    experienceConfidentCore: 'Gwybodaeth graidd hyderus',
     experienceExpert: 'Arbenigwr',
     // --- Old Experience Options Commented Out ---
     /*

@@ -1,3 +1,5 @@
+// Alan UI - agent1-chatbot-module.js | 19th June 2025, WJW
+
 // agent1-chatbot-module.js
 
 import Chatbot from 'https://cdn.jsdelivr.net/npm/flowise-embed@latest/dist/web.js';

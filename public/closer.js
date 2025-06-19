@@ -1,3 +1,5 @@
+// Alan UI - closer.js | 19th June 2025, WJW
+
 // closer.js
 
 /**

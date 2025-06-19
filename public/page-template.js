@@ -1,3 +1,5 @@
+// Alan UI - page-template.js | 19th June 2025, WJW
+
 // In the new file: page-template.js
 
 /**

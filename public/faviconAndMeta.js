@@ -1,3 +1,5 @@
+// Alan UI - faviconAndMeta.js | 19th June 2025, WJW
+
 /**
  * ******************************************************
  * faviconAndMetaSetup()

@@ -1,7 +1,36 @@
-/* Alan UI - Main Styles | Stage 2: Reorganized Version */
+/* Alan UI - Main Styles | Stage 3: Final Themed Version */
 
 /* =====================================================================
-   1. GLOBAL RESETS & BASE STYLES
+   1. VARIABLES & THEME
+===================================================================== */
+:root {
+  /* Core Colors */
+  --color-primary: #007bff;
+  --color-secondary-blue: #2196f3;
+  --color-red: #ff0000;
+  --color-green: #4ec94e;
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  /* Grey Palette */
+  --color-grey-dark: #333333;
+  --color-grey-text: #8d8d8d;
+  --color-grey-medium: #a2a2a2;
+  --color-grey-border: #cccccc;
+  --color-grey-bg-light: #f4f4f4;
+  --color-grey-bg-dark: #f0f0f0;
+
+  /* Fonts */
+  --font-family-main: 'Calibri Light', Arial, sans-serif;
+  --font-family-heading: 'Quicksand', Arial, sans-serif;
+
+  /* Sizing */
+  --side-menu-width: 320px;
+}
+
+
+/* =====================================================================
+   2. GLOBAL RESETS & BASE STYLES
 ===================================================================== */
 html, body {
   margin: 0;
@@ -9,7 +38,7 @@ html, body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  font-family: 'Calibri Light', Arial, sans-serif;
+  font-family: var(--font-family-main);
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
@@ -21,7 +50,7 @@ p {
 
 
 /* =====================================================================
-   2. UTILITY CLASSES
+   3. UTILITY CLASSES
 ===================================================================== */
 .hidden {
   display: none;
@@ -32,7 +61,7 @@ p {
 }
 
 .grey-text {
-  color: grey;
+  color: var(--color-grey-medium);
   font-size: 14px;
 }
 
@@ -49,7 +78,7 @@ p {
 
 
 /* =====================================================================
-   3. PAGE LAYOUT & MAIN STRUCTURE
+   4. PAGE LAYOUT & MAIN STRUCTURE
 ===================================================================== */
 .page-container {
   display: flex;
@@ -77,16 +106,16 @@ p {
   margin: 0;
   padding: 10px 0;
   text-align: center;
-  background: #fff;
+  background: var(--color-white);
   font-size: 12px;
-  color: #8d8d8d;
+  color: var(--color-grey-text);
   font-style: italic;
   z-index: 9999;
 }
 
 
 /* =====================================================================
-   4. HEADER, APP BAR & NAVIGATION
+   5. HEADER, APP BAR & NAVIGATION
 ===================================================================== */
 
 /* --- Main Chatbot Header --- */
@@ -95,14 +124,14 @@ p {
   justify-content: center;
   align-items: center;
   padding: 0 30px;
-  background-color: black;
-  color: white;
+  background-color: var(--color-black);
+  color: var(--color-white);
   position: relative;
 }
-.chatbot-header .red { color: #f44336ff; }
-.chatbot-header .black { color: black; }
-.chatbot-header .white, .chatbot-header { color: white; }
-.chatbot-header .grey, .divider { color: grey; }
+.chatbot-header .red { color: #f44336ff; } /* Keeping specific hex for potential nuance */
+.chatbot-header .black { color: var(--color-black); }
+.chatbot-header .white, .chatbot-header { color: var(--color-white); }
+.chatbot-header .grey, .divider { color: var(--color-grey-medium); }
 
 .title-and-subtitle {
   text-align: center;
@@ -110,16 +139,16 @@ p {
 .chatbot-title {
   font-size: 30px;
   font-weight: bold;
-  color: #000;
+  color: var(--color-black);
   text-align: center;
   padding-top: 8px;
-  font-family: 'Quicksand', Arial, sans-serif;
+  font-family: var(--font-family-heading);
   z-index: 2000;
 }
 .chatbot-subtitle {
   font-size: 11px;
   margin-top: 0;
-  color: grey;
+  color: var(--color-grey-medium);
   padding: 0px 20px 10px 20px;
 }
 
@@ -127,10 +156,10 @@ p {
 #appBar {
   display: flex;
   align-items: center;
-  background-color: black;
-  color: white;
+  background-color: var(--color-black);
+  color: var(--color-white);
   padding: 10px 20px;
-  font-family: 'Calibri Light', Arial, sans-serif !important;
+  font-family: var(--font-family-main) !important;
   font-size: 16px !important;
   box-sizing: content-box !important;
 }
@@ -138,7 +167,7 @@ p {
   background: none;
   border: none;
   font-family: inherit;
-  color: white;
+  color: var(--color-white);
   font-size: 32px;
   font-weight: bold;
   cursor: pointer;
@@ -154,24 +183,24 @@ p {
   text-align: center;
   margin: 0 auto;
   font-size: 24px;
-  font-family: 'Calibri Light', Arial, sans-serif !important;
+  font-family: var(--font-family-main) !important;
   font-weight: normal !important;
   flex: 1;
   line-height: 1.2;
 }
 
-/* --- Menu Icon (Two-Line Burger) - Kept as two separate blocks --- */
+/* --- Menu Icon (Two-Line Burger) --- */
 .menu-icon {
   cursor: pointer;
   font-size: 25px;
-  color: white;
+  color: var(--color-white);
   position: fixed;
   top: calc(42px - 12.5px);
   left: 20px;
   z-index: 10001;
 }
 .menu-icon.active {
-  color: black;
+  color: var(--color-black);
 }
 .menu-icon {
   position: relative;
@@ -186,21 +215,21 @@ p {
   position: absolute;
   left: 0;
   height: 3px;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--color-white);
   transition: background-color 0.3s;
 }
 .menu-icon::before { top: 0; width: 100%; }
 .menu-icon::after { top: 16px; width: 60%; }
 .menu-icon.open::before, .menu-icon.open::after {
-  background-color: rgb(0, 0, 0);
+  background-color: var(--color-black);
 }
 
 /* --- Other Header Icons --- */
 .name-icon {
   width: 25px;
   height: 25px;
-  background-color: rgb(145, 158, 145);
-  color: white;
+  background-color: rgb(145, 158, 145); /* Kept specific RGB as it's unique */
+  color: var(--color-white);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -222,10 +251,10 @@ p {
 }
 .language-dropdown {
   appearance: none;
-  background-color: rgba(255, 255, 255, 0);
-  color: rgba(255, 255, 255, 0);
+  background-color: transparent;
+  color: transparent;
   font-size: 12px;
-  border: 1px solid #ffffff;
+  border: 1px solid var(--color-white);
   border-radius: 10px;
   padding: 10px 0px 7px 10px;
   background-image: url('./images/lang.jpg');
@@ -237,11 +266,11 @@ p {
 }
 .language-dropdown:focus {
   outline: none;
-  border: 1px solid #ffffff;
+  border: 1px solid var(--color-white);
 }
 .language-dropdown option {
-  background-color: white;
-  color: black;
+  background-color: var(--color-white);
+  color: var(--color-black);
   padding-left: 5px;
   text-align: left;
 }
@@ -250,16 +279,16 @@ p {
 }
 
 /* =====================================================================
-   5. SIDE MENU & SIDEBARS
+   6. SIDE MENU & SIDEBARS
 ===================================================================== */
 
 /* --- Main Side Menu Container --- */
 .side-menu {
   position: fixed;
-  left: -330px;
+  left: calc(-1 * var(--side-menu-width));
   top: 10px;
-  width: 320px;
-  background-color: #f4f4f4;
+  width: var(--side-menu-width);
+  background-color: var(--color-grey-bg-light);
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
   transition: left 0.5s ease;
   padding: 60px 15px 15px 15px;
@@ -274,7 +303,7 @@ p {
 .side-menu .chat-link {
   display: block;
   width: 50px;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   padding: 10px;
   border-radius: 12px;
   margin: 5px 10px;
@@ -284,7 +313,7 @@ p {
   transition: background-color 0.3s;
 }
 .side-menu .chat-link:hover {
-  background-color: #ccc;
+  background-color: var(--color-grey-border);
 }
 .side-menu hr {
   width: 100%;
@@ -324,8 +353,8 @@ p {
   color: #555;
   margin: 8px 5px 0 5px;
   padding: 5px 10px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
+  background-color: var(--color-grey-bg-dark);
+  border: 1px solid var(--color-grey-border);
   border-radius: 5px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   display: block;
@@ -351,13 +380,13 @@ p {
 .history-message.user {
   margin-left: auto;
   text-align: right;
-  color: #007bff;
+  color: var(--color-primary);
   font-weight: 500;
 }
 .history-message.bot {
   margin-right: auto;
   text-align: left;
-  color: #333;
+  color: var(--color-grey-dark);
 }
 .bin-btn {
   margin-top: auto;
@@ -379,7 +408,7 @@ p {
 }
 .copy-btn:hover {
   opacity: 1;
-  color: #333;
+  color: var(--color-grey-dark);
 }
 
 
@@ -413,12 +442,12 @@ p {
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
-  color: white;
+  color: var(--color-white);
 }
 .openbtn {
   font-size: 20px;
   cursor: pointer;
-  background-color: white;
+  background-color: var(--color-white);
   color: #464646;
   padding: 10px 15px;
   border: none;
@@ -440,7 +469,7 @@ p {
 
 
 /* =====================================================================
-   6. MODALS, POPUPS & DROPDOWNS
+   7. MODALS, POPUPS & DROPDOWNS
 ===================================================================== */
 
 /* --- Generic Modal --- */
@@ -492,7 +521,7 @@ p {
 }
 .close-button:hover,
 .close-button:focus {
-  color: black;
+  color: var(--color-black);
   text-decoration: none;
   cursor: pointer;
 }
@@ -512,7 +541,7 @@ p {
 }
 
 
-/* --- Slide-out Popup (Kept as separate overrides) --- */
+/* --- Slide-out Popup --- */
 .popup {
   display: none;
   position: fixed;
@@ -543,7 +572,7 @@ p {
   left: 15px;
 }
 .popup-close:hover {
-  color: black;
+  color: var(--color-black);
 }
 #popup {
   position: fixed !important;
@@ -557,14 +586,14 @@ p {
   padding: 20px;
   box-sizing: border-box;
   font-size: 12px;
-  color: #000;
+  color: var(--color-black);
   z-index: 9999;
   transition: right 0.4s ease;
 }
 #popup .popup-content {
   margin-top: 40px;
   line-height: 1.4;
-  color: #000;
+  color: var(--color-black);
 }
 #popup .popup-close {
   position: absolute;
@@ -593,7 +622,7 @@ p {
   z-index: 1;
 }
 .dropdown-content a {
-  color: black;
+  color: var(--color-black);
   padding: 8px 16px;
   text-decoration: none;
   display: block;
@@ -604,7 +633,7 @@ p {
 
 
 /* =====================================================================
-   7. BUTTONS & FORMS
+   8. BUTTONS & FORMS
 ===================================================================== */
 
 /* --- General Form Elements --- */
@@ -617,8 +646,8 @@ button {
 }
 button {
   cursor: pointer;
-  background-color: #007bff;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-white);
 }
 
 /* --- .button Class & Variants --- */
@@ -631,34 +660,34 @@ button {
   padding: 9px 11px;
   cursor: pointer;
   font-size: 14px;
-  color: white;
+  color: var(--color-white);
 }
 .button {
   margin-top: 0px;
-  padding-top: 5px; /* Note: padding is overridden by the rule above */
-  background-color: #2196f3ff;
+  padding-top: 5px;
+  background-color: var(--color-secondary-blue);
 }
 .button.green {
-  background-color: #4ec94e;
+  background-color: var(--color-green);
 }
 .button.grey {
-  background-color: rgb(181, 181, 181);
+  background-color: rgb(181, 181, 181); /* Unique grey, kept as-is */
 }
 .button.red {
-  background-color: #ff0000;
-  color: white;
+  background-color: var(--color-red);
+  color: var(--color-white);
   border-radius: 12px;
-  border: 2px solid black;
+  border: 2px solid var(--color-black);
 }
 .button.inactive-button {
-  background-color: grey;
-  color: white;
+  background-color: var(--color-grey-medium);
+  color: var(--color-white);
   animation: none;
 }
 
 /* --- Specific Button Implementations --- */
 .button-label {
-  color: black;
+  color: var(--color-black);
   text-align: center;
   display: block;
   margin-bottom: 1px;
@@ -679,12 +708,12 @@ button {
   border: none;
 }
 .side-menu .btn-colored {
-  border: 2px solid black;
-  color: black;
+  border: 2px solid var(--color-black);
+  color: var(--color-black);
 }
-.side-menu .btn-eye { background-color: rgb(134, 162, 255); }
-.side-menu .btn-ear { background-color: rgb(133, 255, 133); }
-.side-menu .btn-skin { background-color: #efafff; }
+.side-menu .btn-eye { background-color: rgb(134, 162, 255); } /* Unique color */
+.side-menu .btn-ear { background-color: rgb(133, 255, 133); } /* Unique color */
+.side-menu .btn-skin { background-color: #efafff; } /* Unique color */
 .side-menu .btn-lang {
   background: url('images/lang.jpg') no-repeat center center;
   background-size: cover;
@@ -693,7 +722,7 @@ button {
   height: 32px;
 }
 .instruction-screen button {
-  background: red !important;
+  background: var(--color-red) !important;
   text-align: left !important;
   -webkit-appearance: none !important;
   appearance: none !important;
@@ -748,7 +777,7 @@ button {
 
 
 /* =====================================================================
-   8. MISCELLANEOUS COMPONENTS
+   9. MISCELLANEOUS COMPONENTS
 ===================================================================== */
 /* --- Chatbot Specific --- */
 .chatbot-container {
@@ -768,9 +797,9 @@ flowise-fullchatbot {
 }
 .flowise-chatbot .bot-message {
   display: block !important;
-  color: #000000 !important;
+  color: var(--color-black) !important;
   opacity: 1 !important;
-  background-color: #ffffff !important;
+  background-color: var(--color-white) !important;
 }
 
 
@@ -782,20 +811,20 @@ flowise-fullchatbot {
 }
 .register-link, .login-link {
   cursor: pointer;
-  color: blue;
+  color: blue; /* Kept as-is, could be var(--color-primary) */
   text-decoration: underline;
   font-size: 0.9em;
   margin-top: 20px;
 }
 .detected-condition, #condition-description {
-  color: rgb(0, 0, 0);
+  color: var(--color-black);
   text-align: center;
   padding-left: 40px;
   padding-right: 40px;
 }
 #displayed-job-role {
   font-size: 8px;
-  color: grey;
+  color: var(--color-grey-medium);
   text-align: right;
   flex-grow: 1;
 }
@@ -830,18 +859,19 @@ flowise-fullchatbot {
 }
 #additional-text {
   font-size: 15px;
-  color: grey;
+  color: var(--color-grey-medium);
   margin-top: 0px;
 }
 #sub-text {
   font-size: 16px;
-  color: black;
+  color: var(--color-black);
   font-weight: 900;
   padding-bottom: 5px;
 }
 
+
 /* =====================================================================
-   9. ANIMATIONS & KEYFRAMES
+   10. ANIMATIONS & KEYFRAMES
 ===================================================================== */
 .flip-horizontally {
   animation: smoothFlip360 1.5s ease-out forwards;

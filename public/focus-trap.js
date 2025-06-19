@@ -1,3 +1,5 @@
+// Alan UI - focus-trap.js | 19th June 2025, WJW
+
 // --- START OF FILE focus-trap.js ---
 
 export class FocusTrap {

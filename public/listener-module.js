@@ -1,3 +1,5 @@
+// Alan UI - listener-module.js | 19th June 2025, WJW
+
 /* listener-module.js
    ─────────────────────────────────────────────────────────────────────────
    Persistent chat history with collapsible, numbered sessions.
