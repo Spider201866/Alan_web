@@ -17,6 +17,13 @@
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="preload"
+      href="https://fonts.gstatic.com/s/quicksand/v30/6xKtdSZaM9iE8KbpRA_hJFQ.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
     <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png" />
@@ -268,6 +275,8 @@
                 type="password"
                 id="passwordInput"
                 placeholder="Password"
+                inputmode="numeric"
+                pattern="[0-9]*"
                 style="
                   color: grey;
                   padding: 12px;
@@ -323,6 +332,7 @@
             href="https://medicine.st-andrews.ac.uk/arclight/contact/"
             style="color: blue"
             target="_blank"
+            rel="noopener"
             >here</a
           >
         </p>
@@ -332,8 +342,8 @@
       <!-- SPLASH SCREEN (initially visible only via JS) -->
       <!-- ===================================================================== -->
       <section class="splash-screen hidden">
-        <img id="logo1" src="images/Q.png" alt="Q Logo" />
-        <img id="logo2" src="images/AP.png" alt="AP Logo" />
+        <img id="logo1" src="images/Q.png" alt="Q Logo" loading="lazy" />
+        <img id="logo2" src="images/AP.png" alt="AP Logo" loading="lazy" />
         <p>Eye, Ear, Skin AI Assistant</p>
       </section>
 
@@ -345,6 +355,7 @@
           src="images/bigredt.png"
           alt="Big Red T Logo"
           style="max-width: 120px; height: auto; margin-bottom: -10px"
+          loading="lazy"
         />
         <p id="instruction-text" style="text-align: justify">
           Alan is an AI assistant for students and those who only occasionally see eye, ear or skin
@@ -359,6 +370,7 @@
             class="onboarding-field"
             placeholder="Name"
             title="2-20 letters, spaces, apostrophes or hyphens only"
+            autocomplete="name"
           />
           <div id="job-role-select" class="onboarding-field custom-multiselect-container">
             <div class="select-box"><span id="aims-select-text">Aims</span></div>
@@ -381,7 +393,7 @@
             id="contactInput"
             class="onboarding-field"
             placeholder="Contact (email/phone)"
-            autocomplete="off"
+            autocomplete="email"
           />
           <br /><br /><br />
           <button

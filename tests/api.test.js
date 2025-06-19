@@ -225,6 +225,8 @@ describe('One-Time Password Logic', () => {
       return originalJoin(...args);
     };
 
+    // Clear the module cache to get a fresh instance of server.js
+    jest.resetModules();
     ({ app: otpApp } = require('../server'));
   });
 

@@ -41,14 +41,20 @@ This project uses [Prettier](https://prettier.io/) for consistent code formattin
   npm run format
   ```
   (Available in both the root and `Alan_web` directories.)
+- To check code quality and identify potential issues, run:
+  ```bash
+  npm run lint
+  ```
 - An `.editorconfig` file is also included to enforce consistent indentation and line endings across different editors.
 
 ## Security
 
 - **Rate Limiting:** [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) is used in `server.js` to protect specific API endpoints from excessive or abusive requests. Each IP is limited to 100 requests per 15 minutes, helping prevent basic denial-of-service attacks and abuse.
-- **Security Headers:** [Helmet](https://helmetjs.github.io/) is used in `server.js` to set various HTTP response headers, enhancing the application's security against common web vulnerabilities like XSS, clickjacking, and insecure connections. The Content Security Policy (CSP) is configured to allow necessary external resources (CDNs, Flowise backend, IP API) and inline scripts/styles.
+- **Security Headers:** [Helmet](https://helmetjs.github.io/) is used in `server.js` to set various HTTP response headers, enhancing the application's security against common web vulnerabilities like XSS, clickjacking, and insecure connections. The Content Security Policy (CSP) is configured to allow necessary external resources (CDNs, Flowise backend, IP API) and inline scripts/styles. `X-Content-Type-Options: nosniff` header is also enabled to prevent MIME-sniffing.
 - **Environment Variable Validation:** Critical environment variables (`MASTER_PASSWORD_HASH`, `PASSWORD_SALT`) are validated at server startup in `server.js` to prevent the server from running with missing credentials.
 - **JSON File Integrity:** JSON data files (`user-info.json`, `user-history.json`) are ensured to have a trailing newline character for improved compatibility with various tools.
+- **Robots.txt:** A `robots.txt` file is provided in the `public/` directory to control search engine crawling behavior.
+- **Sitemap.xml:** A `sitemap.xml` file is provided in the `public/` directory to help search engines discover and crawl important pages.
 
 ### Environment Variables (.env)
 
@@ -197,6 +203,18 @@ This feature significantly improves accessibility and user experience for keyboa
 ### Icon-only Buttons
 
 - All icon-only buttons (buttons with no visible text, only an icon or image) must have an appropriate `aria-label` attribute describing their action. This applies to language selection, clear history, and similar buttons in `home.html`, `index.html`, and elsewhere.
+- Navigation buttons like "Eye," "Ear," "Skin," "Tools," "Videos," and "Atoms" in `home.html` now have explicit `aria-label` attributes to clarify their purpose for screen readers.
+
+### "Skip to Content" Link
+
+- A "skip to content" link is implemented in `home.html` and styled in `styles.css` to allow keyboard users and screen readers to bypass repetitive navigation and jump directly to the main content.
+
+## Performance Optimizations
+
+- **Lazy Loading Images/Iframes:** `loading="lazy"` attribute is applied to offscreen images (e.g., logos in `index.html`, `eyeor.gif` in `home.html`) and iframes (e.g., `triangleFrame` in `index.html`) to defer their loading until they are near the viewport, improving initial page load times.
+- **Favicon Preload:** A `<link rel="preload" as="image">` tag is used for the favicon in `home.html` to ensure it loads as early as possible.
+- **Font Preload:** Google Fonts are preloaded using `<link rel="preload" as="font" type="font/woff2" crossorigin>` in `home.html` and `index.html` to reduce Flash of Unstyled Text (FOUT).
+- **Deferred Script Loading:** The `defer` attribute is added to external `<script>` tags in `home.html` and `index.html` to prevent render-blocking, allowing HTML parsing to continue while scripts download in the background.
 
 ---
 

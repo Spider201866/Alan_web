@@ -350,10 +350,12 @@ describe('Alan Webapp UI/UX', () => {
       locationInfo.style.display = 'none'; // Ensure it's hidden initially
 
       // Simulate the relevant part of fetchIPBasedLocation
-      await global.fetch('https://ipapi.co/json/')
-        .then(response => response.json())
-        .then(data => {
-          if (!data) { // Simulate the !data check
+      await global
+        .fetch('https://ipapi.co/json/')
+        .then((response) => response.json())
+        .then((data) => {
+          if (!data) {
+            // Simulate the !data check
             locationInfo.textContent = 'Could not determine your location.';
             locationInfo.style.display = 'block';
             locationInfo.style.color = 'red';
@@ -369,22 +371,19 @@ describe('Alan Webapp UI/UX', () => {
 
     it('should display an error message if fetching IP-based location fails', async () => {
       // Mock fetch to throw an error
-      global.fetch = jest.fn(() =>
-        Promise.reject(new Error('Network error'))
-      );
+      global.fetch = jest.fn(() => Promise.reject(new Error('Network error')));
 
       const locationInfo = document.getElementById('location-info');
       locationInfo.style.display = 'none'; // Ensure it's hidden initially
 
       // Simulate the relevant part of fetchIPBasedLocation
-      await global.fetch('https://ipapi.co/json/')
-        .catch(error => {
-          locationInfo.textContent = 'Could not determine your location due to an error.';
-          locationInfo.style.display = 'block';
-          locationInfo.style.color = 'red';
-          locationInfo.style.textAlign = 'center';
-          locationInfo.style.marginTop = '10px';
-        });
+      await global.fetch('https://ipapi.co/json/').catch((error) => {
+        locationInfo.textContent = 'Could not determine your location due to an error.';
+        locationInfo.style.display = 'block';
+        locationInfo.style.color = 'red';
+        locationInfo.style.textAlign = 'center';
+        locationInfo.style.marginTop = '10px';
+      });
 
       expect(locationInfo.style.display).toBe('block');
       expect(locationInfo.textContent).toBe('Could not determine your location due to an error.');

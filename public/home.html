@@ -1,7 +1,6 @@
 <!-- Alan UI - home.html | 19th June 2025, WJW -->
 <!doctype html>
-<!-- Omit lang="en" so we don’t force English on refresh. -->
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
@@ -13,10 +12,13 @@
     <!-- Sujin 10th 6 2025 -->
 
     <!-- Favicon Preload -->
-    <link rel="preload" href="favicons/favicon-32x32.png" as="image">
+    <link rel="preload" href="favicons/favicon-32x32.png" as="image" />
 
     <!-- External Dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"
+      defer
+    ></script>
     <link rel="stylesheet" href="styles/styles.css" />
     <link rel="prefetch" href="images/atomsblue.jpg" as="image" />
     <link
@@ -30,6 +32,13 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"
       rel="stylesheet"
+    />
+    <link
+      rel="preload"
+      href="https://fonts.gstatic.com/s/quicksand/v30/6xKtdSZaM9iE8KbpRA_hJFQ.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
 
     <!-- External JS Modules -->
@@ -67,6 +76,7 @@
             id="eye-button"
             class="button btn-colored btn-eye"
             onclick="window.location.href='eye.html';"
+            aria-label="Navigate to Eye section"
           >
             Eye
           </button>
@@ -74,6 +84,7 @@
             id="ear-button"
             class="button btn-colored btn-ear"
             onclick="window.location.href='ear.html';"
+            aria-label="Navigate to Ear section"
           >
             Ear
           </button>
@@ -81,22 +92,24 @@
             id="skin-button"
             class="button btn-colored btn-skin"
             onclick="window.location.href='skin.html';"
+            aria-label="Navigate to Skin section"
           >
             Skin
           </button>
         </div>
         <div class="menu-row">
           <a href="https://www.youtube.com/@arclightproject" class="menu-link">
-            <button id="videos-button" class="button grey">Videos</button>
+            <button id="videos-button" class="button grey" aria-label="View Videos">Videos</button>
           </a>
           <button
             id="atoms-button"
             class="button grey"
             onclick="window.location.href='atoms.html';"
+            aria-label="Navigate to Atoms section"
           >
             Atoms
           </button>
-          <button id="tools-button" class="button grey">Tools</button>
+          <button id="tools-button" class="button grey" aria-label="View Tools">Tools</button>
           <div class="language-container">
             <button
               class="button btn-lang"
@@ -259,7 +272,7 @@
           <p id="sub-text" class="centered-content"></p>
         </div>
         <div class="animation-container" id="animationContainer">
-          <img src="images/eyeor.gif" alt="Eyeor Animation" class="fade-in-out" />
+          <img src="images/eyeor.gif" alt="Eyeor Animation" class="fade-in-out" loading="lazy" />
         </div>
       </main>
 

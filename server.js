@@ -40,14 +40,26 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", 'https://cdn.jsdelivr.net', 'https://alan.up.railway.app', 'https://ipapi.co', "'unsafe-inline'"],
-        styleSrc: ["'self'", 'https://cdnjs.cloudflare.com', 'https://fonts.googleapis.com', "'unsafe-inline'"],
+        scriptSrc: [
+          "'self'",
+          'https://cdn.jsdelivr.net',
+          'https://alan.up.railway.app',
+          'https://ipapi.co',
+          "'unsafe-inline'",
+        ],
+        styleSrc: [
+          "'self'",
+          'https://cdnjs.cloudflare.com',
+          'https://fonts.googleapis.com',
+          "'unsafe-inline'",
+        ],
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:'],
         connectSrc: ["'self'", 'https://alan.up.railway.app', 'https://ipapi.co'],
       },
     },
     scriptSrcAttr: ["'unsafe-inline'"], // Explicitly allow inline event handlers
+    noSniff: true, // Enable X-Content-Type-Options: nosniff
   })
 );
 app.use(cors()); // Enable CORS for all routes
