@@ -3,7 +3,7 @@ const crypto = require('crypto');
 require("dotenv").config();
 
 const SALT = process.env.PASSWORD_SALT;
-const passwordToHash = 'your-master-password'; // <-- Put your desired password here
+const passwordToHash = '662023'; // <-- Put your desired password here
 
 if (!SALT) {
   console.error("Please define PASSWORD_SALT in your .env file first.");
