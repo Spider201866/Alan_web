@@ -25,7 +25,9 @@ const limiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
-app.use(limiter);
+if (process.env.NODE_ENV !== 'test') {
+  app.use(limiter);
+}
 const MASTER_PASSWORD_HASH = process.env.MASTER_PASSWORD_HASH || '';
 let ONE_TIME_PASSWORDS = new Set(
   (process.env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean)

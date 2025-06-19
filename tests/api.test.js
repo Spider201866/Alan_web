@@ -5,17 +5,18 @@
  * Requires: jest, supertest
  */
 
+process.env.NODE_ENV = 'test';
 const request = require('supertest');
 
 const path = require('path');
 const os = require('os');
 const fs = require('fs').promises;
 let app, readJsonFile, appendToHistory;
+let tempDir;
+let originalJoin;
 
 describe('API Endpoints', () => {
   // Use a temp directory for test data
-  let tempDir;
-  let originalJoin;
 
   beforeAll(async () => {
     // Set up a valid password hash and salt before requiring the app
@@ -25,6 +26,10 @@ describe('API Endpoints', () => {
     process.env.PASSWORD_SALT = salt;
     const hash = crypto.createHash('sha256').update(password + salt).digest('hex');
     process.env.MASTER_PASSWORD_HASH = hash;
+
+    const otp = 'onetimetest';
+    const otpHash = crypto.createHash('sha256').update(otp + salt).digest('hex');
+    process.env.ONE_TIME_PASSWORD_HASHES = otpHash;
 
     tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-test-'));
     // Patch path.join in server.js to redirect data files to tempDir
@@ -160,4 +165,87 @@ describe('Rate Limiting', () => {
   });
 });
 
-// TODO: Add tests for one-time password logic, file corruption, and edge cases.
+// One-Time Password Logic tests must run in a fully isolated environment
+describe('One-Time Password Logic', () => {
+  const crypto = require('crypto');
+  const otp = 'onetimetest';
+  const salt = 'testsalt';
+  const otpHash = crypto.createHash('sha256').update(otp + salt).digest('hex');
+  let otpTempDir;
+  let otpApp;
+
+  beforeAll(async () => {
+    process.env.PASSWORD_SALT = salt;
+    process.env.MASTER_PASSWORD_HASH = crypto.createHash('sha256').update('testpass' + salt).digest('hex');
+    process.env.ONE_TIME_PASSWORD_HASHES = otpHash;
+
+    otpTempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-otp-test-'));
+    // Patch path.join in server.js to redirect data files to otpTempDir
+    const originalJoin = path.join;
+    path.join = (...args) => {
+      if (args[1] === 'user-info.json' || args[1] === 'user-history.json') {
+        return originalJoin(otpTempDir, args[1]);
+      }
+      return originalJoin(...args);
+    };
+
+    ({ app: otpApp } = require('../server'));
+  });
+
+  afterAll(async () => {
+    // Clean up otpTempDir
+    await fs.rm(otpTempDir, { recursive: true, force: true });
+  });
+
+  it('should accept a valid one-time password for /fetch-records', async () => {
+    const testRecord = {
+      sessionId: 'otp-session',
+      latitude: 10,
+      longitude: 20,
+      dateTime: '2025-06-16T23:00:00Z',
+      area: 'OTP Test',
+      refreshCount: 1,
+    };
+    // Ensure otpTempDir exists before writing
+    await fs.mkdir(otpTempDir, { recursive: true });
+    // Remove any existing user-info.json to avoid test pollution
+    try {
+      await fs.unlink(path.join(otpTempDir, 'user-info.json'));
+    } catch (e) {
+      // Ignore if file does not exist
+    }
+    await fs.writeFile(
+      path.join(otpTempDir, 'user-info.json'),
+      JSON.stringify([testRecord], null, 2)
+    );
+    const res = await request(otpApp).post('/fetch-records').send({ password: otp });
+    if (res.statusCode !== 200 || JSON.stringify(res.body) !== JSON.stringify([testRecord])) {
+      // Log the actual response for debugging
+      console.log('DEBUG OTP TEST RESPONSE:', res.statusCode, res.body);
+    }
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toEqual([testRecord]);
+  });
+
+  it('should reject reuse of a one-time password for /fetch-records', async () => {
+    const res = await request(otpApp).post('/fetch-records').send({ password: otp });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('should reject invalid one-time password', async () => {
+    const res = await request(otpApp).post('/fetch-records').send({ password: 'invalidotp' });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('should reject empty one-time password', async () => {
+    const res = await request(otpApp).post('/fetch-records').send({ password: '' });
+    expect(res.statusCode).toBe(401);
+  });
+
+  it('should reject malformed one-time password', async () => {
+    const res = await request(otpApp).post('/fetch-records').send({ password: null });
+    expect(res.statusCode).toBe(401);
+  });
+});
+
+// TODO: Add tests for file corruption and additional edge cases.

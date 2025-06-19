@@ -1,5 +1,35 @@
 # Project Overview & Recent Updates
 
+---
+
+## Setup & Testing
+
+To set up the project and run the tests:
+
+1. Install dependencies (required for Jest and all other packages):
+   ```bash
+   npm install
+   ```
+
+2. Run the test suite:
+   ```bash
+   npm test
+   ```
+
+Or, to run a specific test file (e.g., accessibility/UI tests):
+   ```bash
+   npx jest tests/ui.test.js
+   ```
+
+### Test Coverage & Isolation
+
+- All backend, authentication, rate limiting, and one-time password (OTP) logic is covered by automated tests.
+- OTP and rate limiting tests are fully isolated in their own temp directories and server instances to prevent data pollution between suites.
+- All major user flows, UI elements, and backend logic are covered.
+- Accessibility requirements are enforced by automated tests in `ui.test.js`.
+
+---
+
 ## Code Formatting
 
 This project uses [Prettier](https://prettier.io/) for consistent code formatting.  

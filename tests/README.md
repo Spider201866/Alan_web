@@ -15,8 +15,8 @@ This folder contains automated tests for the Alan webapp, covering backend API, 
 
 ## Structure
 
-- `api.test.js` — Backend API and helper function tests (Jest + Supertest)
-  - Isolated test data (no pollution of real files)
+- `api.test.js` — Backend API, authentication, OTP, rate limiting, and helper function tests (Jest + Supertest)
+  - Isolated test data (no pollution of real files; OTP and rate limiting tests use separate temp directories and server instances for full isolation)
   - **Tests:**
     1. Accepts a valid record and writes to user-info.json and user-history.json
     2. Rejects invalid records
@@ -25,6 +25,12 @@ This folder contains automated tests for the Alan webapp, covering backend API, 
     5. Requires a valid password (/fetch-history)
     6. readJsonFile returns [] for missing file
     7. appendToHistory can be called with a record
+    8. Rate limiting: returns 429 after exceeding allowed requests
+    9. One-Time Password (OTP) logic:
+       - Accepts a valid OTP for /fetch-records (single-use)
+       - Rejects reuse of an OTP
+       - Rejects invalid, empty, or malformed OTPs
+    10. All major authentication, rate limiting, and edge case flows are covered
 
 - `chatbot.test.js` — Frontend chatbot and sidebar logic (Jest + jsdom)
   - **Tests:**
@@ -89,8 +95,9 @@ This folder contains automated tests for the Alan webapp, covering backend API, 
 ## Notes
 
 - Backend tests use a temporary directory for all data, so your real files are never touched.
+- OTP and rate limiting tests are fully isolated in their own temp directories and server instances to prevent data pollution between suites.
 - Frontend and UI tests use jsdom to simulate the DOM and localStorage.
-- All major user flows, UI elements, and backend logic are covered.
+- All major user flows, UI elements, authentication, rate limiting, OTP, and backend logic are covered.
 - **Accessibility requirements are enforced by automated tests in `ui.test.js`.**
 - For full browser/E2E automation, consider Playwright or Cypress.
 
