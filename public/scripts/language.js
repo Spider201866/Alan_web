@@ -76,7 +76,8 @@ export const translations = {
     passwordPlaceholder: 'Password',
     passwordErrorMsg: 'Invalid password. Please try again',
     passwordSubmitBtn: 'Submit',
-    noCodeLine: "No or incorrect code? Contact us <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>here</a>",
+    noCodeLine:
+      "No or incorrect code? Contact us <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>here</a>",
 
     eyeMarqueeLine1: 'What is glaucoma?',
     eyeMarqueeLine2: 'How do I see the optic disc with the Arclight?',
@@ -98,7 +99,7 @@ export const translations = {
     userName: 'Name',
     userContact: 'Contact',
     userRole: 'Role',
-    userAimsPopupLabel: "Aims",
+    userAimsPopupLabel: 'Aims',
     // userAims: 'Aims',
     userLatLong: 'Lat & Long',
     userArea: 'Area',
@@ -106,7 +107,8 @@ export const translations = {
     userVersion: 'Version',
     userDateTime: 'Date & Time',
     geolocationButton: 'Geolocation',
-    geoInfoText: 'Clicking "Geolocation" will share a more accurate location (lat/long). This helps offer better guidance and choices.',
+    geoInfoText:
+      'Clicking "Geolocation" will share a more accurate location (lat/long). This helps offer better guidance and choices.',
 
     pageTitle_howToExamineEye: 'How to examine the eye',
     frontOfEyeHeading: 'Front of Eye',
@@ -136,7 +138,8 @@ export const translations = {
 
     pageTitle_howToExamineSkin: 'How to examine the skin',
     generalObservationHeading: 'General observation',
-    generalObservationText: 'Inspect lumps, <em>colour changes</em>, distribution<br>Gently palpate for texture, temperature or tenderness',
+    generalObservationText:
+      'Inspect lumps, <em>colour changes</em>, distribution<br>Gently palpate for texture, temperature or tenderness',
     uvLightHeading: 'UV (Wood’s) light',
     uvLightText:
       "In a blacked-out room check for characteristic fluorescence:<br><span style='color:teal;'>tinea (blue-green)</span>, <span style='color:#FF7F50;'>pityriasis versicolor (coppery-orange)</span>, <span style='color:#FF4040;'>erythrasma (coral-red)</span>, <span style='color:blue;'>vitiligo (blue-white)</span>, <span style='color:orange;'>acne (orange-red)</span>, <span style='color:#BFEFFF;'>head lice nits (pale-blue)</span>",
@@ -167,28 +170,35 @@ export const translations = {
     instructionsPatientDetail4: 'age, sex, medication',
     instructionsUseArclight_default: 'Use Arclight: front, fundal reflex, back of eye.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Use Arclight:</strong> <strong><em>front, fundal reflex, back of eye.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Use Arclight:</strong> <strong><em>front, fundal reflex, back of eye.</em></strong>',
     instructionsTooLittle_eye: 'man red eye what?',
     instructionsJustRight_eye:
       'Man 25yr, red eye 3 day. No meds or eye prob before. Pain, watering, White cornea dot. Pupils OK, Vision 6/12 6/6 other',
     instructionsTooMuch_eye:
       'This man came into clinics today. He drove into the building with a red eye, now he thinks the food he ate is affecting his eye. I see watering, red edges, you know? He wants help. Tall man, watery eyes, worried about cornea and pain. He says, "What is this?"',
-    instructionsAdditionalQuery_eye: 'Alan also answers eye teaching/learning queries: What is Iritis? How do I see the retina?',
+    instructionsAdditionalQuery_eye:
+      'Alan also answers eye teaching/learning queries: What is Iritis? How do I see the retina?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Use Arclight:</strong> <strong><em>all around ear, canal, drum.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Use Arclight:</strong> <strong><em>all around ear, canal, drum.</em></strong>',
     instructionsTooLittle_ear: 'man red ear what?',
     instructionsJustRight_ear:
       'Man 25yr, red ear 3 day. No meds or ear prob before. Pain, ear discharge. Red drum, hearing muffled in bad ear but OK other.',
     instructionsTooMuch_ear:
       'This man came into clinics today. He drove into the building with red ears, now he thinks the food he ate is affecting his ear. I see discharge and red edges. He wants help. Tall man, watery ears, worried about hearing and pain. He says, "What is this?"',
-    instructionsAdditionalQuery_ear: 'Alan also answers ear teaching/learning queries: What is Otitis Media? How do I clean an ear?',
+    instructionsAdditionalQuery_ear:
+      'Alan also answers ear teaching/learning queries: What is Otitis Media? How do I clean an ear?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Use Arclight:</strong> <strong><em>UV light, dermoscopy.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Use Arclight:</strong> <strong><em>UV light, dermoscopy.</em></strong>',
     instructionsTooLittle_skin: 'man red skin what?',
-    instructionsJustRight_skin: 'Man 25yr, red skin patch 3 day. No meds or skin prob before. Sore and itchy.',
+    instructionsJustRight_skin:
+      'Man 25yr, red skin patch 3 day. No meds or skin prob before. Sore and itchy.',
     instructionsTooMuch_skin:
       'This man came into clinics today. He drove into the building with red skin, now he thinks the food he ate is affecting his skin. I see watering, red edges. He wants help. Tall man, red skin, worried about pigment and irritation. He says, "What is this?"',
-    instructionsAdditionalQuery_skin: 'Alan also answers skin teaching/learning queries: What is Eczema? How do I see the pigment network?',
+    instructionsAdditionalQuery_skin:
+      'Alan also answers skin teaching/learning queries: What is Eczema? How do I see the pigment network?',
     instructionsLabelTooLittle: 'Too little',
     instructionsLabelJustRight: 'Just right',
     instructionsLabelTooMuch: 'Too much',
@@ -198,7 +208,7 @@ export const translations = {
       'Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying names or details.',
     goodLuck: 'Good luck!',
     namePlaceholder: 'Name',
-    // rolePlaceholder: 'Role', 
+    // rolePlaceholder: 'Role',
 
     // --- NEW "Experience" Dropdown Translations ---
     experiencePlaceholder: 'Experience',
@@ -223,11 +233,11 @@ export const translations = {
     contactPlaceholder: 'Contact (email/phone)',
     acceptButton: 'Accept',
 
-    images: "Images",
-    help: "Help",
-    screenshot: "Screenshot",
-    refer: "Refer",
-    comingSoon: "Coming Soon...",
+    images: 'Images',
+    help: 'Help',
+    screenshot: 'Screenshot',
+    refer: 'Refer',
+    comingSoon: 'Coming Soon...',
   },
 
   // 2) Chinese (Simplified) - zh
@@ -286,7 +296,8 @@ export const translations = {
     passwordPlaceholder: '密码',
     passwordErrorMsg: '密码无效，请重试',
     passwordSubmitBtn: '提交',
-    noCodeLine: "没有或错误的代码？请在此处与我们联系 <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>这里</a>",
+    noCodeLine:
+      "没有或错误的代码？请在此处与我们联系 <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>这里</a>",
 
     eyeMarqueeLine1: '什么是青光眼？',
     eyeMarqueeLine2: '如何使用 Arclight 查看视神经盘？',
@@ -308,7 +319,7 @@ export const translations = {
     userName: '姓名',
     userContact: '联系方式',
     userRole: '角色',
-    userAimsPopupLabel: "目标",
+    userAimsPopupLabel: '目标',
     // userAims: '目标',
     userLatLong: '经纬度',
     userArea: '区域',
@@ -333,12 +344,14 @@ export const translations = {
 
     pageTitle_howToExamineEar: '如何检查耳朵',
     allAroundEarHeading: '耳周检查',
-    allAroundEarText: '检查：<em>外耳廓, </em><em>耳屏, </em><em>乳突</em>是否有肿块、压痛或分泌物<br>轻轻活动外耳廓，注意是否有疼痛',
+    allAroundEarText:
+      '检查：<em>外耳廓, </em><em>耳屏, </em><em>乳突</em>是否有肿块、压痛或分泌物<br>轻轻活动外耳廓，注意是否有疼痛',
     earCanalHeading: '耳道检查',
     earCanalText:
       '倾斜头部，<strong><u>像握笔般握住 Arclight</u></strong><br>成人上拉/后拉外耳廓，儿童下拉/后拉<br>插入检耳镜（成人4.5mm，婴儿2.5mm），推开耳毛，必要时旋转<br>观察：<em>耳垢,</em> <em>杂质,</em> <em>感染</em>',
     tympanicMembraneHeading: '鼓膜检查',
-    tympanicMembraneText: '识别锤骨柄、光反射及鼓室上部<br>注意：<em>颜色,</em> <em>位置,</em> <em>半透明性</em><br>检查是否有穿孔、积液或瘢痕',
+    tympanicMembraneText:
+      '识别锤骨柄、光反射及鼓室上部<br>注意：<em>颜色,</em> <em>位置,</em> <em>半透明性</em><br>检查是否有穿孔、积液或瘢痕',
     additionalText_ear:
       "了解你的鼓膜：正常, <span style='color:red; font-weight:bold;'>红</span>, <span style='color:orange;'>鼓胀</span>, <span style='color:green;'>凹陷</span>, <span style='color:purple;'>穿孔</span><br>&gt;多加练习&lt;",
 
@@ -375,32 +388,41 @@ export const translations = {
     instructionsPatientDetail4: '年龄、性别、用药情况',
     instructionsUseArclight_default: '使用 Arclight：前部、底部反射、眼后部。',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>使用 Arclight：</strong> <strong><em>前部、底部反射、眼后部。</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>使用 Arclight：</strong> <strong><em>前部、底部反射、眼后部。</em></strong>',
     instructionsTooLittle_eye: '男：红眼，怎么回事？',
-    instructionsJustRight_eye: '男 25岁，红眼持续3天。之前无用药或眼疾。疼痛、流泪、白色角膜点。瞳孔正常，视力分别为6/12和6/6。',
+    instructionsJustRight_eye:
+      '男 25岁，红眼持续3天。之前无用药或眼疾。疼痛、流泪、白色角膜点。瞳孔正常，视力分别为6/12和6/6。',
     instructionsTooMuch_eye:
       '今日有男患者来诊，他驾驶车辆进入楼内，眼睛呈红色，他认为食物可能影响了眼睛。请看：流泪和红边。患者求助，高个子男，眼泪汪汪，担心角膜和疼痛。他问：“这是怎么回事？”',
-    instructionsAdditionalQuery_eye: 'Alan 还回答关于眼科教学的问题：什么是虹膜炎？如何观察视网膜？',
+    instructionsAdditionalQuery_eye:
+      'Alan 还回答关于眼科教学的问题：什么是虹膜炎？如何观察视网膜？',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>使用 Arclight：</strong> <strong><em>全方位检查耳朵、耳道、鼓膜。</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>使用 Arclight：</strong> <strong><em>全方位检查耳朵、耳道、鼓膜。</em></strong>',
     instructionsTooLittle_ear: '男：红耳，怎么回事？',
-    instructionsJustRight_ear: '男 25岁，红耳持续3天。之前无用药或耳疾。疼痛、耳部分泌物。鼓膜发红，问题耳听力较弱，但另一侧正常。',
+    instructionsJustRight_ear:
+      '男 25岁，红耳持续3天。之前无用药或耳疾。疼痛、耳部分泌物。鼓膜发红，问题耳听力较弱，但另一侧正常。',
     instructionsTooMuch_ear:
       '今日有男患者来诊，他驾驶车辆进入楼内，耳朵呈红色，他认为食物可能影响了耳朵。请看：分泌物和红边。患者求助，高个子男，耳朵泪流满面，担心听力和疼痛。他问：“这是怎么回事？”',
     instructionsAdditionalQuery_ear: 'Alan 还回答关于耳科教学的问题：什么是中耳炎？如何清洁耳朵？',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>使用 Arclight：</strong> <strong><em>紫外线照射，皮肤镜检查。</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>使用 Arclight：</strong> <strong><em>紫外线照射，皮肤镜检查。</em></strong>',
     instructionsTooLittle_skin: '男：红皮肤，怎么回事？',
-    instructionsJustRight_skin: '男 25岁，红皮肤斑块持续3天。之前无用药或皮肤问题。皮肤酸痛、发痒。',
+    instructionsJustRight_skin:
+      '男 25岁，红皮肤斑块持续3天。之前无用药或皮肤问题。皮肤酸痛、发痒。',
     instructionsTooMuch_skin:
       '今日有男患者来诊，他驾驶车辆进入楼内，皮肤呈红色，他认为食物可能影响了皮肤。请看：流泪和红边。患者求助，高个子男，皮肤发红，担心色素和刺激。他问：“这是怎么回事？”',
-    instructionsAdditionalQuery_skin: 'Alan 还回答关于皮肤教学的问题：什么是湿疹？如何观察色素网络？',
+    instructionsAdditionalQuery_skin:
+      'Alan 还回答关于皮肤教学的问题：什么是湿疹？如何观察色素网络？',
     instructionsLabelTooLittle: '太少',
     instructionsLabelJustRight: '正合适',
     instructionsLabelTooMuch: '太多',
 
     // --- Onboarding Page Translations ---
-    instructionText: 'Alan 是一款 AI 助手，适用于学生和偶尔遇到眼、耳或皮肤病例的人。请清晰书写或表达，并避免透露姓名或详细信息。',
+    instructionText:
+      'Alan 是一款 AI 助手，适用于学生和偶尔遇到眼、耳或皮肤病例的人。请清晰书写或表达，并避免透露姓名或详细信息。',
     goodLuck: '祝你好运！',
     namePlaceholder: '姓名',
     // rolePlaceholder: '角色',
@@ -428,11 +450,11 @@ export const translations = {
     contactPlaceholder: '联系方式（电子邮件/电话）',
     acceptButton: '接受',
 
-    images: "图片",
-    help: "帮助",
-    screenshot: "截屏",
-    refer: "转介",
-    comingSoon: "敬请期待...",
+    images: '图片',
+    help: '帮助',
+    screenshot: '截屏',
+    refer: '转介',
+    comingSoon: '敬请期待...',
   },
 
   // 3) Hindi - hi
@@ -491,7 +513,8 @@ export const translations = {
     passwordPlaceholder: 'पासवर्ड',
     passwordErrorMsg: 'अमान्य पासवर्ड। कृपया पुनः प्रयास करें',
     passwordSubmitBtn: 'सबमिट',
-    noCodeLine: "कोई या गलत कोड? हमसे <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>यहाँ</a> संपर्क करें",
+    noCodeLine:
+      "कोई या गलत कोड? हमसे <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>यहाँ</a> संपर्क करें",
 
     eyeMarqueeLine1: 'ग्लूकोमा क्या है?',
     eyeMarqueeLine2: 'Arclight से ऑप्टिक डिस्क कैसे देखें?',
@@ -513,7 +536,7 @@ export const translations = {
     userName: 'नाम',
     userContact: 'संपर्क',
     userRole: 'भूमिका',
-    userAimsPopupLabel: "लक्ष्य",
+    userAimsPopupLabel: 'लक्ष्य',
     // userAims: 'उद्देश्य',
     userLatLong: 'अक्षांश व देशांतर',
     userArea: 'क्षेत्र',
@@ -521,7 +544,8 @@ export const translations = {
     userVersion: 'संस्करण',
     userDateTime: 'तारीख व समय',
     geolocationButton: 'स्थान निर्धारण',
-    geoInfoText: '“स्थान निर्धारण” पर क्लिक करने से अधिक सटीक स्थान (अक्षांश/देशांतर) साझा होगा। इससे बेहतर मार्गदर्शन और विकल्प मिलते हैं।',
+    geoInfoText:
+      '“स्थान निर्धारण” पर क्लिक करने से अधिक सटीक स्थान (अक्षांश/देशांतर) साझा होगा। इससे बेहतर मार्गदर्शन और विकल्प मिलते हैं।',
 
     pageTitle_howToExamineEye: 'आँख की जांच कैसे करें',
     frontOfEyeHeading: 'आँख का सामने का भाग',
@@ -551,7 +575,8 @@ export const translations = {
 
     pageTitle_howToExamineSkin: 'त्वचा का परीक्षण कैसे करें',
     generalObservationHeading: 'सामान्य निरीक्षण',
-    generalObservationText: 'गठ्ठों, <em>रंग परिवर्तन</em> और वितरण का निरीक्षण करें<br>मुलायमता, तापमान या संवेदनशीलता के लिए धीरे से छूएँ',
+    generalObservationText:
+      'गठ्ठों, <em>रंग परिवर्तन</em> और वितरण का निरीक्षण करें<br>मुलायमता, तापमान या संवेदनशीलता के लिए धीरे से छूएँ',
     uvLightHeading: 'यूवी (वुड्स) लाइट',
     uvLightText:
       "एक अंधेरे कमरे में विशिष्ट फ्लोरोसेंस की जांच करें:<br><span style='color:teal;'>टीना (नीला-हरा)</span>, <span style='color:#FF7F50;'>पिटिरियासिस वर्सिकोलर (तांबे-नारंगी)</span>, <span style='color:#FF4040;'>एरिथ्रास्मा (मछली-लाल)</span>, <span style='color:blue;'>विटिलिगो (नीला-सफेद)</span>, <span style='color:orange;'>मुँहासे (नारंगी-लाल)</span>, <span style='color:#BFEFFF;'>हेड लाइस निट्स (हल्का नीला)</span>",
@@ -582,15 +607,18 @@ export const translations = {
     instructionsPatientDetail4: 'आयु, लिंग, दवा',
     instructionsUseArclight_default: 'Arclight का उपयोग करें: सामने, फंडल रिफ्लेक्स, पीछे की आंख।',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Arclight का उपयोग करें:</strong> <strong><em>सामने, फंडल रिफ्लेक्स, पीछे की आंख।</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Arclight का उपयोग करें:</strong> <strong><em>सामने, फंडल रिफ्लेक्स, पीछे की आंख।</em></strong>',
     instructionsTooLittle_eye: 'आदमी लाल आंख, क्या?',
     instructionsJustRight_eye:
       'आदमी 25 वर्ष, लाल आंख 3 दिन। पहले कोई दवा या आंख की समस्या नहीं थी। दर्द, आंख से पानी, सफेद कॉर्निया डॉट। पुतलियाँ ठीक, दृष्टि 6/12 और 6/6 बाकी।',
     instructionsTooMuch_eye:
       "आज एक आदमी क्लिनिक आया। उसने कार से बिल्डिंग में प्रवेश किया और उसकी आंख लाल है, अब वह समझता है कि खाया हुआ भोजन उसकी आंख को प्रभावित कर रहा है। मैं आंख से पानी और लाल किनारे देखता हूँ। वह मदद चाहता है—लंबा आदमी, आंखें पानी वाली, कॉर्निया और दर्द को लेकर चिंतित। वह पूछता है, 'यह क्या है?'",
-    instructionsAdditionalQuery_eye: 'Alan आंख से संबंधित शिक्षण/सीखने के प्रश्नों का भी उत्तर देता है: इरिटिस क्या है? मैं रेटिना कैसे देखूं?',
+    instructionsAdditionalQuery_eye:
+      'Alan आंख से संबंधित शिक्षण/सीखने के प्रश्नों का भी उत्तर देता है: इरिटिस क्या है? मैं रेटिना कैसे देखूं?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Arclight का उपयोग करें:</strong> <strong><em>पूरे कान, नलिका, ड्रम।</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Arclight का उपयोग करें:</strong> <strong><em>पूरे कान, नलिका, ड्रम।</em></strong>',
     instructionsTooLittle_ear: 'आदमी लाल कान, क्या?',
     instructionsJustRight_ear:
       'आदमी 25 वर्ष, लाल कान 3 दिन। पहले कोई दवा या कान की समस्या नहीं थी। दर्द, कान से स्राव। लाल ड्रम, खराब कान में सुनवाई मंद लेकिन अन्य सामान्य।',
@@ -599,9 +627,11 @@ export const translations = {
     instructionsAdditionalQuery_ear:
       'Alan कान से संबंधित शिक्षण/सीखने के प्रश्नों का भी उत्तर देता है: मिडिया की स्थिति क्या है? मैं कान कैसे साफ करूं?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Arclight का उपयोग करें:</strong> <strong><em>यूवी लाइट, डर्मोस्कोपी।</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Arclight का उपयोग करें:</strong> <strong><em>यूवी लाइट, डर्मोस्कोपी।</em></strong>',
     instructionsTooLittle_skin: 'आदमी लाल त्वचा, क्या?',
-    instructionsJustRight_skin: 'आदमी 25 वर्ष, लाल त्वचा का पैच 3 दिन। पहले कोई दवा या त्वचा की समस्या नहीं थी। खरोंच और खुजली।',
+    instructionsJustRight_skin:
+      'आदमी 25 वर्ष, लाल त्वचा का पैच 3 दिन। पहले कोई दवा या त्वचा की समस्या नहीं थी। खरोंच और खुजली।',
     instructionsTooMuch_skin:
       "आज एक आदमी क्लिनिक आया। उसने कार से बिल्डिंग में प्रवेश किया और उसकी त्वचा लाल है, अब वह समझता है कि खाया हुआ भोजन उसकी त्वचा को प्रभावित कर रहा है। मैं त्वचा से पानी और लाल किनारे देखता हूँ। वह मदद चाहता है—लंबा आदमी, लाल त्वचा, रंग और जलन को लेकर चिंतित। वह पूछता है, 'यह क्या है?'",
     instructionsAdditionalQuery_skin:
@@ -640,11 +670,11 @@ export const translations = {
     contactPlaceholder: 'संपर्क (ईमेल/फ़ोन)',
     acceptButton: 'स्वीकार करें',
 
-    images: "चित्र",
-    help: "सहायता",
-    screenshot: "स्क्रीनशॉट",
-    refer: "रेफ़र",
-    comingSoon: "शीघ्र आ रहा है...",
+    images: 'चित्र',
+    help: 'सहायता',
+    screenshot: 'स्क्रीनशॉट',
+    refer: 'रेफ़र',
+    comingSoon: 'शीघ्र आ रहा है...',
   },
 
   // 4) Spanish - es
@@ -703,14 +733,16 @@ export const translations = {
     passwordPlaceholder: 'Contraseña',
     passwordErrorMsg: 'Contraseña inválida. Inténtalo de nuevo',
     passwordSubmitBtn: 'Enviar',
-    noCodeLine: "¿Sin código o código incorrecto? Contáctanos <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>aquí</a>",
+    noCodeLine:
+      "¿Sin código o código incorrecto? Contáctanos <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>aquí</a>",
 
     eyeMarqueeLine1: '¿Qué es el glaucoma?',
     eyeMarqueeLine2: '¿Cómo veo el disco óptico con el Arclight?',
     eyeMarqueeLine3: 'Hombre de 25 años, ojo rojo 3 días, fotofobia, AV reducida un poco',
     eyeMarqueeLine4: 'Cuéntame sobre la iritis',
     eyeMarqueeLine5: '¿Debo derivar la catarata congénita con urgencia?',
-    eyeMarqueeLine6: 'Mujer 65 años, visión pobre, sin gafas. Parte anterior bien, cristalino opaco',
+    eyeMarqueeLine6:
+      'Mujer 65 años, visión pobre, sin gafas. Parte anterior bien, cristalino opaco',
     eyeMarqueeLine7: 'Madre preocupada: bebé con pupila blanca, sin visión en ese ojo',
 
     earMarqueeLine1: '¿Qué es la otitis media?',
@@ -725,7 +757,7 @@ export const translations = {
     userName: 'Nombre',
     userContact: 'Contacto',
     userRole: 'Rol',
-    userAimsPopupLabel: "Objetivos",
+    userAimsPopupLabel: 'Objetivos',
     // userAims: 'Objetivos',
     userLatLong: 'Lat & Long',
     userArea: 'Área',
@@ -794,31 +826,38 @@ export const translations = {
     instructionsPatientDetail2: 'lo que ves',
     instructionsPatientDetail3: 'visión y pupilas',
     instructionsPatientDetail4: 'edad, sexo, medicación',
-    instructionsUseArclight_default: 'Usa Arclight: frente, reflejo fundal, parte posterior del ojo.',
+    instructionsUseArclight_default:
+      'Usa Arclight: frente, reflejo fundal, parte posterior del ojo.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Usa Arclight:</strong> <strong><em>frente, reflejo fundal, parte posterior del ojo.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Usa Arclight:</strong> <strong><em>frente, reflejo fundal, parte posterior del ojo.</em></strong>',
     instructionsTooLittle_eye: '¿Qué pasa con un ojo rojo?',
     instructionsJustRight_eye:
       'Hombre de 25 años, ojo rojo durante 3 días. Sin medicación ni problemas oculares previos. Dolor, lagrimeo, punto blanco en la córnea. Pupilas OK, visión 6/12 y 6/6 en el otro.',
     instructionsTooMuch_eye:
       "Este hombre llegó a la clínica hoy. Condujo al edificio con un ojo rojo y ahora piensa que la comida ingerida afecta su ojo. Veo lagrimeo y bordes rojos. Pide ayuda; hombre alto, con ojos lagrimosos, preocupado por la córnea y el dolor. Él pregunta: '¿Qué es esto?'",
-    instructionsAdditionalQuery_eye: 'Alan también responde a dudas de enseñanza sobre los ojos: ¿Qué es Iritis? ¿Cómo veo la retina?',
+    instructionsAdditionalQuery_eye:
+      'Alan también responde a dudas de enseñanza sobre los ojos: ¿Qué es Iritis? ¿Cómo veo la retina?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Usa Arclight:</strong> <strong><em>alrededor del oído, canal, tímpano.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Usa Arclight:</strong> <strong><em>alrededor del oído, canal, tímpano.</em></strong>',
     instructionsTooLittle_ear: '¿Qué pasa con un oído rojo?',
     instructionsJustRight_ear:
       'Hombre de 25 años, oído rojo durante 3 días. Sin medicación ni problemas auriculares previos. Dolor, descarga auricular. Tímpano rojo, audición apagada en el oído afectado pero normal en el otro.',
     instructionsTooMuch_ear:
       "Este hombre llegó a la clínica hoy. Condujo al edificio con oídos rojos y ahora piensa que la comida ingerida afecta su oído. Veo descarga y bordes rojos. Pide ayuda; hombre alto, con oídos lacrimosos, preocupado por la audición y el dolor. Él pregunta: '¿Qué es esto?'",
-    instructionsAdditionalQuery_ear: 'Alan también responde a dudas de enseñanza sobre los oídos: ¿Qué es Otitis Media? ¿Cómo limpio un oído?',
+    instructionsAdditionalQuery_ear:
+      'Alan también responde a dudas de enseñanza sobre los oídos: ¿Qué es Otitis Media? ¿Cómo limpio un oído?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Usa Arclight:</strong> <strong><em>Luz UV, dermoscopia.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Usa Arclight:</strong> <strong><em>Luz UV, dermoscopia.</em></strong>',
     instructionsTooLittle_skin: '¿Qué pasa con una piel roja?',
     instructionsJustRight_skin:
       'Hombre de 25 años, mancha roja en la piel durante 3 días. Sin medicación ni problemas cutáneos previos. Dolor e irritación.',
     instructionsTooMuch_skin:
       "Este hombre llegó a la clínica hoy. Condujo al edificio con piel roja y ahora piensa que la comida ingerida afecta su piel. Veo lagrimeo y bordes rojos. Pide ayuda; hombre alto, con piel roja, preocupado por la pigmentación y la irritación. Él pregunta: '¿Qué es esto?'",
-    instructionsAdditionalQuery_skin: 'Alan también responde a dudas de enseñanza sobre la piel: ¿Qué es Eczema? ¿Cómo observo la red de pigmento?',
+    instructionsAdditionalQuery_skin:
+      'Alan también responde a dudas de enseñanza sobre la piel: ¿Qué es Eczema? ¿Cómo observo la red de pigmento?',
     instructionsLabelTooLittle: 'Muy poco',
     instructionsLabelJustRight: 'Adecuado',
     instructionsLabelTooMuch: 'Demasiado',
@@ -853,11 +892,11 @@ export const translations = {
     contactPlaceholder: 'Contacto (correo/telefono)',
     acceptButton: 'Aceptar',
 
-    images: "Imágenes",
-    help: "Ayuda",
-    screenshot: "Captura de pantalla",
-    refer: "Remitir",
-    comingSoon: "Próximamente..."
+    images: 'Imágenes',
+    help: 'Ayuda',
+    screenshot: 'Captura de pantalla',
+    refer: 'Remitir',
+    comingSoon: 'Próximamente...',
   },
 
   // 5) Arabic - ar
@@ -916,7 +955,8 @@ export const translations = {
     passwordPlaceholder: 'كلمة المرور',
     passwordErrorMsg: 'كلمة مرور غير صحيحة. حاول مرة أخرى',
     passwordSubmitBtn: 'إرسال',
-    noCodeLine: "لا يوجد رمز أو أنه خاطئ؟ اتصل بنا <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>هنا</a>",
+    noCodeLine:
+      "لا يوجد رمز أو أنه خاطئ؟ اتصل بنا <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>هنا</a>",
 
     eyeMarqueeLine1: 'ما هو الجلوكوما؟',
     eyeMarqueeLine2: 'كيف أرى القرص البصري باستخدام Arclight؟',
@@ -938,7 +978,7 @@ export const translations = {
     userName: 'الاسم',
     userContact: 'جهة الاتصال',
     userRole: 'الدور',
-    userAimsPopupLabel: "الأهداف",
+    userAimsPopupLabel: 'الأهداف',
     // userAims: 'الأهداف',
     userLatLong: 'خط العرض وخط الطول',
     userArea: 'المنطقة',
@@ -946,7 +986,8 @@ export const translations = {
     userVersion: 'الإصدار',
     userDateTime: 'التاريخ والوقت',
     geolocationButton: 'تحديد الموقع',
-    geoInfoText: 'بالنقر على "تحديد الموقع" سيتم مشاركة موقع أكثر دقة (خط العرض/خط الطول). يساعد ذلك في تقديم إرشادات وخيارات أفضل.',
+    geoInfoText:
+      'بالنقر على "تحديد الموقع" سيتم مشاركة موقع أكثر دقة (خط العرض/خط الطول). يساعد ذلك في تقديم إرشادات وخيارات أفضل.',
 
     pageTitle_howToExamineEye: 'كيفية فحص العين',
     frontOfEyeHeading: 'الجزء الأمامي من العين',
@@ -976,7 +1017,8 @@ export const translations = {
 
     pageTitle_howToExamineSkin: 'كيفية فحص الجلد',
     generalObservationHeading: 'الملاحظة العامة',
-    generalObservationText: 'افحص الكتل، <em>تغيرات اللون</em> والتوزيع<br>حرّك الجلد بلطف لتقييم الملمس، درجة الحرارة أو الحساسية',
+    generalObservationText:
+      'افحص الكتل، <em>تغيرات اللون</em> والتوزيع<br>حرّك الجلد بلطف لتقييم الملمس، درجة الحرارة أو الحساسية',
     uvLightHeading: 'ضوء الأشعة فوق البنفسجية (وودز)',
     uvLightText:
       "في غرفة مظلمة، تحقق من الفلوريسنس المميزة:<br><span style='color:teal;'>تينيا (أزرق-أخضر)</span>, <span style='color:#FF7F50;'>بيتيريازيس فيرسكيولار (برتقالي نحاسي)</span>, <span style='color:#FF4040;'>إريثراثرا (أحمر مرجاني)</span>, <span style='color:blue;'>فيتيليجو (أزرق-أبيض)</span>, <span style='color:orange;'>حب الشباب (أحمر برتقالي)</span>, <span style='color:#BFEFFF;'>بيوض قمل الرأس (أزرق باهت)</span>",
@@ -1005,36 +1047,45 @@ export const translations = {
     instructionsPatientDetail2: 'ما تلاحظه',
     instructionsPatientDetail3: 'الرؤية والحدقات',
     instructionsPatientDetail4: 'العمر، الجنس، الأدوية',
-    instructionsUseArclight_default: 'استخدم Arclight: الجزء الأمامي، الانعكاس القاعي، الجزء الخلفي للعين.',
+    instructionsUseArclight_default:
+      'استخدم Arclight: الجزء الأمامي، الانعكاس القاعي، الجزء الخلفي للعين.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>استخدم Arclight:</strong> <strong><em>الجزء الأمامي، الانعكاس القاعي، الجزء الخلفي للعين.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>استخدم Arclight:</strong> <strong><em>الجزء الأمامي، الانعكاس القاعي، الجزء الخلفي للعين.</em></strong>',
     instructionsTooLittle_eye: 'ما الذي يحدث مع العين الحمراء؟',
     instructionsJustRight_eye:
       'رجل 25 سنة، عين حمراء لمدة 3 أيام. لم يتناول أي أدوية أو لم يكن لديه مشكلة سابقة بالعين. ألم، دموع، بقعة بيضاء على القرنية. الحدقات طبيعية، الرؤية 6/12 و6/6 في العين الأخرى.',
     instructionsTooMuch_eye:
       'وصل هذا الرجل إلى العيادة اليوم. دخل المبنى وهو يقود سيارته وعينه حمراء، ويعتقد أن الطعام الذي تناوله يؤثر على عينه. أرى دموعاً وحوافاً حمراء. هو بحاجة إلى المساعدة؛ رجل طويل، عيناه مبللتان، قلق بشأن القرنية والألم. ويقول: "ما هذا؟"',
-    instructionsAdditionalQuery_eye: 'كما يجيب Alan على استفسارات تعليمية حول العين: ما هو التهاب القزحية؟ كيف أرى الشبكية؟',
+    instructionsAdditionalQuery_eye:
+      'كما يجيب Alan على استفسارات تعليمية حول العين: ما هو التهاب القزحية؟ كيف أرى الشبكية؟',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>استخدم Arclight:</strong> <strong><em>حول الأذن، القناة، طبلة الأذن.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>استخدم Arclight:</strong> <strong><em>حول الأذن، القناة، طبلة الأذن.</em></strong>',
     instructionsTooLittle_ear: 'ما الذي يحدث مع الأذن الحمراء؟',
     instructionsJustRight_ear:
       'رجل 25 سنة، أذن حمراء لمدة 3 أيام. لم يتناول أدوية أو لم يكن لديه مشكلة سابقة بالأذن. ألم، إفرازات أذنية. طبلة حمراء، السمع مكتوم في الأذن المتأثرة لكن طبيعي في الأخرى.',
     instructionsTooMuch_ear:
       'وصل هذا الرجل إلى العيادة اليوم. دخل المبنى وعنين حمراء، ويعتقد أن الطعام الذي تناوله يؤثر على أذنه. أرى إفرازات وحوافاً حمراء. هو بحاجة إلى المساعدة؛ رجل طويل، أذنين مبللتين، قلق بشأن السمع والألم. ويقول: "ما هذا؟"',
-    instructionsAdditionalQuery_ear: 'كما يجيب Alan على استفسارات تعليمية حول الأذن: ما هو التهاب الأذن الوسطى؟ كيف أنظف الأذن؟',
+    instructionsAdditionalQuery_ear:
+      'كما يجيب Alan على استفسارات تعليمية حول الأذن: ما هو التهاب الأذن الوسطى؟ كيف أنظف الأذن؟',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>استخدم Arclight:</strong> <strong><em>نور فوق بنفسجي، تنظير جلدي.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>استخدم Arclight:</strong> <strong><em>نور فوق بنفسجي، تنظير جلدي.</em></strong>',
     instructionsTooLittle_skin: 'ما الذي يحدث مع البشرة الحمراء؟',
-    instructionsJustRight_skin: 'رجل 25 سنة، بقعة جلدية حمراء لمدة 3 أيام. لم يتناول أدوية أو لم يكن لديه مشكلة سابقة بالجلد. جلد مؤلم وخاشع.',
+    instructionsJustRight_skin:
+      'رجل 25 سنة، بقعة جلدية حمراء لمدة 3 أيام. لم يتناول أدوية أو لم يكن لديه مشكلة سابقة بالجلد. جلد مؤلم وخاشع.',
     instructionsTooMuch_skin:
       'وصل هذا الرجل إلى العيادة اليوم. دخل المبنى وبشرته حمراء، ويعتقد أن الطعام الذي تناوله يؤثر على بشرته. أرى دموعاً وحوافاً حمراء. هو بحاجة إلى المساعدة؛ رجل طويل، بشرة حمراء، قلق بشأن الصبغة والتهيج. ويقول: "ما هذا؟"',
-    instructionsAdditionalQuery_skin: 'كما يجيب Alan على استفسارات تعليمية حول الجلد: ما هو الأكزيما؟ كيف أرى شبكة الصبغة؟',
+    instructionsAdditionalQuery_skin:
+      'كما يجيب Alan على استفسارات تعليمية حول الجلد: ما هو الأكزيما؟ كيف أرى شبكة الصبغة؟',
     instructionsLabelTooLittle: 'قليل جدًا',
     instructionsLabelJustRight: 'مناسب',
     instructionsLabelTooMuch: 'كثير جدًا',
 
     // --- Onboarding Page Translations ---
-    instructionText: '(ARABIC: Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying names or details.)',
+    instructionText:
+      '(ARABIC: Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying names or details.)',
     goodLuck: '(ARABIC: Good luck!)',
     namePlaceholder: '(ARABIC: Name)',
     // rolePlaceholder: '(ARABIC: Role)',
@@ -1062,11 +1113,11 @@ export const translations = {
     contactPlaceholder: '(ARABIC: Contact (email/phone))',
     acceptButton: '(ARABIC: Accept)',
 
-    images: "صور",
-    help: "مساعدة",
-    screenshot: "لقطة شاشة",
-    refer: "إحالة",
-    comingSoon: "قريباً..."
+    images: 'صور',
+    help: 'مساعدة',
+    screenshot: 'لقطة شاشة',
+    refer: 'إحالة',
+    comingSoon: 'قريباً...',
   },
 
   // 6) French - fr
@@ -1125,29 +1176,34 @@ export const translations = {
     passwordPlaceholder: 'Mot de passe',
     passwordErrorMsg: 'Mot de passe invalide. Veuillez réessayer',
     passwordSubmitBtn: 'Valider',
-    noCodeLine: "Pas ou mauvais code ? Contactez-nous <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>ici</a>",
+    noCodeLine:
+      "Pas ou mauvais code ? Contactez-nous <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>ici</a>",
 
     eyeMarqueeLine1: "Qu'est-ce que le glaucome ?",
     eyeMarqueeLine2: "Comment voir la papille optique avec l'Arclight ?",
-    eyeMarqueeLine3: 'Homme de 25 ans, œil rouge depuis 3 jours, photophobie, AV légèrement diminuée',
+    eyeMarqueeLine3:
+      'Homme de 25 ans, œil rouge depuis 3 jours, photophobie, AV légèrement diminuée',
     eyeMarqueeLine4: "Parlez-moi de l'iritis",
     eyeMarqueeLine5: 'Faut-il orienter une cataracte congénitale en urgence ?',
-    eyeMarqueeLine6: 'Femme de 65 ans, mauvaise vision, pas de lunettes. Segment antérieur correct, cristallin opacifié',
+    eyeMarqueeLine6:
+      'Femme de 65 ans, mauvaise vision, pas de lunettes. Segment antérieur correct, cristallin opacifié',
     eyeMarqueeLine7: "Mère inquiète d'un bébé avec une pupille blanche, pas de vision",
 
     earMarqueeLine1: "Qu'est-ce que l'otite moyenne ?",
     earMarqueeLine2: 'Puis-je voir le tympan avec mon Arclight ?',
-    earMarqueeLine3: 'Garçon de 16 ans, pavillon douloureux depuis 2 jours, démangeaisons, audition correcte',
+    earMarqueeLine3:
+      'Garçon de 16 ans, pavillon douloureux depuis 2 jours, démangeaisons, audition correcte',
     earMarqueeLine4: 'Parlez-moi du syringage',
     earMarqueeLine5: 'Dois-je référer une mastoïdite en urgence ?',
-    earMarqueeLine6: 'Homme de 73 ans, audition diminuée. Conduit auditif mal visible. Je ne vois que du cérumen',
+    earMarqueeLine6:
+      'Homme de 73 ans, audition diminuée. Conduit auditif mal visible. Je ne vois que du cérumen',
     earMarqueeLine7: 'Bébé ne réagit pas au son depuis des mois',
 
     userInfoTitle: 'Informations Utilisateur',
     userName: 'Nom',
     userContact: 'Contact',
     userRole: 'Rôle',
-    userAimsPopupLabel: "Objectifs",
+    userAimsPopupLabel: 'Objectifs',
     // userAims: 'Objectifs',
     userLatLong: 'Lat & Long',
     userArea: 'Zone',
@@ -1218,7 +1274,8 @@ export const translations = {
     instructionsPatientDetail4: 'âge, sexe, médication',
     instructionsUseArclight_default: 'Utilisez Arclight : avant, réflexe fundal, arrière de l’œil.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Utilisez Arclight :</strong> <strong><em>avant, réflexe fundal, arrière de l’œil.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Utilisez Arclight :</strong> <strong><em>avant, réflexe fundal, arrière de l’œil.</em></strong>',
     instructionsTooLittle_eye: 'homme, œil rouge, quoi ?',
     instructionsJustRight_eye:
       'Homme de 25 ans, œil rouge depuis 3 jours. Pas de médication ni de problème oculaire antérieur. Douleur, larmoiement, point blanc sur la cornée. Pupilles OK, vision 6/12 et 6/6 côté opposé.',
@@ -1227,7 +1284,8 @@ export const translations = {
     instructionsAdditionalQuery_eye:
       'Alan répond également aux questions pédagogiques sur l’œil : Qu’est-ce que l’iridocyclitis ? Comment puis-je voir la rétine ?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Utilisez Arclight :</strong> <strong><em>autour de l’oreille, conduit auditif, tympan.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Utilisez Arclight :</strong> <strong><em>autour de l’oreille, conduit auditif, tympan.</em></strong>',
     instructionsTooLittle_ear: 'homme, oreille rouge, quoi ?',
     instructionsJustRight_ear:
       'Homme de 25 ans, oreille rouge depuis 3 jours. Pas de médication ni de problème auriculaire antérieur. Douleur, écoulement auriculaire. Tympan rouge, audition étouffée dans l’oreille affectée mais normale dans l’autre.',
@@ -1236,7 +1294,8 @@ export const translations = {
     instructionsAdditionalQuery_ear:
       'Alan répond également aux questions pédagogiques sur l’oreille : Qu’est-ce que l’otite moyenne ? Comment nettoyer une oreille ?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Utilisez Arclight :</strong> <strong><em>Lumière UV, dermoscopie.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Utilisez Arclight :</strong> <strong><em>Lumière UV, dermoscopie.</em></strong>',
     instructionsTooLittle_skin: 'homme, peau rouge, quoi ?',
     instructionsJustRight_skin:
       'Homme de 25 ans, tache cutanée rouge depuis 3 jours. Pas de médication ni de problème cutané antérieur. Peau douloureuse et qui démange.',
@@ -1278,11 +1337,11 @@ export const translations = {
     contactPlaceholder: 'Contact (email/téléphone)',
     acceptButton: 'Accepter',
 
-    images: "Images",
-    help: "Aide",
-    screenshot: "Capture d’écran",
-    refer: "Référer",
-    comingSoon: "Bientôt disponible..."
+    images: 'Images',
+    help: 'Aide',
+    screenshot: 'Capture d’écran',
+    refer: 'Référer',
+    comingSoon: 'Bientôt disponible...',
   },
 
   // 7) Portuguese - pt
@@ -1364,7 +1423,7 @@ export const translations = {
     userName: 'Nome',
     userContact: 'Contato',
     userRole: 'Função',
-    userAimsPopupLabel: "Objetivos",
+    userAimsPopupLabel: 'Objetivos',
     // userAims: 'Objetivos',
     userLatLong: 'Lat & Long',
     userArea: 'Área',
@@ -1435,28 +1494,35 @@ export const translations = {
     instructionsPatientDetail4: 'idade, sexo, medicação',
     instructionsUseArclight_default: 'Use Arclight: frente, reflexo fundal, parte de trás do olho.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Use Arclight:</strong> <strong><em>frente, reflexo fundal, parte de trás do olho.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Use Arclight:</strong> <strong><em>frente, reflexo fundal, parte de trás do olho.</em></strong>',
     instructionsTooLittle_eye: 'Homem, olho vermelho, o quê?',
     instructionsJustRight_eye:
       'Homem de 25 anos, olho vermelho por 3 dias. Sem medicação ou problemas oculares prévios. Dor, lacrimejamento, ponto branco na córnea. Pupilas OK, visão 6/12 e 6/6 no outro.',
     instructionsTooMuch_eye:
       "Este homem chegou à clínica hoje. Ele entrou no prédio dirigindo e seu olho está vermelho; ele acha que o alimento ingerido está afetando seu olho. Vejo lacrimejamento e bordas vermelhas. Ele precisa de ajuda—homem alto, com olhos lacrimosos, preocupado com a córnea e a dor. Ele diz: 'O que é isso?'",
-    instructionsAdditionalQuery_eye: 'Alan também responde a dúvidas de ensino sobre os olhos: O que é Irite? Como vejo a retina?',
+    instructionsAdditionalQuery_eye:
+      'Alan também responde a dúvidas de ensino sobre os olhos: O que é Irite? Como vejo a retina?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Use Arclight:</strong> <strong><em>ao redor do ouvido, canal auditivo, tímpano.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Use Arclight:</strong> <strong><em>ao redor do ouvido, canal auditivo, tímpano.</em></strong>',
     instructionsTooLittle_ear: 'Homem, ouvido vermelho, o quê?',
     instructionsJustRight_ear:
       'Homem de 25 anos, ouvido vermelho por 3 dias. Sem medicação ou problemas auriculares prévios. Dor, descarga auricular. Tímpano vermelho, audição abafada no ouvido afetado mas normal no outro.',
     instructionsTooMuch_ear:
       "Este homem chegou à clínica hoje. Ele entrou no prédio com os ouvidos vermelhos e agora pensa que o alimento ingerido está afetando seu ouvido. Vejo descarga e bordas vermelhas. Ele precisa de ajuda—homem alto, com ouvidos lacrimosos, preocupado com a audição e a dor. Ele diz: 'O que é isso?'",
-    instructionsAdditionalQuery_ear: 'Alan também responde a dúvidas de ensino sobre os ouvidos: O que é Otite Média? Como limpo um ouvido?',
+    instructionsAdditionalQuery_ear:
+      'Alan também responde a dúvidas de ensino sobre os ouvidos: O que é Otite Média? Como limpo um ouvido?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Use Arclight:</strong> <strong><em>Luz UV, dermoscopia.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Use Arclight:</strong> <strong><em>Luz UV, dermoscopia.</em></strong>',
     instructionsTooLittle_skin: 'Homem, pele vermelha, o quê?',
-    instructionsJustRight_skin: 'Homem de 25 anos, mancha vermelha na pele por 3 dias. Sem medicação ou problemas cutâneos prévios. Dor e irritação.',
+    instructionsJustRight_skin:
+      'Homem de 25 anos, mancha vermelha na pele por 3 dias. Sem medicação ou problemas cutâneos prévios. Dor e irritação.',
     instructionsTooMuch_skin:
       "Este homem chegou à clínica hoje. Ele entrou no prédio com a pele vermelha e agora pensa que o alimento ingerido está afetando sua pele. Vejo lacrimejamento e bordas vermelhas. Ele precisa de ajuda—homem alto, com pele vermelha, preocupado com a pigmentação e irritação. Ele diz: 'O que é isso?'",
-    instructionsAdditionalQuery_skin: 'Alan também responde a dúvidas de ensino sobre a pele: O que é Eczema? Como observo a rede de pigmento?',
+    instructionsAdditionalQuery_skin:
+      'Alan também responde a dúvidas de ensino sobre a pele: O que é Eczema? Como observo a rede de pigmento?',
     instructionsLabelTooLittle: 'Muito pouco',
     instructionsLabelJustRight: 'Na medida certa',
     instructionsLabelTooMuch: 'Demais',
@@ -1491,11 +1557,11 @@ export const translations = {
     contactPlaceholder: 'Contato (email/telefone)',
     acceptButton: 'Aceitar',
 
-    images: "Imagens",
-    help: "Ajuda",
-    screenshot: "Captura de tela",
-    refer: "Encaminhar",
-    comingSoon: "Em breve..."
+    images: 'Imagens',
+    help: 'Ajuda',
+    screenshot: 'Captura de tela',
+    refer: 'Encaminhar',
+    comingSoon: 'Em breve...',
   },
 
   // 8) Bangla - bn
@@ -1554,14 +1620,16 @@ export const translations = {
     passwordPlaceholder: 'পাসওয়ার্ড',
     passwordErrorMsg: 'ভুল পাসওয়ার্ড। আবার চেষ্টা করুন',
     passwordSubmitBtn: 'জমা দিন',
-    noCodeLine: "কোন বা ভুল কোড? আমাদের সাথে <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>এখানে</a> যোগাযোগ করুন",
+    noCodeLine:
+      "কোন বা ভুল কোড? আমাদের সাথে <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>এখানে</a> যোগাযোগ করুন",
 
     eyeMarqueeLine1: 'গ্লকোমা কী?',
     eyeMarqueeLine2: 'Arclight ব্যবহার করে কীভাবে অপটিক ডিস্ক দেখব?',
     eyeMarqueeLine3: '২৫ বছর বয়সী পুরুষ, ৩ দিন ধরে লাল চোখ, ফটোফোবিয়া, দৃষ্টিশক্তি কিছুটা কমেছে',
     eyeMarqueeLine4: 'ইরাইটিস সম্পর্কে বলুন',
     eyeMarqueeLine5: 'জন্মগত ছানির ক্ষেত্রে দ্রুত রেফার করা উচিত?',
-    eyeMarqueeLine6: '৬৫ বছর বয়সী নারী, দৃষ্টি খারাপ, চশমা নেই। সামনের অংশ ঠিক আছে, কিন্তু লেন্স মেঘলা',
+    eyeMarqueeLine6:
+      '৬৫ বছর বয়সী নারী, দৃষ্টি খারাপ, চশমা নেই। সামনের অংশ ঠিক আছে, কিন্তু লেন্স মেঘলা',
     eyeMarqueeLine7: 'মা উদ্বিগ্ন, শিশুর চোখে সাদা রংয়ের পিউপিল, ওই চোখে দেখা যায় না',
 
     earMarqueeLine1: 'ওটাইটিস মিডিয়া কী?',
@@ -1569,14 +1637,15 @@ export const translations = {
     earMarqueeLine3: '১৬ বছরের ছেলে, ২ দিন ধরে কানের বহির্ভাগে ব্যথা ও চুলকানি, শ্রবণ ঠিক আছে',
     earMarqueeLine4: 'কান সারিঞ্জিং সম্পর্কে বলুন',
     earMarqueeLine5: 'মাস্তয়েডাইটিস কি দ্রুত রেফার করব?',
-    earMarqueeLine6: '৭৩ বছর বয়সী পুরুষ, শ্রবণ দুর্বল। কানের নালি ভাল দেখা যাচ্ছে না। শুধু খালি মোম দেখা যায়',
+    earMarqueeLine6:
+      '৭৩ বছর বয়সী পুরুষ, শ্রবণ দুর্বল। কানের নালি ভাল দেখা যাচ্ছে না। শুধু খালি মোম দেখা যায়',
     earMarqueeLine7: 'শিশু শব্দে সাড়া দিচ্ছে না, অনেকদিন ধরে',
 
     userInfoTitle: 'ব্যবহারকারীর তথ্য',
     userName: 'নাম',
     userContact: 'যোগাযোগ',
     userRole: 'ভূমিকা',
-    userAimsPopupLabel: "লক্ষ্য",
+    userAimsPopupLabel: 'লক্ষ্য',
     // userAims: 'উদ্দেশ্য',
     userLatLong: 'অক্ষাংশ & দ্রাঘিমাংশ',
     userArea: 'এলাকা',
@@ -1584,7 +1653,8 @@ export const translations = {
     userVersion: 'ভার্সন',
     userDateTime: 'তারিখ & সময়',
     geolocationButton: 'জিওলোকেশন',
-    geoInfoText: '“জিওলোকেশন” ক্লিক করলে আরও সঠিক অবস্থান (অক্ষাংশ/দ্রাঘিমাংশ) শেয়ার করা হবে। এটি আরও ভালো নির্দেশনা ও বিকল্প সরবরাহে সহায়তা করে।',
+    geoInfoText:
+      '“জিওলোকেশন” ক্লিক করলে আরও সঠিক অবস্থান (অক্ষাংশ/দ্রাঘিমাংশ) শেয়ার করা হবে। এটি আরও ভালো নির্দেশনা ও বিকল্প সরবরাহে সহায়তা করে।',
 
     pageTitle_howToExamineEye: 'কিভাবে চোখ পরীক্ষা করবেন',
     frontOfEyeHeading: 'চোখের সামনের অংশ',
@@ -1614,7 +1684,8 @@ export const translations = {
 
     pageTitle_howToExamineSkin: 'কীভাবে ত্বক পরীক্ষা করবেন',
     generalObservationHeading: 'সাধারণ পর্যবেক্ষণ',
-    generalObservationText: 'গিঁট, <em>রঙের পরিবর্তন</em> এবং বণ্টন পরীক্ষা করুন<br>নম্রভাবে স্পর্শ করে জানুন বস্তুর গঠন, তাপমাত্রা বা স্পর্শকাতরতা',
+    generalObservationText:
+      'গিঁট, <em>রঙের পরিবর্তন</em> এবং বণ্টন পরীক্ষা করুন<br>নম্রভাবে স্পর্শ করে জানুন বস্তুর গঠন, তাপমাত্রা বা স্পর্শকাতরতা',
     uvLightHeading: 'ইউভি (উড’স) আলো',
     uvLightText:
       "একটি অন্ধকার ঘরে বৈশিষ্ট্যপূর্ণ ফ্লুরোসেন্স দেখুন:<br><span style='color:teal;'>টিনিয়া (নীল-সবুজ)</span>, <span style='color:#FF7F50;'>পিটিরিয়াসিস ভার্সিকোলর (তামার-কমলা)</span>, <span style='color:#FF4040;'>এরিথ্রাজমা (করাল-লাল)</span>, <span style='color:blue;'>ভিটিলিগো (নীল-সাদা)</span>, <span style='color:orange;'>অ্যাকনে (কমলা-লাল)</span>, <span style='color:#BFEFFF;'>হেড লাইস নিটস (ফ্যাকাশে-নীল)</span>",
@@ -1643,30 +1714,38 @@ export const translations = {
     instructionsPatientDetail2: 'আপনি যা দেখছেন',
     instructionsPatientDetail3: 'দৃষ্টি ও পিউপিল',
     instructionsPatientDetail4: 'বয়স, লিঙ্গ, ওষুধ',
-    instructionsUseArclight_default: 'Arclight ব্যবহার করুন: সামনে, ফান্ডাল রিফ্লেক্স, চোখের পেছনে।',
+    instructionsUseArclight_default:
+      'Arclight ব্যবহার করুন: সামনে, ফান্ডাল রিফ্লেক্স, চোখের পেছনে।',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Arclight ব্যবহার করুন:</strong> <strong><em>সামনে, ফান্ডাল রিফ্লেক্স, চোখের পেছনে।</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Arclight ব্যবহার করুন:</strong> <strong><em>সামনে, ফান্ডাল রিফ্লেক্স, চোখের পেছনে।</em></strong>',
     instructionsTooLittle_eye: 'মানুষের লাল চোখ, কি?',
     instructionsJustRight_eye:
       'মানুষ, ২৫ বছর, ৩ দিন ধরে লাল চোখ। পূর্বে কোনো ওষুধ বা চোখের সমস্যা ছিল না। ব্যথা, চোখ থেকে পানি, সাদা কর্নিয়া বিন্দু।',
     instructionsTooMuch_eye:
       "আজ একজন মানুষ ক্লিনিকে এসেছেন। তিনি গাড়ি চালিয়ে ভবনে প্রবেশ করেছেন এবং তার চোখ লাল; তিনি মনে করেন যে খাওয়া খাবার তার চোখকে প্রভাবিত করছে। আমি চোখ থেকে পানি ও লাল প্রান্ত দেখি। তিনি সাহায্য চান—লম্বা ব্যক্তি, চোখে পানি, কর্নিয়া ও ব্যথা নিয়ে উদ্বিগ্ন। তিনি বলেন, 'এটা কী?'",
-    instructionsAdditionalQuery_eye: 'Alan চোখ সম্পর্কিত শিক্ষা/শেখার প্রশ্নও উত্তর দেন: ইরাইটিস কী? রেটিনা কীভাবে দেখবো?',
+    instructionsAdditionalQuery_eye:
+      'Alan চোখ সম্পর্কিত শিক্ষা/শেখার প্রশ্নও উত্তর দেন: ইরাইটিস কী? রেটিনা কীভাবে দেখবো?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Arclight ব্যবহার করুন:</strong> <strong><em>পুরো কান, নালী, ড্রাম।</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Arclight ব্যবহার করুন:</strong> <strong><em>পুরো কান, নালী, ড্রাম।</em></strong>',
     instructionsTooLittle_ear: 'মানুষের লাল কান, কি?',
     instructionsJustRight_ear:
       'মানুষ, ২৫ বছর, ৩ দিন ধরে লাল কান। পূর্বে কোনো ওষুধ বা কান সমস্যা ছিল না। ব্যথা, কান থেকে স্রাব। লাল ড্রাম, খারাপ কানে শুনানি নীরব কিন্তু অন্য কানে ঠিক আছে।',
     instructionsTooMuch_ear:
       "আজ একজন মানুষ ক্লিনিকে এসেছেন। তিনি গাড়ি চালিয়ে ভবনে প্রবেশ করেছেন এবং তার কান লাল; তিনি মনে করেন যে খাওয়া খাবার তার কানকে প্রভাবিত করছে। আমি কান থেকে স্রাব ও লাল প্রান্ত দেখি। তিনি সাহায্য চান—লম্বা ব্যক্তি, কান পানি, শুনানি ও ব্যথা নিয়ে উদ্বিগ্ন। তিনি বলেন, 'এটা কী?'",
-    instructionsAdditionalQuery_ear: 'Alan কান সম্পর্কিত শিক্ষা/শেখার প্রশ্নও উত্তর দেন: মিডিয়া কী? কিভাবে কান পরিষ্কার করবো?',
+    instructionsAdditionalQuery_ear:
+      'Alan কান সম্পর্কিত শিক্ষা/শেখার প্রশ্নও উত্তর দেন: মিডিয়া কী? কিভাবে কান পরিষ্কার করবো?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Arclight ব্যবহার করুন:</strong> <strong><em>UV আলো, ডার্মোস্কোপি।</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Arclight ব্যবহার করুন:</strong> <strong><em>UV আলো, ডার্মোস্কোপি।</em></strong>',
     instructionsTooLittle_skin: 'মানুষের লাল ত্বক, কি?',
-    instructionsJustRight_skin: 'মানুষ, ২৫ বছর, ৩ দিন ধরে লাল ত্বকের দাগ। পূর্বে কোনো ওষুধ বা ত্বকের সমস্যা ছিল না।',
+    instructionsJustRight_skin:
+      'মানুষ, ২৫ বছর, ৩ দিন ধরে লাল ত্বকের দাগ। পূর্বে কোনো ওষুধ বা ত্বকের সমস্যা ছিল না।',
     instructionsTooMuch_skin:
       "আজ একজন মানুষ ক্লিনিকে এসেছেন। তিনি গাড়ি চালিয়ে ভবনে প্রবেশ করেছেন এবং তার ত্বক লাল; তিনি মনে করেন যে খাওয়া খাবার তার ত্বককে প্রভাবিত করছে। আমি ত্বক থেকে পানি ও লাল প্রান্ত দেখি। তিনি সাহায্য চান—লম্বা ব্যক্তি, লাল ত্বক, রং ও জ্বালাপোড়ার জন্য উদ্বিগ্ন। তিনি বলেন, 'এটা কী?'",
-    instructionsAdditionalQuery_skin: 'Alan ত্বক সম্পর্কিত শিক্ষা/শেখার প্রশ্নও উত্তর দেন: একজিমা কী? পিগমেন্ট নেটওয়ার্ক কীভাবে দেখবো?',
+    instructionsAdditionalQuery_skin:
+      'Alan ত্বক সম্পর্কিত শিক্ষা/শেখার প্রশ্নও উত্তর দেন: একজিমা কী? পিগমেন্ট নেটওয়ার্ক কীভাবে দেখবো?',
     instructionsLabelTooLittle: 'খুব কম',
     instructionsLabelJustRight: 'ঠিক আছে',
     instructionsLabelTooMuch: 'খুব বেশি',
@@ -1701,11 +1780,11 @@ export const translations = {
     contactPlaceholder: 'যোগাযোগ (ইমেইল/ফোন)',
     acceptButton: 'গ্রহণ করুন',
 
-    images: "ছবি",
-    help: "সহায়তা",
-    screenshot: "স্ক্রিনশট",
-    refer: "রেফার",
-    comingSoon: "শীঘ্রই আসছে...",
+    images: 'ছবি',
+    help: 'সহায়তা',
+    screenshot: 'স্ক্রিনশট',
+    refer: 'রেফার',
+    comingSoon: 'শীঘ্রই আসছে...',
   },
 
   // 9) Indonesian - id
@@ -1764,29 +1843,33 @@ export const translations = {
     passwordPlaceholder: 'Kata Sandi',
     passwordErrorMsg: 'Kata sandi tidak valid. Coba lagi',
     passwordSubmitBtn: 'Kirim',
-    noCodeLine: "Tidak ada atau kode salah? Hubungi kami <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>di sini</a>",
+    noCodeLine:
+      "Tidak ada atau kode salah? Hubungi kami <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>di sini</a>",
 
     eyeMarqueeLine1: 'Apa itu glaukoma?',
     eyeMarqueeLine2: 'Bagaimana cara melihat disk optik dengan Arclight?',
     eyeMarqueeLine3: 'Pria 25 tahun, mata merah 3 hari, fotofobia, penglihatan sedikit menurun',
     eyeMarqueeLine4: 'Ceritakan tentang iritis',
     eyeMarqueeLine5: 'Haruskah saya merujuk katarak kongenital segera?',
-    eyeMarqueeLine6: 'Wanita 65 tahun, penglihatan buruk, tidak memakai kacamata. Bagian depan normal, lensa keruh',
+    eyeMarqueeLine6:
+      'Wanita 65 tahun, penglihatan buruk, tidak memakai kacamata. Bagian depan normal, lensa keruh',
     eyeMarqueeLine7: 'Ibu khawatir bayi memiliki pupil putih, tidak ada penglihatan di mata itu',
 
     earMarqueeLine1: 'Apa itu otitis media?',
     earMarqueeLine2: 'Bisakah saya melihat membran timpani dengan Arclight saya?',
-    earMarqueeLine3: 'Remaja laki-laki 16 tahun, sakit daun telinga 2 hari, gatal, pendengaran baik',
+    earMarqueeLine3:
+      'Remaja laki-laki 16 tahun, sakit daun telinga 2 hari, gatal, pendengaran baik',
     earMarqueeLine4: 'Ceritakan tentang syringing (pembersihan telinga)',
     earMarqueeLine5: 'Haruskah saya merujuk mastoiditis segera?',
-    earMarqueeLine6: 'Pria 73 tahun, pendengaran buruk. Kanal telinga tidak terlihat jelas, hanya melihat kotoran telinga',
+    earMarqueeLine6:
+      'Pria 73 tahun, pendengaran buruk. Kanal telinga tidak terlihat jelas, hanya melihat kotoran telinga',
     earMarqueeLine7: 'Bayi tidak merespons suara. Sudah berbulan-bulan',
 
     userInfoTitle: 'Info Pengguna',
     userName: 'Nama',
     userContact: 'Kontak',
     userRole: 'Peran',
-    userAimsPopupLabel: "Tujuan",
+    userAimsPopupLabel: 'Tujuan',
     // userAims: 'Tujuan',
     userLatLong: 'Lintang & Bujur',
     userArea: 'Wilayah',
@@ -1825,7 +1908,8 @@ export const translations = {
 
     pageTitle_howToExamineSkin: 'Cara memeriksa kulit',
     generalObservationHeading: 'Pengamatan umum',
-    generalObservationText: 'Periksa benjolan, <em>perubahan warna</em>, dan distribusi<br>Raba dengan lembut untuk tekstur, suhu, atau kepekaan',
+    generalObservationText:
+      'Periksa benjolan, <em>perubahan warna</em>, dan distribusi<br>Raba dengan lembut untuk tekstur, suhu, atau kepekaan',
     uvLightHeading: 'Cahaya UV (Wood’s)',
     uvLightText:
       "Di ruangan yang gelap, periksa fluoresensi khas:<br><span style='color:teal;'>tinea (biru-hijau)</span>, <span style='color:#FF7F50;'>pityriasis versicolor (oranye tembaga)</span>, <span style='color:#FF4040;'>erythrasma (merah karang)</span>, <span style='color:blue;'>vitiligo (biru-putih)</span>, <span style='color:orange;'>jerawat (merah-oranye)</span>, <span style='color:#BFEFFF;'>nit kutu kepala (biru pucat)</span>",
@@ -1856,15 +1940,18 @@ export const translations = {
     instructionsPatientDetail4: 'usia, jenis kelamin, obat',
     instructionsUseArclight_default: 'Gunakan Arclight: depan, refleks fundal, belakang mata.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Gunakan Arclight:</strong> <strong><em>depan, refleks fundal, belakang mata.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Gunakan Arclight:</strong> <strong><em>depan, refleks fundal, belakang mata.</em></strong>',
     instructionsTooLittle_eye: 'Pria, mata merah, apa?',
     instructionsJustRight_eye:
       'Pria 25 tahun, mata merah selama 3 hari. Tanpa obat atau masalah mata sebelumnya. Nyeri, mata berair, titik putih di kornea. Pupil OK, penglihatan 6/12 dan 6/6 pada mata yang lain.',
     instructionsTooMuch_eye:
       "Pria ini datang ke klinik hari ini. Dia memasuki gedung dengan mengemudi dan matanya merah; dia berpikir makanan yang dimakannya memengaruhi matanya. Saya melihat mata berair dan tepi merah. Dia butuh bantuan—pria tinggi, mata berair, khawatir tentang kornea dan nyeri. Dia berkata, 'Apa ini?'",
-    instructionsAdditionalQuery_eye: 'Alan juga menjawab pertanyaan pembelajaran tentang mata: Apa itu Iritis? Bagaimana saya melihat retina?',
+    instructionsAdditionalQuery_eye:
+      'Alan juga menjawab pertanyaan pembelajaran tentang mata: Apa itu Iritis? Bagaimana saya melihat retina?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Gunakan Arclight:</strong> <strong><em>seluruh telinga, saluran, gendang.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Gunakan Arclight:</strong> <strong><em>seluruh telinga, saluran, gendang.</em></strong>',
     instructionsTooLittle_ear: 'Pria, telinga merah, apa?',
     instructionsJustRight_ear:
       'Pria 25 tahun, telinga merah selama 3 hari. Tanpa obat atau masalah telinga sebelumnya. Nyeri, cairan dari telinga. Gendang merah, pendengaran teredam di telinga yang bermasalah tetapi normal pada yang lain.',
@@ -1873,9 +1960,11 @@ export const translations = {
     instructionsAdditionalQuery_ear:
       'Alan juga menjawab pertanyaan pembelajaran tentang telinga: Apa itu Otitis Media? Bagaimana cara membersihkan telinga?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Gunakan Arclight:</strong> <strong><em>Cahaya UV, dermoskopi.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Gunakan Arclight:</strong> <strong><em>Cahaya UV, dermoskopi.</em></strong>',
     instructionsTooLittle_skin: 'Pria, kulit merah, apa?',
-    instructionsJustRight_skin: 'Pria 25 tahun, bercak kulit merah selama 3 hari. Tanpa obat atau masalah kulit sebelumnya. Kulit nyeri dan gatal.',
+    instructionsJustRight_skin:
+      'Pria 25 tahun, bercak kulit merah selama 3 hari. Tanpa obat atau masalah kulit sebelumnya. Kulit nyeri dan gatal.',
     instructionsTooMuch_skin:
       "Pria ini datang ke klinik hari ini. Dia memasuki gedung dengan kulit merah dan berpikir makanan yang dimakannya memengaruhi kulitnya. Saya melihat cairan dan tepi merah. Dia butuh bantuan—pria tinggi, kulit merah, khawatir tentang pigmentasi dan iritasi. Dia berkata, 'Apa ini?'",
     instructionsAdditionalQuery_skin:
@@ -1914,11 +2003,11 @@ export const translations = {
     contactPlaceholder: 'Kontak (email/telepon)',
     acceptButton: 'Terima',
 
-    images: "Gambar",
-    help: "Bantuan",
-    screenshot: "Tangkap Layar",
-    refer: "Rujuk",
-    comingSoon: "Segera hadir...",
+    images: 'Gambar',
+    help: 'Bantuan',
+    screenshot: 'Tangkap Layar',
+    refer: 'Rujuk',
+    comingSoon: 'Segera hadir...',
   },
 
   // 10) Swahili - sw
@@ -1977,14 +2066,17 @@ export const translations = {
     passwordPlaceholder: 'Nenosiri',
     passwordErrorMsg: 'Nenosiri si sahihi. Jaribu tena',
     passwordSubmitBtn: 'Wasilisha',
-    noCodeLine: "Hauna au imekosewa? Wasiliana nasi <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>hapa</a>",
+    noCodeLine:
+      "Hauna au imekosewa? Wasiliana nasi <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>hapa</a>",
 
     eyeMarqueeLine1: 'Glaucoma ni nini?',
     eyeMarqueeLine2: 'Ninaonaje diski ya macho (optic disc) kwa kutumia Arclight?',
-    eyeMarqueeLine3: 'Mwanaume miaka 25, jicho jekundu siku 3, kuhisi mwanga, uwezo wa kuona umepungua kidogo',
+    eyeMarqueeLine3:
+      'Mwanaume miaka 25, jicho jekundu siku 3, kuhisi mwanga, uwezo wa kuona umepungua kidogo',
     eyeMarqueeLine4: 'Nieleze kuhusu iritis',
     eyeMarqueeLine5: 'Je, nipeleke mtoto mwenye cataract ya kuzaliwa haraka?',
-    eyeMarqueeLine6: 'Mwanamke miaka 65, uwezo wa kuona mdogo, hana miwani. Sehemu ya mbele iko sawa, lenzi imefifia',
+    eyeMarqueeLine6:
+      'Mwanamke miaka 65, uwezo wa kuona mdogo, hana miwani. Sehemu ya mbele iko sawa, lenzi imefifia',
     eyeMarqueeLine7: 'Mama anahofia mtoto ana mboni nyeupe, hakuna kuona kwenye jicho hilo',
 
     earMarqueeLine1: 'Otitis media ni nini?',
@@ -1992,14 +2084,15 @@ export const translations = {
     earMarqueeLine3: 'Kijana miaka 16, maumivu kwenye sikio, siku 2, kuwasha, kusikia ni vizuri',
     earMarqueeLine4: 'Nieleze kuhusu kusafisha sikio (syringing)',
     earMarqueeLine5: 'Je, nimpatie rufaa haraka aliye na mastoiditis?',
-    earMarqueeLine6: 'Mwanaume miaka 73, anasikia vibaya. Kituo cha sikio hakionekani vyema, naona nta tu',
+    earMarqueeLine6:
+      'Mwanaume miaka 73, anasikia vibaya. Kituo cha sikio hakionekani vyema, naona nta tu',
     earMarqueeLine7: 'Mtoto mchanga hajibu sauti. Imechukua miezi',
 
     userInfoTitle: 'Taarifa za Mtumiaji',
     userName: 'Jina',
     userContact: 'Mawasiliano',
     userRole: 'Wadhifa',
-    userAimsPopupLabel: "Malengo",
+    userAimsPopupLabel: 'Malengo',
     // userAims: 'Malengo',
     userLatLong: 'Lat & Long',
     userArea: 'Eneo',
@@ -2007,7 +2100,8 @@ export const translations = {
     userVersion: 'Toleo',
     userDateTime: 'Tarehe & Muda',
     geolocationButton: 'Geolokisho',
-    geoInfoText: 'Kwa kubofya "Geolokisho" itashirikiwa eneo (lat/long) lenye usahihi zaidi. Hii husaidia kutoa mwongozo na chaguzi bora.',
+    geoInfoText:
+      'Kwa kubofya "Geolokisho" itashirikiwa eneo (lat/long) lenye usahihi zaidi. Hii husaidia kutoa mwongozo na chaguzi bora.',
 
     pageTitle_howToExamineEye: 'Jinsi ya kuchunguza jicho',
     frontOfEyeHeading: 'Sehemu ya Mbele ya Jicho',
@@ -2037,7 +2131,8 @@ export const translations = {
 
     pageTitle_howToExamineSkin: 'Jinsi ya kuchunguza ngozi',
     generalObservationHeading: 'Uchunguzi wa jumla',
-    generalObservationText: 'Angalia vikoma, <em>mabadiliko ya rangi</em> na mgawanyo<br>Piga kwa upole ili kuhisi muundo, joto au hisia',
+    generalObservationText:
+      'Angalia vikoma, <em>mabadiliko ya rangi</em> na mgawanyo<br>Piga kwa upole ili kuhisi muundo, joto au hisia',
     uvLightHeading: 'Mwanga wa UV (Wood’s)',
     uvLightText:
       "Katika chumba kilicho giza, angalia fluorescens ya kipekee:<br><span style='color:teal;'>tinea (bluu-kijani)</span>, <span style='color:#FF7F50;'>pityriasis versicolor (machungwa ya shaba)</span>, <span style='color:#FF4040;'>erythrasma (weusi-korali)</span>, <span style='color:blue;'>vitiligo (bluu-mweupe)</span>, <span style='color:orange;'>acne (machungwa-wekundu)</span>, <span style='color:#BFEFFF;'>mayai ya mchwa wa kichwa (bluu mwepesi)</span>",
@@ -2068,23 +2163,28 @@ export const translations = {
     instructionsPatientDetail4: 'umri, jinsia, dawa',
     instructionsUseArclight_default: 'Tumia Arclight: mbele, reflex fundal, nyuma ya jicho.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Tumia Arclight:</strong> <strong><em>mbele, reflex fundal, nyuma ya jicho.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Tumia Arclight:</strong> <strong><em>mbele, reflex fundal, nyuma ya jicho.</em></strong>',
     instructionsTooLittle_eye: 'Mwanamume, jicho jekundu, nini?',
     instructionsJustRight_eye:
       'Mwanamume wa miaka 25, jicho jekundu kwa siku 3. Bila dawa wala tatizo la macho hapo awali. Maumivu, kuchemka, nukta nyeupe kwenye kornea. Pupil sawa, Maono 6/12 na 6/6 upande mwingine.',
     instructionsTooMuch_eye:
       "Mwanamume huyu alifika klinikini leo. Aliingia kwenye jengo akiwa anaendesha gari na jicho lake jekundu; anafikiri chakula alichokula kinaathiri jicho lake. Naona kuchemka na pande za jicho. Anahitaji msaada—mwanamume mrefu, macho yenye maji, aliye na wasiwasi kuhusu kornea na maumivu. Anasema, 'Hii ni nini?'",
-    instructionsAdditionalQuery_eye: 'Alan pia anajibu maswali ya ufundishaji kuhusu macho: Ni nini Iritis? Naona retina vipi?',
+    instructionsAdditionalQuery_eye:
+      'Alan pia anajibu maswali ya ufundishaji kuhusu macho: Ni nini Iritis? Naona retina vipi?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Tumia Arclight:</strong> <strong><em>kuzunguka sikio, canal, tympan.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Tumia Arclight:</strong> <strong><em>kuzunguka sikio, canal, tympan.</em></strong>',
     instructionsTooLittle_ear: 'Mwanamume, sikio jekundu, nini?',
     instructionsJustRight_ear:
       'Mwanamume wa miaka 25, sikio jekundu kwa siku 3. Bila dawa wala tatizo la sikio hapo awali. Maumivu, mtoa maji ya sikio. Tympan jekundu, kusikiliza kumedewa sikio la punguza lakini sawa upande mwingine.',
     instructionsTooMuch_ear:
       "Mwanamume huyu alifika klinikini leo. Aliingia kwenye jengo na sikio jekundu na anafikiri chakula alichokula kinaathiri sikio lake. Naona mtoa maji na pande za jicho. Anahitaji msaada—mwanamume mrefu, sikio lenye maji, aliye na wasiwasi kuhusu kusikiliza na maumivu. Anasema, 'Hii ni nini?'",
-    instructionsAdditionalQuery_ear: 'Alan pia anajibu maswali ya ufundishaji kuhusu masikio: Ni nini Otitis Media? Nisafishe sikio vipi?',
+    instructionsAdditionalQuery_ear:
+      'Alan pia anajibu maswali ya ufundishaji kuhusu masikio: Ni nini Otitis Media? Nisafishe sikio vipi?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Tumia Arclight:</strong> <strong><em>Mwangaza wa UV, dermoskopi.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Tumia Arclight:</strong> <strong><em>Mwangaza wa UV, dermoskopi.</em></strong>',
     instructionsTooLittle_skin: 'Mwanamume, ngozi jekundu, nini?',
     instructionsJustRight_skin:
       'Mwanamume wa miaka 25, kipande cha ngozi jekundu kwa siku 3. Bila dawa wala tatizo la ngozi hapo awali. Ngozi inauma na kuchanua.',
@@ -2126,11 +2226,11 @@ export const translations = {
     contactPlaceholder: 'Mawasiliano (email/simu)',
     acceptButton: 'Kubali',
 
-    images: "Picha",
-    help: "Msaada",
-    screenshot: "Picha ya skrini",
-    refer: "Rejelea",
-    comingSoon: "Inakuja hivi karibuni...",
+    images: 'Picha',
+    help: 'Msaada',
+    screenshot: 'Picha ya skrini',
+    refer: 'Rejelea',
+    comingSoon: 'Inakuja hivi karibuni...',
   },
 
   // 11) Urdu - ur
@@ -2189,7 +2289,8 @@ export const translations = {
     passwordPlaceholder: 'پاس ورڈ',
     passwordErrorMsg: 'غلط پاس ورڈ۔ دوبارہ کوشش کریں',
     passwordSubmitBtn: 'جمع کروائیں',
-    noCodeLine: "کوئی کوڈ نہیں یا غلط کوڈ؟ ہم سے <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>یہاں</a> رابطہ کریں",
+    noCodeLine:
+      "کوئی کوڈ نہیں یا غلط کوڈ؟ ہم سے <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>یہاں</a> رابطہ کریں",
 
     eyeMarqueeLine1: 'گلوکوما کیا ہے؟',
     eyeMarqueeLine2: 'میں Arclight سے آپٹک ڈسک کو کیسے دیکھ سکتا ہوں؟',
@@ -2211,7 +2312,7 @@ export const translations = {
     userName: 'نام',
     userContact: 'رابطہ',
     userRole: 'کردار',
-    userAimsPopupLabel: "مقاصد",
+    userAimsPopupLabel: 'مقاصد',
     // userAims: 'مقاصد',
     userLatLong: 'طول و عرض بلد',
     userArea: 'علاقہ',
@@ -2250,7 +2351,8 @@ export const translations = {
 
     pageTitle_howToExamineSkin: 'جلد کا معائنہ کیسے کریں',
     generalObservationHeading: 'عمومی معائنہ',
-    generalObservationText: 'تکلیوں، <em>رنگ میں تبدیلی</em> اور تقسیم کا معائنہ کریں<br>ملائمت سے ساخت، درجہ حرارت یا حساسیت کی جانچ کریں',
+    generalObservationText:
+      'تکلیوں، <em>رنگ میں تبدیلی</em> اور تقسیم کا معائنہ کریں<br>ملائمت سے ساخت، درجہ حرارت یا حساسیت کی جانچ کریں',
     uvLightHeading: 'یو وی (ووڈز) لائٹ',
     uvLightText:
       "ایک اندھیرے کمرے میں مخصوص فلوروسینس چیک کریں:<br><span style='color:teal;'>ٹینا (نیلا-سبز)</span>, <span style='color:#FF7F50;'>پٹیریاسس ورسیکولر (تانبا-نارنجی)</span>, <span style='color:#FF4040;'>ایریتھراسما (مرجان-سرخ)</span>, <span style='color:blue;'>وٹلیگو (نیلا-سفید)</span>, <span style='color:orange;'>مُنہاسے (نارنجی-سرخ)</span>, <span style='color:#BFEFFF;'>ہیڈ لائس نٹس (ہلکا نیلا)</span>",
@@ -2281,28 +2383,35 @@ export const translations = {
     instructionsPatientDetail4: 'عمر، جنس، ادویات',
     instructionsUseArclight_default: 'Arclight استعمال کریں: سامنے، انعکاس شبکیہ، پیچھے کی آنکھ۔',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Arclight استعمال کریں:</strong> <strong><em>سامنے، fundal reflex، پیچھے کی آنکھ۔</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Arclight استعمال کریں:</strong> <strong><em>سامنے، fundal reflex، پیچھے کی آنکھ۔</em></strong>',
     instructionsTooLittle_eye: 'مرد، سرخ آنکھ، کیا؟',
     instructionsJustRight_eye:
       'مرد 25 سال، آنکھ سرخ 3 دن۔ پہلے کوئی دوا یا آنکھ کا مسئلہ نہیں تھا۔ درد، آنکھ سے پانی، سفید کورنیا ڈاٹ۔ پپیلیں ٹھیک، نظر 6/12 اور 6/6 دوسری آنکھ میں۔',
     instructionsTooMuch_eye:
       "آج یہ مرد کلینک آیا۔ وہ گاڑی چلاتے ہوئے عمارت میں داخل ہوا اور اس کی آنکھ سرخ ہے، اب وہ سمجھتا ہے کہ کھایا ہوا کھانا اس کی آنکھ کو متاثر کر رہا ہے۔ میں آنکھ سے پانی اور سرخ کنارے دیکھتا ہوں۔ وہ مدد چاہتا ہے—لمبا مرد، آنکھیں پانی والی، کورنیا اور درد کے بارے में فکر مند۔ وہ پوچھتا ہے، 'یہ کیا ہے؟'",
-    instructionsAdditionalQuery_eye: 'Alan آنکھ سے متعلق تدریسی سوالات کا بھی جواب دیتا ہے: Iritis کیا ہے؟ میں retina کیسے دیکھوں؟',
+    instructionsAdditionalQuery_eye:
+      'Alan آنکھ سے متعلق تدریسی سوالات کا بھی جواب دیتا ہے: Iritis کیا ہے؟ میں retina کیسے دیکھوں؟',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Arclight استعمال کریں:</strong> <strong><em>گھیرے کان، نالی، tympan.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Arclight استعمال کریں:</strong> <strong><em>گھیرے کان، نالی، tympan.</em></strong>',
     instructionsTooLittle_ear: 'مرد، سرخ کان، کیا؟',
     instructionsJustRight_ear:
       'مرد 25 سال، کان سرخ 3 دن۔ پہلے کوئی دوا یا کان کا مسئلہ نہیں تھا۔ درد، کان سے رطوبت۔ سرخ tympan، خراب کان میں سننا دھندلا لیکن دوسری میں ٹھیک۔',
     instructionsTooMuch_ear:
       "آج یہ مرد کلینک آیا۔ وہ گاڑی چلاتے ہوئے عمارت میں داخل ہوا اور اس کے کان سرخ ہیں، اب وہ سمجھتا ہے کہ کھایا ہوا کھانا اس کے کان کو متاثر کر رہا ہے۔ میں کان سے رطوبت اور سرخ کنارے دیکھتا ہوں۔ وہ مدد چاہتا ہے—لمبا مرد، کان پانی والے، سننے اور درد کے بارے में فکر مند۔ وہ پوچھتا ہے، 'یہ کیا ہے؟'",
-    instructionsAdditionalQuery_ear: 'Alan کان سے متعلق تدریسی سوالات کا بھی جواب دیتا ہے: آوٹائٹس میڈیا کیا ہے؟ میں کان کیسے صاف کروں؟',
+    instructionsAdditionalQuery_ear:
+      'Alan کان سے متعلق تدریسی سوالات کا بھی جواب دیتا ہے: آوٹائٹس میڈیا کیا ہے؟ میں کان کیسے صاف کروں؟',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Arclight استعمال کریں:</strong> <strong><em>UV روشنی، جلد کا معائنہ۔</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Arclight استعمال کریں:</strong> <strong><em>UV روشنی، جلد کا معائنہ۔</em></strong>',
     instructionsTooLittle_skin: 'مرد، سرخ جلد، کیا؟',
-    instructionsJustRight_skin: 'مرد 25 سال، 3 دن تک سرخ جلد کا پیچ۔ پہلے کوئی دوا یا جلد کا مسئلہ نہیں تھا۔ جلد میں خارش اور درد۔',
+    instructionsJustRight_skin:
+      'مرد 25 سال، 3 دن تک سرخ جلد کا پیچ۔ پہلے کوئی دوا یا جلد کا مسئلہ نہیں تھا۔ جلد میں خارش اور درد۔',
     instructionsTooMuch_skin:
       "آج یہ مرد کلینک آیا۔ وہ گاڑی چلاتے ہوئے عمارت میں داخل ہوا اور اس کی جلد سرخ ہے، اب وہ سمجھتا ہے کہ کھایا ہوا کھانا اس کی جلد کو متاثر کر رہا ہے۔ میں جلد سے پانی اور سرخ کنارے دیکھتا ہوں۔ وہ مدد چاہتا ہے—لمبا مرد، سرخ جلد، رنگ اور خارش کو لے کر فکر مند۔ وہ پوچھتا ہے، 'یہ کیا ہے؟'",
-    instructionsAdditionalQuery_skin: 'Alan جلد سے متعلق تدریسی سوالات کا بھی جواب دیتا ہے: ایگزما کیا ہے؟ میں رنگ کا جال کیسے دیکھوں؟',
+    instructionsAdditionalQuery_skin:
+      'Alan جلد سے متعلق تدریسی سوالات کا بھی جواب دیتا ہے: ایگزما کیا ہے؟ میں رنگ کا جال کیسے دیکھوں؟',
     instructionsLabelTooLittle: 'بہت کم',
     instructionsLabelJustRight: 'بالکل ٹھیک',
     instructionsLabelTooMuch: 'بہت زیادہ',
@@ -2337,11 +2446,11 @@ export const translations = {
     contactPlaceholder: 'رابطہ (ای میل/فون)',
     acceptButton: 'قبول کریں',
 
-    images: "تصاویر",
-    help: "مدد",
-    screenshot: "اسکرین شاٹ",
-    refer: "ریفر",
-    comingSoon: "جلد آ رہا ہے...",
+    images: 'تصاویر',
+    help: 'مدد',
+    screenshot: 'اسکرین شاٹ',
+    refer: 'ریفر',
+    comingSoon: 'جلد آ رہا ہے...',
   },
 
   // 12) Persian (Farsi) - fa
@@ -2423,7 +2532,7 @@ export const translations = {
     userName: 'نام',
     userContact: 'اطلاعات تماس',
     userRole: 'نقش',
-    userAimsPopupLabel: "اهداف",
+    userAimsPopupLabel: 'اهداف',
     // userAims: 'اهداف',
     userLatLong: 'عرض و طول جغرافیایی',
     userArea: 'منطقه',
@@ -2431,7 +2540,8 @@ export const translations = {
     userVersion: 'نسخه',
     userDateTime: 'تاریخ و زمان',
     geolocationButton: 'موقعیت‌یابی',
-    geoInfoText: 'با کلیک بر روی "موقعیت‌یابی" مکان دقیق‌تری (عرض/طول) به اشتراک گذاشته می‌شود. این به ارائه راهنمایی و گزینه‌های بهتر کمک می‌کند.',
+    geoInfoText:
+      'با کلیک بر روی "موقعیت‌یابی" مکان دقیق‌تری (عرض/طول) به اشتراک گذاشته می‌شود. این به ارائه راهنمایی و گزینه‌های بهتر کمک می‌کند.',
 
     pageTitle_howToExamineEye: 'چگونه چشم را معاینه کنیم',
     frontOfEyeHeading: 'قسمت جلوی چشم',
@@ -2461,7 +2571,8 @@ export const translations = {
 
     pageTitle_howToExamineSkin: 'چگونه پوست را معاینه کنیم',
     generalObservationHeading: 'مشاهده کلی',
-    generalObservationText: 'توده‌ها، <em>تغییرات رنگ</em> و توزیع را بررسی کنید<br>به آرامی بافت، دما یا حساسیت را لمس کنید',
+    generalObservationText:
+      'توده‌ها، <em>تغییرات رنگ</em> و توزیع را بررسی کنید<br>به آرامی بافت، دما یا حساسیت را لمس کنید',
     uvLightHeading: 'نور ماوراء بنفش (Wood’s)',
     uvLightText:
       "در اتاقی تاریک، به فلورسانس مشخص توجه کنید:<br><span style='color:teal;'>تينيا (آبی-سبز)</span>, <span style='color:#FF7F50;'>پيتيريازيس ورسیکولر (نارنجی مسی)</span>, <span style='color:#FF4040;'>ايريثراسم (قرمز مرجانی)</span>, <span style='color:blue;'>ويتيلو (آبی-سفید)</span>, <span style='color:orange;'>آکنه (قرمز-نارنجی)</span>, <span style='color:#BFEFFF;'>تخم کچل (آبی کمرنگ)</span>",
@@ -2492,28 +2603,35 @@ export const translations = {
     instructionsPatientDetail4: 'سن، جنسیت، داروها',
     instructionsUseArclight_default: 'از Arclight استفاده کنید: جلو، بازتاب fundal، پشت چشم.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>از Arclight استفاده کنید:</strong> <strong><em>جلو، بازتاب fundal، پشت چشم.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>از Arclight استفاده کنید:</strong> <strong><em>جلو، بازتاب fundal، پشت چشم.</em></strong>',
     instructionsTooLittle_eye: 'مرد، چشم قرمز، چه؟',
     instructionsJustRight_eye:
       'مرد 25 سال، چشم قرمز به مدت 3 روز. پیش از این دارویی مصرف نکرده یا مشکلی نداشته. درد، اشک، نقطه سفید روی قرنیه. مردمک‌ها طبیعی، بینایی 6/12 و 6/6 در چشم دیگر.',
     instructionsTooMuch_eye:
       'این مرد امروز وارد کلینیک شد. او با رانندگی وارد ساختمان شد و چشمش قرمز است؛ او فکر می‌کند که غذایی که خورده بر چشمش تأثیر گذاشته است. من اشک و لبه‌های قرمز را می‌بینم. او نیاز به کمک دارد—مرد بلند، چشم‌های اشک‌آلود، نگران قرنیه و درد. او می‌گوید: «این چیست؟»',
-    instructionsAdditionalQuery_eye: 'Alan همچنین به پرسش‌های آموزشی درباره چشم پاسخ می‌دهد: التهاب عنبیه چیست؟ چگونه شبکیه را می‌بینم؟',
+    instructionsAdditionalQuery_eye:
+      'Alan همچنین به پرسش‌های آموزشی درباره چشم پاسخ می‌دهد: التهاب عنبیه چیست؟ چگونه شبکیه را می‌بینم؟',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>از Arclight استفاده کنید:</strong> <strong><em>اطراف گوش، کانال، تمپو.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>از Arclight استفاده کنید:</strong> <strong><em>اطراف گوش، کانال، تمپو.</em></strong>',
     instructionsTooLittle_ear: 'مرد، گوش قرمز، چه؟',
     instructionsJustRight_ear:
       'مرد 25 سال، گوش قرمز به مدت 3 روز. پیش از این دارویی مصرف نکرده یا مشکلی نداشته. درد، ترشح گوش. تمپو قرمز، شنیداری در گوش مشکل کمی کاهش یافته ولی در گوش دیگر طبیعی است.',
     instructionsTooMuch_ear:
       'این مرد امروز وارد کلینیک شد. او با رانندگی وارد ساختمان شد و گوش‌هایش قرمز هستند و فکر می‌کند غذایی که خورده بر گوشش تأثیر گذاشته است. من ترشح و لبه‌های قرمز را می‌بینم. او نیاز به کمک دارد—مرد بلند، گوش‌های اشک‌آلود، نگران شنیداری و درد. او می‌گوید: «این چیست؟»',
-    instructionsAdditionalQuery_ear: 'Alan همچنین به پرسش‌های آموزشی درباره گوش پاسخ می‌دهد: التهاب گوش میانی چیست؟ چگونه گوش را تمیز کنم؟',
+    instructionsAdditionalQuery_ear:
+      'Alan همچنین به پرسش‌های آموزشی درباره گوش پاسخ می‌دهد: التهاب گوش میانی چیست؟ چگونه گوش را تمیز کنم؟',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>از Arclight استفاده کنید:</strong> <strong><em>نور UV، درموسکوپی.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>از Arclight استفاده کنید:</strong> <strong><em>نور UV، درموسکوپی.</em></strong>',
     instructionsTooLittle_skin: 'مرد، پوست قرمز، چه؟',
-    instructionsJustRight_skin: 'مرد 25 سال، لکه قرمز پوست به مدت 3 روز. پیش از این دارویی مصرف نکرده یا مشکلی نداشته. پوست دردناک و خارش دارد.',
+    instructionsJustRight_skin:
+      'مرد 25 سال، لکه قرمز پوست به مدت 3 روز. پیش از این دارویی مصرف نکرده یا مشکلی نداشته. پوست دردناک و خارش دارد.',
     instructionsTooMuch_skin:
       'این مرد امروز وارد کلینیک شد. او با رانندگی وارد ساختمان شد و پوستش قرمز است و فکر می‌کند غذایی که خورده بر پوستش تأثیر گذاشته است. من اشک و لبه‌های قرمز را می‌بینم. او نیاز به کمک دارد—مرد بلند، پوست قرمز، نگران رنگ و التهاب. او می‌گوید: «این چیست؟»',
-    instructionsAdditionalQuery_skin: 'Alan همچنین به پرسش‌های آموزشی درباره پوست پاسخ می‌دهد: اگزما چیست؟ چگونه شبکه رنگدانه را می‌بینم؟',
+    instructionsAdditionalQuery_skin:
+      'Alan همچنین به پرسش‌های آموزشی درباره پوست پاسخ می‌دهد: اگزما چیست؟ چگونه شبکه رنگدانه را می‌بینم؟',
     instructionsLabelTooLittle: 'بسیار کم',
     instructionsLabelJustRight: 'کاملاً مناسب',
     instructionsLabelTooMuch: 'بسیار زیاد',
@@ -2548,11 +2666,11 @@ export const translations = {
     contactPlaceholder: 'تماس (ایمیل/تلفن)',
     acceptButton: 'قبول کنید',
 
-    images: "تصاویر",
-    help: "راهنما",
-    screenshot: "اسکرین شات",
-    refer: "ارجاع",
-    comingSoon: "به‌ زودی..."
+    images: 'تصاویر',
+    help: 'راهنما',
+    screenshot: 'اسکرین شات',
+    refer: 'ارجاع',
+    comingSoon: 'به‌ زودی...',
   },
 
   // 13) Lingala - ln
@@ -2611,29 +2729,33 @@ export const translations = {
     passwordPlaceholder: 'Mpasi ya se (Password)',
     passwordErrorMsg: 'Mpasi ya se ezali malamu te. Simba lisusu',
     passwordSubmitBtn: 'Tinda',
-    noCodeLine: "Kode ezali te to ebungi? Sanganá na biso <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>awa</a>",
+    noCodeLine:
+      "Kode ezali te to ebungi? Sanganá na biso <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>awa</a>",
 
     eyeMarqueeLine1: 'Glaucoma ezali nini?',
     eyeMarqueeLine2: 'Naboni namonaka disiki ya liso (optic disc) na Arclight?',
     eyeMarqueeLine3: 'Mobali 25, liso ebotoli mikolo 3, alingaka te pole, liyebisi momeseno',
     eyeMarqueeLine4: 'Loba na ngai likambo ya Iritis',
     eyeMarqueeLine5: 'Esengeli natindela moto oyo azali na cataract ya bokilo mbangu?',
-    eyeMarqueeLine6: 'Mwasi 65, komona ya mabe, azali te na lunete. Eteni ya liboso ezali malamu, kasi lenti ezozala mpasi',
-    eyeMarqueeLine7: 'Mama azali kobanga, mwana azali na zenitho ya pembe, azali te komona na liso yango',
+    eyeMarqueeLine6:
+      'Mwasi 65, komona ya mabe, azali te na lunete. Eteni ya liboso ezali malamu, kasi lenti ezozala mpasi',
+    eyeMarqueeLine7:
+      'Mama azali kobanga, mwana azali na zenitho ya pembe, azali te komona na liso yango',
 
     earMarqueeLine1: 'Otitis media ezali nini?',
     earMarqueeLine2: 'Nakoki komona membrane tympanic na Arclight na ngai?',
     earMarqueeLine3: 'Mobali 16, bololo ya litoyi, mikolo 2, kosokola, koyoka ezali malamu',
     earMarqueeLine4: 'Lobela ngai likambo ya kosukola litoyi (syringing)',
     earMarqueeLine5: 'Esengeli natindela moto oyo azali na mastoiditis mbangu?',
-    earMarqueeLine6: 'Mobali 73, koyoka eza mabe. Monoko ya litoyi emonanaka malamu te, namoni kaka cérumen',
+    earMarqueeLine6:
+      'Mobali 73, koyoka eza mabe. Monoko ya litoyi emonanaka malamu te, namoni kaka cérumen',
     earMarqueeLine7: 'Mwana moke ayokaka te mongongo. Ekomi bileko mingi',
 
     userInfoTitle: 'Mikanda ya Motángo',
     userName: 'Kombo',
     userContact: 'Nzela ya kokutana',
     userRole: 'Mosala',
-    userAimsPopupLabel: "Mikano",
+    userAimsPopupLabel: 'Mikano',
     // userAims: 'Mikano',
     userLatLong: 'Longitude & Latitude',
     userArea: 'Esika',
@@ -2641,7 +2763,8 @@ export const translations = {
     userVersion: 'Edisyo',
     userDateTime: 'Mokolo & Ngonga',
     geolocationButton: 'Lokasyon',
-    geoInfoText: 'Na kokliká "Lokasyon", esika ya solo (lat/long) ekobimisama malamu. Likambo wana ekosalisa na kopesa mayele mpe ba chwa ya malamu.',
+    geoInfoText:
+      'Na kokliká "Lokasyon", esika ya solo (lat/long) ekobimisama malamu. Likambo wana ekosalisa na kopesa mayele mpe ba chwa ya malamu.',
 
     pageTitle_howToExamineEye: 'Ndenge ya kotala jiso',
     frontOfEyeHeading: 'Liboso ya Jiso',
@@ -2671,7 +2794,8 @@ export const translations = {
 
     pageTitle_howToExamineSkin: 'Ndenge ya kotala nzoto',
     generalObservationHeading: 'Kotala ya ndenge nyonso',
-    generalObservationText: 'Tala biloko ya mikuta, <em>mpaya ya lokota</em> mpe boyebi<br>Pona mabɔkɔ mpo na koyeba ndenge, molunge to mawa',
+    generalObservationText:
+      'Tala biloko ya mikuta, <em>mpaya ya lokota</em> mpe boyebi<br>Pona mabɔkɔ mpo na koyeba ndenge, molunge to mawa',
     uvLightHeading: 'Mwangaza ya UV (Wood’s)',
     uvLightText:
       "Na ndako ya kimia, tala bilamba ya fluorescence ya kokamwa:<br><span style='color:teal;'>tinea (bluu-ya-mokili)</span>, <span style='color:#FF7F50;'>pityriasis versicolor (orange ya shaba)</span>, <span style='color:#FF4040;'>erythrasma (rouge ya korali)</span>, <span style='color:blue;'>vitiligo (bluu-mweupe)</span>, <span style='color:orange;'>acne (orange-red)</span>, <span style='color:#BFEFFF;'>head lice nits (bluu ya pɛ̃ mpo na kosika)</span>",
@@ -2702,23 +2826,28 @@ export const translations = {
     instructionsPatientDetail4: 'mbula, genre, misala ya mombongo',
     instructionsUseArclight_default: 'Salela Arclight: liboso, reflet fundal, nsima ya miso.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Salela Arclight:</strong> <strong><em>liboso, reflet fundal, nsima ya miso.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Salela Arclight:</strong> <strong><em>liboso, reflet fundal, nsima ya miso.</em></strong>',
     instructionsTooLittle_eye: 'Mobali, miso ya motema, nini?',
     instructionsJustRight_eye:
       'Mobali ya mbula 25, miso ya motema mpo na mikolo 3. Ezali te na problème ya miso liboso. Mposa, mayele, point ya kornea ya pole. Pupil ebongi, visyon 6/12 mpe 6/6 na mosusu.',
     instructionsTooMuch_eye:
       "Mobali oyo ayebaki lelo na kliniki. Abimi na building na ye na motuka, miso na ye ezali motema; asali ete biloko alingaka kolya ekoki kolimbisa miso na ye. Naona mayele mpe ba bord ya motema. Ayebi kosenga lisalisi—mobali ya molayi, miso ya mayele, akangami na kornea mpe mawa. Ayebisa, 'Nini oyo?'",
-    instructionsAdditionalQuery_eye: 'Alan azali mpe kopesa eyano na mituna ya koyekola miso: Nini Iritis? Ndenge nini nakoka komona retina?',
+    instructionsAdditionalQuery_eye:
+      'Alan azali mpe kopesa eyano na mituna ya koyekola miso: Nini Iritis? Ndenge nini nakoka komona retina?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Salela Arclight:</strong> <strong><em>gbógbo matama, canal, drum.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Salela Arclight:</strong> <strong><em>gbógbo matama, canal, drum.</em></strong>',
     instructionsTooLittle_ear: 'Mobali, matama ya motema, nini?',
     instructionsJustRight_ear:
       'Mobali ya mbula 25, matama ya motema mpo na mikolo 3. Ezali te na problème ya matama liboso. Mposa, matama ya mabe. Drum ya motema, kokoka ezali te malamu na matama mabe kasi ebongi na mosusu.',
     instructionsTooMuch_ear:
       "Mobali oyo ayebaki lelo na kliniki. Abimi na building na ye na motuka, matama na ye ezali motema; asali ete biloko alingaka kolya ekoki kolimbisa matama na ye. Naona discharge mpe ba bord ya motema. Ayebi kosenga lisalisi—mobali ya molayi, matama ya mayele, akangami na kokoka mpe mawa. Ayebisa, 'Nini oyo?'",
-    instructionsAdditionalQuery_ear: 'Alan azali mpe kopesa eyano na mituna ya koyekola matama: Nini Otitis Media? Ndenge nini nakoka kokima matama?',
+    instructionsAdditionalQuery_ear:
+      'Alan azali mpe kopesa eyano na mituna ya koyekola matama: Nini Otitis Media? Ndenge nini nakoka kokima matama?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Salela Arclight:</strong> <strong><em>lumière UV, dermoscopy.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Salela Arclight:</strong> <strong><em>lumière UV, dermoscopy.</em></strong>',
     instructionsTooLittle_skin: 'Mobali, nzoto ya motema, nini?',
     instructionsJustRight_skin:
       'Mobali ya mbula 25, patch ya nzoto ya motema mpo na mikolo 3. Ezali te na problème ya nzoto liboso. Nzoto ezali na mawa mpe etali.',
@@ -2760,11 +2889,11 @@ export const translations = {
     contactPlaceholder: 'Lumikisa (imeyili/telefonu)',
     acceptButton: 'Kobwaka',
 
-    images: "Bililingi",
-    help: "Lisungi",
-    screenshot: "Screenshot",
-    refer: "Kotinda",
-    comingSoon: "Eyakoya mosika te...",
+    images: 'Bililingi',
+    help: 'Lisungi',
+    screenshot: 'Screenshot',
+    refer: 'Kotinda',
+    comingSoon: 'Eyakoya mosika te...',
   },
 
   // 14) Hausa - ha
@@ -2823,14 +2952,16 @@ export const translations = {
     passwordPlaceholder: 'Kalmar sirri',
     passwordErrorMsg: 'Kalmar sirri ba daidai ba. Gwada sake',
     passwordSubmitBtn: 'Aika',
-    noCodeLine: "Babu ko ba daidai ba? Tuntuɓi mu <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>nan</a>",
+    noCodeLine:
+      "Babu ko ba daidai ba? Tuntuɓi mu <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>nan</a>",
 
     eyeMarqueeLine1: 'Menene glaucoma?',
     eyeMarqueeLine2: 'Yaya zan gani diski na ido (optic disc) da Arclight?',
     eyeMarqueeLine3: 'Namiji 25, ido ja har na kwanaki 3, tsoron haske, dan raguwar gani',
     eyeMarqueeLine4: 'Gaya mini game da Iritis',
     eyeMarqueeLine5: 'Ina bukatar turawa da gaggawa ga cutar cataract da aka haifa da ita?',
-    eyeMarqueeLine6: 'Mace 65, gani a wahala, ba riga da gilashi. Gaban ido dai-dai, lens din kumma duhu',
+    eyeMarqueeLine6:
+      'Mace 65, gani a wahala, ba riga da gilashi. Gaban ido dai-dai, lens din kumma duhu',
     eyeMarqueeLine7: 'Uwa tana damuwa: jariri na da farin kwayar ido, babu gani a cikin idon',
 
     earMarqueeLine1: 'Menene otitis media?',
@@ -2838,14 +2969,15 @@ export const translations = {
     earMarqueeLine3: 'Matashi 16, radadin kunne na kwanaki 2, kaikayi, ji da kyau',
     earMarqueeLine4: 'Faɗa mini game da syringing (wanke kunne)',
     earMarqueeLine5: 'Ina bukatar turawa da gaggawa ga mastoiditis?',
-    earMarqueeLine6: 'Namiji 73, ji ba sosai ba. Babu kallo mai kyau a magudanar kunne, gani cerumen kawai',
+    earMarqueeLine6:
+      'Namiji 73, ji ba sosai ba. Babu kallo mai kyau a magudanar kunne, gani cerumen kawai',
     earMarqueeLine7: 'Jariri ba ya amsawa ga murya. Watanni da dama kenan',
 
     userInfoTitle: 'Bayanin Mai Amfani',
     userName: 'Suna',
     userContact: 'Tuntuɓi',
     userRole: 'Rawa',
-    userAimsPopupLabel: "Manufofi",
+    userAimsPopupLabel: 'Manufofi',
     // userAims: 'Manufar',
     userLatLong: 'Lat & Long',
     userArea: 'Yanki',
@@ -2884,7 +3016,8 @@ export const translations = {
 
     pageTitle_howToExamineSkin: 'Yadda ake duba fata',
     generalObservationHeading: 'Gabaɗaya lura',
-    generalObservationText: 'Duba kumburi, <em>canje-canje launi</em> da rabewa<br>Lalle a duba laushi, zafin jiki ko jin zafi',
+    generalObservationText:
+      'Duba kumburi, <em>canje-canje launi</em> da rabewa<br>Lalle a duba laushi, zafin jiki ko jin zafi',
     uvLightHeading: 'Hasken UV (na Wood)',
     uvLightText:
       "A cikin dakin da babu haske, duba fitowar haske ta musamman:<br><span style='color:teal;'>tinea (shuɗi-kore)</span>, <span style='color:#FF7F50;'>pityriasis versicolor (launin tagulla mai orange)</span>, <span style='color:#FF4040;'>erythrasma (jan korali)</span>, <span style='color:blue;'>vitiligo (shuɗi-fari)</span>, <span style='color:orange;'>acne (jan orange)</span>, <span style='color:#BFEFFF;'>ƙwai na kunama (shuɗi mai laushi)</span>",
@@ -2915,29 +3048,35 @@ export const translations = {
     instructionsPatientDetail4: 'shekara, jinsi, magani',
     instructionsUseArclight_default: 'Yi amfani da Arclight: gaba, fundal reflex, bayan idanu.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Yi amfani da Arclight:</strong> <strong><em>gaba, fundal reflex, bayan idanu.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Yi amfani da Arclight:</strong> <strong><em>gaba, fundal reflex, bayan idanu.</em></strong>',
     instructionsTooLittle_eye: 'Maza, idanun ja, me ke faruwa?',
     instructionsJustRight_eye:
       'Maza 25, idanun ja na kwanaki 3. Ba a taɓa amfani da magani ko samun matsalar ido ba a baya. Ciwo, hawaye, farin alamar a kan cornea. Pupilin suna da kyau, gani 6/12 da 6/6 a ɗaya.',
     instructionsTooMuch_eye:
       "Wannan mutum ya zo asibiti a yau. Ya shigo da mota cikin gini, idanunsa ja, yanzu yana tsammanin abincin da ya ci yana shafar idanunsa. Na ga hawaye da gefuna ja. Yana buƙatar taimako—mutum mai tsawo, idanun da ruwa, damuwa game da cornea da ciwo. Yana cewa, 'Menene wannan?'",
-    instructionsAdditionalQuery_eye: 'Alan yana amsa tambayoyi game da koyon ido: Menene Iritis? Ta yaya zan ga retina?',
+    instructionsAdditionalQuery_eye:
+      'Alan yana amsa tambayoyi game da koyon ido: Menene Iritis? Ta yaya zan ga retina?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Yi amfani da Arclight:</strong> <strong><em>kewaye kunnen, canal, drum.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Yi amfani da Arclight:</strong> <strong><em>kewaye kunnen, canal, drum.</em></strong>',
     instructionsTooLittle_ear: 'Maza, kunnen ja, me ke faruwa?',
     instructionsJustRight_ear:
       'Maza 25, kunnen ja na kwanaki 3. Ba a taɓa samun magani ko matsalar kunne ba a baya. Ciwo, fitar ruwa daga kunne. Drum ja, sauraro ya yi rauni a muryar kunne mai matsala amma dai dai a ɗaya.',
     instructionsTooMuch_ear:
       "Wannan mutum ya zo asibiti a yau. Ya shigo cikin gini da kunnen ja, yanzu yana tsammanin abincin da ya ci yana shafar kunnen sa. Na ga ruwa da gefuna ja. Yana buƙatar taimako—mutum mai tsawo, kunnen ruwa, damuwa game da sauraro da ciwo. Yana cewa, 'Menene wannan?'",
-    instructionsAdditionalQuery_ear: 'Alan yana amsa tambayoyi game da koyon kunne: Menene Otitis Media? Ta yaya zan tsabtace kunne?',
+    instructionsAdditionalQuery_ear:
+      'Alan yana amsa tambayoyi game da koyon kunne: Menene Otitis Media? Ta yaya zan tsabtace kunne?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Yi amfani da Arclight:</strong> <strong><em>Lantarki UV, dermoscopy.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Yi amfani da Arclight:</strong> <strong><em>Lantarki UV, dermoscopy.</em></strong>',
     instructionsTooLittle_skin: 'Maza, fata ja, me ke faruwa?',
     instructionsJustRight_skin:
       'Maza 25, tabo a fata ja na kwanaki 3. Ba a taɓa amfani da magani ko samun matsalar fata ba a baya. Fata na jin ciwo da kaikayi.',
     instructionsTooMuch_skin:
       "Wannan mutum ya zo asibiti a yau. Ya shigo cikin gini da fata ja, yanzu yana tsammanin abincin da ya ci yana shafar fatarsa. Na ga ruwa da gefuna ja. Yana buƙatar taimako—mutum mai tsawo, fata ja, damuwa game da launi da kumburi. Yana cewa, 'Menene wannan?'",
-    instructionsAdditionalQuery_skin: 'Alan yana amsa tambayoyi game da koyon fata: Menene Eczema? Ta yaya zan ga tsarin pigment?',
+    instructionsAdditionalQuery_skin:
+      'Alan yana amsa tambayoyi game da koyon fata: Menene Eczema? Ta yaya zan ga tsarin pigment?',
     instructionsLabelTooLittle: 'Kaɗan sosai',
     instructionsLabelJustRight: 'Daidai',
     instructionsLabelTooMuch: 'Yawa sosai',
@@ -2972,11 +3111,11 @@ export const translations = {
     contactPlaceholder: 'Tuntuɓi (email/phone)',
     acceptButton: 'Amince',
 
-    images: "Hotuna",
-    help: "Taimako",
-    screenshot: "Daukar hoton allo",
-    refer: "Mika",
-    comingSoon: "Zuwa nan ba da jimawa ba...",
+    images: 'Hotuna',
+    help: 'Taimako',
+    screenshot: 'Daukar hoton allo',
+    refer: 'Mika',
+    comingSoon: 'Zuwa nan ba da jimawa ba...',
   },
 
   // 15) Yoruba - yo
@@ -3035,11 +3174,13 @@ export const translations = {
     passwordPlaceholder: 'Ọ̀rọ̀ Àgbàrá',
     passwordErrorMsg: 'Ọ̀rọ̀ àgbàrá rẹ kò tọ́. Jọwọ tún gbìyànjú',
     passwordSubmitBtn: 'Fẹ̀yìn',
-    noCodeLine: "Kò sí kóòdù tàbí kòòdù ti kò tọ́nà? Pe wá <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>níbìí</a>",
+    noCodeLine:
+      "Kò sí kóòdù tàbí kòòdù ti kò tọ́nà? Pe wá <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>níbìí</a>",
 
     eyeMarqueeLine1: 'Kí ni glaucoma?',
     eyeMarqueeLine2: 'Báwo ni mo se lè rí disiki ojú (optic disc) pẹ̀lú Arclight?',
-    eyeMarqueeLine3: 'Ọkùnrin ọ̀dún 25, ojú pupa fún ọjọ́ mẹ́ta, ibẹ̀rù ìmólẹ̀, dídín nínú ìran kára díẹ̀',
+    eyeMarqueeLine3:
+      'Ọkùnrin ọ̀dún 25, ojú pupa fún ọjọ́ mẹ́ta, ibẹ̀rù ìmólẹ̀, dídín nínú ìran kára díẹ̀',
     eyeMarqueeLine4: 'Sọ fún mi nípa iritis',
     eyeMarqueeLine5: 'Ṣé mo gbọ́dọ̀ ránfihàn kátarákìtì tó wá láti ìbí lówọ́ lásápá?',
     eyeMarqueeLine6: 'Obìnrin 65, ojú ò lẹ́, kò lóptiki. Apá iwájú dáa, lens ti dàbí fùyúfùyú',
@@ -3050,14 +3191,15 @@ export const translations = {
     earMarqueeLine3: 'Ọkùnrin ọmọ 16, irora ni òfòfò etí fún ọjọ́ méjì, inú rírà, gbọ́ran dáa',
     earMarqueeLine4: 'Sọ fún mi nípa syringing (fífọ etí)',
     earMarqueeLine5: 'Ṣé mo gbọ́dọ̀ ránfihàn mastoiditis lásápá?',
-    earMarqueeLine6: 'Ọkùnrin 73, gbọ́ran ò dán mọ́rán. Kò le rí ọ̀nà etí dáadáa, mo rí amún etí nìkan',
+    earMarqueeLine6:
+      'Ọkùnrin 73, gbọ́ran ò dán mọ́rán. Kò le rí ọ̀nà etí dáadáa, mo rí amún etí nìkan',
     earMarqueeLine7: 'Ọmọdé kò dahun sí ohùn. Ó ti péjù láti oṣù kan sí mìíràn',
 
     userInfoTitle: 'Alaye Olumulo',
     userName: 'Orukọ',
     userContact: 'Kan si',
     userRole: 'Iṣẹ',
-    userAimsPopupLabel: "Èrò",
+    userAimsPopupLabel: 'Èrò',
     // userAims: 'Ero',
     userLatLong: 'Lat & Long',
     userArea: 'Agbegbe',
@@ -3065,7 +3207,8 @@ export const translations = {
     userVersion: 'Iṣẹ́',
     userDateTime: 'Ọjọ & Àkókò',
     geolocationButton: 'Ìpò',
-    geoInfoText: 'Títẹ "Ìpò" yóò ṣàfihàn ipo tó péye (latitude/longitude). Èyí yóò ràn é lọwọ láti fúnni ní ìtọ́nisọ́na àti àṣàyàn tó dáa.',
+    geoInfoText:
+      'Títẹ "Ìpò" yóò ṣàfihàn ipo tó péye (latitude/longitude). Èyí yóò ràn é lọwọ láti fúnni ní ìtọ́nisọ́na àti àṣàyàn tó dáa.',
 
     pageTitle_howToExamineEye: 'Bá a ṣe ń ṣàyẹ̀wò ojú',
     frontOfEyeHeading: 'Ìpínlẹ̀ ojú tó wà níwájú',
@@ -3095,7 +3238,8 @@ export const translations = {
 
     pageTitle_howToExamineSkin: 'Bá a ṣe ń ṣàyẹ̀wò àwọ̀ ara',
     generalObservationHeading: 'Ìfihàn Gbogbogbo',
-    generalObservationText: 'Ṣàyẹ̀wò àrà, <em>àtúnṣe àwọ̀</em> àti pínpín<br>Fọwọ́pọ̀n fún àfihàn, ìgbona tàbí ìrora',
+    generalObservationText:
+      'Ṣàyẹ̀wò àrà, <em>àtúnṣe àwọ̀</em> àti pínpín<br>Fọwọ́pọ̀n fún àfihàn, ìgbona tàbí ìrora',
     uvLightHeading: 'Imọlẹ UV (Wood’s)',
     uvLightText:
       "Ní yara tí kò ní ìmọ́lẹ̀, ṣàyẹ̀wò fun imúlòlùfẹ́ fíìkúsé:<br><span style='color:teal;'>tinea (búlúu-tító)</span>, <span style='color:#FF7F50;'>pityriasis versicolor (osàn-òràngùn)</span>, <span style='color:#FF4040;'>erythrasma (pupa-korali)</span>, <span style='color:blue;'>vitiligo (búlúu-fúnfun)</span>, <span style='color:orange;'>acne (òràngùn-pupa)</span>, <span style='color:#BFEFFF;'>head lice nits (pale-blue)</span>",
@@ -3126,28 +3270,35 @@ export const translations = {
     instructionsPatientDetail4: 'ọmọ ọdún, ìbálòpọ̀, oogun',
     instructionsUseArclight_default: 'Lo Arclight: ojú iwájú, reflex fundal, ẹ̀yìn ojú.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Lo Arclight:</strong> <strong><em>ojú iwájú, reflex fundal, ẹ̀yìn ojú.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Lo Arclight:</strong> <strong><em>ojú iwájú, reflex fundal, ẹ̀yìn ojú.</em></strong>',
     instructionsTooLittle_eye: 'ọkùnrin, ojú pupa, kí ni?',
     instructionsJustRight_eye:
       'Ọkùnrin 25 ọdún, ojú pupa fún ọjọ́ mẹ́ta. Kò sí oogun tàbí iṣòro ojú ṣáájú. Ìrora, omi ojú, àmì funfun lórí kornea. Pupil dáadáa, àwòrán 6/12 àti 6/6 ní ojú kejì.',
     instructionsTooMuch_eye:
       "Ọkùnrin yìí dé ilé ìwòsàn lónìí. Ó wọ ilé pẹ̀lú ọkọ ayọ́kẹ́lẹ́, ojú rẹ̀ sì pupa, ó sì rántí pé oúnjẹ tí ó jẹ̀ ń nípa lórí ojú rẹ̀. Mo rí omi àti etí pupa. Ó fẹ́ ìrànlọ́wọ́—ọkùnrin gígùn, ojú tó ń rọ̀, ní ìbànújẹ nípa kornea àti ìrora. Ó béèrè pé, 'Kí ni èyí?'",
-    instructionsAdditionalQuery_eye: 'Alan tún dáhùn ìbéèrè nípa ẹ̀kọ́ ojú: Kí ni Iritis? Báwo ni mà á ṣe rí retina?',
+    instructionsAdditionalQuery_eye:
+      'Alan tún dáhùn ìbéèrè nípa ẹ̀kọ́ ojú: Kí ni Iritis? Báwo ni mà á ṣe rí retina?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Lo Arclight:</strong> <strong><em>gbógbo etí, canal, drum.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Lo Arclight:</strong> <strong><em>gbógbo etí, canal, drum.</em></strong>',
     instructionsTooLittle_ear: 'ọkùnrin, etí pupa, kí ni?',
     instructionsJustRight_ear:
       'Ọkùnrin 25 ọdún, etí pupa fún ọjọ́ mẹ́ta. Kò sí oogun tàbí iṣòro etí ṣáájú. Ìrora, ìtú omi etí. Drum pupa, ìgbọ́ran kò dáadáa ní etí tó ní ìṣòro ṣùgbọ́n dáadáa ní etí kejì.',
     instructionsTooMuch_ear:
       "Ọkùnrin yìí dé ilé ìwòsàn lónìí. Ó wọ ilé pẹ̀lú etí pupa, ó sì rántí pé oúnjẹ tí ó jẹ̀ ń nípa lórí etí rẹ̀. Mo rí etí tí ń rọ̀ àti etí pupa. Ó fẹ́ ìrànlọ́wọ́—ọkùnrin gígùn, etí tó ń rọ̀, ní ìbànújẹ nípa ìgbọ́ran àti ìrora. Ó béèrè pé, 'Kí ni èyí?'",
-    instructionsAdditionalQuery_ear: 'Alan tún dáhùn ìbéèrè nípa ẹ̀kọ́ etí: Kí ni Otitis Media? Báwo ni mà á ṣe mọ́ etí?',
+    instructionsAdditionalQuery_ear:
+      'Alan tún dáhùn ìbéèrè nípa ẹ̀kọ́ etí: Kí ni Otitis Media? Báwo ni mà á ṣe mọ́ etí?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Lo Arclight:</strong> <strong><em>Lumière UV, dermoscopy.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Lo Arclight:</strong> <strong><em>Lumière UV, dermoscopy.</em></strong>',
     instructionsTooLittle_skin: 'ọkùnrin, àwọ̀ pupa, kí ni?',
-    instructionsJustRight_skin: 'Ọkùnrin 25 ọdún, àwọ̀ pupa lórí apá fún ọjọ́ mẹ́ta. Kò sí oogun tàbí iṣòro àwọ̀ ṣáájú. Àwọ̀ ní ìrora àti ìfarapa.',
+    instructionsJustRight_skin:
+      'Ọkùnrin 25 ọdún, àwọ̀ pupa lórí apá fún ọjọ́ mẹ́ta. Kò sí oogun tàbí iṣòro àwọ̀ ṣáájú. Àwọ̀ ní ìrora àti ìfarapa.',
     instructionsTooMuch_skin:
       "Ọkùnrin yìí dé ilé ìwòsàn lónìí. Ó wọ ilé pẹ̀lú àwọ̀ pupa, ó sì rántí pé oúnjẹ tí ó jẹ̀ ń nípa lórí àwọ̀ rẹ̀. Mo rí omi àti etí pupa. Ó fẹ́ ìrànlọ́wọ́—ọkùnrin gígùn, àwọ̀ pupa, ní ìbànújẹ nípa pigment àti ìfarapa. Ó béèrè pé, 'Kí ni èyí?'",
-    instructionsAdditionalQuery_skin: 'Alan tún dáhùn ìbéèrè nípa ẹ̀kọ́ àwọ̀: Kí ni Eczema? Báwo ni mà á ṣe rí réseau pigment ?',
+    instructionsAdditionalQuery_skin:
+      'Alan tún dáhùn ìbéèrè nípa ẹ̀kọ́ àwọ̀: Kí ni Eczema? Báwo ni mà á ṣe rí réseau pigment ?',
     instructionsLabelTooLittle: 'Kéré jù',
     instructionsLabelJustRight: 'Dáadáa',
     instructionsLabelTooMuch: 'Púpò jù',
@@ -3182,11 +3333,11 @@ export const translations = {
     contactPlaceholder: 'Ìbánisọ̀rọ̀ (imeèlì/foònù)',
     acceptButton: 'Gba',
 
-    images: "Aworan",
-    help: "Iranlowo",
-    screenshot: "Sikirinshọt",
-    refer: "Tunlo",
-    comingSoon: "Nbo laipẹ...",
+    images: 'Aworan',
+    help: 'Iranlowo',
+    screenshot: 'Sikirinshọt',
+    refer: 'Tunlo',
+    comingSoon: 'Nbo laipẹ...',
   },
 
   // 16) Igbo - ig
@@ -3253,7 +3404,8 @@ export const translations = {
     eyeMarqueeLine3: "Nwoke dị afọ 25, anya uhie ruo ụbọchị 3, ịsụfu ìhè, ntakịrị belata n'anya",
     eyeMarqueeLine4: 'Gwa m gbasara iritis',
     eyeMarqueeLine5: 'M ga-eziga cataract amuru ya site na ime ime ozugbo?',
-    eyeMarqueeLine6: "Nwanyi dị afọ 65, anya dọwara, enweghị iko. Oke anya n'ihu dị mma, lens na-egbuke egbuke",
+    eyeMarqueeLine6:
+      "Nwanyi dị afọ 65, anya dọwara, enweghị iko. Oke anya n'ihu dị mma, lens na-egbuke egbuke",
     eyeMarqueeLine7: 'Nne na-echegbu onwe ya: nwa nwere pupil ọcha, anaghị ahụ anya na anya ahụ',
 
     earMarqueeLine1: 'Kedu ihe otitis media?',
@@ -3261,14 +3413,15 @@ export const translations = {
     earMarqueeLine3: "Okorobịa dị afọ 16, nkwara n'ututu ntị ụbọchị 2, itch, inụ nti ọma",
     earMarqueeLine4: 'Gwa m gbasara syringing (icha ntị)',
     earMarqueeLine5: 'M ga-eziga mastoiditis ozugbo?',
-    earMarqueeLine6: 'Nwoke dị afọ 73, inụ nti ya adịghị mma. A naghị ahụ ogbugbu ntị nke ọma. A na-ahụ wax ntị nikan',
+    earMarqueeLine6:
+      'Nwoke dị afọ 73, inụ nti ya adịghị mma. A naghị ahụ ogbugbu ntị nke ọma. A na-ahụ wax ntị nikan',
     earMarqueeLine7: 'Nwa ntị na-anaghị aza ụda. Owere ọnwa ole na ole',
 
     userInfoTitle: 'Ozi Onye Ọrụ',
     userName: 'Aha',
     userContact: 'Kekọrịta',
     userRole: 'Ọrụ',
-    userAimsPopupLabel: "Ebumnobi",
+    userAimsPopupLabel: 'Ebumnobi',
     // userAims: 'Ebumnobi',
     userLatLong: 'Lat & Long',
     userArea: 'Ebe',
@@ -3276,7 +3429,8 @@ export const translations = {
     userVersion: 'Nsụgharị',
     userDateTime: 'Ụbọchị & Oge',
     geolocationButton: 'Ọnọdụ',
-    geoInfoText: 'Ịpị "Ọnọdụ" ga-ekekọrịta ebe dị nkenke (latitude/longitude). Nke a ga-enyere aka inye nduzi na nhọrọ ka mma.',
+    geoInfoText:
+      'Ịpị "Ọnọdụ" ga-ekekọrịta ebe dị nkenke (latitude/longitude). Nke a ga-enyere aka inye nduzi na nhọrọ ka mma.',
 
     pageTitle_howToExamineEye: 'Otu esi ele anya',
     frontOfEyeHeading: "Ụdị Anya N'iru",
@@ -3306,7 +3460,8 @@ export const translations = {
 
     pageTitle_howToExamineSkin: 'Otu esi ele akpụkpọ anụ',
     generalObservationHeading: 'Nlele zuru oke',
-    generalObservationText: 'Lelee mkpụrụ, <em>ngbanwe agba</em> na nkesa<br>Tinye aka nwayọọ iji mata ọdịdị, okpomọkụ ma ọ bụ ntakịrị mgbu',
+    generalObservationText:
+      'Lelee mkpụrụ, <em>ngbanwe agba</em> na nkesa<br>Tinye aka nwayọọ iji mata ọdịdị, okpomọkụ ma ọ bụ ntakịrị mgbu',
     uvLightHeading: 'UV (Wood’s) ìhè',
     uvLightText:
       "Na ime ụlọ jụụ, lelee ìhè pụrụ iche:<br><span style='color:teal;'>tinea (acha anụnụ anụnụ-acha akwụkwọ ndụ)</span>, <span style='color:#FF7F50;'>pityriasis versicolor (acha ọlaọcha-acha oroma)</span>, <span style='color:#FF4040;'>erythrasma (acha uhie coral)</span>, <span style='color:blue;'>vitiligo (acha anụnụ anụnụ-acha ọcha)</span>, <span style='color:orange;'>acne (acha oroma-acha uhie)</span>, <span style='color:#BFEFFF;'>head lice nits (acha ọcha-acha anụnụ anụnụ)</span>",
@@ -3337,29 +3492,35 @@ export const translations = {
     instructionsPatientDetail4: 'afọ, okike, ọgwụ',
     instructionsUseArclight_default: 'Jiri Arclight: ihu, fundal reflex, azụ nke anya.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Jiri Arclight:</strong> <strong><em>ihu, fundal reflex, azụ nke anya.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Jiri Arclight:</strong> <strong><em>ihu, fundal reflex, azụ nke anya.</em></strong>',
     instructionsTooLittle_eye: 'ọkànwà, anya ọbara, gịnị?',
     instructionsJustRight_eye:
       'Ọkànwà afọ 25, anya ọbara ruo ụbọchị 3. Enweghị ọgwụ ma ọ bụ nsogbu anya gara aga. Ọrịa, mmiri n’anya, otu akara ọcha na kornea. Pupil dị mma, ịhụ anya 6/12 na 6/6 n’aka nke ọzọ.',
     instructionsTooMuch_eye:
       "Ọkànwà a bịara ụlọ ọgwụ taa. Ọ na-anya ụgbọ ala bịa n’ime ụlọ, anya ya bụ ọbara, ugbu a ọ chere na nri ọ riri na-emetụta anya ya. Ahụrụ m mmiri na nkịta ọbara. Ọ chọrọ enyemaka—ọkànwà dị elu, anya mmiri, echegbu onwe ya gbasara kornea na ọrịa. Ọ jụrụ, 'Gịnị bụ nke a?'",
-    instructionsAdditionalQuery_eye: 'Alan na-aza ajụjụ gbasara mmụta anya: Gịnị bụ Iritis? Kedu ka m ga-esi hụ retina?',
+    instructionsAdditionalQuery_eye:
+      'Alan na-aza ajụjụ gbasara mmụta anya: Gịnị bụ Iritis? Kedu ka m ga-esi hụ retina?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Jiri Arclight:</strong> <strong><em>gburugburu ntị, canal, tympan.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Jiri Arclight:</strong> <strong><em>gburugburu ntị, canal, tympan.</em></strong>',
     instructionsTooLittle_ear: 'ọkànwà, ntị ọbara, gịnị?',
     instructionsJustRight_ear:
       'Ọkànwà afọ 25, ntị ọbara ruo ụbọchị 3. Enweghị ọgwụ ma ọ bụ nsogbu ntị gara aga. Ọrịa, ntị na-apụta mmiri. Tympan ọbara, ntị dara ada na otu ma dị mma na nke ọzọ.',
     instructionsTooMuch_ear:
       "Ọkànwà a bịara ụlọ ọgwụ taa. Ọ batara n’ime ụlọ na ntị ọbara, ugbu a ọ chere na nri ọ riri na-emetụta ntị ya. Ahụrụ m oghere na ntị ọbara. Ọ jụrụ, 'Gịnị bụ nke a?'",
-    instructionsAdditionalQuery_ear: 'Alan na-aza ajụjụ gbasara mmụta ntị: Gịnị bụ Otitis Media? Kedu ka m ga-esi sachaa ntị?',
+    instructionsAdditionalQuery_ear:
+      'Alan na-aza ajụjụ gbasara mmụta ntị: Gịnị bụ Otitis Media? Kedu ka m ga-esi sachaa ntị?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Jiri Arclight:</strong> <strong><em>UV ìhè, dermoscopy.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Jiri Arclight:</strong> <strong><em>UV ìhè, dermoscopy.</em></strong>',
     instructionsTooLittle_skin: 'ọkànwà, akpụkpọ anụ ọbara, gịnị?',
     instructionsJustRight_skin:
       'Ọkànwà afọ 25, ebe akpụkpọ anụ ọbara ruo ụbọchị 3. Enweghị ọgwụ ma ọ bụ nsogbu akpụkpọ anụ gara aga. Akpụkpọ anụ na-ewe iwe ma na-eme mkpọtụ.',
     instructionsTooMuch_skin:
       "Ọkànwà a bịara ụlọ ọgwụ taa. Ọ batara n’ime ụlọ na akpụkpọ anụ ọbara, ugbu a ọ chere na nri ọ riri na-emetụta akpụkpọ ya. Ahụrụ m mmiri na ntakịrị ogwe. Ọ jụrụ, 'Gịnị bụ nke a?'",
-    instructionsAdditionalQuery_skin: 'Alan na-aza ajụjụ gbasara mmụta akpụkpọ: Gịnị bụ Eczema? Kedu ka m ga-esi hụ pigment network?',
+    instructionsAdditionalQuery_skin:
+      'Alan na-aza ajụjụ gbasara mmụta akpụkpọ: Gịnị bụ Eczema? Kedu ka m ga-esi hụ pigment network?',
     instructionsLabelTooLittle: 'Obere nke ukwuu',
     instructionsLabelJustRight: 'Zuru oke',
     instructionsLabelTooMuch: 'Karịrị oke',
@@ -3394,11 +3555,11 @@ export const translations = {
     contactPlaceholder: 'Kpọtụrụ (email/ekwentị)',
     acceptButton: 'Nabata',
 
-    images: "Ihe oyiyi",
-    help: "Enyemaka",
-    screenshot: "Screenshot",
-    refer: "Ziga",
-    comingSoon: "Na-abịa ngwa ngwa...",
+    images: 'Ihe oyiyi',
+    help: 'Enyemaka',
+    screenshot: 'Screenshot',
+    refer: 'Ziga',
+    comingSoon: 'Na-abịa ngwa ngwa...',
   },
 
   // 17) Zulu - zu
@@ -3462,25 +3623,29 @@ export const translations = {
 
     eyeMarqueeLine1: 'Uyini i-glaucoma?',
     eyeMarqueeLine2: 'Ngingayibona kanjani i-optic disc ngisebenzisa i-Arclight?',
-    eyeMarqueeLine3: 'Indoda eneminyaka engu-25, iso elibomvu, izinsuku ezi-3, ukwesaba ukukhanya, imboni isehla kancane',
+    eyeMarqueeLine3:
+      'Indoda eneminyaka engu-25, iso elibomvu, izinsuku ezi-3, ukwesaba ukukhanya, imboni isehla kancane',
     eyeMarqueeLine4: 'Ngitshele nge-iritis',
     eyeMarqueeLine5: 'Ngabe kumele ngidlulisele i-cataract yezelamani ngokushesha?',
-    eyeMarqueeLine6: 'Owesifazane oneminyaka engu-65, ukubona kuncane, akagqoki amagalasi. Ingaphambili ilungile, ilensi ibemdaka',
+    eyeMarqueeLine6:
+      'Owesifazane oneminyaka engu-65, ukubona kuncane, akagqoki amagalasi. Ingaphambili ilungile, ilensi ibemdaka',
     eyeMarqueeLine7: 'Umama ukhathazekile ngomntwana onompintshe omhlophe, akaboni kulelo iso',
 
     earMarqueeLine1: 'Yini i-otitis media?',
     earMarqueeLine2: 'Ngingabona i-tympanic membrane nge-Arclight yami?',
-    earMarqueeLine3: 'Insizwa eneminyaka engu-16, ubuhlungu epuletini izinsuku ezi-2, ukuqwasha, ukuzwa kulungile',
+    earMarqueeLine3:
+      'Insizwa eneminyaka engu-16, ubuhlungu epuletini izinsuku ezi-2, ukuqwasha, ukuzwa kulungile',
     earMarqueeLine4: 'Ngitshele nge-syringing (ukuhlanza indlebe)',
     earMarqueeLine5: 'Ngabe kumele ngidlulisele i-mastoiditis ngokushesha?',
-    earMarqueeLine6: 'Indoda eneminyaka engu-73, ukuzwa kuncane. Inzila yendlebe ayibonakali kahle, ngibona umsizi wewax kuphela',
+    earMarqueeLine6:
+      'Indoda eneminyaka engu-73, ukuzwa kuncane. Inzila yendlebe ayibonakali kahle, ngibona umsizi wewax kuphela',
     earMarqueeLine7: 'Ingane ayiphenduli emsindweni. Sekuphele izinyanga',
 
     userInfoTitle: 'Ulwazi Lomsebenzisi',
     userName: 'Igama',
     userContact: 'Imininingwane Yokuxhumana',
     userRole: 'Indima',
-    userAimsPopupLabel: "Izinhloso",
+    userAimsPopupLabel: 'Izinhloso',
     // userAims: 'Izinhloso',
     userLatLong: 'Ubude no Ububanzi',
     userArea: 'Indawo',
@@ -3551,15 +3716,18 @@ export const translations = {
     instructionsPatientDetail4: 'iminyaka, ubulili, imithi',
     instructionsUseArclight_default: 'Sebenzisa i-Arclight: phambili, fundal reflex, emuva kweso.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Sebenzisa i-Arclight:</strong> <strong><em>phambili, fundal reflex, emuva kweso.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Sebenzisa i-Arclight:</strong> <strong><em>phambili, fundal reflex, emuva kweso.</em></strong>',
     instructionsTooLittle_eye: 'indoda, iso elibomvu, kwenzekani?',
     instructionsJustRight_eye:
       'Indoda engu-25, iso elibomvu imihla emi-3. Ayikho imithi noma inkinga yamehlo ngaphambili. Ubuhlungu, ukuchama kwamehlo, iphuzu elimhlophe ku-cornea. Amapupile alungile, umbono 6/12 no-6/6 kwenye iso.',
     instructionsTooMuch_eye:
       "Le ndoda ingenile klinikhi namuhla. Iqhube imoto yangenela isakhiwo, iso layo libomvu, manje icabanga ukuthi ukudla okudliweyo kuyayithinta iso layo. Ngiyabona ukuchama kwamehlo nemiphetho ebomvu. Ifuna usizo—indoda ende, amehlombe amanzi, ekhathazekile nge-cornea nobuhlungu. Ithetha, 'Kuyini lokhu?'",
-    instructionsAdditionalQuery_eye: 'Alan uphendula imibuzo yokufundisa mayelana namehlo: Kuyini Iritis? Ngingayibona kanjani i-retina?',
+    instructionsAdditionalQuery_eye:
+      'Alan uphendula imibuzo yokufundisa mayelana namehlo: Kuyini Iritis? Ngingayibona kanjani i-retina?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Sebenzisa i-Arclight:</strong> <strong><em>jikeleza izindlebe, canal, drum.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Sebenzisa i-Arclight:</strong> <strong><em>jikeleza izindlebe, canal, drum.</em></strong>',
     instructionsTooLittle_ear: 'indoda, izindlebe ezibomvu, kwenzekani?',
     instructionsJustRight_ear:
       'Indoda engu-25, izindlebe ezibomvu imihla emi-3. Ayikho imithi noma inkinga yezindlebe ngaphambili. Ubuhlungu, ukukhipha okuthile ezindlebeni. Drum ibomvu, ukuzwa kuyancipha kwindlebe elibi kodwa kulungile kwelinye.',
@@ -3568,7 +3736,8 @@ export const translations = {
     instructionsAdditionalQuery_ear:
       'Alan uphendula imibuzo yokufundisa mayelana nezindlebe: Kuyini Otitis Media? Ngingazihlambulula kanjani izindlebe?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Sebenzisa i-Arclight:</strong> <strong><em>ukukhanya kwe-UV, dermoscopy.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Sebenzisa i-Arclight:</strong> <strong><em>ukukhanya kwe-UV, dermoscopy.</em></strong>',
     instructionsTooLittle_skin: 'indoda, isikhumba esibomvu, kwenzekani?',
     instructionsJustRight_skin:
       'Indoda engu-25, isikhumba esibomvu isiqeshwa imihla emi-3. Ayikho imithi noma inkinga yesikhumba ngaphambili. Isikhumba siyakhathala futhi siyacasuka.',
@@ -3610,11 +3779,11 @@ export const translations = {
     contactPlaceholder: 'Xhumana (imeyili/umakhalekhukhwini)',
     acceptButton: 'Yamukela',
 
-    images: "Izithombe",
-    help: "Usizo",
-    screenshot: "Isithombe-skrini",
-    refer: "Bhekisa",
-    comingSoon: "Kuze maduzane...",
+    images: 'Izithombe',
+    help: 'Usizo',
+    screenshot: 'Isithombe-skrini',
+    refer: 'Bhekisa',
+    comingSoon: 'Kuze maduzane...',
   },
 
   // 18) Amharic - am
@@ -3673,7 +3842,8 @@ export const translations = {
     passwordPlaceholder: 'ፓስወርድ',
     passwordErrorMsg: 'ፓስወርዱ አይገባም። እባክህ እንደገና ፍትሽ',
     passwordSubmitBtn: 'አስረክብ',
-    noCodeLine: "ኮድ የለም ወይም በተሳሳተ? ከኛ <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>እዚህ</a> ጋር ይግኙ",
+    noCodeLine:
+      "ኮድ የለም ወይም በተሳሳተ? ከኛ <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>እዚህ</a> ጋር ይግኙ",
 
     eyeMarqueeLine1: 'ግላውኮማ ምንድነው?',
     eyeMarqueeLine2: 'በArclight የአይን ወይን አካል (optic disc) እንዴት ማየት እችላለሁ?',
@@ -3695,7 +3865,7 @@ export const translations = {
     userName: 'ስም',
     userContact: 'የመገናኘት መረጃ',
     userRole: 'ተግባር',
-    userAimsPopupLabel: "ዓላማዎች",
+    userAimsPopupLabel: 'ዓላማዎች',
     // userAims: 'ዓላማዎች',
     userLatLong: 'Lat & Long',
     userArea: 'አካባቢ',
@@ -3703,7 +3873,8 @@ export const translations = {
     userVersion: 'ስሪት',
     userDateTime: 'ቀን & ሰዓት',
     geolocationButton: 'ቦታ መለኪያ',
-    geoInfoText: 'በ"ቦታ መለኪያ" ላይ በመጫን የትክክለኛ ቦታ (የርዝመ/የሰፊነት) ይጋራል። ይህም የተሻለ መምሪያና አማራጭ ስርዓት መስጠት ይረዳል።',
+    geoInfoText:
+      'በ"ቦታ መለኪያ" ላይ በመጫን የትክክለኛ ቦታ (የርዝመ/የሰፊነት) ይጋራል። ይህም የተሻለ መምሪያና አማራጭ ስርዓት መስጠት ይረዳል።',
 
     pageTitle_howToExamineEye: 'እንዴት ዓይን መፈተን እንደሚገባ',
     frontOfEyeHeading: 'የዓይን ፊት ክፍል',
@@ -3720,18 +3891,21 @@ export const translations = {
 
     pageTitle_howToExamineEar: 'እንዴት ጆሮን መፈተን እንደሚገባ',
     allAroundEarHeading: 'የጆሮ ዙሪያ',
-    allAroundEarText: 'ይፈትኑ: <em>ፒና, </em><em>ትራግስ, </em><em>ማስቶይድ</em> ለክብ, ስሜት ችግኝ ወይም ማስጠንቀቂያ<br>ፒናን በርካታ ዝርዝር ይንቀሳቀሱ እና ማንኛውንም ህመም ያሳዩ',
+    allAroundEarText:
+      'ይፈትኑ: <em>ፒና, </em><em>ትራግስ, </em><em>ማስቶይድ</em> ለክብ, ስሜት ችግኝ ወይም ማስጠንቀቂያ<br>ፒናን በርካታ ዝርዝር ይንቀሳቀሱ እና ማንኛውንም ህመም ያሳዩ',
     earCanalHeading: 'የጆሮ ትስስር',
     earCanalText:
       'ራስን ይጎዱ፣ <strong><u>Arclightን እንደ እቃ ተቆም ይያዙ</u></strong><br>ፒናን ለማየት ለሕዝብ (ታዋቂዎች) ወይም ለልጆች (ታውቂዎች) ወደ ላይ/ወደ ኋላ ይጫኑ<br>ስፔኩለም ያስገቡ (ታዋቂ: 4.5mm, ልጆች: 2.5mm)፣ ጸጉርን ይነጻሉ፣ ከሚያስፈልግ በሌላ በሙሉ ይቀየሩ<br>ይፈልጉ: <em>ጆሮ ስር,</em> <em>ቅርጸ ነጭ,</em> <em>በሽታ</em>',
     tympanicMembraneHeading: 'ጆሮ ጭንቅላት',
-    tympanicMembraneText: 'የማሌዎስ እጅ ይወቁ፣ የብርሃን ተመልከትና አቲክን ይለዩ<br>ማስታወቂያ: <em>ቀለም,</em> <em>ቦታ,</em> <em>ግልጽነት</em><br>ፍቺ ፣ ፍሳሽ ወይም ምልክት ይፈልጉ',
+    tympanicMembraneText:
+      'የማሌዎስ እጅ ይወቁ፣ የብርሃን ተመልከትና አቲክን ይለዩ<br>ማስታወቂያ: <em>ቀለም,</em> <em>ቦታ,</em> <em>ግልጽነት</em><br>ፍቺ ፣ ፍሳሽ ወይም ምልክት ይፈልጉ',
     additionalText_ear:
       "የጆሮዎን ጭንቅላት ያውቁ፦ ተፈጥሮ, <span style='color:red; font-weight:bold;'>ቀይ</span>, <span style='color:orange;'>ተነሳሽ</span>, <span style='color:green;'>ተቀንስ</span>, <span style='color:purple;'>ተፈታ</span><br>&gt;ተደጋጋሚ ተሞክሩ&lt;",
 
     pageTitle_howToExamineSkin: 'እንዴት የቆዳን መፈተን እንደሚገባ',
     generalObservationHeading: 'የጠቅላላ ትንታኔ',
-    generalObservationText: 'ቁስል እና <em>ቀለም ለውጦች</em> ያሳዩ፣ ተመን ይፈትኑ<br>በቀስተ ልብ ቆዳውን ይጭሩ ለቅርጸት፣ ሙቀት ወይም ስሜት ይረዱ',
+    generalObservationText:
+      'ቁስል እና <em>ቀለም ለውጦች</em> ያሳዩ፣ ተመን ይፈትኑ<br>በቀስተ ልብ ቆዳውን ይጭሩ ለቅርጸት፣ ሙቀት ወይም ስሜት ይረዱ',
     uvLightHeading: 'የUV (Wood’s) ብርሃን',
     uvLightText:
       "በጥቁር ክፍል ውስጥ የሚታየውን ፍሎሮሴንስ ይፈትኑ:<br><span style='color:teal;'>ቲኒያ (ሰማያዊ-ሰማያዊ)</span>, <span style='color:#FF7F50;'>ፒቲሪያሲስ ቨርሲኮለር (ብርቱ ብርቱ)</span>, <span style='color:#FF4040;'>ኤሪትራስማ (ወይዘሮ ቀይ)</span>, <span style='color:blue;'>ቪቲሊጎ (ሰማያዊ-ነጭ)</span>, <span style='color:orange;'>አክኔ (ብርቱ ቀይ)</span>, <span style='color:#BFEFFF;'>የራስ ሙቅ ነገር (ቀለም ቀለም)</span>",
@@ -3762,32 +3936,41 @@ export const translations = {
     instructionsPatientDetail4: 'እድሜ፣ ፆታ፣ መድሃኒት',
     instructionsUseArclight_default: 'Arclight ተጠቀሙ፡ ፊት፣ fundal reflex፣ የዓይን ዳር።',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Arclight ተጠቀሙ፡</strong> <strong><em>ፊት፣ fundal reflex፣ የዓይን ዳር።</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Arclight ተጠቀሙ፡</strong> <strong><em>ፊት፣ fundal reflex፣ የዓይን ዳር።</em></strong>',
     instructionsTooLittle_eye: 'ወንድ ሰው፣ ቀይ ዓይን፣ ምን ነው?',
-    instructionsJustRight_eye: 'ወንድ 25 ዓመት፣ ቀይ ዓይን ለ3 ቀናት። ቀደም ምንም መድሃኒት ወይም የዓይን ችግኝ አልነበረም። ህመም፣ ውሃ በዓይን፣ በኮርኔያ ላይ አንድ ነጭ ነጭ።',
+    instructionsJustRight_eye:
+      'ወንድ 25 ዓመት፣ ቀይ ዓይን ለ3 ቀናት። ቀደም ምንም መድሃኒት ወይም የዓይን ችግኝ አልነበረም። ህመም፣ ውሃ በዓይን፣ በኮርኔያ ላይ አንድ ነጭ ነጭ።',
     instructionsTooMuch_eye:
       'ይህ ወንድ ዛሬ ወደ ክሊኒክ መጣ። በመኪና ተንስቷ ህንፃ ውስጥ ገባ፣ ዓይኑ ቀይ ነው፣ እና እርሱ የተባለው ምግብ የሚተግበር እንደሆነ ያስባል። ውሃ እና ቀይ ጎኖች አሉ። እርሱ እርዳታ ይፈልጋል፤ ርዝመቱ ከፍ ያለ፣ ዓይኖቹ ውሃ ያሉ፣ ስለ ኮርኔያ እና ህመም ተጨንቀው ናቸው። እርሱ “ይህ ምንድነው?” ይላል።',
-    instructionsAdditionalQuery_eye: 'Alan ደግሞ ስለ ዓይን ትምህርት ጥያቄዎች ይሰጣል፡ Iritis ምንድነው? ራዕይን እንዴት እየተመለከተ እንደምታየው?',
+    instructionsAdditionalQuery_eye:
+      'Alan ደግሞ ስለ ዓይን ትምህርት ጥያቄዎች ይሰጣል፡ Iritis ምንድነው? ራዕይን እንዴት እየተመለከተ እንደምታየው?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Arclight ተጠቀሙ፡</strong> <strong><em>በሙሉ ዙሪያ የጆሮ፣ canal፣ tympan.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Arclight ተጠቀሙ፡</strong> <strong><em>በሙሉ ዙሪያ የጆሮ፣ canal፣ tympan.</em></strong>',
     instructionsTooLittle_ear: 'ወንድ ሰው፣ ጆሮ ቀይ፣ ምን ነው?',
-    instructionsJustRight_ear: 'ወንድ 25 ዓመት፣ ጆሮ ቀይ ለ3 ቀናት። ቀደም ምንም መድሃኒት ወይም ጆሮ ችግኝ አልነበረም። ህመም፣ የጆሮ ውሃ፣ ቀይ tympan፣ ስሰም በጭንቅላት ዝቅ ነው ግን በሌላ ጆሮ ጥሩ ነው።',
+    instructionsJustRight_ear:
+      'ወንድ 25 ዓመት፣ ጆሮ ቀይ ለ3 ቀናት። ቀደም ምንም መድሃኒት ወይም ጆሮ ችግኝ አልነበረም። ህመም፣ የጆሮ ውሃ፣ ቀይ tympan፣ ስሰም በጭንቅላት ዝቅ ነው ግን በሌላ ጆሮ ጥሩ ነው።',
     instructionsTooMuch_ear:
       'ይህ ወንድ ዛሬ ወደ ክሊኒክ መጣ። በመኪና ተንስቷ ህንፃ ውስጥ ገባ፣ ጆሮዎቹ ቀይ ናቸው፣ እና እርሱ የተባለው ምግብ ጆሮዎቹን እንደሚተግበር ያስባል። እኔ የጆሮ ውሃን እና ቀይ ጎኖችን እቃለሁ። እርሱ እርዳታ ይፈልጋል፤ ርዝመቱ ከፍ ያለ፣ ጆሮ ውሃ ያሉ፣ ስለ ስሰም እና ህመም ተጨንቀው ናቸው። እርሱ “ይህ ምንድነው?” ይላል።',
-    instructionsAdditionalQuery_ear: 'Alan ደግሞ ስለ ጆሮ ትምህርት ጥያቄዎች ይሰጣል፡ Otitis Media ምንድነው? እንዴት እንደምታሰጥ ጆሮ?',
+    instructionsAdditionalQuery_ear:
+      'Alan ደግሞ ስለ ጆሮ ትምህርት ጥያቄዎች ይሰጣል፡ Otitis Media ምንድነው? እንዴት እንደምታሰጥ ጆሮ?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Arclight ተጠቀሙ፡</strong> <strong><em>UV ብርሃን፣ dermoscopy.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Arclight ተጠቀሙ፡</strong> <strong><em>UV ብርሃን፣ dermoscopy.</em></strong>',
     instructionsTooLittle_skin: 'ወንድ ሰው፣ ቆዳ ቀይ፣ ምን ነው?',
     instructionsJustRight_skin: 'ወንድ 25 ዓመት፣ ቆዳ ቀይ ቦታ 3 ቀናት። ቀደም ምንም መድሃኒት ወይም ቆዳ ችግኝ አልነበረም።',
     instructionsTooMuch_skin:
       'ይህ ወንድ ዛሬ ወደ ክሊኒክ መጣ። በመኪና ተንስቷ ህንፃ ውስጥ ገባ፣ ቆዳው ቀይ ነው፣ እና እርሱ የተባለው ምግብ ቆዳውን እንደሚተግበር ያስባል። እኔ ውሃን እና ቀይ ጎኖችን እቃለሁ። እርሱ እርዳታ ይፈልጋል፤ ርዝመቱ ከፍ ያለ፣ ቆዳ ቀይ ናቸው፣ ስለ pigment እና እሳት ተጨንቀው ናቸው። እርሱ “ይህ ምንድነው?” ይላል።',
-    instructionsAdditionalQuery_skin: 'Alan ደግሞ ስለ ቆዳ ትምህርት ጥያቄዎች ይሰጣል፡ Eczema ምንድነው? እንዴት እንደምታሰጥ network ya pigment?',
+    instructionsAdditionalQuery_skin:
+      'Alan ደግሞ ስለ ቆዳ ትምህርት ጥያቄዎች ይሰጣል፡ Eczema ምንድነው? እንዴት እንደምታሰጥ network ya pigment?',
     instructionsLabelTooLittle: 'በጣም ትንሽ',
     instructionsLabelJustRight: 'በትክክል',
     instructionsLabelTooMuch: 'በጣም ብዙ',
 
     // --- Onboarding Page Translations ---
-    instructionText: 'Alan የአይ፣ ጆሮ እና ቆዳ ምርመራ አስተዳደር ነው፣ ለተማሪዎች እና ለበጊዜ ብቻ የሚታዩ ክስተቶች። እባክዎ ግልጽ ይፃፉ ወይም ይናገሩ፣ እና ስም ወይም ዝርዝሮችን አትገልጹ።',
+    instructionText:
+      'Alan የአይ፣ ጆሮ እና ቆዳ ምርመራ አስተዳደር ነው፣ ለተማሪዎች እና ለበጊዜ ብቻ የሚታዩ ክስተቶች። እባክዎ ግልጽ ይፃፉ ወይም ይናገሩ፣ እና ስም ወይም ዝርዝሮችን አትገልጹ።',
     goodLuck: 'ሞገስ ይሁን!',
     namePlaceholder: 'ስም',
     // rolePlaceholder: 'ሚና',
@@ -3815,11 +3998,11 @@ export const translations = {
     contactPlaceholder: 'እውቅ (ኢሜል/ስልክ)',
     acceptButton: 'ተቀበል',
 
-    images: "ሥዕሎች",
-    help: "እርዳታ",
-    screenshot: "Screenshot",
-    refer: "አስተላለፍ",
-    comingSoon: "በቅርቡ...",
+    images: 'ሥዕሎች',
+    help: 'እርዳታ',
+    screenshot: 'Screenshot',
+    refer: 'አስተላለፍ',
+    comingSoon: 'በቅርቡ...',
   },
 
   // 19) Shona - sn
@@ -3878,29 +4061,34 @@ export const translations = {
     passwordPlaceholder: 'Password',
     passwordErrorMsg: 'Password haina kunaka. Edzazve',
     passwordSubmitBtn: 'Tumira',
-    noCodeLine: "Hapana kodhi kana yakarasha? Taura nesu <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>pano</a>",
+    noCodeLine:
+      "Hapana kodhi kana yakarasha? Taura nesu <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>pano</a>",
 
     eyeMarqueeLine1: 'Chii chinonzi glaucoma?',
     eyeMarqueeLine2: 'Ndingawona sei disiki reziso (optic disc) neArclight?',
-    eyeMarqueeLine3: 'Murume ane makore 25, ziso dzvuku mazuva 3, kutya chiedza, kuona kwaderera zvishoma',
+    eyeMarqueeLine3:
+      'Murume ane makore 25, ziso dzvuku mazuva 3, kutya chiedza, kuona kwaderera zvishoma',
     eyeMarqueeLine4: 'Ndiudze nezve iritis',
     eyeMarqueeLine5: 'Ndoda here kutumira congenital cataract nekukasika?',
-    eyeMarqueeLine6: 'Mukadzi ane makore 65, kuona kusina kusimba, haashandise magirazi. Kumberi kwakanaka, lens yakatsvukuruka',
+    eyeMarqueeLine6:
+      'Mukadzi ane makore 65, kuona kusina kusimba, haashandise magirazi. Kumberi kwakanaka, lens yakatsvukuruka',
     eyeMarqueeLine7: 'Amai vanoshushikana: mucheche ane mboni chena, haone pachiso ichocho',
 
     earMarqueeLine1: 'Chii chinonzi otitis media?',
     earMarqueeLine2: 'Ndinokwanisa kuona guvhu rezeve (tympanic membrane) neArclight yangu here?',
-    earMarqueeLine3: 'Mukomana ane makore 16, nzeve inorwadza kwema2 days, kuzara, kunzwa kwakanaka',
+    earMarqueeLine3:
+      'Mukomana ane makore 16, nzeve inorwadza kwema2 days, kuzara, kunzwa kwakanaka',
     earMarqueeLine4: 'Ndipakurire nezve syringing (kuchenesa nzeve)',
     earMarqueeLine5: 'Ndoda here kukurumidza kutumira mastoiditis?',
-    earMarqueeLine6: 'Murume ane makore 73, kunzwa kushoma. Chiteshi chenzeve hachioneki zvakanaka, ndinoona wakisi chete',
+    earMarqueeLine6:
+      'Murume ane makore 73, kunzwa kushoma. Chiteshi chenzeve hachioneki zvakanaka, ndinoona wakisi chete',
     earMarqueeLine7: 'Mucheche haapindure pakunzwa ruzha. Kwave nemwedzi yakati wandei',
 
     userInfoTitle: 'Ruzivo rweMushandisi',
     userName: 'Zita',
     userContact: 'Kubata',
     userRole: 'Basa',
-    userAimsPopupLabel: "Zvinangwa",
+    userAimsPopupLabel: 'Zvinangwa',
     // userAims: 'Zvinangwa',
     userLatLong: 'Lat & Long',
     userArea: 'Nzvimbo',
@@ -3932,13 +4120,15 @@ export const translations = {
     earCanalText:
       'Kakavadza musoro, <strong><u>batidza Arclight senge chinyorwa</u></strong><br>Dhonza pinna kumusoro/kuseri (kuvanhu vakuru) kana kuenda pasi/kuseri (kuvana)<br>Pinza speculum (4.5mm yevakuru, 2.5mm yevana), dzima ntutu, shandura kana zvichidiwa<br>Ongorora: <em>kupera kwewaxa,</em> <em>zvisaririra,</em> <em>hutachiona</em>',
     tympanicMembraneHeading: 'Membranisi yeNzeve',
-    tympanicMembraneText: 'Ziva mbira ya malleus, chiedza chinoratidza, attic<br>Ongorora: <em>ruvara</em>, <em>nzvimbo</em>, <em>kujeka</em><br>Tarisa kuboora, mvura kana mavanga',
+    tympanicMembraneText:
+      'Ziva mbira ya malleus, chiedza chinoratidza, attic<br>Ongorora: <em>ruvara</em>, <em>nzvimbo</em>, <em>kujeka</em><br>Tarisa kuboora, mvura kana mavanga',
     additionalText_ear:
       "Ziva maTM ako: echinyakare, <span style='color:red; font-weight:bold;'>dzvuku</span>, <span style='color:orange;'>kuwedzera</span>, <span style='color:green;'>kudzorerwa</span>, <span style='color:purple;'>kupwanya</span><br>&gt;Dzidzira kazhinji&lt;",
 
     pageTitle_howToExamineSkin: 'Maitiro ekuongorora ganda',
     generalObservationHeading: 'Kuongorora kwakazara',
-    generalObservationText: 'Tarisa mapundu, <em>shanduko dzemavara</em> uye kugoverwa<br>Nyatso pfugama kuti unzwe kusimba, kupisa kana kurwadziwa',
+    generalObservationText:
+      'Tarisa mapundu, <em>shanduko dzemavara</em> uye kugoverwa<br>Nyatso pfugama kuti unzwe kusimba, kupisa kana kurwadziwa',
     uvLightHeading: 'UV (Wood’s) mwenje',
     uvLightText:
       "Mumba rakadzikama, tarisa kuoneka kwe fluorescence:<br><span style='color:teal;'>tinea (bhuruu-nesvibira)</span>, <span style='color:#FF7F50;'>pityriasis versicolor (orenji-copper)</span>, <span style='color:#FF4040;'>erythrasma (ruvara rwecoral)</span>, <span style='color:blue;'>vitiligo (bhuruu- chena)</span>, <span style='color:orange;'>acne (orenji-ruvara)</span>, <span style='color:#BFEFFF;'>head lice nits (bhuruu-pale)</span>",
@@ -3967,31 +4157,38 @@ export const translations = {
     instructionsPatientDetail2: 'zvaunoona',
     instructionsPatientDetail3: 'kuona uye mapupil',
     instructionsPatientDetail4: 'zera, bonde, mushonga',
-    instructionsUseArclight_default: 'Shandisa Arclight: pamberi, fundal reflex, kumashure kwemaziso.',
+    instructionsUseArclight_default:
+      'Shandisa Arclight: pamberi, fundal reflex, kumashure kwemaziso.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Shandisa Arclight:</strong> <strong><em>pamberi, fundal reflex, kumashure kwemaziso.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Shandisa Arclight:</strong> <strong><em>pamberi, fundal reflex, kumashure kwemaziso.</em></strong>',
     instructionsTooLittle_eye: 'murume, maziso matsvuku, chii?',
     instructionsJustRight_eye:
       'Murume ane makore 25, maziso matsvuku kwemazuva 3. Hapana mushonga kana dambudziko remaziso kare. Kurwadziwa, kuchema kwemaziso, dot chena pa cornea. Mapupil akarongeka, kuona 6/12 uye 6/6 kune rimwe.',
     instructionsTooMuch_eye:
       "Murume uyu akasvika kukiriniki nhasi. Akapinda mudzimba achityaira, maziso ake matsvuku, iye anofunga kuti chikafu chaadya chiri kukanganisa maziso ake. Ndiri kuona kuchema kwemaziso uye mipendero matsvuku. Anoda rubatsiro—murume murefu, maziso anochema, akatya nezve cornea uye kurwadziwa. Anobvunza, 'Chii ichi?'",
-    instructionsAdditionalQuery_eye: 'Alan anopindura mibvunzo yekudzidzisa nezvemaonero: Chii chinonzi Iritis? Ndingaona sei retina?',
+    instructionsAdditionalQuery_eye:
+      'Alan anopindura mibvunzo yekudzidzisa nezvemaonero: Chii chinonzi Iritis? Ndingaona sei retina?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Shandisa Arclight:</strong> <strong><em>kutenderedza nzeve, canal, drum.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Shandisa Arclight:</strong> <strong><em>kutenderedza nzeve, canal, drum.</em></strong>',
     instructionsTooLittle_ear: 'murume, nzeve dzakatsvuka, chii?',
     instructionsJustRight_ear:
       'Murume ane makore 25, nzeve dzakatsvuka kwemazuva 3. Hapana mushonga kana dambudziko renzeve kare. Kurwadziwa, kubuda mvura mumenzeve. Drum tsvuku, kunzwa kwakaderera mumenzeve rimwe asi kwakajairika rumwe.',
     instructionsTooMuch_ear:
       "Murume uyu akasvika kukiriniki nhasi. Akapinda mudzimba aine nzeve dzakatsvuka, iye anofunga kuti chikafu chaadya chiri kukanganisa nzeve dzake. Ndiri kuona kubuda mvura uye mipendero matsvuku. Anoda rubatsiro—murume murefu, nzeve dzinochema, akatya nezvekunzwa uye kurwadziwa. Anobvunza, 'Chii ichi?'",
-    instructionsAdditionalQuery_ear: 'Alan anopindura mibvunzo yekudzidzisa nezvenzeve: Chii chinonzi Otitis Media? Ndingaichenesa sei nzeve?',
+    instructionsAdditionalQuery_ear:
+      'Alan anopindura mibvunzo yekudzidzisa nezvenzeve: Chii chinonzi Otitis Media? Ndingaichenesa sei nzeve?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Shandisa Arclight:</strong> <strong><em>UV mwenje, dermoscopy.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Shandisa Arclight:</strong> <strong><em>UV mwenje, dermoscopy.</em></strong>',
     instructionsTooLittle_skin: 'murume, ganda matsvuku, chii?',
     instructionsJustRight_skin:
       'Murume ane makore 25, ganda rine dombo retsvuku kwemazuva 3. Hapana mushonga kana dambudziko reganda kare. Ganda rinorwadza uye rinorwadza.',
     instructionsTooMuch_skin:
       "Murume uyu akasvika kukiriniki nhasi. Akapinda mudzimba aine ganda matsvuku, iye anofunga kuti chikafu chaadya chiri kukanganisa ganda rake. Ndiri kuona kuchema kwemaziso uye mipendero matsvuku. Anoda rubatsiro—murume murefu, ganda matsvuku, akatya nezve pigment uye kusagadzikana. Anobvunza, 'Chii ichi?'",
-    instructionsAdditionalQuery_skin: 'Alan anopindura mibvunzo yekudzidzisa nezveganda: Chii chinonzi Eczema? Ndingaona sei pigment network?',
+    instructionsAdditionalQuery_skin:
+      'Alan anopindura mibvunzo yekudzidzisa nezveganda: Chii chinonzi Eczema? Ndingaona sei pigment network?',
     instructionsLabelTooLittle: 'Zvishoma',
     instructionsLabelJustRight: 'Zvakaringana',
     instructionsLabelTooMuch: 'Zvakawandisa',
@@ -4026,11 +4223,11 @@ export const translations = {
     contactPlaceholder: 'Bata (email/foni)',
     acceptButton: 'Gamuchira',
 
-    images: "Mifananidzo",
-    help: "Rubatsiro",
-    screenshot: "Screenshot",
-    refer: "Tumira",
-    comingSoon: "Chiri kuuya nokukurumidza...",
+    images: 'Mifananidzo',
+    help: 'Rubatsiro',
+    screenshot: 'Screenshot',
+    refer: 'Tumira',
+    comingSoon: 'Chiri kuuya nokukurumidza...',
   },
 
   // 20) Kinyarwanda - rw
@@ -4089,29 +4286,35 @@ export const translations = {
     passwordPlaceholder: 'Ijambo-banga',
     passwordErrorMsg: 'Ijambo-banga ntabwo rikoreshwa. Ongera ugerageze',
     passwordSubmitBtn: 'Emeza',
-    noCodeLine: "Nta kode cyangwa iribeshye? Twandikire <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>aha</a>",
+    noCodeLine:
+      "Nta kode cyangwa iribeshye? Twandikire <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>aha</a>",
 
     eyeMarqueeLine1: 'Glaucoma ni iki?',
     eyeMarqueeLine2: 'Nigute nabona optic disc ukoresheje Arclight?',
-    eyeMarqueeLine3: 'Umugabo ufite imyaka 25, ijisho ritukura iminsi 3, gutinya urumuri, kureba kugabanuka gatoya',
+    eyeMarqueeLine3:
+      'Umugabo ufite imyaka 25, ijisho ritukura iminsi 3, gutinya urumuri, kureba kugabanuka gatoya',
     eyeMarqueeLine4: 'Mbwira kuri iritis',
     eyeMarqueeLine5: "Naba ngomba kohereza cataract y'umwana bwangu?",
-    eyeMarqueeLine6: "Umugore ufite imyaka 65, kubona bike, nta gafasha k'amaso. Imbere y'ijisho imeze neza, lens yarijimye",
-    eyeMarqueeLine7: "Nyina arahangayitse: umwana afite ishashi y'amaso yera, nta kureba mu jisho iryo",
+    eyeMarqueeLine6:
+      "Umugore ufite imyaka 65, kubona bike, nta gafasha k'amaso. Imbere y'ijisho imeze neza, lens yarijimye",
+    eyeMarqueeLine7:
+      "Nyina arahangayitse: umwana afite ishashi y'amaso yera, nta kureba mu jisho iryo",
 
     earMarqueeLine1: 'Otitis media ni iki?',
     earMarqueeLine2: "Nshobora kubona urupapuro rw'ugutwi (tympanic membrane) nkoresheje Arclight?",
-    earMarqueeLine3: "Umusore w'imyaka 16, ububabare kuri pinna, iminsi 2, kumva byarazimye, ariko yumva neza",
+    earMarqueeLine3:
+      "Umusore w'imyaka 16, ububabare kuri pinna, iminsi 2, kumva byarazimye, ariko yumva neza",
     earMarqueeLine4: 'Mbwira ibyerekeye gushyira amazi mu gutwi (syringing)',
     earMarqueeLine5: 'Naba ngomba kohereza mastoiditis byihuse?',
-    earMarqueeLine6: "Umugabo w'imyaka 73, yumva bitameze neza. Umuyoboro w'ugutwi ntiwagaragara neza, mbona cerumen gusa",
+    earMarqueeLine6:
+      "Umugabo w'imyaka 73, yumva bitameze neza. Umuyoboro w'ugutwi ntiwagaragara neza, mbona cerumen gusa",
     earMarqueeLine7: 'Umwana ntasubiza ijwi. Hashize amezi menshi',
 
     userInfoTitle: "Amakuru y'Umukoresha",
     userName: 'Izina',
     userContact: 'Amakuru yo kuvugana',
     userRole: 'Inshingano',
-    userAimsPopupLabel: "Intego",
+    userAimsPopupLabel: 'Intego',
     // userAims: 'Intego',
     userLatLong: 'Lat & Long',
     userArea: 'Agace',
@@ -4142,8 +4345,9 @@ export const translations = {
     earCanalHeading: "Inzira y'ikibuno",
     earCanalText:
       'Bikanye umutwe, <strong><u>fata Arclight nko gufata ikaramu</u></strong><br>Hagarika pinna hejuru/inzira (abakuru) cyangwa hasi/inzira (abana)<br>Shyiramo speculum (4.5mm ku bakuru, 2.5mm ku bana), kanda utambuke imisatsi, ujugunye niba bikenewe<br>Shakisha: <em>umuse,</em> <em>ibisigazwa,</em> <em>uburwayi</em>',
-    tympanicMembraneHeading: 'Igikoma cy\'ugutwi',
-    tympanicMembraneText: 'Menya aho malleus ifashe, urumuri rugaragara, na attic<br>Reba: <em>ibara</em>, <em>umwanya</em>, <em>uko bigaragara</em><br>Reba niba hari umwenge, amazi cyangwa ibikomere',
+    tympanicMembraneHeading: "Igikoma cy'ugutwi",
+    tympanicMembraneText:
+      'Menya aho malleus ifashe, urumuri rugaragara, na attic<br>Reba: <em>ibara</em>, <em>umwanya</em>, <em>uko bigaragara</em><br>Reba niba hari umwenge, amazi cyangwa ibikomere',
     additionalText_ear:
       "Menya TM yawe: isanzwe, <span style='color:red; font-weight:bold;'>umutuku</span>, <span style='color:orange;'>yarazamutse</span>, <span style='color:green;'>yagarutse</span>, <span style='color:purple;'>yafunze</span><br>&gt;Imenyere buri gihe&lt;",
 
@@ -4181,29 +4385,35 @@ export const translations = {
     instructionsPatientDetail4: 'imyaka, igitsina, imiti',
     instructionsUseArclight_default: 'Koresha Arclight: imbere, reflex ya fundal, inyuma y’ijisho.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Koresha Arclight:</strong> <strong><em>imbere, reflex ya fundal, inyuma y’ijisho.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Koresha Arclight:</strong> <strong><em>imbere, reflex ya fundal, inyuma y’ijisho.</em></strong>',
     instructionsTooLittle_eye: 'Umugabo, ijisho ritukura, ni iki?',
     instructionsJustRight_eye:
       'Umugabo w’imyaka 25, ijisho ritukura mu minsi 3. Nta miti cyangwa ikibazo cy’ijisho cyigeze kibaho. Kubabara, amazi mu jisho, akantu keza ku kornea. Amapupil meza, ubona 6/12 na 6/6 ku rindi jisho.',
     instructionsTooMuch_eye:
       "Uyu mugabo yinjiye mu ivuriro uyu munsi. Yinjiye mu nyubako atwaye imodoka, ijisho rye ritukura, ubu aratekereza ko ibyo yariye biri kugira ingaruka ku jisho rye. Mboneye amazi n’ibice by’ijisho ritukura. Arashaka ubufasha—umugabo muremure, amaso abira, afite impungenge ku kornea no kubabara. Aravuga ati, 'Iki ni iki?'",
-    instructionsAdditionalQuery_eye: 'Alan asubiza n’ibibazo by’uburezi ku jisho: Iki ni Iritis? Nakora nte ngo mbone retina?',
+    instructionsAdditionalQuery_eye:
+      'Alan asubiza n’ibibazo by’uburezi ku jisho: Iki ni Iritis? Nakora nte ngo mbone retina?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Koresha Arclight:</strong> <strong><em>Hanze y’amatwi, canal, tympan.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Koresha Arclight:</strong> <strong><em>Hanze y’amatwi, canal, tympan.</em></strong>',
     instructionsTooLittle_ear: 'Umugabo, amatwi atukura, ni iki?',
     instructionsJustRight_ear:
       'Umugabo w’imyaka 25, amatwi atukura mu minsi 3. Nta miti cyangwa ikibazo cy’amatwi cyigeze kibaho. Kubabara, amazi aturuka mu matwi. Tympan itukura, kumva bigoye mu jwi rimwe ariko bisanzwe mu rindi.',
     instructionsTooMuch_ear:
       "Uyu mugabo yinjiye mu ivuriro uyu munsi. Yinjiye mu nyubako n’amatwi atukura, aratekereza ko ibyo yariye bigira ingaruka ku matwi ye. Mboneye amazi n’ibice bitukura. Arashaka ubufasha—umugabo muremure, amatwi anyerera, afite impungenge ku kumva no kubabara. Aravuga ati, 'Iki ni iki?'",
-    instructionsAdditionalQuery_ear: 'Alan asubiza n’ibibazo by’uburezi ku matwi: Iki ni Otitis Media? Nakora nte ngo nisukure amatwi?',
+    instructionsAdditionalQuery_ear:
+      'Alan asubiza n’ibibazo by’uburezi ku matwi: Iki ni Otitis Media? Nakora nte ngo nisukure amatwi?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Koresha Arclight:</strong> <strong><em>urumuri rwa UV, dermoscopy.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Koresha Arclight:</strong> <strong><em>urumuri rwa UV, dermoscopy.</em></strong>',
     instructionsTooLittle_skin: 'Umugabo, uruhu rutukura, ni iki?',
     instructionsJustRight_skin:
       'Umugabo w’imyaka 25, akantu ku ruhu rutukura mu minsi 3. Nta miti cyangwa ikibazo cy’uruhu cyigeze kibaho. Uruhu ruraribwa kandi rworoshye.',
     instructionsTooMuch_skin:
       "Uyu mugabo yinjiye mu ivuriro uyu munsi. Yinjiye mu nyubako, uruhu rwe rutukura, aratekereza ko ibyo yariye bigira ingaruka ku ruhu. Mboneye amazi n’ibice bitukura. Arashaka ubufasha—umugabo muremure, uruhu rutukura, afite impungenge ku bijyanye na pigment no gucika intege. Aravuga ati, 'Iki ni iki?'",
-    instructionsAdditionalQuery_skin: 'Alan asubiza n’ibibazo by’uburezi ku ruhu: Iki ni Eczema? Nakora nte ngo mbone réseau ya pigment?',
+    instructionsAdditionalQuery_skin:
+      'Alan asubiza n’ibibazo by’uburezi ku ruhu: Iki ni Eczema? Nakora nte ngo mbone réseau ya pigment?',
     instructionsLabelTooLittle: 'Buke cyane',
     instructionsLabelJustRight: 'Bihagije',
     instructionsLabelTooMuch: 'Byinshi cyane',
@@ -4218,7 +4428,7 @@ export const translations = {
     // --- NEW "Experience" Dropdown Translations (Needs review for Kinyarwanda) ---
     experiencePlaceholder: 'Inararibonye',
     experienceStudentRefresher: 'Umunyeshuri / Ukuvugurura',
-    experienceConfidentCore: 'Ubumenyi bw\'ibanze bwizewe',
+    experienceConfidentCore: "Ubumenyi bw'ibanze bwizewe",
     experienceExpert: 'Impuguke',
     // --- Old Experience Options Commented Out ---
     /*
@@ -4238,11 +4448,11 @@ export const translations = {
     contactPlaceholder: 'Tumenyeshe (imeyili/telefone)',
     acceptButton: 'Emeza',
 
-    images: "Amafoto",
-    help: "Ubufasha",
-    screenshot: "Ifoto ya Ekrini",
-    refer: "Ohereza",
-    comingSoon: "Biraza vuba...",
+    images: 'Amafoto',
+    help: 'Ubufasha',
+    screenshot: 'Ifoto ya Ekrini',
+    refer: 'Ohereza',
+    comingSoon: 'Biraza vuba...',
   },
 
   // 21) Chichewa (Malawi) - ny
@@ -4301,14 +4511,17 @@ export const translations = {
     passwordPlaceholder: 'Mawu obisika',
     passwordErrorMsg: 'Mawu obisika sailakwa. Yesaninso',
     passwordSubmitBtn: 'Tumizani',
-    noCodeLine: "Palibe kapena sailakwe? Lumikizanani nafe <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>apa</a>",
+    noCodeLine:
+      "Palibe kapena sailakwe? Lumikizanani nafe <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>apa</a>",
 
     eyeMarqueeLine1: 'Glaucoma ndi chiyani?',
     eyeMarqueeLine2: 'Ndingaone bwanji disiki ya maso (optic disc) pogwiritsa Arclight?',
-    eyeMarqueeLine3: "Amuna 25, diso lofiira kwa masiku 3, mantha a kuwala, kuona kuli pansi pang'ono",
+    eyeMarqueeLine3:
+      "Amuna 25, diso lofiira kwa masiku 3, mantha a kuwala, kuona kuli pansi pang'ono",
     eyeMarqueeLine4: 'Ndiwuzeni za iritis',
     eyeMarqueeLine5: 'Ndiyenera kutumiza cataract yobadwa nayo mwamsanga?',
-    eyeMarqueeLine6: 'Mkazi 65, maso ofowoka, alibe magalasi. Gawo lakutsogolo lili bwino, lens yakhala mdima',
+    eyeMarqueeLine6:
+      'Mkazi 65, maso ofowoka, alibe magalasi. Gawo lakutsogolo lili bwino, lens yakhala mdima',
     eyeMarqueeLine7: 'Amayi akuda nkhawa: mwana ali ndi diso loyera, safi ra diso limenelo',
 
     earMarqueeLine1: 'Otitis media ndi chiyani?',
@@ -4316,14 +4529,15 @@ export const translations = {
     earMarqueeLine3: 'Mnyamata 16, khutu likupweteka kwa masiku 2, kukutitcha, kumva kuli bwino',
     earMarqueeLine4: 'Ndiwuzeni za kusamba khutu (syringing)',
     earMarqueeLine5: 'Ndiyenera kutumiza mwamsanga mastoiditis?',
-    earMarqueeLine6: 'Amuna 73, kumva kwake kufooka. Sindingaone bwino potsegula khutu, ndikuona phula lokha',
+    earMarqueeLine6:
+      'Amuna 73, kumva kwake kufooka. Sindingaone bwino potsegula khutu, ndikuona phula lokha',
     earMarqueeLine7: 'Mwana sakuitanira mukumva mawu. Kwapitako miyezi ingapo',
 
     userInfoTitle: 'Zambiri za Wogwiritsa',
     userName: 'Dzina',
     userContact: 'Lumikizanani',
     userRole: 'Udindo',
-    userAimsPopupLabel: "Zolinga",
+    userAimsPopupLabel: 'Zolinga',
     // userAims: 'Zolinga',
     userLatLong: 'Lat & Long',
     userArea: 'Malo',
@@ -4355,7 +4569,8 @@ export const translations = {
     earCanalText:
       'Pangira mutu, <strong><u>kamata Arclight monga patani</u></strong><br>Dhonza pinna kupamwamba/ku chabe (aŵa akulu) kapena kupansi/ku chabe (ana)<br>Ikani speculum (4.5mm kwa akulu, 2.5mm kwa ana), panga nthawi kupeza, sinthani ngati zikufunika<br>Onani: <em>chikoma,</em> <em>zambiri,</em> <em>matenda</em>',
     tympanicMembraneHeading: 'Timpaniki Membreni',
-    tympanicMembraneText: 'Zindikirani chogwirira cha malleus, kuwala kowala, ndi attic<br>Zindikirani: <em>mtundu</em>, <em>malo</em>, <em>kuwonekera</em><br>Yang\'anani ngati pali dzenje, madzi kapena zipsera',
+    tympanicMembraneText:
+      "Zindikirani chogwirira cha malleus, kuwala kowala, ndi attic<br>Zindikirani: <em>mtundu</em>, <em>malo</em>, <em>kuwonekera</em><br>Yang'anani ngati pali dzenje, madzi kapena zipsera",
     additionalText_ear:
       "Dziwani mayankho anu: achiwoneka, <span style='color:red; font-weight:bold;'>osafuka</span>, <span style='color:orange;'>magazi atsopano</span>, <span style='color:green;'>osamangidwa</span>, <span style='color:purple;'>opanda kuwala</span><br>&gt;Phunzitsani nthawi zonse&lt;",
 
@@ -4391,7 +4606,8 @@ export const translations = {
     instructionsPatientDetail2: 'zomwe mumawona',
     instructionsPatientDetail3: 'maonero ndi pupil',
     instructionsPatientDetail4: 'ubale, mtundu, mankhwala',
-    instructionsUseArclight_default: 'Gwiritsani ntchito Arclight: patsogolo, reflex ya fundal, pambuyo pa maso.',
+    instructionsUseArclight_default:
+      'Gwiritsani ntchito Arclight: patsogolo, reflex ya fundal, pambuyo pa maso.',
     instructionsBackground_eye: '#dfe7ff',
     instructionsUseArclight_eye:
       '<strong>Gwiritsani ntchito Arclight:</strong> <strong><em>patsogolo, reflex ya fundal, pambuyo pa maso.</em></strong>',
@@ -4400,22 +4616,28 @@ export const translations = {
       'Munthu wa zaka 25, maso akuda kwa masiku 3. Palibe mankhwala kapena vutoli kale. Maumivu, kuchemka, dot woyera pa kornea. Pupil alili bwino, maonero 6/12 ndi 6/6 ena.',
     instructionsTooMuch_eye:
       "Munthu uyu analowa ku kliniki lero. Amadutsa mu nyumba, maso ake akuda, tsopano amaganiza kuti chakudya adyera chikukhalira maso ake. Ndikuona kuchemka ndi mapeto akuda. Akufuna thandizo—munthu wautali, maso opweteka, okhudzidwa ndi kornea ndi maumivu. Amasonyeza kuti, 'Chiyani ichi?'",
-    instructionsAdditionalQuery_eye: 'Alan akuphunzitsa za maso: Chiyani Iritis? Ndingawonere bwanji retina?',
+    instructionsAdditionalQuery_eye:
+      'Alan akuphunzitsa za maso: Chiyani Iritis? Ndingawonere bwanji retina?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Gwiritsani ntchito Arclight:</strong> <strong><em>zoseka, canal, tympan.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Gwiritsani ntchito Arclight:</strong> <strong><em>zoseka, canal, tympan.</em></strong>',
     instructionsTooLittle_ear: 'Munthu, matamando akuda, chiyani?',
     instructionsJustRight_ear:
       "Munthu wa zaka 25, matamando akuda kwa masiku 3. Palibe mankhwala kapena vutoli kale. Maumivu, kuchoka kwa matamando. Tympan akuda, kumamva kumedewa m'matamando ena koma bwino m'matamando ena.",
     instructionsTooMuch_ear:
       "Munthu uyu analowa ku kliniki lero. Amadutsa mu nyumba ndi matamando akuda, tsopano amaganiza kuti chakudya adyera chikukhalira matamando ake. Ndikuona discharge ndi mapeto akuda. Akufuna thandizo—munthu wautali, matamando opweteka, okhudzidwa ndi kumamva ndi maumivu. Amasonyeza kuti, 'Chiyani ichi?'",
-    instructionsAdditionalQuery_ear: 'Alan akuphunzitsa za matamando: Chiyani Otitis Media? Ndingasafitsire matamando bwanji?',
+    instructionsAdditionalQuery_ear:
+      'Alan akuphunzitsa za matamando: Chiyani Otitis Media? Ndingasafitsire matamando bwanji?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Gwiritsani ntchito Arclight:</strong> <strong><em>chiedza cha UV, dermoscopy.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Gwiritsani ntchito Arclight:</strong> <strong><em>chiedza cha UV, dermoscopy.</em></strong>',
     instructionsTooLittle_skin: 'Munthu, khungu akuda, chiyani?',
-    instructionsJustRight_skin: 'Munthu wa zaka 25, khungu la khungu akuda kwa masiku 3. Palibe mankhwala kapena vutoli kale. Khungu likuvuta.',
+    instructionsJustRight_skin:
+      'Munthu wa zaka 25, khungu la khungu akuda kwa masiku 3. Palibe mankhwala kapena vutoli kale. Khungu likuvuta.',
     instructionsTooMuch_skin:
       "Munthu uyu analowa ku kliniki lero. Amadutsa mu nyumba ndi khungu akuda, tsopano amaganiza kuti chakudya adyera chikukhalira khungu lake. Ndikuona kuchemka ndi mapeto akuda. Akufuna thandizo—munthu wautali, khungu akuda, okhudzidwa ndi pigment ndi kusokoneza. Amasonyeza kuti, 'Chiyani ichi?'",
-    instructionsAdditionalQuery_skin: 'Alan akuphunzitsa za khungu: Chiyani Eczema? Ndingawonere bwanji network ya pigment?',
+    instructionsAdditionalQuery_skin:
+      'Alan akuphunzitsa za khungu: Chiyani Eczema? Ndingawonere bwanji network ya pigment?',
     instructionsLabelTooLittle: 'Zochepa kwambiri',
     instructionsLabelJustRight: 'Zokwanira',
     instructionsLabelTooMuch: 'Zambiri kwambiri',
@@ -4450,11 +4672,11 @@ export const translations = {
     contactPlaceholder: 'Lumikizani (email/phone)',
     acceptButton: 'Chitira',
 
-    images: "Zithunzi",
-    help: "Thandizo",
-    screenshot: "Chithunzi cha skirini",
-    refer: "Tumizirani",
-    comingSoon: "Kubwera posachedwa...",
+    images: 'Zithunzi',
+    help: 'Thandizo',
+    screenshot: 'Chithunzi cha skirini',
+    refer: 'Tumizirani',
+    comingSoon: 'Kubwera posachedwa...',
   },
 
   // 22) Welsh - cy
@@ -4513,11 +4735,13 @@ export const translations = {
     passwordPlaceholder: 'Cyfrinair',
     passwordErrorMsg: 'Cyfrinair anghywir. Rhowch gynnig arall arni',
     passwordSubmitBtn: 'Gyflwyno',
-    noCodeLine: "Dim côd neu côd anghywir? Cysylltwch â ni <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>yma</a>",
+    noCodeLine:
+      "Dim côd neu côd anghywir? Cysylltwch â ni <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>yma</a>",
 
     eyeMarqueeLine1: 'Beth yw glawcoma?',
     eyeMarqueeLine2: "Sut gallaf weld y ddisg optig gyda'r Arclight?",
-    eyeMarqueeLine3: 'Dyn 25 mlwydd oed, llygad coch am 3 diwrnod, ofn goleuni, VA wedi lleihau ychydig',
+    eyeMarqueeLine3:
+      'Dyn 25 mlwydd oed, llygad coch am 3 diwrnod, ofn goleuni, VA wedi lleihau ychydig',
     eyeMarqueeLine4: 'Siaradwch â mi am Iritis',
     eyeMarqueeLine5: 'A ddylwn i gyfeirio cataract cynhenid ar frys?',
     eyeMarqueeLine6: 'Menyw 65 oed, golwg wael, dim sbectol. Blaen y llygad yn iawn, lens niwlog',
@@ -4535,7 +4759,7 @@ export const translations = {
     userName: 'Enw',
     userContact: 'Cyswllt',
     userRole: 'Rôl',
-    userAimsPopupLabel: "Amcanion",
+    userAimsPopupLabel: 'Amcanion',
     // userAims: 'Amcanion',
     userLatLong: 'Lat & Long',
     userArea: 'Ardal',
@@ -4567,13 +4791,15 @@ export const translations = {
     earCanalText:
       "Cymryd y pen, <strong><u>dal Arclight fel ysgrifell</u></strong><br>Tynnu'r clust i fyny/yn ôl (ar gyfer oedolion) neu i lawr/yn ôl (ar gyfer plant)<br>Mewngofnodwch speculum (4.5mm i oedolion, 2.5mm i blant), gwthio drwg, troi os oes angen<br>Chwilio am: <em>cwmpas,</em> <em>gwasgedd,</em> <em>heint</em>",
     tympanicMembraneHeading: 'Bilen y glust',
-    tympanicMembraneText: "Adnabod y ddolen malleus, adlewyrchiad golau, ac atig<br>Nodwch: <em>lliw</em>, <em>lleoliad</em>, <em>tryloywder</em><br>Chwiliwch am dyllu, hylif neu greithiau",
+    tympanicMembraneText:
+      'Adnabod y ddolen malleus, adlewyrchiad golau, ac atig<br>Nodwch: <em>lliw</em>, <em>lleoliad</em>, <em>tryloywder</em><br>Chwiliwch am dyllu, hylif neu greithiau',
     additionalText_ear:
       "Adnabod eich TM: arferol, <span style='color:red; font-weight:bold;'>coch</span>, <span style='color:orange;'>ymgolli</span>, <span style='color:green;'>ailsefydlu</span>, <span style='color:purple;'>torri</span><br>>Ymarfer yn aml<",
 
     pageTitle_howToExamineSkin: "Sut i archwilio'r croen",
     generalObservationHeading: 'Sylw cyffredinol',
-    generalObservationText: 'Archwiliwch ganghennau, <em>newidiadau lliw</em> a dosbarthiad<br>Teimlwch yn araf am strwythur, tymheredd neu deimlad',
+    generalObservationText:
+      'Archwiliwch ganghennau, <em>newidiadau lliw</em> a dosbarthiad<br>Teimlwch yn araf am strwythur, tymheredd neu deimlad',
     uvLightHeading: 'Lliw UV (Wood’s)',
     uvLightText:
       "Yn ystafell tywyll, gwirhewch am liw ffater arbennig:<br><span style='color:teal;'>tinea (glas-werdd)</span>, <span style='color:#FF7F50;'>pityriasis versicolor (oren-copper)</span>, <span style='color:#FF4040;'>erythrasma (coral-coch)</span>, <span style='color:blue;'>vitiligo (glas-llen)</span>, <span style='color:orange;'>acne (oren-coch)</span>, <span style='color:#BFEFFF;'>hlafell o glwst (glas-pale)</span>",
@@ -4602,25 +4828,31 @@ export const translations = {
     instructionsPatientDetail2: 'yr hyn rydych yn ei weld',
     instructionsPatientDetail3: 'gweledigaeth a phupils',
     instructionsPatientDetail4: 'oed, rhywedd, meddyginiaeth',
-    instructionsUseArclight_default: 'Defnyddiwch Arclight: blaen, adlewyrchiad fundal, cefn y llygad.',
+    instructionsUseArclight_default:
+      'Defnyddiwch Arclight: blaen, adlewyrchiad fundal, cefn y llygad.',
     instructionsBackground_eye: '#dfe7ff',
-    instructionsUseArclight_eye: '<strong>Defnyddiwch Arclight:</strong> <strong><em>blaen, adlewyrchiad fundal, cefn y llygad.</em></strong>',
+    instructionsUseArclight_eye:
+      '<strong>Defnyddiwch Arclight:</strong> <strong><em>blaen, adlewyrchiad fundal, cefn y llygad.</em></strong>',
     instructionsTooLittle_eye: 'dyn, llygad coch, beth?',
     instructionsJustRight_eye:
       "Dyn 25 oed, llygad coch am 3 diwrnod. Dim meddyginiaeth na broblem llygad o'r blaen. Poen, llygad yn llifo, dot gwyn ar y cornea. Pupils yn iawn, gweledigaeth 6/12 a 6/6 ar y llygad arall.",
     instructionsTooMuch_eye:
       "Daeth y dyn hwn i glinig heddiw. Fe gyrruodd iddo mewn adeilad gyda llygad coch ac yn awr mae'n credu bod y bwyd a fwydwyd yn effeithio ar ei lygaid. Rwy'n gweld llygad yn llifo a ymylon coch. Mae angen cymorth arno—dyn tal, llygaid yn llifo, pryderol am y cornea a phroen. Mae'n gofyn, 'Beth yw hyn?'",
-    instructionsAdditionalQuery_eye: 'Mae Alan hefyd yn ateb cwestiynau dysgu am lygaid: Beth yw Iritis? Sut y gallaf weld y retina?',
+    instructionsAdditionalQuery_eye:
+      'Mae Alan hefyd yn ateb cwestiynau dysgu am lygaid: Beth yw Iritis? Sut y gallaf weld y retina?',
     instructionsBackground_ear: '#f2fff2',
-    instructionsUseArclight_ear: '<strong>Defnyddiwch Arclight:</strong> <strong><em>o amgylch y clust, sianel, tympan.</em></strong>',
+    instructionsUseArclight_ear:
+      '<strong>Defnyddiwch Arclight:</strong> <strong><em>o amgylch y clust, sianel, tympan.</em></strong>',
     instructionsTooLittle_ear: 'dyn, clust coch, beth?',
     instructionsJustRight_ear:
       "Dyn 25 oed, clust coch am 3 diwrnod. Dim meddyginiaeth na broblem clust o'r blaen. Poen, llif clust. Tympan coch, sain yn isel yn y clust gwael ond yn iawn yn y clust arall.",
     instructionsTooMuch_ear:
       "Daeth y dyn hwn i glinig heddiw. Fe gyrruodd iddo mewn adeilad gyda chlust coch ac mae'n credu bod y bwyd a fwydwyd yn effeithio ar ei glust. Rwy'n gweld llif clust a ymylon coch. Mae angen cymorth arno—dyn tal, clust yn llifo, pryderol am glywed a phroen. Mae'n gofyn, 'Beth yw hyn?'",
-    instructionsAdditionalQuery_ear: 'Mae Alan hefyd yn ateb cwestiynau dysgu am glust: Beth yw Otitis Media? Sut y gallaf lanhau clust?',
+    instructionsAdditionalQuery_ear:
+      'Mae Alan hefyd yn ateb cwestiynau dysgu am glust: Beth yw Otitis Media? Sut y gallaf lanhau clust?',
     instructionsBackground_skin: '#fddfff',
-    instructionsUseArclight_skin: '<strong>Defnyddiwch Arclight:</strong> <strong><em>Lliw UV, dermoscopi.</em></strong>',
+    instructionsUseArclight_skin:
+      '<strong>Defnyddiwch Arclight:</strong> <strong><em>Lliw UV, dermoscopi.</em></strong>',
     instructionsTooLittle_skin: 'dyn, croen coch, beth?',
     instructionsJustRight_skin:
       "Dyn 25 oed, patch croen coch am 3 diwrnod. Dim meddyginiaeth na broblem croen o'r blaen. Croen poenus ac yn cysgodol.",
@@ -4662,11 +4894,11 @@ export const translations = {
     contactPlaceholder: 'Cysylltu (e-bost/ffôn)',
     acceptButton: 'Derbyn',
 
-    images: "Delweddau",
-    help: "Cymorth",
-    screenshot: "Sgrinlun",
-    refer: "Cyfeirio",
-    comingSoon: "Ar ddod cyn bo hir..."
-  }
+    images: 'Delweddau',
+    help: 'Cymorth',
+    screenshot: 'Sgrinlun',
+    refer: 'Cyfeirio',
+    comingSoon: 'Ar ddod cyn bo hir...',
+  },
 };
 window.translations = translations;

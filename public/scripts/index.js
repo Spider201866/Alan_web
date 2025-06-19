@@ -22,8 +22,207 @@ const acceptButton = document.getElementById('acceptButton');
 
 // State
 let aimsDropdownExpanded = false;
-const classificationLookup = { /* Data unchanged */
-  HI:['QA','MO','LU','SG','BN','IE','NO','KW','AE','CH','HK','SM','US','SA','NL','IS','BH','SE','DE','AU','TW','DK','AT','CA','BE','OM','FI','GB','FR','JP','MT','KR','NZ','ES','IT','PR','CY','IL','CZ'],MI:['GQ','SI','SK','LT','EE','TT','PT','PL','HU','MY','SC','RU','GR','LV','KN','AG','TR','KZ','BS','CL','PA','HR','RO','UY','MU','BG','AR','IR','MX','LB','GA','MV','TM','BY','BW','TH','CN','BR','ZA','IN'],LI:['BB','ME','AZ','CR','IQ','DO','PW','MK','RS','DZ','GD','CO','SR','LC','PE','LK','EG','MN','JO','AL','VE','ID','DM','XK','NR','TN','VC','NA','BA','EC','GE','SZ','FJ','LY','PY','JM','AM','SV','BT','UA','MA','BZ','GY','PH','GT','BO','LA','UZ','CV','VN','PK'],VLI:['AO','CG','MM','NG','NI','WS','MD','TO','HN','TL','GH','SD','BD','MR','KH','ZM','LS','CI','TV','PG','KG','DJ','KE','MH','FM','CM','TZ','ST','TJ','VU','NP','SN','TD','UG','YE','ZW','BJ','ML','SB','ET','RW','GN','KI','AF','BF','HT','GW','SL','GM','SS','TG','KM','MG','ER','MZ','MW','NE','LR','BI','CD','CF']
+const classificationLookup = {
+  /* Data unchanged */
+  HI: [
+    'QA',
+    'MO',
+    'LU',
+    'SG',
+    'BN',
+    'IE',
+    'NO',
+    'KW',
+    'AE',
+    'CH',
+    'HK',
+    'SM',
+    'US',
+    'SA',
+    'NL',
+    'IS',
+    'BH',
+    'SE',
+    'DE',
+    'AU',
+    'TW',
+    'DK',
+    'AT',
+    'CA',
+    'BE',
+    'OM',
+    'FI',
+    'GB',
+    'FR',
+    'JP',
+    'MT',
+    'KR',
+    'NZ',
+    'ES',
+    'IT',
+    'PR',
+    'CY',
+    'IL',
+    'CZ',
+  ],
+  MI: [
+    'GQ',
+    'SI',
+    'SK',
+    'LT',
+    'EE',
+    'TT',
+    'PT',
+    'PL',
+    'HU',
+    'MY',
+    'SC',
+    'RU',
+    'GR',
+    'LV',
+    'KN',
+    'AG',
+    'TR',
+    'KZ',
+    'BS',
+    'CL',
+    'PA',
+    'HR',
+    'RO',
+    'UY',
+    'MU',
+    'BG',
+    'AR',
+    'IR',
+    'MX',
+    'LB',
+    'GA',
+    'MV',
+    'TM',
+    'BY',
+    'BW',
+    'TH',
+    'CN',
+    'BR',
+    'ZA',
+    'IN',
+  ],
+  LI: [
+    'BB',
+    'ME',
+    'AZ',
+    'CR',
+    'IQ',
+    'DO',
+    'PW',
+    'MK',
+    'RS',
+    'DZ',
+    'GD',
+    'CO',
+    'SR',
+    'LC',
+    'PE',
+    'LK',
+    'EG',
+    'MN',
+    'JO',
+    'AL',
+    'VE',
+    'ID',
+    'DM',
+    'XK',
+    'NR',
+    'TN',
+    'VC',
+    'NA',
+    'BA',
+    'EC',
+    'GE',
+    'SZ',
+    'FJ',
+    'LY',
+    'PY',
+    'JM',
+    'AM',
+    'SV',
+    'BT',
+    'UA',
+    'MA',
+    'BZ',
+    'GY',
+    'PH',
+    'GT',
+    'BO',
+    'LA',
+    'UZ',
+    'CV',
+    'VN',
+    'PK',
+  ],
+  VLI: [
+    'AO',
+    'CG',
+    'MM',
+    'NG',
+    'NI',
+    'WS',
+    'MD',
+    'TO',
+    'HN',
+    'TL',
+    'GH',
+    'SD',
+    'BD',
+    'MR',
+    'KH',
+    'ZM',
+    'LS',
+    'CI',
+    'TV',
+    'PG',
+    'KG',
+    'DJ',
+    'KE',
+    'MH',
+    'FM',
+    'CM',
+    'TZ',
+    'ST',
+    'TJ',
+    'VU',
+    'NP',
+    'SN',
+    'TD',
+    'UG',
+    'YE',
+    'ZW',
+    'BJ',
+    'ML',
+    'SB',
+    'ET',
+    'RW',
+    'GN',
+    'KI',
+    'AF',
+    'BF',
+    'HT',
+    'GW',
+    'SL',
+    'GM',
+    'SS',
+    'TG',
+    'KM',
+    'MG',
+    'ER',
+    'MZ',
+    'MW',
+    'NE',
+    'LR',
+    'BI',
+    'CD',
+    'CF',
+  ],
 };
 
 // Entry Point
@@ -68,9 +267,13 @@ function showSplashScreenAndThen() {
 
 function handleAccept() {
   const rawName = nameInput.value.trim();
-  const checkedAims = Array.from(checkboxesContainer.querySelectorAll('input:checked')).map(cb => cb.value);
+  const checkedAims = Array.from(checkboxesContainer.querySelectorAll('input:checked')).map(
+    (cb) => cb.value
+  );
   let roleClass = '(P)';
-  if (checkedAims.length > 0 && !checkedAims.includes('Veterinary')) { roleClass = '(M)'; }
+  if (checkedAims.length > 0 && !checkedAims.includes('Veterinary')) {
+    roleClass = '(M)';
+  }
 
   // Store data in localStorage
   localStorage.setItem('name', rawName);
@@ -78,15 +281,19 @@ function handleAccept() {
   localStorage.setItem('selectedExperience', experienceSelect.value);
   localStorage.setItem('contactInfo', contactInput.value);
   localStorage.setItem('roleClassification', roleClass);
-  if (!localStorage.getItem('sessionId')) { localStorage.setItem('sessionId', `user-${Date.now()}`); }
-  
+  if (!localStorage.getItem('sessionId')) {
+    localStorage.setItem('sessionId', `user-${Date.now()}`);
+  }
+
   // Push data to server
   pushDataToServer(rawName, checkedAims, roleClass);
 
   // Animate out and redirect
   blackScreen.style.visibility = 'visible';
   blackScreen.style.opacity = 1;
-  setTimeout(() => { window.location.href = 'home.html'; }, 6250);
+  setTimeout(() => {
+    window.location.href = 'home.html';
+  }, 6250);
 }
 
 /*********************************************/
@@ -95,8 +302,8 @@ function handleAccept() {
 
 function fetchIPBasedLocation() {
   fetch('https://ipapi.co/json/')
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       if (data) {
         localStorage.setItem('latitude', data.latitude || 'Not set');
         localStorage.setItem('longitude', data.longitude || 'Not set');
@@ -107,13 +314,16 @@ function fetchIPBasedLocation() {
         storeClassifications(iso2);
       }
     })
-  .catch(() => {});
+    .catch(() => {});
 }
 
 function storeClassifications(iso2) {
   let classification = 'Unknown';
   for (const [key, values] of Object.entries(classificationLookup)) {
-    if (values.includes(iso2)) { classification = key; break; }
+    if (values.includes(iso2)) {
+      classification = key;
+      break;
+    }
   }
   localStorage.setItem('classification', classification);
 }
@@ -125,34 +335,47 @@ function verifyPassword() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ password: enteredPassword }),
   })
-  .then(response => {
-    if (!response.ok) throw new Error('Invalid password');
-    localStorage.setItem('verified', 'true');
-    passwordScreen.classList.add('hidden');
-    instructionRef.classList.remove('hidden');
-  })
-  .catch(() => {
-    passwordError.style.display = 'block';
-    passwordInput.value = '';
-    passwordSubmitBtn.disabled = true;
-    setTimeout(() => { passwordError.style.display = 'none'; }, 3000);
-  });
+    .then((response) => {
+      if (!response.ok) throw new Error('Invalid password');
+      localStorage.setItem('verified', 'true');
+      passwordScreen.classList.add('hidden');
+      instructionRef.classList.remove('hidden');
+    })
+    .catch(() => {
+      passwordError.style.display = 'block';
+      passwordInput.value = '';
+      passwordSubmitBtn.disabled = true;
+      setTimeout(() => {
+        passwordError.style.display = 'none';
+      }, 3000);
+    });
 }
 
 function pushDataToServer(name, aims, roleClass) {
   const userInfo = {
-      sessionId: localStorage.getItem('sessionId'), name: name, role: aims.join(', '),
-      experience: experienceSelect.value, latitude: localStorage.getItem('latitude'), longitude: localStorage.getItem('longitude'),
-      country: localStorage.getItem('country'), iso2: localStorage.getItem('iso2'), classification: localStorage.getItem('classification'),
-      roleClassification: roleClass, area: localStorage.getItem('area'), contactInfo: contactInput.value,
-      version: '1.0', dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
+    sessionId: localStorage.getItem('sessionId'),
+    name: name,
+    role: aims.join(', '),
+    experience: experienceSelect.value,
+    latitude: localStorage.getItem('latitude'),
+    longitude: localStorage.getItem('longitude'),
+    country: localStorage.getItem('country'),
+    iso2: localStorage.getItem('iso2'),
+    classification: localStorage.getItem('classification'),
+    roleClassification: roleClass,
+    area: localStorage.getItem('area'),
+    contactInfo: contactInput.value,
+    version: '1.0',
+    dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }),
   };
   fetch('https://alan.up.railway.app/record-info', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(userInfo)
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userInfo),
   })
-  .then(resp => resp.text())
-  .then(data => console.log('Record saved:', data))
-  .catch(() => {});
+    .then((resp) => resp.text())
+    .then((data) => console.log('Record saved:', data))
+    .catch(() => {});
 }
 
 /*********************************************/
@@ -166,23 +389,26 @@ function initEventListeners() {
   });
 
   jobSelectElement.addEventListener('click', (e) => {
-      e.stopPropagation(); 
-      checkboxesContainer.style.display = aimsDropdownExpanded ? 'none' : 'block';
-      aimsDropdownExpanded = !aimsDropdownExpanded;
+    e.stopPropagation();
+    checkboxesContainer.style.display = aimsDropdownExpanded ? 'none' : 'block';
+    aimsDropdownExpanded = !aimsDropdownExpanded;
   });
 
   document.addEventListener('click', () => {
-      if (aimsDropdownExpanded) {
-          checkboxesContainer.style.display = 'none';
-          aimsDropdownExpanded = false;
-      }
+    if (aimsDropdownExpanded) {
+      checkboxesContainer.style.display = 'none';
+      aimsDropdownExpanded = false;
+    }
   });
-  
+
   checkboxesContainer.addEventListener('change', () => {
-      const checkedItems = Array.from(checkboxesContainer.querySelectorAll('input:checked'));
-      const selectedTexts = checkedItems.map(item => item.parentElement.textContent.trim());
-      aimsSelectText.textContent = selectedTexts.length > 0 ? selectedTexts.join(', ') : (window.translations?.en?.aimsPlaceholder || 'Aims');
-      checkSelections();
+    const checkedItems = Array.from(checkboxesContainer.querySelectorAll('input:checked'));
+    const selectedTexts = checkedItems.map((item) => item.parentElement.textContent.trim());
+    aimsSelectText.textContent =
+      selectedTexts.length > 0
+        ? selectedTexts.join(', ')
+        : window.translations?.en?.aimsPlaceholder || 'Aims';
+    checkSelections();
   });
 
   experienceSelect.addEventListener('change', checkSelections);
@@ -194,7 +420,7 @@ function initEventListeners() {
     passwordError.style.display = 'none';
   });
   passwordSubmitBtn.addEventListener('click', verifyPassword);
-  
+
   checkSelections(); // Initial check
 }
 
@@ -210,7 +436,7 @@ function checkSelections() {
 
   const contactEntered = !!contactInput.value.trim();
   contactInput.classList.toggle('is-active', contactEntered);
-  
+
   acceptButton.disabled = !(nameEntered && anyAimChecked && experienceSelected && contactEntered);
 }
 
@@ -223,14 +449,17 @@ function initLanguageControls() {
   const indexLangDropdown = document.getElementById('index-language-dropdown');
   indexLangButton.addEventListener('click', (e) => {
     e.stopPropagation();
-    indexLangDropdown.style.display = (indexLangDropdown.style.display === 'none' || indexLangDropdown.style.display === '') ? 'block' : 'none';
+    indexLangDropdown.style.display =
+      indexLangDropdown.style.display === 'none' || indexLangDropdown.style.display === ''
+        ? 'block'
+        : 'none';
   });
   document.addEventListener('click', () => {
     if (indexLangDropdown.style.display === 'block') {
-        indexLangDropdown.style.display = 'none';
+      indexLangDropdown.style.display = 'none';
     }
   });
-  indexLangDropdown.querySelectorAll('li').forEach(item => {
+  indexLangDropdown.querySelectorAll('li').forEach((item) => {
     item.addEventListener('click', () => {
       const chosenLang = item.getAttribute('data-value');
       localStorage.setItem('preferredLanguage', chosenLang);
@@ -243,12 +472,19 @@ function initLanguageControls() {
 function updateIndexLanguageDisplays(lang) {
   if (!window.translations || !window.translations[lang]) return;
   const t = window.translations[lang];
-  
+
   // Translate simple text content
-  const elementTranslations = { 'password-title': 'passwordTitle', 'passwordError': 'passwordErrorMsg', 'passwordSubmitBtn': 'passwordSubmitBtn', 'instruction-text': 'instructionText', 'good-luck': 'goodLuck', 'acceptButton': 'acceptButton' };
+  const elementTranslations = {
+    'password-title': 'passwordTitle',
+    passwordError: 'passwordErrorMsg',
+    passwordSubmitBtn: 'passwordSubmitBtn',
+    'instruction-text': 'instructionText',
+    'good-luck': 'goodLuck',
+    acceptButton: 'acceptButton',
+  };
   for (const [id, key] of Object.entries(elementTranslations)) {
-      const el = document.getElementById(id);
-      if(el) el.textContent = t[key];
+    const el = document.getElementById(id);
+    if (el) el.textContent = t[key];
   }
 
   // Translate placeholders and dynamic text
@@ -257,22 +493,37 @@ function updateIndexLanguageDisplays(lang) {
   document.getElementById('nameInput').placeholder = t.namePlaceholder;
   document.getElementById('contactInput').placeholder = t.contactPlaceholder;
   if (checkboxesContainer.querySelectorAll('input:checked').length === 0) {
-      aimsSelectText.textContent = t.aimsPlaceholder || 'Aims';
+    aimsSelectText.textContent = t.aimsPlaceholder || 'Aims';
   }
-  
+
   // Translate checkbox labels
-  const aimsTranslations = { "Eyes": "aimsEyes", "Ears": "aimsEars", "Skin": "aimsSkin", "Veterinary": "aimsVeterinary", "Child/Maternal": "aimsChildMaternal" };
-  checkboxesContainer.querySelectorAll('label').forEach(label => {
-      const checkbox = label.querySelector('input');
-      const translationKey = aimsTranslations[checkbox.value];
-      if (label.childNodes[1] && t[translationKey]) { label.childNodes[1].nodeValue = ' ' + t[translationKey]; }
+  const aimsTranslations = {
+    Eyes: 'aimsEyes',
+    Ears: 'aimsEars',
+    Skin: 'aimsSkin',
+    Veterinary: 'aimsVeterinary',
+    'Child/Maternal': 'aimsChildMaternal',
+  };
+  checkboxesContainer.querySelectorAll('label').forEach((label) => {
+    const checkbox = label.querySelector('input');
+    const translationKey = aimsTranslations[checkbox.value];
+    if (label.childNodes[1] && t[translationKey]) {
+      label.childNodes[1].nodeValue = ' ' + t[translationKey];
+    }
   });
-  
+
   // Translate select options
-  document.querySelector('#experience-select option[disabled]').textContent = t.experiencePlaceholder;
-  const expOptionsMapping = { "Student / refresher": "experienceStudentRefresher", "Confident core knowledge": "experienceConfidentCore", "Expert": "experienceExpert" };
-  document.querySelectorAll('#experience-select option:not([disabled])').forEach(option => {
-      const translationKey = expOptionsMapping[option.value];
-      if (t[translationKey]) { option.textContent = t[translationKey]; }
+  document.querySelector('#experience-select option[disabled]').textContent =
+    t.experiencePlaceholder;
+  const expOptionsMapping = {
+    'Student / refresher': 'experienceStudentRefresher',
+    'Confident core knowledge': 'experienceConfidentCore',
+    Expert: 'experienceExpert',
+  };
+  document.querySelectorAll('#experience-select option:not([disabled])').forEach((option) => {
+    const translationKey = expOptionsMapping[option.value];
+    if (t[translationKey]) {
+      option.textContent = t[translationKey];
+    }
   });
 }

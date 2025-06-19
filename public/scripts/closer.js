@@ -7,7 +7,7 @@
  * This is the key to cleaning up nested setTimeouts.
  * @param {number} ms - The delay in milliseconds.
  */
-const delay = ms => new Promise(res => setTimeout(res, ms));
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 /**
  * Runs once the page is fully loaded, initiating the animations.

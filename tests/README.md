@@ -1,5 +1,16 @@
 # Alan Webapp Test Suite
 
+## Formatting
+
+All test files (and the rest of the codebase) are formatted using [Prettier](https://prettier.io/) for consistency.
+- To automatically format all test files, run:
+  ```
+  npm run format
+  ```
+  (Available in both the root and `Alan_web` directories.)
+
+---
+
 This folder contains automated tests for the Alan webapp, covering backend API, frontend chatbot logic, and UI/UX integration.
 
 ## Structure
@@ -87,5 +98,6 @@ This folder contains automated tests for the Alan webapp, covering backend API, 
 
 - Add more tests for edge cases, error handling, and new features as you develop.
 - Keep tests in sync with your codebase for best results.
+- Consider adding tests for rate limiting and other security middleware if your use case requires it.
 
 ---

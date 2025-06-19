@@ -10,12 +10,13 @@ export let imagesButtonClicked = false;
 
 /* ── constants & helpers ──────────────────────────────────────────────── */
 const STORAGE_KEY = 'alan-chat-history-v2';
-const normalise = s => s
-  .replace(/[.,;!?]/g, '')
-  .replace(/\s+/g, ' ')
-  .replace(/\n/g, ' ')
-  .trim()
-  .toLowerCase();
+const normalise = (s) =>
+  s
+    .replace(/[.,;!?]/g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/\n/g, ' ')
+    .trim()
+    .toLowerCase();
 
 /* add copy button inside a session container */
 function makeCopyButton(container, sess) {
@@ -23,10 +24,11 @@ function makeCopyButton(container, sess) {
   btn.className = 'fa-regular fa-copy copy-btn'; // Font Awesome icon
   btn.title = 'Copy this session';
 
-  btn.addEventListener('click', ev => {
-    ev.stopPropagation(); 
-    const text = sess.messages.map(m => m.text).join('\n');
-    navigator.clipboard.writeText(text)
+  btn.addEventListener('click', (ev) => {
+    ev.stopPropagation();
+    const text = sess.messages.map((m) => m.text).join('\n');
+    navigator.clipboard
+      .writeText(text)
       .then(() => {
         // Original opacity feedback
         btn.style.opacity = '1';
@@ -65,10 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ── observe Flowise chatbot for messages and reset actions ───────────── */
 function attachFlowiseObservers() {
   const host = document.querySelector('flowise-fullchatbot');
-  if (!host) { console.error('[History] Flowise host element not found.'); return; }
-  
+  if (!host) {
+    console.error('[History] Flowise host element not found.');
+    return;
+  }
+
   let attempts = 0;
-  const maxAttempts = 20; 
+  const maxAttempts = 20;
   const intervalId = setInterval(() => {
     attempts++;
     if (host.shadowRoot) {
@@ -76,14 +81,13 @@ function attachFlowiseObservers() {
       const root = host.shadowRoot;
       console.log('%c[History] Flowise shadowRoot accessed.', 'color:#008000');
 
-      new MutationObserver(handleBubbleChanges)
-        .observe(root, { childList: true, subtree: true });
-      handleBubbleChanges(); 
+      new MutationObserver(handleBubbleChanges).observe(root, { childList: true, subtree: true });
+      handleBubbleChanges();
 
       const hookResetButton = () => {
         const resetButton = root.querySelector('button[title="Reset Chat"]');
         if (resetButton && !resetButton.dataset.historyHooked) {
-          resetButton.dataset.historyHooked = 'true'; 
+          resetButton.dataset.historyHooked = 'true';
           resetButton.addEventListener('click', () => {
             console.log('%c[History] Flowise "Reset Chat" detected.', 'color:#ffa500');
             startNewSession();
@@ -91,10 +95,8 @@ function attachFlowiseObservers() {
           console.log('%c[History] Flowise "Reset Chat" button hooked.', 'color:#00ced1');
         }
       };
-      hookResetButton(); 
-      new MutationObserver(hookResetButton) 
-        .observe(root, { childList: true, subtree: true });
-
+      hookResetButton();
+      new MutationObserver(hookResetButton).observe(root, { childList: true, subtree: true });
     } else if (attempts >= maxAttempts) {
       clearInterval(intervalId);
       console.error('[History] Failed to access Flowise shadowRoot after multiple attempts.');
@@ -108,14 +110,14 @@ function handleBubbleChanges() {
   if (!host || !host.shadowRoot) return;
 
   host.shadowRoot
-      .querySelectorAll('[class*="guest-container"],[class*="host-container"]')
-      .forEach(bubbleElement => {
-        const rawText = bubbleElement.textContent.trim();
-        if (!rawText) return; 
+    .querySelectorAll('[class*="guest-container"],[class*="host-container"]')
+    .forEach((bubbleElement) => {
+      const rawText = bubbleElement.textContent.trim();
+      if (!rawText) return;
 
-        const role = /\bguest-container\b/i.test(bubbleElement.className) ? 'user' : 'bot';
-        saveMessage(role, rawText);
-      });
+      const role = /\bguest-container\b/i.test(bubbleElement.className) ? 'user' : 'bot';
+      saveMessage(role, rawText);
+    });
 }
 
 /* ── start a new chat session ─────────────────────────────────────────── */
@@ -128,12 +130,15 @@ function startNewSession() {
   history.sessions.push(newSession);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
 
-  storedKeys.clear(); 
+  storedKeys.clear();
 
   console.log(`%c[History] New session started: ID ${CURRENT_ID}`, 'color:#007bff');
 
   const sidebar = document.getElementById('chatHistorySidebar');
-  if (!sidebar) { console.error("[History] Sidebar element not found for new session."); return; }
+  if (!sidebar) {
+    console.error('[History] Sidebar element not found for new session.');
+    return;
+  }
 
   const headerElement = document.createElement('div');
   headerElement.className = 'session-header';
@@ -142,34 +147,34 @@ function startNewSession() {
   const contentContainer = document.createElement('div');
   contentContainer.id = `session-${CURRENT_ID}`;
   contentContainer.className = 'session-content empty-session-content'; // Mark as empty
-  makeCopyButton(contentContainer, newSession); 
+  makeCopyButton(contentContainer, newSession);
 
   headerElement.addEventListener('click', () => {
-    contentContainer.style.display =
-      contentContainer.style.display === 'none' ? 'block' : 'none';
+    contentContainer.style.display = contentContainer.style.display === 'none' ? 'block' : 'none';
   });
 
   sidebar.appendChild(headerElement);
   sidebar.appendChild(contentContainer);
-  headerElement.scrollIntoView({ behavior: 'auto', block: 'nearest' }); 
+  headerElement.scrollIntoView({ behavior: 'auto', block: 'nearest' });
 }
 
 /* ── save message, merge streaming bot chunks, de-duplicate ─────────── */
 function saveMessage(role, text) {
-  const currentSession = history.sessions.find(s => s.id === CURRENT_ID);
+  const currentSession = history.sessions.find((s) => s.id === CURRENT_ID);
   if (!currentSession) {
     // This could happen if a message arrives before startNewSession fully completes for CURRENT_ID
     // Or if CURRENT_ID somehow gets out of sync.
     // Let's try to find the latest session as a fallback.
-    const latestSession = history.sessions[history.sessions.length -1];
+    const latestSession = history.sessions[history.sessions.length - 1];
     if (latestSession && latestSession.id === CURRENT_ID) {
-        // It was just a timing issue, proceed with latestSession as currentSession
+      // It was just a timing issue, proceed with latestSession as currentSession
     } else {
-        console.error(`[History] Critical: Current session ${CURRENT_ID} not found. Message "${text}" for role "${role}" cannot be saved.`);
-        return;
+      console.error(
+        `[History] Critical: Current session ${CURRENT_ID} not found. Message "${text}" for role "${role}" cannot be saved.`
+      );
+      return;
     }
   }
-
 
   const lastMessage = currentSession.messages[currentSession.messages.length - 1];
   const normalizedText = normalise(text);
@@ -178,13 +183,16 @@ function saveMessage(role, text) {
 
   if (role === 'bot' && lastMessage && lastMessage.role === 'bot') {
     const prevNormalizedText = normalise(lastMessage.text);
-    if (normalizedText.startsWith(prevNormalizedText) || prevNormalizedText.startsWith(normalizedText)) {
+    if (
+      normalizedText.startsWith(prevNormalizedText) ||
+      prevNormalizedText.startsWith(normalizedText)
+    ) {
       const betterText = text.length > lastMessage.text.length ? text : lastMessage.text;
-      
+
       if (normalise(lastMessage.text) !== normalise(betterText)) {
-        storedKeys.delete(role + '|' + normalise(lastMessage.text)); 
+        storedKeys.delete(role + '|' + normalise(lastMessage.text));
         lastMessage.text = betterText;
-        storedKeys.add(role + '|' + normalise(betterText)); 
+        storedKeys.add(role + '|' + normalise(betterText));
 
         const sessionContentDiv = document.getElementById(`session-${CURRENT_ID}`);
         if (sessionContentDiv) {
@@ -195,7 +203,7 @@ function saveMessage(role, text) {
         }
       }
       localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
-      return; 
+      return;
     }
   }
 
@@ -208,10 +216,13 @@ function saveMessage(role, text) {
 /* ── render all sessions to the sidebar ───────────────────────────────── */
 function renderSidebar() {
   const sidebar = document.getElementById('chatHistorySidebar');
-  if (!sidebar) { console.error("[History] Sidebar element not found for rendering."); return; }
-  sidebar.innerHTML = ''; 
+  if (!sidebar) {
+    console.error('[History] Sidebar element not found for rendering.');
+    return;
+  }
+  sidebar.innerHTML = '';
 
-  history.sessions.forEach(session => {
+  history.sessions.forEach((session) => {
     const headerElement = document.createElement('div');
     headerElement.className = 'session-header';
     headerElement.textContent = `--${session.id}--`;
@@ -229,18 +240,17 @@ function renderSidebar() {
     } else {
       contentContainer.style.display = 'block'; // Ensure current is open
       storedKeys.clear(); // Reset for current session on initial render
-      session.messages.forEach(msg => storedKeys.add(msg.role + '|' + normalise(msg.text)));
+      session.messages.forEach((msg) => storedKeys.add(msg.role + '|' + normalise(msg.text)));
     }
 
     makeCopyButton(contentContainer, session);
-    session.messages.forEach(message => appendLine(contentContainer, message.role, message.text));
+    session.messages.forEach((message) => appendLine(contentContainer, message.role, message.text));
 
     headerElement.addEventListener('click', () => {
       // Toggle display of the associated content container
       const targetContent = document.getElementById(`session-${session.id}`);
       if (targetContent) {
-        targetContent.style.display =
-          targetContent.style.display === 'none' ? 'block' : 'none';
+        targetContent.style.display = targetContent.style.display === 'none' ? 'block' : 'none';
       }
     });
 
@@ -248,9 +258,11 @@ function renderSidebar() {
     sidebar.appendChild(contentContainer);
   });
 
-  const currentSessionHeader = sidebar.querySelector(`#session-${CURRENT_ID}`)?.previousElementSibling;
+  const currentSessionHeader = sidebar.querySelector(
+    `#session-${CURRENT_ID}`
+  )?.previousElementSibling;
   if (currentSessionHeader) {
-      currentSessionHeader.scrollIntoView({ behavior: 'auto', block: 'nearest' });
+    currentSessionHeader.scrollIntoView({ behavior: 'auto', block: 'nearest' });
   }
 }
 
@@ -266,11 +278,14 @@ function appendLineToSidebar(sessionId, role, text) {
 /* ── create and append a DOM element for a message line ──────────────── */
 function appendLine(sessionContentDiv, role, text) {
   const lineElement = document.createElement('div');
-  lineElement.className = `history-message ${role}`; 
+  lineElement.className = `history-message ${role}`;
   lineElement.textContent = text;
   sessionContentDiv.appendChild(lineElement);
 
-  if (sessionContentDiv.style.display !== 'none' && sessionContentDiv.id === `session-${CURRENT_ID}`) {
+  if (
+    sessionContentDiv.style.display !== 'none' &&
+    sessionContentDiv.id === `session-${CURRENT_ID}`
+  ) {
     sessionContentDiv.scrollTop = sessionContentDiv.scrollHeight;
   }
 }
@@ -283,7 +298,7 @@ export function attachImagesButton() {
 export function resetSidebarHistory() {
   console.log('%c[History] Resetting in-memory sidebar history state.', 'color:#ff0000');
   history = { sessionCounter: 0, sessions: [] };
-  CURRENT_ID = 0; 
+  CURRENT_ID = 0;
   storedKeys.clear();
   // The actual localStorage.removeItem and DOM clearing (sidebar.innerHTML = '')
   // is handled by the clearHistoryBtn event listener in the main HTML/script.

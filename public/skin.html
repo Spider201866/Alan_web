@@ -4,18 +4,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="How to examine the skin: Alan's AI assistant guide for skin examination, including observation, UV light, and dermoscopy." />
+    <meta
+      name="description"
+      content="How to examine the skin: Alan's AI assistant guide for skin examination, including observation, UV light, and dermoscopy."
+    />
     <title>Skin Exam</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
-    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
-    <link rel="manifest" href="favicons/manifest.json">
-<link rel="stylesheet" href="styles/styles.css">
-<script type="module" src="scripts/faviconAndMeta.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png" />
+    <link rel="manifest" href="favicons/manifest.json" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <script type="module" src="scripts/faviconAndMeta.js"></script>
     <!-- Translations object embedded for a single-file solution -->
     <script>
       window.translations = {
@@ -53,13 +59,28 @@
         margin-bottom: 8px;
       }
       /* IMPROVEMENT: Reusable classes to replace inline styles */
-      .teal { color: teal; }
-      .coral-orange { color: #ff7f50; }
-      .coral-red { color: #ff4040; }
-      .blue { color: blue; }
-      .orange { color: orange; }
-      .pale-blue { color: #bfefff; }
-      .red { color: red; font-weight: bold; }
+      .teal {
+        color: teal;
+      }
+      .coral-orange {
+        color: #ff7f50;
+      }
+      .coral-red {
+        color: #ff4040;
+      }
+      .blue {
+        color: blue;
+      }
+      .orange {
+        color: orange;
+      }
+      .pale-blue {
+        color: #bfefff;
+      }
+      .red {
+        color: red;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
@@ -74,23 +95,40 @@
       <h3 id="uvLightHeading">UV (Wood’s) light</h3>
       <div id="uvLightText">
         <span class="block">In a blacked-out room check for characteristic fluorescence:</span>
-        <span class="block"><span class="teal">tinea (blue-green)</span>, <span class="coral-orange">pityriasis versicolor (coppery-orange)</span>, <span class="coral-red">erythrasma (coral-red)</span>, <span class="blue">vitiligo (blue-white)</span>, <span class="orange">acne (orange-red)</span>, <span class="pale-blue">head lice nits (pale-blue)</span></span>
+        <span class="block"
+          ><span class="teal">tinea (blue-green)</span>,
+          <span class="coral-orange">pityriasis versicolor (coppery-orange)</span>,
+          <span class="coral-red">erythrasma (coral-red)</span>,
+          <span class="blue">vitiligo (blue-white)</span>,
+          <span class="orange">acne (orange-red)</span>,
+          <span class="pale-blue">head lice nits (pale-blue)</span></span
+        >
       </div>
 
       <h3 id="dermoscopyHeading">Dermoscopy</h3>
       <div id="dermoscopyText">
-        <span class="block"><strong><u>Hold Arclight polariser like a pen</u></strong>, check: <strong>ABCDE</strong> (<em>Asymmetry</em>, <em>Border</em>, <em>Colour</em>, <em>Diameter >6mm</em>, <em>Evolving</em>)</span>
-        <span class="block">Study: PDSBV (<em>Pigment network</em>, <em>Dots</em>, <em>Streaks</em>, <em>Blue-white</em>, <em>Vascular</em>)</span>
+        <span class="block"
+          ><strong><u>Hold Arclight polariser like a pen</u></strong
+          >, check: <strong>ABCDE</strong> (<em>Asymmetry</em>, <em>Border</em>, <em>Colour</em>,
+          <em>Diameter >6mm</em>, <em>Evolving</em>)</span
+        >
+        <span class="block"
+          >Study: PDSBV (<em>Pigment network</em>, <em>Dots</em>, <em>Streaks</em>,
+          <em>Blue-white</em>, <em>Vascular</em>)</span
+        >
       </div>
 
       <div id="additionalText">
-        <span class="block">Know your lesion: normal, <span class="red">suspicious</span>, <span class="orange">inflamed</span></span>
+        <span class="block"
+          >Know your lesion: normal, <span class="red">suspicious</span>,
+          <span class="orange">inflamed</span></span
+        >
         <span class="block">>Practice often<</span>
       </div>
     </div>
 
     <script type="module">
-import { initPage } from './scripts/page-template.js';
+      import { initPage } from './scripts/page-template.js';
 
       // This is the function that knows how to translate THIS specific page
       function applyTranslations() {
@@ -100,7 +138,8 @@ import { initPage } from './scripts/page-template.js';
 
         // We no longer need to update the pageTitle here, the template does it.
         // We just need to handle the content unique to this page.
-        document.getElementById('generalObservationHeading').textContent = t.generalObservationHeading;
+        document.getElementById('generalObservationHeading').textContent =
+          t.generalObservationHeading;
         document.getElementById('generalObservationText').innerHTML = t.generalObservationText;
         document.getElementById('uvLightHeading').textContent = t.uvLightHeading;
         document.getElementById('uvLightText').innerHTML = t.uvLightText;

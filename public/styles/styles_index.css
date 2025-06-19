@@ -39,7 +39,9 @@ body {
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 0.5s, opacity 0.5s linear;
+  transition:
+    visibility 0s 0.5s,
+    opacity 0.5s linear;
 }
 
 .visible {
@@ -74,8 +76,10 @@ body {
 
 .black-screen {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-color: black;
   display: flex;
   justify-content: center;
@@ -86,14 +90,16 @@ body {
    4. SPLASH SCREEN SPECIFICS
 ===================================================================== */
 .splash-screen img {
-  width: 30vw; max-width: 150px;
+  width: 30vw;
+  max-width: 150px;
   height: auto;
   margin: 20px 0;
   transform-origin: center;
   transition: transform 3s ease-in-out;
 }
 #logo2 {
-  width: 50vw; max-width: 300px;
+  width: 50vw;
+  max-width: 300px;
   margin-bottom: 40px;
 }
 .splash-screen p {
@@ -106,8 +112,12 @@ body {
   animation: zoomEffect 3s ease-in-out forwards;
 }
 @keyframes zoomEffect {
-  from { transform: scale(0.8); }
-  to { transform: scale(1); }
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 /* =====================================================================
@@ -116,18 +126,26 @@ body {
 
 /* Common styles for all input/select fields */
 .onboarding-field {
-  display: flex; align-items: center;
-  width: var(--field-width); height: var(--field-height);
-  margin: 10px auto; padding: 0 15px;
-  font-size: 16px; font-family: inherit;
+  display: flex;
+  align-items: center;
+  width: var(--field-width);
+  height: var(--field-height);
+  margin: 10px auto;
+  padding: 0 15px;
+  font-size: 16px;
+  font-family: inherit;
   color: var(--color-placeholder);
   background-color: var(--color-background-form);
   border: 2px solid var(--field-border-color);
   border-radius: var(--field-border-radius);
-  box-sizing: border-box; position: relative;
-  appearance: none; -webkit-appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  appearance: none;
+  -webkit-appearance: none;
   text-align: left;
-  transition: border-color 0.2s, color 0.2s;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
 }
 
 .onboarding-field.is-active {
@@ -150,34 +168,51 @@ select.experience-dropdown {
 }
 
 /* --- Aims Multi-Select Dropdown --- */
-.custom-multiselect-container { padding: 0; }
+.custom-multiselect-container {
+  padding: 0;
+}
 .custom-multiselect-container .select-box {
-  display: flex; align-items: center;
-  height: 100%; width: 100%;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
   padding: 0 15px;
-  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .custom-multiselect-container .checkboxes {
-  display: none; position: absolute;
-  top: 100%; left: 0; right: 0;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   background: var(--color-background-form);
-  border: 1px solid var(--field-border-color); border-top: none;
+  border: 1px solid var(--field-border-color);
+  border-top: none;
   border-radius: 0 0 var(--field-border-radius) var(--field-border-radius);
-  max-height: 200px; overflow-y: auto;
-  z-index: 1000; padding: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 10px;
   text-align: left;
 }
 .custom-multiselect-container .checkboxes label {
-  display: flex; align-items: center;
-  padding: 8px; cursor: pointer;
-  color: #333; font-size: 16px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  color: #333;
+  font-size: 16px;
   border-radius: 6px;
 }
 .custom-multiselect-container .checkboxes label:hover {
   background-color: var(--color-background-main);
 }
-.custom-multiselect-container .checkboxes input[type="checkbox"] {
-  margin-right: 12px; transform: scale(1.2); flex-shrink: 0;
+.custom-multiselect-container .checkboxes input[type='checkbox'] {
+  margin-right: 12px;
+  transform: scale(1.2);
+  flex-shrink: 0;
 }
 
 /* =====================================================================

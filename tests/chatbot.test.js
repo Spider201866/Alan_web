@@ -17,12 +17,15 @@ describe('Chatbot Frontend', () => {
   let document;
 
   beforeEach(() => {
-    dom = new JSDOM(`
+    dom = new JSDOM(
+      `
       <body>
         <div class="chatbot-container"></div>
         <ul id="chat-history-list"></ul>
       </body>
-    `, { url: "http://localhost" });
+    `,
+      { url: 'http://localhost' }
+    );
     document = dom.window.document;
     global.document = document;
     global.window = dom.window;
@@ -30,8 +33,12 @@ describe('Chatbot Frontend', () => {
     let store = {};
     global.localStorage = {
       getItem: (key) => store[key] || null,
-      setItem: (key, value) => { store[key] = value; },
-      removeItem: (key) => { delete store[key]; }
+      setItem: (key, value) => {
+        store[key] = value;
+      },
+      removeItem: (key) => {
+        delete store[key];
+      },
     };
   });
 
@@ -45,13 +52,13 @@ describe('Chatbot Frontend', () => {
       { className: 'guest-container', textContent: 'Hello' },
       { className: 'host-container', textContent: 'Hi there' },
       { className: 'guest-container', textContent: 'Hello' }, // duplicate
-      { className: 'host-container', textContent: 'How can I help?' }
+      { className: 'host-container', textContent: 'How can I help?' },
     ];
     // Deduplication logic
-    const normalise = s => s.replace(/\s+/g, ' ').trim().toLowerCase();
+    const normalise = (s) => s.replace(/\s+/g, ' ').trim().toLowerCase();
     const seen = new Set();
     const lines = [];
-    bubbles.forEach(bub => {
+    bubbles.forEach((bub) => {
       const raw = bub.textContent.trim();
       if (!raw) return;
       const key = normalise(raw);
@@ -81,7 +88,7 @@ describe('Chatbot Frontend', () => {
     // Save to localStorage
     const fullLog = [
       { user: true, text: 'Hello' },
-      { user: false, text: 'Hi there' }
+      { user: false, text: 'Hi there' },
     ];
     localStorage.setItem('alan-sidebar-log', JSON.stringify(fullLog));
     expect(localStorage.getItem('alan-sidebar-log')).toBe(JSON.stringify(fullLog));
@@ -91,7 +98,7 @@ describe('Chatbot Frontend', () => {
     // Set up localStorage
     const fullLog = [
       { user: true, text: 'Hello' },
-      { user: false, text: 'Hi there' }
+      { user: false, text: 'Hi there' },
     ];
     localStorage.setItem('alan-sidebar-log', JSON.stringify(fullLog));
     // Restore

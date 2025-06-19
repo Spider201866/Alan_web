@@ -4,18 +4,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Instructions for using Alan, the AI assistant for eyes, ears, and skin. Learn how to interact, what information to provide, and how to get the best results." />
+    <meta
+      name="description"
+      content="Instructions for using Alan, the AI assistant for eyes, ears, and skin. Learn how to interact, what information to provide, and how to get the best results."
+    />
     <title>Instructions</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
-    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
-    <link rel="manifest" href="favicons/manifest.json">
-<link rel="stylesheet" href="styles/styles.css">
-<script type="module" src="scripts/faviconAndMeta.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png" />
+    <link rel="manifest" href="favicons/manifest.json" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <script type="module" src="scripts/faviconAndMeta.js"></script>
     <!-- Translations object embedded -->
     <script>
       window.translations = {
@@ -28,7 +34,7 @@
           instructionsPatientDetail2: 'what you see',
           instructionsPatientDetail3: 'vision & pupils', // This is the default for Eye
           instructionsPatientDetail4: 'age, sex, medication',
-          
+
           // Specific texts for patientDetail3 for Ear and Skin
           instructionsPatientDetail3_ear_specific: 'hearing',
           instructionsPatientDetail3_skin_specific: 'odour',
@@ -47,9 +53,11 @@
           instructionsTooMuch_eye: `This man came into clinics today. He drove into the building with a red eye, now he thinks the food he ate is affecting his eye. I see watering, red edges, you know? He wants help. Tall man, watery eyes, worried about cornea and pain. He says, "What is this?"`,
           instructionsAdditionalQuery_eye: `Alan also answers eye teaching/learning queries: What is Iritis? How do I see the retina?`,
           instructionsTooLittle_ear: 'child ear pain',
-          instructionsJustRight_ear: 'Girl 4yr, R ear pain 2 days. Fever, pulling ear. TM red, bulging. Not crying now. No discharge.',
+          instructionsJustRight_ear:
+            'Girl 4yr, R ear pain 2 days. Fever, pulling ear. TM red, bulging. Not crying now. No discharge.',
           instructionsTooMuch_ear: `My daughter has an earache, she was fine yesterday but today she keeps touching her right ear and she had a temperature earlier. I looked inside but I can't see anything. What do you think is wrong with her?`,
-          instructionsAdditionalQuery_ear: 'Alan also answers ear teaching/learning queries: What is otitis media?',
+          instructionsAdditionalQuery_ear:
+            'Alan also answers ear teaching/learning queries: What is otitis media?',
           instructionsTooLittle_skin: 'rash on arm',
           instructionsJustRight_skin: `Woman 30yr, itchy rash on arm 1 week. Spreading slowly. Annular lesion with central clearing. No fever, feels well.`,
           instructionsTooMuch_skin: `I have this weird circular rash on my forearm, it started small but it's getting bigger. It doesn't hurt but it's really itchy. I haven't used any new soaps or anything. It's been there for about a week.`,
@@ -59,10 +67,14 @@
     </script>
     <style>
       /* --- Identical to original styles, with flexbox fix & overflow --- */
-      body, html {
-        margin: 0; padding: 0; height: 100%;
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
         font-family: 'Calibri Light', Arial, sans-serif;
-        font-size: 15px; background-color: white;
+        font-size: 15px;
+        background-color: white;
       }
       body {
         display: flex;
@@ -76,57 +88,124 @@
         flex-direction: column;
       }
       #wrapSection {
-        overflow: hidden; margin-bottom: 25px; padding-right: 0;
+        overflow: hidden;
+        margin-bottom: 25px;
+        padding-right: 0;
       }
       #switchContainer {
-        float: right; width: 100px; text-align: center;
-        padding: 10px; border-radius: 15px;
-        margin-left: 0; margin-right: -25px; margin-top: -10px;
+        float: right;
+        width: 100px;
+        text-align: center;
+        padding: 10px;
+        border-radius: 15px;
+        margin-left: 0;
+        margin-right: -25px;
+        margin-top: -10px;
       }
       .switch {
-        position: relative; display: inline-block;
-        width: 60px; height: 180px;
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 180px;
       }
-      .switch input { display: none; }
+      .switch input {
+        display: none;
+      }
       .switch-label {
-        display: flex; align-items: center; justify-content: center;
-        cursor: pointer; width: 60px; height: 60px;
-        font-weight: bold; color: black; background-color: white;
-        transition: background-color 0.3s, box-shadow 0.3s;
-        border-radius: 20px; border: 1px solid black;
-        margin-bottom: 10px; white-space: nowrap;
-        overflow: hidden; text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        width: 60px;
+        height: 60px;
+        font-weight: bold;
+        color: black;
+        background-color: white;
+        transition:
+          background-color 0.3s,
+          box-shadow 0.3s;
+        border-radius: 20px;
+        border: 1px solid black;
+        margin-bottom: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .switch-label:hover {
-        background-color: #e0e0e0; box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        background-color: #e0e0e0;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
       }
       .switch input:checked + .switch-label {
-        background-color: black; color: white;
-        border-color: black; box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        background-color: black;
+        color: white;
+        border-color: black;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
       }
-      .clear { clear: both; }
-      .boldText { font-weight: bold; }
-      .justify { text-align: justify; }
-      #additionalExamples p { margin-bottom: 10px; font-size: 13px; color: #333; }
+      .clear {
+        clear: both;
+      }
+      .boldText {
+        font-weight: bold;
+      }
+      .justify {
+        text-align: justify;
+      }
+      #additionalExamples p {
+        margin-bottom: 10px;
+        font-size: 13px;
+        color: #333;
+      }
       #additionalExamples strong {
-        display: block; font-weight: bold;
-        margin-bottom: -10px; line-height: 1.2;
+        display: block;
+        font-weight: bold;
+        margin-bottom: -10px;
+        line-height: 1.2;
       }
       #additionalExamples span {
-        display: block; margin-left: 10px;
-        margin-top: 0; line-height: 1.2;
+        display: block;
+        margin-left: 10px;
+        margin-top: 0;
+        line-height: 1.2;
       }
-      .infoText { padding-left: 60px; color: black; margin-top: 5px; margin-bottom: 10px;}
-      .infoText li { list-style-type: none; line-height: 1.2; margin-bottom: 2px; }
-      .listText { color: red; }
-      hr { border: none; height: 2px; background-color: #ccc; margin: 20px 0; }
-      #useArclight { margin-top: 10px; margin-bottom: 10px; }
-      #additionalQuery { padding-top: 5px; color: blue; font-size: 15px; }
+      .infoText {
+        padding-left: 60px;
+        color: black;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+      .infoText li {
+        list-style-type: none;
+        line-height: 1.2;
+        margin-bottom: 2px;
+      }
+      .listText {
+        color: red;
+      }
+      hr {
+        border: none;
+        height: 2px;
+        background-color: #ccc;
+        margin: 20px 0;
+      }
+      #useArclight {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      #additionalQuery {
+        padding-top: 5px;
+        color: blue;
+        font-size: 15px;
+      }
       @media (max-width: 600px) {
         #switchContainer {
-          width: 80px; margin-left: 0; margin-right: 0; margin-top: -10px;
+          width: 80px;
+          margin-left: 0;
+          margin-right: 0;
+          margin-top: -10px;
         }
-        .infoText { padding-left: 20px; }
+        .infoText {
+          padding-left: 20px;
+        }
       }
     </style>
   </head>
@@ -156,15 +235,15 @@
           <hr />
           <div id="additionalExamples" class="justify">
             <p>
-              <span class="block" id="labelTooLittle" style="font-weight:bold"></span>
+              <span class="block" id="labelTooLittle" style="font-weight: bold"></span>
               <span class="block" id="tooLittle"></span>
             </p>
             <p>
-              <span class="block" id="labelJustRight" style="font-weight:bold"></span>
+              <span class="block" id="labelJustRight" style="font-weight: bold"></span>
               <span class="block" id="justRight"></span>
             </p>
             <p>
-              <span class="block" id="labelTooMuch" style="font-weight:bold"></span>
+              <span class="block" id="labelTooMuch" style="font-weight: bold"></span>
               <span class="block" id="tooMuch"></span>
             </p>
             <p id="additionalQuery"></p>
@@ -175,7 +254,7 @@
     </main>
 
     <script type="module">
-import { initPage } from './scripts/page-template.js';
+      import { initPage } from './scripts/page-template.js';
 
       function applyTranslationsAndToggle() {
         var trans;
@@ -185,33 +264,36 @@ import { initPage } from './scripts/page-template.js';
           document.getElementById('pageTitle').textContent = trans.instructionsPageTitle;
           document.getElementById('introText').innerHTML = trans.instructionsIntro;
           document.getElementById('patientPrompt').textContent = trans.instructionsPatientPrompt;
-          
+
           // Set static details (1, 2, and 4)
-          document.getElementById('patientDetail1').innerHTML = `<span class="listText">${trans.instructionsPatientDetail1}</span>`;
-          document.getElementById('patientDetail2').innerHTML = `<span class="listText">${trans.instructionsPatientDetail2}</span>`;
-          document.getElementById('patientDetail4').innerHTML = `<span class="listText">${trans.instructionsPatientDetail4}</span>`;
-          
+          document.getElementById('patientDetail1').innerHTML =
+            `<span class="listText">${trans.instructionsPatientDetail1}</span>`;
+          document.getElementById('patientDetail2').innerHTML =
+            `<span class="listText">${trans.instructionsPatientDetail2}</span>`;
+          document.getElementById('patientDetail4').innerHTML =
+            `<span class="listText">${trans.instructionsPatientDetail4}</span>`;
+
           // Detail 3 will be set by toggleContent based on the current selection
-          toggleContent(); 
+          toggleContent();
         } else {
-          console.error("Translations not found for language:", lang);
+          console.error('Translations not found for language:', lang);
         }
 
-        document.querySelectorAll('input[name="option"]').forEach(function(radio) {
+        document.querySelectorAll('input[name="option"]').forEach(function (radio) {
           radio.addEventListener('change', toggleContent);
         });
 
         function toggleContent() {
           var option = document.querySelector('input[name="option"]:checked').value;
-          
+
           if (!trans) {
-              console.warn("toggleContent called before translations (trans) are loaded.");
-              var lang = localStorage.getItem('preferredLanguage') || 'en';
-              trans = window.translations && window.translations[lang];
-              if (!trans) {
-                  console.error("Failed to load translations in toggleContent. Aborting.");
-                  return; 
-              }
+            console.warn('toggleContent called before translations (trans) are loaded.');
+            var lang = localStorage.getItem('preferredLanguage') || 'en';
+            trans = window.translations && window.translations[lang];
+            if (!trans) {
+              console.error('Failed to load translations in toggleContent. Aborting.');
+              return;
+            }
           }
 
           document.getElementById('labelTooLittle').textContent = trans.instructionsLabelTooLittle;
@@ -221,33 +303,40 @@ import { initPage } from './scripts/page-template.js';
           let patientDetail3Text = trans.instructionsPatientDetail3; // Default for Eye
 
           if (option === 'eye') {
-            document.getElementById('content').style.backgroundColor = trans.instructionsBackground_eye;
+            document.getElementById('content').style.backgroundColor =
+              trans.instructionsBackground_eye;
             document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_eye;
             document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_eye;
             document.getElementById('justRight').textContent = trans.instructionsJustRight_eye;
             document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_eye;
-            document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_eye;
+            document.getElementById('additionalQuery').innerHTML =
+              trans.instructionsAdditionalQuery_eye;
             // patientDetail3Text is already set to the default (eye version)
           } else if (option === 'ear') {
-            document.getElementById('content').style.backgroundColor = trans.instructionsBackground_ear;
+            document.getElementById('content').style.backgroundColor =
+              trans.instructionsBackground_ear;
             document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_ear;
             document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_ear;
             document.getElementById('justRight').textContent = trans.instructionsJustRight_ear;
             document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_ear;
-            document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_ear;
+            document.getElementById('additionalQuery').innerHTML =
+              trans.instructionsAdditionalQuery_ear;
             patientDetail3Text = trans.instructionsPatientDetail3_ear_specific; // Use specific ear text
           } else if (option === 'skin') {
-            document.getElementById('content').style.backgroundColor = trans.instructionsBackground_skin;
+            document.getElementById('content').style.backgroundColor =
+              trans.instructionsBackground_skin;
             document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_skin;
             document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_skin;
             document.getElementById('justRight').textContent = trans.instructionsJustRight_skin;
             document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_skin;
-            document.getElementById('additionalQuery').innerHTML = trans.instructionsAdditionalQuery_skin;
+            document.getElementById('additionalQuery').innerHTML =
+              trans.instructionsAdditionalQuery_skin;
             patientDetail3Text = trans.instructionsPatientDetail3_skin_specific; // Use specific skin text
           }
 
           // Update patientDetail3 with the determined text
-          document.getElementById('patientDetail3').innerHTML = `<span class="listText">${patientDetail3Text}</span>`;
+          document.getElementById('patientDetail3').innerHTML =
+            `<span class="listText">${patientDetail3Text}</span>`;
         }
       }
 

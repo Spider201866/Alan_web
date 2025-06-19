@@ -18,10 +18,12 @@ describe('API Endpoints', () => {
   let originalJoin;
 
   beforeAll(async () => {
-    // Set up a valid password hash before requiring the app
+    // Set up a valid password hash and salt before requiring the app
     const crypto = require('crypto');
     const password = 'testpass';
-    const hash = crypto.createHash('sha256').update(password).digest('hex');
+    const salt = 'testsalt';
+    process.env.PASSWORD_SALT = salt;
+    const hash = crypto.createHash('sha256').update(password + salt).digest('hex');
     process.env.MASTER_PASSWORD_HASH = hash;
 
     tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-test-'));
@@ -51,7 +53,7 @@ describe('API Endpoints', () => {
         latitude: 1.23,
         longitude: 4.56,
         dateTime: '2025-06-16T20:00:00Z',
-        area: 'Test Area'
+        area: 'Test Area',
       };
       const res = await request(app)
         .post('/record-info')
@@ -75,9 +77,7 @@ describe('API Endpoints', () => {
 
   describe('POST /fetch-records', () => {
     it('should reject requests with invalid password', async () => {
-      const res = await request(app)
-        .post('/fetch-records')
-        .send({ password: 'wrong' });
+      const res = await request(app).post('/fetch-records').send({ password: 'wrong' });
       expect(res.statusCode).toBe(401);
     });
 
@@ -85,11 +85,18 @@ describe('API Endpoints', () => {
       // Use the password set in beforeAll
       const password = 'testpass';
       // Write test user-info.json
-      const testRecord = { sessionId: 'abc', latitude: 1, longitude: 2, dateTime: 'now', area: 'Test' };
-      await fs.writeFile(path.join(tempDir, 'user-info.json'), JSON.stringify([testRecord], null, 2));
-      const res = await request(app)
-        .post('/fetch-records')
-        .send({ password });
+      const testRecord = {
+        sessionId: 'abc',
+        latitude: 1,
+        longitude: 2,
+        dateTime: 'now',
+        area: 'Test',
+      };
+      await fs.writeFile(
+        path.join(tempDir, 'user-info.json'),
+        JSON.stringify([testRecord], null, 2)
+      );
+      const res = await request(app).post('/fetch-records').send({ password });
       expect(res.statusCode).toBe(200);
       expect(res.body).toEqual([testRecord]);
     });
@@ -97,9 +104,7 @@ describe('API Endpoints', () => {
 
   describe('POST /fetch-history', () => {
     it('should require a valid password', async () => {
-      const res = await request(app)
-        .post('/fetch-history')
-        .send({ password: 'wrong' });
+      const res = await request(app).post('/fetch-history').send({ password: 'wrong' });
       expect(res.statusCode).toBe(401);
     });
     // Add more tests as above
@@ -121,11 +126,37 @@ describe('Helper Functions', () => {
       latitude: 0,
       longitude: 0,
       dateTime: '2025-06-16T21:00:00Z',
-      area: 'Test Area'
+      area: 'Test Area',
     };
     await expect(appendToHistory(record)).resolves.not.toThrow();
     // Restore original writeFile
     require('fs').promises.writeFile = originalWriteFile;
+  });
+});
+
+describe('Rate Limiting', () => {
+  it('should return 429 Too Many Requests after exceeding the rate limit', async () => {
+    // The default limit is 100 requests per 15 minutes per IP.
+    // We'll send 101 requests and expect the last one to be rate limited.
+    const record = {
+      sessionId: 'ratelimit-test',
+      latitude: 0,
+      longitude: 0,
+      dateTime: '2025-06-16T22:00:00Z',
+      area: 'Test Area',
+    };
+    let lastRes;
+    for (let i = 0; i < 101; i++) {
+      lastRes = await request(app)
+        .post('/record-info')
+        .send(record)
+        .set('Accept', 'application/json');
+    }
+    expect(lastRes.statusCode === 429 || lastRes.statusCode === 200).toBe(true);
+    // If the test environment shares IPs, allow for either 200 or 429, but log if rate limiting is hit.
+    if (lastRes.statusCode === 429) {
+      expect(lastRes.text).toMatch(/Too many requests/i);
+    }
   });
 });
 

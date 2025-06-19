@@ -4,18 +4,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="How to examine the ear: Alan's AI assistant guide for ear examination, including pinna, canal, and tympanic membrane." />
+    <meta
+      name="description"
+      content="How to examine the ear: Alan's AI assistant guide for ear examination, including pinna, canal, and tympanic membrane."
+    />
     <title>Ear Exam</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
-    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
-    <link rel="manifest" href="favicons/manifest.json">
-<link rel="stylesheet" href="styles/styles.css">
-<script type="module" src="scripts/faviconAndMeta.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png" />
+    <link rel="manifest" href="favicons/manifest.json" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <script type="module" src="scripts/faviconAndMeta.js"></script>
     <!-- Translations object embedded for a single-file solution -->
     <script>
       window.translations = {
@@ -53,10 +59,19 @@
         margin-bottom: 8px;
       }
       /* IMPROVEMENT: Reusable classes to replace inline styles */
-      .red { color: red; font-weight: bold; }
-      .orange { color: orange; }
-      .green { color: green; }
-      .purple { color: purple; }
+      .red {
+        color: red;
+        font-weight: bold;
+      }
+      .orange {
+        color: orange;
+      }
+      .green {
+        color: green;
+      }
+      .purple {
+        color: purple;
+      }
     </style>
   </head>
   <body>
@@ -64,15 +79,22 @@
     <div id="earExamText">
       <h3 id="allAroundEarHeading">All around ear</h3>
       <div id="allAroundEarText">
-        <span class="block">Check: <em>pinna, </em><em>tragus, </em><em>mastoid</em> for lumps, tenderness or discharge</span>
+        <span class="block"
+          >Check: <em>pinna, </em><em>tragus, </em><em>mastoid</em> for lumps, tenderness or
+          discharge</span
+        >
         <span class="block">Gently move pinna, note any pain</span>
       </div>
 
       <h3 id="earCanalHeading">Ear canal</h3>
       <div id="earCanalText">
-        <span class="block">Tilt head, <strong><u>hold Arclight like a pen</u></strong></span>
+        <span class="block"
+          >Tilt head, <strong><u>hold Arclight like a pen</u></strong></span
+        >
         <span class="block">Pull pinna up/back (adults) or down/back (children)</span>
-        <span class="block">Insert speculum (4.5mm adult, 2.5mm infant), push past hairs, rotate if needed</span>
+        <span class="block"
+          >Insert speculum (4.5mm adult, 2.5mm infant), push past hairs, rotate if needed</span
+        >
         <span class="block">Look for: <em>wax,</em> <em>debris,</em> <em>infection</em></span>
       </div>
 
@@ -84,13 +106,17 @@
       </div>
 
       <div id="additionalText">
-        <span class="block">Know your TM's: normal, <span class="red">red</span>, <span class="orange">bulging</span>, <span class="green">retracted</span>, <span class="purple">perforated</span></span>
+        <span class="block"
+          >Know your TM's: normal, <span class="red">red</span>,
+          <span class="orange">bulging</span>, <span class="green">retracted</span>,
+          <span class="purple">perforated</span></span
+        >
         <span class="block">>Practice often<</span>
       </div>
     </div>
 
     <script type="module">
-import { initPage } from './scripts/page-template.js';
+      import { initPage } from './scripts/page-template.js';
 
       // This is the function that knows how to translate THIS specific page
       function applyTranslations() {

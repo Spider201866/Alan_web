@@ -1,25 +1,31 @@
 <!-- Alan UI - index.html | 19th June 2025, WJW -->
 <!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <title>Alan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Alan: AI onboarding and login. Start using the AI assistant for eyes, ears, and skin. Secure access and language selection." />
-<link rel="stylesheet" href="styles/styles_index.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
-    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
-    <link rel="manifest" href="favicons/manifest.json">
-<script type="module" src="scripts/faviconAndMeta.js"></script>
+    <meta
+      name="description"
+      content="Alan: AI onboarding and login. Start using the AI assistant for eyes, ears, and skin. Secure access and language selection."
+    />
+    <link rel="stylesheet" href="styles/styles_index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png" />
+    <link rel="manifest" href="favicons/manifest.json" />
+    <script type="module" src="scripts/faviconAndMeta.js"></script>
 
     <!-- External JS modules will be loaded as-is -->
     <script type="module">
-import { translations } from './scripts/language.js';
+      import { translations } from './scripts/language.js';
       window.translations = translations; // Make translations globally available
     </script>
 
@@ -27,155 +33,421 @@ import { translations } from './scripts/language.js';
     <style>
       /* --- UNIFIED STYLE FOR ALL FORM FIELDS FOR CONSISTENT SPACING AND APPEARANCE --- */
       .onboarding-field {
-        display: flex; align-items: center; width: 220px; height: 50px;
-        margin: 10px auto; padding: 0 15px; font-size: 16px; color: grey;
-        background-color: #fff; border: 2px solid #ccc; border-radius: 14px;
-        box-sizing: border-box; position: relative; -webkit-appearance: none;
-        appearance: none; text-align: left; font-family: sans-serif;
+        display: flex;
+        align-items: center;
+        width: 220px;
+        height: 50px;
+        margin: 10px auto;
+        padding: 0 15px;
+        font-size: 16px;
+        color: grey;
+        background-color: #fff;
+        border: 2px solid #ccc;
+        border-radius: 14px;
+        box-sizing: border-box;
+        position: relative;
+        -webkit-appearance: none;
+        appearance: none;
+        text-align: left;
+        font-family: sans-serif;
       }
       /* --- Style for the custom multi-select dropdown --- */
-      .custom-multiselect-container { padding: 0; cursor: pointer; }
+      .custom-multiselect-container {
+        padding: 0;
+        cursor: pointer;
+      }
       .custom-multiselect-container .select-box {
-        display: flex; align-items: center; height: 100%; width: 100%;
-        padding: 0 15px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        padding: 0 15px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
       /* --- Add identical dropdown arrow to select and custom div --- */
-      .experience-dropdown, .custom-multiselect-container {
+      .experience-dropdown,
+      .custom-multiselect-container {
         background-image: url('data:image/svg+xml;utf8,<svg fill="%233e3e3e" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-        background-repeat: no-repeat; background-position: right 10px center;
-        background-size: 24px; padding-right: 40px;
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 24px;
+        padding-right: 40px;
       }
-      select.experience-dropdown { padding-left: 13px; cursor: pointer; }
+      select.experience-dropdown {
+        padding-left: 13px;
+        cursor: pointer;
+      }
       /* --- Checkbox dropdown panel --- */
       .custom-multiselect-container .checkboxes {
-        display: none; position: absolute; top: 100%; left: 0; right: 0;
-        background: white; border: 1px solid #ccc; border-top: none;
-        border-radius: 0 0 14px 14px; max-height: 200px; overflow-y: auto;
-        z-index: 1000; padding: 10px; text-align: left;
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ccc;
+        border-top: none;
+        border-radius: 0 0 14px 14px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        padding: 10px;
+        text-align: left;
       }
       .custom-multiselect-container .checkboxes label {
-        display: flex; align-items: center; padding: 8px;
-        cursor: pointer; color: #333; font-size: 16px;
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        cursor: pointer;
+        color: #333;
+        font-size: 16px;
       }
-      .custom-multiselect-container .checkboxes label:hover { background-color: #f0f0f0; }
-      .custom-multiselect-container .checkboxes input[type="checkbox"] { margin-right: 10px; transform: scale(1.2); }
+      .custom-multiselect-container .checkboxes label:hover {
+        background-color: #f0f0f0;
+      }
+      .custom-multiselect-container .checkboxes input[type='checkbox'] {
+        margin-right: 10px;
+        transform: scale(1.2);
+      }
       /* --- Style for active/selected fields --- */
-      .onboarding-field.is-active { color: blue; border-color: blue; }
+      .onboarding-field.is-active {
+        color: blue;
+        border-color: blue;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <main>
-        <!-- ===================================================================== -->
-        <!-- PASSWORD SCREEN (initially hidden) -->
-        <!-- ===================================================================== -->
-        <section class="password-screen hidden" id="passwordScreen" style="position: relative">
-            <div style="text-align: center; margin-bottom: 60px">
-<div id="language-selector-text" style="margin-bottom: 6px; font-size: 14px; color: #000; text-align: center; cursor: pointer;" aria-label="Open language selector" onclick="document.getElementById('index-language-button').click()">
-    中文, हिन्दी, Español, العربية, Français...
-</div>
-<div style="display: flex; justify-content: center;">
-<button id="index-language-button" title="Choose language" aria-label="Change language" style="background: url('images/lang.jpg') no-repeat center center; background-size: cover; width: 64px; height: 64px; border: 3px solid #3e3e3e; cursor: pointer;"></button>
-</div>
-                <div id="index-language-dropdown" style="display: none; position: absolute; top: 40px; left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid #ccc; z-index: 9999; min-width: 220px; white-space: nowrap; max-height: 350px; overflow-y: auto; font-size: 14px; line-height: 1.2;">
-                    <ul style="margin: 0; padding: 0; list-style: none">
-                        <li data-value="en" style="padding: 6px; cursor: pointer"><strong>English</strong> (English)</li>
-                        <li data-value="zh" style="padding: 6px; cursor: pointer"><strong>中文</strong> (Chinese)</li>
-                        <li data-value="hi" style="padding: 6px; cursor: pointer"><strong>हिन्दी</strong> (Hindi)</li>
-                        <li data-value="es" style="padding: 6px; cursor: pointer"><strong>Español</strong> (Spanish)</li>
-                        <li data-value="ar" style="padding: 6px; cursor: pointer"><strong>العربية</strong> (Arabic)</li>
-                        <li data-value="fr" style="padding: 6px; cursor: pointer"><strong>Français</strong> (French)</li>
-                        <li data-value="bn" style="padding: 6px; cursor: pointer"><strong>বাংলা</strong> (Bangla)</li>
-                        <li data-value="pt" style="padding: 6px; cursor: pointer"><strong>Português</strong> (Portuguese)</li>
-                        <li data-value="id" style="padding: 6px; cursor: pointer"><strong>Bahasa Indonesia</strong> (Indonesian)</li>
-                        <li data-value="sw" style="padding: 6px; cursor: pointer"><strong>Kiswahili</strong> (Swahili)</li>
-                        <li data-value="ur" style="padding: 6px; cursor: pointer"><strong>اردو</strong> (Urdu)</li>
-                        <li data-value="fa" style="padding: 6px; cursor: pointer"><strong>فارسی</strong> (Persian)</li>
-                        <li data-value="ln" style="padding: 6px; cursor: pointer"><strong>Lingala</strong> (Lingala)</li>
-                        <li data-value="ha" style="padding: 6px; cursor: pointer"><strong>Hausa</strong> (Hausa)</li>
-                        <li data-value="yo" style="padding: 6px; cursor: pointer"><strong>Yorùbá</strong> (Yoruba)</li>
-                        <li data-value="ig" style="padding: 6px; cursor: pointer"><strong>Igbo</strong> (Igbo)</li>
-                        <li data-value="zu" style="padding: 6px; cursor: pointer"><strong>Zulu</strong> (Zulu)</li>
-                        <li data-value="am" style="padding: 6px; cursor: pointer"><strong>አማርኛ</strong> (Amharic)</li>
-                        <li data-value="sn" style="padding: 6px; cursor: pointer"><strong>chiShona</strong> (Shona)</li>
-                        <li data-value="rw" style="padding: 6px; cursor: pointer"><strong>Ikinyarwanda</strong> (Kinyarwanda)</li>
-                        <li data-value="ny" style="padding: 6px; cursor: pointer"><strong>Chichewa</strong> (Chichewa)</li>
-                        <li data-value="cy" style="padding: 6px; cursor: pointer"><strong>Cymraeg</strong> (Welsh)</li>
-                    </ul>
-                </div>
+      <!-- ===================================================================== -->
+      <!-- PASSWORD SCREEN (initially hidden) -->
+      <!-- ===================================================================== -->
+      <section class="password-screen hidden" id="passwordScreen" style="position: relative">
+        <div style="text-align: center; margin-bottom: 60px">
+          <div
+            id="language-selector-text"
+            style="
+              margin-bottom: 6px;
+              font-size: 14px;
+              color: #000;
+              text-align: center;
+              cursor: pointer;
+            "
+            aria-label="Open language selector"
+            onclick="document.getElementById('index-language-button').click()"
+          >
+            中文, हिन्दी, Español, العربية, Français...
+          </div>
+          <div style="display: flex; justify-content: center">
+            <button
+              id="index-language-button"
+              title="Choose language"
+              aria-label="Change language"
+              style="
+                background: url('images/lang.jpg') no-repeat center center;
+                background-size: cover;
+                width: 64px;
+                height: 64px;
+                border: 3px solid #3e3e3e;
+                cursor: pointer;
+              "
+            ></button>
+          </div>
+          <div
+            id="index-language-dropdown"
+            style="
+              display: none;
+              position: absolute;
+              top: 40px;
+              left: 50%;
+              transform: translateX(-50%);
+              background: #fff;
+              border: 1px solid #ccc;
+              z-index: 9999;
+              min-width: 220px;
+              white-space: nowrap;
+              max-height: 350px;
+              overflow-y: auto;
+              font-size: 14px;
+              line-height: 1.2;
+            "
+          >
+            <ul style="margin: 0; padding: 0; list-style: none">
+              <li data-value="en" style="padding: 6px; cursor: pointer">
+                <strong>English</strong> (English)
+              </li>
+              <li data-value="zh" style="padding: 6px; cursor: pointer">
+                <strong>中文</strong> (Chinese)
+              </li>
+              <li data-value="hi" style="padding: 6px; cursor: pointer">
+                <strong>हिन्दी</strong> (Hindi)
+              </li>
+              <li data-value="es" style="padding: 6px; cursor: pointer">
+                <strong>Español</strong> (Spanish)
+              </li>
+              <li data-value="ar" style="padding: 6px; cursor: pointer">
+                <strong>العربية</strong> (Arabic)
+              </li>
+              <li data-value="fr" style="padding: 6px; cursor: pointer">
+                <strong>Français</strong> (French)
+              </li>
+              <li data-value="bn" style="padding: 6px; cursor: pointer">
+                <strong>বাংলা</strong> (Bangla)
+              </li>
+              <li data-value="pt" style="padding: 6px; cursor: pointer">
+                <strong>Português</strong> (Portuguese)
+              </li>
+              <li data-value="id" style="padding: 6px; cursor: pointer">
+                <strong>Bahasa Indonesia</strong> (Indonesian)
+              </li>
+              <li data-value="sw" style="padding: 6px; cursor: pointer">
+                <strong>Kiswahili</strong> (Swahili)
+              </li>
+              <li data-value="ur" style="padding: 6px; cursor: pointer">
+                <strong>اردو</strong> (Urdu)
+              </li>
+              <li data-value="fa" style="padding: 6px; cursor: pointer">
+                <strong>فارسی</strong> (Persian)
+              </li>
+              <li data-value="ln" style="padding: 6px; cursor: pointer">
+                <strong>Lingala</strong> (Lingala)
+              </li>
+              <li data-value="ha" style="padding: 6px; cursor: pointer">
+                <strong>Hausa</strong> (Hausa)
+              </li>
+              <li data-value="yo" style="padding: 6px; cursor: pointer">
+                <strong>Yorùbá</strong> (Yoruba)
+              </li>
+              <li data-value="ig" style="padding: 6px; cursor: pointer">
+                <strong>Igbo</strong> (Igbo)
+              </li>
+              <li data-value="zu" style="padding: 6px; cursor: pointer">
+                <strong>Zulu</strong> (Zulu)
+              </li>
+              <li data-value="am" style="padding: 6px; cursor: pointer">
+                <strong>አማርኛ</strong> (Amharic)
+              </li>
+              <li data-value="sn" style="padding: 6px; cursor: pointer">
+                <strong>chiShona</strong> (Shona)
+              </li>
+              <li data-value="rw" style="padding: 6px; cursor: pointer">
+                <strong>Ikinyarwanda</strong> (Kinyarwanda)
+              </li>
+              <li data-value="ny" style="padding: 6px; cursor: pointer">
+                <strong>Chichewa</strong> (Chichewa)
+              </li>
+              <li data-value="cy" style="padding: 6px; cursor: pointer">
+                <strong>Cymraeg</strong> (Welsh)
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <h2
+          id="password-title"
+          style="margin-bottom: 40px; font-weight: normal; font-size: 17px; text-align: center"
+        >
+          Enter your Alan password
+        </h2>
+
+        <form
+          onsubmit="event.preventDefault(); document.getElementById('passwordSubmitBtn').click();"
+        >
+          <div
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: flex-start;
+              margin-bottom: 20px;
+            "
+          >
+            <div style="display: flex; flex-direction: column; margin-right: 30px">
+              <input
+                type="password"
+                id="passwordInput"
+                placeholder="Password"
+                style="
+                  color: grey;
+                  padding: 12px;
+                  width: 150px;
+                  font-size: 16px;
+                  border-radius: 14px;
+                  border: 2px solid #ccc;
+                  margin-bottom: 20px;
+                "
+              />
+              <p
+                id="passwordError"
+                style="
+                  color: red;
+                  display: none;
+                  width: 220px;
+                  text-align: center;
+                  margin: 6px auto 0;
+                "
+              >
+                Invalid password. Please try again
+              </p>
             </div>
+            <button
+              type="submit"
+              id="passwordSubmitBtn"
+              disabled
+              style="
+                padding: 12px;
+                font-size: 16px;
+                border-radius: 12px;
+                border: 1px solid #ccc;
+                cursor: pointer;
+              "
+            >
+              Submit
+            </button>
+          </div>
+        </form>
 
-            <h2 id="password-title" style="margin-bottom: 40px; font-weight: normal; font-size: 17px; text-align: center;">Enter your Alan password</h2>
-            
-            <form onsubmit="event.preventDefault(); document.getElementById('passwordSubmitBtn').click();">
-                <div style="display: flex; justify-content: center; align-items: flex-start; margin-bottom: 20px">
-                    <div style="display: flex; flex-direction: column; margin-right: 30px">
-                        <input type="password" id="passwordInput" placeholder="Password" style="color: grey; padding: 12px; width: 150px; font-size: 16px; border-radius: 14px; border: 2px solid #ccc; margin-bottom: 20px" />
-                        <p id="passwordError" style="color: red; display: none; width: 220px; text-align: center; margin: 6px auto 0">Invalid password. Please try again</p>
-                    </div>
-                    <button type="submit" id="passwordSubmitBtn" disabled style="padding: 12px; font-size: 16px; border-radius: 12px; border: 1px solid #ccc; cursor: pointer;">Submit</button>
-                </div>
-            </form>
+        <p
+          id="noCodeLine"
+          style="
+            margin-top: 50px;
+            font-style: italic;
+            font-size: 14px;
+            color: black;
+            text-align: center;
+          "
+        >
+          No or incorrect code? Contact us
+          <a
+            href="https://medicine.st-andrews.ac.uk/arclight/contact/"
+            style="color: blue"
+            target="_blank"
+            >here</a
+          >
+        </p>
+      </section>
 
-            <p id="noCodeLine" style="margin-top: 50px; font-style: italic; font-size: 14px; color: black; text-align: center;">
-                No or incorrect code? Contact us <a href="https://medicine.st-andrews.ac.uk/arclight/contact/" style="color: blue" target="_blank">here</a>
-            </p>
-        </section>
+      <!-- ===================================================================== -->
+      <!-- SPLASH SCREEN (initially visible only via JS) -->
+      <!-- ===================================================================== -->
+      <section class="splash-screen hidden">
+        <img id="logo1" src="images/Q.png" alt="Q Logo" />
+        <img id="logo2" src="images/AP.png" alt="AP Logo" />
+        <p>Eye, Ear, Skin AI Assistant</p>
+      </section>
 
-        <!-- ===================================================================== -->
-        <!-- SPLASH SCREEN (initially visible only via JS) -->
-        <!-- ===================================================================== -->
-        <section class="splash-screen hidden">
-<img id="logo1" src="images/Q.png" alt="Q Logo" />
-<img id="logo2" src="images/AP.png" alt="AP Logo" />
-            <p>Eye, Ear, Skin AI Assistant</p>
-        </section>
+      <!-- ===================================================================== -->
+      <!-- ONBOARDING (INSTRUCTION) SCREEN (initially hidden) -->
+      <!-- ===================================================================== -->
+      <section class="instruction-screen hidden">
+        <img
+          src="images/bigredt.png"
+          alt="Big Red T Logo"
+          style="max-width: 120px; height: auto; margin-bottom: -10px"
+        />
+        <p id="instruction-text" style="text-align: justify">
+          Alan is an AI assistant for students and those who only occasionally see eye, ear or skin
+          cases. Write or speak clearly and avoid identifying names or details.
+        </p>
+        <p id="good-luck" class="good-luck" style="text-align: center">Good luck!</p>
 
-        <!-- ===================================================================== -->
-        <!-- ONBOARDING (INSTRUCTION) SCREEN (initially hidden) -->
-        <!-- ===================================================================== -->
-        <section class="instruction-screen hidden">
-<img src="images/bigredt.png" alt="Big Red T Logo" style="max-width: 120px; height: auto; margin-bottom: -10px" />
-            <p id="instruction-text" style="text-align: justify">Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying names or details.</p>
-            <p id="good-luck" class="good-luck" style="text-align: center">Good luck!</p>
-
-            <form id="onboardingForm" onsubmit="event.preventDefault();">
-                <input type="text" id="nameInput" class="onboarding-field" placeholder="Name" title="2-20 letters, spaces, apostrophes or hyphens only" />
-                <div id="job-role-select" class="onboarding-field custom-multiselect-container">
-                    <div class="select-box"><span id="aims-select-text">Aims</span></div>
-                    <div class="checkboxes" id="aims-checkboxes">
-                        <label><input type="checkbox" value="Eyes" /> Eyes</label>
-                        <label><input type="checkbox" value="Ears" /> Ears</label>
-                        <label><input type="checkbox" value="Skin" /> Skin</label>
-                        <label><input type="checkbox" value="Veterinary" /> Veterinary</label>
-                        <label><input type="checkbox" value="Child/Maternal" /> Child/Maternal</label>
-                    </div>
-                </div>
-                <select id="experience-select" class="onboarding-field experience-dropdown">
-                    <option value="" disabled selected hidden>Experience</option>
-                    <option value="Student / refresher">Student / Refresher</option>
-                    <option value="Confident core knowledge">Good core knowledge</option>
-                    <option value="Expert">Expert</option>
-                </select>
-                <input type="text" id="contactInput" class="onboarding-field" placeholder="Contact (email/phone)" autocomplete="off" />
-                <br /><br /><br />
-                <button type="button" id="acceptButton" disabled style="display: inline-flex; align-items: center; justify-content: flex-start; text-align: left; appearance: none; -webkit-appearance: none;">Accept</button>
-            </form>
-            <br />
-            <div id="locationInfo" style="display: none"></div>
-        </section>
+        <form id="onboardingForm" onsubmit="event.preventDefault();">
+          <input
+            type="text"
+            id="nameInput"
+            class="onboarding-field"
+            placeholder="Name"
+            title="2-20 letters, spaces, apostrophes or hyphens only"
+          />
+          <div id="job-role-select" class="onboarding-field custom-multiselect-container">
+            <div class="select-box"><span id="aims-select-text">Aims</span></div>
+            <div class="checkboxes" id="aims-checkboxes">
+              <label><input type="checkbox" value="Eyes" /> Eyes</label>
+              <label><input type="checkbox" value="Ears" /> Ears</label>
+              <label><input type="checkbox" value="Skin" /> Skin</label>
+              <label><input type="checkbox" value="Veterinary" /> Veterinary</label>
+              <label><input type="checkbox" value="Child/Maternal" /> Child/Maternal</label>
+            </div>
+          </div>
+          <select id="experience-select" class="onboarding-field experience-dropdown">
+            <option value="" disabled selected hidden>Experience</option>
+            <option value="Student / refresher">Student / Refresher</option>
+            <option value="Confident core knowledge">Good core knowledge</option>
+            <option value="Expert">Expert</option>
+          </select>
+          <input
+            type="text"
+            id="contactInput"
+            class="onboarding-field"
+            placeholder="Contact (email/phone)"
+            autocomplete="off"
+          />
+          <br /><br /><br />
+          <button
+            type="button"
+            id="acceptButton"
+            disabled
+            style="
+              display: inline-flex;
+              align-items: center;
+              justify-content: flex-start;
+              text-align: left;
+              appearance: none;
+              -webkit-appearance: none;
+            "
+          >
+            Accept
+          </button>
+        </form>
+        <br />
+        <div id="locationInfo" style="display: none"></div>
+      </section>
     </main>
 
     <!-- ===================================================================== -->
     <!-- BLACK SCREEN OVERLAY (Transition to Home) -->
     <!-- ===================================================================== -->
-    <div class="black-screen" id="blackScreen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 9999; visibility: hidden; opacity: 0; transition: visibility 0s, opacity 1s ease; display: flex; justify-content: center; align-items: center;">
-        <iframe id="triangleFrame" src="triangle.html" style="border: none; width: clamp(180px, 50vw, 300px); height: clamp(180px, 50vw, 300px); transform: scale(1); transition: transform 4s ease-in-out, filter 4s ease-in-out; transform-origin: center center;"></iframe>
+    <div
+      class="black-screen"
+      id="blackScreen"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: black;
+        z-index: 9999;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          visibility 0s,
+          opacity 1s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <iframe
+        id="triangleFrame"
+        src="triangle.html"
+        style="
+          border: none;
+          width: clamp(180px, 50vw, 300px);
+          height: clamp(180px, 50vw, 300px);
+          transform: scale(1);
+          transition:
+            transform 4s ease-in-out,
+            filter 4s ease-in-out;
+          transform-origin: center center;
+        "
+      ></iframe>
     </div>
 
     <!-- ===================================================================== -->
     <!-- MAIN SCRIPT -->
     <!-- ===================================================================== -->
-<script src="scripts/index.js"></script>
-</body>
+    <script src="scripts/index.js"></script>
+  </body>
 </html>

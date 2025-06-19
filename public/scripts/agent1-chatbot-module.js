@@ -39,7 +39,8 @@ export function initChatbot(sessionId) {
         bottom: 20,
         size: 'medium',
         iconColor: 'black',
-        customIconSrc: 'https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg'
+        customIconSrc:
+          'https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg',
       },
       chatWindow: {
         welcomeMessage: false,
@@ -49,25 +50,25 @@ export function initChatbot(sessionId) {
         botMessage: {
           backgroundColor: '#ffffff',
           textColor: '#000000',
-          showAvatar: false
+          showAvatar: false,
         },
         userMessage: {
           backgroundColor: '#f4f4f4',
           textColor: '#000000',
-          showAvatar: false
+          showAvatar: false,
         },
         textInput: {
           placeholder: 'Alan >',
           backgroundColor: '#f7f7f7',
           textColor: '#303235',
-          sendButtonColor: '#000000'
+          sendButtonColor: '#000000',
         },
         footer: {
           textColor: '#ffffff',
           text: '',
           company: '',
-          companyLink: ''
-        }
+          companyLink: '',
+        },
       },
       customCSS: `
         /* Rounded corners for user message bubble */
@@ -117,7 +118,7 @@ export function initChatbot(sessionId) {
             background-color: #f44336ff;
           }
         }
-      `
-    }
+      `,
+    },
   });
 }

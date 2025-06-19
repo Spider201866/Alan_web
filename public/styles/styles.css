@@ -28,11 +28,11 @@
   --side-menu-width: 320px;
 }
 
-
 /* =====================================================================
    2. GLOBAL RESETS & BASE STYLES
 ===================================================================== */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -47,7 +47,6 @@ html, body {
 p {
   margin: 20px 0;
 }
-
 
 /* =====================================================================
    3. UTILITY CLASSES
@@ -75,7 +74,6 @@ p {
 .tooltip-item {
   cursor: pointer;
 }
-
 
 /* =====================================================================
    4. PAGE LAYOUT & MAIN STRUCTURE
@@ -113,7 +111,6 @@ p {
   z-index: 9999;
 }
 
-
 /* =====================================================================
    5. HEADER, APP BAR & NAVIGATION
 ===================================================================== */
@@ -128,10 +125,20 @@ p {
   color: var(--color-white);
   position: relative;
 }
-.chatbot-header .red { color: #f44336ff; } /* Keeping specific hex for potential nuance */
-.chatbot-header .black { color: var(--color-black); }
-.chatbot-header .white, .chatbot-header { color: var(--color-white); }
-.chatbot-header .grey, .divider { color: var(--color-grey-medium); }
+.chatbot-header .red {
+  color: #f44336ff;
+} /* Keeping specific hex for potential nuance */
+.chatbot-header .black {
+  color: var(--color-black);
+}
+.chatbot-header .white,
+.chatbot-header {
+  color: var(--color-white);
+}
+.chatbot-header .grey,
+.divider {
+  color: var(--color-grey-medium);
+}
 
 .title-and-subtitle {
   text-align: center;
@@ -210,7 +217,8 @@ p {
   cursor: pointer;
   top: -45px;
 }
-.menu-icon::before, .menu-icon::after {
+.menu-icon::before,
+.menu-icon::after {
   content: '';
   position: absolute;
   left: 0;
@@ -218,9 +226,16 @@ p {
   background-color: var(--color-white);
   transition: background-color 0.3s;
 }
-.menu-icon::before { top: 0; width: 100%; }
-.menu-icon::after { top: 16px; width: 60%; }
-.menu-icon.open::before, .menu-icon.open::after {
+.menu-icon::before {
+  top: 0;
+  width: 100%;
+}
+.menu-icon::after {
+  top: 16px;
+  width: 60%;
+}
+.menu-icon.open::before,
+.menu-icon.open::after {
   background-color: var(--color-black);
 }
 
@@ -335,7 +350,6 @@ p {
   margin-right: 0;
 }
 
-
 /* --- Chat History (in Side Menu) --- */
 #chatHistorySidebar {
   flex: 1 1 auto;
@@ -356,9 +370,11 @@ p {
   background-color: var(--color-grey-bg-dark);
   border: 1px solid var(--color-grey-border);
   border-radius: 5px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   display: block;
-  transition: background-color 0.2s, box-shadow 0.2s;
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s;
 }
 .session-content {
   padding: 8px 10px;
@@ -403,14 +419,13 @@ p {
   font-size: 16px;
   color: #777;
   cursor: pointer;
-  opacity: .55;
-  transition: opacity .2s;
+  opacity: 0.55;
+  transition: opacity 0.2s;
 }
 .copy-btn:hover {
   opacity: 1;
   color: var(--color-grey-dark);
 }
-
 
 /* --- Generic Sidebar (Overlay Style) --- */
 .sidebar {
@@ -467,7 +482,6 @@ p {
   color: #464646;
 }
 
-
 /* =====================================================================
    7. MODALS, POPUPS & DROPDOWNS
 ===================================================================== */
@@ -481,7 +495,7 @@ p {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   pointer-events: auto;
 }
 .modal {
@@ -503,7 +517,9 @@ p {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
   text-align: center;
   max-width: 400px;
   border-radius: 6px;
@@ -537,9 +553,8 @@ p {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
 }
-
 
 /* --- Slide-out Popup --- */
 .popup {
@@ -582,7 +597,7 @@ p {
   display: block !important;
   background-color: #f1f1f1;
   border-radius: 30px 0 0 30px;
-  box-shadow: -2px 0 6px rgba(0,0,0,0.2);
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.2);
   padding: 20px;
   box-sizing: border-box;
   font-size: 12px;
@@ -611,7 +626,6 @@ p {
   line-height: 1.5;
 }
 
-
 /* --- Dropdowns --- */
 .dropdown-content {
   display: none;
@@ -630,7 +644,6 @@ p {
 .dropdown-content a:hover {
   background-color: #f1f1f1;
 }
-
 
 /* =====================================================================
    8. BUTTONS & FORMS
@@ -711,9 +724,15 @@ button {
   border: 2px solid var(--color-black);
   color: var(--color-black);
 }
-.side-menu .btn-eye { background-color: rgb(134, 162, 255); } /* Unique color */
-.side-menu .btn-ear { background-color: rgb(133, 255, 133); } /* Unique color */
-.side-menu .btn-skin { background-color: #efafff; } /* Unique color */
+.side-menu .btn-eye {
+  background-color: rgb(134, 162, 255);
+} /* Unique color */
+.side-menu .btn-ear {
+  background-color: rgb(133, 255, 133);
+} /* Unique color */
+.side-menu .btn-skin {
+  background-color: #efafff;
+} /* Unique color */
 .side-menu .btn-lang {
   background: url('images/lang.jpg') no-repeat center center;
   background-size: cover;
@@ -729,52 +748,59 @@ button {
 }
 
 /* --- Referral Form (Top Row) --- */
-.top-input-line{
-    display:flex!important;
-    gap:6px!important;
-    margin-bottom:18px!important;
-    align-items:flex-end!important;
+.top-input-line {
+  display: flex !important;
+  gap: 6px !important;
+  margin-bottom: 18px !important;
+  align-items: flex-end !important;
 }
-.top-input-group{
-    display:flex!important;
-    flex-direction:column!important;
-    flex-shrink:0!important;
+.top-input-group {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-shrink: 0 !important;
 }
-.top-input-group.id-group { flex:0 0 46px!important; }
-.top-input-group.tel-group { flex:0 0 120px!important; }
-.top-input-group.age-group { flex:0 0 50px!important; }
-.top-input-group.sex-group { flex:0 0 60px!important; }
-
-.top-input-group label{
-    font-size:11px!important;
-    font-weight:bold!important;
-    color:#444!important;
-    line-height:16px!important;
-    margin:0 0 2px 0!important;
-    white-space:nowrap!important;
+.top-input-group.id-group {
+  flex: 0 0 46px !important;
 }
-.top-input-group input[type="text"],
-.top-input-group input[type="tel"],
-.top-input-group select{
-    width:100%!important;
-    height:36px!important;
-    padding:5px 6px!important;
-    font-size:13px!important;
-    line-height:1.4!important;
-    border:1px solid #e0e0e0!important;
-    border-radius:4px!important;
-    background-color:#fdfdfd!important;
-    box-sizing:border-box!important;
-    min-width:0!important;
+.top-input-group.tel-group {
+  flex: 0 0 120px !important;
 }
-.top-input-group.id-group input{
-    padding-left:4px!important;
-    padding-right:4px!important;
+.top-input-group.age-group {
+  flex: 0 0 50px !important;
 }
-.top-input-group select{
-    vertical-align:bottom!important;
+.top-input-group.sex-group {
+  flex: 0 0 60px !important;
 }
 
+.top-input-group label {
+  font-size: 11px !important;
+  font-weight: bold !important;
+  color: #444 !important;
+  line-height: 16px !important;
+  margin: 0 0 2px 0 !important;
+  white-space: nowrap !important;
+}
+.top-input-group input[type='text'],
+.top-input-group input[type='tel'],
+.top-input-group select {
+  width: 100% !important;
+  height: 36px !important;
+  padding: 5px 6px !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 4px !important;
+  background-color: #fdfdfd !important;
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+}
+.top-input-group.id-group input {
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+}
+.top-input-group select {
+  vertical-align: bottom !important;
+}
 
 /* =====================================================================
    9. MISCELLANEOUS COMPONENTS
@@ -802,21 +828,23 @@ flowise-fullchatbot {
   background-color: var(--color-white) !important;
 }
 
-
 /* --- Other UI Sections --- */
-.access-screen, #registrationSection {
+.access-screen,
+#registrationSection {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.register-link, .login-link {
+.register-link,
+.login-link {
   cursor: pointer;
   color: blue; /* Kept as-is, could be var(--color-primary) */
   text-decoration: underline;
   font-size: 0.9em;
   margin-top: 20px;
 }
-.detected-condition, #condition-description {
+.detected-condition,
+#condition-description {
   color: var(--color-black);
   text-align: center;
   padding-left: 40px;
@@ -854,7 +882,7 @@ flowise-fullchatbot {
 }
 .logo-and-text-container {
   text-align: center;
-  line-height: 1.0;
+  line-height: 1;
   padding-top: 20px;
 }
 #additional-text {
@@ -868,7 +896,6 @@ flowise-fullchatbot {
   font-weight: 900;
   padding-bottom: 5px;
 }
-
 
 /* =====================================================================
    10. ANIMATIONS & KEYFRAMES
@@ -899,19 +926,37 @@ flowise-fullchatbot {
 }
 
 @keyframes smoothFlip360 {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(360deg); }
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
 }
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 @keyframes fadeinout {
-  0% { opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 /* =====================================================================
@@ -946,7 +991,8 @@ flowise-fullchatbot {
 }
 
 /* NOTE: Renamed for clarity */
-@keyframes scroll-left { /* Content moves from right to left */
+@keyframes scroll-left {
+  /* Content moves from right to left */
   0% {
     transform: translateX(0);
   }
@@ -954,7 +1000,8 @@ flowise-fullchatbot {
     transform: translateX(-50%);
   }
 }
-@keyframes scroll-right { /* Content moves from left to right */
+@keyframes scroll-right {
+  /* Content moves from left to right */
   0% {
     transform: translateX(-50%);
   }

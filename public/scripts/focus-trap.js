@@ -24,10 +24,11 @@ export class FocusTrap {
     this.previousActiveElement = document.activeElement;
 
     // Find all focusable elements within the modal
-    const focusableSelector = 'a[href], button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])';
+    const focusableSelector =
+      'a[href], button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])';
     this.focusableElements = Array.from(
       this.modalElement.querySelectorAll(focusableSelector)
-    ).filter(el => !el.hasAttribute('disabled') && el.offsetParent !== null); // Only visible, non-disabled elements
+    ).filter((el) => !el.hasAttribute('disabled') && el.offsetParent !== null); // Only visible, non-disabled elements
 
     if (this.focusableElements.length === 0) return;
 
@@ -73,12 +74,14 @@ export class FocusTrap {
     }
 
     // Handle the Tab key
-    if (e.shiftKey) { // Shift + Tab (backwards)
+    if (e.shiftKey) {
+      // Shift + Tab (backwards)
       if (document.activeElement === this.firstFocusableElement) {
         e.preventDefault();
         this.lastFocusableElement.focus();
       }
-    } else { // Tab (forwards)
+    } else {
+      // Tab (forwards)
       if (document.activeElement === this.lastFocusableElement) {
         e.preventDefault();
         this.firstFocusableElement.focus();

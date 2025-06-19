@@ -1,3 +1,75 @@
+# Project Overview & Recent Updates
+
+## Code Formatting
+
+This project uses [Prettier](https://prettier.io/) for consistent code formatting.  
+- Configuration is defined in `.prettierrc` at the project root.
+- To automatically format all JavaScript, JSON, CSS, and HTML files, run:
+  ```
+  npm run format
+  ```
+  (Available in both the root and `Alan_web` directories.)
+
+## Security
+
+[express-rate-limit](https://www.npmjs.com/package/express-rate-limit) is used in both server.js files to protect the server from excessive or abusive requests.
+- Each IP is limited to 100 requests per 15 minutes.
+- This helps prevent basic denial-of-service attacks and abuse.
+
+## Project Structure
+
+The main public directory is organized as follows:
+```
+aboutalan.html
+atoms.html
+ear.html
+eye.html
+home.html
+index.html
+instructions.html
+muted.html
+referral.html
+skin.html
+triangle.html
+view-records.html
+weblinks.html
+favicons/
+  favicons/android-chrome-192x192.png
+  favicons/android-chrome-512x512.png
+  favicons/apple-icon-60x60.png
+  favicons/apple-touch-icon.png
+  favicons/favicon-16x16.png
+  favicons/favicon-32x32.png
+  favicons/manifest.json
+images/
+  images/allergic_conjunctivitis.jpg
+  images/AP.png
+  images/atomsblue.jpg
+  images/bigredt.png
+  images/eyeor.gif
+  images/howtouseeye.png
+  images/iritis.jpg
+  images/lang.jpg
+  images/Q.png
+  images/triangle.png
+scripts/
+  scripts/agent1-chatbot-module.js
+  scripts/closer.js
+  scripts/faviconAndMeta.js
+  scripts/focus-trap.js
+  scripts/home.js
+  scripts/index.js
+  scripts/language.js
+  scripts/listener-module.js
+  scripts/muted.js
+  scripts/page-template.js
+styles/
+  styles/styles_index.css
+  styles/styles.css
+```
+
+---
+
 ## Appbar and Page Layout Consistency (June 2025)
 
 ### Shared Appbar Pattern

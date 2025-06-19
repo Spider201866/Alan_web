@@ -4,18 +4,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="About Alan: AI assistant for eye, ear, and skin diagnostics. Learn about Alan's features, technology, and mission." />
+    <meta
+      name="description"
+      content="About Alan: AI assistant for eye, ear, and skin diagnostics. Learn about Alan's features, technology, and mission."
+    />
     <title>About Alan</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16">
-    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
-    <link rel="manifest" href="favicons/manifest.json">
-<link rel="stylesheet" href="styles/styles.css">
-<script type="module" src="scripts/faviconAndMeta.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png" />
+    <link rel="manifest" href="favicons/manifest.json" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <script type="module" src="scripts/faviconAndMeta.js"></script>
     <!-- Translations object embedded for a single-file solution -->
     <script>
       window.translations = {
@@ -84,8 +90,12 @@
         color: red;
       }
       @keyframes smoothFlip360 {
-        from { transform: rotateY(0deg); }
-        to { transform: rotateY(180deg); }
+        from {
+          transform: rotateY(0deg);
+        }
+        to {
+          transform: rotateY(180deg);
+        }
       }
       .flip-horizontally {
         animation: smoothFlip360 1.5s ease-out forwards;
@@ -100,23 +110,32 @@
       </header>
       <section id="aboutAlanContent">
         <div id="aboutAlanText">
-          <p>Alan is an AI eye, ear and skin diagnostic assistant, comprising: a foundation language model and symbolic logic. Smart. Serious. State of the art.</p>
-          <p>Clinical, local knowledge and images, are tailored to different roles such as health workers and general practitioners. Concise dialogue generates a diagnosis and management plan. Use of the arclight is embedded throughout.</p>
+          <p>
+            Alan is an AI eye, ear and skin diagnostic assistant, comprising: a foundation language
+            model and symbolic logic. Smart. Serious. State of the art.
+          </p>
+          <p>
+            Clinical, local knowledge and images, are tailored to different roles such as health
+            workers and general practitioners. Concise dialogue generates a diagnosis and management
+            plan. Use of the arclight is embedded throughout.
+          </p>
         </div>
         <ul id="aboutAlanList">
-          <li id="aboutAlanListItem1" class="highlight bullet-point">Expert base – tropical/hot climate</li>
+          <li id="aboutAlanListItem1" class="highlight bullet-point">
+            Expert base – tropical/hot climate
+          </li>
           <li id="aboutAlanListItem2" class="highlight bullet-point">Arclight aware</li>
         </ul>
         <p id="aboutAlanEfficient"><strong>Efficient</strong> – concise, plain language</p>
         <p id="aboutAlanEasy"><strong>Easy-to-use</strong> – app, voice, vision</p>
         <p id="aboutAlanExplainable"><strong>Explainable</strong> – facts/rules, images</p>
         <p id="aboutAlanEncouraging"><strong>Encouraging</strong> – empathy, teacher</p>
-        <p id="aboutAlanDate"><span style="display:block; margin-top:24px;">wjw Jan 25</span></p>
+        <p id="aboutAlanDate"><span style="display: block; margin-top: 24px">wjw Jan 25</span></p>
       </section>
     </main>
 
     <script type="module">
-import { initPage } from './scripts/page-template.js';
+      import { initPage } from './scripts/page-template.js';
 
       // This is the function that knows how to translate THIS specific page
       function applyTranslations() {

@@ -1,24 +1,46 @@
 aboutalan.html
-agent1-chatbot-module.js
 atoms.html
-boxes.html
-closer.js
 ear.html
 eye.html
-faviconAndMeta.js
 home.html
 index.html
 instructions.html
-language.js
-listener-module.js
 muted.html
-muted.js
 referral.html
 skin.html
-styles_index.css
-styles.css
 triangle.html
 view-records.html
 weblinks.html
 favicons/
+  favicons/android-chrome-192x192.png
+  favicons/android-chrome-512x512.png
+  favicons/apple-icon-60x60.png
+  favicons/apple-touch-icon.png
+  favicons/favicon-16x16.png
+  favicons/favicon-32x32.png
+  favicons/manifest.json
 images/
+  images/allergic_conjunctivitis.jpg
+  images/AP.png
+  images/atomsblue.jpg
+  images/bigredt.png
+  images/eyeor.gif
+  images/howtouseeye.png
+  images/iritis.jpg
+  images/lang.jpg
+  images/Q.png
+  images/triangle.png
+scripts/
+  scripts/agent1-chatbot-module.js
+  scripts/closer.js
+  scripts/faviconAndMeta.js
+  scripts/focus-trap.js
+  scripts/home.js
+  scripts/index.js
+  scripts/language.js
+  scripts/listener-module.js
+  scripts/muted.js
+  scripts/page-template.js
+styles/
+  styles/styles_index.css
+  styles/styles.css

@@ -12,7 +12,8 @@ describe('Alan Webapp UI/UX', () => {
   let document;
 
   beforeEach(() => {
-    dom = new JSDOM(`
+    dom = new JSDOM(
+      `
       <body>
         <div class="menu-icon"></div>
         <nav class="side-menu" style="left: -370px;"></nav>
@@ -28,7 +29,9 @@ describe('Alan Webapp UI/UX', () => {
         <button id="geolocation-button"></button>
         <p id="location-info"></p>
       </body>
-    `, { url: "http://localhost" });
+    `,
+      { url: 'http://localhost' }
+    );
     document = dom.window.document;
     global.document = document;
     global.window = dom.window;
@@ -36,21 +39,21 @@ describe('Alan Webapp UI/UX', () => {
     global.localStorage = {
       getItem: jest.fn(),
       setItem: jest.fn(),
-      removeItem: jest.fn()
+      removeItem: jest.fn(),
     };
     // Mock navigator.geolocation
     global.navigator = {
       geolocation: {
-        getCurrentPosition: jest.fn()
-      }
+        getCurrentPosition: jest.fn(),
+      },
     };
-});
+  });
 
-// Accessibility tests for marquee duplication in boxes.html
-describe('Accessibility: Marquee duplication in boxes.html', () => {
-  it('should set aria-hidden="true" on all duplicated marquee elements (IDs ending in "b")', () => {
-    // Simulate the DOM structure of boxes.html
-    const dom = new JSDOM(`
+  // Accessibility tests for marquee duplication in boxes.html
+  describe('Accessibility: Marquee duplication in boxes.html', () => {
+    it('should set aria-hidden="true" on all duplicated marquee elements (IDs ending in "b")', () => {
+      // Simulate the DOM structure of boxes.html
+      const dom = new JSDOM(`
       <section class="marquee">
         <div class="marquee-content-reverse">
           <div class="box" id="eyeMarqueeLine1a">What is glaucoma?</div>
@@ -68,59 +71,59 @@ describe('Accessibility: Marquee duplication in boxes.html', () => {
         </div>
       </section>
     `);
-    const document = dom.window.document;
-    // Select all elements with id ending in "b"
-    const duplicatedBoxes = Array.from(document.querySelectorAll('.box[id$="b"]'));
-    duplicatedBoxes.forEach(box => {
-      expect(box.getAttribute('aria-hidden')).toBe('true');
+      const document = dom.window.document;
+      // Select all elements with id ending in "b"
+      const duplicatedBoxes = Array.from(document.querySelectorAll('.box[id$="b"]'));
+      duplicatedBoxes.forEach((box) => {
+        expect(box.getAttribute('aria-hidden')).toBe('true');
+      });
     });
   });
-});
 
-// Accessibility tests for icon-only buttons
-describe('Accessibility: Icon-only buttons have aria-labels', () => {
-  it('should have aria-label on icon-only language button in home.html', () => {
-    const dom = new JSDOM(`
+  // Accessibility tests for icon-only buttons
+  describe('Accessibility: Icon-only buttons have aria-labels', () => {
+    it('should have aria-label on icon-only language button in home.html', () => {
+      const dom = new JSDOM(`
       <button class="button btn-lang" id="language-button" aria-label="Change language"></button>
     `);
-    const document = dom.window.document;
-    const btn = document.getElementById('language-button');
-    expect(btn).not.toBeNull();
-    expect(btn.getAttribute('aria-label')).toBe('Change language');
-  });
+      const document = dom.window.document;
+      const btn = document.getElementById('language-button');
+      expect(btn).not.toBeNull();
+      expect(btn.getAttribute('aria-label')).toBe('Change language');
+    });
 
-  it('should have aria-label on icon-only language button in index.html', () => {
-    const dom = new JSDOM(`
+    it('should have aria-label on icon-only language button in index.html', () => {
+      const dom = new JSDOM(`
       <button id="index-language-button" title="Choose language" aria-label="Change language"></button>
     `);
-    const document = dom.window.document;
-    const btn = document.getElementById('index-language-button');
-    expect(btn).not.toBeNull();
-    expect(btn.getAttribute('aria-label')).toBe('Change language');
-  });
+      const document = dom.window.document;
+      const btn = document.getElementById('index-language-button');
+      expect(btn).not.toBeNull();
+      expect(btn.getAttribute('aria-label')).toBe('Change language');
+    });
 
-  it('should have aria-label on icon-only clear history button in home.html', () => {
-    const dom = new JSDOM(`
+    it('should have aria-label on icon-only clear history button in home.html', () => {
+      const dom = new JSDOM(`
       <button id="clearHistoryBtn" title="Delete all chat history" aria-label="Delete all chat history">
         <svg></svg>
       </button>
     `);
-    const document = dom.window.document;
-    const btn = document.getElementById('clearHistoryBtn');
-    expect(btn).not.toBeNull();
-    expect(btn.getAttribute('aria-label')).toBe('Delete all chat history');
-  });
+      const document = dom.window.document;
+      const btn = document.getElementById('clearHistoryBtn');
+      expect(btn).not.toBeNull();
+      expect(btn.getAttribute('aria-label')).toBe('Delete all chat history');
+    });
 
-  it('should have aria-label on icon-only geo-info button in home.html', () => {
-    const dom = new JSDOM(`
+    it('should have aria-label on icon-only geo-info button in home.html', () => {
+      const dom = new JSDOM(`
       <button id="geo-info-button" aria-label="Show location info">i</button>
     `);
-    const document = dom.window.document;
-    const btn = document.getElementById('geo-info-button');
-    expect(btn).not.toBeNull();
-    expect(btn.getAttribute('aria-label')).toBe('Show location info');
+      const document = dom.window.document;
+      const btn = document.getElementById('geo-info-button');
+      expect(btn).not.toBeNull();
+      expect(btn.getAttribute('aria-label')).toBe('Show location info');
+    });
   });
-});
 
   afterEach(() => {
     jest.resetAllMocks();
@@ -145,7 +148,9 @@ describe('Accessibility: Icon-only buttons have aria-labels', () => {
     `;
     document.body.appendChild(langDropdown);
     // Show dropdown
-    langBtn.onclick = () => { langDropdown.style.display = 'block'; };
+    langBtn.onclick = () => {
+      langDropdown.style.display = 'block';
+    };
     langBtn.click();
     expect(langDropdown.style.display).toBe('block');
     // Hide dropdown
@@ -170,7 +175,7 @@ describe('Accessibility: Icon-only buttons have aria-labels', () => {
       '#tools-button': document.createElement('button'),
       '#arclight-project-button': document.createElement('button'),
       '#links-button': document.createElement('button'),
-      '#about-button': document.createElement('button')
+      '#about-button': document.createElement('button'),
     };
     Object.entries(fields).forEach(([selector, el]) => {
       if (selector.startsWith('.')) el.className = selector.slice(1);
@@ -196,7 +201,7 @@ describe('Accessibility: Icon-only buttons have aria-labels', () => {
         toolsButton: 'Tools',
         arclightProjectButton: 'Arclight Project',
         linksButton: 'Links',
-        aboutButton: 'About'
+        aboutButton: 'About',
       },
       es: {
         eyesEars: 'Ojos, Oídos, Piel',
@@ -213,7 +218,7 @@ describe('Accessibility: Icon-only buttons have aria-labels', () => {
         toolsButton: 'Herramientas',
         arclightProjectButton: 'Proyecto Arclight',
         linksButton: 'Enlaces',
-        aboutButton: 'Acerca de'
+        aboutButton: 'Acerca de',
       },
       fr: {
         eyesEars: 'Yeux, Oreilles, Peau',
@@ -230,8 +235,8 @@ describe('Accessibility: Icon-only buttons have aria-labels', () => {
         toolsButton: 'Outils',
         arclightProjectButton: 'Projet Arclight',
         linksButton: 'Liens',
-        aboutButton: 'À propos'
-      }
+        aboutButton: 'À propos',
+      },
     };
     global.window.translations = translations;
 
@@ -239,20 +244,32 @@ describe('Accessibility: Icon-only buttons have aria-labels', () => {
     function updateAllLanguage(lang) {
       const t = window.translations[lang];
       const elementTranslations = {
-        '.chatbot-subtitle': 'eyesEars', '#good-history': 'goodHistory', '#examine-well': 'examineWell',
-        '#use-arclight': 'useArclight', '.chatbot-version': 'alanMistakes', '#instructions-button': 'instructionsButton',
-        '#eye-button': 'eyeButton', '#ear-button': 'earButton', '#skin-button': 'skinButton', '#videos-button': 'videosButton',
-        '#atoms-button': 'atomsButton', '#tools-button': 'toolsButton', '#arclight-project-button': 'arclightProjectButton',
-        '#links-button': 'linksButton', '#about-button': 'aboutButton'
+        '.chatbot-subtitle': 'eyesEars',
+        '#good-history': 'goodHistory',
+        '#examine-well': 'examineWell',
+        '#use-arclight': 'useArclight',
+        '.chatbot-version': 'alanMistakes',
+        '#instructions-button': 'instructionsButton',
+        '#eye-button': 'eyeButton',
+        '#ear-button': 'earButton',
+        '#skin-button': 'skinButton',
+        '#videos-button': 'videosButton',
+        '#atoms-button': 'atomsButton',
+        '#tools-button': 'toolsButton',
+        '#arclight-project-button': 'arclightProjectButton',
+        '#links-button': 'linksButton',
+        '#about-button': 'aboutButton',
       };
       for (const [selector, key] of Object.entries(elementTranslations)) {
-        const el = selector.startsWith('.') ? document.querySelector(selector) : document.getElementById(selector.slice(1));
+        const el = selector.startsWith('.')
+          ? document.querySelector(selector)
+          : document.getElementById(selector.slice(1));
         if (el) el.textContent = t[key];
       }
     }
 
     // Test for each language
-    languages.forEach(lang => {
+    languages.forEach((lang) => {
       updateAllLanguage(lang);
       const t = translations[lang];
       expect(document.querySelector('.chatbot-subtitle').textContent).toBe(t.eyesEars);
@@ -267,7 +284,9 @@ describe('Accessibility: Icon-only buttons have aria-labels', () => {
       expect(document.getElementById('videos-button').textContent).toBe(t.videosButton);
       expect(document.getElementById('atoms-button').textContent).toBe(t.atomsButton);
       expect(document.getElementById('tools-button').textContent).toBe(t.toolsButton);
-      expect(document.getElementById('arclight-project-button').textContent).toBe(t.arclightProjectButton);
+      expect(document.getElementById('arclight-project-button').textContent).toBe(
+        t.arclightProjectButton
+      );
       expect(document.getElementById('links-button').textContent).toBe(t.linksButton);
       expect(document.getElementById('about-button').textContent).toBe(t.aboutButton);
     });
@@ -351,16 +370,26 @@ describe('Accessibility: Icon-only buttons have aria-labels', () => {
     document.body.appendChild(sideMenu);
     // Check all buttons exist
     [
-      'instructions-button', 'eye-button', 'ear-button', 'skin-button',
-      'videos-button', 'atoms-button', 'tools-button', 'links-button',
-      'about-button', 'arclight-project-button', 'language-button'
-    ].forEach(id => {
+      'instructions-button',
+      'eye-button',
+      'ear-button',
+      'skin-button',
+      'videos-button',
+      'atoms-button',
+      'tools-button',
+      'links-button',
+      'about-button',
+      'arclight-project-button',
+      'language-button',
+    ].forEach((id) => {
       expect(document.getElementById(id)).not.toBeNull();
     });
     // Simulate back arrow click (page navigation)
     const backArrow = document.querySelector('.back-arrow');
     let navigated = false;
-    backArrow.onclick = () => { navigated = true; };
+    backArrow.onclick = () => {
+      navigated = true;
+    };
     backArrow.click();
     expect(navigated).toBe(true);
   });
@@ -384,10 +413,18 @@ describe('Accessibility: Icon-only buttons have aria-labels', () => {
     `;
     document.body.appendChild(nav);
     [
-      'instructions-button', 'eye-button', 'ear-button', 'skin-button',
-      'videos-button', 'atoms-button', 'tools-button', 'links-button',
-      'about-button', 'arclight-project-button', 'language-button'
-    ].forEach(id => {
+      'instructions-button',
+      'eye-button',
+      'ear-button',
+      'skin-button',
+      'videos-button',
+      'atoms-button',
+      'tools-button',
+      'links-button',
+      'about-button',
+      'arclight-project-button',
+      'language-button',
+    ].forEach((id) => {
       const btn = document.getElementById(id);
       expect(btn).not.toBeNull();
       // Simulate click
@@ -407,7 +444,7 @@ describe('Accessibility: Icon-only buttons have aria-labels', () => {
     `;
     document.body.appendChild(langDropdown);
     const langItems = langDropdown.querySelectorAll('li');
-    langItems.forEach(item => {
+    langItems.forEach((item) => {
       item.onclick = jest.fn();
       item.click();
       expect(item.onclick).toHaveBeenCalled();
@@ -549,7 +586,10 @@ describe('Accessibility: Icon-only buttons have aria-labels', () => {
     // Simulate submit
     const submit = document.getElementById('password-submit');
     let submitted = false;
-    submit.onclick = (e) => { e.preventDefault(); submitted = true; };
+    submit.onclick = (e) => {
+      e.preventDefault();
+      submitted = true;
+    };
     submit.click();
     expect(submitted).toBe(true);
   });
@@ -571,7 +611,10 @@ describe('Accessibility: Icon-only buttons have aria-labels', () => {
     // Simulate submit
     const submit = document.getElementById('onboarding-submit');
     let submitted = false;
-    submit.onclick = (e) => { e.preventDefault(); submitted = true; };
+    submit.onclick = (e) => {
+      e.preventDefault();
+      submitted = true;
+    };
     submit.click();
     expect(submitted).toBe(true);
   });
@@ -589,7 +632,7 @@ describe('Accessibility: Icon-only buttons have aria-labels', () => {
         country: 'UK',
         iso2: 'GB',
         classification: 'A',
-        contactInfo: 'test@example.com'
+        contactInfo: 'test@example.com',
       };
       return map[key] || '';
     };
@@ -606,8 +649,8 @@ describe('Accessibility: Icon-only buttons have aria-labels', () => {
         userCountry: 'Country',
         userVersion: 'Version',
         userDateTime: 'Date/Time',
-        howCanIHelp: 'How can I help?'
-      }
+        howCanIHelp: 'How can I help?',
+      },
     };
     // Simulate popup-content element
     const popupContent = document.createElement('div');
