@@ -5,26 +5,35 @@
 ## What Works
 - The server successfully starts and serves static files from the `public/` directory, including a custom 404 page for unknown routes.
 - Server endpoints are protected by `express-rate-limit` to prevent excessive or abusive requests.
-- Security headers are applied using `helmet`, with a configured Content Security Policy (CSP) that allows necessary external resources (CDNs, Flowise backend, IP API) and inline scripts/styles/fonts.
+- Security headers are applied using `helmet`, with a meticulously configured Content Security Policy (CSP) in `server.js`. This CSP now correctly allows all necessary external resources (CDNs, Flowise backend, Google Fonts, IP API) for scripts, styles, fonts, and connections. The `scriptSrcAttr: ["'unsafe-inline'"]` directive is also correctly configured to allow inline event handlers if needed, though many have been refactored.
 - Critical environment variables (`MASTER_PASSWORD_HASH`, `PASSWORD_SALT`) are validated at server startup.
 - JSON data files (`user-info.json`, `user-history.json`) are written with a trailing newline.
 - Frontend pages utilize a shared appbar pattern for consistent navigation and layout, with centralized styling.
+- Inline event handlers (e.g., `onclick`) in `public/home.html` have been refactored to use `element.addEventListener()` for improved CSP compliance and modern JavaScript practices.
 - A reusable focus trap system is implemented for modals and side menus, enhancing keyboard accessibility.
 - Accessibility requirements for marquee content (`aria-hidden="true"`), icon-only buttons (`aria-label`), and "skip to content" links are enforced.
-- External script loading is optimized using the `defer` attribute in HTML pages, and favicon preloading is implemented for improved performance.
+- External script loading is optimized using the `defer` attribute in HTML pages. Problematic/unnecessary preload links for fonts and favicons were removed from `public/index.html` and `public/home.html`.
 - API data fetching includes graceful error handling to provide user feedback when location data is unavailable or errors occur.
-- Comprehensive automated test suite covers UI and accessibility, with pre-test formatting (`npm run format:check`) and linting (`npm run lint`) hooks.
+- Comprehensive automated test suite covers UI and accessibility. The `npm test` script now includes a pre-test formatting check (`npm run format:check`) and linting (`npm run lint`) hooks, all of which pass after recent changes.
 - Code formatting is enforced using Prettier and EditorConfig.
 - ESLint is configured for code quality checks.
 - The Node.js version is specified in `package.json` and `.nvmrc` for consistent development environments.
 - The duplicate `html2canvas` script has been removed from `public/home.html`.
 - The core chatbot functionality for eye, skin, and ear queries is implemented on the frontend (`public/scripts/agent1-chatbot-module.js`), which interacts with the external "Alan" chatbot agent managed via Flowise. This "Alan" agent is powered by Google Gemini 2.5 Flash (a static LLM) and incorporates advanced intelligence, role, logic, memory, and security features within its prompt. This codebase focuses on the interface, not the "secret sauce" of the agent itself.
+- All recent CSP and event handler issues have been resolved. Documentation and memory bank files are up to date.
 
-## What's Left to Build
-- No specific features are currently pending. The project meets its core requirements as a web chatbot with advanced LLM integration and enhanced security/maintainability.
+## What's Left to Build (New Tasks for "Tomorrow")
+1.  **Split Language Translations into Separate Files:**
+    *   Refactor the current translation system into individual JSON files per language (e.g., `locales/en.json`).
+    *   Implement dynamic loading of these files based on user selection.
+2.  **Implement PWA Service Worker for Install Prompt:**
+    *   Create/correct `public/service-worker.js` to enable PWA features, focusing on the "Install app" prompt.
+    *   Configure caching strategies and ensure `manifest.json` is PWA-ready.
+3.  **Refactor CSS - Move More to `styles.css`:**
+    *   Centralize more styling into `public/styles/styles.css` from other CSS files or inline styles to improve maintainability.
 
 ## Current Status
-The AlanUI Web Chatbot is functional, robust, and provides accessible health information for eye, skin, and ear users. It leverages an intelligent external chatbot agent ("Alan") for its core AI, with this codebase focusing on a consistent, accessible user interface and foundational server security. All identified improvements have been implemented, and documentation has been updated accordingly.
+The AlanUI Web Chatbot is functional and stable after resolving recent CSP and event handling issues. Documentation and memory bank files are up-to-date. The project is now poised for the next set of enhancements focusing on internationalization, PWA capabilities, and CSS organization.
 
 ## Known Issues
 - All server logic is in a single `server.js` file, which could become unwieldy for larger projects.
@@ -52,4 +61,5 @@ The AlanUI Web Chatbot is functional, robust, and provides accessible health inf
     - Specified Node.js version for consistent development environments.
     - Removed duplicate `html2canvas` script.
 - The decision to exclude complex backend features like user registration, account management, and external database integration is intentional, aimed at keeping the project simple and democratizing its eventual open-source release. This design choice emphasizes the interface's role in providing accessible health information, with the "secret sauce" of the AI agent being managed externally.
-- Browser caching of CSP headers was identified as a significant challenge during development, requiring hard refreshes and cache clearing to apply changes.
+- Browser caching of CSP headers and server process state were identified as significant challenges during development, requiring forceful server restarts (e.g., `taskkill /F /IM node.exe /T ; node server.js`) and meticulous browser cache/service worker clearing (including Incognito/Private windows and inspecting raw HTTP headers) to ensure changes to CSP in `server.js` were correctly applied and received by the browser.
+- Refactoring inline event handlers to `addEventListener` proved to be a key solution for `script-src-attr 'none'` errors, making the frontend more robust against restrictive CSPs.

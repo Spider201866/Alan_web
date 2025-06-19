@@ -10,21 +10,22 @@
 - **Chatbot Agent**: "Alan" (managed via Flowise, incorporates role, logic, memory, and security in its prompt)
 - **Environment Variables**: `dotenv` package for loading `.env` files.
 - **Rate Limiting**: `express-rate-limit`
-- **Security Headers**: `helmet` (with Content Security Policy configured)
-- **Code Formatting**: Prettier, EditorConfig
-- **Code Quality**: ESLint
-- **Testing**: Jest, JSDOM
-- **Performance**: Favicon preloading, deferred script loading
-- **Error Handling**: Custom 404 page, graceful API error handling
+- **Security Headers**: `helmet` is used for setting various HTTP security headers. Its Content Security Policy (CSP) is configured in `server.js` to specify allowed sources for scripts (`scriptSrc`), styles (`styleSrc`), fonts (`fontSrc`), connections (`connectSrc`), images (`imgSrc`), and to manage inline event handlers (`scriptSrcAttr`).
+- **Code Formatting**: Prettier (config in `.prettierrc`), EditorConfig (config in `.editorconfig`).
+- **Code Quality**: ESLint (config in `.eslintrc.js`).
+- **Testing**: Jest, JSDOM.
+- **Performance**: Deferred script loading (`defer` attribute). Problematic/unnecessary preload links for fonts and favicons were removed from HTML.
+- **Error Handling**: Custom 404 page, graceful API error handling.
+- **Event Handling**: Refactoring inline event handlers (e.g., `onclick`) to use `element.addEventListener()` in JavaScript for improved CSP compatibility and modern practices (e.g., in `public/home.html`).
 
 ## Development Setup
 - **Node.js**: Version specified in `package.json` (`engines`) and `.nvmrc` (e.g., `>=20.0.0`).
 - **npm**: Package manager for installing dependencies.
 - **Environment Variables**: `.env` file for configuration, with critical variables validated at startup. Instructions for setup are in `README.md`.
 - **Project Structure**:
-    - `server.js`: Main server application, includes 404 route.
+    - `server.js`: Main server application, configures `helmet` for CSP, includes 404 route.
     - `public/`: Static assets (HTML, CSS, JS, images, favicons).
-        - `public/home.html`, `public/index.html`: Main pages with deferred scripts and favicon preloading.
+        - `public/home.html`, `public/index.html`: Main pages with deferred scripts. `home.html` now uses `addEventListener` for navigation button event handling. Preload links removed.
         - `public/404.html`: Custom 404 page.
         - `public/page-template.js`: Shared appbar logic.
         - `public/focus-trap.js`: Focus trap system for accessibility.

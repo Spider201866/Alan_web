@@ -1,46 +1,89 @@
-aboutalan.html
-atoms.html
-ear.html
-eye.html
-home.html
-index.html
-instructions.html
-muted.html
-referral.html
-skin.html
-triangle.html
-view-records.html
-weblinks.html
-favicons/
-  favicons/android-chrome-192x192.png
-  favicons/android-chrome-512x512.png
-  favicons/apple-icon-60x60.png
-  favicons/apple-touch-icon.png
-  favicons/favicon-16x16.png
-  favicons/favicon-32x32.png
-  favicons/manifest.json
-images/
-  images/allergic_conjunctivitis.jpg
-  images/AP.png
-  images/atomsblue.jpg
-  images/bigredt.png
-  images/eyeor.gif
-  images/howtouseeye.png
-  images/iritis.jpg
-  images/lang.jpg
-  images/Q.png
-  images/triangle.png
-scripts/
-  scripts/agent1-chatbot-module.js
-  scripts/closer.js
-  scripts/faviconAndMeta.js
-  scripts/focus-trap.js
-  scripts/home.js
-  scripts/index.js
-  scripts/language.js
-  scripts/listener-module.js
-  scripts/muted.js
-  scripts/page-template.js
-styles/
-  styles/styles_index.css
-  styles/styles.css
+.editorconfig
+.env
+.env.example
+.eslintrc.js
+.gitignore
+.nvmrc
+.prettierrc
+compress_and_convert_images_instructions.txt
+folderList.txt
+generate-hash.js
+package-lock.json
+package.json
+README.md
+reset-locally-from-github.md
+server.js
+user-history.json
+user-info.json
+memory-bank/
+memory-bank/activeContext.md
+memory-bank/productContext.md
+memory-bank/progress.md
+memory-bank/projectbrief.md
+memory-bank/systemPatterns.md
+memory-bank/techContext.md
+public/
+public/404.html
+public/aboutalan.html
+public/atoms.html
+public/ear.html
+public/eye.html
+public/home.html
+public/index.html
+public/instructions.html
+public/muted.html
+public/referral.html
+public/robots.txt
+public/sitemap.xml
+public/skin.html
+public/triangle.html
+public/view-records.html
+public/weblinks.html
+public/favicons/
+public/favicons/android-chrome-192x192.png
+public/favicons/android-chrome-512x512.png
+public/favicons/apple-icon-60x60.png
+public/favicons/apple-touch-icon.png
+public/favicons/favicon-16x16.png
+public/favicons/favicon-32x32.png
+public/favicons/manifest.json
+public/images/
+public/images/allergic_conjunctivitis.jpg
+public/images/AP.png
+public/images/atomsblue.jpg
+public/images/bigredt.png
+public/images/eyeor.gif
+public/images/howtouseeye.png
+public/images/iritis.jpg
+public/images/lang.jpg
+public/images/Q.png
+public/images/triangle.png
+public/scripts/
+public/scripts/agent1-chatbot-module.js
+public/scripts/closer.js
+public/scripts/faviconAndMeta.js
+public/scripts/focus-trap.js
+public/scripts/home.js
+public/scripts/index.js
+public/scripts/language.js
+public/scripts/listener-module.js
+public/scripts/muted.js
+public/scripts/page-template.js
+public/styles/
+public/styles/styles_index.css
+public/styles/styles.css
+tests/
+tests/.gitkeep
+tests/api.test.js
+tests/chatbot.test.js
+tests/README.md
+tests/ui.test.js
+vscode-alanui-launcher/
+vscode-alanui-launcher/.vscodeignore
+vscode-alanui-launcher/INSTALLATION_STEPS.md
+vscode-alanui-launcher/package-lock.json
+vscode-alanui-launcher/package.json
+vscode-alanui-launcher/README.md
+vscode-alanui-launcher/tsconfig.json
+vscode-alanui-launcher/src/
+vscode-alanui-launcher/src/extension.ts

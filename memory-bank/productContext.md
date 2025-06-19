@@ -25,7 +25,7 @@ The AlanUI Web Chatbot was created to provide accessible and relevant health inf
 - Clear, accurate, and easy-to-understand health information, with the ability to maintain context and apply complex logic.
 - Simple, consistent, and accessible frontend for all users, with a shared appbar, uniform page layouts, and "skip to content" links.
 - Enhanced keyboard accessibility for all interactive elements, including modals and menus.
-- Improved page load performance through favicon preloading and deferred script loading.
+- Page load performance is optimized through deferred script loading; problematic favicon preload links were removed, relying on standard browser mechanisms for favicon fetching.
 - Minimal configuration required for deployment and operation, with clear environment variable setup instructions.
 
 ## Security and Privacy

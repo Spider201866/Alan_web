@@ -77,54 +77,99 @@ PORT=3000
 
 ## Project Structure
 
-The main public directory is organized as follows:
+The project is organized as follows. For a complete list of all files, see `folderList.txt`.
+
 ```
-aboutalan.html
-atoms.html
-ear.html
-eye.html
-home.html
-index.html
-instructions.html
-muted.html
-referral.html
-skin.html
-triangle.html
-view-records.html
-weblinks.html
-favicons/
-  favicons/android-chrome-192x192.png
-  favicons/android-chrome-512x512.png
-  favicons/apple-icon-60x60.png
-  favicons/apple-touch-icon.png
-  favicons/favicon-16x16.png
-  favicons/favicon-32x32.png
-  favicons/manifest.json
-images/
-  images/allergic_conjunctivitis.jpg
-  images/AP.png
-  images/atomsblue.jpg
-  images/bigredt.png
-  images/eyeor.gif
-  images/howtouseeye.png
-  images/iritis.jpg
-  images/lang.jpg
-  images/Q.png
-  images/triangle.png
-scripts/
-  scripts/agent1-chatbot-module.js
-  scripts/closer.js
-  scripts/faviconAndMeta.js
-  scripts/focus-trap.js
-  scripts/home.js
-  scripts/index.js
-  scripts/language.js
-  scripts/listener-module.js
-  scripts/muted.js
-  scripts/page-template.js
-styles/
-  styles/styles_index.css
-  styles/styles.css
+.
+├── .editorconfig
+├── .env
+├── .env.example
+├── .eslintrc.js
+├── .gitignore
+├── .nvmrc
+├── .prettierrc
+├── compress_and_convert_images_instructions.txt
+├── folderList.txt
+├── generate-hash.js
+├── package-lock.json
+├── package.json
+├── README.md
+├── reset-locally-from-github.md
+├── server.js
+├── user-history.json
+├── user-info.json
+├── memory-bank/
+│   ├── activeContext.md
+│   ├── productContext.md
+│   ├── progress.md
+│   ├── projectbrief.md
+│   ├── systemPatterns.md
+│   └── techContext.md
+├── public/
+│   ├── 404.html
+│   ├── aboutalan.html
+│   ├── atoms.html
+│   ├── ear.html
+│   ├── eye.html
+│   ├── home.html
+│   ├── index.html
+│   ├── instructions.html
+│   ├── muted.html
+│   ├── referral.html
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   ├── skin.html
+│   ├── triangle.html
+│   ├── view-records.html
+│   ├── weblinks.html
+│   ├── favicons/
+│   │   ├── android-chrome-192x192.png
+│   │   ├── android-chrome-512x512.png
+│   │   ├── apple-icon-60x60.png
+│   │   ├── apple-touch-icon.png
+│   │   ├── favicon-16x16.png
+│   │   ├── favicon-32x32.png
+│   │   └── manifest.json
+│   ├── images/
+│   │   ├── allergic_conjunctivitis.jpg
+│   │   ├── AP.png
+│   │   ├── atomsblue.jpg
+│   │   ├── bigredt.png
+│   │   ├── eyeor.gif
+│   │   ├── howtouseeye.png
+│   │   ├── iritis.jpg
+│   │   ├── lang.jpg
+│   │   ├── Q.png
+│   │   └── triangle.png
+│   ├── scripts/
+│   │   ├── agent1-chatbot-module.js
+│   │   ├── closer.js
+│   │   ├── faviconAndMeta.js
+│   │   ├── focus-trap.js
+│   │   ├── home.js
+│   │   ├── index.js
+│   │   ├── language.js
+│   │   ├── listener-module.js
+│   │   ├── muted.js
+│   │   └── page-template.js
+│   └── styles/
+│       ├── styles_index.css
+│       └── styles.css
+├── tests/
+│   ├── .gitkeep
+│   ├── api.test.js
+│   ├── chatbot.test.js
+│   ├── README.md
+│   └── ui.test.js
+└── vscode-alanui-launcher/
+    ├── .vscodeignore
+    ├── INSTALLATION_STEPS.md
+    ├── package-lock.json
+    ├── package.json
+    ├── README.md
+    ├── tsconfig.json
+    └── src/
+        └── extension.ts
 ```
 
 ---
@@ -244,3 +289,98 @@ To reset local data or clean up test files:
 - **Resetting User Data:** To clear `user-info.json` and `user-history.json` (used by the legacy record server), you can simply delete these files from the project root. They will be recreated as empty files on the next server startup or data submission.
 - **Resetting One-Time Passwords:** One-time passwords are managed in the `.env` file. To reset them, modify the `ONE_TIME_PASSWORD_HASHES` variable in your `.env` file.
 - **Cleaning Test Artifacts:** Automated tests are designed to clean up after themselves. If any temporary test files persist, they are typically located in `tests/temp/` and can be safely deleted.
+
+---
+
+## Troubleshooting
+
+### Persistent Content Security Policy (CSP) / Font Loading Errors (June 2025)
+
+**Symptoms:**
+- Browser console shows errors like "Refused to load the font '<URL>' because it violates the following Content Security Policy directive: 'font-src 'self' <URL>'" or "Refused to connect to '<URL>' because it violates ... 'connect-src'..."
+- These errors persist even after:
+    - Verifying `server.js` has the correct CSP directives (e.g., `fontSrc` includes `https://fonts.gstatic.com` and `https://cdnjs.cloudflare.com`, `connectSrc` includes necessary API endpoints).
+    - Removing problematic `<link rel="preload">` tags from HTML files (`index.html`, `home.html`).
+    - Forcefully restarting the Node.js server.
+    - Performing thorough browser cache clearing (including unregistering service workers, clearing all site data for `localhost:3000`, disabling cache in network tools).
+    - Testing in a new Incognito/Private window or even a different browser.
+
+**Diagnosis & Resolution:**
+This highly persistent issue indicates that the browser is receiving an outdated CSP header, or the Node.js server process is not serving the latest version of `server.js` despite restarts.
+
+1.  **Verify Server-Side CSP**: The `server.js` file should have the correct domains in the `helmet` configuration. For example:
+    ```javascript
+    app.use(
+      helmet({
+        contentSecurityPolicy: {
+          directives: {
+            // ... other directives
+            fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com', '*'], // Wildcard '*' was added as a final diagnostic step.
+            connectSrc: [
+              "'self'",
+              'https://alan.up.railway.app',
+              'https://ipapi.co',
+              'https://cdn.jsdelivr.net',
+              'https://cdnjs.cloudflare.com',
+              'https://fonts.googleapis.com',
+              'https://flowiseai-railway-production-fecf.up.railway.app',
+            ],
+            // ... other directives
+          },
+        },
+      })
+    );
+    ```
+2.  **Ensure Server is Running Latest Code**: The most critical step is to ensure the Node.js server process is *actually* running the latest saved version of `server.js`. Standard restarts might not be sufficient if an old process is lingering.
+    - Use `taskkill /F /IM node.exe /T` (Windows) or `pkill -f node` / `killall node` (macOS/Linux) to forcefully terminate all Node.js processes before restarting the server (`node server.js`).
+3.  **Thorough Browser Cache Annihilation**:
+    - Close ALL browser windows/tabs related to `localhost:3000`.
+    - Restart your browser completely.
+    - Open Developer Tools (F12) -> Application tab -> Service Workers -> Unregister ALL for `localhost:3000`.
+    - Application tab -> Storage -> Clear site data for `localhost:3000`.
+    - Network tab -> Check "Disable cache".
+    - Open `http://localhost:3000/` in a **new Incognito/Private window**.
+4.  **Inspect HTTP Headers**: If issues persist, in the Incognito window's Developer Tools (Network tab), load `http://localhost:3000/`. Click on the very first request (e.g., `localhost` or `index.html`). Go to the "Response Headers" section and verify the `Content-Security-Policy` header being sent by the server matches the configuration in `server.js`.
+
+If the browser *still* reports an outdated CSP in the console logs (e.g., `font-src` missing `https://cdnjs.cloudflare.com` or the wildcard `*`, or `script-src-attr 'none'` when `'unsafe-inline'` is expected), it points to an issue where the server process itself is not reflecting the file changes on disk, or a very stubborn browser cache. The wildcard `*` in `fontSrc` was added as a last resort for font loading and proved effective.
+    - **Refactoring Inline Event Handlers**: For "Refused to execute inline event handler" errors (often due to `script-src-attr 'none'`), refactoring HTML elements with `onclick="..."` attributes to use `element.addEventListener('click', ...)` in JavaScript is a robust solution. This was done for `public/home.html`.
+    - **Final `server.js` CSP state (as of June 19, 2025)**:
+      ```javascript
+      app.use(
+        helmet({
+          contentSecurityPolicy: {
+            directives: {
+              defaultSrc: ["'self'"],
+              scriptSrc: [
+                "'self'",
+                'https://cdn.jsdelivr.net',
+                'https://alan.up.railway.app',
+                'https://ipapi.co',
+                'https://cdnjs.cloudflare.com',
+                "'unsafe-inline'", // For inline <script> tags and fallback for event handlers
+              ],
+              styleSrc: [
+                "'self'",
+                'https://cdnjs.cloudflare.com',
+                'https://fonts.googleapis.com',
+                "'unsafe-inline'",
+              ],
+              fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'], // Wildcard removed after fixing other issues
+              imgSrc: ["'self'", 'data:'],
+              connectSrc: [
+                "'self'",
+                'https://alan.up.railway.app',
+                'https://ipapi.co',
+                'https://cdn.jsdelivr.net',
+                'https://cdnjs.cloudflare.com',
+                'https://fonts.googleapis.com',
+                'https://flowiseai-railway-production-fecf.up.railway.app',
+              ],
+            },
+          },
+          scriptSrcAttr: ["'unsafe-inline'"], // Explicitly allows inline event attributes like onclick
+          noSniff: true,
+        })
+      );
+      ```
+This combination of server-side CSP configuration, HTML refactoring, and client-side cache clearing ultimately resolved the issues.

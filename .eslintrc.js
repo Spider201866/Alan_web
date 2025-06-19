@@ -1,3 +1,4 @@
+// Alan UI - .eslintrc.js | 19th June 2025, WJW
 module.exports = {
   env: {
     browser: true,

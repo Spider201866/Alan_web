@@ -1,3 +1,4 @@
+// Alan UI - server.js | 19th June 2025, WJW
 const express = require('express');
 const fs = require('fs').promises; // Use the promise-based version of fs
 const path = require('path');
@@ -45,7 +46,8 @@ app.use(
           'https://cdn.jsdelivr.net',
           'https://alan.up.railway.app',
           'https://ipapi.co',
-          "'unsafe-inline'",
+          'https://cdnjs.cloudflare.com',
+          "'unsafe-inline'", // For inline <script> tags and older browser compatibility for event handlers
         ],
         styleSrc: [
           "'self'",
@@ -53,12 +55,27 @@ app.use(
           'https://fonts.googleapis.com',
           "'unsafe-inline'",
         ],
-        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'], // Specific sources, wildcard removed
         imgSrc: ["'self'", 'data:'],
-        connectSrc: ["'self'", 'https://alan.up.railway.app', 'https://ipapi.co'],
+        connectSrc: [
+          "'self'",
+          'https://alan.up.railway.app',
+          'https://ipapi.co',
+          'https://cdn.jsdelivr.net',
+          'https://cdnjs.cloudflare.com',
+          'https://fonts.googleapis.com',
+          'https://flowiseai-railway-production-fecf.up.railway.app',
+        ],
+        // 'script-src-attr' is not needed here if 'unsafe-inline' is in script-src for event handlers,
+        // or if we rely on addEventListener. However, to be explicit for modern browsers that support it
+        // and to ensure inline event attributes work if any are missed in refactoring:
+        // Note: Helmet handles 'script-src-attr' as a top-level option, not in directives.
       },
     },
-    scriptSrcAttr: ["'unsafe-inline'"], // Explicitly allow inline event handlers
+    // Forcing 'unsafe-inline' for script attributes if any inline event handlers (onclick, etc.) are still used.
+    // If all event handlers are moved to addEventListener, this might not be strictly necessary,
+    // but it provides a fallback. The browser will use the more specific script-src-attr if it supports it.
+    scriptSrcAttr: ["'unsafe-inline'"],
     noSniff: true, // Enable X-Content-Type-Options: nosniff
   })
 );

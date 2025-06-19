@@ -1,3 +1,4 @@
+// Alan UI - generate-hash.js | 19th June 2025, WJW
 // generate-hash.js
 const crypto = require('crypto');
 require('dotenv').config();

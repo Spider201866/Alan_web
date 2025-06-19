@@ -1,3 +1,4 @@
+<!-- Alan UI - reset-locally-from-github.md | 19th June 2025, WJW -->
 # How to Reset Your Local Project to Match a GitHub Commit
 
 This guide will help you completely reset your local project directory to match a specific commit from your GitHub repository (e.g., "dolphin2" on https://github.com/Spider201866/Alan_web). This is useful if you want to undo all local changes and ensure your files are identical to a known good state.

@@ -26,7 +26,7 @@ To provide a web-based chatbot for users, especially in Low and Middle-Income Co
 - No user registration or account management.
 - No external database integration (data is primarily static or handled by the chatbot logic).
 - No complex backend record storage (the focus is on the chatbot interaction).
-- No advanced AI/ML for chatbot responses (responses are likely rule-based or pre-defined).
+- The development of the core AI/LLM model itself is out of scope; the project integrates with an existing advanced LLM (Google Gemini 2.5 Flash via Flowise).
 
 ## Current Status
 - Static frontend files are served.
@@ -41,4 +41,4 @@ To provide a web-based chatbot for users, especially in Low and Middle-Income Co
 - Node.js version is specified for consistent development environments.
 - API error handling has been improved for user-facing feedback.
 - A custom 404 page is implemented for unknown routes.
-- Favicon preloading is implemented for performance.
+- Favicons are implemented; problematic preload links were removed to resolve browser errors, standard browser loading mechanisms for favicons are in effect.
