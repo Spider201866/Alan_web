@@ -10,7 +10,7 @@
 
   <!-- External Dependencies -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles/styles.css">
 <link rel="prefetch" href="images/atomsblue.jpg" as="image">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,10 +19,10 @@
   
   <!-- External JS Modules -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script> 
-  <script type="module" src="faviconAndMeta.js"></script>
-  <script type="module" src="closer.js"></script>
-  <script type="module" src="language.js"></script>
-  <script src="muted.js"></script>
+<script type="module" src="scripts/faviconAndMeta.js"></script>
+<script type="module" src="scripts/closer.js"></script>
+<script type="module" src="scripts/language.js"></script>
+<script src="scripts/muted.js"></script>
 
   <!-- Inline Styles -->
   <style>
@@ -62,7 +62,7 @@
         <button id="atoms-button" class="button grey" onclick="window.location.href='atoms.html';">Atoms</button>
         <button id="tools-button" class="button grey">Tools</button>
         <div class="language-container">
-<button class="button btn-lang" id="language-button" aria-label="Change language"></button>
+<button class="button btn-lang" id="language-button" aria-label="Change language" style="background: url('images/lang.jpg') no-repeat center center; background-size: cover;"></button>
           <div id="language-dropdown" style="display: none; position: absolute; top: 40px; left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid #ccc; z-index: 9999; min-width: 220px; white-space: nowrap; max-height: 350px; overflow-y: auto; font-size: 14px; line-height: 1.2;">
             <ul style="margin: 0; padding: 0; list-style: none;">
               <li data-value="en" style="padding: 6px; cursor: pointer;"><strong>English</strong> (English)</li>
@@ -167,6 +167,6 @@
   </aside>
 
   <!-- SCRIPT BLOCK -->
-  <script type="module" src="home.js"></script>
+<script type="module" src="scripts/home.js"></script>
 </body>
 </html>
