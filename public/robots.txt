@@ -1,2 +1,7 @@
+# robots.txt – public site
 User-agent: *
-Disallow: /
+Disallow: /admin/   # block anything in the admin section
+Disallow: /api/     # block your JSON or REST endpoints
+
+# (optional) tell crawlers where the XML sitemap lives
+Sitemap: https://example.com/sitemap.xml
