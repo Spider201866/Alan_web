@@ -31,20 +31,32 @@
     - Updated `public/scripts/page-template.js` to use the new translation system for page titles and to trigger updates on language change.
     - Refactored `public/index.html` (via `public/scripts/index.js`) and `public/home.html` (via `public/scripts/home.js`) to use the new system for their language selection UI and content translation.
     - Refactored content pages (`aboutalan.html`, `eye.html`, `ear.html`, `skin.html`, `instructions.html`, `atoms.html`, `referral.html`, `weblinks.html`) to remove embedded translations and use the new dynamic system.
+- **CSS Centralization and Refinements (June 20, 2025):** All local and inline styles from `aboutalan.html`, `home.html`, `atoms.html`, `ear.html`, `eye.html`, `instructions.html`, `skin.html`, and `weblinks.html` have been successfully moved to `public/styles/styles.css`. Common styles for exam pages were consolidated using the `.exam-content-container` class. Utility classes were grouped. The "How to use" button text visibility on `home.html` (styled with yellow background and black text) and the `lang.jpg` 404 error were resolved. Spacing for the ">Practice often<" line on exam pages was adjusted using the `.practice-often-spacing` class with `margin-top: 30px;`. Empty/commented page-specific style sections in `styles.css` were cleaned up.
 
 ## What's Left to Build (New Tasks for "Tomorrow")
-1.  **Finalize and Verify All Translations:**
-    *   Ensure all necessary translation keys are present in all 22 JSON language files in `public/translations/`.
-    *   Thoroughly test all pages in various languages to confirm all static and dynamic text elements are correctly translated and displayed.
-    *   Refine any remaining dynamic text updates within JavaScript files (e.g., parts of `referral.html`'s `initializeForm`) to use `getTranslation`.
-2.  **Implement PWA Service Worker for Install Prompt:**
+1.  **Finalize and Verify All Translations (Ongoing):**
+    *   Ensure all necessary translation keys are present and accurately translated in all 22 JSON language files in `public/translations/` (currently, some contain placeholders like "(ARABIC: ...)").
+    *   Thoroughly test all pages in various languages.
+    *   Refine any remaining dynamic text updates within JavaScript files.
+    *   *Future Enhancement Suggestion:* Develop a script to automatically compare `en.json` with other language files to identify missing keys.
+    *   *Future Enhancement Suggestion:* Consider implementing a system to log missing translation keys to a service in a production environment.
+2.  **Translation System Robustness:**
+    *   Error handling in `language.js`'s `setLanguage` function was improved to prevent infinite loops if `en.json` fails to load (DONE - June 20, 2025).
+4.  **Refine Data Storage and Legacy API (Future Consideration):**
+    *   **Security**: Investigate moving data files (`user-info.json`, `user-history.json`) written by the application outside the webroot (e.g., to a dedicated data directory like `../alan_data/`).
+    *   **Deprecate/Refactor Legacy API**: Develop a plan to phase out or refactor the legacy record-keeping API routes in `server.js`, considering more robust storage (e.g., SQLite or cloud service) to replace flat files and `async-mutex`.
+6.  **Explore Component-Based Architecture (Future Consideration):**
+    *   **Goal**: Improve modularity, reusability, and maintainability of frontend code.
+    *   **Options to Consider**:
+        *   **Native Web Components**: Refactor reusable UI pieces (e.g., Muted Buttons bar, Side Menu) into native Web Components.
+        *   **Lightweight Framework**: Evaluate a lightweight framework like Svelte.
+7.  **Implement PWA Service Worker for Install Prompt:**
     *   Create/correct `public/service-worker.js` to enable PWA features, focusing on the "Install app" prompt.
     *   Configure caching strategies and ensure `manifest.json` is PWA-ready.
-3.  **Refactor CSS - Move More to `styles.css`:**
-    *   Centralize more styling into `public/styles/styles.css` from other CSS files or inline styles to improve maintainability.
+3.  **CSS Refactoring (Centralization into `styles.css`):** (DONE - June 20, 2025) Centralized styling into `public/styles/styles.css` from individual HTML pages. Common exam page styles consolidated. Utility classes grouped. Further internal conciseness of `styles.css` can be a future low-priority task.
 
 ## Current Status
-The AlanUI Web Chatbot is functional and stable. Recent work focused on resolving CSP/event handler issues, achieving visual consistency in header/appbar heights, and implementing a new dynamic language loading system using external JSON files. Core scripts (`language.js`, `page-template.js`, `index.js`, `home.js`) and all relevant HTML pages have been refactored to support this. Documentation and memory bank files are updated. The project is now poised for translation key completion/verification, PWA capabilities, and further CSS organization.
+The AlanUI Web Chatbot is functional and stable. Recent work focused on resolving CSP/event handler issues, achieving visual consistency in header/appbar heights, implementing a new dynamic language loading system using external JSON files, **and centralizing all page-specific CSS into `public/styles/styles.css` while making targeted consolidations within it.** Core scripts (`language.js`, `page-template.js`, `index.js`, `home.js`) and all relevant HTML pages have been refactored to support this. Documentation and memory bank files are updated **to reflect these CSS changes and other recent enhancements.** The project is now poised for translation key completion/verification, PWA capabilities, and **completed the main CSS centralization effort.**
 
 ## Known Issues
 - All server logic is in a single `server.js` file, which could become unwieldy for larger projects.
@@ -71,6 +83,7 @@ The AlanUI Web Chatbot is functional and stable. Recent work focused on resolvin
     - Documented `.env` setup and cleanup procedures in `README.md`.
     - Specified Node.js version for consistent development environments.
     - Removed duplicate `html2canvas` script.
+    - Noted that the manual image compression process (ref `compress_and_convert_images_instructions.txt`) is currently low priority due to the limited number of project images and their current state.
 - The decision to exclude complex backend features like user registration, account management, and external database integration is intentional, aimed at keeping the project simple and democratizing its eventual open-source release. This design choice emphasizes the interface's role in providing accessible health information, with the "secret sauce" of the AI agent being managed externally.
 - Browser caching of CSP headers and server process state were identified as significant challenges during development, requiring forceful server restarts (e.g., `taskkill /F /IM node.exe /T ; node server.js`) and meticulous browser cache/service worker clearing (including Incognito/Private windows and inspecting raw HTTP headers) to ensure changes to CSP in `server.js` were correctly applied and received by the browser.
 - Refactoring inline event handlers to `addEventListener` proved to be a key solution for `script-src-attr 'none'` errors, making the frontend more robust against restrictive CSPs.

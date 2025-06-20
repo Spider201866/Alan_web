@@ -17,6 +17,9 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. It fo
     - Specific padding adjustments (e.g., `.chatbot-subtitle`) and viewport meta tag consistency are used to ensure visually consistent rendered heights for these headers across different pages and in various (emulated) viewing environments.
     - Explicit `font-family` with `!important` is used for elements like `.back-arrow` to ensure consistent rendering.
     - Deferred script loading for improved performance. Problematic/unnecessary preload links for fonts and favicons were removed from HTML files.
+    - Local styles from individual HTML pages (inline or `<style>` blocks) have been centralized into `public/styles/styles.css`.
+    - Common styling for exam content pages (eye, ear, skin) is handled by the `.exam-content-container` class and its descendant selectors in `styles.css`.
+    - Utility classes (colors, layout helpers like `.block`) are grouped in `styles.css`.
 - **Accessibility**: Implementation of focus traps for modals/menus, `aria-hidden` for duplicated marquee content, `aria-label` for icon-only buttons, and "skip to content" links.
     - **Event Handling**: Inline event handlers (e.g., `onclick`) in HTML are being refactored to use `element.addEventListener()` in JavaScript (as done in `public/home.html`) for better CSP compatibility and modern practices.
 - **Automated Testing & Code Quality**: Comprehensive test suite covering UI and accessibility, with pre-test formatting and linting hooks. ESLint is configured for code quality.
@@ -34,6 +37,7 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. It fo
 - **Shared Component Pattern (Frontend)**:
     - Centralized appbar (`#appBar`) logic (`page-template.js`) and styling (`styles.css`) for consistent UI elements across sub-pages.
     - The main header on `home.html` (`.chatbot-header`) is also styled in `styles.css`, with fine-tuned padding to match the perceived height of the shared appbar.
+    - Further CSS centralization has moved most page-specific styles from HTML files into `public/styles/styles.css`. Common patterns, like exam page content, are styled via shared classes (e.g., `.exam-content-container`).
 - **Dynamic Content Loading Pattern (Frontend)**:
     - `language-loader.js` fetches language-specific JSON files from `public/translations/` on demand.
     - Caching of loaded translations to avoid redundant network requests.
@@ -53,8 +57,8 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. It fo
     - `public/scripts/language.js`: Manages current language, uses loader, provides translation functions, and dispatches `languageChanged` event.
     - `public/scripts/index.js`, `public/scripts/home.js`: Handle page-specific logic, including UI updates in response to `languageChanged` event.
     - `public/translations/`: Directory containing individual language JSON files.
-    - `public/styles/styles.css`: Centralized styles for shared UI elements like the `#appBar` (on sub-pages), the `.chatbot-header` (on `home.html`), and "skip to content" link. Includes specific padding for `.chatbot-subtitle` and `font-family` for `.back-arrow` to ensure visual consistency.
-    - `public/styles/styles_index.css`: Specific styles for home/index pages.
+    - `public/styles/styles.css`: Centralized stylesheet for all shared UI elements, page-specific layouts, component styles, and utility classes. All styles previously in HTML `<style>` blocks or inline attributes have been moved here. Includes specific rules for `#appBar`, `.chatbot-header`, `.exam-content-container`, and various page/component-specific selectors.
+    - `public/styles/styles_index.css`: Specific styles for home/index pages (remains separate for now, but its role might diminish further).
     - `public/boxes.html`: Contains marquee content with `aria-hidden` attributes for accessibility (though marquee content is now directly in `home.html`).
 - `tests/`: Contains automated tests for UI and accessibility.
 - `.editorconfig`: Enforces consistent code style across editors.

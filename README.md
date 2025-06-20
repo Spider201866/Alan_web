@@ -88,7 +88,7 @@ The project is organized as follows. For a complete list of all files, see `fold
 ├── .gitignore
 ├── .nvmrc
 ├── .prettierrc
-├── compress_and_convert_images_instructions.txt
+├── compress_and_convert_images_instructions.txt (Note: Manual image optimization process, currently low priority)
 ├── folderList.txt
 ├── generate-hash.js
 ├── package-lock.json
@@ -212,7 +212,7 @@ The following pages use the shared appbar and are visually/structurally consiste
 
 - We will **keep both** `styles.css` and `styles_index.css` in the project.
 - This separation makes it easier to understand and maintain styles, and avoids a single "monster" CSS file.
-- Use `styles.css` for shared UI elements (like the appbar) and `styles_index.css` for home/index-specific or other specialized styles.
+- Use `styles.css` for shared UI elements (like the appbar), all page-specific styles (previously in HTML files), common component styles, and utility classes. `styles_index.css` contains legacy styles primarily for `index.html` and its role may diminish further.
 
 ### How to Add a New Page with Appbar
 

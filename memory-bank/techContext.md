@@ -18,7 +18,7 @@
     - Deferred script loading (`defer` attribute). Problematic/unnecessary preload links for fonts and favicons were removed from HTML.
     - Consistent viewport meta tags across HTML files (e.g., `user-scalable=no` removed from `home.html` for consistent rendering).
 - **UI Consistency**:
-    - Centralized CSS (`public/styles/styles.css`) for shared elements like appbars/headers.
+    - Centralized CSS (`public/styles/styles.css`) for all shared elements, page-specific layouts, and utility classes. Local styles from HTML pages have been moved here. Common patterns like exam page content use shared classes (e.g., `.exam-content-container`).
     - Fine-tuned padding (e.g., `.chatbot-subtitle`) and font properties (e.g., `.back-arrow` with `!important`) to achieve visually consistent rendered heights in specific emulation environments.
 - **Error Handling**: Custom 404 page, graceful API error handling.
 - **Event Handling**: Refactoring inline event handlers (e.g., `onclick`) to use `element.addEventListener()` in JavaScript for improved CSP compatibility and modern practices (e.g., in `public/home.html`).
@@ -41,6 +41,8 @@
         - `public/scripts/language.js`: Manages current language, uses loader, provides translation functions.
         - `public/scripts/language-loader.js`: Fetches individual language JSON files.
         - `public/translations/`: Directory containing `{langCode}.json` translation files.
+        - `public/styles/styles.css`: Main centralized stylesheet for all global, component, page-specific, and utility styles.
+        - `public/styles/styles_index.css`: Legacy styles primarily for `index.html` (role may diminish).
     - `user-info.json`, `user-history.json`: JSON data files (ensured to have trailing newlines).
     - `package.json`: Defines project metadata, dependencies, and scripts.
     - `.prettierrc`: Prettier configuration file.

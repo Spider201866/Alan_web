@@ -28,8 +28,14 @@ export async function setLanguage(langCode) {
     console.error(`Error setting language to ${langCode}:`, error);
     // Fallback to English if setting the desired language fails catastrophically
     if (langCode !== 'en') {
-      console.log('Attempting to fallback to English due to error.');
-      await setLanguage('en');
+      console.warn(`Failed to load language "${langCode}". Attempting to fallback to English.`);
+      await setLanguage('en'); // Try to load English
+    } else {
+      // This means 'en' itself failed to load. Do not recall setLanguage('en').
+      console.error('CRITICAL: Failed to load English (en.json). Translations will be broken.');
+      window.currentTranslations = {}; // Clear potentially stale translations
+      // Consider dispatching a specific error event here if UI needs to react
+      // document.dispatchEvent(new CustomEvent('criticalTranslationError'));
     }
   }
 }

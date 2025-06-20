@@ -3,9 +3,18 @@
 # Active Context
 
 ## Current Work Focus
-The dynamic language loading system has been implemented. Current focus is on ensuring all translation keys are correctly populated in the JSON files and thorough testing of the internationalization features. Upcoming tasks include PWA service worker implementation and further CSS refactoring.
+The dynamic language loading system has been implemented and CSS refactoring (centralization of styles) is largely complete. Current focus is on ensuring all translation keys are correctly populated in the JSON files and thorough testing of the internationalization features. Upcoming tasks include PWA service worker implementation.
 
 ## Recent Changes
+- **CSS Centralization and Refinements (June 20, 2025):**
+    - Moved local `<style>` blocks and inline styles from `aboutalan.html`, `home.html`, `atoms.html`, `ear.html`, `eye.html`, `instructions.html`, `skin.html`, and `weblinks.html` into `public/styles/styles.css`.
+    - Created a shared class `.exam-content-container` to consolidate common styling for eye, ear, and skin exam pages, including their `h3` and `p` tags.
+    - Grouped utility classes (color utilities like `.red`, `.highlight`, `.orange`, etc., and general utilities like `.block`, `.clear`, `.boldText`, `.justify`) within the "UTILITY CLASSES" section of `public/styles/styles.css`.
+    - Resolved a 404 error for `lang.jpg` by correcting its path in `styles.css`.
+    - Fixed a visibility issue for the "How to use" button text on `home.html` by ensuring correct translation key usage and updating its CSS to a yellow background with black text for clear visibility.
+    - Adjusted spacing for the ">Practice often<" line on exam pages using the CSS class `.practice-often-spacing` with `margin-top: 30px;`.
+    - Cleaned up empty or commented-out page-specific style sections in `styles.css` after consolidation.
+
 - **Dynamic Language Loading System Implementation (June 20, 2025):**
     - Replaced the single, large `language.js` file (which embedded all translations) with a new system.
     - Created `public/scripts/language-loader.js` to dynamically fetch individual language JSON files from `public/translations/` on demand, with caching.
@@ -54,15 +63,27 @@ The dynamic language loading system has been implemented. Current focus is on en
     - Updated `test` script to include `format:check`.
 
 ## Next Steps (New Tasks for "Tomorrow")
-1.  **Split Language Translations into Separate Files:**
-    *   **Goal**: Refactor the current translation system (likely embedded in HTML or a single JS object) into individual JSON files per language (e.g., `locales/en.json`, `locales/es.json`).
+1.  **Finalize and Verify All Translations (Ongoing):**
+    *   **Goal**: Ensure all necessary translation keys are present and accurately translated in all 22 JSON language files in `public/translations/`.
     *   **Details**:
-        *   Create a `locales/` directory within `public/`.
-        *   Move translations for each of the 22 languages into its own JSON file.
-        *   Implement a JavaScript function (likely in `public/scripts/language.js` or a new module) to dynamically fetch and apply the correct language JSON file based on user selection (e.g., from `localStorage`).
-        *   Update existing language switching logic to use this new system.
-    *   **Considerations**: Ensure no FOUC (Flash of Unstyled Content/Untranslated Text). Ensure all existing translated elements are covered. Maintain performance.
-2.  **Implement PWA Service Worker for Install Prompt:**
+        *   Systematically review each language file against `en.json`.
+        *   Populate missing translations and correct any placeholder text (e.g., "(ARABIC: ...)")
+        *   Thoroughly test all pages in various languages.
+    *   **Suggestion for future improvement**: Develop a script to automatically compare `en.json` with other language files to identify missing keys.
+2.  **Enhance Translation System Robustness & Monitoring (Future Enhancement):**
+    *   **Logging Missing Keys**: Consider implementing a system to log missing translation keys to a service in a production environment to track which translations are most urgently needed. (The current `console.warn` for missing keys is good for development).
+    *   **Error Handling**: The error handling in `language.js`'s `setLanguage` function was improved to prevent infinite loops if `en.json` fails to load (DONE - June 20, 2025).
+3.  **Refine Data Storage and Legacy API (Future Consideration):**
+    *   **Security**: Investigate moving data files (`user-info.json`, `user-history.json`) written by the application outside the webroot (e.g., to a dedicated data directory like `../alan_data/`) to improve security hygiene.
+    *   **Deprecate/Refactor Legacy API**: Develop a plan to phase out the legacy record-keeping API routes in `server.js` or refactor them. This could involve:
+        *   Migrating from flat file storage to a more robust mechanism (e.g., SQLite database or a simple cloud-based storage solution).
+        *   This would also eliminate the need for `async-mutex` for file access and improve scalability and data handling.
+4.  **Explore Component-Based Architecture (Future Consideration):**
+    *   **Goal**: Improve modularity, reusability, and maintainability of frontend code.
+    *   **Options to Consider**:
+        *   **Native Web Components**: Refactor reusable UI pieces (e.g., Muted Buttons bar, Side Menu) into native Web Components to encapsulate their HTML, CSS, and JS.
+        *   **Lightweight Framework**: Alternatively, evaluate a lightweight framework like Svelte, which compiles to efficient vanilla JS and would formalize a component-based approach without significant overhead.
+5.  **Implement PWA Service Worker for Install Prompt:**
     *   **Goal**: Enable PWA features, primarily allowing users to "install" the web app on desktop and mobile.
     *   **Details**:
         *   Create/correct `public/service-worker.js`.
@@ -71,22 +92,23 @@ The dynamic language loading system has been implemented. Current focus is on en
         *   Register the service worker in the main JavaScript entry point (e.g., `public/scripts/index.js` or `public/scripts/home.js`).
         *   Verify `public/favicons/manifest.json` is correctly configured for PWA installability (e.g., `start_url`, `display`, icons).
     *   **Considerations**: Test install prompt on various platforms/browsers. Ensure offline capabilities are as intended (if any).
-3.  **Refactor CSS - Move More to `styles.css`:**
-    *   **Goal**: Centralize more styling into `public/styles/styles.css` to improve maintainability and reduce redundancy from other CSS files or inline styles.
-    *   **Details**:
-        *   Identify common styles currently in `public/styles/styles_index.css` or potentially in page-specific `<style>` tags (though these should be minimal).
-        *   Move shared, reusable styles to `styles.css`.
-        *   Ensure `styles_index.css` primarily contains styles unique to `index.html` or `home.html` if they differ significantly from other pages.
-    *   **Considerations**: Perform thorough visual regression testing to ensure no layouts are broken. Maintain the distinction between global styles (`styles.css`) and page-specific overrides.
+3.  **CSS Refactoring (Centralization into `styles.css`):** (DONE - June 20, 2025)
+    *   **Goal**: Centralize styling into `public/styles/styles.css` from individual HTML pages.
+    *   **Details**: Styles from `aboutalan.html`, `home.html`, `atoms.html`, `ear.html`, `eye.html`, `instructions.html`, `skin.html`, and `weblinks.html` were moved. Common exam page styles consolidated with `.exam-content-container`. Utility classes grouped.
+    *   **Outcome**: HTML files are cleaner. `styles.css` now contains all these styles. Further internal conciseness of `styles.css` itself can be a future low-priority task if needed.
 
 ## Active Decisions and Considerations
+- CSS for exam pages (`eye.html`, `ear.html`, `skin.html`) now uses a shared `.exam-content-container` class for common layout (padding, line-height, text-align) and common styling for `h3` and `p` tags within it.
+- Utility classes (colors, `.block`, `.clear`, `.boldText`, `.justify`, `.practice-often-spacing`) are grouped in `styles.css`.
+- The "How to use" button (`#instructions-button`) on `home.html` is styled with a yellow background and black text for visibility.
 - The refactoring of `home.html` to use `addEventListener` is a good pattern to continue.
 - The `fontSrc` in `server.js` was reverted to `["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com']` after the wildcard `*` helped diagnose issues; this more specific configuration is now working.
 - Maintaining separation of `styles.css` and `styles_index.css` is still the plan, but with more shared elements moving to `styles.css`.
 - Maintaining separation of `styles.css` and `styles_index.css`.
 - Adherence to shared appbar pattern and accessibility guidelines.
 - **Visual Consistency**: Striving for pixel-perfect (or as close as practically possible) visual consistency across pages, especially for shared elements like headers/appbars, even if it requires fine-tuning CSS based on observed rendering in specific (emulated) environments.
-- **Internationalization (i18n)**: Translations are managed via external JSON files per language, loaded dynamically.
+- **Internationalization (i18n)**: Translations are managed via external JSON files per language, loaded dynamically. The task to ensure *all* text strings are sourced from these files is ongoing. Error handling in `language.js` improved to prevent infinite loops on critical load failures.
+- **Image Optimization**: The manual image compression process (outlined in `compress_and_convert_images_instructions.txt`) is currently considered low priority. The project uses a limited number of static images, and further aggressive optimization may not yield significant benefits at this stage compared to other development priorities.
 
 ## Important Patterns and Preferences
 - **Dynamic Language Loading**:
