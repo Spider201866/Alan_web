@@ -23,46 +23,11 @@
     <link rel="stylesheet" href="styles/styles.css" />
     <script type="module" src="scripts/faviconAndMeta.js"></script>
     <!-- Translations will be loaded dynamically by language.js and page-template.js -->
-    <style>
-      /* --- Identical to original styles, with minimal additions --- */
-      body {
-        font-family: 'Calibri Light', Arial, sans-serif;
-        background-color: white;
-        color: black;
-        margin: 0;
-        padding: 0;
-      }
-      #earExamText {
-        padding: 15px;
-        line-height: 1.4em;
-        text-align: justify;
-      }
-      #earExamText h3 {
-        margin-top: 16px;
-        margin-bottom: 8px;
-      }
-      #earExamText p {
-        margin-bottom: 8px;
-      }
-      /* IMPROVEMENT: Reusable classes to replace inline styles */
-      .red {
-        color: red;
-        font-weight: bold;
-      }
-      .orange {
-        color: orange;
-      }
-      .green {
-        color: green;
-      }
-      .purple {
-        color: purple;
-      }
-    </style>
+    <!-- Styles moved to public/styles/styles.css -->
   </head>
   <body>
     <!-- Main Content Area -->
-    <div id="earExamText">
+    <div id="earExamText" class="exam-content-container">
       <h3 id="allAroundEarHeading">All around ear</h3>
       <div id="allAroundEarText">
         <span class="block"
@@ -97,7 +62,7 @@
           <span class="orange">bulging</span>, <span class="green">retracted</span>,
           <span class="purple">perforated</span></span
         >
-        <span class="block">>Practice often<</span>
+        <span class="block practice-often-spacing">>Practice often<</span>
       </div>
     </div>
 

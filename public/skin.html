@@ -23,55 +23,11 @@
     <link rel="stylesheet" href="styles/styles.css" />
     <script type="module" src="scripts/faviconAndMeta.js"></script>
     <!-- Translations will be loaded dynamically by language.js and page-template.js -->
-    <style>
-      /* --- Identical to original styles, with minimal additions --- */
-      body {
-        font-family: 'Calibri Light', Arial, sans-serif;
-        background-color: white;
-        color: black;
-        margin: 0;
-        padding: 0;
-      }
-      #skinExamText {
-        padding: 15px;
-        line-height: 1.4em;
-        text-align: justify;
-      }
-      #skinExamText h3 {
-        margin-top: 16px;
-        margin-bottom: 8px;
-      }
-      #skinExamText p {
-        margin-bottom: 8px;
-      }
-      /* IMPROVEMENT: Reusable classes to replace inline styles */
-      .teal {
-        color: teal;
-      }
-      .coral-orange {
-        color: #ff7f50;
-      }
-      .coral-red {
-        color: #ff4040;
-      }
-      .blue {
-        color: blue;
-      }
-      .orange {
-        color: orange;
-      }
-      .pale-blue {
-        color: #bfefff;
-      }
-      .red {
-        color: red;
-        font-weight: bold;
-      }
-    </style>
+    <!-- Styles moved to public/styles/styles.css -->
   </head>
   <body>
     <!-- Main Content Area -->
-    <div id="skinExamText">
+    <div id="skinExamText" class="exam-content-container">
       <h3 id="generalObservationHeading">General observation</h3>
       <div id="generalObservationText">
         <span class="block">Inspect lumps, <em>colour changes</em>, distribution</span>
@@ -109,7 +65,7 @@
           >Know your lesion: normal, <span class="red">suspicious</span>,
           <span class="orange">inflamed</span></span
         >
-        <span class="block">>Practice often<</span>
+        <span class="block practice-often-spacing">>Practice often<</span>
       </div>
     </div>
 

@@ -23,69 +23,7 @@
     <link rel="stylesheet" href="styles/styles.css" />
     <script type="module" src="scripts/faviconAndMeta.js"></script>
     <!-- Translations will be loaded dynamically by language.js and page-template.js -->
-    <style>
-      /* --- Identical to original styles, with minimal additions --- */
-      body {
-        font-family: 'Calibri Light', Arial, sans-serif;
-        background-color: white;
-        color: black;
-        margin: 0;
-        padding: 0;
-      }
-      #aboutAlan {
-        padding: 15px;
-        margin-top: -10px;
-      }
-      #logoContainer {
-        text-align: center;
-        margin: -10px;
-      }
-      /* IMPROVEMENT: Style for logo moved here from inline */
-      #logoImage {
-        max-width: 120px;
-        height: auto;
-        margin-bottom: -10px;
-      }
-      #aboutAlanContent {
-        margin-top: 10px;
-      }
-      #aboutAlanText,
-      #aboutAlanEfficient,
-      #aboutAlanEasy,
-      #aboutAlanExplainable,
-      #aboutAlanEncouraging {
-        font-size: 15px;
-        text-align: justify;
-        margin-bottom: 16px;
-      }
-      /* IMPROVEMENT: Style for date moved here from inline */
-      #aboutAlanDate {
-        font-size: 12px;
-        text-align: justify;
-        margin-bottom: 16px;
-      }
-      #aboutAlanList {
-        padding-left: 20px;
-        margin-bottom: 16px;
-      }
-      .bullet-point {
-        list-style-type: disc;
-      }
-      .highlight {
-        color: red;
-      }
-      @keyframes smoothFlip360 {
-        from {
-          transform: rotateY(0deg);
-        }
-        to {
-          transform: rotateY(180deg);
-        }
-      }
-      .flip-horizontally {
-        animation: smoothFlip360 1.5s ease-out forwards;
-      }
-    </style>
+    <!-- Styles moved to public/styles/styles.css -->
   </head>
   <body>
     <!-- Main About Alan Content (structure preserved) -->
@@ -115,7 +53,7 @@
         <p id="aboutAlanEasy"><strong>Easy-to-use</strong> – app, voice, vision</p>
         <p id="aboutAlanExplainable"><strong>Explainable</strong> – facts/rules, images</p>
         <p id="aboutAlanEncouraging"><strong>Encouraging</strong> – empathy, teacher</p>
-        <p id="aboutAlanDate"><span style="display: block; margin-top: 24px">wjw Jan 25</span></p>
+        <p id="aboutAlanDate"><span class="date-spacing">wjw Jan 25</span></p>
       </section>
     </main>
 

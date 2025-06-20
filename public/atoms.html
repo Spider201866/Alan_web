@@ -22,45 +22,10 @@
     <link rel="manifest" href="favicons/manifest.json" />
     <link rel="stylesheet" href="styles/styles.css" />
     <script type="module" src="scripts/faviconAndMeta.js"></script>
-    <style>
-      body,
-      html {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        font-family: 'Calibri Light', Arial, sans-serif;
-      }
-      #imageContainer {
-        flex-grow: 1; /* Takes up all available vertical space */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden; /* Prevents any potential scrollbars */
-      }
-      img {
-        max-width: 100%;
-        max-height: 100%; /* Ensures image fits vertically too */
-        object-fit: contain; /* Scales image to fit without distortion */
-        touch-action: manipulation; /* Moved from inline style */
-      }
-    </style>
+    <!-- Styles moved to public/styles/styles.css -->
   </head>
   <body>
-    <!-- 
-    **********************************************
-    *              TOP APP BAR                  *
-    **********************************************
-    - Contains back arrow & title
-  -->
-    <!-- 
-    **********************************************
-    *           IMAGE CONTAINER                 *
-    **********************************************
-    - Flex container that fills remaining space
-    - Centers the image within the viewport
-  -->
+    <!--  Atoms Page Content (structure preserved) -->
     <main id="imageContainer">
       <img src="images/atomsblue.jpg" alt="Blue Atoms Image" />
     </main>

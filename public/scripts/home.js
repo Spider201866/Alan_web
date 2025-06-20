@@ -33,6 +33,7 @@ function main() {
   // updateAllLanguage(storedLang); // Will be triggered by 'languageChanged' from language.js
 
   document.addEventListener('languageChanged', applyHomeTranslations);
+  applyHomeTranslations(); // Call it once directly on load to ensure initial application
 
   faviconAndMetaSetup();
   initChatbot();
@@ -44,9 +45,9 @@ function main() {
   setupLanguageControls();
   setupChatbotInteraction();
 
-  if (localStorage.getItem('instructionsClicked') === 'true') {
-    updateButtonStyle(instructionsButton);
-  }
+  // if (localStorage.getItem('instructionsClicked') === 'true') {
+  //   updateButtonStyle(instructionsButton);
+  // }
 
   // Add overlay and Escape key event listeners for closing popups/menus
   overlay.addEventListener('click', closeAllPopups);
@@ -74,14 +75,14 @@ function fetchMutedSnippet() {
 
 function applyHomeTranslations() {
   // No lang parameter needed, getTranslation uses window.currentTranslations
-  console.log('home.js: Applying translations.');
+  // console.log('home.js: Applying translations.'); // Standard log, can be re-enabled if needed
   const elementTranslations = {
     '.chatbot-subtitle': 'eyesEars',
     '#good-history': 'goodHistory',
     '#examine-well': 'examineWell',
     '#use-arclight': 'useArclight',
     '.chatbot-version': 'alanMistakes',
-    '#instructions-button': 'instructionsButton',
+    '#instructions-button': 'instructionsButton', // Reverted to correct key
     '#eye-button': 'eyeButton',
     '#ear-button': 'earButton',
     '#skin-button': 'skinButton',
@@ -94,8 +95,17 @@ function applyHomeTranslations() {
   };
   for (const [selector, key] of Object.entries(elementTranslations)) {
     const el = document.querySelector(selector);
-    if (el) el.textContent = getTranslation(key, el.textContent); // Fallback to existing text
+    // For most elements, use existing textContent as fallback.
+    // For instructions-button, the fallback is handled separately below if needed.
+    if (el) el.textContent = getTranslation(key, el.textContent);
   }
+
+  // Ensure instructions-button specifically gets its text, with a hardcoded fallback.
+  const instructionsBtn = document.getElementById('instructions-button');
+  if (instructionsBtn) {
+    instructionsBtn.textContent = getTranslation('instructionsButton', 'How to use');
+  }
+
   const geoInfoTextEl = document.getElementById('geoInfoText');
   if (geoInfoTextEl) {
     geoInfoTextEl.textContent =

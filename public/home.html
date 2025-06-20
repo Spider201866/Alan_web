@@ -36,10 +36,7 @@
     <script type="module" src="scripts/language.js" defer></script>
     <script src="scripts/muted.js" defer></script>
 
-    <!-- Inline Styles -->
-    <style>
-      /* Placeholder for any inline styles if needed */
-    </style>
+    <!-- Inline styles are being removed or refactored into styles.css -->
   </head>
   <body>
     <a href="#main-content" class="skip-to-content">Skip to main content</a>
@@ -57,8 +54,8 @@
       <!-- SIDE MENU -->
       <div class="menu-icon"></div>
       <nav class="side-menu">
-        <div style="display: flex; margin-bottom: 10px">
-          <button id="instructions-button" class="button red pulse">How to use</button>
+        <div class="side-menu-top-row">
+          <button id="instructions-button" class="button red pulse"></button>
         </div>
         <div class="menu-row">
           <button
@@ -96,108 +93,86 @@
               class="button btn-lang"
               id="language-button"
               aria-label="Change language"
-              style="
-                background: url('images/lang.jpg') no-repeat center center;
-                background-size: cover;
-              "
             ></button>
-            <div
-              id="language-dropdown"
-              style="
-                display: none;
-                position: absolute;
-                top: 40px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #fff;
-                border: 1px solid #ccc;
-                z-index: 9999;
-                min-width: 220px;
-                white-space: nowrap;
-                max-height: 350px;
-                overflow-y: auto;
-                font-size: 14px;
-                line-height: 1.2;
-              "
-            >
-              <ul style="margin: 0; padding: 0; list-style: none">
-                <li data-value="en" style="padding: 6px; cursor: pointer">
+            <div id="language-dropdown">
+              <ul>
+                <li data-value="en">
                   <strong>English</strong> (English)
                 </li>
-                <li data-value="zh" style="padding: 6px; cursor: pointer">
+                <li data-value="zh">
                   <strong>中文</strong> (Chinese)
                 </li>
-                <li data-value="hi" style="padding: 6px; cursor: pointer">
+                <li data-value="hi">
                   <strong>हिन्दी</strong> (Hindi)
                 </li>
-                <li data-value="es" style="padding: 6px; cursor: pointer">
+                <li data-value="es">
                   <strong>Español</strong> (Spanish)
                 </li>
-                <li data-value="ar" style="padding: 6px; cursor: pointer">
+                <li data-value="ar">
                   <strong>العربية</strong> (Arabic)
                 </li>
-                <li data-value="fr" style="padding: 6px; cursor: pointer">
+                <li data-value="fr">
                   <strong>Français</strong> (French)
                 </li>
-                <li data-value="bn" style="padding: 6px; cursor: pointer">
+                <li data-value="bn">
                   <strong>বাংলা</strong> (Bangla)
                 </li>
-                <li data-value="pt" style="padding: 6px; cursor: pointer">
+                <li data-value="pt">
                   <strong>Português</strong> (Portuguese)
                 </li>
-                <li data-value="id" style="padding: 6px; cursor: pointer">
+                <li data-value="id">
                   <strong>Bahasa Indonesia</strong> (Indonesian)
                 </li>
-                <li data-value="sw" style="padding: 6px; cursor: pointer">
+                <li data-value="sw">
                   <strong>Kiswahili</strong> (Swahili)
                 </li>
-                <li data-value="ur" style="padding: 6px; cursor: pointer">
+                <li data-value="ur">
                   <strong>اردو</strong> (Urdu)
                 </li>
-                <li data-value="fa" style="padding: 6px; cursor: pointer">
+                <li data-value="fa">
                   <strong>فارسی</strong> (Persian)
                 </li>
-                <li data-value="ln" style="padding: 6px; cursor: pointer">
+                <li data-value="ln">
                   <strong>Lingala</strong> (Lingala)
                 </li>
-                <li data-value="ha" style="padding: 6px; cursor: pointer">
+                <li data-value="ha">
                   <strong>Hausa</strong> (Hausa)
                 </li>
-                <li data-value="yo" style="padding: 6px; cursor: pointer">
+                <li data-value="yo">
                   <strong>Yorùbá</strong> (Yoruba)
                 </li>
-                <li data-value="ig" style="padding: 6px; cursor: pointer">
+                <li data-value="ig">
                   <strong>Igbo</strong> (Igbo)
                 </li>
-                <li data-value="zu" style="padding: 6px; cursor: pointer">
+                <li data-value="zu">
                   <strong>Zulu</strong> (Zulu)
                 </li>
-                <li data-value="am" style="padding: 6px; cursor: pointer">
+                <li data-value="am">
                   <strong>አማርኛ</strong> (Amharic)
                 </li>
-                <li data-value="sn" style="padding: 6px; cursor: pointer">
+                <li data-value="sn">
                   <strong>chiShona</strong> (Shona)
                 </li>
-                <li data-value="rw" style="padding: 6px; cursor: pointer">
+                <li data-value="rw">
                   <strong>Ikinyarwanda</strong> (Kinyarwanda)
                 </li>
-                <li data-value="ny" style="padding: 6px; cursor: pointer">
+                <li data-value="ny">
                   <strong>Chichewa</strong> (Chichewa)
                 </li>
-                <li data-value="cy" style="padding: 6px; cursor: pointer">
+                <li data-value="cy">
                   <strong>Cymraeg</strong> (Welsh)
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        <div style="display: flex; margin-bottom: 10px">
+        <div class="side-menu-top-row">
           <a href="https://arclightprojectshop.co.uk/" style="text-decoration: none">
-            <button id="arclight-project-button" class="button grey" style="margin-right: 10px">
+            <button id="arclight-project-button" class="button grey">
               Arclight Project
             </button>
           </a>
-          <button id="links-button" class="button grey" style="margin-right: 10px">Links</button>
+          <button id="links-button" class="button grey">Links</button>
           <button id="about-button" class="button grey">About</button>
         </div>
 
@@ -208,7 +183,6 @@
           id="clearHistoryBtn"
           title="Delete all chat history"
           aria-label="Delete all chat history"
-          style="background: none; border: none; cursor: pointer; padding: 0 0 4px 0"
         >
           <!-- small rubbish-bin icon (24×24, stroke-only) -->
           <svg
@@ -346,45 +320,16 @@
     <aside id="popup">
       <span class="popup-close">×</span>
       <div class="popup-content" id="popup-content"></div>
-      <div style="text-align: center; margin-top: 10px; position: relative">
-        <button id="geolocation-button" class="button grey" style="font-size: 14px">
+      <div class="popup-button-container">
+        <button id="geolocation-button" class="button grey">
           Check Location
         </button>
-        <button
-          id="geo-info-button"
-          style="
-            background-color: #fff;
-            color: #000;
-            border: 1px solid #000;
-            border-radius: 8px;
-            padding: 4px 8px;
-            cursor: pointer;
-            font-size: 14px;
-          "
-          aria-label="Show location info"
-        >
+        <button id="geo-info-button" aria-label="Show location info">
           i
         </button>
-        <p id="location-info" style="display: none; margin-top: 5px; font-size: 12px"></p>
-        <div
-          id="geo-info-popup"
-          style="
-            display: none;
-            position: absolute;
-            left: 50%;
-            top: 120%;
-            transform: translateX(-50%);
-            width: 200px;
-            max-width: none;
-            background: #fefefe;
-            border: 1px solid #000;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            z-index: 10;
-          "
-        >
-          <p id="geoInfoText" style="font-size: 14px; margin: 0">Additional info...</p>
+        <p id="location-info"></p>
+        <div id="geo-info-popup">
+          <p id="geoInfoText">Additional info...</p>
         </div>
       </div>
     </aside>

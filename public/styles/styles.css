@@ -96,6 +96,72 @@ p {
   cursor: pointer;
 }
 
+/* --- Color Utilities --- */
+.highlight { /* This could be a global utility class */
+  color: var(--color-red); /* Using variable from styles.css */
+}
+
+.red { /* As used in ear.html, eye.html, skin.html - includes bold */
+  color: var(--color-red);
+  font-weight: bold;
+}
+
+.orange {
+  color: orange; /* Consider var(--color-orange) */
+}
+
+.green { /* As used in ear.html, eye.html - distinct from .button.green */
+  color: green; /* Consider var(--color-green-text) or similar */
+}
+
+.purple {
+  color: purple; /* Consider var(--color-purple) */
+}
+
+.teal {
+  color: teal; /* Consider var(--color-teal) */
+}
+.coral-orange {
+  color: #ff7f50; /* Consider var(--color-coral-orange) */
+}
+.coral-red {
+  color: #ff4040; /* Consider var(--color-coral-red) */
+}
+.blue { /* Distinct from primary/secondary blue variables, used in skin.html */
+  color: blue;   /* Consider var(--color-text-blue) or similar if themed */
+}
+.pale-blue {
+  color: #bfefff; /* Consider var(--color-pale-blue) */
+}
+
+.listText { /* Specific to instructions.html, but is a color utility */
+  color: var(--color-red); /* Using var from .highlight/.red */
+}
+
+/* --- General Utilities --- */
+.block { /* Used in eye.html, ear.html etc. to make spans behave like paragraphs */
+  display: block;
+  margin-bottom: 8px;
+}
+
+.clear { /* Utility class for clearing floats */
+  clear: both;
+}
+
+.boldText { /* Utility class for bold text */
+  font-weight: bold;
+}
+
+.justify { /* Utility class for justified text */
+  text-align: justify;
+}
+
+.empty-line-spacer {
+  height: 1.2em; /* Approximately one line of text height, adjust as needed */
+  /* Or use a pixel value like height: 16px; or height: 20px; */
+}
+
+
 /* =====================================================================
    4. PAGE LAYOUT & MAIN STRUCTURE
 ===================================================================== */
@@ -211,9 +277,6 @@ p {
 }
 
 /* --- Menu Icon (Two-Line Burger) --- */
-/* FIX: Reverted to the original effective positioning to ensure perfect vertical alignment.
-   The original file had two conflicting rules; this combines the properties from the rule
-   that was actually being applied by the browser. */
 .menu-icon {
   position: relative;
   display: inline-block;
@@ -221,8 +284,8 @@ p {
   height: 20px;
   cursor: pointer;
   top: -45px;
-  left: 20px; /* This line was missing and is now restored */
-  z-index: 10001; /* From the other rule */
+  left: 20px; 
+  z-index: 10001; 
 }
 
 .menu-icon::before,
@@ -271,7 +334,7 @@ p {
 }
 .language-dropdown {
   appearance: none;
-  background: url('./images/lang.jpg') no-repeat right -1px center;
+  background: url('../images/lang.jpg') no-repeat right -1px center;
   background-size: 25px 25px;
   color: transparent;
   font-size: 12px;
@@ -530,7 +593,6 @@ p {
   padding: 0;
   line-height: 1.5;
 }
-/* FIX: Changed `right: 10px` to `left: 15px` to match the intended original layout. */
 #popup .popup-close {
   position: absolute;
   top: 10px;
@@ -623,7 +685,7 @@ button {
 .side-menu .btn-ear { background-color: rgb(133, 255, 133); }
 .side-menu .btn-skin { background-color: #efafff; }
 .side-menu .btn-lang {
-  background: url('images/lang.jpg') no-repeat center center;
+  background: url('../images/lang.jpg') no-repeat center center;
   background-size: cover;
   border: 2px solid #3e3e3e;
   width: 32px;
@@ -759,6 +821,369 @@ flowise-fullchatbot {
   font-weight: 900;
   padding-bottom: 5px;
 }
+
+/* =====================================================================
+   PAGE-SPECIFIC STYLES
+===================================================================== */
+/* --- About Alan Page Styles --- */
+#aboutAlan {
+  padding: 15px;
+  margin-top: -10px; /* Consider if this is needed given appbar */
+}
+
+#logoContainer {
+  text-align: center;
+  margin: -10px; /* Consider if this is needed */
+}
+
+#logoImage {
+  max-width: 120px;
+  height: auto;
+  margin-bottom: -10px;
+}
+
+#aboutAlanContent {
+  margin-top: 10px;
+}
+
+#aboutAlanText,
+#aboutAlanEfficient,
+#aboutAlanEasy,
+#aboutAlanExplainable,
+#aboutAlanEncouraging {
+  font-size: 15px;
+  text-align: justify;
+  margin-bottom: 16px;
+}
+
+#aboutAlanDate {
+  font-size: 12px;
+  text-align: justify;
+  margin-bottom: 16px;
+}
+
+.date-spacing { /* New class for the inline style from aboutalan.html */
+  display: block;
+  margin-top: 24px;
+}
+
+#aboutAlanList {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.bullet-point { /* Could be a global utility if used elsewhere */
+  list-style-type: disc;
+}
+
+/* --- Home Page Specific Styles --- */
+.side-menu-top-row { /* Replaces inline style on divs in side-menu */
+  display: flex;
+  margin-bottom: 10px;
+}
+
+#instructions-button { /* Style for the 'How to use' button */
+  background-color: yellow;
+  color: black;
+  /* border: 1px solid black; /* Optional: if a border is desired */
+}
+
+#language-dropdown {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid #ccc;
+  z-index: 9999;
+  min-width: 220px;
+  white-space: nowrap;
+  max-height: 350px;
+  overflow-y: auto;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+#language-dropdown ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#language-dropdown li {
+  padding: 6px;
+  cursor: pointer;
+}
+
+#clearHistoryBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 0 4px 0;
+}
+
+/* Styles for elements within the #popup aside */
+.popup-button-container { /* Replaces inline style on div around geolocation button */
+  text-align: center;
+  margin-top: 10px;
+  position: relative;
+}
+
+#geo-info-button {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 14px; /* Already covered by .button, but explicit here */
+}
+
+#location-info {
+  display: none; /* JavaScript will toggle this */
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+#geo-info-popup {
+  display: none; /* JavaScript will toggle this */
+  position: absolute;
+  left: 50%;
+  top: 120%; /* Positioned below the trigger button */
+  transform: translateX(-50%);
+  width: 200px;
+  max-width: none; /* Override any potential max-width from other rules */
+  background: #fefefe;
+  border: 1px solid #000;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 10; /* Ensure it's above other popup content */
+}
+
+#geoInfoText { /* Or #geo-info-popup p */
+  font-size: 14px;
+  margin: 0;
+}
+
+/* --- Atoms Page Styles --- */
+#imageContainer { /* Specific to atoms.html */
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+#imageContainer img { /* Styles for the image within atoms.html's container */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  touch-action: manipulation;
+}
+
+/* Note: Ear, Eye, and Skin exam page content styles are handled by .exam-content-container */
+/* Targeting the specific text containers within #eyeExamText (These are DIVs, not P tags) */
+#eyeExamText #frontOfEyeText,
+#eyeExamText #fundalReflexText,
+#eyeExamText #backOfEyeText,
+#eyeExamText #additionalText {
+  margin-bottom: 8px;
+}
+
+/* Removed incorrect padding-top from .exam-content-container #additionalText */
+
+/* --- Shared Content Styles --- */
+.exam-content-container {
+  padding: 15px;
+  line-height: 1.4em;
+  text-align: justify;
+}
+
+.exam-content-container h3 {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 1.17em; /* Default h3 size, explicit */
+  font-weight: bold; /* Default h3 weight, explicit */
+}
+
+.exam-content-container p { /* Overrides global p margin for this specific section */
+  margin-top: 0; /* Reset top margin from global p */
+  margin-bottom: 8px;
+}
+
+/* --- Web Links Page Styles (weblinks.html) --- */
+.weblinks-page main {
+  padding: 20px;
+}
+
+.weblinks-page .link-intro {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.weblinks-page .links-list {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+.weblinks-page .links-list li {
+  margin-bottom: 10px;
+}
+
+.weblinks-page .links-list a {
+  color: #0037ff; /* Consider var(--color-link) */
+  text-decoration: none;
+}
+
+.weblinks-page .links-list a:hover,
+.weblinks-page .links-list a:focus {
+  text-decoration: underline;
+}
+
+
+/* --- Instructions Page Styles (instructions.html) --- */
+.instructions-page { /* Applied to body of instructions.html */
+  font-size: 15px;
+  background-color: white;
+}
+
+#content { /* Assuming this ID is unique to instructions.html or scoped by .instructions-page if not */
+  padding: 8px 20px 20px 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex; /* This is already on body, might be redundant if #content is direct child and body is flex container */
+  flex-direction: column; /* Same as above */
+}
+
+#wrapSection {
+  overflow: hidden;
+  margin-bottom: 25px;
+  padding-right: 0;
+}
+
+#switchContainer {
+  float: right;
+  width: 100px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 15px;
+  margin-left: 0;
+  margin-right: -25px;
+  margin-top: -10px;
+}
+
+.switch { /* Specific to instructions.html switch component */
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 180px;
+}
+
+.switch input {
+  display: none;
+}
+
+.switch-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  font-weight: bold;
+  color: black;
+  background-color: white;
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
+  border-radius: 20px;
+  border: 1px solid black;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.switch-label:hover {
+  background-color: #e0e0e0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.switch input:checked + .switch-label {
+  background-color: black;
+  color: white;
+  border-color: black;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+#additionalExamples p { /* Scoped to #additionalExamples on instructions.html */
+  margin-top: 0; /* Overriding global p */
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: #333;
+}
+
+#additionalExamples strong {
+  display: block;
+  font-weight: bold; /* .boldText class could also be used in HTML */
+  margin-bottom: -10px;
+  line-height: 1.2;
+}
+
+#additionalExamples span { /* This is quite generic, might need more specific selector if conflicts arise */
+  display: block;
+  margin-left: 10px;
+  margin-top: 0;
+  line-height: 1.2;
+}
+
+.infoText { /* Specific to instructions.html */
+  padding-left: 60px;
+  color: black;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.infoText li {
+  list-style-type: none;
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+/* .listText moved to Utility Color Classes section */
+
+.instructions-page hr { /* Scoped to instructions.html */
+  border: none;
+  height: 2px;
+  background-color: #ccc;
+  margin: 20px 0;
+}
+
+#useArclight { /* Specific to instructions.html */
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#additionalQuery { /* Specific to instructions.html */
+  padding-top: 5px;
+  color: blue; /* Consider a theme variable e.g. var(--color-link-accent) */
+  font-size: 15px;
+}
+
+@media (max-width: 600px) {
+  .instructions-page #switchContainer { /* Scoped to instructions.html */
+    width: 80px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: -10px;
+  }
+  .instructions-page .infoText { /* Scoped to instructions.html */
+    padding-left: 20px;
+  }
+}
+
 
 /* =====================================================================
    10. ANIMATIONS & KEYFRAMES

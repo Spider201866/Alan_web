@@ -23,151 +23,9 @@
     <link rel="stylesheet" href="styles/styles.css" />
     <script type="module" src="scripts/faviconAndMeta.js"></script>
     <!-- Translations will be loaded dynamically by language.js and page-template.js -->
-    <style>
-      /* --- Identical to original styles, with flexbox fix & overflow --- */
-      body,
-      html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        font-family: 'Calibri Light', Arial, sans-serif;
-        font-size: 15px;
-        background-color: white;
-      }
-      body {
-        display: flex;
-        flex-direction: column;
-      }
-      #content {
-        padding: 8px 20px 20px 20px;
-        min-height: 100vh;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-      }
-      #wrapSection {
-        overflow: hidden;
-        margin-bottom: 25px;
-        padding-right: 0;
-      }
-      #switchContainer {
-        float: right;
-        width: 100px;
-        text-align: center;
-        padding: 10px;
-        border-radius: 15px;
-        margin-left: 0;
-        margin-right: -25px;
-        margin-top: -10px;
-      }
-      .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 180px;
-      }
-      .switch input {
-        display: none;
-      }
-      .switch-label {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        width: 60px;
-        height: 60px;
-        font-weight: bold;
-        color: black;
-        background-color: white;
-        transition:
-          background-color 0.3s,
-          box-shadow 0.3s;
-        border-radius: 20px;
-        border: 1px solid black;
-        margin-bottom: 10px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .switch-label:hover {
-        background-color: #e0e0e0;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-      }
-      .switch input:checked + .switch-label {
-        background-color: black;
-        color: white;
-        border-color: black;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-      }
-      .clear {
-        clear: both;
-      }
-      .boldText {
-        font-weight: bold;
-      }
-      .justify {
-        text-align: justify;
-      }
-      #additionalExamples p {
-        margin-bottom: 10px;
-        font-size: 13px;
-        color: #333;
-      }
-      #additionalExamples strong {
-        display: block;
-        font-weight: bold;
-        margin-bottom: -10px;
-        line-height: 1.2;
-      }
-      #additionalExamples span {
-        display: block;
-        margin-left: 10px;
-        margin-top: 0;
-        line-height: 1.2;
-      }
-      .infoText {
-        padding-left: 60px;
-        color: black;
-        margin-top: 5px;
-        margin-bottom: 10px;
-      }
-      .infoText li {
-        list-style-type: none;
-        line-height: 1.2;
-        margin-bottom: 2px;
-      }
-      .listText {
-        color: red;
-      }
-      hr {
-        border: none;
-        height: 2px;
-        background-color: #ccc;
-        margin: 20px 0;
-      }
-      #useArclight {
-        margin-top: 10px;
-        margin-bottom: 10px;
-      }
-      #additionalQuery {
-        padding-top: 5px;
-        color: blue;
-        font-size: 15px;
-      }
-      @media (max-width: 600px) {
-        #switchContainer {
-          width: 80px;
-          margin-left: 0;
-          margin-right: 0;
-          margin-top: -10px;
-        }
-        .infoText {
-          padding-left: 20px;
-        }
-      }
-    </style>
+    <!-- Styles moved to public/styles/styles.css -->
   </head>
-  <body>
+  <body class="instructions-page">
     <main id="content">
       <p id="introText"></p>
       <div id="wrapSection">
@@ -193,15 +51,15 @@
           <hr />
           <div id="additionalExamples" class="justify">
             <p>
-              <span class="block" id="labelTooLittle" style="font-weight: bold"></span>
+              <span class="block boldText" id="labelTooLittle"></span>
               <span class="block" id="tooLittle"></span>
             </p>
             <p>
-              <span class="block" id="labelJustRight" style="font-weight: bold"></span>
+              <span class="block boldText" id="labelJustRight"></span>
               <span class="block" id="justRight"></span>
             </p>
             <p>
-              <span class="block" id="labelTooMuch" style="font-weight: bold"></span>
+              <span class="block boldText" id="labelTooMuch"></span>
               <span class="block" id="tooMuch"></span>
             </p>
             <p id="additionalQuery"></p>

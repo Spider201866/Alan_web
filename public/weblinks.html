@@ -21,52 +21,10 @@
     <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png" />
     <link rel="manifest" href="favicons/manifest.json" />
     <script type="module" src="scripts/faviconAndMeta.js"></script>
-    <style>
-      body {
-        font-family: 'Calibri Light', Arial, sans-serif;
-        background-color: white;
-        color: black;
-        margin: 0;
-        padding: 0;
-      }
-
-      /* FIX: Using <main> for primary content */
-      main {
-        padding: 20px;
-      }
-
-      /* FIX: Using <main> for primary content */
-      main {
-        padding: 20px;
-      }
-
-      .link-intro {
-        text-align: center;
-        margin-bottom: 20px;
-      }
-
-      /* FIX: Changed #links to an <ol> for a semantic list */
-      .links-list {
-        list-style-position: inside; /* Keeps numbers aligned with text */
-        padding-left: 0; /* Removes default padding */
-      }
-      .links-list li {
-        margin-bottom: 10px;
-      }
-      .links-list a {
-        color: #0037ff;
-        text-decoration: none;
-      }
-
-      /* FIX: Added hover/focus state for better usability */
-      .links-list a:hover,
-      .links-list a:focus {
-        text-decoration: underline;
-      }
-    </style>
+    <!-- Styles moved to public/styles/styles.css -->
   </head>
 
-  <body>
+  <body class="weblinks-page">
     <!-- FIX: Using <main> for the main content area -->
     <main>
       <p class="link-intro" id="weblinksIntroParagraph">Here are some interesting links...</p>
