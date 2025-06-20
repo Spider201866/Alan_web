@@ -65,6 +65,7 @@ app.use(
           'https://cdnjs.cloudflare.com',
           'https://fonts.googleapis.com',
           'https://flowiseai-railway-production-fecf.up.railway.app',
+          'https://api.bigdatacloud.net',
         ],
         // 'script-src-attr' is not needed here if 'unsafe-inline' is in script-src for event handlers,
         // or if we rely on addEventListener. However, to be explicit for modern browsers that support it

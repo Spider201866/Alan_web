@@ -332,7 +332,7 @@ This highly persistent issue indicates that the browser is receiving an outdated
     );
     ```
 2.  **Ensure Server is Running Latest Code**: The most critical step is to ensure the Node.js server process is *actually* running the latest saved version of `server.js`. Standard restarts might not be sufficient if an old process is lingering.
-    - Use `taskkill /F /IM node.exe /T` (Windows) or `pkill -f node` / `killall node` (macOS/Linux) to forcefully terminate all Node.js processes before restarting the server (`node server.js`).
+    - **CRITICAL: Use `taskkill /F /IM node.exe /T` (Windows) or `pkill -f node` / `killall node` (macOS/Linux) to FORCEFULLY TERMINATE ALL Node.js processes before restarting the server (`node server.js`). Standard restarts (e.g., Ctrl+C in the terminal and rerunning `node server.js`) MAY NOT BE SUFFICIENT if a stale process is lingering.**
 3.  **Thorough Browser Cache Annihilation**:
     - Close ALL browser windows/tabs related to `localhost:3000`.
     - Restart your browser completely.
@@ -375,6 +375,7 @@ If the browser *still* reports an outdated CSP in the console logs (e.g., `font-
                 'https://cdnjs.cloudflare.com',
                 'https://fonts.googleapis.com',
                 'https://flowiseai-railway-production-fecf.up.railway.app',
+                'https://api.bigdatacloud.net', // Added for reverse geocoding
               ],
             },
           },
