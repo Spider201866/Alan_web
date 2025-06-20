@@ -1,5 +1,6 @@
 // services/data-service.js
 import path from 'path';
+import fs from 'fs'; // Import fs module
 import { fileURLToPath } from 'url';
 import Database from 'better-sqlite3';
 
@@ -11,6 +12,18 @@ let dbPath;
 if (process.env.NODE_ENV === 'production') {
     dbPath = '/data/alan-data.db'; // Railway volume
     console.log('Connecting to PRODUCTION database at /data/alan-data.db');
+    // Ensure the /data directory exists in production
+    const dataDir = path.dirname(dbPath); // This will be /data
+    if (!fs.existsSync(dataDir)) {
+        try {
+            fs.mkdirSync(dataDir, { recursive: true });
+            console.log(`Created directory: ${dataDir}`);
+        } catch (err) {
+            console.error(`Error creating directory ${dataDir}:`, err);
+            // Potentially throw the error or handle it if directory creation is critical and fails
+            throw err; 
+        }
+    }
 } else if (process.env.NODE_ENV === 'test') {
     dbPath = path.join(__projectRoot, 'test-alan-data.db');
     console.log(`Connecting to TEST database at: ${dbPath}`);
