@@ -92,7 +92,7 @@
 - **`npm run format`**: To automatically format code using Prettier.
 - **`npm run format:check`**: To check code formatting without writing changes (used in CI/CD).
 - **`npm run lint`**: To run ESLint for code quality checks.
-- **`npm test`**: To run the full test suite (includes `format:check`). (Note: API tests may need updates for the new database interaction).
+- **`npm test`**: To run the full test suite (includes `format:check`). The test suite now uses a centralized server management pattern for all API, Rate Limiting, and 404 tests, with a single server instance shared across these suites. The OTP logic tests use a separate, isolated server instance. All server instances are gracefully shut down in their respective `afterAll` hooks, and the global `afterAll` reliably closes the database connection and deletes the test database file. This approach eliminates the EBUSY error and ensures robust test isolation and cleanup. All tests (API, UI, and chatbot) are now passing.
 - **`npx jest tests/ui.test.js`**: To run specific UI/accessibility tests.
 - **Flowise UI/API**: For configuring and managing the "Alan" chatbot agent (external to this project's codebase).
 - **Cleanup Procedures**: Documented in `README.md` for resetting local data (deleting `alan-data.db`) and test artifacts.

@@ -3,9 +3,15 @@
 # Active Context
 
 ## Current Work Focus
-Persistent data storage using SQLite has been implemented and tested. API tests (`tests/api.test.js`) have been refactored for the new database backend and are passing (with a minor test DB cleanup issue noted). All documentation (README, Memory Bank files) has been updated to reflect these significant changes. PWA service worker implementation is the next primary focus.
+Persistent data storage using SQLite has been implemented and tested. API tests (`tests/api.test.js`) have been refactored for the new database backend and are passing. The test suite now uses a centralized server management pattern, and the global `afterAll` reliably cleans up the test database file. All documentation (README, Memory Bank files) has been updated to reflect these significant changes. PWA service worker implementation is the next primary focus.
 
 ## Recent Changes
+- **Test Server Lifecycle Management & EBUSY Solution (June 20, 2025):**
+    *   The test suite now uses a centralized server management pattern for all API, Rate Limiting, and 404 tests, with a single server instance shared across these suites.
+    *   The OTP logic tests use a separate, isolated server instance to ensure a clean environment for sensitive tests.
+    *   All server instances are gracefully shut down in their respective `afterAll` hooks, and the global `afterAll` reliably closes the database connection and deletes the test database file.
+    *   This approach eliminates the EBUSY error and ensures robust test isolation and cleanup.
+    *   All tests (API, UI, and chatbot) are now passing.
 - **API Test Refactor for SQLite Backend (June 20, 2025):**
     *   Refactored `tests/api.test.js` to work with the new SQLite database via `services/data-service.js`.
     *   Updated test setup, teardown (including global `afterAll` for DB connection closing and file deletion), and assertions to use database operations instead of file system checks.

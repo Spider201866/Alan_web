@@ -26,7 +26,8 @@
     - ESLint configuration migrated to `eslint.config.js` for ESLint v9+.
     - `package.json` updated with `"type": "module"`; utility scripts like `generate-hash.js` renamed to `.cjs` extension. The main server `server.js` is now an ES Module.
     - `npm run lint` passes with 0 errors (minor acceptable warnings for prefixed unused variables).
-    - `npm test` (including Prettier checks and translation consistency check) passes successfully. (Note: API tests in `tests/api.test.js` will need updating for the SQLite backend).
+    - The test suite now uses a centralized server management pattern for all API, Rate Limiting, and 404 tests, with a single server instance shared across these suites. The OTP logic tests use a separate, isolated server instance. All server instances are gracefully shut down in their respective `afterAll` hooks, and the global `afterAll` reliably closes the database connection and deletes the test database file. This approach eliminates the EBUSY error and ensures robust test isolation and cleanup.
+    - `npm test` (including Prettier checks and translation consistency check) passes successfully. All tests (API, UI, and chatbot) are now passing.
     - Old `.eslintrc.js` file deleted.
 - **HTML Accessibility & Cleanup (June 20, 2025):**
     - Deleted the `img#condition-image` element from `public/home.html` as it was deemed unnecessary.

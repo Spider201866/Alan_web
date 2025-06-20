@@ -23,6 +23,11 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. The s
 - **Accessibility**: Implementation of focus traps for modals/menus, `aria-hidden` for duplicated marquee content, `aria-label` for icon-only buttons, and "skip to content" links.
     - **Event Handling**: Inline event handlers (e.g., `onclick`) in HTML are being refactored to use `element.addEventListener()` in JavaScript (as done in `public/home.html`) for better CSP compatibility and modern practices.
 - **Automated Testing & Code Quality**: Comprehensive test suite covering UI and accessibility, with pre-test formatting and linting hooks. ESLint is configured for code quality.
+- **Test Server Lifecycle Management (June 2025)**: 
+    - The test suite now uses a centralized server management pattern for all API, Rate Limiting, and 404 tests, with a single server instance shared across these suites.
+    - The OTP logic tests use a separate, isolated server instance to ensure a clean environment for sensitive tests.
+    - All server instances are gracefully shut down in their respective `afterAll` hooks, and the global `afterAll` reliably closes the database connection and deletes the test database file.
+    - This approach eliminates the EBUSY error and ensures robust test isolation and cleanup.
 - **API Error Handling**: Frontend API calls include graceful error handling to provide user feedback.
 - **Custom 404 Page**: A dedicated 404 route and page are implemented for unhandled paths.
 - **Node.js Version Specification**: The required Node.js version is specified for consistent development environments.

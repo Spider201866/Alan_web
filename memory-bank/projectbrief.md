@@ -35,6 +35,7 @@ To provide a web-based chatbot for users, especially in Low and Middle-Income Co
 - Server endpoints are protected by `express-rate-limit`.
 - Content Security Policy (CSP) is configured using Helmet for enhanced security.
 - Automated tests cover UI, accessibility, and backend aspects.
+- The test suite uses a centralized server management pattern for all API, Rate Limiting, and 404 tests, with a single server instance shared across these suites. The OTP logic tests use a separate, isolated server instance. All server instances are gracefully shut down in their respective `afterAll` hooks, and the global `afterAll` reliably closes the database connection and deletes the test database file. All tests (API, UI, and chatbot) are now passing.
 - Code formatting is enforced using Prettier, with check and write scripts.
 - ESLint is configured for code quality checks.
 - Node.js version is specified for consistent development environments.

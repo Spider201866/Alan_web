@@ -26,7 +26,10 @@ Or, to run a specific test file (e.g., accessibility/UI tests):
 ### Test Coverage & Isolation
 
 - All backend, authentication, rate limiting, and one-time password (OTP) logic is covered by automated tests.
-- OTP and rate limiting tests are fully isolated in their own temp directories and server instances to prevent data pollution between suites.
+- **Server instances for tests are now managed centrally**:
+    - A single server instance is used for most API, Rate Limiting, and 404 tests.
+    - A separate, isolated server instance is used specifically for OTP logic tests, ensuring a clean environment for sensitive tests.
+- This new server management strategy ensures robust test isolation and reliable cleanup of test resources.
 - All major user flows, UI elements, and backend logic are covered.
 - Accessibility requirements are enforced by automated tests in `ui.test.js`.
 
@@ -347,10 +350,10 @@ To reset local data or clean up test files:
 
 - **Resetting User Data:** User data is now stored in an SQLite database.
     - **Locally:** Delete `alan-data.db` from the project root. It will be recreated on the next server startup.
-    - **Test Environment:** Delete `test-alan-data.db` from the project root if it persists after tests.
+    - **Test Environment:** The `test-alan-data.db` file is now reliably deleted by the automated test suite's global `afterAll` hook after all tests complete.
     - **Production (Railway):** Data is stored on a persistent volume (`/data/alan-data.db`). Resetting this would typically involve accessing the volume directly or implementing a specific API endpoint for data clearing (not currently implemented).
 - **Resetting One-Time Passwords:** One-time passwords are managed in the `.env` file. To reset them, modify the `ONE_TIME_PASSWORD_HASHES` variable in your `.env` file.
-- **Cleaning Test Artifacts:** Automated tests should ideally clean up `test-alan-data.db`. If any other temporary test files persist, they are typically located in `tests/temp/` and can be safely deleted.
+- **Cleaning Test Artifacts:** The automated test suite now reliably cleans up `test-alan-data.db` and other temporary resources.
 
 ---
 

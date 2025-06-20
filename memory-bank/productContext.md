@@ -20,6 +20,7 @@ The AlanUI Web Chatbot was created to provide accessible and relevant health inf
 - Server endpoints are protected by `express-rate-limit` to prevent excessive or abusive requests.
 - A custom 404 page is served for unknown routes, providing a better user experience.
 - API data fetching includes robust error handling to inform users of issues gracefully.
+- The test suite uses a centralized server management pattern for all API, Rate Limiting, and 404 tests, with a single server instance shared across these suites. The OTP logic tests use a separate, isolated server instance. All server instances are gracefully shut down in their respective `afterAll` hooks, and the global `afterAll` reliably closes the database connection and deletes the test database file. All tests (API, UI, and chatbot) are now passing.
 
 ## User Experience Goals
 - Fast, reliable, and intuitive chatbot interaction, powered by an advanced LLM for more nuanced responses.
