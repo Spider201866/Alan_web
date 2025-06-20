@@ -1,52 +1,19 @@
 [
   {
-    "sessionId": "test-session",
-    "latitude": 1.23,
-    "longitude": 4.56,
-    "dateTime": "2025-06-16T20:00:00Z",
-    "area": "Test Area",
-    "refreshCount": 2
-  },
-  {
-    "sessionId": "ratelimit-test",
-    "latitude": 0,
-    "longitude": 0,
-    "dateTime": "2025-06-16T22:00:00Z",
-    "area": "Test Area",
-    "refreshCount": 2732
-  },
-  {
-    "sessionId": "user-1750443081255",
-    "name": "Maximus",
-    "role": "Eyes",
-    "experience": "Confident core knowledge",
-    "country": "United Kingdom",
-    "iso2": "GB",
-    "classification": "HI",
-    "roleClassification": "(M)",
-    "contactInfo": "dave7765@22",
-    "version": "1.0",
-    "dateTime": "20/06/2025, 18:32:28",
-    "latitude": 53.6362,
-    "longitude": -2.1656,
-    "area": "Rochdale",
-    "refreshCount": 14
-  },
-  {
     "sessionId": "user-1750445088524",
     "name": "Maximus",
     "role": "Ears",
     "experience": "Confident core knowledge",
-    "latitude": 53.444608,
-    "longitude": -2.9130752,
     "country": "United Kingdom",
     "iso2": "GB",
     "classification": "HI",
     "roleClassification": "(M)",
-    "area": "Liverpool",
     "contactInfo": "dave7765@22",
     "version": "1.0",
-    "dateTime": "20/06/2025, 18:54:19",
-    "refreshCount": 13
+    "dateTime": "20/06/2025, 20:05:45",
+    "latitude": 53.444608,
+    "longitude": -2.9130752,
+    "area": "Liverpool",
+    "refreshCount": 2
   }
 ]

@@ -31,12 +31,14 @@ const cspOptions = {
         'https://alan.up.railway.app',
         'https://ipapi.co',
         'https://cdnjs.cloudflare.com',
+        'https://unpkg.com', // Added for Leaflet
         "'unsafe-inline'", // For inline <script> tags and older browser compatibility for event handlers
       ],
       styleSrc: [
         "'self'",
         'https://cdnjs.cloudflare.com',
         'https://fonts.googleapis.com',
+        'https://unpkg.com', // Added for Leaflet
         "'unsafe-inline'",
       ],
       fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
@@ -45,6 +47,7 @@ const cspOptions = {
         "'self'",
         'https://alan.up.railway.app',
         'https://ipapi.co', // Corrected typo from server.cjs
+        'https://unpkg.com', // Added for Leaflet (though not strictly connect, good to have if it makes other sub-requests)
         'https://cdn.jsdelivr.net',
         'https://cdnjs.cloudflare.com',
         'https://fonts.googleapis.com',

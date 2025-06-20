@@ -23,3 +23,7 @@ Thumbs.db
 
 # Ignore VSIX packages
 *.vsix
+
+# Database files
+*.db
+*.db-journal

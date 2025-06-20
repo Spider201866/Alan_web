@@ -221,8 +221,8 @@
       // Called when user clicks "Submit" on password screen
       function handleSubmit() {
         const entered = passwordInput.value.trim();
-        // 1) Validate + fetch the single active record from /fetch-records
-        fetch('/fetch-records', {
+        // 1) Validate + fetch the single active record from /api/fetch-records
+        fetch('/api/fetch-records', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ password: entered }),
@@ -267,7 +267,7 @@
       }
 
       function fetchActiveRecord(password) {
-        fetch('/fetch-records', {
+        fetch('/api/fetch-records', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ password }),
@@ -285,7 +285,7 @@
       }
 
       function fetchHistory(password) {
-        fetch('/fetch-history', {
+        fetch('/api/fetch-history', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ password }),

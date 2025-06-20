@@ -1,39 +1,51 @@
 import express from 'express';
-import fs from 'fs/promises';
+// import fs from 'fs/promises'; // No longer needed
 // Config is now passed as a parameter, so remove direct import
 // import configFromFile from '../config/index.js';
 import { validateRecord } from '../middleware/validation.js';
 import { validatePassword } from '../middleware/auth.js'; // This will use its own imported config for salt/hashes
-import { readJsonFile, appendToHistory } from '../services/records.js';
+// import { readJsonFile, appendToHistory } from '../services/records.js'; // Old service
+import dataService from '../services/data-service.js'; // New service
 
-export default function apiRoutes(rateLimiter, config) {
+export default function apiRoutes(rateLimiter, config) { // config parameter might not be needed by these routes anymore
   // Added config parameter
   const router = express.Router();
 
-  router.post('/record-info', rateLimiter, validateRecord, async (req, res, next) => {
+  // Route: Overwrite the active record and append/update the history.
+  router.post('/record-info', rateLimiter, validateRecord, (req, res, next) => {
     try {
-      const record = { ...req.body, refreshCount: 1 };
+      const record = { ...req.body }; // refreshCount is handled by DB
       if (!record.sessionId) record.sessionId = `fallback-${Date.now()}`;
-
-      await appendToHistory(record, config.paths.userHistory); // Use passed config
-      await fs.writeFile(config.paths.userInfo, JSON.stringify([record], null, 2) + '\n'); // Use passed config
+      
+      dataService.upsertRecord(record);
       res.send('OK');
     } catch (err) {
+      console.error('Error in /record-info:', err); // Keep console.error for server logs
       next(err);
     }
   });
 
-  router.post('/fetch-records', rateLimiter, validatePassword, async (req, res, next) => {
+  // Route: Fetch the single active record.
+  router.post('/fetch-records', rateLimiter, validatePassword, (req, res, next) => {
+    // The original plan had a console.log here for non-production, can be added if needed
+    // if (process.env.NODE_ENV !== 'production') {
+    //   console.log('FETCH-RECORDS BODY:', req.body);
+    // }
+    // next(); // This next() was part of a multi-handler setup, simplified here
     try {
-      res.json(await readJsonFile(config.paths.userInfo)); // Use passed config
+      const records = dataService.getActiveRecord();
+      res.json(records);
     } catch (err) {
+      console.error('Error in /fetch-records:', err);
       next(err);
     }
   });
 
-  router.post('/fetch-history', rateLimiter, validatePassword, async (req, res, next) => {
+  // Route: Fetch the full user history.
+  router.post('/fetch-history', rateLimiter, validatePassword, (req, res, next) => {
     try {
-      res.json(await readJsonFile(config.paths.userHistory)); // Use passed config
+      const history = dataService.getFullHistory();
+      res.json(history);
     } catch (err) {
       next(err);
     }
