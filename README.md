@@ -221,6 +221,15 @@ The following pages use the shared appbar and are visually/structurally consiste
 3. Do **not** add local appbar/back-arrow/pageTitle CSS or markup.
 4. For justified main content, use `text-align: justify;` on your main content container.
 
+### Header Height Consistency (June 20, 2025)
+- The main header on `public/home.html` (class `.chatbot-header`) and the shared appbar (`#appBar`) on sub-pages are designed to appear visually consistent.
+- Due to differences in their content structure and how browsers might render them in specific emulations (e.g., phone screens in Chrome DevTools), fine-tuning was required.
+- The `padding-bottom` of the `.chatbot-subtitle` (within `.chatbot-header`) in `public/styles/styles.css` was adjusted to `13.5px`. This ensures that the rendered height of the `home.html` header closely matches the rendered height of the `#appBar` on other pages (observed as ~72px in a specific phone emulation).
+- The viewport meta tag in `public/home.html` was also updated to remove `user-scalable=no`, aligning it with other pages and contributing to consistent rendering.
+- The `font-family` for the `.back-arrow` in `#appBar` was made explicit with `!important` in `public/styles/styles.css` to ensure consistent arrow rendering.
+
+These micro-adjustments aim for perceptual consistency across different page headers/appbars in various viewing environments.
+
 ---
 
 ## Keyboard Accessibility: Focus Trap

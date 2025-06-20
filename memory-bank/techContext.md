@@ -14,7 +14,12 @@
 - **Code Formatting**: Prettier (config in `.prettierrc`), EditorConfig (config in `.editorconfig`).
 - **Code Quality**: ESLint (config in `.eslintrc.js`).
 - **Testing**: Jest, JSDOM.
-- **Performance**: Deferred script loading (`defer` attribute). Problematic/unnecessary preload links for fonts and favicons were removed from HTML.
+- **Performance**:
+    - Deferred script loading (`defer` attribute). Problematic/unnecessary preload links for fonts and favicons were removed from HTML.
+    - Consistent viewport meta tags across HTML files (e.g., `user-scalable=no` removed from `home.html` for consistent rendering).
+- **UI Consistency**:
+    - Centralized CSS (`public/styles/styles.css`) for shared elements like appbars/headers.
+    - Fine-tuned padding (e.g., `.chatbot-subtitle`) and font properties (e.g., `.back-arrow` with `!important`) to achieve visually consistent rendered heights in specific emulation environments.
 - **Error Handling**: Custom 404 page, graceful API error handling.
 - **Event Handling**: Refactoring inline event handlers (e.g., `onclick`) to use `element.addEventListener()` in JavaScript for improved CSP compatibility and modern practices (e.g., in `public/home.html`).
 
@@ -25,7 +30,8 @@
 - **Project Structure**:
     - `server.js`: Main server application, configures `helmet` for CSP, includes 404 route.
     - `public/`: Static assets (HTML, CSS, JS, images, favicons).
-        - `public/home.html`, `public/index.html`: Main pages with deferred scripts. `home.html` now uses `addEventListener` for navigation button event handling. Preload links removed.
+        - `public/home.html`, `public/index.html`: Main pages with deferred scripts and consistent viewport meta tags. `home.html` now uses `addEventListener` for navigation button event handling. Preload links removed.
+        - `public/referral.html`: Example of a sub-page that correctly links to `styles/styles.css` and relies on it for appbar styling.
         - `public/404.html`: Custom 404 page.
         - `public/page-template.js`: Shared appbar logic.
         - `public/focus-trap.js`: Focus trap system for accessibility.

@@ -8,7 +8,9 @@
 - Security headers are applied using `helmet`, with a meticulously configured Content Security Policy (CSP) in `server.js`. This CSP now correctly allows all necessary external resources (CDNs, Flowise backend, Google Fonts, IP API) for scripts, styles, fonts, and connections. The `scriptSrcAttr: ["'unsafe-inline'"]` directive is also correctly configured to allow inline event handlers if needed, though many have been refactored.
 - Critical environment variables (`MASTER_PASSWORD_HASH`, `PASSWORD_SALT`) are validated at server startup.
 - JSON data files (`user-info.json`, `user-history.json`) are written with a trailing newline.
-- Frontend pages utilize a shared appbar pattern for consistent navigation and layout, with centralized styling.
+- Frontend pages utilize a shared appbar pattern (`#appBar` on sub-pages) and a distinct main header (`.chatbot-header` on `home.html`). Both are styled via `public/styles/styles.css` with specific adjustments (padding, font declarations, viewport meta tags) to ensure visually consistent rendered heights across different pages and in various (emulated) viewing environments.
+- `public/referral.html` now correctly links to `public/styles/styles.css` and has its local appbar styles removed.
+- The viewport meta tag in `public/home.html` was updated (removed `user-scalable=no`) for rendering consistency.
 - Inline event handlers (e.g., `onclick`) in `public/home.html` have been refactored to use `element.addEventListener()` for improved CSP compliance and modern JavaScript practices.
 - A reusable focus trap system is implemented for modals and side menus, enhancing keyboard accessibility.
 - Accessibility requirements for marquee content (`aria-hidden="true"`), icon-only buttons (`aria-label`), and "skip to content" links are enforced.
@@ -20,7 +22,9 @@
 - The Node.js version is specified in `package.json` and `.nvmrc` for consistent development environments.
 - The duplicate `html2canvas` script has been removed from `public/home.html`.
 - The core chatbot functionality for eye, skin, and ear queries is implemented on the frontend (`public/scripts/agent1-chatbot-module.js`), which interacts with the external "Alan" chatbot agent managed via Flowise. This "Alan" agent is powered by Google Gemini 2.5 Flash (a static LLM) and incorporates advanced intelligence, role, logic, memory, and security features within its prompt. This codebase focuses on the interface, not the "secret sauce" of the agent itself.
-- All recent CSP and event handler issues have been resolved. Documentation and memory bank files are up to date.
+- All recent CSP and event handler issues have been resolved.
+- Header/appbar height consistency across `home.html` and sub-pages has been achieved through targeted CSS and HTML adjustments.
+- Documentation and memory bank files are up to date reflecting these UI consistency improvements.
 
 ## What's Left to Build (New Tasks for "Tomorrow")
 1.  **Split Language Translations into Separate Files:**
@@ -33,7 +37,7 @@
     *   Centralize more styling into `public/styles/styles.css` from other CSS files or inline styles to improve maintainability.
 
 ## Current Status
-The AlanUI Web Chatbot is functional and stable after resolving recent CSP and event handling issues. Documentation and memory bank files are up-to-date. The project is now poised for the next set of enhancements focusing on internationalization, PWA capabilities, and CSS organization.
+The AlanUI Web Chatbot is functional and stable. Recent work focused on resolving CSP/event handler issues and achieving visual consistency in header/appbar heights across different pages, particularly for `home.html` versus sub-pages, by fine-tuning CSS and HTML configurations. Documentation and memory bank files are up-to-date. The project is now poised for the next set of enhancements focusing on internationalization, PWA capabilities, and CSS organization.
 
 ## Known Issues
 - All server logic is in a single `server.js` file, which could become unwieldy for larger projects.

@@ -3,9 +3,16 @@
 # Active Context
 
 ## Current Work Focus
-Planning for upcoming tasks: language file splitting, PWA service worker implementation, and CSS refactoring. All memory bank files have been updated to reflect the resolution of recent CSP issues.
+Focus is on ensuring visual consistency across all pages, particularly header and appbar heights. Next steps include language file splitting, PWA service worker implementation, and further CSS refactoring.
 
 ## Recent Changes
+- **Header/Appbar Height Consistency (June 20, 2025):**
+    - Investigated and resolved discrepancies in rendered heights between the main `.chatbot-header` on `public/home.html` and the shared `#appBar` on sub-pages (e.g., `public/referral.html`).
+    - Ensured `public/referral.html` correctly links to `public/styles/styles.css` and removed its local appbar styles.
+    - Updated the viewport meta tag in `public/home.html` by removing `user-scalable=no` to align with other pages, which influenced consistent rendering in specific emulations.
+    - Fine-tuned `padding-bottom` of `.chatbot-subtitle` in `public/styles/styles.css` to `13.5px` to achieve a rendered height of ~72px for the `home.html` header, matching other page appbars in the target emulation environment.
+    - Made the `font-family` for the `.back-arrow` in `#appBar` explicit with `!important` in `public/styles/styles.css` for consistent arrow rendering.
+    - Updated `README.md` to document these header/appbar consistency adjustments.
 - **Memory Bank Update (June 19, 2025):** All core memory bank files (`activeContext.md`, `systemPatterns.md`, `techContext.md`, `progress.md`, `projectbrief.md`, `productContext.md`) reviewed and updated to reflect recent CSP troubleshooting, HTML refactoring, and documentation changes.
 - **CSP Troubleshooting & Resolution (June 19, 2025):**
     - Addressed multiple CSP violations related to `font-src`, `connect-src`, and `script-src-attr`.
@@ -69,8 +76,13 @@ Planning for upcoming tasks: language file splitting, PWA service worker impleme
 - Maintaining separation of `styles.css` and `styles_index.css` is still the plan, but with more shared elements moving to `styles.css`.
 - Maintaining separation of `styles.css` and `styles_index.css`.
 - Adherence to shared appbar pattern and accessibility guidelines.
+- **Visual Consistency**: Striving for pixel-perfect (or as close as practically possible) visual consistency across pages, especially for shared elements like headers/appbars, even if it requires fine-tuning CSS based on observed rendering in specific (emulated) environments.
 
 ## Important Patterns and Preferences
+- **Header/Appbar Styling**:
+    - Shared `#appBar` on sub-pages is styled via `public/styles/styles.css`. Sub-pages must link to this stylesheet and not contain local appbar styles.
+    - The unique `.chatbot-header` on `public/home.html` is also styled in `public/styles/styles.css`, with specific padding adjustments (e.g., `.chatbot-subtitle`) to align its rendered height with the shared `#appBar` in target viewing environments.
+    - Viewport meta tags should be consistent across pages to avoid unexpected rendering differences.
 - **CSP Configuration**: Manage CSP via `helmet` in `server.js`. Be mindful of `scriptSrcAttr` for inline event handlers and prefer `addEventListener`.
 - **Event Handling**: Prefer `addEventListener` over inline attributes (`onclick`, etc.) for better CSP compatibility and code organization.
 - **Shared Appbar Pattern**: All new main pages should use `initPage` from `page-template.js`.
