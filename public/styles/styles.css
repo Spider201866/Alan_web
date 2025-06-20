@@ -1,4 +1,4 @@
-/* Alan UI - Main Styles | Stage 3: Final Themed Version */
+/* Alan UI - Main Styles | Stage 3: Final Themed Version (Refactored & Corrected) */
 
 /* =====================================================================
    1. VARIABLES & THEME
@@ -36,12 +36,12 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  font-family: var(--font-family-main);
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family-main);
 }
 
 p {
@@ -77,13 +77,8 @@ p {
   outline-offset: 2px;
 }
 
-.hidden {
-  display: none;
-}
-
-.visible {
-  display: block;
-}
+.hidden { display: none; }
+.visible { display: block; }
 
 .grey-text {
   color: var(--color-grey-medium);
@@ -118,7 +113,7 @@ p {
 
 #mainContent {
   position: relative;
-  padding: 0px 10px 0px 10px;
+  padding: 0 10px;
   font-size: 14px;
 }
 
@@ -151,24 +146,14 @@ p {
   color: var(--color-white);
   position: relative;
 }
-.chatbot-header .red {
-  color: #f44336ff;
-} /* Keeping specific hex for potential nuance */
-.chatbot-header .black {
-  color: var(--color-black);
-}
-.chatbot-header .white,
-.chatbot-header {
-  color: var(--color-white);
-}
+.chatbot-header .red { color: #f44336ff; }
+.chatbot-header .black { color: var(--color-black); }
+.chatbot-header .white { color: var(--color-white); }
 .chatbot-header .grey,
-.divider {
-  color: var(--color-grey-medium);
-}
+.divider { color: var(--color-grey-medium); }
 
-.title-and-subtitle {
-  text-align: center;
-}
+.title-and-subtitle { text-align: center; }
+
 .chatbot-title {
   font-size: 30px;
   font-weight: bold;
@@ -178,11 +163,12 @@ p {
   font-family: var(--font-family-heading);
   z-index: 2000;
 }
+
 .chatbot-subtitle {
   font-size: 11px;
   margin-top: 0;
   color: var(--color-grey-medium);
-  padding: 0px 20px 10px 20px;
+  padding: 0 20px 13.5px 20px; /* Fine-tuning bottom padding */
 }
 
 /* --- Shared App Bar --- */
@@ -196,11 +182,12 @@ p {
   font-size: 16px !important;
   box-sizing: content-box !important;
 }
+
 .back-arrow {
   background: none;
   border: none;
-  font-family: inherit;
   color: var(--color-white);
+  font-family: var(--font-family-main) !important; /* Ensuring override */
   font-size: 32px;
   font-weight: bold;
   cursor: pointer;
@@ -212,6 +199,7 @@ p {
   align-items: center;
   justify-content: center;
 }
+
 #pageTitle {
   text-align: center;
   margin: 0 auto;
@@ -223,18 +211,9 @@ p {
 }
 
 /* --- Menu Icon (Two-Line Burger) --- */
-.menu-icon {
-  cursor: pointer;
-  font-size: 25px;
-  color: var(--color-white);
-  position: fixed;
-  top: calc(42px - 12.5px);
-  left: 20px;
-  z-index: 10001;
-}
-.menu-icon.active {
-  color: var(--color-black);
-}
+/* FIX: Reverted to the original effective positioning to ensure perfect vertical alignment.
+   The original file had two conflicting rules; this combines the properties from the rule
+   that was actually being applied by the browser. */
 .menu-icon {
   position: relative;
   display: inline-block;
@@ -242,7 +221,10 @@ p {
   height: 20px;
   cursor: pointer;
   top: -45px;
+  left: 20px; /* This line was missing and is now restored */
+  z-index: 10001; /* From the other rule */
 }
+
 .menu-icon::before,
 .menu-icon::after {
   content: '';
@@ -252,24 +234,19 @@ p {
   background-color: var(--color-white);
   transition: background-color 0.3s;
 }
-.menu-icon::before {
-  top: 0;
-  width: 100%;
-}
-.menu-icon::after {
-  top: 16px;
-  width: 60%;
-}
+.menu-icon::before { top: 0; width: 100%; }
+.menu-icon::after { top: 16px; width: 60%; }
+
+.menu-icon.active { color: var(--color-black); }
 .menu-icon.open::before,
-.menu-icon.open::after {
-  background-color: var(--color-black);
-}
+.menu-icon.open::after { background-color: var(--color-black); }
+
 
 /* --- Other Header Icons --- */
 .name-icon {
   width: 25px;
   height: 25px;
-  background-color: rgb(145, 158, 145); /* Kept specific RGB as it's unique */
+  background-color: rgb(145, 158, 145);
   color: var(--color-white);
   border-radius: 50%;
   display: flex;
@@ -283,6 +260,8 @@ p {
   z-index: 1000;
   user-select: none;
 }
+
+.language-container { position: relative; }
 .language-selector {
   position: fixed;
   right: 23px;
@@ -292,16 +271,13 @@ p {
 }
 .language-dropdown {
   appearance: none;
-  background-color: transparent;
+  background: url('./images/lang.jpg') no-repeat right -1px center;
+  background-size: 25px 25px;
   color: transparent;
   font-size: 12px;
   border: 1px solid var(--color-white);
   border-radius: 10px;
   padding: 10px 0px 7px 10px;
-  background-image: url('./images/lang.jpg');
-  background-repeat: no-repeat;
-  background-position: right -1px center;
-  background-size: 25px 25px;
   width: 60px;
   text-align: left;
 }
@@ -315,19 +291,17 @@ p {
   padding-left: 5px;
   text-align: left;
 }
-.language-container {
-  position: relative;
-}
 
 /* =====================================================================
    6. SIDE MENU & SIDEBARS
 ===================================================================== */
-
 /* --- Main Side Menu Container --- */
 .side-menu {
   position: fixed;
   left: calc(-1 * var(--side-menu-width));
   top: 10px;
+  bottom: 40px;
+  height: calc(100% - 40px);
   width: var(--side-menu-width);
   background-color: var(--color-grey-bg-light);
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
@@ -338,8 +312,6 @@ p {
   flex-direction: column;
   align-items: center;
   z-index: 10000;
-  height: calc(100% - 40px);
-  bottom: 40px;
 }
 .side-menu .chat-link {
   display: block;
@@ -353,28 +325,12 @@ p {
   text-decoration: none;
   transition: background-color 0.3s;
 }
-.side-menu .chat-link:hover {
-  background-color: var(--color-grey-border);
-}
-.side-menu hr {
-  width: 100%;
-  border: 1px solid #ddd;
-  margin: 5px 0;
-}
-.menu-link {
-  text-decoration: none;
-}
-.menu-row {
-  display: flex;
-  margin-bottom: 10px;
-  align-items: center;
-}
-.menu-row .button {
-  margin-right: 10px;
-}
-.menu-row .button:last-child {
-  margin-right: 0;
-}
+.side-menu .chat-link:hover { background-color: var(--color-grey-border); }
+.side-menu hr { width: 100%; border: 1px solid #ddd; margin: 5px 0; }
+.menu-link { text-decoration: none; }
+.menu-row { display: flex; margin-bottom: 10px; align-items: center; }
+.menu-row .button { margin-right: 10px; }
+.menu-row .button:last-child { margin-right: 0; }
 
 /* --- Chat History (in Side Menu) --- */
 #chatHistorySidebar {
@@ -398,9 +354,7 @@ p {
   border-radius: 5px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   display: block;
-  transition:
-    background-color 0.2s,
-    box-shadow 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s;
 }
 .session-content {
   padding: 8px 10px;
@@ -448,10 +402,7 @@ p {
   opacity: 0.55;
   transition: opacity 0.2s;
 }
-.copy-btn:hover {
-  opacity: 1;
-  color: var(--color-grey-dark);
-}
+.copy-btn:hover { opacity: 1; color: var(--color-grey-dark); }
 
 /* --- Generic Sidebar (Overlay Style) --- */
 .sidebar {
@@ -474,9 +425,7 @@ p {
   display: block;
   transition: 0.3s;
 }
-.sidebar a:hover {
-  color: #f1f1f1;
-}
+.sidebar a:hover { color: #f1f1f1; }
 .sidebar .closebtn {
   position: absolute;
   top: 0;
@@ -499,22 +448,14 @@ p {
   display: flex;
   align-items: center;
 }
-.openbtn:hover {
-  background-color: #f1f1f1;
-}
-.openbtn .icon {
-  font-size: 20px;
-  margin-right: 10px;
-  color: #464646;
-}
+.openbtn:hover { background-color: #f1f1f1; }
+.openbtn .icon { font-size: 20px; margin-right: 10px; color: #464646; }
 
 /* =====================================================================
    7. MODALS, POPUPS & DROPDOWNS
 ===================================================================== */
-
 /* --- Generic Modal --- */
-#modal-overlay {
-  display: none;
+#modal-overlay, .mini-modal {
   position: fixed;
   z-index: 9998;
   top: 0;
@@ -522,15 +463,11 @@ p {
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.35);
-  pointer-events: auto;
 }
 .modal {
-  display: none;
   position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
   justify-content: center;
@@ -543,84 +480,34 @@ p {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  box-shadow:
-    0 4px 8px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  text-align: center;
   max-width: 400px;
+  max-height: 90vh;
   border-radius: 6px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   position: relative;
   box-sizing: border-box;
-  overflow: visible;
-  max-height: 90vh;
+  text-align: center;
   overflow-y: auto;
 }
-.close-button {
-  color: #aaa;
+.close-button, .close {
   float: right;
-  font-size: 28px;
   font-weight: bold;
-}
-.close-button:hover,
-.close-button:focus {
-  color: var(--color-black);
+  font-size: 28px;
+  color: #aaa;
+  cursor: pointer;
   text-decoration: none;
-  cursor: pointer;
 }
-.close {
-  float: right;
-  font-size: 24px;
-  cursor: pointer;
-}
-.mini-modal {
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+.close-button:hover, .close-button:focus,
+.close:hover, .close:focus {
+  color: var(--color-black);
 }
 
 /* --- Slide-out Popup --- */
-.popup {
-  display: none;
-  position: fixed;
-  top: 80px;
-  right: -300px;
-  width: 300px;
-  height: 50%;
-  background-color: rgb(242, 242, 242);
-  padding: 40px;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 1001;
-  border-radius: 18px 0 0 18px;
-  text-align: left;
-  transition: right 0.3s ease;
-}
-.popup h2 {
-  margin-top: 0;
-}
-.popup-content {
-  margin-bottom: 10px;
-}
-.popup-close {
-  cursor: pointer;
-  color: #696969;
-  font-size: 30px;
-  position: absolute;
-  top: 10px;
-  left: 15px;
-}
-.popup-close:hover {
-  color: var(--color-black);
-}
 #popup {
   position: fixed !important;
   top: 80px;
   right: -350px;
   width: 250px;
-  display: block !important;
   background-color: #f1f1f1;
   border-radius: 30px 0 0 30px;
   box-shadow: -2px 0 6px rgba(0, 0, 0, 0.2);
@@ -630,27 +517,31 @@ p {
   color: var(--color-black);
   z-index: 9999;
   transition: right 0.4s ease;
+  display: block !important;
+  text-align: left;
 }
 #popup .popup-content {
   margin-top: 40px;
   line-height: 1.4;
   color: var(--color-black);
 }
+#popup .popup-content p {
+  margin: 4px 0;
+  padding: 0;
+  line-height: 1.5;
+}
+/* FIX: Changed `right: 10px` to `left: 15px` to match the intended original layout. */
 #popup .popup-close {
   position: absolute;
   top: 10px;
-  right: 10px;
+  left: 15px;
   font-size: 30px;
   cursor: pointer;
   border: none;
   background: transparent;
   color: #666;
 }
-.popup-content p {
-  margin: 4px 0;
-  padding: 0;
-  line-height: 1.5;
-}
+#popup .popup-close:hover { color: var(--color-black); }
 
 /* --- Dropdowns --- */
 .dropdown-content {
@@ -658,7 +549,7 @@ p {
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 .dropdown-content a {
@@ -667,17 +558,12 @@ p {
   text-decoration: none;
   display: block;
 }
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
+.dropdown-content a:hover { background-color: #f1f1f1; }
 
 /* =====================================================================
    8. BUTTONS & FORMS
 ===================================================================== */
-
-/* --- General Form Elements --- */
-input,
-button {
+input, button {
   margin: 10px;
   padding: 8px;
   border-radius: 4px;
@@ -690,41 +576,26 @@ button {
 }
 
 /* --- .button Class & Variants --- */
-.button,
-.button.green,
-.button.grey {
+.button {
   margin: 4px;
+  padding: 9px 11px;
   border: none;
   border-radius: 12px;
-  padding: 9px 11px;
   cursor: pointer;
   font-size: 14px;
   color: var(--color-white);
-}
-.button {
-  margin-top: 0px;
-  padding-top: 5px;
   background-color: var(--color-secondary-blue);
 }
-.button.green {
-  background-color: var(--color-green);
-}
-.button.grey {
-  background-color: rgb(181, 181, 181); /* Unique grey, kept as-is */
-}
+.button.green { background-color: var(--color-green); }
+.button.grey { background-color: rgb(181, 181, 181); }
 .button.red {
   background-color: var(--color-red);
-  color: var(--color-white);
-  border-radius: 12px;
   border: 2px solid var(--color-black);
 }
 .button.inactive-button {
   background-color: var(--color-grey-medium);
-  color: var(--color-white);
   animation: none;
 }
-
-/* --- Specific Button Implementations --- */
 .button-label {
   color: var(--color-black);
   text-align: center;
@@ -734,8 +605,10 @@ button {
 }
 .info-button {
   margin-left: 5px;
+  padding: 0;
   background-color: #777;
   color: #fff;
+  border: none;
   border-radius: 4px;
   width: 24px;
   height: 24px;
@@ -744,21 +617,11 @@ button {
   line-height: 24px;
   text-align: center;
   cursor: pointer;
-  border: none;
 }
-.side-menu .btn-colored {
-  border: 2px solid var(--color-black);
-  color: var(--color-black);
-}
-.side-menu .btn-eye {
-  background-color: rgb(134, 162, 255);
-} /* Unique color */
-.side-menu .btn-ear {
-  background-color: rgb(133, 255, 133);
-} /* Unique color */
-.side-menu .btn-skin {
-  background-color: #efafff;
-} /* Unique color */
+.side-menu .btn-colored { border: 2px solid var(--color-black); color: var(--color-black); }
+.side-menu .btn-eye { background-color: rgb(134, 162, 255); }
+.side-menu .btn-ear { background-color: rgb(133, 255, 133); }
+.side-menu .btn-skin { background-color: #efafff; }
 .side-menu .btn-lang {
   background: url('images/lang.jpg') no-repeat center center;
   background-size: cover;
@@ -785,18 +648,10 @@ button {
   flex-direction: column !important;
   flex-shrink: 0 !important;
 }
-.top-input-group.id-group {
-  flex: 0 0 46px !important;
-}
-.top-input-group.tel-group {
-  flex: 0 0 120px !important;
-}
-.top-input-group.age-group {
-  flex: 0 0 50px !important;
-}
-.top-input-group.sex-group {
-  flex: 0 0 60px !important;
-}
+.top-input-group.id-group { flex: 0 0 46px !important; }
+.top-input-group.tel-group { flex: 0 0 120px !important; }
+.top-input-group.age-group { flex: 0 0 50px !important; }
+.top-input-group.sex-group { flex: 0 0 60px !important; }
 
 .top-input-group label {
   font-size: 11px !important;
@@ -806,12 +661,12 @@ button {
   margin: 0 0 2px 0 !important;
   white-space: nowrap !important;
 }
-.top-input-group input[type='text'],
-.top-input-group input[type='tel'],
+.top-input-group input,
 .top-input-group select {
   width: 100% !important;
   height: 36px !important;
   padding: 5px 6px !important;
+  margin: 0 !important;
   font-size: 13px !important;
   line-height: 1.4 !important;
   border: 1px solid #e0e0e0 !important;
@@ -820,21 +675,13 @@ button {
   box-sizing: border-box !important;
   min-width: 0 !important;
 }
-.top-input-group.id-group input {
-  padding-left: 4px !important;
-  padding-right: 4px !important;
-}
-.top-input-group select {
-  vertical-align: bottom !important;
-}
+.top-input-group.id-group input { padding-left: 4px !important; padding-right: 4px !important; }
 
 /* =====================================================================
    9. MISCELLANEOUS COMPONENTS
 ===================================================================== */
-/* --- Chatbot Specific --- */
 .chatbot-container {
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
   flex-grow: 1;
   display: flex;
   justify-content: center;
@@ -854,27 +701,22 @@ flowise-fullchatbot {
   background-color: var(--color-white) !important;
 }
 
-/* --- Other UI Sections --- */
-.access-screen,
-#registrationSection {
+.access-screen, #registrationSection {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.register-link,
-.login-link {
+.register-link, .login-link {
   cursor: pointer;
-  color: blue; /* Kept as-is, could be var(--color-primary) */
+  color: blue;
   text-decoration: underline;
   font-size: 0.9em;
   margin-top: 20px;
 }
-.detected-condition,
-#condition-description {
+.detected-condition, #condition-description {
   color: var(--color-black);
   text-align: center;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding: 0 40px;
 }
 #displayed-job-role {
   font-size: 8px;
@@ -883,19 +725,14 @@ flowise-fullchatbot {
   flex-grow: 1;
 }
 #boxesFrame {
-  width: 100%;
-  height: 100px;
+  width: 100%; height: 100px;
   border: 0;
   overflow: hidden;
   background-color: transparent;
 }
-.object-container {
-  width: 100%;
+.object-container, .object-container iframe {
+  width: 100%; height: 100%;
   overflow: hidden;
-}
-.object-container iframe {
-  width: 100%;
-  height: 100%;
   border: none;
   display: block;
 }
@@ -926,69 +763,26 @@ flowise-fullchatbot {
 /* =====================================================================
    10. ANIMATIONS & KEYFRAMES
 ===================================================================== */
-.flip-horizontally {
-  animation: smoothFlip360 1.5s ease-out forwards;
-}
-.pulse {
-  animation: pulse 1s infinite;
-}
-.flash-blue {
-  background-color: #cde8ff;
-  transition: background-color 1s ease-out;
-}
+.flip-horizontally { animation: smoothFlip360 1.5s ease-out forwards; }
+.pulse { animation: pulse 1s infinite; }
+.flash-blue { background-color: #cde8ff; transition: background-color 1s ease-out; }
+
 .animation-container {
   display: none;
   justify-content: center;
   align-items: center;
   padding-top: 10px;
 }
-.animation-container img {
-  width: 70px;
-  height: auto;
-}
-.animation-container img.fade-in-out {
-  opacity: 0;
-  transition: opacity 2s;
-}
+.animation-container img { width: 70px; height: auto; }
+.animation-container img.fade-in-out { opacity: 0; transition: opacity 2s; }
 
-@keyframes smoothFlip360 {
-  from {
-    transform: rotateY(0deg);
-  }
-  to {
-    transform: rotateY(360deg);
-  }
-}
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes fadeinout {
-  0% {
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
+@keyframes smoothFlip360 { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+@keyframes fadeinout { 0% { opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { opacity: 0; } }
 
 /* =====================================================================
    11. SCROLLING BOXES MARQUEE
 ===================================================================== */
-
 .marquee {
   display: flex;
   flex-shrink: 0;
@@ -997,44 +791,16 @@ flowise-fullchatbot {
   width: 100vw;
   margin-bottom: 15px;
 }
-.marquee:last-child {
-  margin-bottom: 0;
-}
+.marquee:last-child { margin-bottom: 0; }
+.marquee-content, .marquee-content-reverse { display: flex; }
 
-.marquee-content,
-.marquee-content-reverse {
-  display: flex;
-}
-
-/* Encapsulated animations in a media query for accessibility */
 @media (prefers-reduced-motion: no-preference) {
-  .marquee-content {
-    animation: scroll-left 60s linear infinite;
-  }
-  .marquee-content-reverse {
-    animation: scroll-right 60s linear infinite;
-  }
+  .marquee-content { animation: scroll-left 60s linear infinite; }
+  .marquee-content-reverse { animation: scroll-right 60s linear infinite; }
 }
 
-/* NOTE: Renamed for clarity */
-@keyframes scroll-left {
-  /* Content moves from right to left */
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-@keyframes scroll-right {
-  /* Content moves from left to right */
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
+@keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+@keyframes scroll-right { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 
 .box {
   flex-shrink: 0;
@@ -1044,8 +810,8 @@ flowise-fullchatbot {
   padding: 10px;
   margin-right: 15px;
   font-size: 14px;
-  background-color: #fff;
-  border: 1px solid #000;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-black);
   border-radius: 12px;
   display: flex;
   align-items: center;
