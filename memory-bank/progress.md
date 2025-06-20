@@ -62,17 +62,16 @@
     *   This modularization enhances code organization and maintainability.
 - **API Endpoint Usage Corrected (June 20, 2025):**
     *   Client-side scripts now correctly target local API endpoints (`/api/record-info`, `/api/fetch-records`) for data submission and authentication, resolving previous 404 errors related to an unavailable external URL.
+- **Conditional Logging Implementation (June 20, 2025):**
+    *   Successfully created and integrated `public/scripts/log.js` for conditional client-side logging.
+    *   All relevant client-side scripts in `public/scripts/` were refactored to use the new `log.*` methods.
+    *   `log.info` and `log.debug` messages are now silenced in production, while `log.warn` and `log.error` remain active.
+    *   Resolved issues related to ES module loading for `muted.js` and the initialization of its buttons.
 
 ## What's Left to Build (New Tasks for "Tomorrow")
-1.  **Implement Conditional Logging Wrapper:**
-    *   **Goal**: Reduce console noise in production while retaining `warn` and `error` logs.
-    *   **Method**:
-        *   Create `public/scripts/log.js` with a wrapper around `console` methods.
-        *   The wrapper will check `window.location.hostname` against `'alan.up.railway.app'`.
-        *   If production, `log.debug()` and `log.info()` become no-ops. `log.warn()` and `log.error()` will still call the real `console` methods.
-        *   In development, all `log.*` methods will map directly to `console.*`.
-        *   Include `log.js` in `index.html` and `home.html` before other scripts.
-        *   Refactor existing `console.*` calls in client-side JavaScript files to use `log.*` equivalents.
+1.  **Implement PWA Service Worker for Install Prompt:**
+    *   Create/correct `public/service-worker.js` to enable PWA features, focusing on the "Install app" prompt.
+    *   Configure caching strategies and ensure `manifest.json` is PWA-ready.
 2.  **Refine Data Storage and Legacy API (Future Consideration):**
     *   **Security**: Investigate moving data files (`user-info.json`, `user-history.json`) written by the application outside the webroot (e.g., to a dedicated data directory like `../alan_data/`).
     *   **Deprecate/Refactor Legacy API**: Develop a plan to phase out or refactor the legacy record-keeping API routes (now in `routes/api.js` and using `services/records.js`), considering more robust storage (e.g., SQLite or cloud service) to replace flat files and `async-mutex`.
@@ -81,9 +80,6 @@
     *   **Options to Consider**:
         *   **Native Web Components**: Refactor reusable UI pieces (e.g., Muted Buttons bar, Side Menu) into native Web Components.
         *   **Lightweight Framework**: Evaluate a lightweight framework like Svelte.
-4.  **Implement PWA Service Worker for Install Prompt:**
-    *   Create/correct `public/service-worker.js` to enable PWA features, focusing on the "Install app" prompt.
-    *   Configure caching strategies and ensure `manifest.json` is PWA-ready.
 
 ## Current Status
 The AlanUI Web Chatbot is functional and stable. Recent work focused on:
@@ -99,18 +95,8 @@ The AlanUI Web Chatbot is functional and stable. Recent work focused on:
 - **Fixing the build and linting pipeline**: Migrated to ESLint v9+ with `eslint.config.js`, updated `package.json` for ES modules, renamed utility CommonJS files to `.cjs` (server is now ES Module `server.js`), and resolved all linting errors. `npm test` and `npm run lint` now pass.
 - **Minor HTML hygiene, accessibility, and performance improvements** (image deletion, removed inline styles, removed stale comment, verified meta descriptions, ensured consistent script deferral).
 - **All translations finalized and verified.**
-Core scripts and HTML pages have been refactored to support these enhancements. Documentation and memory bank files are updated. The project is now poised for PWA capabilities and conditional logging.
-
-## Current Status
-The AlanUI Web Chatbot is functional and stable. Recent work focused on:
-- Resolving CSP/event handler issues.
-- Achieving visual consistency in header/appbar heights.
-- Implementing a new dynamic language loading system using external JSON files.
-- Centralizing all page-specific CSS into `public/styles/styles.css` and making targeted consolidations.
-- **Fixing the build and linting pipeline**: Migrated to ESLint v9+ with `eslint.config.js`, updated `package.json` for ES modules, renamed CommonJS files to `.cjs`, and resolved all linting errors. `npm test` (now including translation consistency check) and `npm run lint` now pass.
-- **Frontend Orchestrator Refactor**: `home.js` and `index.js` have been successfully refactored into orchestrators, with their functionalities broken down into new, single-responsibility modules. This significantly improves the structure and maintainability of the frontend codebase.
-- **Minor HTML hygiene, accessibility, and performance improvements** (image deletion, removed inline styles, removed stale comment, verified meta descriptions, ensured consistent script deferral).
-Core scripts and HTML pages have been refactored to support these enhancements. Documentation and memory bank files are updated. The project is now poised for PWA capabilities and conditional logging.
+- **Conditional Logging**: Implemented a client-side conditional logging wrapper (`public/scripts/log.js`) to reduce console noise in production environments. All client scripts refactored to use this logger.
+Core scripts and HTML pages have been refactored to support these enhancements. Documentation and memory bank files are updated. The project is now poised for PWA capabilities.
 
 ## Known Issues
 - The server logic has been refactored out of a single file, addressing the previous concern. The new modular structure should be more maintainable.

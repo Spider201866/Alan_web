@@ -1,6 +1,7 @@
 // public/scripts/onboarding-form.js
 // Manages the interactive state and validation of the onboarding form fields.
 
+import log from './log.js';
 // DOM element references will be passed to initOnboardingForm
 let nameInputEl, jobSelectElementEl, experienceSelectEl, contactInputEl, acceptButtonEl;
 let checkboxesContainerEl, aimsSelectTextEl; // Specific to jobSelectElementEl interactions
@@ -17,7 +18,7 @@ function checkSelections() {
     !contactInputEl ||
     !acceptButtonEl
   ) {
-    // console.warn("checkSelections: One or more DOM elements are not available.");
+    // log.warn("checkSelections: One or more DOM elements are not available.");
     return;
   }
 
@@ -61,7 +62,7 @@ export function initOnboardingForm(elements) {
     !contactInputEl ||
     !acceptButtonEl
   ) {
-    console.error(
+    log.error(
       'initOnboardingForm: Could not initialize all required DOM elements. Some functionality may be impaired.'
     );
     return; // Prevent further execution if critical elements are missing

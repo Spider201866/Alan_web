@@ -1,6 +1,7 @@
 // public/scripts/index.js (New Orchestrator Version)
 // Orchestrates location, auth, form, and language modules for the index page.
 
+import log from './log.js';
 import { setLanguage, getTranslation } from './language.js';
 import { initializeLocation } from './location-service.js';
 import { initAuthFlow } from './auth-flow.js';

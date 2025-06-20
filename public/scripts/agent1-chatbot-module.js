@@ -3,6 +3,7 @@
 // agent1-chatbot-module.js
 
 import Chatbot from 'https://cdn.jsdelivr.net/npm/flowise-embed@latest/dist/web.js';
+import log from './log.js';
 
 // MODIFICATION 1: The function now accepts a 'sessionId' from the outside.
 export function initChatbot(sessionId) {
@@ -12,7 +13,7 @@ export function initChatbot(sessionId) {
   // Ensure a container exists – adjust the selector if needed
   const container = document.querySelector('.chatbot-container');
   if (!container) {
-    console.error('Chatbot container (.chatbot-container) not found in the DOM.');
+    log.error('Chatbot container (.chatbot-container) not found in the DOM.');
     return;
   }
 
@@ -22,7 +23,7 @@ export function initChatbot(sessionId) {
   if (!chatbotEl) {
     chatbotEl = document.createElement('flowise-fullchatbot');
     container.appendChild(chatbotEl);
-    console.log('<flowise-fullchatbot> element created and appended to container.');
+    log.info('<flowise-fullchatbot> element created and appended to container.');
   }
 
   // Now initialise the chatbot using Flowise embed API

@@ -1,6 +1,7 @@
 // public/scripts/auth-flow.js
 // Manages the user authentication and onboarding flow.
 
+import log from './log.js';
 // DOM element references will be passed to initAuthFlow
 let passwordScreenEl, passwordInputEl, passwordSubmitBtnEl, passwordErrorEl;
 let splashScreenRefEl, instructionRefEl, blackScreenEl;
@@ -38,9 +39,9 @@ function pushDataToServer(name, aims, roleClass, experience, contact) {
       }
       return resp.text();
     })
-    .then((data) => console.log('Record saved:', data))
+    .then((data) => log.info('Record saved:', data))
     .catch((error) => {
-      console.error('Error pushing data to server:', error);
+      log.error('Error pushing data to server:', error);
       // Potentially re-throw or handle more gracefully if needed by the caller
     });
 }
@@ -82,7 +83,7 @@ function verifyPassword() {
       instructionRefEl.classList.add('visible');
     })
     .catch((error) => {
-      console.error('Error verifying password:', error.message);
+      log.error('Error verifying password:', error.message);
       passwordErrorEl.textContent = error.message.includes('password')
         ? getTranslation('passwordErrorMsg', 'Incorrect password. Please try again.')
         : getTranslation('serverErrorMsg', 'Server error. Please try again later.');
@@ -104,12 +105,12 @@ function handleAccept() {
     !contactInputEl ||
     !blackScreenEl
   ) {
-    console.error('Missing DOM elements for handleAccept');
+    log.error('Missing DOM elements for handleAccept');
     return;
   }
   const checkboxesContainer = jobSelectElementEl.querySelector('.checkboxes');
   if (!checkboxesContainer) {
-    console.error('Missing checkboxes container within jobSelectElementEl');
+    log.error('Missing checkboxes container within jobSelectElementEl');
     return;
   }
 

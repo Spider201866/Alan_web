@@ -1,14 +1,12 @@
 // Alan UI - muted.js | 19th June 2025, WJW
 
 // muted.js
-
-// Wait until the document is ready, then wire the buttons
-document.addEventListener('DOMContentLoaded', initMutedButtons);
+import log from './log.js';
 
 /**
  * Attach Refer, Screenshot and Images button events
  */
-function initMutedButtons() {
+export function initMutedButtons() {
   // REFER
   const referButton = document.getElementById('refer');
   if (referButton) {
@@ -43,7 +41,7 @@ function initMutedButtons() {
  */
 /* global html2canvas */
 function takeScreenshot() {
-  if (typeof html2canvas === 'undefined') return console.error('html2canvas is not loaded.');
+  if (typeof html2canvas === 'undefined') return log.error('html2canvas is not loaded.');
 
   html2canvas(document.body)
     .then((canvas) => {
@@ -53,7 +51,7 @@ function takeScreenshot() {
       link.click();
       link.remove();
     })
-    .catch((err) => console.error('Screenshot capture failed:', err));
+    .catch((err) => log.error('Screenshot capture failed:', err));
 }
 
 /**

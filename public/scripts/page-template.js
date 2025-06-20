@@ -1,5 +1,6 @@
 // Alan UI - page-template.js | 20th June 2025, WJW (Refactored for new language system)
 import { getTranslation } from './language.js'; // Assuming language.js auto-initializes
+import log from './log.js';
 
 /**
  * Builds the standard page header with a translated title and appends it to the body.
@@ -65,7 +66,7 @@ export function initPage(pageTitleKey, applyPageSpecificTranslations) {
 
     // 3. Listen for the custom 'languageChanged' event
     document.addEventListener('languageChanged', () => {
-      console.log(
+      log.info(
         `page-template.js: Detected languageChanged event for page with title key: ${pageTitleKey}`
       );
       updatePageTranslations();
@@ -76,7 +77,7 @@ export function initPage(pageTitleKey, applyPageSpecificTranslations) {
       if (e.key === 'preferredLanguage') {
         // The 'languageChanged' event should ideally handle this,
         // but as a fallback or for immediate cross-tab UI update:
-        console.log(
+        log.info(
           `page-template.js: Detected storage event for preferredLanguage on page: ${pageTitleKey}`
         );
         // Note: setLanguage in language.js already re-fetches and dispatches 'languageChanged'.

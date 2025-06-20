@@ -1,5 +1,6 @@
 // Alan UI - language.js | 20th June 2025, WJW (Refactored for dynamic loading)
 import { loadLanguage } from './language-loader.js';
+import log from './log.js';
 
 // Holds the currently loaded translations
 window.currentTranslations = {};
@@ -13,7 +14,7 @@ window.currentTranslations = {};
  */
 export async function setLanguage(langCode) {
   if (!langCode) {
-    console.warn('setLanguage called with no langCode, defaulting to English.');
+    log.warn('setLanguage called with no langCode, defaulting to English.');
     langCode = 'en';
   }
   try {
@@ -27,16 +28,16 @@ export async function setLanguage(langCode) {
         detail: { langCode, translations: window.currentTranslations },
       })
     );
-    console.log(`Language set to: ${langCode}`);
+    log.info(`Language set to: ${langCode}`);
   } catch (error) {
-    console.error(`Error setting language to ${langCode}:`, error);
+    log.error(`Error setting language to ${langCode}:`, error);
     // Fallback to English if setting the desired language fails catastrophically
     if (langCode !== 'en') {
-      console.warn(`Failed to load language "${langCode}". Attempting to fallback to English.`);
+      log.warn(`Failed to load language "${langCode}". Attempting to fallback to English.`);
       await setLanguage('en'); // Try to load English
     } else {
       // This means 'en' itself failed to load. Do not recall setLanguage('en').
-      console.error('CRITICAL: Failed to load English (en.json). Translations will be broken.');
+      log.error('CRITICAL: Failed to load English (en.json). Translations will be broken.');
       window.currentTranslations = {}; // Clear potentially stale translations
       // Consider dispatching a specific error event here if UI needs to react
       // document.dispatchEvent(new CustomEvent('criticalTranslationError'));
@@ -59,7 +60,7 @@ export function getTranslation(key, fallbackText = '') {
     return window.currentTranslations[key];
   }
   // const activeLang = localStorage.getItem('preferredLanguage') || 'en'; // Get current lang for warning if needed
-  // console.warn(`Translation key "${key}" not found for language "${activeLang}". Using fallback.`);
+  // log.warn(`Translation key "${key}" not found for language "${activeLang}". Using fallback.`);
   return fallbackText || key; // Return the key itself if no fallback is provided
 }
 
@@ -75,7 +76,7 @@ async function initializeLanguage() {
 // Initialize the language as soon as the script is loaded.
 // This ensures translations are ready early in the page lifecycle.
 initializeLanguage().catch((error) => {
-  console.error('Error during initial language load:', error);
+  log.error('Error during initial language load:', error);
 });
 
 // For convenience, also expose setLanguage and getTranslation on the window object,
@@ -83,4 +84,4 @@ initializeLanguage().catch((error) => {
 window.setAppLanguage = setLanguage;
 window.getAppTranslation = getTranslation;
 
-console.log('New language.js loaded and initialized.');
+log.info('New language.js loaded and initialized.');

@@ -59,6 +59,11 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. The s
 - **Focus Trap Pattern (Frontend)**: Reusable class for managing keyboard focus within modals and side menus.
 - **External Agent Integration Pattern**: The frontend (`agent1-chatbot-module.js`) interacts with an externally managed chatbot agent ("Alan" via Flowise) for its core intelligence.
 - **Graceful Degradation (API Errors)**: Frontend API calls are designed to handle failures gracefully and inform the user.
+- **Conditional Client-Side Logging Pattern (New)**:
+    - A dedicated module (`public/scripts/log.js`) wraps native `console` methods.
+    - It provides `log.info()`, `log.debug()`, `log.warn()`, and `log.error()`.
+    - `log.info()` and `log.debug()` are silenced in production environments (based on `window.location.hostname`), while `log.warn()` and `log.error()` remain active.
+    - All client-side scripts are refactored to use this `log` module, ensuring consistent and environment-aware logging.
 
 ## Component Relationships
 - `server.js`: Main server entry point. Initializes Express, applies global middleware (Helmet, CORS, JSON parsing, static file serving from `config.paths.public`), sets up rate limiting, and mounts routers from `routes/api.js` and `routes/web.js`. Also incorporates 404 and global error handlers from `middleware/error.js`.
@@ -78,6 +83,7 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. The s
     - `public/agent1-chatbot-module.js`: Contains the core chatbot logic, responsible for interacting with the external "Alan" agent.
     - `public/page-template.js`: Provides `initPage` function for shared appbar injection and coordinates page-level translation updates.
     - `public/focus-trap.js`: Provides `FocusTrap` class for keyboard accessibility.
+    - `public/scripts/log.js`: Provides conditional client-side logging utilities.
     - `public/scripts/language-loader.js`: Fetches individual language JSON files.
     - `public/scripts/language.js`: Manages current language, uses loader, provides translation functions, and dispatches `languageChanged` event.
     - `public/scripts/index.js`, `public/scripts/home.js`: Act as orchestrators. They initialize their respective modules and manage page-specific logic, including UI updates in response to `languageChanged` event (often delegated to a translator module or handled directly for page-specific elements).
@@ -105,7 +111,7 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. The s
     7. If no route matches, `notFound` middleware from `middleware/error.js` serves `public/404.html`.
     7. If an error occurs in a route handler (especially async ones wrapped with `handleErrors`), it's passed to `globalErrorHandler` from `middleware/error.js`.
 - **Frontend Page Rendering**:
-    1. HTML page loads (e.g., `home.html`, `index.html`, `referral.html`). Viewport meta tags are consistent. Scripts like `language.js` (with `type="module"`) initialize.
+    1. HTML page loads (e.g., `home.html`, `index.html`, `referral.html`). Viewport meta tags are consistent. Core utility scripts like `log.js` and `language.js` (with `type="module"`) initialize.
     2. `language.js` loads the preferred/default language JSON using `language-loader.js` and dispatches `languageChanged`.
     3. For sub-pages (not `index.html` or `home.html`), `page-template.js`'s `initPage` function is called. It builds the header (translating title using `getTranslation`) and sets up listeners for `languageChanged`.
     4. For `index.html` and `home.html`, their respective orchestrator scripts (`index.js`, `home.js`) are loaded (`type="module"`).
@@ -147,7 +153,7 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. The s
 
 ## Design Patterns in Use
 - **Middleware Pattern**: Express.js middleware is used for rate limiting, serving static files, applying security headers (`Helmet`), and handling 404 routes.
-- **Module Pattern (Frontend)**: Frontend JavaScript files in `public/scripts/` use modules to organize code (e.g., `page-template.js`, `focus-trap.js`, `agent1-chatbot-module.js`).
+- **Module Pattern (Frontend)**: Frontend JavaScript files in `public/scripts/` use modules (ES6 `import`/`export`) to organize code (e.g., `page-template.js`, `focus-trap.js`, `agent1-chatbot-module.js`, `log.js`). Scripts are loaded with `<script type="module">`. Functions are explicitly imported/exported, avoiding global scope pollution (e.g., `initMutedButtons` from `muted.js`).
 - **Shared Component Pattern (Frontend)**: Centralized appbar logic and styling for consistent UI elements across multiple pages.
 - **Focus Trap Pattern (Frontend)**: Reusable class for managing keyboard focus within modals and side menus.
 - **External Agent Integration Pattern**: The frontend (`agent1-chatbot-module.js`) interacts with an externally managed chatbot agent ("Alan" via Flowise) for its core intelligence.

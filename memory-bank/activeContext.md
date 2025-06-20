@@ -3,9 +3,15 @@
 # Active Context
 
 ## Current Work Focus
-The dynamic language loading system has been implemented, CSS refactoring (centralization of styles) is largely complete, and the build/linting process is stable. Several HTML hygiene, accessibility, and performance improvements have been made (verified meta descriptions, ensured consistent script deferral). All translation keys are now correctly populated in the JSON files, and thorough testing and verification of the internationalization features have been performed. Upcoming tasks include PWA service worker implementation and implementing a conditional logging wrapper.
+The dynamic language loading system, CSS refactoring (centralization of styles), and the build/linting process are stable. HTML hygiene, accessibility, and performance improvements have been made. All translation keys are correctly populated. The conditional logging wrapper has now been successfully implemented, reducing console noise in production. Upcoming tasks primarily focus on PWA service worker implementation.
 
 ## Recent Changes
+- **Conditional Logging Implementation (June 20, 2025):**
+    *   Created `public/scripts/log.js`, a new module providing conditional logging (`log.info`, `log.debug`, `log.warn`, `log.error`). `log.info` and `log.debug` are silenced in production (when `window.location.hostname === 'alan.up.railway.app'`), while `log.warn` and `log.error` remain active.
+    *   Integrated `log.js` into `public/index.html` and `public/home.html` by adding `<script type="module" src="scripts/log.js" defer></script>` before other custom scripts.
+    *   Refactored all relevant client-side JavaScript files in `public/scripts/` to import and use the new `log.*` methods instead of direct `console.*` calls. This includes: `agent1-chatbot-module.js`, `auth-flow.js`, `home-data.js`, `home-translator.js`, `home-ui.js`, `home.js`, `index.js`, `language-loader.js`, `language.js`, `listener-module.js`, `location-service.js`, `muted.js`, `onboarding-form.js`, and `page-template.js`.
+    *   Corrected an issue where `public/scripts/muted.js` was not loaded as a module, causing an import error. Added `type="module"` to its script tag in `public/home.html`.
+    *   Fixed the initialization of "muted buttons" by exporting `initMutedButtons` from `muted.js` and importing/calling it directly in `home-data.js`, as module functions are not global.
 - **Frontend Orchestrator Refactor (June 20, 2025):**
     *   Refactored `public/scripts/home.js` and `public/scripts/index.js` into orchestrator patterns.
     *   **For `home.js`:**
@@ -120,15 +126,15 @@ The dynamic language loading system has been implemented, CSS refactoring (centr
     - Updated `test` script to include `format:check`.
 
 ## Next Steps (New Tasks for "Tomorrow")
-1.  **Implement Conditional Logging Wrapper:**
-    *   **Goal**: Reduce console noise in production while retaining `warn` and `error` logs.
-    *   **Method**:
-        *   Create `public/scripts/log.js` with a wrapper around `console` methods.
-        *   The wrapper will check `window.location.hostname` against `'alan.up.railway.app'`.
-        *   If production, `log.debug()` and `log.info()` become no-ops. `log.warn()` and `log.error()` will still call the real `console` methods.
-        *   In development, all `log.*` methods will map directly to `console.*`.
-        *   Include `log.js` in `index.html` and `home.html` before other scripts.
-        *   Refactor existing `console.*` calls in client-side JavaScript files to use `log.*` equivalents.
+1.  **Implement PWA Service Worker for Install Prompt:**
+    *   **Goal**: Enable PWA features, primarily allowing users to "install" the web app on desktop and mobile.
+    *   **Details**:
+        *   Create/correct `public/service-worker.js`.
+        *   Implement basic caching strategies (e.g., cache-first for static assets, network-first for dynamic content).
+        *   Ensure the service worker correctly handles `fetch` events.
+        *   Register the service worker in the main JavaScript entry point (e.g., `public/scripts/index.js` or `public/scripts/home.js`).
+        *   Verify `public/favicons/manifest.json` is correctly configured for PWA installability (e.g., `start_url`, `display`, icons).
+    *   **Considerations**: Test install prompt on various platforms/browsers. Ensure offline capabilities are as intended (if any).
 2.  **Refine Data Storage and Legacy API (Future Consideration):**
     *   **Security**: Investigate moving data files (`user-info.json`, `user-history.json`) written by the application outside the webroot (e.g., to a dedicated data directory like `../alan_data/`) to improve security hygiene.
     *   **Deprecate/Refactor Legacy API**: Develop a plan to phase out or refactor the legacy record-keeping API routes in `server.js` or refactor them. This could involve:
@@ -139,15 +145,6 @@ The dynamic language loading system has been implemented, CSS refactoring (centr
     *   **Options to Consider**:
         *   **Native Web Components**: Refactor reusable UI pieces (e.g., Muted Buttons bar, Side Menu) into native Web Components to encapsulate their HTML, CSS, and JS.
         *   **Lightweight Framework**: Alternatively, evaluate a lightweight framework like Svelte, which compiles to efficient vanilla JS and would formalize a component-based approach without significant overhead.
-4.  **Implement PWA Service Worker for Install Prompt:**
-    *   **Goal**: Enable PWA features, primarily allowing users to "install" the web app on desktop and mobile.
-    *   **Details**:
-        *   Create/correct `public/service-worker.js`.
-        *   Implement basic caching strategies (e.g., cache-first for static assets, network-first for dynamic content).
-        *   Ensure the service worker correctly handles `fetch` events.
-        *   Register the service worker in the main JavaScript entry point (e.g., `public/scripts/index.js` or `public/scripts/home.js`).
-        *   Verify `public/favicons/manifest.json` is correctly configured for PWA installability (e.g., `start_url`, `display`, icons).
-    *   **Considerations**: Test install prompt on various platforms/browsers. Ensure offline capabilities are as intended (if any).
 
 ## Active Decisions and Considerations
 - CSS for exam pages (`eye.html`, `ear.html`, `skin.html`) now uses a shared `.exam-content-container` class for common layout (padding, line-height, text-align) and common styling for `h3` and `p` tags within it.
@@ -169,6 +166,12 @@ The dynamic language loading system has been implemented, CSS refactoring (centr
     - `language.js` orchestrates loading, caching (via loader), stores current translations in `window.currentTranslations`, manages `localStorage` for `preferredLanguage`, and dispatches a `languageChanged` event.
     - `page-template.js` and individual page scripts use `getTranslation(key)` and listen to `languageChanged` for UI updates.
     - HTML pages call `initPage('pageTitleKey', optionalCallback)` where `optionalCallback` handles page-specific text.
+- **Conditional Client-Side Logging**:
+    - A new module `public/scripts/log.js` provides `log.info()`, `log.debug()`, `log.warn()`, and `log.error()`.
+    - `log.info()` and `log.debug()` are no-ops in production (when `window.location.hostname === 'alan.up.railway.app'`).
+    - `log.warn()` and `log.error()` always call the native `console` methods.
+    - All client-side scripts have been refactored to use this `log` module instead of direct `console.*` calls.
+    - `log.js` is loaded as a module in `index.html` and `home.html`.
 - **Header/Appbar Styling**:
     - Shared `#appBar` on sub-pages is styled via `public/styles/styles.css`. Sub-pages must link to this stylesheet and not contain local appbar styles.
     - The unique `.chatbot-header` on `public/home.html` is also styled in `public/styles/styles.css`, with specific padding adjustments (e.g., `.chatbot-subtitle`) to align its rendered height with the shared `#appBar` in target viewing environments.
@@ -204,8 +207,9 @@ The dynamic language loading system has been implemented, CSS refactoring (centr
 - **CSP Debugging**: Can be complex due to interactions between server configuration (`helmet`), HTML content (preloads, inline handlers), and aggressive browser/service worker caching. Forceful server restarts and comprehensive cache clearing (including incognito/different browsers) are essential diagnostic tools.
 - **`script-src-attr`**: This CSP directive can be particularly tricky. If the browser reports `script-src-attr 'none'` despite server configuration aiming for `'unsafe-inline'`, it can indicate deep caching issues or subtle interactions with other CSP directives or `helmet` defaults. Refactoring to `addEventListener` is a more robust solution than relying on `'unsafe-inline'` for event handlers.
 - **Server Process State & Cache Busting**: Ensuring the running Node.js process reflects the latest saved file changes is critical. Standard terminal restarts (Ctrl+C and `node server.js`) may not always be sufficient if old processes linger. Forcefully terminating all Node.js processes (e.g., using `taskkill /F /IM node.exe /T` on Windows or `pkill -f node` on macOS/Linux) before restarting the server is a key troubleshooting step for issues where server-side changes (like CSP headers in `config/index.js` used by `server.js`) don't seem to apply. This, combined with thorough browser cache clearing (including service workers and using incognito mode), is often necessary to resolve persistent caching problems.
-- **JavaScript Modules**: Using ES6 modules (`import`/`export`) for better code organization. Ensure `<script type="module">` is used in HTML when loading scripts that use these features.
+- **JavaScript Modules**: Using ES6 modules (`import`/`export`) for better code organization. Ensure `<script type="module">` is used in HTML when loading scripts that use these features. Functions exported from modules are not global and must be explicitly imported where needed (e.g., `initMutedButtons` from `muted.js` called by `home-data.js`).
 - **Event-Driven UI Updates**: Using custom events (e.g., `languageChanged`) to decouple components and trigger UI updates.
 - The project prioritizes consistency, accessibility, and security.
 - Vanilla JavaScript and simple structure are by design.
-</content>
+- **Module Loading (`type="module"`)**: Scripts that use ES6 `import` statements must be loaded in HTML with the `<script type="module">` attribute. Forgetting this can lead to `SyntaxError: Cannot use import statement outside a module`.
+- **Module Scope**: Functions and variables within an ES6 module are scoped to that module by default and are not automatically added to the global (`window`) scope. If a function needs to be called from another module or an inline script, it must be explicitly exported from its module and imported where needed, or called via a proper module interaction pattern.

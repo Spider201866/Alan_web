@@ -1,6 +1,7 @@
 // public/scripts/home-ui.js
 // Manages UI elements, interactions, and popups for the home page.
 
+import log from './log.js';
 import { FocusTrap } from './focus-trap.js';
 import { getTranslation, setLanguage } from './language.js'; // setLanguage needed for language controls
 
@@ -286,10 +287,10 @@ export function initUI(options = {}) {
     setupGeolocationButton(options.onGeolocationClick);
   } else {
     // Fallback or error if the crucial callback isn't provided
-    console.warn('initUI: onGeolocationClick callback not provided for geolocation button.');
+    log.warn('initUI: onGeolocationClick callback not provided for geolocation button.');
     // Setup geolocation button without the data fetching part if no callback
     setupGeolocationButton(() => {
-      console.log('Geolocation clicked, but no data handler provided to UI module.');
+      log.info('Geolocation clicked, but no data handler provided to UI module.');
     });
   }
 
@@ -322,7 +323,7 @@ export function initUI(options = {}) {
         .then((mod) => {
           if (typeof mod.resetSidebarHistory === 'function') mod.resetSidebarHistory();
         })
-        .catch((err) => console.error('Failed to load listener-module for history reset:', err));
+        .catch((err) => log.error('Failed to load listener-module for history reset:', err));
     });
   }
 }

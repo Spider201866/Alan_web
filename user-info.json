@@ -1,19 +1,19 @@
 [
   {
-    "sessionId": "user-1750443081255",
-    "name": "William Williams",
-    "role": "Eyes",
-    "experience": "Student / refresher",
+    "sessionId": "user-1750445088524",
+    "name": "Maximus",
+    "role": "Ears",
+    "experience": "Confident core knowledge",
     "country": "United Kingdom",
     "iso2": "GB",
     "classification": "HI",
     "roleClassification": "(M)",
     "contactInfo": "dave7765@22",
     "version": "1.0",
-    "dateTime": "20/06/2025, 18:32:28",
-    "latitude": 53.6362,
-    "longitude": -2.1656,
-    "area": "Rochdale",
+    "dateTime": "20/06/2025, 18:54:19",
+    "latitude": 53.444608,
+    "longitude": -2.9130752,
+    "area": "Liverpool",
     "refreshCount": 1
   }
 ]

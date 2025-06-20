@@ -1,6 +1,7 @@
 // public/scripts/home.js (New Orchestrator Version)
 // Orchestrates UI, data, and translation modules for the home page.
 
+import log from './log.js';
 import { faviconAndMetaSetup } from './faviconAndMeta.js';
 import { initChatbot } from './agent1-chatbot-module.js';
 // import { setLanguage, getTranslation } from './language.js'; // No longer directly used here, handled by translator or UI
@@ -24,7 +25,7 @@ function main() {
   initTranslator();
 
   // 3. Load initial data snippets (e.g., muted.html content).
-  fetchMutedSnippet().catch((err) => console.error('Initial fetchMutedSnippet failed:', err));
+  fetchMutedSnippet().catch((err) => log.error('Initial fetchMutedSnippet failed:', err));
 
   // 4. Initialize the chatbot.
   // Ensure sessionId is available or generated if not.
@@ -53,9 +54,9 @@ async function fetchAndDisplayLocation(latitude, longitude) {
 
     // UI updates like flashing blue or refreshing popup content are handled within home-ui.js
     // after this async function completes or as part of its internal logic.
-    console.log('fetchAndDisplayLocation: Area fetched and data pushed.');
+    log.info('fetchAndDisplayLocation: Area fetched and data pushed.');
   } catch (error) {
-    console.error('Error in fetchAndDisplayLocation (orchestrator):', error);
+    log.error('Error in fetchAndDisplayLocation (orchestrator):', error);
     // Optionally, communicate this error back to the UI if a mechanism is set up.
   }
 }
@@ -65,13 +66,13 @@ window.addEventListener('pageshow', (event) => {
   // Side menu should be closed by default on page show, handled by initUI's initial state.
   // Push data to server on page show.
   pushLocalStorageToServer().catch((err) =>
-    console.error('pushLocalStorageToServer on pageshow failed:', err)
+    log.error('pushLocalStorageToServer on pageshow failed:', err)
   );
 
   if (event.persisted) {
     // If the page is loaded from cache, re-fetch dynamic content.
     fetchMutedSnippet().catch((err) =>
-      console.error('fetchMutedSnippet on pageshow (persisted) failed:', err)
+      log.error('fetchMutedSnippet on pageshow (persisted) failed:', err)
     );
     // Consider if a full reload is always necessary or if targeted updates are better.
     // window.location.reload(); // This was in the original, evaluate if still needed.
@@ -82,7 +83,7 @@ document.addEventListener('visibilitychange', () => {
   if (!document.hidden) {
     // When the tab becomes visible again, push data.
     pushLocalStorageToServer().catch((err) =>
-      console.error('pushLocalStorageToServer on visibilitychange failed:', err)
+      log.error('pushLocalStorageToServer on visibilitychange failed:', err)
     );
   }
 });

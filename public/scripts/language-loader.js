@@ -1,3 +1,5 @@
+import log from './log.js';
+
 // A simple in-memory cache to avoid re-fetching languages.
 const loadedTranslations = {};
 
@@ -27,14 +29,14 @@ export async function loadLanguage(langCode = 'en') {
     loadedTranslations[langCode] = translations;
     return translations;
   } catch (error) {
-    console.warn(error.message);
+    log.warn(error.message);
     // 3. If it fails, try to fetch the English fallback (if we're not already trying to load English).
     if (langCode !== 'en') {
-      console.log('Falling back to English translation.');
+      log.info('Falling back to English translation.');
       return await loadLanguage('en'); // This will use the cache if 'en' is already loaded.
     } else {
       // If even English fails, return an empty object to prevent total app failure.
-      console.error('Critical: Could not load the English fallback translation file.');
+      log.error('Critical: Could not load the English fallback translation file.');
       return {};
     }
   }

@@ -1,10 +1,11 @@
 // public/scripts/home-translator.js
 // Manages UI text updates based on language changes for the home page.
 
+import log from './log.js';
 import { getTranslation } from './language.js';
 
 function applyHomeTranslations() {
-  // console.log('home-translator.js: Applying translations.');
+  // log.info('home-translator.js: Applying translations.');
   const elementTranslations = {
     '.chatbot-subtitle': 'eyesEars',
     '#good-history': 'goodHistory',

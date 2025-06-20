@@ -1,6 +1,7 @@
 // public/scripts/location-service.js
 // Fetches IP-based location and determines user classification.
 
+import log from './log.js';
 const classificationLookup = {
   HI: [
     'QA',
@@ -233,7 +234,7 @@ async function fetchIPBasedLocation() {
       localStorage.setItem('iso2', iso2);
       storeClassifications(iso2);
     } else {
-      console.warn('IP-based location data was empty.');
+      log.warn('IP-based location data was empty.');
       // Set defaults if data is missing to avoid nulls in localStorage
       localStorage.setItem('latitude', 'Not set');
       localStorage.setItem('longitude', 'Not set');
@@ -243,7 +244,7 @@ async function fetchIPBasedLocation() {
       storeClassifications('Not set');
     }
   } catch (error) {
-    console.error('Error fetching IP-based location:', error);
+    log.error('Error fetching IP-based location:', error);
     // Set defaults on error
     localStorage.setItem('latitude', 'Not set');
     localStorage.setItem('longitude', 'Not set');

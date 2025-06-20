@@ -43,6 +43,7 @@
         - `public/page-template.js`: Shared appbar logic and coordinates page-level translation updates.
         - `public/focus-trap.js`: Focus trap system for accessibility.
         - `public/scripts/agent1-chatbot-module.js`: Core chatbot logic, integrating with Flowise/Gemini.
+        - `public/scripts/log.js`: Provides conditional client-side logging utilities.
         - `public/scripts/index.js`: Orchestrator for `index.html`. Initializes modules for location services, authentication flow, onboarding form validation, and page-specific language controls.
         - `public/scripts/home.js`: Orchestrator for `home.html`. Initializes modules for UI management, data operations, and translations.
         - `public/scripts/home-ui.js`: Manages UI elements, interactions, and popups for `home.html`.

@@ -6,6 +6,7 @@
    (Based on user-provided structure with enhancements for UI/UX)
    ----------------------------------------------------------------------- */
 
+import log from './log.js';
 export let imagesButtonClicked = false;
 
 /* ── constants & helpers ──────────────────────────────────────────────── */
@@ -54,7 +55,7 @@ history.sessionCounter += 1;
 let CURRENT_ID = history.sessionCounter;
 history.sessions.push({ id: CURRENT_ID, messages: [] });
 localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
-console.log('%c[History] Ready. Current Session ID:', 'color:#008000', CURRENT_ID, history);
+log.info('%c[History] Ready. Current Session ID:', 'color:#008000', CURRENT_ID, history);
 
 let storedKeys = new Set(); // For de-duplication within the CURRENT_ID session
 
@@ -68,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function attachFlowiseObservers() {
   const host = document.querySelector('flowise-fullchatbot');
   if (!host) {
-    console.error('[History] Flowise host element not found.');
+    log.error('[History] Flowise host element not found.');
     return;
   }
 
@@ -79,7 +80,7 @@ function attachFlowiseObservers() {
     if (host.shadowRoot) {
       clearInterval(intervalId);
       const root = host.shadowRoot;
-      console.log('%c[History] Flowise shadowRoot accessed.', 'color:#008000');
+      log.info('%c[History] Flowise shadowRoot accessed.', 'color:#008000');
 
       new MutationObserver(handleBubbleChanges).observe(root, { childList: true, subtree: true });
       handleBubbleChanges();
@@ -89,17 +90,17 @@ function attachFlowiseObservers() {
         if (resetButton && !resetButton.dataset.historyHooked) {
           resetButton.dataset.historyHooked = 'true';
           resetButton.addEventListener('click', () => {
-            console.log('%c[History] Flowise "Reset Chat" detected.', 'color:#ffa500');
+            log.info('%c[History] Flowise "Reset Chat" detected.', 'color:#ffa500');
             startNewSession();
           });
-          console.log('%c[History] Flowise "Reset Chat" button hooked.', 'color:#00ced1');
+          log.info('%c[History] Flowise "Reset Chat" button hooked.', 'color:#00ced1');
         }
       };
       hookResetButton();
       new MutationObserver(hookResetButton).observe(root, { childList: true, subtree: true });
     } else if (attempts >= maxAttempts) {
       clearInterval(intervalId);
-      console.error('[History] Failed to access Flowise shadowRoot after multiple attempts.');
+      log.error('[History] Failed to access Flowise shadowRoot after multiple attempts.');
     }
   }, 100);
 }
@@ -132,11 +133,11 @@ function startNewSession() {
 
   storedKeys.clear();
 
-  console.log(`%c[History] New session started: ID ${CURRENT_ID}`, 'color:#007bff');
+  log.info(`%c[History] New session started: ID ${CURRENT_ID}`, 'color:#007bff');
 
   const sidebar = document.getElementById('chatHistorySidebar');
   if (!sidebar) {
-    console.error('[History] Sidebar element not found for new session.');
+    log.error('[History] Sidebar element not found for new session.');
     return;
   }
 
@@ -169,7 +170,7 @@ function saveMessage(role, text) {
     if (latestSession && latestSession.id === CURRENT_ID) {
       // It was just a timing issue, proceed with latestSession as currentSession
     } else {
-      console.error(
+      log.error(
         `[History] Critical: Current session ${CURRENT_ID} not found. Message "${text}" for role "${role}" cannot be saved.`
       );
       return;
@@ -217,7 +218,7 @@ function saveMessage(role, text) {
 function renderSidebar() {
   const sidebar = document.getElementById('chatHistorySidebar');
   if (!sidebar) {
-    console.error('[History] Sidebar element not found for rendering.');
+    log.error('[History] Sidebar element not found for rendering.');
     return;
   }
   sidebar.innerHTML = '';
@@ -296,7 +297,7 @@ export function attachImagesButton() {
 }
 
 export function resetSidebarHistory() {
-  console.log('%c[History] Resetting in-memory sidebar history state.', 'color:#ff0000');
+  log.info('%c[History] Resetting in-memory sidebar history state.', 'color:#ff0000');
   history = { sessionCounter: 0, sessions: [] };
   CURRENT_ID = 0;
   storedKeys.clear();
