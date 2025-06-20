@@ -33,10 +33,14 @@
         - `public/home.html`, `public/index.html`: Main pages with deferred scripts and consistent viewport meta tags. `home.html` now uses `addEventListener` for navigation button event handling. Preload links removed.
         - `public/referral.html`: Example of a sub-page that correctly links to `styles/styles.css` and relies on it for appbar styling.
         - `public/404.html`: Custom 404 page.
-        - `public/page-template.js`: Shared appbar logic.
+        - `public/page-template.js`: Shared appbar logic and coordinates page-level translation updates.
         - `public/focus-trap.js`: Focus trap system for accessibility.
         - `public/scripts/agent1-chatbot-module.js`: Core chatbot logic, integrating with Flowise/Gemini.
-        - `public/scripts/index.js`: Includes improved API error handling.
+        - `public/scripts/index.js`: Handles logic for `index.html`, including onboarding and language selection.
+        - `public/scripts/home.js`: Handles logic for `home.html`, including side menu and language selection.
+        - `public/scripts/language.js`: Manages current language, uses loader, provides translation functions.
+        - `public/scripts/language-loader.js`: Fetches individual language JSON files.
+        - `public/translations/`: Directory containing `{langCode}.json` translation files.
     - `user-info.json`, `user-history.json`: JSON data files (ensured to have trailing newlines).
     - `package.json`: Defines project metadata, dependencies, and scripts.
     - `.prettierrc`: Prettier configuration file.

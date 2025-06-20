@@ -22,21 +22,7 @@
     <link rel="manifest" href="favicons/manifest.json" />
     <link rel="stylesheet" href="styles/styles.css" />
     <script type="module" src="scripts/faviconAndMeta.js"></script>
-    <!-- Translations object embedded for a single-file solution -->
-    <script>
-      window.translations = {
-        en: {
-          pageTitle: 'How to examine the skin',
-          generalObservationHeading: 'General observation',
-          generalObservationText: `<span class="block">Inspect lumps, <em>colour changes</em>, distribution</span><span class="block">Gently palpate for texture, temperature or tenderness</span>`,
-          uvLightHeading: 'UV (Wood’s) light',
-          uvLightText: `<span class="block">In a blacked-out room check for characteristic fluorescence:</span><span class="block"><span class="teal">tinea (blue-green)</span>, <span class="coral-orange">pityriasis versicolor (coppery-orange)</span>, <span class="coral-red">erythrasma (coral-red)</span>, <span class="blue">vitiligo (blue-white)</span>, <span class="orange">acne (orange-red)</span>, <span class="pale-blue">head lice nits (pale-blue)</span></span>`,
-          dermoscopyHeading: 'Dermoscopy',
-          dermoscopyText: `<span class="block"><strong><u>Hold Arclight polariser like a pen</u></strong>, check: <strong>ABCDE</strong> (<em>Asymmetry</em>, <em>Border</em>, <em>Colour</em>, <em>Diameter >6mm</em>, <em>Evolving</em>)</span><span class="block">Study: PDSBV (<em>Pigment network</em>, <em>Dots</em>, <em>Streaks</em>, <em>Blue-white</em>, <em>Vascular</em>)</span>`,
-          additionalText: `<span class="block">Know your lesion: normal, <span class="red">suspicious</span>, <span class="orange">inflamed</span></span><span class="block">>Practice often<</span>`,
-        },
-      };
-    </script>
+    <!-- Translations will be loaded dynamically by language.js and page-template.js -->
     <style>
       /* --- Identical to original styles, with minimal additions --- */
       body {
@@ -129,27 +115,22 @@
 
     <script type="module">
       import { initPage } from './scripts/page-template.js';
+      import { getTranslation } from './scripts/language.js';
 
       // This is the function that knows how to translate THIS specific page
-      function applyTranslations() {
-        const lang = localStorage.getItem('preferredLanguage') || 'en';
-        const t = window.translations && window.translations[lang];
-        if (!t) return;
-
-        // We no longer need to update the pageTitle here, the template does it.
-        // We just need to handle the content unique to this page.
-        document.getElementById('generalObservationHeading').textContent =
-          t.generalObservationHeading;
-        document.getElementById('generalObservationText').innerHTML = t.generalObservationText;
-        document.getElementById('uvLightHeading').textContent = t.uvLightHeading;
-        document.getElementById('uvLightText').innerHTML = t.uvLightText;
-        document.getElementById('dermoscopyHeading').textContent = t.dermoscopyHeading;
-        document.getElementById('dermoscopyText').innerHTML = t.dermoscopyText;
-        document.getElementById('additionalText').innerHTML = t.additionalText;
+      function applyPageSpecificTranslations() {
+        document.getElementById('generalObservationHeading').textContent = getTranslation('generalObservationHeading', 'General observation');
+        document.getElementById('generalObservationText').innerHTML = getTranslation('generalObservationText', 'Default general observation text.');
+        document.getElementById('uvLightHeading').textContent = getTranslation('uvLightHeading', 'UV (Wood’s) light');
+        document.getElementById('uvLightText').innerHTML = getTranslation('uvLightText', 'Default UV light text.');
+        document.getElementById('dermoscopyHeading').textContent = getTranslation('dermoscopyHeading', 'Dermoscopy');
+        document.getElementById('dermoscopyText').innerHTML = getTranslation('dermoscopyText', 'Default dermoscopy text.');
+        // Assuming "additionalText" should be "additionalText_skin" for consistency
+        document.getElementById('additionalText').innerHTML = getTranslation('additionalText_skin', 'Default additional skin text.');
       }
 
-      // Initialize the page with its title and its specific translation function
-      initPage('How to examine the skin', applyTranslations);
+      // Initialize the page with its title key and its specific translation function
+      initPage('pageTitle_howToExamineSkin', applyPageSpecificTranslations);
     </script>
   </body>
 </html>

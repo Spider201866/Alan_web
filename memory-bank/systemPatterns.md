@@ -27,11 +27,16 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. It fo
 
 ## Design Patterns in Use
 - **Middleware Pattern**: Express.js middleware is used for rate limiting, serving static files, applying security headers (`Helmet`), and handling 404 routes.
-- **Module Pattern (Frontend)**: Frontend JavaScript files in `public/scripts/` use modules to organize code (e.g., `page-template.js`, `focus-trap.js`, `agent1-chatbot-module.js`).
-- **Event Listener Pattern (Frontend)**: Replacing inline event handlers (e.g., `onclick`) with `addEventListener` in JavaScript for improved CSP compliance and separation of concerns (e.g., in `public/home.html`).
+- **Module Pattern (Frontend)**: Frontend JavaScript files in `public/scripts/` use modules to organize code (e.g., `page-template.js`, `focus-trap.js`, `agent1-chatbot-module.js`, `language.js`, `language-loader.js`).
+- **Event Listener Pattern (Frontend)**:
+    - Replacing inline event handlers (e.g., `onclick`) with `addEventListener` in JavaScript for improved CSP compliance and separation of concerns (e.g., in `public/home.html`).
+    - Using custom DOM events (e.g., `languageChanged`) for decoupled communication between modules (e.g., `language.js` dispatches, `page-template.js`, `index.js`, `home.js` listen).
 - **Shared Component Pattern (Frontend)**:
     - Centralized appbar (`#appBar`) logic (`page-template.js`) and styling (`styles.css`) for consistent UI elements across sub-pages.
     - The main header on `home.html` (`.chatbot-header`) is also styled in `styles.css`, with fine-tuned padding to match the perceived height of the shared appbar.
+- **Dynamic Content Loading Pattern (Frontend)**:
+    - `language-loader.js` fetches language-specific JSON files from `public/translations/` on demand.
+    - Caching of loaded translations to avoid redundant network requests.
 - **Focus Trap Pattern (Frontend)**: Reusable class for managing keyboard focus within modals and side menus.
 - **External Agent Integration Pattern**: The frontend (`agent1-chatbot-module.js`) interacts with an externally managed chatbot agent ("Alan" via Flowise) for its core intelligence.
 - **Graceful Degradation (API Errors)**: Frontend API calls are designed to handle failures gracefully and inform the user.
@@ -42,12 +47,15 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. It fo
     - `public/home.html`, `public/index.html`: Main landing and onboarding pages. `home.html` now uses `addEventListener` for navigation button event handling. Preload links for fonts/favicons removed.
     - `public/404.html`: Custom page for unknown routes.
     - `public/agent1-chatbot-module.js`: Contains the core chatbot logic, responsible for interacting with the external "Alan" agent.
-    - `public/page-template.js`: Provides `initPage` function for shared appbar injection on sub-pages.
+    - `public/page-template.js`: Provides `initPage` function for shared appbar injection and coordinates page-level translation updates.
     - `public/focus-trap.js`: Provides `FocusTrap` class for keyboard accessibility.
-    - `public/scripts/`: Other frontend JavaScript logic, including improved API error handling in `index.js`.
+    - `public/scripts/language-loader.js`: Fetches individual language JSON files.
+    - `public/scripts/language.js`: Manages current language, uses loader, provides translation functions, and dispatches `languageChanged` event.
+    - `public/scripts/index.js`, `public/scripts/home.js`: Handle page-specific logic, including UI updates in response to `languageChanged` event.
+    - `public/translations/`: Directory containing individual language JSON files.
     - `public/styles/styles.css`: Centralized styles for shared UI elements like the `#appBar` (on sub-pages), the `.chatbot-header` (on `home.html`), and "skip to content" link. Includes specific padding for `.chatbot-subtitle` and `font-family` for `.back-arrow` to ensure visual consistency.
     - `public/styles/styles_index.css`: Specific styles for home/index pages.
-    - `public/boxes.html`: Contains marquee content with `aria-hidden` attributes for accessibility.
+    - `public/boxes.html`: Contains marquee content with `aria-hidden` attributes for accessibility (though marquee content is now directly in `home.html`).
 - `tests/`: Contains automated tests for UI and accessibility.
 - `.editorconfig`: Enforces consistent code style across editors.
 - `.eslintrc.js`: ESLint configuration for code quality.
@@ -63,12 +71,19 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. It fo
     4. If within limits, proceeds to next middleware/route handler.
     5. If route is not found, the 404 handler serves `public/404.html`.
 - **Frontend Page Rendering**:
-    1. HTML page loads (e.g., `home.html`, `referral.html`). Viewport meta tags are consistent.
-    2. For sub-pages, `page-template.js`'s `initPage` function is called to inject the shared `#appBar`.
-    3. `public/styles/styles.css` applies styling. This includes rules for the `#appBar` (sub-pages) and the `.chatbot-header` (`home.html`), with specific padding for `.chatbot-subtitle` and font styles for `.back-arrow` to ensure their rendered heights are consistent in target environments.
-    4. External scripts are downloaded in parallel and executed after HTML parsing due to `defer` attribute.
-    5. External resources (scripts, styles, fonts) are loaded according to the CSP.
-    6. Event handlers (e.g., for navigation buttons in `home.html`) are attached via JavaScript using `addEventListener`.
+    1. HTML page loads (e.g., `home.html`, `referral.html`). Viewport meta tags are consistent. Scripts like `language.js` (with `type="module"`) initialize.
+    2. `language.js` loads the preferred/default language JSON using `language-loader.js` and dispatches `languageChanged`.
+    3. For sub-pages, `page-template.js`'s `initPage` function is called. It builds the header (translating title using `getTranslation`) and sets up listeners for `languageChanged`.
+    4. Page-specific scripts (e.g., `index.js`, `home.js`, or inline scripts in content pages) listen for `languageChanged` and call their respective functions to apply translations using `getTranslation`.
+    5. `public/styles/styles.css` applies styling. This includes rules for the `#appBar` (sub-pages) and the `.chatbot-header` (`home.html`), with specific padding for `.chatbot-subtitle` and font styles for `.back-arrow` to ensure their rendered heights are consistent in target environments.
+    6. Other external scripts are downloaded in parallel and executed after HTML parsing due to `defer` attribute.
+    7. External resources (scripts, styles, fonts) are loaded according to the CSP.
+    8. Event handlers (e.g., for navigation buttons in `home.html`) are attached via JavaScript using `addEventListener`.
+- **Language Change**:
+    1. User interacts with a language selection UI (e.g., dropdown in `home.html` side menu).
+    2. The UI event handler calls `await setLanguage(newLangCode)` from `language.js`.
+    3. `setLanguage` updates `localStorage`, fetches the new language JSON (via `language-loader.js`), updates `window.currentTranslations`, and dispatches the `languageChanged` event.
+    4. All active listeners for `languageChanged` (in `page-template.js`, `index.js`, `home.js`, etc.) execute their callbacks to re-translate relevant UI elements.
 - **Chatbot Interaction**:
     1. User inputs query on the frontend.
     2. `agent1-chatbot-module.js` sends the query to the external "Alan" agent (via Flowise).

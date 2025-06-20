@@ -1,12 +1,13 @@
 // Alan UI - home.js | 19th June 2025, WJW
 
 // NOTE: This script depends on external modules:
-// - language.js (for `translations`)
+// - language.js (for `setLanguage`, `getTranslation`)
 // - faviconAndMeta.js (for `faviconAndMetaSetup`)
 // - agent1-chatbot-module.js (for `initChatbot`)
 // - closer.js and listener-module.js (for event listeners)
 import { faviconAndMetaSetup } from './faviconAndMeta.js';
 import { initChatbot } from './agent1-chatbot-module.js';
+import { setLanguage, getTranslation } from './language.js';
 import './closer.js';
 import './listener-module.js';
 import { FocusTrap } from './focus-trap.js';
@@ -27,9 +28,11 @@ const sideMenuFocusTrap = new FocusTrap(sideMenu);
 
 // Core Functions
 function main() {
-  fetchMutedSnippet();
-  const storedLang = localStorage.getItem('preferredLanguage') || 'en';
-  updateAllLanguage(storedLang);
+  fetchMutedSnippet(); // This also calls updateAllLanguage, will need adjustment
+  // const storedLang = localStorage.getItem('preferredLanguage') || 'en';
+  // updateAllLanguage(storedLang); // Will be triggered by 'languageChanged' from language.js
+
+  document.addEventListener('languageChanged', applyHomeTranslations);
 
   faviconAndMetaSetup();
   initChatbot();
@@ -63,18 +66,15 @@ function fetchMutedSnippet() {
       if (typeof window.initMutedButtons === 'function') {
         window.initMutedButtons();
       }
-      const storedLang = localStorage.getItem('preferredLanguage') || 'en';
-      updateAllLanguage(storedLang);
+      // const storedLang = localStorage.getItem('preferredLanguage') || 'en';
+      // applyHomeTranslations(); // This will be handled by the languageChanged event
     })
     .catch((err) => console.error('Error fetching muted.html:', err));
 }
 
-function updateAllLanguage(lang) {
-  if (!window.translations || !window.translations[lang]) {
-    console.warn(`Translations for '${lang}' not found. Check language.js.`);
-    return;
-  }
-  const t = window.translations[lang];
+function applyHomeTranslations() {
+  // No lang parameter needed, getTranslation uses window.currentTranslations
+  console.log('home.js: Applying translations.');
   const elementTranslations = {
     '.chatbot-subtitle': 'eyesEars',
     '#good-history': 'goodHistory',
@@ -94,29 +94,35 @@ function updateAllLanguage(lang) {
   };
   for (const [selector, key] of Object.entries(elementTranslations)) {
     const el = document.querySelector(selector);
-    if (el) el.textContent = t[key];
+    if (el) el.textContent = getTranslation(key, el.textContent); // Fallback to existing text
   }
   const geoInfoTextEl = document.getElementById('geoInfoText');
   if (geoInfoTextEl) {
     geoInfoTextEl.textContent =
-      t.geoInfoPopupText ||
-      "Location data helps us understand usage and improve Alan. Your IP address provides an approximate country/city on first load. You can optionally provide more precise GPS data using the 'Check Location' button. This data is handled as per our privacy guidelines.";
+      getTranslation('geoInfoPopupText', "Location data helps us understand usage and improve Alan. Your IP address provides an approximate country/city on first load. You can optionally provide more precise GPS data using the 'Check Location' button. This data is handled as per our privacy guidelines.");
   }
-  showGreeting();
+  showGreeting(); // This will now use getTranslation internally
   const mutedButtonTranslations = {
     '#images .text-part': 'images',
     '#help .text-part': 'help',
     '#screenshot .text-part': 'screenshot',
     '#refer .text-part': 'refer',
-    '#refer-popup': 'comingSoon',
+    // '#refer-popup': 'comingSoon', // This seems to be an ID for a popup, not text content directly
   };
   for (const [selector, key] of Object.entries(mutedButtonTranslations)) {
     const el = document.querySelector(selector);
-    if (el) el.textContent = t[key];
+    if (el) el.textContent = getTranslation(key, el.textContent);
   }
-  const boxesFrame = document.getElementById('boxesFrame');
-  if (boxesFrame && boxesFrame.contentDocument) {
-    const boxesDoc = boxesFrame.contentDocument;
+  // Refer popup text if it exists and needs translation
+  const referPopupEl = document.getElementById('refer-popup');
+  if (referPopupEl) {
+    referPopupEl.textContent = getTranslation('comingSoon', 'Coming Soon...');
+  }
+
+  // Translate marquee boxes directly in home.html
+  // const boxesFrame = document.getElementById('boxesFrame'); // No longer an iframe
+  // if (boxesFrame && boxesFrame.contentDocument) { // No longer an iframe
+    // const boxesDoc = boxesFrame.contentDocument; // No longer an iframe
     const marqueeLines = [
       'eyeMarqueeLine1',
       'eyeMarqueeLine2',
@@ -134,26 +140,27 @@ function updateAllLanguage(lang) {
       'earMarqueeLine7',
     ];
     marqueeLines.forEach((lineKey) => {
-      const elA = boxesDoc.getElementById(`${lineKey}a`);
-      if (elA) elA.textContent = t[lineKey];
-      const elB = boxesDoc.getElementById(`${lineKey}b`);
-      if (elB) elB.textContent = t[lineKey];
+      const elA = document.getElementById(`${lineKey}a`); // Select from main document
+      if (elA) elA.textContent = getTranslation(lineKey, elA.textContent);
+      const elB = document.getElementById(`${lineKey}b`); // Select from main document
+      if (elB) elB.textContent = getTranslation(lineKey, elB.textContent); // Duplicated content should also be translated if visible, or keys adjusted if only for screen readers
     });
-  }
+  // } // End of removed iframe check
 }
 
 function showGreeting() {
   const name = localStorage.getItem('name');
   const subTextEl = document.getElementById('sub-text');
-  const lang = localStorage.getItem('preferredLanguage') || 'en';
-  if (!window.translations || !window.translations[lang]) return;
-  const t = window.translations[lang];
+  // const lang = localStorage.getItem('preferredLanguage') || 'en'; // No longer needed
+  // if (!window.translations || !window.translations[lang]) return; // No longer needed
+  // const t = window.translations[lang]; // No longer needed
+  const howCanIHelpText = getTranslation('howCanIHelp', 'what can I help with?');
   if (name) {
     let firstName = name.split(' ')[0];
     firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-    subTextEl.innerText = `${firstName}, ${t.howCanIHelp}`;
+    subTextEl.innerText = `${firstName}, ${howCanIHelpText}`;
   } else {
-    subTextEl.innerText = t.howCanIHelp;
+    subTextEl.innerText = howCanIHelpText;
   }
 }
 
@@ -293,9 +300,9 @@ function togglePopup() {
 }
 
 function buildPopupContent() {
-  const lang = localStorage.getItem('preferredLanguage') || 'en';
-  if (!window.translations || !window.translations[lang]) return '';
-  const t = window.translations[lang];
+  // const lang = localStorage.getItem('preferredLanguage') || 'en'; // No longer needed
+  // if (!window.translations || !window.translations[lang]) return ''; // No longer needed
+  // const t = window.translations[lang]; // No longer needed
   const name = localStorage.getItem('name') || 'Not set';
   const role = localStorage.getItem('selectedJobRole') || 'Not set';
   const experienceValue = localStorage.getItem('selectedExperience') || 'Not set';
@@ -312,10 +319,20 @@ function buildPopupContent() {
     'Confident core knowledge': 'experienceConfidentCore',
     Expert: 'experienceExpert',
   };
-  const experience = t[experienceKeyMap[experienceValue]] || experienceValue;
+  const translatedExperience = getTranslation(experienceKeyMap[experienceValue], experienceValue);
   const now = new Date();
   const currDT = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}, ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-  return `<h2>${t.userInfoTitle || 'User Information'}</h2><p><strong>${t.userName || 'Name'}:</strong> ${name}</p><p><strong>${t.userContact || 'Contact'}:</strong> ${contactInfo}</p><p><strong>${t.userAimsPopupLabel || 'Aims'}:</strong> ${role}${roleClass ? ', ' + roleClass : ''}</p> <p><strong>${t.userExperiencePopupLabel || 'Experience'}:</strong> ${experience}</p><p id="latLongSection" style="color: grey;"><strong>${t.userLatLong || 'Lat/Long'}:</strong> ${latitude}, ${longitude}</p><p id="areaSection" style="color: grey;"><strong>${t.userArea || 'Area'}:</strong> ${area}</p><p id="countrySection" style="color: grey;"><strong>${t.userCountry || 'Country'}:</strong> ${country}, ${iso2}, ${classification}</p><p style="color: grey;"><em><strong>${t.userVersion || 'Version'}:</strong> 1.0</em></p><p style="color: grey;"><em><strong>${t.userDateTime || 'Date/Time'}:</strong> ${currDT}</em></p>`;
+  
+  return `<h2>${getTranslation('userInfoTitle', 'User Information')}</h2>
+<p><strong>${getTranslation('userName', 'Name')}:</strong> ${name}</p>
+<p><strong>${getTranslation('userContact', 'Contact')}:</strong> ${contactInfo}</p>
+<p><strong>${getTranslation('userAimsPopupLabel', 'Aims')}:</strong> ${role}${roleClass ? ', ' + roleClass : ''}</p> 
+<p><strong>${getTranslation('userExperiencePopupLabel', 'Experience')}:</strong> ${translatedExperience}</p>
+<p id="latLongSection" style="color: grey;"><strong>${getTranslation('userLatLong', 'Lat/Long')}:</strong> ${latitude}, ${longitude}</p>
+<p id="areaSection" style="color: grey;"><strong>${getTranslation('userArea', 'Area')}:</strong> ${area}</p>
+<p id="countrySection" style="color: grey;"><strong>${getTranslation('userCountry', 'Country')}:</strong> ${country}, ${iso2}, ${classification}</p>
+<p style="color: grey;"><em><strong>${getTranslation('userVersion', 'Version')}:</strong> 1.0</em></p>
+<p style="color: grey;"><em><strong>${getTranslation('userDateTime', 'Date/Time')}:</strong> ${currDT}</em></p>`;
 }
 
 function setupGeoInfoButton() {
@@ -418,10 +435,11 @@ function setupLanguageControls() {
   });
   document.addEventListener('click', () => (languageDropdown.style.display = 'none'));
   languageDropdown.querySelectorAll('li').forEach((item) => {
-    item.addEventListener('click', () => {
+    item.addEventListener('click', async () => { // Make async
       const chosenLang = item.getAttribute('data-value');
-      localStorage.setItem('preferredLanguage', chosenLang);
-      updateAllLanguage(chosenLang);
+      localStorage.setItem('preferredLanguage', chosenLang); // Explicitly set here before calling setLanguage
+      // updateAllLanguage(chosenLang); // Old direct update
+      await setLanguage(chosenLang); // New way: triggers 'languageChanged' event
       languageDropdown.style.display = 'none';
     });
   });

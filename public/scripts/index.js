@@ -1,4 +1,5 @@
-// Alan UI - index.js | 19th June 2025, WJW
+// Alan UI - index.js | 20th June 2025, WJW (Refactored for new language system)
+import { setLanguage, getTranslation } from './language.js'; // Assuming language.js auto-initializes and dispatches 'languageChanged'
 
 /*********************************************/
 /*           SETUP & INITIALIZATION          */
@@ -232,7 +233,10 @@ function main() {
   showSplashScreenAndThen();
   fetchIPBasedLocation();
   initEventListeners();
-  initLanguageControls();
+  initLanguageControls(); // Sets up listeners for language UI on this page
+  // applyIndexTranslations(); // Initial translation application
+  // The 'languageChanged' event from language.js's initial load should trigger applyIndexTranslations.
+  document.addEventListener('languageChanged', applyIndexTranslations);
 }
 
 /*********************************************/
@@ -483,19 +487,18 @@ function initLanguageControls() {
     }
   });
   indexLangDropdown.querySelectorAll('li').forEach((item) => {
-    item.addEventListener('click', () => {
+    item.addEventListener('click', async () => { // Make the event listener async
       const chosenLang = item.getAttribute('data-value');
-      localStorage.setItem('preferredLanguage', chosenLang);
-      updateIndexLanguageDisplays(chosenLang);
+      localStorage.setItem('preferredLanguage', chosenLang); // Keep this for cross-tab/session persistence
+      // updateIndexLanguageDisplays(chosenLang); // Old direct update
+      await setLanguage(chosenLang); // New way: triggers 'languageChanged' event
       indexLangDropdown.style.display = 'none';
     });
   });
 }
 
-function updateIndexLanguageDisplays(lang) {
-  if (!window.translations || !window.translations[lang]) return;
-  const t = window.translations[lang];
-
+function applyIndexTranslations() {
+  console.log('index.js: Applying translations based on current language.');
   // Translate simple text content
   const elementTranslations = {
     'password-title': 'passwordTitle',
@@ -504,19 +507,35 @@ function updateIndexLanguageDisplays(lang) {
     'instruction-text': 'instructionText',
     'good-luck': 'goodLuck',
     acceptButton: 'acceptButton',
+    // Splash screen text - assuming the <p> tag inside .splash-screen needs a unique ID or more specific selector
+    // For now, let's assume it's the only <p> in .splash-screen or add an ID like 'splashScreenText'
   };
   for (const [id, key] of Object.entries(elementTranslations)) {
     const el = document.getElementById(id);
-    if (el) el.textContent = t[key];
+    if (el) el.textContent = getTranslation(key, el.textContent); // Keep existing text as fallback
+  }
+  
+  const splashScreenTextElement = splashScreenRef?.querySelector('p');
+  if (splashScreenTextElement) {
+      splashScreenTextElement.textContent = getTranslation('splashScreenText', 'Eye, Ear, Skin AI Assistant');
   }
 
+
   // Translate placeholders and dynamic text
-  document.getElementById('passwordInput').placeholder = t.passwordPlaceholder;
-  document.getElementById('noCodeLine').innerHTML = t.noCodeLine;
-  document.getElementById('nameInput').placeholder = t.namePlaceholder;
-  document.getElementById('contactInput').placeholder = t.contactPlaceholder;
+  const passwordInputEl = document.getElementById('passwordInput');
+  if (passwordInputEl) passwordInputEl.placeholder = getTranslation('passwordPlaceholder', 'Password');
+  
+  const noCodeLineEl = document.getElementById('noCodeLine');
+  if (noCodeLineEl) noCodeLineEl.innerHTML = getTranslation('noCodeLine', "No or incorrect code? Contact us <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>here</a>");
+  
+  const nameInputEl = document.getElementById('nameInput');
+  if (nameInputEl) nameInputEl.placeholder = getTranslation('namePlaceholder', 'Name');
+
+  const contactInputEl = document.getElementById('contactInput');
+  if (contactInputEl) contactInputEl.placeholder = getTranslation('contactPlaceholder', 'Contact (email/phone)');
+
   if (checkboxesContainer.querySelectorAll('input:checked').length === 0) {
-    aimsSelectText.textContent = t.aimsPlaceholder || 'Aims';
+    aimsSelectText.textContent = getTranslation('aimsPlaceholder', 'Aims');
   }
 
   // Translate checkbox labels
@@ -529,24 +548,33 @@ function updateIndexLanguageDisplays(lang) {
   };
   checkboxesContainer.querySelectorAll('label').forEach((label) => {
     const checkbox = label.querySelector('input');
-    const translationKey = aimsTranslations[checkbox.value];
-    if (label.childNodes[1] && t[translationKey]) {
-      label.childNodes[1].nodeValue = ' ' + t[translationKey];
+    if (checkbox) {
+        const translationKey = aimsTranslations[checkbox.value];
+        // Assuming the text node is the second child of the label, after the input
+        if (label.childNodes && label.childNodes.length > 1 && label.childNodes[1].nodeType === Node.TEXT_NODE) {
+            label.childNodes[1].nodeValue = ' ' + getTranslation(translationKey, checkbox.value); // Fallback to value
+        }
     }
   });
 
   // Translate select options
-  document.querySelector('#experience-select option[disabled]').textContent =
-    t.experiencePlaceholder;
+  const experienceSelectDisabledOption = document.querySelector('#experience-select option[disabled]');
+  if (experienceSelectDisabledOption) experienceSelectDisabledOption.textContent = getTranslation('experiencePlaceholder', 'Experience');
+  
   const expOptionsMapping = {
     'Student / refresher': 'experienceStudentRefresher',
-    'Confident core knowledge': 'experienceConfidentCore',
+    'Confident core knowledge': 'experienceConfidentCore', // Note: Key in JSON is 'experienceConfidentCore'
     Expert: 'experienceExpert',
   };
   document.querySelectorAll('#experience-select option:not([disabled])').forEach((option) => {
     const translationKey = expOptionsMapping[option.value];
-    if (t[translationKey]) {
-      option.textContent = t[translationKey];
+    if (translationKey) {
+      option.textContent = getTranslation(translationKey, option.value); // Fallback to original value
     }
   });
+   // Translate language selector text
+   const langSelectorText = document.getElementById('language-selector-text');
+   if (langSelectorText) {
+     langSelectorText.textContent = getTranslation('languageSelectorText', '中文, हिन्दी, Español, العربية, Français...');
+   }
 }

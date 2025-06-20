@@ -22,49 +22,7 @@
     <link rel="manifest" href="favicons/manifest.json" />
     <link rel="stylesheet" href="styles/styles.css" />
     <script type="module" src="scripts/faviconAndMeta.js"></script>
-    <!-- Translations object embedded -->
-    <script>
-      window.translations = {
-        en: {
-          instructionsPageTitle: 'Instructions',
-          instructionsIntro: `Alan is an AI assistant for students and those who only occasionally see eye, ear or skin cases. Write or speak clearly and avoid identifying names or details. Look fully around head/face/body part and examine both eyes/ears. Good luck!`,
-          instructionsPatientPrompt: `Tell Alan about your patient's:`,
-          // These are the base texts. Detail3 will be overridden dynamically.
-          instructionsPatientDetail1: 'problem & onset',
-          instructionsPatientDetail2: 'what you see',
-          instructionsPatientDetail3: 'vision & pupils', // This is the default for Eye
-          instructionsPatientDetail4: 'age, sex, medication',
-
-          // Specific texts for patientDetail3 for Ear and Skin
-          instructionsPatientDetail3_ear_specific: 'hearing',
-          instructionsPatientDetail3_skin_specific: 'odour',
-
-          instructionsBackground_eye: '#dfe7ff',
-          instructionsBackground_ear: '#ffefd5',
-          instructionsBackground_skin: '#e0ffff',
-          instructionsUseArclight_eye: `<strong>Use Arclight:</strong> <strong><em>front, fundal reflex, back of eye.</em></strong>`,
-          instructionsUseArclight_ear: `<strong>Use Arclight:</strong> <strong><em>canal, eardrum.</em></strong>`,
-          instructionsUseArclight_skin: `<strong>Use Arclight:</strong> <strong><em>UV light, dermoscopy.</em></strong>`,
-          instructionsLabelTooLittle: 'Too little',
-          instructionsLabelJustRight: 'Just right',
-          instructionsLabelTooMuch: 'Too much',
-          instructionsTooLittle_eye: 'man red eye what?',
-          instructionsJustRight_eye: `Man 25yr, red eye 3 day. No meds or eye prob before. Pain, watering, White cornea dot. Pupils OK, Vision 6/12 6/6 other`,
-          instructionsTooMuch_eye: `This man came into clinics today. He drove into the building with a red eye, now he thinks the food he ate is affecting his eye. I see watering, red edges, you know? He wants help. Tall man, watery eyes, worried about cornea and pain. He says, "What is this?"`,
-          instructionsAdditionalQuery_eye: `Alan also answers eye teaching/learning queries: What is Iritis? How do I see the retina?`,
-          instructionsTooLittle_ear: 'child ear pain',
-          instructionsJustRight_ear:
-            'Girl 4yr, R ear pain 2 days. Fever, pulling ear. TM red, bulging. Not crying now. No discharge.',
-          instructionsTooMuch_ear: `My daughter has an earache, she was fine yesterday but today she keeps touching her right ear and she had a temperature earlier. I looked inside but I can't see anything. What do you think is wrong with her?`,
-          instructionsAdditionalQuery_ear:
-            'Alan also answers ear teaching/learning queries: What is otitis media?',
-          instructionsTooLittle_skin: 'rash on arm',
-          instructionsJustRight_skin: `Woman 30yr, itchy rash on arm 1 week. Spreading slowly. Annular lesion with central clearing. No fever, feels well.`,
-          instructionsTooMuch_skin: `I have this weird circular rash on my forearm, it started small but it's getting bigger. It doesn't hurt but it's really itchy. I haven't used any new soaps or anything. It's been there for about a week.`,
-          instructionsAdditionalQuery_skin: `Alan also answers skin teaching/learning queries: What is tinea? How to use a Woods light?`,
-        },
-      };
-    </script>
+    <!-- Translations will be loaded dynamically by language.js and page-template.js -->
     <style>
       /* --- Identical to original styles, with flexbox fix & overflow --- */
       body,
@@ -255,93 +213,76 @@
 
     <script type="module">
       import { initPage } from './scripts/page-template.js';
+      import { getTranslation } from './scripts/language.js';
 
       function applyTranslationsAndToggle() {
-        var trans;
-        var lang = localStorage.getItem('preferredLanguage') || 'en';
-        trans = window.translations && window.translations[lang];
-        if (trans) {
-          document.getElementById('pageTitle').textContent = trans.instructionsPageTitle;
-          document.getElementById('introText').innerHTML = trans.instructionsIntro;
-          document.getElementById('patientPrompt').textContent = trans.instructionsPatientPrompt;
+        // Page title is handled by initPage using getTranslation('instructionsPageTitle')
+        document.getElementById('introText').innerHTML = getTranslation('instructionsIntro', 'Default intro text.');
+        document.getElementById('patientPrompt').textContent = getTranslation('instructionsPatientPrompt', "Tell Alan about your patient's:");
 
-          // Set static details (1, 2, and 4)
-          document.getElementById('patientDetail1').innerHTML =
-            `<span class="listText">${trans.instructionsPatientDetail1}</span>`;
-          document.getElementById('patientDetail2').innerHTML =
-            `<span class="listText">${trans.instructionsPatientDetail2}</span>`;
-          document.getElementById('patientDetail4').innerHTML =
-            `<span class="listText">${trans.instructionsPatientDetail4}</span>`;
-
-          // Detail 3 will be set by toggleContent based on the current selection
-          toggleContent();
-        } else {
-          console.error('Translations not found for language:', lang);
-        }
-
-        document.querySelectorAll('input[name="option"]').forEach(function (radio) {
-          radio.addEventListener('change', toggleContent);
-        });
-
-        function toggleContent() {
-          var option = document.querySelector('input[name="option"]:checked').value;
-
-          if (!trans) {
-            console.warn('toggleContent called before translations (trans) are loaded.');
-            var lang = localStorage.getItem('preferredLanguage') || 'en';
-            trans = window.translations && window.translations[lang];
-            if (!trans) {
-              console.error('Failed to load translations in toggleContent. Aborting.');
-              return;
-            }
-          }
-
-          document.getElementById('labelTooLittle').textContent = trans.instructionsLabelTooLittle;
-          document.getElementById('labelJustRight').textContent = trans.instructionsLabelJustRight;
-          document.getElementById('labelTooMuch').textContent = trans.instructionsLabelTooMuch;
-
-          let patientDetail3Text = trans.instructionsPatientDetail3; // Default for Eye
-
-          if (option === 'eye') {
-            document.getElementById('content').style.backgroundColor =
-              trans.instructionsBackground_eye;
-            document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_eye;
-            document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_eye;
-            document.getElementById('justRight').textContent = trans.instructionsJustRight_eye;
-            document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_eye;
-            document.getElementById('additionalQuery').innerHTML =
-              trans.instructionsAdditionalQuery_eye;
-            // patientDetail3Text is already set to the default (eye version)
-          } else if (option === 'ear') {
-            document.getElementById('content').style.backgroundColor =
-              trans.instructionsBackground_ear;
-            document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_ear;
-            document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_ear;
-            document.getElementById('justRight').textContent = trans.instructionsJustRight_ear;
-            document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_ear;
-            document.getElementById('additionalQuery').innerHTML =
-              trans.instructionsAdditionalQuery_ear;
-            patientDetail3Text = trans.instructionsPatientDetail3_ear_specific; // Use specific ear text
-          } else if (option === 'skin') {
-            document.getElementById('content').style.backgroundColor =
-              trans.instructionsBackground_skin;
-            document.getElementById('useArclight').innerHTML = trans.instructionsUseArclight_skin;
-            document.getElementById('tooLittle').textContent = trans.instructionsTooLittle_skin;
-            document.getElementById('justRight').textContent = trans.instructionsJustRight_skin;
-            document.getElementById('tooMuch').textContent = trans.instructionsTooMuch_skin;
-            document.getElementById('additionalQuery').innerHTML =
-              trans.instructionsAdditionalQuery_skin;
-            patientDetail3Text = trans.instructionsPatientDetail3_skin_specific; // Use specific skin text
-          }
-
-          // Update patientDetail3 with the determined text
-          document.getElementById('patientDetail3').innerHTML =
-            `<span class="listText">${patientDetail3Text}</span>`;
-        }
+        document.getElementById('patientDetail1').innerHTML =
+          `<span class="listText">${getTranslation('instructionsPatientDetail1', 'problem & onset')}</span>`;
+        document.getElementById('patientDetail2').innerHTML =
+          `<span class="listText">${getTranslation('instructionsPatientDetail2', 'what you see')}</span>`;
+        document.getElementById('patientDetail4').innerHTML =
+          `<span class="listText">${getTranslation('instructionsPatientDetail4', 'age, sex, medication')}</span>`;
+        
+        toggleContent(); // Initial call to set content based on default checked radio
       }
 
-      // Initialize the page with its title and its specific translation/toggle function
-      initPage('Instructions', applyTranslationsAndToggle);
+      function toggleContent() {
+        var option = document.querySelector('input[name="option"]:checked').value;
+
+        document.getElementById('labelTooLittle').textContent = getTranslation('instructionsLabelTooLittle', 'Too little');
+        document.getElementById('labelJustRight').textContent = getTranslation('instructionsLabelJustRight', 'Just right');
+        document.getElementById('labelTooMuch').textContent = getTranslation('instructionsLabelTooMuch', 'Too much');
+
+        let patientDetail3TextKey = 'instructionsPatientDetail3'; // Default for Eye
+        let useArclightKey = 'instructionsUseArclight_eye';
+        let tooLittleKey = 'instructionsTooLittle_eye';
+        let justRightKey = 'instructionsJustRight_eye';
+        let tooMuchKey = 'instructionsTooMuch_eye';
+        let additionalQueryKey = 'instructionsAdditionalQuery_eye';
+        let backgroundColorKey = 'instructionsBackground_eye';
+
+
+        if (option === 'eye') {
+          // Keys are already set to eye defaults
+        } else if (option === 'ear') {
+          patientDetail3TextKey = 'instructionsPatientDetail3_ear_specific';
+          useArclightKey = 'instructionsUseArclight_ear';
+          tooLittleKey = 'instructionsTooLittle_ear';
+          justRightKey = 'instructionsJustRight_ear';
+          tooMuchKey = 'instructionsTooMuch_ear';
+          additionalQueryKey = 'instructionsAdditionalQuery_ear';
+          backgroundColorKey = 'instructionsBackground_ear';
+        } else if (option === 'skin') {
+          patientDetail3TextKey = 'instructionsPatientDetail3_skin_specific';
+          useArclightKey = 'instructionsUseArclight_skin';
+          tooLittleKey = 'instructionsTooLittle_skin';
+          justRightKey = 'instructionsJustRight_skin';
+          tooMuchKey = 'instructionsTooMuch_skin';
+          additionalQueryKey = 'instructionsAdditionalQuery_skin';
+          backgroundColorKey = 'instructionsBackground_skin';
+        }
+        
+        document.getElementById('content').style.backgroundColor = getTranslation(backgroundColorKey, '#ffffff'); // Default to white
+        document.getElementById('useArclight').innerHTML = getTranslation(useArclightKey, 'Use Arclight.');
+        document.getElementById('tooLittle').textContent = getTranslation(tooLittleKey, 'Default too little example.');
+        document.getElementById('justRight').textContent = getTranslation(justRightKey, 'Default just right example.');
+        document.getElementById('tooMuch').textContent = getTranslation(tooMuchKey, 'Default too much example.');
+        document.getElementById('additionalQuery').innerHTML = getTranslation(additionalQueryKey, 'Default additional query.');
+        
+        document.getElementById('patientDetail3').innerHTML =
+          `<span class="listText">${getTranslation(patientDetail3TextKey, 'vision & pupils')}</span>`;
+      }
+      
+      document.querySelectorAll('input[name="option"]').forEach(function (radio) {
+        radio.addEventListener('change', toggleContent);
+      });
+
+      // Initialize the page with its title key and its specific translation/toggle function
+      initPage('instructionsPageTitle', applyTranslationsAndToggle);
     </script>
   </body>
 </html>

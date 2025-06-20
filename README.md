@@ -232,6 +232,38 @@ These micro-adjustments aim for perceptual consistency across different page hea
 
 ---
 
+## Dynamic Language Loading System (June 20, 2025)
+
+The application now features a dynamic language loading system to improve performance and maintainability.
+
+- **External JSON Files**: Translations for 22 languages are stored in individual JSON files within the `public/translations/` directory (e.g., `en.json`, `es.json`).
+- **On-Demand Loading**:
+    - `public/scripts/language-loader.js` handles fetching these JSON files. It includes an in-memory cache to avoid re-fetching already loaded languages.
+    - On initial app load, only the user's preferred language (from `localStorage`) or English (default) is loaded.
+    - Other languages are fetched only when selected by the user.
+- **Core Language Module (`public/scripts/language.js`)**:
+    - This module orchestrates the language system.
+    - It imports `loadLanguage` from `language-loader.js`.
+    - Provides `setLanguage(langCode)` to change the current language. This function updates `localStorage`, fetches the new translations (via `loadLanguage`), stores them in a global `window.currentTranslations` object, and dispatches a `languageChanged` custom event.
+    - Provides `getTranslation(key, fallbackText)` for components to retrieve translated strings.
+    - Initializes the language on startup based on `localStorage` or defaults to English.
+- **Page Integration (`public/scripts/page-template.js`)**:
+    - The `initPage(pageTitleKey, applyPageSpecificTranslationsCallback)` function now uses `getTranslation` for the page title.
+    - It listens for the `languageChanged` event to re-translate the page title and call the page-specific translation callback.
+- **HTML Page Refactoring**:
+    - All HTML pages (`index.html`, `home.html`, `aboutalan.html`, `eye.html`, `ear.html`, `skin.html`, `instructions.html`, `atoms.html`, `referral.html`, `weblinks.html`) have been updated:
+        - Removed any embedded `window.translations` script blocks.
+        - Their respective JavaScript logic now imports `getTranslation` and uses it within their `applyPageSpecificTranslations` (or equivalent) functions.
+        - Calls to `initPage` now use translation keys for titles.
+- **UI Controls Updated**:
+    - Language selection UI in `public/index.html` (via `scripts/index.js`) and `public/home.html` (via `scripts/home.js`) now correctly call `setLanguage` to trigger the new system.
+- **Error Handling**: The loader includes basic fallback to English if a selected language file is not found or fails to load.
+- **Module Usage**: `public/index.html`'s main script tag (`scripts/index.js`) was updated to `type="module"` to support `import` statements.
+
+This refactor significantly improves the previous system of embedding all translations in a single large JavaScript file.
+
+---
+
 ## Keyboard Accessibility: Focus Trap
 
 A reusable focus trap system is implemented for all modals and side menus to ensure keyboard users can navigate the app efficiently.

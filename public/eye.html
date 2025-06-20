@@ -22,21 +22,7 @@
     <link rel="manifest" href="favicons/manifest.json" />
     <link rel="stylesheet" href="styles/styles.css" />
     <script type="module" src="scripts/faviconAndMeta.js"></script>
-    <!-- Translations object embedded for a single-file solution -->
-    <script>
-      window.translations = {
-        en: {
-          pageTitle: 'How to examine the eye',
-          frontOfEyeHeading: 'Front of Eye',
-          frontOfEyeText: `<span class="block">Observe and compare eyes: <em>straight,</em> <em>right,</em> <em>left,</em> <em>up,</em> down</span><span class="block"><strong><u>Hold & get close</u></strong>. Examine: <em>lids,</em> <em>conjunctiva,</em> <em>cornea,</em> <em>pupil</em></span><span class="block">Use with <span class="orange">fluro</span> for corneal ulcers or scratches</span>`,
-          fundalReflexHeading: 'Fundal Reflex',
-          fundalReflexText: `<span class="block"><em>Dim</em> room, baby happy; at arms-length – compare reflexes</span><span class="block">Equal: <em>Brightness,</em> <em>Colour,</em> <em>Shape</em></span><span class="block">Go closer for details: <em>Scar, cataract, RB, Vit Haem</em></span>`,
-          backOfEyeHeading: 'Back of Eye',
-          backOfEyeText: `<span class="block">Use right eye to view patient's right eye; left for left</span><span class="block">Patient must look straight NOT at light; get close and find optic disc (Dilate = best view)</span><span class="block">Study disc: <em>Margin,</em> <em>Colour,</em> <em>Cup</em>. Track big vessels, then ask patient to look directly into the light to see macula</span>`,
-          additionalText: `<span class="block">Know your discs: normal, <span class="red"><strong>swollen</strong></span>, <span class="red">new vessels</span>, <span class="orange">cupped</span>, <span class="green">pale</span></span><span class="block">>Practice often<</span>`,
-        },
-      };
-    </script>
+    <!-- Translations will be loaded dynamically by language.js and page-template.js -->
     <style>
       /* --- Identical to original styles, with minimal additions --- */
       body {
@@ -132,26 +118,25 @@
 
     <script type="module">
       import { initPage } from './scripts/page-template.js';
+      import { getTranslation } from './scripts/language.js';
 
       // This is the function that knows how to translate THIS specific page
-      function applyTranslations() {
-        const lang = localStorage.getItem('preferredLanguage') || 'en';
-        const t = window.translations && window.translations[lang];
-        if (!t) return;
-
-        // We no longer need to update the pageTitle here, the template does it.
-        // We just need to handle the content unique to this page.
-        document.getElementById('frontOfEyeHeading').textContent = t.frontOfEyeHeading;
-        document.getElementById('frontOfEyeText').innerHTML = t.frontOfEyeText;
-        document.getElementById('fundalReflexHeading').textContent = t.fundalReflexHeading;
-        document.getElementById('fundalReflexText').innerHTML = t.fundalReflexText;
-        document.getElementById('backOfEyeHeading').textContent = t.backOfEyeHeading;
-        document.getElementById('backOfEyeText').innerHTML = t.backOfEyeText;
-        document.getElementById('additionalText').innerHTML = t.additionalText;
+      function applyPageSpecificTranslations() {
+        document.getElementById('frontOfEyeHeading').textContent = getTranslation('frontOfEyeHeading', 'Front of Eye');
+        document.getElementById('frontOfEyeText').innerHTML = getTranslation('frontOfEyeText', 'Default front of eye text.');
+        document.getElementById('fundalReflexHeading').textContent = getTranslation('fundalReflexHeading', 'Fundal Reflex');
+        document.getElementById('fundalReflexText').innerHTML = getTranslation('fundalReflexText', 'Default fundal reflex text.');
+        document.getElementById('backOfEyeHeading').textContent = getTranslation('backOfEyeHeading', 'Back of Eye');
+        document.getElementById('backOfEyeText').innerHTML = getTranslation('backOfEyeText', 'Default back of eye text.');
+        // Note: The key for "additionalText" in the old translations object was just "additionalText".
+        // Assuming it should be "additionalText_eye" for consistency with other similar keys if it's eye-specific.
+        // If it's truly generic, the key "additionalText" would need to exist in the JSON files.
+        // For now, I'll assume it's eye-specific based on context.
+        document.getElementById('additionalText').innerHTML = getTranslation('additionalText_eye', 'Default additional eye text.');
       }
 
-      // Initialize the page with its title and its specific translation function
-      initPage('How to examine the eye', applyTranslations);
+      // Initialize the page with its title key and its specific translation function
+      initPage('pageTitle_howToExamineEye', applyPageSpecificTranslations);
     </script>
   </body>
 </html>

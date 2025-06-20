@@ -25,11 +25,18 @@
 - All recent CSP and event handler issues have been resolved.
 - Header/appbar height consistency across `home.html` and sub-pages has been achieved through targeted CSS and HTML adjustments.
 - Documentation and memory bank files are up to date reflecting these UI consistency improvements.
+- **Dynamic Language Loading System (June 20, 2025):**
+    - Implemented `public/scripts/language-loader.js` to dynamically fetch language JSON files from `public/translations/`.
+    - Refactored `public/scripts/language.js` to use the new loader, manage the current language state, and provide `setLanguage` and `getTranslation` functions.
+    - Updated `public/scripts/page-template.js` to use the new translation system for page titles and to trigger updates on language change.
+    - Refactored `public/index.html` (via `public/scripts/index.js`) and `public/home.html` (via `public/scripts/home.js`) to use the new system for their language selection UI and content translation.
+    - Refactored content pages (`aboutalan.html`, `eye.html`, `ear.html`, `skin.html`, `instructions.html`, `atoms.html`, `referral.html`, `weblinks.html`) to remove embedded translations and use the new dynamic system.
 
 ## What's Left to Build (New Tasks for "Tomorrow")
-1.  **Split Language Translations into Separate Files:**
-    *   Refactor the current translation system into individual JSON files per language (e.g., `locales/en.json`).
-    *   Implement dynamic loading of these files based on user selection.
+1.  **Finalize and Verify All Translations:**
+    *   Ensure all necessary translation keys are present in all 22 JSON language files in `public/translations/`.
+    *   Thoroughly test all pages in various languages to confirm all static and dynamic text elements are correctly translated and displayed.
+    *   Refine any remaining dynamic text updates within JavaScript files (e.g., parts of `referral.html`'s `initializeForm`) to use `getTranslation`.
 2.  **Implement PWA Service Worker for Install Prompt:**
     *   Create/correct `public/service-worker.js` to enable PWA features, focusing on the "Install app" prompt.
     *   Configure caching strategies and ensure `manifest.json` is PWA-ready.
@@ -37,7 +44,7 @@
     *   Centralize more styling into `public/styles/styles.css` from other CSS files or inline styles to improve maintainability.
 
 ## Current Status
-The AlanUI Web Chatbot is functional and stable. Recent work focused on resolving CSP/event handler issues and achieving visual consistency in header/appbar heights across different pages, particularly for `home.html` versus sub-pages, by fine-tuning CSS and HTML configurations. Documentation and memory bank files are up-to-date. The project is now poised for the next set of enhancements focusing on internationalization, PWA capabilities, and CSS organization.
+The AlanUI Web Chatbot is functional and stable. Recent work focused on resolving CSP/event handler issues, achieving visual consistency in header/appbar heights, and implementing a new dynamic language loading system using external JSON files. Core scripts (`language.js`, `page-template.js`, `index.js`, `home.js`) and all relevant HTML pages have been refactored to support this. Documentation and memory bank files are updated. The project is now poised for translation key completion/verification, PWA capabilities, and further CSS organization.
 
 ## Known Issues
 - All server logic is in a single `server.js` file, which could become unwieldy for larger projects.
