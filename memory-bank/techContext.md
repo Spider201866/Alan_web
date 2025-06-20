@@ -3,7 +3,7 @@
 # Tech Context
 
 ## Technologies Used
-- **Backend**: Node.js, Express.js
+- **Backend**: Node.js, Express.js, SQLite (via `better-sqlite3`)
 - **Frontend**: HTML, CSS, JavaScript (vanilla JS)
 - **Chatbot Integration**: Flowise (for managing chatbot agents)
 - **Large Language Model (LLM)**: Google Gemini 2.5 Flash (30k token agent, static)
@@ -31,9 +31,9 @@
 - **Project Structure**:
     - `server.js`: Main server application (ES Module), orchestrates middleware and routes.
     - `config/index.js`: Centralized configuration (paths, port, security, CSP).
-    - `routes/`: Contains `api.js` for API routes (e.g., `/api/record-info`, `/api/fetch-records`) and `web.js` for frontend page routes.
+    - `routes/`: Contains `api.js` for API routes (e.g., `/api/record-info`, `/api/fetch-records`, `/api/fetch-history`) and `web.js` for frontend page routes.
     - `middleware/`: Contains `auth.js`, `validation.js`, and `error.js` for various middleware functions.
-    - `services/`: Contains `records.js` for data interaction logic.
+    - `services/`: Contains `data-service.js` for SQLite database interaction logic (using `better-sqlite3`).
     - `generate-hash.cjs`: Script to generate password hashes (CommonJS module).
     - `eslint.config.js`: ESLint flat configuration file.
     - `public/`: Static assets (HTML, CSS, JS, images, favicons).
@@ -57,7 +57,7 @@
         - `public/translations/`: Directory containing `{langCode}.json` translation files.
         - `public/styles/styles.css`: Main centralized stylesheet for all global, component, page-specific, and utility styles.
         - `public/styles/styles_index.css`: Legacy styles primarily for `index.html` (role may diminish).
-    - `user-info.json`, `user-history.json`: JSON data files (ensured to have trailing newlines).
+    - `alan-data.db`: SQLite database file (local development, in `.gitignore`).
     - `package.json`: Defines project metadata, dependencies, and scripts (including `"type": "module"`).
     - `.prettierrc`: Prettier configuration file.
     - `.editorconfig`: EditorConfig configuration file.
@@ -66,7 +66,7 @@
     - `tests/`: Contains automated test files.
 
 ## Technical Constraints
-- **No Backend Data Storage**: The project does not involve complex backend record storage or external databases; data handling is primarily for chatbot interaction.
+- **Backend Data Storage**: User session and history data are now stored in a persistent SQLite database using `better-sqlite3`. This replaces the previous JSON file-based storage and "No Backend Data Storage" constraint. The database is `alan-data.db` locally (gitignored) and `/data/alan-data.db` in production on Railway (persistent volume).
 - **Modular Server Structure**: Server logic has been refactored from a single `server.cjs` file into a modular structure (`server.js` as entry point, with `config/`, `routes/`, `middleware/`, `services/` directories). This addresses the previous concern about a single server file.
 - **No Frontend Framework**: Frontend is intentionally built with vanilla HTML, CSS, and JavaScript. This decision aligns with the project's goal of simplicity and democratizing access, as the system is designed to remain small (one main page and a few sidebar pages) and will not grow significantly in complexity.
 - **External Chatbot Agent Dependency**: Reliance on an external Flowise agent (powered by Gemini 2.5 Flash) means the chatbot's performance and availability are dependent on these external services. The prompt engineering and maintenance for the "Alan" agent are handled within Flowise, external to this codebase.
@@ -76,6 +76,7 @@
 - `dotenv`: Loads environment variables from a `.env` file.
 - `express-rate-limit`: Middleware for rate limiting.
 - `helmet`: Security middleware for setting HTTP headers.
+- `better-sqlite3`: Library for SQLite database interaction.
 - `eslint`: JavaScript linter for code quality (v9+).
 - `@eslint/js`: Official ESLint JavaScript plugin.
 - `globals`: For defining global variables in ESLint flat config.
@@ -91,7 +92,7 @@
 - **`npm run format`**: To automatically format code using Prettier.
 - **`npm run format:check`**: To check code formatting without writing changes (used in CI/CD).
 - **`npm run lint`**: To run ESLint for code quality checks.
-- **`npm test`**: To run the full test suite (includes `format:check`).
+- **`npm test`**: To run the full test suite (includes `format:check`). (Note: API tests may need updates for the new database interaction).
 - **`npx jest tests/ui.test.js`**: To run specific UI/accessibility tests.
 - **Flowise UI/API**: For configuring and managing the "Alan" chatbot agent (external to this project's codebase).
-- **Cleanup Procedures**: Documented in `README.md` for resetting local data and test artifacts.
+- **Cleanup Procedures**: Documented in `README.md` for resetting local data (deleting `alan-data.db`) and test artifacts.

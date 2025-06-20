@@ -7,11 +7,10 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. The s
 
 ## Key Technical Decisions
 - **Static File Serving**: Express.js serves static HTML, CSS, and JavaScript files from the `public/` directory.
-- **No Backend Data Storage**: The project does not involve complex backend record storage or external databases; data handling is primarily for chatbot interaction.
+- **Backend Data Storage**: User session and history data are now stored in a persistent SQLite database (`alan-data.db` locally, `/data/alan-data.db` in production on Railway) managed by the `better-sqlite3` library via `services/data-service.js`. This replaces the previous JSON file-based storage.
 - **Rate Limiting**: `express-rate-limit` is used on server endpoints (100 requests per 15 minutes per IP) to prevent abuse.
-- **Security Headers**: `Helmet` is used in `server.js`, configured with options from `config/index.js`, to set various HTTP response headers. The Content Security Policy (CSP) is meticulously configured to allow necessary external resources (CDNs, Flowise backend, Google Fonts, IP API) while aiming for security. This includes specific directives for `scriptSrc`, `styleSrc`, `fontSrc`, `connectSrc`, and `scriptSrcAttr` (to manage inline event handlers).
+- **Security Headers**: `Helmet` is used in `server.js`, configured with options from `config/index.js`, to set various HTTP response headers. The Content Security Policy (CSP) is meticulously configured to allow necessary external resources (CDNs, Flowise backend, Google Fonts, IP API, Leaflet resources including map tiles and icons from unpkg.com and raw.githubusercontent.com) while aiming for security. This includes specific directives for `scriptSrc`, `styleSrc`, `fontSrc`, `imgSrc`, `connectSrc`, and `scriptSrcAttr`.
 - **Environment Variable Validation**: Critical environment variables (`MASTER_PASSWORD_HASH`, `PASSWORD_SALT`) are validated within `config/index.js` during application startup.
-- **JSON File Integrity**: JSON data files (`user-info.json`, `user-history.json`) are ensured to have a trailing newline character.
 - **Frontend Consistency & Performance**:
     - Shared appbar pattern (`#appBar`) and the unique main header on `home.html` (`.chatbot-header`) are styled via `public/styles/styles.css`.
     - Specific padding adjustments (e.g., `.chatbot-subtitle`) and viewport meta tag consistency are used to ensure visually consistent rendered heights for these headers across different pages and in various (emulated) viewing environments.
@@ -69,16 +68,17 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. The s
 - `server.js`: Main server entry point. Initializes Express, applies global middleware (Helmet, CORS, JSON parsing, static file serving from `config.paths.public`), sets up rate limiting, and mounts routers from `routes/api.js` and `routes/web.js`. Also incorporates 404 and global error handlers from `middleware/error.js`.
 - `config/index.js`: Manages all server configuration, including port, file paths, security settings (salt, master hash, OTPs), and CSP options. Validates critical environment variables.
 - `routes/`:
-    - `api.js`: Defines API routes (e.g., `/record-info`, `/fetch-records`, `/fetch-history`). Uses middleware from `middleware/validation.js` and `middleware/auth.js`, and services from `services/records.js`.
+    - `api.js`: Defines API routes (e.g., `/record-info`, `/fetch-records`, `/fetch-history`). Uses middleware from `middleware/validation.js` and `middleware/auth.js`, and interacts with `services/data-service.js` for database operations.
     - `web.js`: Defines routes for serving frontend HTML pages (e.g., `/`, `/view-records`).
 - `middleware/`:
     - `auth.js`: Contains `validatePassword` middleware and `hashPassword` helper.
     - `validation.js`: Contains `validateRecord` middleware.
     - `error.js`: Contains `handleErrors` async wrapper, `notFound` 404 handler, and `globalErrorHandler`.
 - `services/`:
-    - `records.js`: Contains `readJsonFile` and `appendToHistory` functions for interacting with `user-info.json` and `user-history.json`. Uses `async-mutex`. These services support the local `/api/record-info` and `/api/fetch-records` endpoints.
+    - `data-service.js`: Manages all interactions with the SQLite database (using `better-sqlite3`), including initializing the database, and providing functions to get active records, full history, and upsert records. Replaces the old `services/records.js`.
 - `public/`: Contains all frontend assets (HTML, CSS, JS, images, favicons).
     - `public/home.html`, `public/index.html`: Main landing and onboarding pages. `home.html` now uses `addEventListener` for navigation button event handling. Preload links for fonts/favicons removed.
+    - `public/view-records.html`: Displays active and historical records, now sourcing data from the SQLite database via API calls. Includes Leaflet map integration with custom red marker icons. Event handlers for map buttons are attached via JavaScript.
     - `public/404.html`: Custom page for unknown routes.
     - `public/agent1-chatbot-module.js`: Contains the core chatbot logic, responsible for interacting with the external "Alan" agent.
     - `public/page-template.js`: Provides `initPage` function for shared appbar injection and coordinates page-level translation updates.
@@ -106,7 +106,7 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. The s
     2. An Express `app` instance is created by `createApp`.
     3. Global middleware is applied by `createApp`: `Helmet` (with CSP from the provided config), CORS, `express.json()`, `express.static()`.
     4. Request is routed via `app.use('/api', apiRoutesFactory(limiter, configToUse))` or `app.use('/', webRoutesFactory(configToUse))`. The route factories receive the active configuration.
-    5. For API routes (e.g., `/api/record-info`, `/api/fetch-records`), the router returned by `apiRoutesFactory` handles the request, potentially using specific middleware like `validateRecord` or `validatePassword`. These routes use the config passed to `apiRoutesFactory` for path lookups and interact with services in `services/records.js`.
+    5. For API routes (e.g., `/api/record-info`, `/api/fetch-records`), the router returned by `apiRoutesFactory` handles the request, potentially using specific middleware like `validateRecord` or `validatePassword`. These routes now interact with `services/data-service.js` for database operations.
     6. For web routes, the router returned by `webRoutesFactory` handles serving HTML files, using the config passed to it.
     7. If no route matches, `notFound` middleware from `middleware/error.js` serves `public/404.html`.
     7. If an error occurs in a route handler (especially async ones wrapped with `handleErrors`), it's passed to `globalErrorHandler` from `middleware/error.js`.

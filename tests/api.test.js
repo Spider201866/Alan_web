@@ -7,25 +7,22 @@
  * Requires: jest, supertest
  */
 
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = 'test'; // Ensures data-service uses test-alan-data.db
 import request from 'supertest';
 import path from 'path';
 import os from 'os';
-import fs from 'fs/promises';
+import fs from 'fs/promises'; // Still needed for deleting the test DB file
 import crypto from 'crypto';
 import { jest } from '@jest/globals'; // Import jest
+import dataService from '../services/data-service.js'; // Import the new data service
+
+const testDb = dataService.db; // Get the db instance for direct manipulation
 
 // Variables to hold app instances for different test scopes
 let mainTestApp;
 let otpTestApp;
 let rateLimitTestApp; // Added for rate limiting tests
 let notFoundTestApp; // Added for 404 tests
-
-// Temporary directory for general tests
-let tempDirMain; // Renamed for clarity
-let tempDirOtp;
-let tempDirRateLimit;
-let tempDirNotFound;
 
 // Store original env vars to restore them
 let originalMasterPasswordHashAtStart;
@@ -57,45 +54,56 @@ describe('API Endpoints', () => {
       .digest('hex');
     process.env.ONE_TIME_PASSWORD_HASHES = otpHash;
 
-    tempDirMain = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-main-test-'));
-
     jest.resetModules();
     const { default: baseConfig } = await import('../config/index.js');
     const testConfig = deepCopyConfig(baseConfig);
-    testConfig.paths.userInfo = path.join(tempDirMain, 'user-info.json');
-    testConfig.paths.userHistory = path.join(tempDirMain, 'user-history.json');
+    delete testConfig.paths.userInfo;
+    delete testConfig.paths.userHistory;
     testConfig.security.otpHashes = new Set(
       (process.env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean)
     );
 
-    // Ensure files exist for tests that might read before writing
-    await fs.writeFile(testConfig.paths.userInfo, '[]\n', 'utf8');
-    await fs.writeFile(testConfig.paths.userHistory, '[]\n', 'utf8');
+    testDb.prepare('DELETE FROM history').run();
+    testDb.prepare('DELETE FROM active_record').run();
 
     const { createApp } = await import('../server.js');
     mainTestApp = createApp(testConfig);
   });
 
   afterAll(async () => {
-    if (tempDirMain) {
-      await fs.rm(tempDirMain, { recursive: true, force: true });
-    }
+    // Restore original env vars and reset modules
+    // DB closing and file deletion moved to a global afterAll
     process.env.MASTER_PASSWORD_HASH = originalMasterPasswordHashAtStart;
     process.env.PASSWORD_SALT = originalPasswordSaltAtStart;
     process.env.ONE_TIME_PASSWORD_HASHES = originalOneTimePasswordHashesAtStart;
-    jest.resetModules(); // Reset modules after all tests in this describe block
+    jest.resetModules();
+  });
+
+  beforeEach(() => {
+    testDb.prepare('DELETE FROM history').run();
+    testDb.prepare('DELETE FROM active_record').run();
   });
 
   describe('POST /record-info', () => {
-    it('should accept a valid record and write to user-info.json and user-history.json with trailing newline', async () => {
+    it('should accept a valid record and store it in the database', async () => {
       const record = {
         sessionId: 'test-session',
+        name: 'Test User',
+        role: 'Tester',
+        experience: 'Lots',
+        focus: 'Testing',
         latitude: 1.23,
         longitude: 4.56,
-        dateTime: '2025-06-16T20:00:00Z',
+        country: 'Testland',
+        iso2: 'TL',
+        classification: 'TestClass',
+        roleClassification: 'TestRoleClass',
         area: 'Test Area',
+        contactInfo: 'test@example.com',
+        version: '1.0-test',
+        selectedAgent: 'TestAgent',
+        dateTime: '2025-06-16T20:00:00Z',
       };
-      // user-history.json is already created in beforeAll for mainTestApp
       const res = await request(mainTestApp)
         .post('/api/record-info')
         .send(record)
@@ -103,20 +111,32 @@ describe('API Endpoints', () => {
       expect(res.statusCode).toBe(200);
       expect(res.text).toBe('OK');
 
-      const userInfoContent = await fs.readFile(path.join(tempDirMain, 'user-info.json'), 'utf8');
-      expect(userInfoContent.endsWith('\n')).toBe(true);
-      const userHistoryContent = await fs.readFile(
-        path.join(tempDirMain, 'user-history.json'),
-        'utf8'
-      );
-      expect(userHistoryContent.endsWith('\n')).toBe(true);
-      // Check content of history
-      const historyData = JSON.parse(userHistoryContent);
-      expect(historyData.length).toBe(1);
-      expect(historyData[0].sessionId).toBe('test-session');
+      const historyEntry = testDb
+        .prepare('SELECT * FROM history WHERE sessionId = ?')
+        .get(record.sessionId);
+      expect(historyEntry).toBeDefined();
+      expect(historyEntry.name).toBe(record.name);
+      expect(historyEntry.latitude).toBe(record.latitude);
+      expect(historyEntry.refreshCount).toBe(1);
+
+      const activeRecordEntry = testDb.prepare('SELECT * FROM active_record WHERE id = 1').get();
+      expect(activeRecordEntry).toBeDefined();
+      expect(activeRecordEntry.sessionId).toBe(record.sessionId);
+
+      const updatedRecord = {
+        ...record,
+        dateTime: '2025-06-16T20:05:00Z',
+        area: 'Updated Test Area',
+      };
+      await request(mainTestApp).post('/api/record-info').send(updatedRecord);
+      const updatedHistoryEntry = testDb
+        .prepare('SELECT * FROM history WHERE sessionId = ?')
+        .get(record.sessionId);
+      expect(updatedHistoryEntry.refreshCount).toBe(2);
+      expect(updatedHistoryEntry.area).toBe('Updated Test Area');
     });
 
-    it('should reject invalid records', async () => {
+    it('should reject invalid records (validation middleware test)', async () => {
       const record = { latitude: 'not-a-number' };
       const res = await request(mainTestApp)
         .post('/api/record-info')
@@ -133,23 +153,40 @@ describe('API Endpoints', () => {
       expect(res.statusCode).toBe(401);
     });
 
-    it('should accept valid password and return user-info.json', async () => {
+    it('should accept valid password and return the active record from DB', async () => {
       const password = 'testpass';
       const testRecord = {
-        sessionId: 'abc',
-        latitude: 1,
-        longitude: 2,
-        dateTime: 'now',
-        area: 'Test',
+        sessionId: 'active-session-123',
+        name: 'Active User',
+        role: 'Active Role',
+        experience: 'Active Exp',
+        focus: 'Active Focus',
+        latitude: 10.0,
+        longitude: 20.0,
+        country: 'Active Country',
+        iso2: 'AC',
+        classification: 'Active Class',
+        roleClassification: 'Active RoleClass',
+        area: 'Active Area',
+        contactInfo: 'active@example.com',
+        version: '2.0-active',
+        selectedAgent: 'ActiveAgent',
+        dateTime: '2025-06-20T10:00:00Z',
       };
-      // Use the path from the config that mainTestApp was created with
-      await fs.writeFile(
-        path.join(tempDirMain, 'user-info.json'),
-        JSON.stringify([testRecord], null, 2) + '\n'
-      );
+      dataService.upsertRecord(testRecord);
+
       const res = await request(mainTestApp).post('/api/fetch-records').send({ password });
       expect(res.statusCode).toBe(200);
-      expect(res.body).toEqual([testRecord]);
+      expect(res.body).toBeInstanceOf(Array);
+      expect(res.body.length).toBe(1);
+      expect(res.body[0]).toMatchObject({ ...testRecord, refreshCount: 1 });
+    });
+
+    it('should return an empty array if no active record is set', async () => {
+      const password = 'testpass';
+      const res = await request(mainTestApp).post('/api/fetch-records').send({ password });
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toEqual([]);
     });
   });
 
@@ -158,69 +195,51 @@ describe('API Endpoints', () => {
       const res = await request(mainTestApp).post('/api/fetch-history').send({ password: 'wrong' });
       expect(res.statusCode).toBe(401);
     });
-  });
-});
 
-describe('Helper Functions', () => {
-  let readJsonFile, appendToHistory;
-  let helperTempDir;
+    it('should return all records from history, ordered by dateTime DESC', async () => {
+      const password = 'testpass';
+      const record1 = { sessionId: 'hist-1', dateTime: '2025-01-01T00:00:00Z', name: 'Rec1' };
+      const record2 = { sessionId: 'hist-2', dateTime: '2025-01-02T00:00:00Z', name: 'Rec2' };
+      const record3 = { sessionId: 'hist-3', dateTime: '2025-01-01T12:00:00Z', name: 'Rec3' };
 
-  beforeAll(async () => {
-    helperTempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-helper-test-'));
-    const helpers = await import('../services/records.js');
-    readJsonFile = helpers.readJsonFile;
-    appendToHistory = helpers.appendToHistory;
-  });
+      dataService.upsertRecord(record1);
+      dataService.upsertRecord(record2);
+      dataService.upsertRecord(record3);
 
-  afterAll(async () => {
-    if (helperTempDir) {
-      await fs.rm(helperTempDir, { recursive: true, force: true });
-    }
-  });
-
-  it('readJsonFile returns [] for missing file', async () => {
-    const data = await readJsonFile(path.join(helperTempDir, 'nonexistent.json'));
-    expect(data).toEqual([]);
-  });
-
-  it('appendToHistory can be called with a record', async () => {
-    const originalWriteFile = fs.writeFile;
-    fs.writeFile = jest.fn().mockResolvedValue();
-    const record = {
-      sessionId: 'test-session-append',
-      latitude: 0,
-      longitude: 0,
-      dateTime: '2025-06-16T21:00:00Z',
-      area: 'Test Area',
-    };
-    const dummyHistoryPath = path.join(helperTempDir, 'dummy-history.json');
-    await expect(appendToHistory(record, dummyHistoryPath)).resolves.not.toThrow();
-    expect(fs.writeFile).toHaveBeenCalled();
-    fs.writeFile = originalWriteFile;
+      const res = await request(mainTestApp).post('/api/fetch-history').send({ password });
+      expect(res.statusCode).toBe(200);
+      expect(res.body.length).toBe(3);
+      expect(res.body[0].sessionId).toBe('hist-2');
+      expect(res.body[1].sessionId).toBe('hist-3');
+      expect(res.body[2].sessionId).toBe('hist-1');
+    });
   });
 });
 
 describe('Rate Limiting', () => {
   beforeAll(async () => {
-    // Setup for rateLimitTestApp
-    tempDirRateLimit = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-ratelimit-test-'));
     jest.resetModules();
     const { default: baseConfig } = await import('../config/index.js');
     const testConfig = deepCopyConfig(baseConfig);
-    testConfig.paths.userInfo = path.join(tempDirRateLimit, 'user-info.json');
-    testConfig.paths.userHistory = path.join(tempDirRateLimit, 'user-history.json');
+    delete testConfig.paths.userInfo;
+    delete testConfig.paths.userHistory;
 
-    // Ensure files exist
-    await fs.writeFile(testConfig.paths.userInfo, '[]\n', 'utf8');
-    await fs.writeFile(testConfig.paths.userHistory, '[]\n', 'utf8');
+    // Ensure testDb is available and tables are clean for this suite
+    if (testDb && testDb.open) {
+      testDb.prepare('DELETE FROM history').run();
+      testDb.prepare('DELETE FROM active_record').run();
+    } else {
+      // This case should ideally not happen if testDb is managed globally
+      console.warn(
+        'Rate Limiting: testDb was closed or undefined, re-importing dataService might be needed or check test order'
+      );
+    }
 
     const { createApp } = await import('../server.js');
     rateLimitTestApp = createApp(testConfig);
   });
   afterAll(async () => {
-    if (tempDirRateLimit) {
-      await fs.rm(tempDirRateLimit, { recursive: true, force: true });
-    }
+    // No specific DB cleanup here if relying on the main test DB's lifecycle
   });
 
   it('should return 429 Too Many Requests after exceeding the rate limit or 200 if not hit', async () => {
@@ -235,7 +254,7 @@ describe('Rate Limiting', () => {
     let lastRes;
     let rateLimitHit = false;
     for (let i = 0; i < 101; i++) {
-      lastRes = await request(rateLimitTestApp) // Use rateLimitTestApp
+      lastRes = await request(rateLimitTestApp)
         .post('/api/record-info')
         .send(record)
         .set('Accept', 'application/json');
@@ -275,29 +294,27 @@ describe('One-Time Password Logic', () => {
       .digest('hex');
     process.env.ONE_TIME_PASSWORD_HASHES = otpHashForThisTest;
 
-    tempDirOtp = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-otp-test-'));
     jest.resetModules();
     const { default: baseConfig } = await import('../config/index.js');
     const otpTestConfig = deepCopyConfig(baseConfig);
-    otpTestConfig.paths.userInfo = path.join(tempDirOtp, 'user-info.json');
-    otpTestConfig.paths.userHistory = path.join(tempDirOtp, 'user-history.json');
+    delete otpTestConfig.paths.userInfo;
+    delete otpTestConfig.paths.userHistory;
     otpTestConfig.security.otpHashes = new Set(
       (process.env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean)
     );
 
-    await fs.writeFile(otpTestConfig.paths.userInfo, '[]\n', 'utf8');
-    await fs.writeFile(otpTestConfig.paths.userHistory, '[]\n', 'utf8');
+    if (testDb && testDb.open) {
+      testDb.prepare('DELETE FROM history').run();
+      testDb.prepare('DELETE FROM active_record').run();
+    } else {
+      console.warn('OTP Logic: testDb was closed or undefined.');
+    }
 
     const { createApp } = await import('../server.js');
     otpTestApp = createApp(otpTestConfig);
   });
 
   afterAll(async () => {
-    if (tempDirOtp) {
-      await fs.rm(tempDirOtp, { recursive: true, force: true });
-    }
-    // Restore original env vars by relying on the outermost afterAll, or do it here if necessary
-    // For safety, explicitly restore env vars used by this suite
     process.env.PASSWORD_SALT = originalPasswordSaltAtStart;
     process.env.MASTER_PASSWORD_HASH = originalMasterPasswordHashAtStart;
     process.env.ONE_TIME_PASSWORD_HASHES = originalOneTimePasswordHashesAtStart;
@@ -311,13 +328,9 @@ describe('One-Time Password Logic', () => {
       longitude: 20,
       dateTime: '2025-06-16T23:00:00Z',
       area: 'OTP Test',
-      refreshCount: 1,
     };
-    // Use the path from otpTestConfig
-    await fs.writeFile(
-      path.join(tempDirOtp, 'user-info.json'),
-      JSON.stringify([testRecord], null, 2) + '\n'
-    );
+    dataService.upsertRecord(testRecord);
+
     const res = await request(otpTestApp)
       .post('/api/fetch-records')
       .send({ password: otpForThisTest });
@@ -325,7 +338,8 @@ describe('One-Time Password Logic', () => {
       console.log('DEBUG OTP TEST RESPONSE (valid):', res.statusCode, res.body, res.text);
     }
     expect(res.statusCode).toBe(200);
-    expect(res.body).toEqual([testRecord]);
+    expect(res.body.length).toBe(1);
+    expect(res.body[0]).toMatchObject({ ...testRecord, refreshCount: 1 });
   });
 
   it('should reject reuse of a one-time password for /fetch-records', async () => {
@@ -360,21 +374,17 @@ describe('One-Time Password Logic', () => {
 
 describe('404 Not Found Handler', () => {
   beforeAll(async () => {
-    tempDirNotFound = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-404-test-'));
     jest.resetModules();
     const { default: baseConfig } = await import('../config/index.js');
     const testConfig = deepCopyConfig(baseConfig);
-    // 404 doesn't strictly need data paths, but good practice for isolation
-    testConfig.paths.userInfo = path.join(tempDirNotFound, 'user-info.json');
-    testConfig.paths.userHistory = path.join(tempDirNotFound, 'user-history.json');
+    delete testConfig.paths.userInfo;
+    delete testConfig.paths.userHistory;
 
     const { createApp } = await import('../server.js');
     notFoundTestApp = createApp(testConfig);
   });
   afterAll(async () => {
-    if (tempDirNotFound) {
-      await fs.rm(tempDirNotFound, { recursive: true, force: true });
-    }
+    // No specific cleanup needed for this suite
   });
 
   it('should return 404 for unknown routes', async () => {
@@ -382,6 +392,35 @@ describe('404 Not Found Handler', () => {
     expect(res.statusCode).toBe(404);
     expect(res.headers['content-type']).toMatch(/text\/html/);
   });
+});
+
+// Global afterAll to close DB and delete file once all tests in this file are done
+afterAll(async () => {
+  if (testDb && testDb.open) {
+    testDb.close();
+    console.log('Global afterAll: Test database connection closed.');
+  }
+  const dbPath = path.resolve(process.cwd(), 'test-alan-data.db');
+  try {
+    await fs.unlink(dbPath);
+    console.log('Global afterAll: Test database file test-alan-data.db deleted.');
+  } catch (err) {
+    if (err.code === 'EBUSY') {
+      console.warn(
+        `Global afterAll: test-alan-data.db was busy. This might happen if a previous test suite's app instance didn't shut down cleanly or still held a lock. Retrying deletion...`
+      );
+      // Simple retry logic, could be more sophisticated
+      await new Promise((resolve) => setTimeout(resolve, 100)); // Wait a bit
+      try {
+        await fs.unlink(dbPath);
+        console.log('Global afterAll: Test database file test-alan-data.db deleted after retry.');
+      } catch (retryErr) {
+        console.error('Global afterAll: Error deleting test database file after retry:', retryErr);
+      }
+    } else if (err.code !== 'ENOENT') {
+      console.error('Global afterAll: Error deleting test database file:', err);
+    }
+  }
 });
 
 // TODO: Add tests for file corruption and additional edge cases.

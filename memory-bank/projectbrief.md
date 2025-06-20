@@ -24,11 +24,10 @@ To provide a web-based chatbot for users, especially in Low and Middle-Income Co
 
 ## Out of Scope
 - No user registration or account management.
-- No external database integration (data is primarily static or handled by the chatbot logic).
-- No complex backend record storage (the focus is on the chatbot interaction).
 - The development of the core AI/LLM model itself is out of scope; the project integrates with an existing advanced LLM (Google Gemini 2.5 Flash via Flowise).
 
 ## Current Status
+- User session and history data are now stored in a persistent SQLite database using `better-sqlite3`. This replaces the previous file-based storage.
 - Static frontend files are served.
 - Frontend pages utilize a shared appbar pattern for consistent navigation and layout.
 - A reusable focus trap system is implemented for modals and side menus, enhancing keyboard accessibility.

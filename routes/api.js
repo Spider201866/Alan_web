@@ -7,7 +7,8 @@ import { validatePassword } from '../middleware/auth.js'; // This will use its o
 // import { readJsonFile, appendToHistory } from '../services/records.js'; // Old service
 import dataService from '../services/data-service.js'; // New service
 
-export default function apiRoutes(rateLimiter, config) { // config parameter might not be needed by these routes anymore
+export default function apiRoutes(rateLimiter, config) {
+  // config parameter might not be needed by these routes anymore
   // Added config parameter
   const router = express.Router();
 
@@ -16,7 +17,7 @@ export default function apiRoutes(rateLimiter, config) { // config parameter mig
     try {
       const record = { ...req.body }; // refreshCount is handled by DB
       if (!record.sessionId) record.sessionId = `fallback-${Date.now()}`;
-      
+
       dataService.upsertRecord(record);
       res.send('OK');
     } catch (err) {

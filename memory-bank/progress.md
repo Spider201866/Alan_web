@@ -9,18 +9,24 @@
     - Configuration is centralized in `config/index.js`.
     - Routes are split into `routes/api.js` and `routes/web.js`.
     - Middleware functions are organized in `middleware/auth.js`, `middleware/validation.js`, and `middleware/error.js`.
-    - Data service functions are in `services/records.js`.
+    - Data service functions for SQLite interaction are in `services/data-service.js` (using `better-sqlite3`). The old `services/records.js` and JSON data files have been removed.
     - The `package.json` start script now correctly uses `node server.js`.
     - The old `server.cjs` file has been deleted.
+- **Persistent Data Storage (June 20, 2025):**
+    - Successfully migrated backend data storage from JSON files to an SQLite database using `better-sqlite3`.
+    - `services/data-service.js` handles all database operations.
+    - API routes in `routes/api.js` now use the new data service.
+    - `.gitignore` updated for database files.
+    - Logic added to `services/data-service.js` to attempt creation of `/data` directory in production (for Railway).
 - The server successfully starts (`node server.js`) and serves static files from the `public/` directory, including a custom 404 page for unknown routes (now handled by `middleware/error.js` and `routes/web.js`).
 - Server endpoints are protected by `express-rate-limit` (configured in `server.js`).
-- Security headers are applied using `helmet`, with a meticulously configured Content Security Policy (CSP) sourced from `config/index.js` and applied in `server.js`. This CSP correctly allows all necessary external resources.
+- Security headers are applied using `helmet`, with a meticulously configured Content Security Policy (CSP) sourced from `config/index.js` and applied in `server.js`. This CSP correctly allows all necessary external resources, including for Leaflet maps (scripts, styles, tiles, and marker icons).
 - Critical environment variables (`MASTER_PASSWORD_HASH`, `PASSWORD_SALT`) are validated at startup (now within `config/index.js`).
 - **Build and Linting Process (June 20, 2025):**
     - ESLint configuration migrated to `eslint.config.js` for ESLint v9+.
     - `package.json` updated with `"type": "module"`; utility scripts like `generate-hash.js` renamed to `.cjs` extension. The main server `server.js` is now an ES Module.
     - `npm run lint` passes with 0 errors (minor acceptable warnings for prefixed unused variables).
-    - `npm test` (including Prettier checks and translation consistency check) passes successfully.
+    - `npm test` (including Prettier checks and translation consistency check) passes successfully. (Note: API tests in `tests/api.test.js` will need updating for the SQLite backend).
     - Old `.eslintrc.js` file deleted.
 - **HTML Accessibility & Cleanup (June 20, 2025):**
     - Deleted the `img#condition-image` element from `public/home.html` as it was deemed unnecessary.
@@ -29,7 +35,9 @@
     - Verified that all relevant HTML pages have appropriate `<meta name="description">` tags.
 - **Script Loading Optimization (June 20, 2025):**
     - Ensured all external JavaScripts in HTML files consistently use the `defer` attribute to prevent render-blocking and improve loading performance.
-- JSON data files (`user-info.json`, `user-history.json`) are written with a trailing newline.
+- **View Records Page Functionality (June 20, 2025):**
+    - `public/view-records.html` correctly fetches and displays data from the new SQLite backend.
+    - Map functionality (Leaflet) is working, including display of red marker pins, after CSP updates and JavaScript fixes for event handling and library loading order.
 - Frontend pages utilize a shared appbar pattern (`#appBar` on sub-pages) and a distinct main header (`.chatbot-header` on `home.html`). Both are styled via `public/styles/styles.css` with specific adjustments (padding, font declarations, viewport meta tags) to ensure visually consistent rendered heights across different pages and in various (emulated) viewing environments.
 - `public/referral.html` now correctly links to `public/styles/styles.css` and has its local appbar styles removed.
 - The viewport meta tag in `public/home.html` was updated (removed `user-scalable=no`) for rendering consistency.
@@ -72,9 +80,8 @@
 1.  **Implement PWA Service Worker for Install Prompt:**
     *   Create/correct `public/service-worker.js` to enable PWA features, focusing on the "Install app" prompt.
     *   Configure caching strategies and ensure `manifest.json` is PWA-ready.
-2.  **Refine Data Storage and Legacy API (Future Consideration):**
-    *   **Security**: Investigate moving data files (`user-info.json`, `user-history.json`) written by the application outside the webroot (e.g., to a dedicated data directory like `../alan_data/`).
-    *   **Deprecate/Refactor Legacy API**: Develop a plan to phase out or refactor the legacy record-keeping API routes (now in `routes/api.js` and using `services/records.js`), considering more robust storage (e.g., SQLite or cloud service) to replace flat files and `async-mutex`.
+2.  **Update API Tests for SQLite Backend**:
+    *   Modify `tests/api.test.js` to correctly set up and tear down test data using the new SQLite database (`test-alan-data.db`) via `services/data-service.js`. This will ensure backend tests remain valid after the data storage migration.
 3.  **Explore Component-Based Architecture (Future Consideration):**
     *   **Goal**: Improve modularity, reusability, and maintainability of frontend code.
     *   **Options to Consider**:
@@ -91,7 +98,11 @@ The AlanUI Web Chatbot is functional and stable. Recent work focused on:
     *   Successfully modularized the server from `server.cjs` to `server.js` (using an app factory pattern) and multiple supporting ES modules in `config/`, `routes/`, `middleware/`, and `services/`.
     *   Updated `package.json` start script to `node server.js` and test script to use `NODE_OPTIONS=--experimental-vm-modules` for Jest.
     *   Refactored `tests/api.test.js`, `tests/ui.test.js`, and `tests/chatbot.test.js` to correctly use ES module syntax, import Jest globals, and leverage the app factory for isolated test configurations.
-    *   All 47 tests across 3 suites are now passing.
+    *   All 47 tests across 3 suites are now passing. (Note: API tests will need updating for SQLite).
+- **Persistent Data Storage Migration (June 20, 2025):**
+    *   Successfully migrated backend data storage from JSON files to SQLite using `better-sqlite3`.
+    *   Updated `services/data-service.js`, `routes/api.js`, CSP in `config/index.js`, and `public/view-records.html` (including map functionality and pin color).
+    *   Addressed deployment issues on Railway related to directory creation for the database.
 - **Fixing the build and linting pipeline**: Migrated to ESLint v9+ with `eslint.config.js`, updated `package.json` for ES modules, renamed utility CommonJS files to `.cjs` (server is now ES Module `server.js`), and resolved all linting errors. `npm test` and `npm run lint` now pass.
 - **Minor HTML hygiene, accessibility, and performance improvements** (image deletion, removed inline styles, removed stale comment, verified meta descriptions, ensured consistent script deferral).
 - **All translations finalized and verified.**
@@ -100,23 +111,24 @@ Core scripts and HTML pages have been refactored to support these enhancements. 
 
 ## Known Issues
 - The server logic has been refactored out of a single file, addressing the previous concern. The new modular structure should be more maintainable.
+- API tests in `tests/api.test.js` need to be updated to work with the new SQLite backend.
 - Reliance on external Flowise services and the "Alan" agent means the chatbot's performance and availability are dependent on these external components. (Note: The prompt engineering and maintenance of the "Alan" agent are external to this codebase and will be ignored for now as per user feedback.)
 
 ## Evolution of Project Decisions
 - The project's core purpose evolved to be a web chatbot for health information, moving away from a "secure record server" concept.
+- **Data Persistence (June 20, 2025):** Migrated from JSON file storage to a persistent SQLite database using `better-sqlite3` to improve data integrity, enable persistent storage on platforms like Railway (using volumes), and simplify data management. This addresses a previous "out of scope" item.
 - Key decision to integrate with Flowise to manage the "Alan" chatbot agent, which is powered by Google Gemini 2.5 Flash (a static LLM). This allows the "Alan" agent to incorporate advanced AI capabilities (role, logic, memory, security) via its prompt, while keeping the core codebase focused on the interface. (Note: The prompt engineering and agent maintenance are external to this codebase and will be ignored for now as per user feedback.)
 - Recent decisions (June 2025) focused on improving user experience, security, and maintainability:
     - Implemented shared appbar and centralized styling for UI consistency and maintainability.
     - Introduced focus trap for enhanced keyboard accessibility, reflecting a commitment to inclusive design.
     - Integrated `express-rate-limit` to bolster server security against common attack vectors.
-    - Added `helmet` for comprehensive security headers and configured CSP to allow all necessary resources.
+    - Added `helmet` for comprehensive security headers and configured CSP to allow all necessary resources (including for Leaflet maps).
     - Expanded automated testing to cover new features and enforce accessibility standards, ensuring quality and reliability, including pre-test formatting and linting hooks.
     - Maintained separate CSS files (`styles.css` for shared UI, `styles_index.css` for specific pages) for better organization.
     - Added `.editorconfig` for consistent code style across editors.
     - Switched from `body-parser` to `express.json()` for efficiency.
     - Cleaned up debug `console.log` statements.
     - Validated critical environment variables at startup.
-    - Ensured JSON files have trailing newlines.
     - Implemented a custom 404 page for better user experience on unknown routes.
     - Improved API error handling on the frontend to provide clear user feedback.
     - Added `defer` attribute to external scripts and preloaded favicons for performance optimization.
@@ -124,7 +136,7 @@ Core scripts and HTML pages have been refactored to support these enhancements. 
     - Specified Node.js version for consistent development environments.
     - Removed duplicate `html2canvas` script.
     - Noted that the manual image compression process (ref `compress_and_convert_images_instructions.txt`) is currently low priority due to the limited number of project images and their current state.
-- The decision to exclude complex backend features like user registration, account management, and external database integration is intentional, aimed at keeping the project simple and democratizing its eventual open-source release. This design choice emphasizes the interface's role in providing accessible health information, with the "secret sauce" of the AI agent being managed externally.
+- The decision to exclude complex backend features like user registration and account management is intentional, aimed at keeping the project simple and democratizing its eventual open-source release. This design choice emphasizes the interface's role in providing accessible health information, with the "secret sauce" of the AI agent being managed externally.
 - Browser caching of CSP headers and server process state were identified as significant challenges during development, requiring forceful server restarts (e.g., `taskkill /F /IM node.exe /T ; node server.js`) and meticulous browser cache/service worker clearing (including Incognito/Private windows and inspecting raw HTTP headers) to ensure changes to CSP (now in `config/index.js` and applied by `server.js`) were correctly applied and received by the browser.
 - Refactoring inline event handlers to `addEventListener` proved to be a key solution for `script-src-attr 'none'` errors, making the frontend more robust against restrictive CSPs.
 - **ESLint v9 Migration**: Successfully migrated to `eslint.config.js` (flat config). Ensured project uses ES modules by default (`"type": "module"` in `package.json`). The main server `server.js` is an ES module, and utility CommonJS files (like `generate-hash.cjs`) use the `.cjs` extension. Integrated `eslint-plugin-jest` for test file linting.

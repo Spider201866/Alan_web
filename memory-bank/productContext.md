@@ -30,7 +30,7 @@ The AlanUI Web Chatbot was created to provide accessible and relevant health inf
 - Minimal configuration required for deployment and operation, with clear environment variable setup instructions.
 
 ## Security and Privacy
-- The project focuses on providing information and does not handle sensitive user records or authentication.
+- The project focuses on providing information. While it does not handle user authentication or highly sensitive Personal Identifiable Information (PII), it now stores user interaction/session data (like name, role, experience, location if provided, and interaction metadata) in a persistent SQLite database for history and context purposes.
 - Server endpoints are protected by `express-rate-limit` to prevent excessive or abusive requests (100 requests per 15 minutes per IP).
-- Content Security Policy (CSP) is enforced via Helmet to mitigate XSS and other injection attacks, whitelisting necessary external resources.
+- Content Security Policy (CSP) is enforced via Helmet to mitigate XSS and other injection attacks, whitelisting necessary external resources (including for Leaflet maps).
 - Frontend accessibility ensures sensitive content (e.g., duplicated marquee content) is hidden from screen readers where appropriate, and interactive elements have proper `aria-label` attributes.

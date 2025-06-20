@@ -42,7 +42,13 @@ const cspOptions = {
         "'unsafe-inline'",
       ],
       fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
-      imgSrc: ["'self'", 'data:'],
+      imgSrc: [
+        "'self'",
+        'data:',
+        'https://*.tile.openstreetmap.org',
+        'https://unpkg.com',
+        'https://raw.githubusercontent.com',
+      ], // Added for Leaflet map tiles & custom red icons
       connectSrc: [
         "'self'",
         'https://alan.up.railway.app',

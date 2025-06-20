@@ -50,9 +50,9 @@ This project uses [Prettier](https://prettier.io/) for consistent code formattin
 ## Security
 
 - **Rate Limiting:** [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) is configured in `server.js` (via the `createApp` factory) and applied to API routes to protect specific API endpoints. Each IP is limited to 100 requests per 15 minutes.
-- **Security Headers:** [Helmet](https://helmetjs.github.io/) is used in `server.js` (via the `createApp` factory), with Content Security Policy (CSP) options defined in `config/index.js`. This enhances security against common web vulnerabilities. The CSP is configured to allow necessary external resources and inline scripts/styles where appropriate. `X-Content-Type-Options: nosniff` header is also enabled.
+- **Security Headers:** [Helmet](https://helmetjs.github.io/) is used in `server.js` (via the `createApp` factory), with Content Security Policy (CSP) options defined in `config/index.js`. This enhances security against common web vulnerabilities. The CSP is configured to allow necessary external resources (including for Leaflet maps) and inline scripts/styles where appropriate. `X-Content-Type-Options: nosniff` header is also enabled.
 - **Environment Variable Validation:** Critical environment variables (`MASTER_PASSWORD_HASH`, `PASSWORD_SALT`) are validated at server startup within `config/index.js`.
-- **JSON File Integrity:** JSON data files (`user-info.json`, `user-history.json`) are ensured to have a trailing newline character for improved compatibility with various tools.
+- **Data Persistence:** User session and history data are now stored in an SQLite database (`alan-data.db` locally, `/data/alan-data.db` in production on Railway) managed by `better-sqlite3`. The old JSON file-based storage (`user-info.json`, `user-history.json`) has been removed.
 - **Robots.txt:** A `robots.txt` file is provided in the `public/` directory to control search engine crawling behavior.
 - **Sitemap.xml:** A `sitemap.xml` file is provided in the `public/` directory to help search engines discover and crawl important pages.
 
@@ -96,8 +96,7 @@ The project is organized as follows. For a complete list of all files, see `fold
 ├── README.md
 ├── reset-locally-from-github.md
 ├── server.js (Main application entry point, ES Module, uses app factory pattern)
-├── user-history.json
-├── user-info.json
+├── alan-data.db (SQLite database file, created locally if not present. In .gitignore)
 ├── config/
 │   └── index.js (Centralized configuration, including paths and CSP)
 ├── memory-bank/
@@ -173,7 +172,7 @@ The project is organized as follows. For a complete list of all files, see `fold
 │   ├── api.js
 │   └── web.js
 ├── services/
-│   └── records.js
+│   └── data-service.js (Manages SQLite database interactions)
 ├── tests/
 │   ├── .gitkeep
 │   ├── api.test.js
@@ -346,9 +345,12 @@ These tests use [Jest](https://jestjs.io/) and [jsdom](https://github.com/jsdom/
 
 To reset local data or clean up test files:
 
-- **Resetting User Data:** To clear `user-info.json` and `user-history.json` (used by the legacy record server), you can simply delete these files from the project root. They will be recreated as empty files on the next server startup or data submission.
+- **Resetting User Data:** User data is now stored in an SQLite database.
+    - **Locally:** Delete `alan-data.db` from the project root. It will be recreated on the next server startup.
+    - **Test Environment:** Delete `test-alan-data.db` from the project root if it persists after tests.
+    - **Production (Railway):** Data is stored on a persistent volume (`/data/alan-data.db`). Resetting this would typically involve accessing the volume directly or implementing a specific API endpoint for data clearing (not currently implemented).
 - **Resetting One-Time Passwords:** One-time passwords are managed in the `.env` file. To reset them, modify the `ONE_TIME_PASSWORD_HASHES` variable in your `.env` file.
-- **Cleaning Test Artifacts:** Automated tests are designed to clean up after themselves. If any temporary test files persist, they are typically located in `tests/temp/` and can be safely deleted.
+- **Cleaning Test Artifacts:** Automated tests should ideally clean up `test-alan-data.db`. If any other temporary test files persist, they are typically located in `tests/temp/` and can be safely deleted.
 
 ---
 
@@ -416,8 +418,9 @@ This combination of server-side CSP configuration (now in `config/index.js`), HT
 ## API Endpoint Usage
 
 - **Local API Endpoints**: The application primarily uses its own backend API endpoints, prefixed with `/api/`.
-    - `/api/record-info`: Used for submitting user onboarding data and subsequent updates from the home page. Client-side calls in `public/scripts/home-data.js` and `public/scripts/auth-flow.js` target this local endpoint. (Note: This replaces previous usage of an external `https://alan.up.railway.app/record-info` URL, which was found to be unavailable).
-    - `/api/fetch-records`: Used for password verification. Client-side calls in `public/scripts/auth-flow.js` target this local endpoint.
+    - `/api/record-info`: Used for submitting user onboarding data and subsequent updates from the home page. Data is now persisted to the SQLite database. Client-side calls in `public/scripts/home-data.js` and `public/scripts/auth-flow.js` target this local endpoint.
+    - `/api/fetch-records`: Used for password verification and fetching the active record from the SQLite database. Client-side calls in `public/scripts/auth-flow.js` and `public/view-records.html` target this local endpoint.
+    - `/api/fetch-history`: Used for fetching all historical records from the SQLite database. Client-side calls in `public/view-records.html` target this local endpoint.
 - Other external APIs are used for specific functionalities:
     - `https://ipapi.co/json/`: For IP-based geolocation.
     - `https://api.bigdatacloud.net/data/reverse-geocode-client`: For reverse geocoding.
