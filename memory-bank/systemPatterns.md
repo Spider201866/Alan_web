@@ -20,6 +20,7 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. It fo
     - Local styles from individual HTML pages (inline or `<style>` blocks) have been centralized into `public/styles/styles.css`.
     - Common styling for exam content pages (eye, ear, skin) is handled by the `.exam-content-container` class and its descendant selectors in `styles.css`.
     - Utility classes (colors, layout helpers like `.block`) are grouped in `styles.css`.
+    - **Dynamic Language Loading**: Translations are stored in individual JSON files (`public/translations/`) and loaded on demand, with caching.
 - **Accessibility**: Implementation of focus traps for modals/menus, `aria-hidden` for duplicated marquee content, `aria-label` for icon-only buttons, and "skip to content" links.
     - **Event Handling**: Inline event handlers (e.g., `onclick`) in HTML are being refactored to use `element.addEventListener()` in JavaScript (as done in `public/home.html`) for better CSP compatibility and modern practices.
 - **Automated Testing & Code Quality**: Comprehensive test suite covering UI and accessibility, with pre-test formatting and linting hooks. ESLint is configured for code quality.

@@ -237,7 +237,7 @@ These micro-adjustments aim for perceptual consistency across different page hea
 
 The application now features a dynamic language loading system to improve performance and maintainability.
 
-- **External JSON Files**: Translations for 22 languages are stored in individual JSON files within the `public/translations/` directory (e.g., `en.json`, `es.json`).
+- **External JSON Files**: Translations for 22 languages are stored in individual JSON files within the `public/translations/` directory (e.g., `en.json`, `es.json`, `cy.json`).
 - **On-Demand Loading**:
     - `public/scripts/language-loader.js` handles fetching these JSON files. It includes an in-memory cache to avoid re-fetching already loaded languages.
     - On initial app load, only the user's preferred language (from `localStorage`) or English (default) is loaded.

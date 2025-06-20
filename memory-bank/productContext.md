@@ -15,6 +15,7 @@ The AlanUI Web Chatbot was created to provide accessible and relevant health inf
 - Users interact with the chatbot via a static frontend interface.
 - The chatbot leverages a Flowise agent powered by Google Gemini 2.5 Flash (a 30k token LLM) to process user queries related to eye, skin, and ear health. This agent incorporates advanced role, logic, memory, and security features within its prompt to provide relevant and intelligent information.
 - Frontend pages utilize a shared appbar pattern (`public/page-template.js` and `public/styles.css`) for consistent navigation and layout.
+- The application supports dynamic language loading for 22 languages, with translations stored in external JSON files and loaded on demand.
 - Modals and side menus implement a focus trap system (`public/focus-trap.js`) to ensure keyboard accessibility.
 - Server endpoints are protected by `express-rate-limit` to prevent excessive or abusive requests.
 - A custom 404 page is served for unknown routes, providing a better user experience.

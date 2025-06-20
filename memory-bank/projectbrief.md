@@ -42,3 +42,4 @@ To provide a web-based chatbot for users, especially in Low and Middle-Income Co
 - API error handling has been improved for user-facing feedback.
 - A custom 404 page is implemented for unknown routes.
 - Favicons are implemented; problematic preload links were removed to resolve browser errors, standard browser loading mechanisms for favicons are in effect.
+- The application now features a dynamic language loading system, with translations stored in external JSON files and loaded on demand.

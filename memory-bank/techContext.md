@@ -20,6 +20,7 @@
 - **UI Consistency**:
     - Centralized CSS (`public/styles/styles.css`) for all shared elements, page-specific layouts, and utility classes. Local styles from HTML pages have been moved here. Common patterns like exam page content use shared classes (e.g., `.exam-content-container`).
     - Fine-tuned padding (e.g., `.chatbot-subtitle`) and font properties (e.g., `.back-arrow` with `!important`) to achieve visually consistent rendered heights in specific emulation environments.
+    - **Dynamic Language Loading**: Translations are stored in individual JSON files (`public/translations/`) and loaded on demand, with caching.
 - **Error Handling**: Custom 404 page, graceful API error handling.
 - **Event Handling**: Refactoring inline event handlers (e.g., `onclick`) to use `element.addEventListener()` in JavaScript for improved CSP compatibility and modern practices (e.g., in `public/home.html`).
 

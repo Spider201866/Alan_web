@@ -47,17 +47,7 @@
 - **CSS Centralization and Refinements (June 20, 2025):** All local and inline styles from `aboutalan.html`, `home.html`, `atoms.html`, `ear.html`, `eye.html`, `instructions.html`, `skin.html`, and `weblinks.html` have been successfully moved to `public/styles/styles.css`. Common styles for exam pages were consolidated using the `.exam-content-container` class. Utility classes were grouped. The "How to use" button text visibility on `home.html` (styled with yellow background and black text) and the `lang.jpg` 404 error were resolved. Spacing for the ">Practice often<" line on exam pages was adjusted using the `.practice-often-spacing` class with `margin-top: 30px;`. Empty/commented page-specific style sections in `styles.css` were cleaned up.
 
 ## What's Left to Build (New Tasks for "Tomorrow")
-1.  **Finalize and Verify All Translations (Ongoing):**
-    *   Ensure all necessary translation keys are present and accurately translated in all 22 JSON language files in `public/translations/` (currently, some contain placeholders like "(ARABIC: ...)").
-    *   Thoroughly test all pages in various languages.
-    *   Refine any remaining dynamic text updates within JavaScript files.
-    *   *Future Enhancement Suggestion:* Develop a script to automatically compare `en.json` with other language files to identify missing keys.
-    *   *Future Enhancement Suggestion:* Consider implementing a system to log missing translation keys to a service in a production environment.
-2.  **Translation System Robustness (DONE - June 20, 2025):**
-    *   Error handling in `language.js`'s `setLanguage` function was improved to prevent infinite loops if `en.json` fails to load.
-3.  **CSS Refactoring (Centralization into `styles.css`) (DONE - June 20, 2025):**
-    *   Centralized styling into `public/styles/styles.css` from individual HTML pages. Common exam page styles consolidated. Utility classes grouped. Further internal conciseness of `styles.css` can be a future low-priority task.
-4.  **Implement Conditional Logging Wrapper:**
+1.  **Implement Conditional Logging Wrapper:**
     *   **Goal**: Reduce console noise in production while retaining `warn` and `error` logs.
     *   **Method**:
         *   Create `public/scripts/log.js` with a wrapper around `console` methods.
@@ -66,17 +56,28 @@
         *   In development, all `log.*` methods will map directly to `console.*`.
         *   Include `log.js` in `index.html` and `home.html` before other scripts.
         *   Refactor existing `console.*` calls in client-side JavaScript files to use `log.*` equivalents.
-5.  **Refine Data Storage and Legacy API (Future Consideration):**
+2.  **Refine Data Storage and Legacy API (Future Consideration):**
     *   **Security**: Investigate moving data files (`user-info.json`, `user-history.json`) written by the application outside the webroot (e.g., to a dedicated data directory like `../alan_data/`).
     *   **Deprecate/Refactor Legacy API**: Develop a plan to phase out or refactor the legacy record-keeping API routes in `server.cjs`, considering more robust storage (e.g., SQLite or cloud service) to replace flat files and `async-mutex`.
-6.  **Explore Component-Based Architecture (Future Consideration):**
+3.  **Explore Component-Based Architecture (Future Consideration):**
     *   **Goal**: Improve modularity, reusability, and maintainability of frontend code.
     *   **Options to Consider**:
         *   **Native Web Components**: Refactor reusable UI pieces (e.g., Muted Buttons bar, Side Menu) into native Web Components.
         *   **Lightweight Framework**: Evaluate a lightweight framework like Svelte.
-7.  **Implement PWA Service Worker for Install Prompt:**
+4.  **Implement PWA Service Worker for Install Prompt:**
     *   Create/correct `public/service-worker.js` to enable PWA features, focusing on the "Install app" prompt.
     *   Configure caching strategies and ensure `manifest.json` is PWA-ready.
+
+## Current Status
+The AlanUI Web Chatbot is functional and stable. Recent work focused on:
+- Resolving CSP/event handler issues.
+- Achieving visual consistency in header/appbar heights.
+- Implementing a new dynamic language loading system using external JSON files.
+- Centralizing all page-specific CSS into `public/styles/styles.css` and making targeted consolidations.
+- **Fixing the build and linting pipeline**: Migrated to ESLint v9+ with `eslint.config.js`, updated `package.json` for ES modules, renamed CommonJS files to `.cjs`, and resolved all linting errors. `npm test` and `npm run lint` now pass.
+- **Minor HTML hygiene, accessibility, and performance improvements** (image deletion, removed inline styles, removed stale comment, verified meta descriptions, ensured consistent script deferral).
+- **All translations finalized and verified.**
+Core scripts and HTML pages have been refactored to support these enhancements. Documentation and memory bank files are updated. The project is now poised for PWA capabilities and conditional logging.
 
 ## Current Status
 The AlanUI Web Chatbot is functional and stable. Recent work focused on:
