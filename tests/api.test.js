@@ -1,4 +1,4 @@
-/* Alan UI - api.test.js | 19th June 2025, WJW */
+/* Alan UI - api.test.js | 20th June 2025, WJW */ // Updated date
 
 /* eslint-env jest */
 /**
@@ -8,30 +8,39 @@
  */
 
 process.env.NODE_ENV = 'test';
-const request = require('supertest');
+import request from 'supertest';
+import path from 'path';
+import os from 'os';
+import fs from 'fs/promises';
+import crypto from 'crypto';
+import { jest } from '@jest/globals'; // Import jest
 
-const path = require('path');
-const os = require('os');
-const fs = require('fs').promises;
-let app, readJsonFile, appendToHistory;
-let tempDir;
-let originalJoin;
+// Variables to hold app instances for different test scopes
+let mainTestApp;
+let otpTestApp;
+let rateLimitTestApp; // Added for rate limiting tests
+let notFoundTestApp; // Added for 404 tests
+
+// Temporary directory for general tests
+let tempDirMain; // Renamed for clarity
+let tempDirOtp;
+let tempDirRateLimit;
+let tempDirNotFound;
+
+// Store original env vars to restore them
+let originalMasterPasswordHashAtStart;
+let originalPasswordSaltAtStart;
+let originalOneTimePasswordHashesAtStart;
+
+// Helper to create a deep copy of the config
+const deepCopyConfig = (config) => JSON.parse(JSON.stringify(config));
 
 describe('API Endpoints', () => {
-  // Use a temp directory for test data
-
-  let originalMasterPasswordHashAtStart;
-  let originalPasswordSaltAtStart;
-  let originalOneTimePasswordHashesAtStart;
-
   beforeAll(async () => {
-    // Store original environment variables
     originalMasterPasswordHashAtStart = process.env.MASTER_PASSWORD_HASH;
     originalPasswordSaltAtStart = process.env.PASSWORD_SALT;
     originalOneTimePasswordHashesAtStart = process.env.ONE_TIME_PASSWORD_HASHES;
 
-    // Set up a valid password hash and salt for the main test suite
-    const crypto = require('crypto');
     const password = 'testpass';
     const salt = 'testsalt';
     process.env.PASSWORD_SALT = salt;
@@ -48,30 +57,33 @@ describe('API Endpoints', () => {
       .digest('hex');
     process.env.ONE_TIME_PASSWORD_HASHES = otpHash;
 
-    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-test-'));
-    // Patch path.join in server.js to redirect data files to tempDir
-    originalJoin = path.join;
-    path.join = (...args) => {
-      if (args[1] === 'user-info.json' || args[1] === 'user-history.json') {
-        return originalJoin(tempDir, args[1]);
-      }
-      return originalJoin(...args);
-    };
+    tempDirMain = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-main-test-'));
 
-    // Now require the app and helpers
-    ({ app, readJsonFile, appendToHistory } = require('../server.cjs')); // Updated to .cjs
+    jest.resetModules();
+    const { default: baseConfig } = await import('../config/index.js');
+    const testConfig = deepCopyConfig(baseConfig);
+    testConfig.paths.userInfo = path.join(tempDirMain, 'user-info.json');
+    testConfig.paths.userHistory = path.join(tempDirMain, 'user-history.json');
+    testConfig.security.otpHashes = new Set(
+      (process.env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean)
+    );
+
+    // Ensure files exist for tests that might read before writing
+    await fs.writeFile(testConfig.paths.userInfo, '[]\n', 'utf8');
+    await fs.writeFile(testConfig.paths.userHistory, '[]\n', 'utf8');
+
+    const { createApp } = await import('../server.js');
+    mainTestApp = createApp(testConfig);
   });
 
   afterAll(async () => {
-    // Restore path.join
-    path.join = originalJoin;
-    // Clean up tempDir
-    await fs.rm(tempDir, { recursive: true, force: true });
-
-    // Restore original environment variables after all tests in this file
+    if (tempDirMain) {
+      await fs.rm(tempDirMain, { recursive: true, force: true });
+    }
     process.env.MASTER_PASSWORD_HASH = originalMasterPasswordHashAtStart;
     process.env.PASSWORD_SALT = originalPasswordSaltAtStart;
     process.env.ONE_TIME_PASSWORD_HASHES = originalOneTimePasswordHashesAtStart;
+    jest.resetModules(); // Reset modules after all tests in this describe block
   });
 
   describe('POST /record-info', () => {
@@ -83,26 +95,31 @@ describe('API Endpoints', () => {
         dateTime: '2025-06-16T20:00:00Z',
         area: 'Test Area',
       };
-      const res = await request(app)
-        .post('/record-info')
+      // user-history.json is already created in beforeAll for mainTestApp
+      const res = await request(mainTestApp)
+        .post('/api/record-info')
         .send(record)
         .set('Accept', 'application/json');
       expect(res.statusCode).toBe(200);
       expect(res.text).toBe('OK');
 
-      // Verify user-info.json has trailing newline
-      const userInfoContent = await fs.readFile(path.join(tempDir, 'user-info.json'), 'utf8');
+      const userInfoContent = await fs.readFile(path.join(tempDirMain, 'user-info.json'), 'utf8');
       expect(userInfoContent.endsWith('\n')).toBe(true);
-
-      // Verify user-history.json has trailing newline
-      const userHistoryContent = await fs.readFile(path.join(tempDir, 'user-history.json'), 'utf8');
+      const userHistoryContent = await fs.readFile(
+        path.join(tempDirMain, 'user-history.json'),
+        'utf8'
+      );
       expect(userHistoryContent.endsWith('\n')).toBe(true);
+      // Check content of history
+      const historyData = JSON.parse(userHistoryContent);
+      expect(historyData.length).toBe(1);
+      expect(historyData[0].sessionId).toBe('test-session');
     });
 
     it('should reject invalid records', async () => {
       const record = { latitude: 'not-a-number' };
-      const res = await request(app)
-        .post('/record-info')
+      const res = await request(mainTestApp)
+        .post('/api/record-info')
         .send(record)
         .set('Accept', 'application/json');
       expect(res.statusCode).toBe(400);
@@ -112,14 +129,12 @@ describe('API Endpoints', () => {
 
   describe('POST /fetch-records', () => {
     it('should reject requests with invalid password', async () => {
-      const res = await request(app).post('/fetch-records').send({ password: 'wrong' });
+      const res = await request(mainTestApp).post('/api/fetch-records').send({ password: 'wrong' });
       expect(res.statusCode).toBe(401);
     });
 
     it('should accept valid password and return user-info.json', async () => {
-      // Use the password set in beforeAll
       const password = 'testpass';
-      // Write test user-info.json
       const testRecord = {
         sessionId: 'abc',
         latitude: 1,
@@ -127,11 +142,12 @@ describe('API Endpoints', () => {
         dateTime: 'now',
         area: 'Test',
       };
+      // Use the path from the config that mainTestApp was created with
       await fs.writeFile(
-        path.join(tempDir, 'user-info.json'),
-        JSON.stringify([testRecord], null, 2) + '\n' // Ensure test data also has newline
+        path.join(tempDirMain, 'user-info.json'),
+        JSON.stringify([testRecord], null, 2) + '\n'
       );
-      const res = await request(app).post('/fetch-records').send({ password });
+      const res = await request(mainTestApp).post('/api/fetch-records').send({ password });
       expect(res.statusCode).toBe(200);
       expect(res.body).toEqual([testRecord]);
     });
@@ -139,23 +155,37 @@ describe('API Endpoints', () => {
 
   describe('POST /fetch-history', () => {
     it('should require a valid password', async () => {
-      const res = await request(app).post('/fetch-history').send({ password: 'wrong' });
+      const res = await request(mainTestApp).post('/api/fetch-history').send({ password: 'wrong' });
       expect(res.statusCode).toBe(401);
     });
-    // Add more tests as above
   });
 });
 
 describe('Helper Functions', () => {
+  let readJsonFile, appendToHistory;
+  let helperTempDir;
+
+  beforeAll(async () => {
+    helperTempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-helper-test-'));
+    const helpers = await import('../services/records.js');
+    readJsonFile = helpers.readJsonFile;
+    appendToHistory = helpers.appendToHistory;
+  });
+
+  afterAll(async () => {
+    if (helperTempDir) {
+      await fs.rm(helperTempDir, { recursive: true, force: true });
+    }
+  });
+
   it('readJsonFile returns [] for missing file', async () => {
-    const data = await readJsonFile('nonexistent.json');
+    const data = await readJsonFile(path.join(helperTempDir, 'nonexistent.json'));
     expect(data).toEqual([]);
   });
 
   it('appendToHistory can be called with a record', async () => {
-    // Mock fs.writeFile to avoid actual file writes
-    const originalWriteFile = require('fs').promises.writeFile;
-    require('fs').promises.writeFile = jest.fn().mockResolvedValue();
+    const originalWriteFile = fs.writeFile;
+    fs.writeFile = jest.fn().mockResolvedValue();
     const record = {
       sessionId: 'test-session-append',
       latitude: 0,
@@ -163,17 +193,38 @@ describe('Helper Functions', () => {
       dateTime: '2025-06-16T21:00:00Z',
       area: 'Test Area',
     };
-    await expect(appendToHistory(record)).resolves.not.toThrow();
-    // Restore original writeFile
-    require('fs').promises.writeFile = originalWriteFile;
+    const dummyHistoryPath = path.join(helperTempDir, 'dummy-history.json');
+    await expect(appendToHistory(record, dummyHistoryPath)).resolves.not.toThrow();
+    expect(fs.writeFile).toHaveBeenCalled();
+    fs.writeFile = originalWriteFile;
   });
 });
 
 describe('Rate Limiting', () => {
+  beforeAll(async () => {
+    // Setup for rateLimitTestApp
+    tempDirRateLimit = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-ratelimit-test-'));
+    jest.resetModules();
+    const { default: baseConfig } = await import('../config/index.js');
+    const testConfig = deepCopyConfig(baseConfig);
+    testConfig.paths.userInfo = path.join(tempDirRateLimit, 'user-info.json');
+    testConfig.paths.userHistory = path.join(tempDirRateLimit, 'user-history.json');
+
+    // Ensure files exist
+    await fs.writeFile(testConfig.paths.userInfo, '[]\n', 'utf8');
+    await fs.writeFile(testConfig.paths.userHistory, '[]\n', 'utf8');
+
+    const { createApp } = await import('../server.js');
+    rateLimitTestApp = createApp(testConfig);
+  });
+  afterAll(async () => {
+    if (tempDirRateLimit) {
+      await fs.rm(tempDirRateLimit, { recursive: true, force: true });
+    }
+  });
+
   it('should return 429 Too Many Requests after exceeding the rate limit or 200 if not hit', async () => {
-    expect.hasAssertions(); // Declare that assertions are expected
-    // The default limit is 100 requests per 15 minutes per IP.
-    // We'll send 101 requests.
+    expect.hasAssertions();
     const record = {
       sessionId: 'ratelimit-test',
       latitude: 0,
@@ -184,8 +235,8 @@ describe('Rate Limiting', () => {
     let lastRes;
     let rateLimitHit = false;
     for (let i = 0; i < 101; i++) {
-      lastRes = await request(app)
-        .post('/record-info')
+      lastRes = await request(rateLimitTestApp) // Use rateLimitTestApp
+        .post('/api/record-info')
         .send(record)
         .set('Accept', 'application/json');
       if (lastRes.statusCode === 429) {
@@ -193,68 +244,64 @@ describe('Rate Limiting', () => {
         break;
       }
       if (lastRes.statusCode !== 200) {
-        // If any request is not 200 before limit, break
         break;
       }
     }
-
-    // The final status code must be either 200 or 429.
-    /* eslint-disable jest/no-conditional-expect */
-    // The number of assertions and their nature varies based on whether the rate limit is hit.
-    // This test structure is intentional to cover both scenarios.
     if (rateLimitHit) {
-      expect(lastRes.statusCode).toBe(429); // Explicitly assert 429 if hit
+      expect(lastRes.statusCode).toBe(429);
       expect(lastRes.text).toMatch(/Too many requests/i);
     } else {
-      // If rate limit was not hit, the loop completed or broke due to a non-200/non-429 status.
-      // We expect the status to be 200 if no rate limit was hit and no other error occurred during the loop.
       expect(lastRes.statusCode).toBe(200);
       console.log(
         'Rate limit was not triggered (all 101 requests were 200 OK or loop broke on non-429). This might be expected in some environments.'
       );
     }
-    /* eslint-enable jest/no-conditional-expect */
   });
 });
 
-// One-Time Password Logic tests must run in a fully isolated environment
 describe('One-Time Password Logic', () => {
-  const crypto = require('crypto');
-  const otp = 'onetimetest';
-  const salt = 'testsalt';
-  const otpHash = crypto
+  const otpForThisTest = 'specific-otp-for-test';
+  const saltForThisTest = 'specific-salt-for-otp-test';
+  const otpHashForThisTest = crypto
     .createHash('sha256')
-    .update(otp + salt)
+    .update(otpForThisTest + saltForThisTest)
     .digest('hex');
-  let otpTempDir;
-  let otpApp;
 
   beforeAll(async () => {
-    process.env.PASSWORD_SALT = salt;
+    process.env.PASSWORD_SALT = saltForThisTest;
     process.env.MASTER_PASSWORD_HASH = crypto
       .createHash('sha256')
-      .update('testpass' + salt)
+      .update('masterpassfortest' + saltForThisTest)
       .digest('hex');
-    process.env.ONE_TIME_PASSWORD_HASHES = otpHash;
+    process.env.ONE_TIME_PASSWORD_HASHES = otpHashForThisTest;
 
-    otpTempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-otp-test-'));
-    // Patch path.join in server.js to redirect data files to otpTempDir
-    const originalJoin = path.join;
-    path.join = (...args) => {
-      if (args[1] === 'user-info.json' || args[1] === 'user-history.json') {
-        return originalJoin(otpTempDir, args[1]);
-      }
-      return originalJoin(...args);
-    };
-
-    // Clear the module cache to get a fresh instance of server.js
+    tempDirOtp = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-otp-test-'));
     jest.resetModules();
-    ({ app: otpApp } = require('../server.cjs')); // Updated to .cjs
+    const { default: baseConfig } = await import('../config/index.js');
+    const otpTestConfig = deepCopyConfig(baseConfig);
+    otpTestConfig.paths.userInfo = path.join(tempDirOtp, 'user-info.json');
+    otpTestConfig.paths.userHistory = path.join(tempDirOtp, 'user-history.json');
+    otpTestConfig.security.otpHashes = new Set(
+      (process.env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean)
+    );
+
+    await fs.writeFile(otpTestConfig.paths.userInfo, '[]\n', 'utf8');
+    await fs.writeFile(otpTestConfig.paths.userHistory, '[]\n', 'utf8');
+
+    const { createApp } = await import('../server.js');
+    otpTestApp = createApp(otpTestConfig);
   });
 
   afterAll(async () => {
-    // Clean up otpTempDir
-    await fs.rm(otpTempDir, { recursive: true, force: true });
+    if (tempDirOtp) {
+      await fs.rm(tempDirOtp, { recursive: true, force: true });
+    }
+    // Restore original env vars by relying on the outermost afterAll, or do it here if necessary
+    // For safety, explicitly restore env vars used by this suite
+    process.env.PASSWORD_SALT = originalPasswordSaltAtStart;
+    process.env.MASTER_PASSWORD_HASH = originalMasterPasswordHashAtStart;
+    process.env.ONE_TIME_PASSWORD_HASHES = originalOneTimePasswordHashesAtStart;
+    jest.resetModules();
   });
 
   it('should accept a valid one-time password for /fetch-records', async () => {
@@ -266,54 +313,74 @@ describe('One-Time Password Logic', () => {
       area: 'OTP Test',
       refreshCount: 1,
     };
-    // Ensure otpTempDir exists before writing
-    await fs.mkdir(otpTempDir, { recursive: true });
-    // Remove any existing user-info.json to avoid test pollution
-    try {
-      await fs.unlink(path.join(otpTempDir, 'user-info.json'));
-    } catch (_e) {
-      // Prefix unused variable with underscore
-      // Ignore if file does not exist
-    }
+    // Use the path from otpTestConfig
     await fs.writeFile(
-      path.join(otpTempDir, 'user-info.json'),
+      path.join(tempDirOtp, 'user-info.json'),
       JSON.stringify([testRecord], null, 2) + '\n'
     );
-    const res = await request(otpApp).post('/fetch-records').send({ password: otp });
-    if (res.statusCode !== 200 || JSON.stringify(res.body) !== JSON.stringify([testRecord])) {
-      // Log the actual response for debugging
-      console.log('DEBUG OTP TEST RESPONSE:', res.statusCode, res.body);
+    const res = await request(otpTestApp)
+      .post('/api/fetch-records')
+      .send({ password: otpForThisTest });
+    if (res.statusCode !== 200) {
+      console.log('DEBUG OTP TEST RESPONSE (valid):', res.statusCode, res.body, res.text);
     }
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual([testRecord]);
   });
 
   it('should reject reuse of a one-time password for /fetch-records', async () => {
-    const res = await request(otpApp).post('/fetch-records').send({ password: otp });
+    const res = await request(otpTestApp)
+      .post('/api/fetch-records')
+      .send({ password: otpForThisTest });
+    if (res.statusCode !== 401) {
+      console.log('DEBUG OTP TEST RESPONSE (reuse):', res.statusCode, res.body, res.text);
+    }
     expect(res.statusCode).toBe(401);
   });
 
   it('should reject invalid one-time password', async () => {
-    const res = await request(otpApp).post('/fetch-records').send({ password: 'invalidotp' });
+    const res = await request(otpTestApp)
+      .post('/api/fetch-records')
+      .send({ password: 'invalidotp' });
     expect(res.statusCode).toBe(401);
   });
 
   it('should reject empty one-time password', async () => {
-    const res = await request(otpApp).post('/fetch-records').send({ password: '' });
-    expect(res.statusCode).toBe(401);
+    const res = await request(otpTestApp).post('/api/fetch-records').send({ password: '' });
+    expect(res.statusCode).toBe(400);
+    expect(res.text).toBe('Password is required');
   });
 
-  it('should reject malformed one-time password', async () => {
-    const res = await request(otpApp).post('/fetch-records').send({ password: null });
-    expect(res.statusCode).toBe(401);
+  it('should reject malformed one-time password (e.g. null)', async () => {
+    const res = await request(otpTestApp).post('/api/fetch-records').send({ password: null });
+    expect(res.statusCode).toBe(400);
+    expect(res.text).toBe('Password is required');
   });
 });
 
 describe('404 Not Found Handler', () => {
+  beforeAll(async () => {
+    tempDirNotFound = await fs.mkdtemp(path.join(os.tmpdir(), 'alanui-404-test-'));
+    jest.resetModules();
+    const { default: baseConfig } = await import('../config/index.js');
+    const testConfig = deepCopyConfig(baseConfig);
+    // 404 doesn't strictly need data paths, but good practice for isolation
+    testConfig.paths.userInfo = path.join(tempDirNotFound, 'user-info.json');
+    testConfig.paths.userHistory = path.join(tempDirNotFound, 'user-history.json');
+
+    const { createApp } = await import('../server.js');
+    notFoundTestApp = createApp(testConfig);
+  });
+  afterAll(async () => {
+    if (tempDirNotFound) {
+      await fs.rm(tempDirNotFound, { recursive: true, force: true });
+    }
+  });
+
   it('should return 404 for unknown routes', async () => {
-    const res = await request(app).get('/non-existent-route');
+    const res = await request(notFoundTestApp).get('/non-existent-route');
     expect(res.statusCode).toBe(404);
-    expect(res.headers['content-type']).toMatch(/text\/html/); // Expecting HTML for 404 page
+    expect(res.headers['content-type']).toMatch(/text\/html/);
   });
 });
 

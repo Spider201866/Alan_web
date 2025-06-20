@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "node server.cjs",
-    "test": "npm run format:check && npm run check-translations && jest --verbose",
+    "start": "node server.js",
+    "test": "npm run format:check && npm run check-translations && set NODE_OPTIONS=--experimental-vm-modules&& jest --verbose",
     "format": "prettier --write \"**/*.{js,json,css,html}\"",
     "format:check": "prettier --check \"**/*.{js,json,css,html}\"",
     "lint": "eslint \"**/*.js\"",

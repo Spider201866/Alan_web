@@ -7,7 +7,8 @@
  * Requires: jest, jsdom
  */
 
-const { JSDOM } = require('jsdom');
+import { JSDOM } from 'jsdom';
+import { jest } from '@jest/globals'; // Import jest
 
 describe('Alan Webapp UI/UX', () => {
   let dom;

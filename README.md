@@ -13,7 +13,7 @@ To set up the project and run the tests:
    npm install
    ```
 
-2. Run the test suite:
+2. Run the test suite (this command now includes `NODE_OPTIONS=--experimental-vm-modules` for ES Module support in Jest, as defined in `package.json`):
    ```bash
    npm test
    ```
@@ -49,9 +49,9 @@ This project uses [Prettier](https://prettier.io/) for consistent code formattin
 
 ## Security
 
-- **Rate Limiting:** [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) is used in `server.js` to protect specific API endpoints from excessive or abusive requests. Each IP is limited to 100 requests per 15 minutes, helping prevent basic denial-of-service attacks and abuse.
-- **Security Headers:** [Helmet](https://helmetjs.github.io/) is used in `server.js` to set various HTTP response headers, enhancing the application's security against common web vulnerabilities like XSS, clickjacking, and insecure connections. The Content Security Policy (CSP) is configured to allow necessary external resources (CDNs, Flowise backend, IP API) and inline scripts/styles. `X-Content-Type-Options: nosniff` header is also enabled to prevent MIME-sniffing.
-- **Environment Variable Validation:** Critical environment variables (`MASTER_PASSWORD_HASH`, `PASSWORD_SALT`) are validated at server startup in `server.js` to prevent the server from running with missing credentials.
+- **Rate Limiting:** [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) is configured in `server.js` (via the `createApp` factory) and applied to API routes to protect specific API endpoints. Each IP is limited to 100 requests per 15 minutes.
+- **Security Headers:** [Helmet](https://helmetjs.github.io/) is used in `server.js` (via the `createApp` factory), with Content Security Policy (CSP) options defined in `config/index.js`. This enhances security against common web vulnerabilities. The CSP is configured to allow necessary external resources and inline scripts/styles where appropriate. `X-Content-Type-Options: nosniff` header is also enabled.
+- **Environment Variable Validation:** Critical environment variables (`MASTER_PASSWORD_HASH`, `PASSWORD_SALT`) are validated at server startup within `config/index.js`.
 - **JSON File Integrity:** JSON data files (`user-info.json`, `user-history.json`) are ensured to have a trailing newline character for improved compatibility with various tools.
 - **Robots.txt:** A `robots.txt` file is provided in the `public/` directory to control search engine crawling behavior.
 - **Sitemap.xml:** A `sitemap.xml` file is provided in the `public/` directory to help search engines discover and crawl important pages.
@@ -84,7 +84,6 @@ The project is organized as follows. For a complete list of all files, see `fold
 ├── .editorconfig
 ├── .env
 ├── .env.example
-├── .eslintrc.js (Note: This file has been replaced by eslint.config.js for ESLint v9+)
 ├── .gitignore
 ├── .nvmrc
 ├── .prettierrc
@@ -93,12 +92,14 @@ The project is organized as follows. For a complete list of all files, see `fold
 ├── folderList.txt
 ├── generate-hash.cjs (Note: Renamed from .js, now a CommonJS module)
 ├── package-lock.json
-├── package.json (Note: Includes "type": "module")
+├── package.json (Note: Includes "type": "module", start script uses `node server.js`)
 ├── README.md
 ├── reset-locally-from-github.md
-├── server.cjs (Note: Renamed from .js, now a CommonJS module)
+├── server.js (Main application entry point, ES Module, uses app factory pattern)
 ├── user-history.json
 ├── user-info.json
+├── config/
+│   └── index.js (Centralized configuration, including paths and CSP)
 ├── memory-bank/
 │   ├── activeContext.md
 │   ├── productContext.md
@@ -106,6 +107,10 @@ The project is organized as follows. For a complete list of all files, see `fold
 │   ├── projectbrief.md
 │   ├── systemPatterns.md
 │   └── techContext.md
+├── middleware/
+│   ├── auth.js
+│   ├── error.js
+│   └── validation.js
 ├── public/
 │   ├── 404.html
 │   ├── aboutalan.html
@@ -150,12 +155,19 @@ The project is organized as follows. For a complete list of all files, see `fold
 │   │   ├── home.js
 │   │   ├── index.js
 │   │   ├── language.js
+│   │   ├── language-loader.js (Handles dynamic loading of translation JSON files)
 │   │   ├── listener-module.js
 │   │   ├── muted.js
 │   │   └── page-template.js
 │   └── styles/
 │       ├── styles_index.css
 │       └── styles.css
+│   └── translations/ (Contains individual language JSON files e.g. en.json, es.json)
+├── routes/
+│   ├── api.js
+│   └── web.js
+├── services/
+│   └── records.js
 ├── tests/
 │   ├── .gitkeep
 │   ├── api.test.js
@@ -341,39 +353,42 @@ To reset local data or clean up test files:
 **Symptoms:**
 - Browser console shows errors like "Refused to load the font '<URL>' because it violates the following Content Security Policy directive: 'font-src 'self' <URL>'" or "Refused to connect to '<URL>' because it violates ... 'connect-src'..."
 - These errors persist even after:
-    - Verifying `server.js` has the correct CSP directives (e.g., `fontSrc` includes `https://fonts.gstatic.com` and `https://cdnjs.cloudflare.com`, `connectSrc` includes necessary API endpoints).
+    - Verifying `config/index.js` (for `cspOptions`) and `server.js` (for applying Helmet) have the correct CSP directives.
     - Removing problematic `<link rel="preload">` tags from HTML files (`index.html`, `home.html`).
-    - Forcefully restarting the Node.js server.
+    - Forcefully restarting the Node.js server (`node server.js`).
     - Performing thorough browser cache clearing (including unregistering service workers, clearing all site data for `localhost:3000`, disabling cache in network tools).
     - Testing in a new Incognito/Private window or even a different browser.
 
 **Diagnosis & Resolution:**
-This highly persistent issue indicates that the browser is receiving an outdated CSP header, or the Node.js server process is not serving the latest version of `server.js` despite restarts.
+This highly persistent issue indicates that the browser is receiving an outdated CSP header, or the Node.js server process is not serving the latest version of the configuration/server code despite restarts.
 
-1.  **Verify Server-Side CSP**: The `server.js` file should have the correct domains in the `helmet` configuration. For example:
+1.  **Verify Server-Side CSP**: The `cspOptions` object in `config/index.js` should define the correct domains. `server.js` then applies these options via `app.use(helmet(configToUse.cspOptions));` within the `createApp` function. Example snippet from `config/index.js`:
     ```javascript
-    app.use(
-      helmet({
-        contentSecurityPolicy: {
-          directives: {
-            // ... other directives
-            fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com', '*'], // Wildcard '*' was added as a final diagnostic step.
-            connectSrc: [
-              "'self'",
-              'https://alan.up.railway.app',
-              'https://ipapi.co',
-              'https://cdn.jsdelivr.net',
-              'https://cdnjs.cloudflare.com',
-              'https://fonts.googleapis.com',
-              'https://flowiseai-railway-production-fecf.up.railway.app',
-            ],
-            // ... other directives
-          },
+    // Inside config/index.js
+    const cspOptions = {
+      contentSecurityPolicy: {
+        directives: {
+          // ... other directives
+          fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
+          connectSrc: [
+            "'self'",
+            'https://alan.up.railway.app',
+            'https://ipapi.co',
+            'https://cdn.jsdelivr.net',
+            'https://cdnjs.cloudflare.com',
+            'https://fonts.googleapis.com',
+            'https://flowiseai-railway-production-fecf.up.railway.app',
+            'https://api.bigdatacloud.net',
+          ],
+          // ... other directives
         },
-      })
-    );
+      },
+      scriptSrcAttr: ["'unsafe-inline'"],
+      noSniff: true,
+    };
+    // This cspOptions object is then part of the default export.
     ```
-2.  **Ensure Server is Running Latest Code**: The most critical step is to ensure the Node.js server process is *actually* running the latest saved version of `server.js`. Standard restarts might not be sufficient if an old process is lingering.
+2.  **Ensure Server is Running Latest Code**: The most critical step is to ensure the Node.js server process is *actually* running the latest saved versions of `server.js` and `config/index.js`. Standard restarts might not be sufficient if an old process is lingering.
     - **CRITICAL: Use `taskkill /F /IM node.exe /T` (Windows) or `pkill -f node` / `killall node` (macOS/Linux) to FORCEFULLY TERMINATE ALL Node.js processes before restarting the server (`node server.js`). Standard restarts (e.g., Ctrl+C in the terminal and rerunning `node server.js`) MAY NOT BE SUFFICIENT if a stale process is lingering.**
 3.  **Thorough Browser Cache Annihilation**:
     - Close ALL browser windows/tabs related to `localhost:3000`.
@@ -382,48 +397,10 @@ This highly persistent issue indicates that the browser is receiving an outdated
     - Application tab -> Storage -> Clear site data for `localhost:3000`.
     - Network tab -> Check "Disable cache".
     - Open `http://localhost:3000/` in a **new Incognito/Private window**.
-4.  **Inspect HTTP Headers**: If issues persist, in the Incognito window's Developer Tools (Network tab), load `http://localhost:3000/`. Click on the very first request (e.g., `localhost` or `index.html`). Go to the "Response Headers" section and verify the `Content-Security-Policy` header being sent by the server matches the configuration in `server.js`.
+4.  **Inspect HTTP Headers**: If issues persist, in the Incognito window's Developer Tools (Network tab), load `http://localhost:3000/`. Click on the very first request (e.g., `localhost` or `index.html`). Go to the "Response Headers" section and verify the `Content-Security-Policy` header being sent by the server matches the configuration in `config/index.js`.
 
-If the browser *still* reports an outdated CSP in the console logs (e.g., `font-src` missing `https://cdnjs.cloudflare.com` or the wildcard `*`, or `script-src-attr 'none'` when `'unsafe-inline'` is expected), it points to an issue where the server process itself is not reflecting the file changes on disk, or a very stubborn browser cache. The wildcard `*` in `fontSrc` was added as a last resort for font loading and proved effective.
+If the browser *still* reports an outdated CSP in the console logs, it points to an issue where the server process itself is not reflecting the file changes on disk, or a very stubborn browser cache.
     - **Refactoring Inline Event Handlers**: For "Refused to execute inline event handler" errors (often due to `script-src-attr 'none'`), refactoring HTML elements with `onclick="..."` attributes to use `element.addEventListener('click', ...)` in JavaScript is a robust solution. This was done for `public/home.html`.
-    - **Final `server.js` CSP state (as of June 19, 2025)**:
-      ```javascript
-      app.use(
-        helmet({
-          contentSecurityPolicy: {
-            directives: {
-              defaultSrc: ["'self'"],
-              scriptSrc: [
-                "'self'",
-                'https://cdn.jsdelivr.net',
-                'https://alan.up.railway.app',
-                'https://ipapi.co',
-                'https://cdnjs.cloudflare.com',
-                "'unsafe-inline'", // For inline <script> tags and fallback for event handlers
-              ],
-              styleSrc: [
-                "'self'",
-                'https://cdnjs.cloudflare.com',
-                'https://fonts.googleapis.com',
-                "'unsafe-inline'",
-              ],
-              fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'], // Wildcard removed after fixing other issues
-              imgSrc: ["'self'", 'data:'],
-              connectSrc: [
-                "'self'",
-                'https://alan.up.railway.app',
-                'https://ipapi.co',
-                'https://cdn.jsdelivr.net',
-                'https://cdnjs.cloudflare.com',
-                'https://fonts.googleapis.com',
-                'https://flowiseai-railway-production-fecf.up.railway.app',
-                'https://api.bigdatacloud.net', // Added for reverse geocoding
-              ],
-            },
-          },
-          scriptSrcAttr: ["'unsafe-inline'"], // Explicitly allows inline event attributes like onclick
-          noSniff: true,
-        })
-      );
-      ```
-This combination of server-side CSP configuration, HTML refactoring, and client-side cache clearing ultimately resolved the issues.
+    - **Final CSP configuration is in `config/index.js` (as of June 20, 2025)**.
+
+This combination of server-side CSP configuration (now in `config/index.js`), HTML refactoring, and client-side cache clearing ultimately resolved the issues.

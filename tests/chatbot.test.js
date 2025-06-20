@@ -7,7 +7,8 @@
  * Requires: jest, jsdom
  */
 
-const { JSDOM } = require('jsdom');
+import { JSDOM } from 'jsdom';
+import { jest } from '@jest/globals'; // Import jest
 
 // Import the modules to test
 // Note: You may need to adjust import paths and use dynamic import for ES modules

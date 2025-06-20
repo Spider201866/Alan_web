@@ -10,7 +10,7 @@
 - **Chatbot Agent**: "Alan" (managed via Flowise, incorporates role, logic, memory, and security in its prompt)
 - **Environment Variables**: `dotenv` package for loading `.env` files.
 - **Rate Limiting**: `express-rate-limit`
-- **Security Headers**: `helmet` is used for setting various HTTP security headers. Its Content Security Policy (CSP) is configured in `server.cjs` to specify allowed sources for scripts (`scriptSrc`), styles (`styleSrc`), fonts (`fontSrc`), connections (`connectSrc`), images (`imgSrc`), and to manage inline event handlers (`scriptSrcAttr`).
+- **Security Headers**: `helmet` is used for setting various HTTP security headers. Its Content Security Policy (CSP) is configured in `config/index.js` (and applied in `server.js`) to specify allowed sources for scripts (`scriptSrc`), styles (`styleSrc`), fonts (`fontSrc`), connections (`connectSrc`), images (`imgSrc`), and to manage inline event handlers (`scriptSrcAttr`).
 - **Code Formatting**: Prettier (config in `.prettierrc`), EditorConfig (config in `.editorconfig`).
 - **Code Quality**: ESLint (v9+ using flat config `eslint.config.js`). Project `package.json` has `"type": "module"`.
 - **Testing**: Jest, JSDOM, `eslint-plugin-jest`.
@@ -29,9 +29,13 @@
 - **npm**: Package manager for installing dependencies.
 - **Environment Variables**: `.env` file for configuration, with critical variables validated at startup. Instructions for setup are in `README.md`.
 - **Project Structure**:
-    - `server.cjs` (formerly `server.js`): Main server application (CommonJS module), configures `helmet` for CSP, includes 404 route.
-    - `generate-hash.cjs` (formerly `generate-hash.js`): Script to generate password hashes (CommonJS module).
-    - `eslint.config.js`: ESLint flat configuration file (replaces `.eslintrc.js`).
+    - `server.js`: Main server application (ES Module), orchestrates middleware and routes.
+    - `config/index.js`: Centralized configuration (paths, port, security, CSP).
+    - `routes/`: Contains `api.js` for API routes and `web.js` for frontend page routes.
+    - `middleware/`: Contains `auth.js`, `validation.js`, and `error.js` for various middleware functions.
+    - `services/`: Contains `records.js` for data interaction logic.
+    - `generate-hash.cjs`: Script to generate password hashes (CommonJS module).
+    - `eslint.config.js`: ESLint flat configuration file.
     - `public/`: Static assets (HTML, CSS, JS, images, favicons).
         - `public/home.html`, `public/index.html`: Main pages with deferred scripts and consistent viewport meta tags. `home.html` now uses `addEventListener` for navigation button event handling. Preload links removed.
         - `public/referral.html`: Example of a sub-page that correctly links to `styles/styles.css` and relies on it for appbar styling.
@@ -56,7 +60,7 @@
 
 ## Technical Constraints
 - **No Backend Data Storage**: The project does not involve complex backend record storage or external databases; data handling is primarily for chatbot interaction.
-- **Single Server File**: All server logic is currently in `server.cjs`, which could become a maintenance challenge as the project grows.
+- **Modular Server Structure**: Server logic has been refactored from a single `server.cjs` file into a modular structure (`server.js` as entry point, with `config/`, `routes/`, `middleware/`, `services/` directories). This addresses the previous concern about a single server file.
 - **No Frontend Framework**: Frontend is intentionally built with vanilla HTML, CSS, and JavaScript. This decision aligns with the project's goal of simplicity and democratizing access, as the system is designed to remain small (one main page and a few sidebar pages) and will not grow significantly in complexity.
 - **External Chatbot Agent Dependency**: Reliance on an external Flowise agent (powered by Gemini 2.5 Flash) means the chatbot's performance and availability are dependent on these external services. The prompt engineering and maintenance for the "Alan" agent are handled within Flowise, external to this codebase.
 
@@ -76,7 +80,7 @@
 
 ## Tool Usage Patterns
 - **`npm install`**: To set up project dependencies.
-- **`node server.cjs`**: To start the server.
+- **`node server.js`**: To start the server (updated from `server.cjs`).
 - **`npm run format`**: To automatically format code using Prettier.
 - **`npm run format:check`**: To check code formatting without writing changes (used in CI/CD).
 - **`npm run lint`**: To run ESLint for code quality checks.

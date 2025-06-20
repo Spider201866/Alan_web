@@ -3,14 +3,14 @@
 # System Patterns
 
 ## System Architecture
-The AlanUI Web Chatbot is built as a Node.js application using Express.js. It follows a monolithic architecture where server-side logic, including routing and static file serving, resides within a single `server.js` file. The primary functionality is frontend-driven, providing a web chatbot experience.
+The AlanUI Web Chatbot is built as a Node.js application using Express.js. The server-side logic has been refactored from a single monolithic `server.cjs` file into a modular structure with `server.js` as the main entry point. Configuration, routes, middleware, and services are now separated into their own modules within respective directories (`config/`, `routes/`, `middleware/`, `services/`). The primary functionality remains frontend-driven, providing a web chatbot experience.
 
 ## Key Technical Decisions
 - **Static File Serving**: Express.js serves static HTML, CSS, and JavaScript files from the `public/` directory.
 - **No Backend Data Storage**: The project does not involve complex backend record storage or external databases; data handling is primarily for chatbot interaction.
 - **Rate Limiting**: `express-rate-limit` is used on server endpoints (100 requests per 15 minutes per IP) to prevent abuse.
-- **Security Headers**: `Helmet` is used in `server.js` to set various HTTP response headers. The Content Security Policy (CSP) is meticulously configured to allow necessary external resources (CDNs, Flowise backend, Google Fonts, IP API) while aiming for security. This includes specific directives for `scriptSrc`, `styleSrc`, `fontSrc`, `connectSrc`, and `scriptSrcAttr` (to manage inline event handlers).
-- **Environment Variable Validation**: Critical environment variables (`MASTER_PASSWORD_HASH`, `PASSWORD_SALT`) are validated at server startup.
+- **Security Headers**: `Helmet` is used in `server.js`, configured with options from `config/index.js`, to set various HTTP response headers. The Content Security Policy (CSP) is meticulously configured to allow necessary external resources (CDNs, Flowise backend, Google Fonts, IP API) while aiming for security. This includes specific directives for `scriptSrc`, `styleSrc`, `fontSrc`, `connectSrc`, and `scriptSrcAttr` (to manage inline event handlers).
+- **Environment Variable Validation**: Critical environment variables (`MASTER_PASSWORD_HASH`, `PASSWORD_SALT`) are validated within `config/index.js` during application startup.
 - **JSON File Integrity**: JSON data files (`user-info.json`, `user-history.json`) are ensured to have a trailing newline character.
 - **Frontend Consistency & Performance**:
     - Shared appbar pattern (`#appBar`) and the unique main header on `home.html` (`.chatbot-header`) are styled via `public/styles/styles.css`.
@@ -30,8 +30,11 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. It fo
 - **Advanced Chatbot Integration**: The project integrates with Flowise to manage the "Alan" chatbot agent, powered by Google Gemini 2.5 Flash (a static LLM), incorporating advanced role, logic, memory, and security features within its prompt. This codebase primarily handles the interface and surrounding functionalities.
 
 ## Design Patterns in Use
-- **Middleware Pattern**: Express.js middleware is used for rate limiting, serving static files, applying security headers (`Helmet`), and handling 404 routes.
-- **Module Pattern (Frontend)**: Frontend JavaScript files in `public/scripts/` use modules to organize code (e.g., `page-template.js`, `focus-trap.js`, `agent1-chatbot-module.js`, `language.js`, `language-loader.js`).
+- **Middleware Pattern**: Express.js middleware is used for rate limiting, serving static files, applying security headers (`Helmet`), and handling 404 routes. These are now more organized, with specific middleware functions in the `middleware/` directory (e.g., `middleware/auth.js`, `middleware/validation.js`, `middleware/error.js`).
+- **Module Pattern (Backend & Frontend)**:
+    - **Backend**: The server-side code now extensively uses ES modules. `server.js` exports a `createApp(config)` factory function, making the application instance configurable for different environments (like testing). The main execution block in `server.js` uses this factory with the default config for normal operation. Modules are organized into `config/`, `routes/`, `middleware/`, and `services/`.
+    - **Frontend**: Frontend JavaScript files in `public/scripts/` use modules to organize code (e.g., `page-template.js`, `focus-trap.js`, `agent1-chatbot-module.js`, `language.js`, `language-loader.js`).
+- **App Factory Pattern (Backend)**: `server.js` exports a `createApp(customConfig)` function, allowing the creation of Express app instances with specific configurations. This is crucial for test isolation, enabling tests in `tests/api.test.js` to initialize the server with modified configurations (e.g., temporary file paths, specific OTP settings).
 - **Event Listener Pattern (Frontend)**:
     - Replacing inline event handlers (e.g., `onclick`) with `addEventListener` in JavaScript for improved CSP compliance and separation of concerns (e.g., in `public/home.html`).
     - Using custom DOM events (e.g., `languageChanged`) for decoupled communication between modules (e.g., `language.js` dispatches, `page-template.js`, `index.js`, `home.js` listen).
@@ -47,7 +50,17 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. It fo
 - **Graceful Degradation (API Errors)**: Frontend API calls are designed to handle failures gracefully and inform the user.
 
 ## Component Relationships
-- `server.js`: Central hub, handles incoming requests, rate limiting, serves static files, applies security headers (including detailed CSP via `helmet`), and manages 404 routes.
+- `server.js`: Main server entry point. Initializes Express, applies global middleware (Helmet, CORS, JSON parsing, static file serving from `config.paths.public`), sets up rate limiting, and mounts routers from `routes/api.js` and `routes/web.js`. Also incorporates 404 and global error handlers from `middleware/error.js`.
+- `config/index.js`: Manages all server configuration, including port, file paths, security settings (salt, master hash, OTPs), and CSP options. Validates critical environment variables.
+- `routes/`:
+    - `api.js`: Defines API routes (e.g., `/record-info`, `/fetch-records`, `/fetch-history`). Uses middleware from `middleware/validation.js` and `middleware/auth.js`, and services from `services/records.js`.
+    - `web.js`: Defines routes for serving frontend HTML pages (e.g., `/`, `/view-records`).
+- `middleware/`:
+    - `auth.js`: Contains `validatePassword` middleware and `hashPassword` helper.
+    - `validation.js`: Contains `validateRecord` middleware.
+    - `error.js`: Contains `handleErrors` async wrapper, `notFound` 404 handler, and `globalErrorHandler`.
+- `services/`:
+    - `records.js`: Contains `readJsonFile` and `appendToHistory` functions for interacting with `user-info.json` and `user-history.json`. Uses `async-mutex`.
 - `public/`: Contains all frontend assets (HTML, CSS, JS, images, favicons).
     - `public/home.html`, `public/index.html`: Main landing and onboarding pages. `home.html` now uses `addEventListener` for navigation button event handling. Preload links for fonts/favicons removed.
     - `public/404.html`: Custom page for unknown routes.
@@ -63,18 +76,21 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. It fo
     - `public/boxes.html`: Contains marquee content with `aria-hidden` attributes for accessibility (though marquee content is now directly in `home.html`).
 - `tests/`: Contains automated tests for UI and accessibility.
 - `.editorconfig`: Enforces consistent code style across editors.
-- `.eslintrc.js`: ESLint configuration for code quality.
+- `eslint.config.js`: ESLint flat configuration for code quality. (Replaced `.eslintrc.js`)
 - `.nvmrc`: Specifies the recommended Node.js version.
 - `package.json`: Manages dependencies, scripts (including `format:check` and `lint`), and specifies Node.js engine version.
 - **Flowise/Google Gemini 2.5 Flash (External)**: Provides the core intelligence for the "Alan" chatbot agent, which is accessed by `agent1-chatbot-module.js`.
 
 ## Critical Implementation Paths
 - **All Incoming Requests**:
-    1. Request hits `server.js`.
-    2. `Helmet` middleware applies security headers, including the detailed CSP.
-    3. `express-rate-limit` middleware checks request rate (for specific routes).
-    4. If within limits, proceeds to next middleware/route handler.
-    5. If route is not found, the 404 handler serves `public/404.html`.
+    1. For normal operation, `server.js` calls `createApp` with default configuration. For tests, `createApp` is called with a test-specific configuration.
+    2. An Express `app` instance is created by `createApp`.
+    3. Global middleware is applied by `createApp`: `Helmet` (with CSP from the provided config), CORS, `express.json()`, `express.static()`.
+    4. Request is routed via `app.use('/api', apiRoutesFactory(limiter, configToUse))` or `app.use('/', webRoutesFactory(configToUse))`. The route factories receive the active configuration.
+    5. For API routes, the router returned by `apiRoutesFactory` handles the request, potentially using specific middleware like `validateRecord` or `validatePassword`. These routes use the config passed to `apiRoutesFactory` for path lookups.
+    6. For web routes, the router returned by `webRoutesFactory` handles serving HTML files, using the config passed to it.
+    6. If no route matches, `notFound` middleware from `middleware/error.js` serves `public/404.html`.
+    7. If an error occurs in a route handler (especially async ones wrapped with `handleErrors`), it's passed to `globalErrorHandler` from `middleware/error.js`.
 - **Frontend Page Rendering**:
     1. HTML page loads (e.g., `home.html`, `referral.html`). Viewport meta tags are consistent. Scripts like `language.js` (with `type="module"`) initialize.
     2. `language.js` loads the preferred/default language JSON using `language-loader.js` and dispatches `languageChanged`.
@@ -106,7 +122,7 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. It fo
 - **Automated Testing & Code Quality Execution**:
     1. `npm test` command is run.
     2. `npm run format:check` is executed first to ensure code formatting.
-    3. `jest` executes test files, including accessibility checks for UI elements and API tests for rate limiting, JSON file integrity, and environment variable validation (manual verification for `process.exit` behavior).
+    3. `jest` executes test files, including accessibility checks for UI elements and API tests for rate limiting, JSON file integrity, and environment variable validation (now handled in `config/index.js`, `process.exit` behavior still needs manual/specific test verification if critical).
     4. `npm run lint` can be run separately to check code quality with ESLint.
 - **Automated Testing & Code Quality**: Comprehensive test suite covering UI and accessibility, with pre-test formatting and linting hooks. ESLint is configured for code quality.
 - **API Error Handling**: Frontend API calls include graceful error handling to provide user feedback.

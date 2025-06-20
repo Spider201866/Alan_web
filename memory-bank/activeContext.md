@@ -6,6 +6,20 @@
 The dynamic language loading system has been implemented, CSS refactoring (centralization of styles) is largely complete, and the build/linting process is stable. Several HTML hygiene, accessibility, and performance improvements have been made (verified meta descriptions, ensured consistent script deferral). All translation keys are now correctly populated in the JSON files, and thorough testing and verification of the internationalization features have been performed. Upcoming tasks include PWA service worker implementation and implementing a conditional logging wrapper.
 
 ## Recent Changes
+- **Server Refactor (June 20, 2025):**
+    *   Refactored the monolithic `server.cjs` into a modular structure using ES Modules.
+    *   Created new directories: `config/`, `routes/`, `middleware/`, and `services/`.
+    *   New main server entry point is `server.js`.
+    *   Relevant logic moved into:
+        *   `config/index.js` (environment variables, paths, CSP options)
+        *   `routes/api.js` (API routes)
+        *   `routes/web.js` (frontend page routes)
+        *   `middleware/auth.js` (authentication logic)
+        *   `middleware/validation.js` (request validation logic)
+        *   `middleware/error.js` (error handling and 404 middleware)
+        *   `services/records.js` (file I/O helpers for JSON data)
+    *   Updated `package.json` start script from `node server.cjs` to `node server.js`.
+    *   Deleted the old `server.cjs` file.
 - **Translation Consistency Verified (June 20, 2025):**
     *   The `scripts/check-translations.cjs` script was created and executed.
     *   The script confirmed that all language files (`public/translations/*.json`) have no missing keys, no extra keys, and no placeholder values when compared against `en.json`. This verifies the completion of the translation task.
@@ -144,7 +158,7 @@ The dynamic language loading system has been implemented, CSS refactoring (centr
     - Shared `#appBar` on sub-pages is styled via `public/styles/styles.css`. Sub-pages must link to this stylesheet and not contain local appbar styles.
     - The unique `.chatbot-header` on `public/home.html` is also styled in `public/styles/styles.css`, with specific padding adjustments (e.g., `.chatbot-subtitle`) to align its rendered height with the shared `#appBar` in target viewing environments.
     - Viewport meta tags should be consistent across pages to avoid unexpected rendering differences.
-- **CSP Configuration**: Manage CSP via `helmet` in `server.cjs`. Be mindful of `scriptSrcAttr` for inline event handlers and prefer `addEventListener`.
+- **CSP Configuration**: Manage CSP via `helmet` in `server.js` (using options from `config/index.js`). Be mindful of `scriptSrcAttr` for inline event handlers and prefer `addEventListener`.
 - **ESLint Configuration**: ESLint v9+ uses `eslint.config.js` (flat config). Project `package.json` set to `"type": "module"`. CommonJS files should use `.cjs` extension.
 - **Event Handling**: Prefer `addEventListener` over inline attributes (`onclick`, etc.) for better CSP compatibility and code organization.
 - **Shared Appbar Pattern**: All new main pages should use `initPage` from `page-template.js`.
@@ -156,18 +170,18 @@ The dynamic language loading system has been implemented, CSS refactoring (centr
 - **Command Line Operations**:
     - Avoid using `&&` for command chaining in PowerShell as it's not supported; use separate commands or PowerShell specific syntax (e.g., semicolon `;`) if chaining is essential.
 - **Server Management & Page Viewing**:
-    - After making changes, I will typically stop any running Node.js server (using `taskkill /F /IM node.exe /T` if necessary) and then restart it with `node server.cjs` to ensure changes are applied.
+    - After making changes, I will typically stop any running Node.js server (using `taskkill /F /IM node.exe /T` if necessary) and then restart it with `node server.js` to ensure changes are applied.
     - However, per user preference, I will generally *not* automatically use the `open` command in `attempt_completion` to view the page in a browser. The user will typically manage when to view the application. I should only use the `open` command if specifically requested for a particular test or verification step.
 
 ## Learnings and Project Insights
-- **ESLint v9 Migration**: Requires moving to `eslint.config.js` (flat config). If `package.json` has `"type": "module"`, CommonJS files (like `server.cjs`, `generate-hash.cjs`) need the `.cjs` extension. ESLint plugins (e.g., `eslint-plugin-jest`) also need to be compatible with flat config. Dependencies like `globals` may be needed.
+- **ESLint v9 Migration**: Requires moving to `eslint.config.js` (flat config). If `package.json` has `"type": "module"`, the main server entry point `server.js` is an ES module. CommonJS utility files (like `generate-hash.cjs`) need the `.cjs` extension. ESLint plugins (e.g., `eslint-plugin-jest`) also need to be compatible with flat config. Dependencies like `globals` may be needed.
 - **Lint Rule Specificity**: Rules like `jest/no-conditional-expect` can be very strict. If a test legitimately has varying assertion paths, using `eslint-disable` comments for that specific block can be a pragmatic solution after careful consideration.
 - **`replace_in_file` vs. `write_to_file`**: For complex or repeatedly failing targeted edits with `replace_in_file` (especially after interruptions that revert the file), `write_to_file` with the full intended content can be a more robust fallback, provided the base content used is accurate.
 - **Tool Interruption Impact**: Interrupted `replace_in_file` or `write_to_file` operations revert the file. It's crucial to use the *actual* current file content (often provided in the error message from the failed tool use) as the basis for the next attempt, not a potentially stale version from memory or previous reads.
 - **CSP Debugging**: Can be complex due to interactions between server configuration (`helmet`), HTML content (preloads, inline handlers), and aggressive browser/service worker caching. Forceful server restarts and comprehensive cache clearing (including incognito/different browsers) are essential diagnostic tools.
 - **CSP Debugging**: Can be complex due to interactions between server configuration (`helmet`), HTML content (preloads, inline handlers), and aggressive browser/service worker caching. Forceful server restarts and comprehensive cache clearing (including incognito/different browsers) are essential diagnostic tools.
 - **`script-src-attr`**: This CSP directive can be particularly tricky. If the browser reports `script-src-attr 'none'` despite server configuration aiming for `'unsafe-inline'`, it can indicate deep caching issues or subtle interactions with other CSP directives or `helmet` defaults. Refactoring to `addEventListener` is a more robust solution than relying on `'unsafe-inline'` for event handlers.
-- **Server Process State & Cache Busting**: Ensuring the running Node.js process reflects the latest saved file changes is critical. Standard terminal restarts (Ctrl+C and `node server.js`) may not always be sufficient if old processes linger. Forcefully terminating all Node.js processes (e.g., using `taskkill /F /IM node.exe /T` on Windows or `pkill -f node` on macOS/Linux) before restarting the server is a key troubleshooting step for issues where server-side changes (like CSP headers in `server.js`) don't seem to apply. This, combined with thorough browser cache clearing (including service workers and using incognito mode), is often necessary to resolve persistent caching problems.
+- **Server Process State & Cache Busting**: Ensuring the running Node.js process reflects the latest saved file changes is critical. Standard terminal restarts (Ctrl+C and `node server.js`) may not always be sufficient if old processes linger. Forcefully terminating all Node.js processes (e.g., using `taskkill /F /IM node.exe /T` on Windows or `pkill -f node` on macOS/Linux) before restarting the server is a key troubleshooting step for issues where server-side changes (like CSP headers in `config/index.js` used by `server.js`) don't seem to apply. This, combined with thorough browser cache clearing (including service workers and using incognito mode), is often necessary to resolve persistent caching problems.
 - **JavaScript Modules**: Using ES6 modules (`import`/`export`) for better code organization. Ensure `<script type="module">` is used in HTML when loading scripts that use these features.
 - **Event-Driven UI Updates**: Using custom events (e.g., `languageChanged`) to decouple components and trigger UI updates.
 - The project prioritizes consistency, accessibility, and security.
