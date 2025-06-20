@@ -74,6 +74,12 @@ body {
   overflow-y: auto;
 }
 
+.instruction-screen-logo {
+  max-width: 120px;
+  height: auto;
+  margin-bottom: -10px;
+}
+
 .black-screen {
   position: fixed;
   top: 0;

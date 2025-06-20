@@ -3,9 +3,22 @@
 # Active Context
 
 ## Current Work Focus
-The dynamic language loading system has been implemented and CSS refactoring (centralization of styles) is largely complete. The build and linting process (ESLint v9 migration, Prettier checks) has been fixed. Current focus is on ensuring all translation keys are correctly populated in the JSON files and thorough testing of the internationalization features. Upcoming tasks include PWA service worker implementation.
+The dynamic language loading system has been implemented, CSS refactoring (centralization of styles) is largely complete, and the build/linting process is stable. Several HTML hygiene, accessibility, and performance improvements have been made (verified meta descriptions, ensured consistent script deferral). Current focus is on ensuring all translation keys are correctly populated in the JSON files and thorough testing of the internationalization features. Upcoming tasks include PWA service worker implementation and implementing a conditional logging wrapper.
 
 ## Recent Changes
+- **Script Loading Optimization (June 20, 2025):**
+    - Reviewed all HTML files in `public/` to ensure external JavaScripts consistently use the `defer` attribute to avoid render-blocking.
+    - Added `defer` to `scripts/faviconAndMeta.js` in `aboutalan.html`, `atoms.html`, `ear.html`, `eye.html`, `instructions.html`, `skin.html`, `weblinks.html`, `triangle.html`, and `view-records.html`.
+    - Added `defer` to `anime.min.js` in `triangle.html`.
+    - Added `defer` to `leaflet.js` in `view-records.html`.
+    - Confirmed `npm run format` and `npm test` pass after these changes.
+- **Meta Description Verification (June 20, 2025):**
+    - Verified that all main HTML pages (`index.html`, `home.html`, `aboutalan.html`, `atoms.html`, `ear.html`, `eye.html`, `instructions.html`, `referral.html`, `skin.html`, `weblinks.html`) and key auxiliary pages (`404.html`, `muted.html`, `triangle.html`, `view-records.html`) already have appropriate `<meta name="description">` tags. No changes were needed for this task.
+- **HTML Accessibility & Cleanup (June 20, 2025):**
+    - Deleted the `img#condition-image` element from `public/home.html` as it was deemed unnecessary.
+    - Moved inline styles for the logo image (`images/bigredt.png`) in `public/index.html` to `public/styles/styles_index.css` under a new class `.instruction-screen-logo`.
+    - Removed a stale HTML comment (`<!-- Sujin 10th 6 2025 -->`) from `public/home.html`.
+    - Confirmed `npm run format` and `npm test` continue to pass after these changes.
 - **Build/Lint Process Fixes (June 20, 2025):**
     - Migrated ESLint configuration from `.eslintrc.js` to `eslint.config.js` to support ESLint v9+.
     - Installed `globals` and `eslint-plugin-jest` as dev dependencies.
@@ -84,17 +97,26 @@ The dynamic language loading system has been implemented and CSS refactoring (ce
 2.  **Enhance Translation System Robustness & Monitoring (Future Enhancement):**
     *   **Logging Missing Keys**: Consider implementing a system to log missing translation keys to a service in a production environment to track which translations are most urgently needed. (The current `console.warn` for missing keys is good for development).
     *   **Error Handling**: The error handling in `language.js`'s `setLanguage` function was improved to prevent infinite loops if `en.json` fails to load (DONE - June 20, 2025).
-3.  **Refine Data Storage and Legacy API (Future Consideration):**
+3.  **Implement Conditional Logging Wrapper:**
+    *   **Goal**: Reduce console noise in production while retaining `warn` and `error` logs.
+    *   **Method**:
+        *   Create `public/scripts/log.js` with a wrapper around `console` methods.
+        *   The wrapper will check `window.location.hostname` against `'alan.up.railway.app'`.
+        *   If production, `log.debug()` and `log.info()` become no-ops. `log.warn()` and `log.error()` will still call the real `console` methods.
+        *   In development, all `log.*` methods will map directly to `console.*`.
+        *   Include `log.js` in `index.html` and `home.html` before other scripts.
+        *   Refactor existing `console.*` calls in client-side JavaScript files to use `log.*` equivalents.
+4.  **Refine Data Storage and Legacy API (Future Consideration):**
     *   **Security**: Investigate moving data files (`user-info.json`, `user-history.json`) written by the application outside the webroot (e.g., to a dedicated data directory like `../alan_data/`) to improve security hygiene.
     *   **Deprecate/Refactor Legacy API**: Develop a plan to phase out the legacy record-keeping API routes in `server.js` or refactor them. This could involve:
         *   Migrating from flat file storage to a more robust mechanism (e.g., SQLite database or a simple cloud-based storage solution).
         *   This would also eliminate the need for `async-mutex` for file access and improve scalability and data handling.
-4.  **Explore Component-Based Architecture (Future Consideration):**
+5.  **Explore Component-Based Architecture (Future Consideration):**
     *   **Goal**: Improve modularity, reusability, and maintainability of frontend code.
     *   **Options to Consider**:
         *   **Native Web Components**: Refactor reusable UI pieces (e.g., Muted Buttons bar, Side Menu) into native Web Components to encapsulate their HTML, CSS, and JS.
         *   **Lightweight Framework**: Alternatively, evaluate a lightweight framework like Svelte, which compiles to efficient vanilla JS and would formalize a component-based approach without significant overhead.
-5.  **Implement PWA Service Worker for Install Prompt:**
+6.  **Implement PWA Service Worker for Install Prompt:**
     *   **Goal**: Enable PWA features, primarily allowing users to "install" the web app on desktop and mobile.
     *   **Details**:
         *   Create/correct `public/service-worker.js`.
@@ -103,7 +125,7 @@ The dynamic language loading system has been implemented and CSS refactoring (ce
         *   Register the service worker in the main JavaScript entry point (e.g., `public/scripts/index.js` or `public/scripts/home.js`).
         *   Verify `public/favicons/manifest.json` is correctly configured for PWA installability (e.g., `start_url`, `display`, icons).
     *   **Considerations**: Test install prompt on various platforms/browsers. Ensure offline capabilities are as intended (if any).
-3.  **CSS Refactoring (Centralization into `styles.css`):** (DONE - June 20, 2025)
+7.  **CSS Refactoring (Centralization into `styles.css`):** (DONE - June 20, 2025)
     *   **Goal**: Centralize styling into `public/styles/styles.css` from individual HTML pages.
     *   **Details**: Styles from `aboutalan.html`, `home.html`, `atoms.html`, `ear.html`, `eye.html`, `instructions.html`, `skin.html`, and `weblinks.html` were moved. Common exam page styles consolidated with `.exam-content-container`. Utility classes grouped.
     *   **Outcome**: HTML files are cleaner. `styles.css` now contains all these styles. Further internal conciseness of `styles.css` itself can be a future low-priority task if needed.

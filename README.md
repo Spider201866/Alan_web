@@ -84,18 +84,19 @@ The project is organized as follows. For a complete list of all files, see `fold
 ├── .editorconfig
 ├── .env
 ├── .env.example
-├── .eslintrc.js
+├── .eslintrc.js (Note: This file has been replaced by eslint.config.js for ESLint v9+)
 ├── .gitignore
 ├── .nvmrc
 ├── .prettierrc
 ├── compress_and_convert_images_instructions.txt (Note: Manual image optimization process, currently low priority)
+├── eslint.config.js (ESLint v9+ configuration)
 ├── folderList.txt
-├── generate-hash.js
+├── generate-hash.cjs (Note: Renamed from .js, now a CommonJS module)
 ├── package-lock.json
-├── package.json
+├── package.json (Note: Includes "type": "module")
 ├── README.md
 ├── reset-locally-from-github.md
-├── server.js
+├── server.cjs (Note: Renamed from .js, now a CommonJS module)
 ├── user-history.json
 ├── user-info.json
 ├── memory-bank/

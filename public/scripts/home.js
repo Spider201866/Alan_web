@@ -36,7 +36,7 @@ function main() {
   applyHomeTranslations(); // Call it once directly on load to ensure initial application
 
   faviconAndMetaSetup();
-  initChatbot();
+  initChatbot(localStorage.getItem('sessionId')); // Reverted: No longer passing apiBaseUrl
   setupMenuIcon();
   setupInstructionsButton();
   setupNameIcon();
@@ -210,6 +210,7 @@ function pushLocalStorageToServer() {
   }
 
   fetch('https://alan.up.railway.app/record-info', {
+    // Reverted to hardcoded URL
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),

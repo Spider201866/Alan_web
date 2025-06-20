@@ -13,7 +13,13 @@
     - `npm run lint` passes with 0 errors (minor acceptable warnings for prefixed unused variables).
     - `npm test` (including Prettier checks) passes successfully.
     - Old `.eslintrc.js` file deleted.
-- JSON data files (`user-info.json`, `user-history.json`) are written with a trailing newline.
+- **HTML Accessibility & Cleanup (June 20, 2025):**
+    - Deleted the `img#condition-image` element from `public/home.html` as it was deemed unnecessary.
+    - Moved inline styles for a logo in `public/index.html` to `public/styles/styles_index.css`.
+    - Removed a stale HTML comment from `public/home.html`.
+    - Verified that all relevant HTML pages have appropriate `<meta name="description">` tags.
+- **Script Loading Optimization (June 20, 2025):**
+    - Ensured all external JavaScripts in HTML files consistently use the `defer` attribute to prevent render-blocking and improve loading performance.
 - JSON data files (`user-info.json`, `user-history.json`) are written with a trailing newline.
 - Frontend pages utilize a shared appbar pattern (`#appBar` on sub-pages) and a distinct main header (`.chatbot-header` on `home.html`). Both are styled via `public/styles/styles.css` with specific adjustments (padding, font declarations, viewport meta tags) to ensure visually consistent rendered heights across different pages and in various (emulated) viewing environments.
 - `public/referral.html` now correctly links to `public/styles/styles.css` and has its local appbar styles removed.
@@ -21,7 +27,7 @@
 - Inline event handlers (e.g., `onclick`) in `public/home.html` have been refactored to use `element.addEventListener()` for improved CSP compliance and modern JavaScript practices.
 - A reusable focus trap system is implemented for modals and side menus, enhancing keyboard accessibility.
 - Accessibility requirements for marquee content (`aria-hidden="true"`), icon-only buttons (`aria-label`), and "skip to content" links are enforced.
-- External script loading is optimized using the `defer` attribute in HTML pages. Problematic/unnecessary preload links for fonts and favicons were removed from `public/index.html` and `public/home.html`.
+- External script loading is optimized using the `defer` attribute in HTML pages (verified and updated June 20, 2025). Problematic/unnecessary preload links for fonts and favicons were removed from `public/index.html` and `public/home.html`.
 - API data fetching includes graceful error handling to provide user feedback when location data is unavailable or errors occur.
 - Comprehensive automated test suite covers UI and accessibility. The `npm test` script now includes a pre-test formatting check (`npm run format:check`) and linting (`npm run lint`) hooks, all of which pass after recent changes.
 - Code formatting is enforced using Prettier and EditorConfig.
@@ -47,9 +53,20 @@
     *   Refine any remaining dynamic text updates within JavaScript files.
     *   *Future Enhancement Suggestion:* Develop a script to automatically compare `en.json` with other language files to identify missing keys.
     *   *Future Enhancement Suggestion:* Consider implementing a system to log missing translation keys to a service in a production environment.
-2.  **Translation System Robustness:**
-    *   Error handling in `language.js`'s `setLanguage` function was improved to prevent infinite loops if `en.json` fails to load (DONE - June 20, 2025).
-4.  **Refine Data Storage and Legacy API (Future Consideration):**
+2.  **Translation System Robustness (DONE - June 20, 2025):**
+    *   Error handling in `language.js`'s `setLanguage` function was improved to prevent infinite loops if `en.json` fails to load.
+3.  **CSS Refactoring (Centralization into `styles.css`) (DONE - June 20, 2025):**
+    *   Centralized styling into `public/styles/styles.css` from individual HTML pages. Common exam page styles consolidated. Utility classes grouped. Further internal conciseness of `styles.css` can be a future low-priority task.
+4.  **Implement Conditional Logging Wrapper:**
+    *   **Goal**: Reduce console noise in production while retaining `warn` and `error` logs.
+    *   **Method**:
+        *   Create `public/scripts/log.js` with a wrapper around `console` methods.
+        *   The wrapper will check `window.location.hostname` against `'alan.up.railway.app'`.
+        *   If production, `log.debug()` and `log.info()` become no-ops. `log.warn()` and `log.error()` will still call the real `console` methods.
+        *   In development, all `log.*` methods will map directly to `console.*`.
+        *   Include `log.js` in `index.html` and `home.html` before other scripts.
+        *   Refactor existing `console.*` calls in client-side JavaScript files to use `log.*` equivalents.
+5.  **Refine Data Storage and Legacy API (Future Consideration):**
     *   **Security**: Investigate moving data files (`user-info.json`, `user-history.json`) written by the application outside the webroot (e.g., to a dedicated data directory like `../alan_data/`).
     *   **Deprecate/Refactor Legacy API**: Develop a plan to phase out or refactor the legacy record-keeping API routes in `server.cjs`, considering more robust storage (e.g., SQLite or cloud service) to replace flat files and `async-mutex`.
 6.  **Explore Component-Based Architecture (Future Consideration):**
@@ -60,7 +77,6 @@
 7.  **Implement PWA Service Worker for Install Prompt:**
     *   Create/correct `public/service-worker.js` to enable PWA features, focusing on the "Install app" prompt.
     *   Configure caching strategies and ensure `manifest.json` is PWA-ready.
-3.  **CSS Refactoring (Centralization into `styles.css`):** (DONE - June 20, 2025) Centralized styling into `public/styles/styles.css` from individual HTML pages. Common exam page styles consolidated. Utility classes grouped. Further internal conciseness of `styles.css` can be a future low-priority task.
 
 ## Current Status
 The AlanUI Web Chatbot is functional and stable. Recent work focused on:
@@ -69,6 +85,7 @@ The AlanUI Web Chatbot is functional and stable. Recent work focused on:
 - Implementing a new dynamic language loading system using external JSON files.
 - Centralizing all page-specific CSS into `public/styles/styles.css` and making targeted consolidations.
 - **Fixing the build and linting pipeline**: Migrated to ESLint v9+ with `eslint.config.js`, updated `package.json` for ES modules, renamed CommonJS files to `.cjs`, and resolved all linting errors. `npm test` and `npm run lint` now pass.
+- **Minor HTML hygiene, accessibility, and performance improvements** (image deletion, removed inline styles, removed stale comment, verified meta descriptions, ensured consistent script deferral).
 Core scripts and HTML pages have been refactored to support these enhancements. Documentation and memory bank files are updated. The project is now poised for translation key completion/verification and PWA capabilities.
 
 ## Known Issues

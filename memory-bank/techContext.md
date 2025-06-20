@@ -10,10 +10,10 @@
 - **Chatbot Agent**: "Alan" (managed via Flowise, incorporates role, logic, memory, and security in its prompt)
 - **Environment Variables**: `dotenv` package for loading `.env` files.
 - **Rate Limiting**: `express-rate-limit`
-- **Security Headers**: `helmet` is used for setting various HTTP security headers. Its Content Security Policy (CSP) is configured in `server.js` to specify allowed sources for scripts (`scriptSrc`), styles (`styleSrc`), fonts (`fontSrc`), connections (`connectSrc`), images (`imgSrc`), and to manage inline event handlers (`scriptSrcAttr`).
+- **Security Headers**: `helmet` is used for setting various HTTP security headers. Its Content Security Policy (CSP) is configured in `server.cjs` to specify allowed sources for scripts (`scriptSrc`), styles (`styleSrc`), fonts (`fontSrc`), connections (`connectSrc`), images (`imgSrc`), and to manage inline event handlers (`scriptSrcAttr`).
 - **Code Formatting**: Prettier (config in `.prettierrc`), EditorConfig (config in `.editorconfig`).
-- **Code Quality**: ESLint (config in `.eslintrc.js`).
-- **Testing**: Jest, JSDOM.
+- **Code Quality**: ESLint (v9+ using flat config `eslint.config.js`). Project `package.json` has `"type": "module"`.
+- **Testing**: Jest, JSDOM, `eslint-plugin-jest`.
 - **Performance**:
     - Deferred script loading (`defer` attribute). Problematic/unnecessary preload links for fonts and favicons were removed from HTML.
     - Consistent viewport meta tags across HTML files (e.g., `user-scalable=no` removed from `home.html` for consistent rendering).
@@ -28,7 +28,9 @@
 - **npm**: Package manager for installing dependencies.
 - **Environment Variables**: `.env` file for configuration, with critical variables validated at startup. Instructions for setup are in `README.md`.
 - **Project Structure**:
-    - `server.js`: Main server application, configures `helmet` for CSP, includes 404 route.
+    - `server.cjs` (formerly `server.js`): Main server application (CommonJS module), configures `helmet` for CSP, includes 404 route.
+    - `generate-hash.cjs` (formerly `generate-hash.js`): Script to generate password hashes (CommonJS module).
+    - `eslint.config.js`: ESLint flat configuration file (replaces `.eslintrc.js`).
     - `public/`: Static assets (HTML, CSS, JS, images, favicons).
         - `public/home.html`, `public/index.html`: Main pages with deferred scripts and consistent viewport meta tags. `home.html` now uses `addEventListener` for navigation button event handling. Preload links removed.
         - `public/referral.html`: Example of a sub-page that correctly links to `styles/styles.css` and relies on it for appbar styling.
@@ -44,16 +46,16 @@
         - `public/styles/styles.css`: Main centralized stylesheet for all global, component, page-specific, and utility styles.
         - `public/styles/styles_index.css`: Legacy styles primarily for `index.html` (role may diminish).
     - `user-info.json`, `user-history.json`: JSON data files (ensured to have trailing newlines).
-    - `package.json`: Defines project metadata, dependencies, and scripts.
+    - `package.json`: Defines project metadata, dependencies, and scripts (including `"type": "module"`).
     - `.prettierrc`: Prettier configuration file.
     - `.editorconfig`: EditorConfig configuration file.
-    - `.eslintrc.js`: ESLint configuration file.
+    - `.eslintrc.js`: (Deleted, replaced by `eslint.config.js`).
     - `.nvmrc`: Node Version Manager configuration.
     - `tests/`: Contains automated test files.
 
 ## Technical Constraints
 - **No Backend Data Storage**: The project does not involve complex backend record storage or external databases; data handling is primarily for chatbot interaction.
-- **Single Server File**: All server logic is currently in `server.js`, which could become a maintenance challenge as the project grows.
+- **Single Server File**: All server logic is currently in `server.cjs`, which could become a maintenance challenge as the project grows.
 - **No Frontend Framework**: Frontend is intentionally built with vanilla HTML, CSS, and JavaScript. This decision aligns with the project's goal of simplicity and democratizing access, as the system is designed to remain small (one main page and a few sidebar pages) and will not grow significantly in complexity.
 - **External Chatbot Agent Dependency**: Reliance on an external Flowise agent (powered by Gemini 2.5 Flash) means the chatbot's performance and availability are dependent on these external services. The prompt engineering and maintenance for the "Alan" agent are handled within Flowise, external to this codebase.
 
@@ -62,7 +64,10 @@
 - `dotenv`: Loads environment variables from a `.env` file.
 - `express-rate-limit`: Middleware for rate limiting.
 - `helmet`: Security middleware for setting HTTP headers.
-- `eslint`: JavaScript linter for code quality.
+- `eslint`: JavaScript linter for code quality (v9+).
+- `@eslint/js`: Official ESLint JavaScript plugin.
+- `globals`: For defining global variables in ESLint flat config.
+- `eslint-plugin-jest`: ESLint plugin for Jest.
 - `jest`: JavaScript testing framework.
 - `jsdom`: JavaScript implementation of the DOM and HTML standards.
 - `prettier`: Code formatter.
@@ -70,7 +75,7 @@
 
 ## Tool Usage Patterns
 - **`npm install`**: To set up project dependencies.
-- **`node server.js`**: To start the server.
+- **`node server.cjs`**: To start the server.
 - **`npm run format`**: To automatically format code using Prettier.
 - **`npm run format:check`**: To check code formatting without writing changes (used in CI/CD).
 - **`npm run lint`**: To run ESLint for code quality checks.
