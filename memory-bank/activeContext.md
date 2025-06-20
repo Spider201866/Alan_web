@@ -6,6 +6,21 @@
 The dynamic language loading system has been implemented, CSS refactoring (centralization of styles) is largely complete, and the build/linting process is stable. Several HTML hygiene, accessibility, and performance improvements have been made (verified meta descriptions, ensured consistent script deferral). All translation keys are now correctly populated in the JSON files, and thorough testing and verification of the internationalization features have been performed. Upcoming tasks include PWA service worker implementation and implementing a conditional logging wrapper.
 
 ## Recent Changes
+- **Frontend Orchestrator Refactor (June 20, 2025):**
+    *   Refactored `public/scripts/home.js` and `public/scripts/index.js` into orchestrator patterns.
+    *   **For `home.js`:**
+        *   Created `public/scripts/home-ui.js` for UI management, interactions, and popups.
+        *   Created `public/scripts/home-data.js` for data fetching and server communication.
+        *   Created `public/scripts/home-translator.js` for language and text updates.
+        *   `home.js` now imports and initializes these modules, orchestrating their interactions.
+    *   **For `index.js`:**
+        *   Created `public/scripts/location-service.js` for IP-based location and classification.
+        *   Created `public/scripts/auth-flow.js` for managing splash screen, password verification, and final "Accept" flow.
+        *   Created `public/scripts/onboarding-form.js` for interactive state and validation of the onboarding form.
+        *   `index.js` now imports and initializes these modules, orchestrating their interactions and managing page-specific language controls.
+    *   This modularization improves code organization, separation of concerns, and maintainability for the main frontend scripts.
+- **API Endpoint Clarification (June 20, 2025):**
+    *   Client-side scripts (`home-data.js`, `auth-flow.js`) updated to use local API endpoints (`/api/record-info`, `/api/fetch-records`) instead of a previously hardcoded external URL (`https://alan.up.railway.app/record-info`) which was found to be unavailable. This aligns with the project's self-contained backend for these functions.
 - **Server Refactor (June 20, 2025):**
     *   Refactored the monolithic `server.cjs` into a modular structure using ES Modules.
     *   Created new directories: `config/`, `routes/`, `middleware/`, and `services/`.
@@ -161,6 +176,13 @@ The dynamic language loading system has been implemented, CSS refactoring (centr
 - **CSP Configuration**: Manage CSP via `helmet` in `server.js` (using options from `config/index.js`). Be mindful of `scriptSrcAttr` for inline event handlers and prefer `addEventListener`.
 - **ESLint Configuration**: ESLint v9+ uses `eslint.config.js` (flat config). Project `package.json` set to `"type": "module"`. CommonJS files should use `.cjs` extension.
 - **Event Handling**: Prefer `addEventListener` over inline attributes (`onclick`, etc.) for better CSP compatibility and code organization.
+- **API Endpoint Usage**:
+    *   Key data submission (`/record-info`) and authentication (`/fetch-records`) now explicitly use the local server's `/api/...` prefixed endpoints. External API calls are limited to specific services like geolocation and the Flowise chatbot.
+- **Frontend Orchestrator Pattern**:
+    *   Main page scripts (e.g., `home.js`, `index.js`) act as orchestrators.
+    *   They import and initialize specialized modules responsible for distinct concerns (UI, data, translation, auth, form logic, location services).
+    *   Orchestrators manage the "wiring" between modules, often by passing callbacks or references, making dependencies explicit.
+    *   This promotes separation of concerns, testability, and maintainability.
 - **Shared Appbar Pattern**: All new main pages should use `initPage` from `page-template.js`.
 - **Focus Trap Implementation**: Use `FocusTrap` class for modals/menus.
 - **Accessibility Best Practices**: `aria-hidden` for duplicated content, `aria-label` for icon-only buttons, "Skip to content" links.

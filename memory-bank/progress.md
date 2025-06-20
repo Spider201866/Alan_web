@@ -54,6 +54,14 @@
     - Refactored `public/index.html` (via `public/scripts/index.js`) and `public/home.html` (via `public/scripts/home.js`) to use the new system for their language selection UI and content translation.
     - Refactored content pages (`aboutalan.html`, `eye.html`, `ear.html`, `skin.html`, `instructions.html`, `atoms.html`, `referral.html`, `weblinks.html`) to remove embedded translations and use the new dynamic system.
 - **CSS Centralization and Refinements (June 20, 2025):** All local and inline styles from `aboutalan.html`, `home.html`, `atoms.html`, `ear.html`, `eye.html`, `instructions.html`, `skin.html`, and `weblinks.html` have been successfully moved to `public/styles/styles.css`. Common styles for exam pages were consolidated using the `.exam-content-container` class. Utility classes were grouped. The "How to use" button text visibility on `home.html` (styled with yellow background and black text) and the `lang.jpg` 404 error were resolved. Spacing for the ">Practice often<" line on exam pages was adjusted using the `.practice-often-spacing` class with `margin-top: 30px;`. Empty/commented page-specific style sections in `styles.css` were cleaned up.
+- **Frontend Orchestrator Refactor (June 20, 2025):**
+    *   Successfully refactored `public/scripts/home.js` and `public/scripts/index.js` into orchestrator patterns.
+    *   Created and integrated new modules:
+        *   For `home.js`: `home-ui.js`, `home-data.js`, `home-translator.js`.
+        *   For `index.js`: `location-service.js`, `auth-flow.js`, `onboarding-form.js`.
+    *   This modularization enhances code organization and maintainability.
+- **API Endpoint Usage Corrected (June 20, 2025):**
+    *   Client-side scripts now correctly target local API endpoints (`/api/record-info`, `/api/fetch-records`) for data submission and authentication, resolving previous 404 errors related to an unavailable external URL.
 
 ## What's Left to Build (New Tasks for "Tomorrow")
 1.  **Implement Conditional Logging Wrapper:**
@@ -100,6 +108,7 @@ The AlanUI Web Chatbot is functional and stable. Recent work focused on:
 - Implementing a new dynamic language loading system using external JSON files.
 - Centralizing all page-specific CSS into `public/styles/styles.css` and making targeted consolidations.
 - **Fixing the build and linting pipeline**: Migrated to ESLint v9+ with `eslint.config.js`, updated `package.json` for ES modules, renamed CommonJS files to `.cjs`, and resolved all linting errors. `npm test` (now including translation consistency check) and `npm run lint` now pass.
+- **Frontend Orchestrator Refactor**: `home.js` and `index.js` have been successfully refactored into orchestrators, with their functionalities broken down into new, single-responsibility modules. This significantly improves the structure and maintainability of the frontend codebase.
 - **Minor HTML hygiene, accessibility, and performance improvements** (image deletion, removed inline styles, removed stale comment, verified meta descriptions, ensured consistent script deferral).
 Core scripts and HTML pages have been refactored to support these enhancements. Documentation and memory bank files are updated. The project is now poised for PWA capabilities and conditional logging.
 

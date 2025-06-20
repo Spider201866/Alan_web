@@ -46,7 +46,7 @@ describe('Chatbot Frontend', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    // jest.resetAllMocks(); // Relying on clearMocks: true in jest.config.js
   });
 
   it('should deduplicate and truncate chat history', () => {

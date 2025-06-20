@@ -149,15 +149,21 @@ The project is organized as follows. For a complete list of all files, see `fold
 │   │   └── triangle.png
 │   ├── scripts/
 │   │   ├── agent1-chatbot-module.js
+│   │   ├── auth-flow.js (Manages auth & page flow for index.html)
 │   │   ├── closer.js
 │   │   ├── faviconAndMeta.js
 │   │   ├── focus-trap.js
-│   │   ├── home.js
-│   │   ├── index.js
+│   │   ├── home.js (Orchestrator for home.html)
+│   │   ├── home-data.js (Data operations for home.html)
+│   │   ├── home-translator.js (Translation logic for home.html)
+│   │   ├── home-ui.js (UI management for home.html)
+│   │   ├── index.js (Orchestrator for index.html)
 │   │   ├── language.js
 │   │   ├── language-loader.js (Handles dynamic loading of translation JSON files)
 │   │   ├── listener-module.js
+│   │   ├── location-service.js (Location fetching for index.html)
 │   │   ├── muted.js
+│   │   ├── onboarding-form.js (Form validation for index.html)
 │   │   └── page-template.js
 │   └── styles/
 │       ├── styles_index.css
@@ -404,3 +410,15 @@ If the browser *still* reports an outdated CSP in the console logs, it points to
     - **Final CSP configuration is in `config/index.js` (as of June 20, 2025)**.
 
 This combination of server-side CSP configuration (now in `config/index.js`), HTML refactoring, and client-side cache clearing ultimately resolved the issues.
+
+---
+
+## API Endpoint Usage
+
+- **Local API Endpoints**: The application primarily uses its own backend API endpoints, prefixed with `/api/`.
+    - `/api/record-info`: Used for submitting user onboarding data and subsequent updates from the home page. Client-side calls in `public/scripts/home-data.js` and `public/scripts/auth-flow.js` target this local endpoint. (Note: This replaces previous usage of an external `https://alan.up.railway.app/record-info` URL, which was found to be unavailable).
+    - `/api/fetch-records`: Used for password verification. Client-side calls in `public/scripts/auth-flow.js` target this local endpoint.
+- Other external APIs are used for specific functionalities:
+    - `https://ipapi.co/json/`: For IP-based geolocation.
+    - `https://api.bigdatacloud.net/data/reverse-geocode-client`: For reverse geocoding.
+    - Flowise endpoint (configured externally): For chatbot interactions.

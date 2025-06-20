@@ -33,7 +33,18 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. The s
 - **Middleware Pattern**: Express.js middleware is used for rate limiting, serving static files, applying security headers (`Helmet`), and handling 404 routes. These are now more organized, with specific middleware functions in the `middleware/` directory (e.g., `middleware/auth.js`, `middleware/validation.js`, `middleware/error.js`).
 - **Module Pattern (Backend & Frontend)**:
     - **Backend**: The server-side code now extensively uses ES modules. `server.js` exports a `createApp(config)` factory function, making the application instance configurable for different environments (like testing). The main execution block in `server.js` uses this factory with the default config for normal operation. Modules are organized into `config/`, `routes/`, `middleware/`, and `services/`.
-    - **Frontend**: Frontend JavaScript files in `public/scripts/` use modules to organize code (e.g., `page-template.js`, `focus-trap.js`, `agent1-chatbot-module.js`, `language.js`, `language-loader.js`).
+    - **Frontend**: Frontend JavaScript files in `public/scripts/` use modules to organize code. This now includes:
+        *   Core utility modules: `page-template.js`, `focus-trap.js`, `language.js`, `language-loader.js`.
+        *   Chatbot interaction: `agent1-chatbot-module.js`.
+        *   **Orchestrator Pattern Modules (New):**
+            *   `home.js` and `index.js` act as orchestrators.
+            *   `home-ui.js`, `home-data.js`, `home-translator.js` (for `home.js`).
+            *   `location-service.js`, `auth-flow.js`, `onboarding-form.js` (for `index.js`).
+- **Frontend Orchestrator Pattern (New)**:
+    *   Main page scripts (`home.js`, `index.js`) are orchestrators.
+    *   They import and initialize specialized, single-responsibility modules.
+    *   Responsibilities are clearly delegated: UI interactions, data operations, translation, authentication flow, form validation, and location services are handled by dedicated modules.
+    *   Orchestrators manage the "wiring" by passing callbacks or references, making dependencies explicit and improving modularity.
 - **App Factory Pattern (Backend)**: `server.js` exports a `createApp(customConfig)` function, allowing the creation of Express app instances with specific configurations. This is crucial for test isolation, enabling tests in `tests/api.test.js` to initialize the server with modified configurations (e.g., temporary file paths, specific OTP settings).
 - **Event Listener Pattern (Frontend)**:
     - Replacing inline event handlers (e.g., `onclick`) with `addEventListener` in JavaScript for improved CSP compliance and separation of concerns (e.g., in `public/home.html`).
@@ -60,7 +71,7 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. The s
     - `validation.js`: Contains `validateRecord` middleware.
     - `error.js`: Contains `handleErrors` async wrapper, `notFound` 404 handler, and `globalErrorHandler`.
 - `services/`:
-    - `records.js`: Contains `readJsonFile` and `appendToHistory` functions for interacting with `user-info.json` and `user-history.json`. Uses `async-mutex`.
+    - `records.js`: Contains `readJsonFile` and `appendToHistory` functions for interacting with `user-info.json` and `user-history.json`. Uses `async-mutex`. These services support the local `/api/record-info` and `/api/fetch-records` endpoints.
 - `public/`: Contains all frontend assets (HTML, CSS, JS, images, favicons).
     - `public/home.html`, `public/index.html`: Main landing and onboarding pages. `home.html` now uses `addEventListener` for navigation button event handling. Preload links for fonts/favicons removed.
     - `public/404.html`: Custom page for unknown routes.
@@ -69,7 +80,9 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. The s
     - `public/focus-trap.js`: Provides `FocusTrap` class for keyboard accessibility.
     - `public/scripts/language-loader.js`: Fetches individual language JSON files.
     - `public/scripts/language.js`: Manages current language, uses loader, provides translation functions, and dispatches `languageChanged` event.
-    - `public/scripts/index.js`, `public/scripts/home.js`: Handle page-specific logic, including UI updates in response to `languageChanged` event.
+    - `public/scripts/index.js`, `public/scripts/home.js`: Act as orchestrators. They initialize their respective modules and manage page-specific logic, including UI updates in response to `languageChanged` event (often delegated to a translator module or handled directly for page-specific elements).
+        - `home-ui.js`, `home-data.js`, `home-translator.js`: Modules for `home.js`.
+        - `location-service.js`, `auth-flow.js`, `onboarding-form.js`: Modules for `index.js`.
     - `public/translations/`: Directory containing individual language JSON files.
     - `public/styles/styles.css`: Centralized stylesheet for all shared UI elements, page-specific layouts, component styles, and utility classes. All styles previously in HTML `<style>` blocks or inline attributes have been moved here. Includes specific rules for `#appBar`, `.chatbot-header`, `.exam-content-container`, and various page/component-specific selectors.
     - `public/styles/styles_index.css`: Specific styles for home/index pages (remains separate for now, but its role might diminish further).
@@ -87,15 +100,17 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. The s
     2. An Express `app` instance is created by `createApp`.
     3. Global middleware is applied by `createApp`: `Helmet` (with CSP from the provided config), CORS, `express.json()`, `express.static()`.
     4. Request is routed via `app.use('/api', apiRoutesFactory(limiter, configToUse))` or `app.use('/', webRoutesFactory(configToUse))`. The route factories receive the active configuration.
-    5. For API routes, the router returned by `apiRoutesFactory` handles the request, potentially using specific middleware like `validateRecord` or `validatePassword`. These routes use the config passed to `apiRoutesFactory` for path lookups.
+    5. For API routes (e.g., `/api/record-info`, `/api/fetch-records`), the router returned by `apiRoutesFactory` handles the request, potentially using specific middleware like `validateRecord` or `validatePassword`. These routes use the config passed to `apiRoutesFactory` for path lookups and interact with services in `services/records.js`.
     6. For web routes, the router returned by `webRoutesFactory` handles serving HTML files, using the config passed to it.
-    6. If no route matches, `notFound` middleware from `middleware/error.js` serves `public/404.html`.
+    7. If no route matches, `notFound` middleware from `middleware/error.js` serves `public/404.html`.
     7. If an error occurs in a route handler (especially async ones wrapped with `handleErrors`), it's passed to `globalErrorHandler` from `middleware/error.js`.
 - **Frontend Page Rendering**:
-    1. HTML page loads (e.g., `home.html`, `referral.html`). Viewport meta tags are consistent. Scripts like `language.js` (with `type="module"`) initialize.
+    1. HTML page loads (e.g., `home.html`, `index.html`, `referral.html`). Viewport meta tags are consistent. Scripts like `language.js` (with `type="module"`) initialize.
     2. `language.js` loads the preferred/default language JSON using `language-loader.js` and dispatches `languageChanged`.
-    3. For sub-pages, `page-template.js`'s `initPage` function is called. It builds the header (translating title using `getTranslation`) and sets up listeners for `languageChanged`.
-    4. Page-specific scripts (e.g., `index.js`, `home.js`, or inline scripts in content pages) listen for `languageChanged` and call their respective functions to apply translations using `getTranslation`.
+    3. For sub-pages (not `index.html` or `home.html`), `page-template.js`'s `initPage` function is called. It builds the header (translating title using `getTranslation`) and sets up listeners for `languageChanged`.
+    4. For `index.html` and `home.html`, their respective orchestrator scripts (`index.js`, `home.js`) are loaded (`type="module"`).
+        - These orchestrators initialize their dedicated UI, data, translation, auth, form, and location modules.
+        - They also set up listeners for `languageChanged` to trigger translation updates (often via their translator module or directly for page-specific elements).
     5. `public/styles/styles.css` applies styling. This includes rules for the `#appBar` (sub-pages) and the `.chatbot-header` (`home.html`), with specific padding for `.chatbot-subtitle` and font styles for `.back-arrow` to ensure their rendered heights are consistent in target environments.
     6. Other external scripts are downloaded in parallel and executed after HTML parsing due to `defer` attribute.
     7. External resources (scripts, styles, fonts) are loaded according to the CSP.

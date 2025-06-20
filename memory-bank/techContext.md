@@ -31,7 +31,7 @@
 - **Project Structure**:
     - `server.js`: Main server application (ES Module), orchestrates middleware and routes.
     - `config/index.js`: Centralized configuration (paths, port, security, CSP).
-    - `routes/`: Contains `api.js` for API routes and `web.js` for frontend page routes.
+    - `routes/`: Contains `api.js` for API routes (e.g., `/api/record-info`, `/api/fetch-records`) and `web.js` for frontend page routes.
     - `middleware/`: Contains `auth.js`, `validation.js`, and `error.js` for various middleware functions.
     - `services/`: Contains `records.js` for data interaction logic.
     - `generate-hash.cjs`: Script to generate password hashes (CommonJS module).
@@ -43,8 +43,14 @@
         - `public/page-template.js`: Shared appbar logic and coordinates page-level translation updates.
         - `public/focus-trap.js`: Focus trap system for accessibility.
         - `public/scripts/agent1-chatbot-module.js`: Core chatbot logic, integrating with Flowise/Gemini.
-        - `public/scripts/index.js`: Handles logic for `index.html`, including onboarding and language selection.
-        - `public/scripts/home.js`: Handles logic for `home.html`, including side menu and language selection.
+        - `public/scripts/index.js`: Orchestrator for `index.html`. Initializes modules for location services, authentication flow, onboarding form validation, and page-specific language controls.
+        - `public/scripts/home.js`: Orchestrator for `home.html`. Initializes modules for UI management, data operations, and translations.
+        - `public/scripts/home-ui.js`: Manages UI elements, interactions, and popups for `home.html`.
+        - `public/scripts/home-data.js`: Handles data fetching and server communication for `home.html`.
+        - `public/scripts/home-translator.js`: Manages UI text updates based on language changes for `home.html`.
+        - `public/scripts/location-service.js`: Fetches IP-based location and determines classification for `index.html`.
+        - `public/scripts/auth-flow.js`: Manages splash screen, password verification, and final "Accept" flow for `index.html`.
+        - `public/scripts/onboarding-form.js`: Manages interactive state and validation of the onboarding form for `index.html`.
         - `public/scripts/language.js`: Manages current language, uses loader, provides translation functions.
         - `public/scripts/language-loader.js`: Fetches individual language JSON files.
         - `public/translations/`: Directory containing `{langCode}.json` translation files.

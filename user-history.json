@@ -14,5 +14,22 @@
     "dateTime": "2025-06-16T22:00:00Z",
     "area": "Test Area",
     "refreshCount": 2732
+  },
+  {
+    "sessionId": "user-1750443081255",
+    "name": "Maximus",
+    "role": "Eyes",
+    "experience": "Confident core knowledge",
+    "country": "United Kingdom",
+    "iso2": "GB",
+    "classification": "HI",
+    "roleClassification": "(M)",
+    "contactInfo": "dave7765@22",
+    "version": "1.0",
+    "dateTime": "20/06/2025, 18:32:28",
+    "latitude": 53.6362,
+    "longitude": -2.1656,
+    "area": "Rochdale",
+    "refreshCount": 14
   }
 ]

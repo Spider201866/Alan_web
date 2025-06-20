@@ -251,6 +251,19 @@
         >
           <div
             style="
+              position: absolute;
+              left: -10000px;
+              top: auto;
+              width: 1px;
+              height: 1px;
+              overflow: hidden;
+            "
+          >
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" autocomplete="username" />
+          </div>
+          <div
+            style="
               display: flex;
               justify-content: center;
               align-items: flex-start;
@@ -264,6 +277,7 @@
                 placeholder="Password"
                 inputmode="numeric"
                 pattern="[0-9]*"
+                autocomplete="new-password"
                 style="
                   color: grey;
                   padding: 12px;
