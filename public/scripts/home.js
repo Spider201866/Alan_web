@@ -108,8 +108,10 @@ function applyHomeTranslations() {
 
   const geoInfoTextEl = document.getElementById('geoInfoText');
   if (geoInfoTextEl) {
-    geoInfoTextEl.textContent =
-      getTranslation('geoInfoPopupText', "Location data helps us understand usage and improve Alan. Your IP address provides an approximate country/city on first load. You can optionally provide more precise GPS data using the 'Check Location' button. This data is handled as per our privacy guidelines.");
+    geoInfoTextEl.textContent = getTranslation(
+      'geoInfoPopupText',
+      "Location data helps us understand usage and improve Alan. Your IP address provides an approximate country/city on first load. You can optionally provide more precise GPS data using the 'Check Location' button. This data is handled as per our privacy guidelines."
+    );
   }
   showGreeting(); // This will now use getTranslation internally
   const mutedButtonTranslations = {
@@ -132,29 +134,29 @@ function applyHomeTranslations() {
   // Translate marquee boxes directly in home.html
   // const boxesFrame = document.getElementById('boxesFrame'); // No longer an iframe
   // if (boxesFrame && boxesFrame.contentDocument) { // No longer an iframe
-    // const boxesDoc = boxesFrame.contentDocument; // No longer an iframe
-    const marqueeLines = [
-      'eyeMarqueeLine1',
-      'eyeMarqueeLine2',
-      'eyeMarqueeLine3',
-      'eyeMarqueeLine4',
-      'eyeMarqueeLine5',
-      'eyeMarqueeLine6',
-      'eyeMarqueeLine7',
-      'earMarqueeLine1',
-      'earMarqueeLine2',
-      'earMarqueeLine3',
-      'earMarqueeLine4',
-      'earMarqueeLine5',
-      'earMarqueeLine6',
-      'earMarqueeLine7',
-    ];
-    marqueeLines.forEach((lineKey) => {
-      const elA = document.getElementById(`${lineKey}a`); // Select from main document
-      if (elA) elA.textContent = getTranslation(lineKey, elA.textContent);
-      const elB = document.getElementById(`${lineKey}b`); // Select from main document
-      if (elB) elB.textContent = getTranslation(lineKey, elB.textContent); // Duplicated content should also be translated if visible, or keys adjusted if only for screen readers
-    });
+  // const boxesDoc = boxesFrame.contentDocument; // No longer an iframe
+  const marqueeLines = [
+    'eyeMarqueeLine1',
+    'eyeMarqueeLine2',
+    'eyeMarqueeLine3',
+    'eyeMarqueeLine4',
+    'eyeMarqueeLine5',
+    'eyeMarqueeLine6',
+    'eyeMarqueeLine7',
+    'earMarqueeLine1',
+    'earMarqueeLine2',
+    'earMarqueeLine3',
+    'earMarqueeLine4',
+    'earMarqueeLine5',
+    'earMarqueeLine6',
+    'earMarqueeLine7',
+  ];
+  marqueeLines.forEach((lineKey) => {
+    const elA = document.getElementById(`${lineKey}a`); // Select from main document
+    if (elA) elA.textContent = getTranslation(lineKey, elA.textContent);
+    const elB = document.getElementById(`${lineKey}b`); // Select from main document
+    if (elB) elB.textContent = getTranslation(lineKey, elB.textContent); // Duplicated content should also be translated if visible, or keys adjusted if only for screen readers
+  });
   // } // End of removed iframe check
 }
 
@@ -332,7 +334,7 @@ function buildPopupContent() {
   const translatedExperience = getTranslation(experienceKeyMap[experienceValue], experienceValue);
   const now = new Date();
   const currDT = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}, ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-  
+
   return `<h2>${getTranslation('userInfoTitle', 'User Information')}</h2>
 <p><strong>${getTranslation('userName', 'Name')}:</strong> ${name}</p>
 <p><strong>${getTranslation('userContact', 'Contact')}:</strong> ${contactInfo}</p>
@@ -423,7 +425,8 @@ async function fetchAreaFromLatLong(lat, lng) {
     const resp = await fetch(url);
     const data = await resp.json();
     return data.city || data.locality || data.principalSubdivision || 'Unknown';
-  } catch (err) {
+  } catch (_err) {
+    // Prefix unused variable with underscore
     return 'Unknown';
   }
 }
@@ -445,7 +448,8 @@ function setupLanguageControls() {
   });
   document.addEventListener('click', () => (languageDropdown.style.display = 'none'));
   languageDropdown.querySelectorAll('li').forEach((item) => {
-    item.addEventListener('click', async () => { // Make async
+    item.addEventListener('click', async () => {
+      // Make async
       const chosenLang = item.getAttribute('data-value');
       localStorage.setItem('preferredLanguage', chosenLang); // Explicitly set here before calling setLanguage
       // updateAllLanguage(chosenLang); // Old direct update

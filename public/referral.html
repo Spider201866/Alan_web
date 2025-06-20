@@ -327,10 +327,22 @@
 
       function applyPageSpecificTranslations() {
         // Labels for top input group
-        document.querySelector('label[for="ref-id"]').textContent = getTranslation('refIdLabel', 'ID');
-        document.querySelector('label[for="ref-tel"]').textContent = getTranslation('refTelLabel', 'Telephone');
-        document.querySelector('label[for="ref-age"]').textContent = getTranslation('refAgeLabel', 'Age');
-        document.querySelector('label[for="ref-sex"]').textContent = getTranslation('refSexLabel', 'M/F');
+        document.querySelector('label[for="ref-id"]').textContent = getTranslation(
+          'refIdLabel',
+          'ID'
+        );
+        document.querySelector('label[for="ref-tel"]').textContent = getTranslation(
+          'refTelLabel',
+          'Telephone'
+        );
+        document.querySelector('label[for="ref-age"]').textContent = getTranslation(
+          'refAgeLabel',
+          'Age'
+        );
+        document.querySelector('label[for="ref-sex"]').textContent = getTranslation(
+          'refSexLabel',
+          'M/F'
+        );
 
         // Screening switch label
         // Note: The text "Screening: No problems" or "Screening: Fail" is dynamically set by initializeForm's updateScreeningLabel.
@@ -339,29 +351,43 @@
         // So, no direct translation here for the dynamic part.
 
         // Priority label
-        document.querySelector('label[for="ref-priority"]').textContent = getTranslation('refPriorityLabel', 'Priority');
+        document.querySelector('label[for="ref-priority"]').textContent = getTranslation(
+          'refPriorityLabel',
+          'Priority'
+        );
         // Priority select options might also need translation if their text is static.
         // For now, assuming their values/text are handled or are language-agnostic.
 
         // Provisional diagnosis label and button
-        document.querySelector('label[for="ref-dx"].dx-label').textContent = getTranslation('refDxLabel', 'Provisional diagnosis (free text)');
-        document.getElementById('btnLoadExample').textContent = getTranslation('refLoadExampleBtn', 'Example');
-        
+        document.querySelector('label[for="ref-dx"].dx-label').textContent = getTranslation(
+          'refDxLabel',
+          'Provisional diagnosis (free text)'
+        );
+        document.getElementById('btnLoadExample').textContent = getTranslation(
+          'refLoadExampleBtn',
+          'Example'
+        );
+
         // Textarea placeholder
         const refDxTextarea = document.getElementById('ref-dx');
         if (refDxTextarea) {
-          refDxTextarea.placeholder = getTranslation('refDxPlaceholder', 'eg SUB-CONJUNTIVAL HAEMORRHAGE – sudden, bright-red patch, no pain or vision change. {problem & onset; what you saw; vision & pupils/hearing/odour; medication} D Smith (Hightown Clinic)');
+          refDxTextarea.placeholder = getTranslation(
+            'refDxPlaceholder',
+            'eg SUB-CONJUNTIVAL HAEMORRHAGE – sudden, bright-red patch, no pain or vision change. {problem & onset; what you saw; vision & pupils/hearing/odour; medication} D Smith (Hightown Clinic)'
+          );
         }
 
         // Preview section title
         // Assuming the h3 element for "Text Preview:" can be targeted or given an ID if needed.
         // For now, let's find it by its current text content if it's unique enough, or add an ID.
         // This is brittle; adding an ID would be better.
-        const previewTitleElement = Array.from(document.querySelectorAll('h3')).find(h3 => h3.textContent.includes('Text Preview:'));
+        const previewTitleElement = Array.from(document.querySelectorAll('h3')).find((h3) =>
+          h3.textContent.includes('Text Preview:')
+        );
         if (previewTitleElement) {
           previewTitleElement.textContent = getTranslation('refPreviewTitle', 'Text Preview:');
         }
-        
+
         // The char count info is dynamically generated, its template string in JS will need translation.
       }
 

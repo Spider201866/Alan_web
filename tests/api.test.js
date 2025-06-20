@@ -59,7 +59,7 @@ describe('API Endpoints', () => {
     };
 
     // Now require the app and helpers
-    ({ app, readJsonFile, appendToHistory } = require('../server'));
+    ({ app, readJsonFile, appendToHistory } = require('../server.cjs')); // Updated to .cjs
   });
 
   afterAll(async () => {
@@ -170,9 +170,10 @@ describe('Helper Functions', () => {
 });
 
 describe('Rate Limiting', () => {
-  it('should return 429 Too Many Requests after exceeding the rate limit', async () => {
+  it('should return 429 Too Many Requests after exceeding the rate limit or 200 if not hit', async () => {
+    expect.hasAssertions(); // Declare that assertions are expected
     // The default limit is 100 requests per 15 minutes per IP.
-    // We'll send 101 requests and expect the last one to be rate limited.
+    // We'll send 101 requests.
     const record = {
       sessionId: 'ratelimit-test',
       latitude: 0,
@@ -181,17 +182,38 @@ describe('Rate Limiting', () => {
       area: 'Test Area',
     };
     let lastRes;
+    let rateLimitHit = false;
     for (let i = 0; i < 101; i++) {
       lastRes = await request(app)
         .post('/record-info')
         .send(record)
         .set('Accept', 'application/json');
+      if (lastRes.statusCode === 429) {
+        rateLimitHit = true;
+        break;
+      }
+      if (lastRes.statusCode !== 200) {
+        // If any request is not 200 before limit, break
+        break;
+      }
     }
-    expect(lastRes.statusCode === 429 || lastRes.statusCode === 200).toBe(true);
-    // If the test environment shares IPs, allow for either 200 or 429, but log if rate limiting is hit.
-    if (lastRes.statusCode === 429) {
+
+    // The final status code must be either 200 or 429.
+    /* eslint-disable jest/no-conditional-expect */
+    // The number of assertions and their nature varies based on whether the rate limit is hit.
+    // This test structure is intentional to cover both scenarios.
+    if (rateLimitHit) {
+      expect(lastRes.statusCode).toBe(429); // Explicitly assert 429 if hit
       expect(lastRes.text).toMatch(/Too many requests/i);
+    } else {
+      // If rate limit was not hit, the loop completed or broke due to a non-200/non-429 status.
+      // We expect the status to be 200 if no rate limit was hit and no other error occurred during the loop.
+      expect(lastRes.statusCode).toBe(200);
+      console.log(
+        'Rate limit was not triggered (all 101 requests were 200 OK or loop broke on non-429). This might be expected in some environments.'
+      );
     }
+    /* eslint-enable jest/no-conditional-expect */
   });
 });
 
@@ -227,7 +249,7 @@ describe('One-Time Password Logic', () => {
 
     // Clear the module cache to get a fresh instance of server.js
     jest.resetModules();
-    ({ app: otpApp } = require('../server'));
+    ({ app: otpApp } = require('../server.cjs')); // Updated to .cjs
   });
 
   afterAll(async () => {
@@ -249,7 +271,8 @@ describe('One-Time Password Logic', () => {
     // Remove any existing user-info.json to avoid test pollution
     try {
       await fs.unlink(path.join(otpTempDir, 'user-info.json'));
-    } catch (e) {
+    } catch (_e) {
+      // Prefix unused variable with underscore
       // Ignore if file does not exist
     }
     await fs.writeFile(

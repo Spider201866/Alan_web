@@ -487,7 +487,8 @@ function initLanguageControls() {
     }
   });
   indexLangDropdown.querySelectorAll('li').forEach((item) => {
-    item.addEventListener('click', async () => { // Make the event listener async
+    item.addEventListener('click', async () => {
+      // Make the event listener async
       const chosenLang = item.getAttribute('data-value');
       localStorage.setItem('preferredLanguage', chosenLang); // Keep this for cross-tab/session persistence
       // updateIndexLanguageDisplays(chosenLang); // Old direct update
@@ -514,25 +515,33 @@ function applyIndexTranslations() {
     const el = document.getElementById(id);
     if (el) el.textContent = getTranslation(key, el.textContent); // Keep existing text as fallback
   }
-  
+
   const splashScreenTextElement = splashScreenRef?.querySelector('p');
   if (splashScreenTextElement) {
-      splashScreenTextElement.textContent = getTranslation('splashScreenText', 'Eye, Ear, Skin AI Assistant');
+    splashScreenTextElement.textContent = getTranslation(
+      'splashScreenText',
+      'Eye, Ear, Skin AI Assistant'
+    );
   }
-
 
   // Translate placeholders and dynamic text
   const passwordInputEl = document.getElementById('passwordInput');
-  if (passwordInputEl) passwordInputEl.placeholder = getTranslation('passwordPlaceholder', 'Password');
-  
+  if (passwordInputEl)
+    passwordInputEl.placeholder = getTranslation('passwordPlaceholder', 'Password');
+
   const noCodeLineEl = document.getElementById('noCodeLine');
-  if (noCodeLineEl) noCodeLineEl.innerHTML = getTranslation('noCodeLine', "No or incorrect code? Contact us <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>here</a>");
-  
+  if (noCodeLineEl)
+    noCodeLineEl.innerHTML = getTranslation(
+      'noCodeLine',
+      "No or incorrect code? Contact us <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>here</a>"
+    );
+
   const nameInputEl = document.getElementById('nameInput');
   if (nameInputEl) nameInputEl.placeholder = getTranslation('namePlaceholder', 'Name');
 
   const contactInputEl = document.getElementById('contactInput');
-  if (contactInputEl) contactInputEl.placeholder = getTranslation('contactPlaceholder', 'Contact (email/phone)');
+  if (contactInputEl)
+    contactInputEl.placeholder = getTranslation('contactPlaceholder', 'Contact (email/phone)');
 
   if (checkboxesContainer.querySelectorAll('input:checked').length === 0) {
     aimsSelectText.textContent = getTranslation('aimsPlaceholder', 'Aims');
@@ -549,18 +558,28 @@ function applyIndexTranslations() {
   checkboxesContainer.querySelectorAll('label').forEach((label) => {
     const checkbox = label.querySelector('input');
     if (checkbox) {
-        const translationKey = aimsTranslations[checkbox.value];
-        // Assuming the text node is the second child of the label, after the input
-        if (label.childNodes && label.childNodes.length > 1 && label.childNodes[1].nodeType === Node.TEXT_NODE) {
-            label.childNodes[1].nodeValue = ' ' + getTranslation(translationKey, checkbox.value); // Fallback to value
-        }
+      const translationKey = aimsTranslations[checkbox.value];
+      // Assuming the text node is the second child of the label, after the input
+      if (
+        label.childNodes &&
+        label.childNodes.length > 1 &&
+        label.childNodes[1].nodeType === Node.TEXT_NODE
+      ) {
+        label.childNodes[1].nodeValue = ' ' + getTranslation(translationKey, checkbox.value); // Fallback to value
+      }
     }
   });
 
   // Translate select options
-  const experienceSelectDisabledOption = document.querySelector('#experience-select option[disabled]');
-  if (experienceSelectDisabledOption) experienceSelectDisabledOption.textContent = getTranslation('experiencePlaceholder', 'Experience');
-  
+  const experienceSelectDisabledOption = document.querySelector(
+    '#experience-select option[disabled]'
+  );
+  if (experienceSelectDisabledOption)
+    experienceSelectDisabledOption.textContent = getTranslation(
+      'experiencePlaceholder',
+      'Experience'
+    );
+
   const expOptionsMapping = {
     'Student / refresher': 'experienceStudentRefresher',
     'Confident core knowledge': 'experienceConfidentCore', // Note: Key in JSON is 'experienceConfidentCore'
@@ -572,9 +591,12 @@ function applyIndexTranslations() {
       option.textContent = getTranslation(translationKey, option.value); // Fallback to original value
     }
   });
-   // Translate language selector text
-   const langSelectorText = document.getElementById('language-selector-text');
-   if (langSelectorText) {
-     langSelectorText.textContent = getTranslation('languageSelectorText', '中文, हिन्दी, Español, العربية, Français...');
-   }
+  // Translate language selector text
+  const langSelectorText = document.getElementById('language-selector-text');
+  if (langSelectorText) {
+    langSelectorText.textContent = getTranslation(
+      'languageSelectorText',
+      '中文, हिन्दी, Español, العربية, Français...'
+    );
+  }
 }

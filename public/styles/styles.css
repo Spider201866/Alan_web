@@ -77,8 +77,12 @@ p {
   outline-offset: 2px;
 }
 
-.hidden { display: none; }
-.visible { display: block; }
+.hidden {
+  display: none;
+}
+.visible {
+  display: block;
+}
 
 .grey-text {
   color: var(--color-grey-medium);
@@ -97,11 +101,13 @@ p {
 }
 
 /* --- Color Utilities --- */
-.highlight { /* This could be a global utility class */
+.highlight {
+  /* This could be a global utility class */
   color: var(--color-red); /* Using variable from styles.css */
 }
 
-.red { /* As used in ear.html, eye.html, skin.html - includes bold */
+.red {
+  /* As used in ear.html, eye.html, skin.html - includes bold */
   color: var(--color-red);
   font-weight: bold;
 }
@@ -110,7 +116,8 @@ p {
   color: orange; /* Consider var(--color-orange) */
 }
 
-.green { /* As used in ear.html, eye.html - distinct from .button.green */
+.green {
+  /* As used in ear.html, eye.html - distinct from .button.green */
   color: green; /* Consider var(--color-green-text) or similar */
 }
 
@@ -127,32 +134,38 @@ p {
 .coral-red {
   color: #ff4040; /* Consider var(--color-coral-red) */
 }
-.blue { /* Distinct from primary/secondary blue variables, used in skin.html */
-  color: blue;   /* Consider var(--color-text-blue) or similar if themed */
+.blue {
+  /* Distinct from primary/secondary blue variables, used in skin.html */
+  color: blue; /* Consider var(--color-text-blue) or similar if themed */
 }
 .pale-blue {
   color: #bfefff; /* Consider var(--color-pale-blue) */
 }
 
-.listText { /* Specific to instructions.html, but is a color utility */
+.listText {
+  /* Specific to instructions.html, but is a color utility */
   color: var(--color-red); /* Using var from .highlight/.red */
 }
 
 /* --- General Utilities --- */
-.block { /* Used in eye.html, ear.html etc. to make spans behave like paragraphs */
+.block {
+  /* Used in eye.html, ear.html etc. to make spans behave like paragraphs */
   display: block;
   margin-bottom: 8px;
 }
 
-.clear { /* Utility class for clearing floats */
+.clear {
+  /* Utility class for clearing floats */
   clear: both;
 }
 
-.boldText { /* Utility class for bold text */
+.boldText {
+  /* Utility class for bold text */
   font-weight: bold;
 }
 
-.justify { /* Utility class for justified text */
+.justify {
+  /* Utility class for justified text */
   text-align: justify;
 }
 
@@ -160,7 +173,6 @@ p {
   height: 1.2em; /* Approximately one line of text height, adjust as needed */
   /* Or use a pixel value like height: 16px; or height: 20px; */
 }
-
 
 /* =====================================================================
    4. PAGE LAYOUT & MAIN STRUCTURE
@@ -212,13 +224,23 @@ p {
   color: var(--color-white);
   position: relative;
 }
-.chatbot-header .red { color: #f44336ff; }
-.chatbot-header .black { color: var(--color-black); }
-.chatbot-header .white { color: var(--color-white); }
+.chatbot-header .red {
+  color: #f44336ff;
+}
+.chatbot-header .black {
+  color: var(--color-black);
+}
+.chatbot-header .white {
+  color: var(--color-white);
+}
 .chatbot-header .grey,
-.divider { color: var(--color-grey-medium); }
+.divider {
+  color: var(--color-grey-medium);
+}
 
-.title-and-subtitle { text-align: center; }
+.title-and-subtitle {
+  text-align: center;
+}
 
 .chatbot-title {
   font-size: 30px;
@@ -284,8 +306,8 @@ p {
   height: 20px;
   cursor: pointer;
   top: -45px;
-  left: 20px; 
-  z-index: 10001; 
+  left: 20px;
+  z-index: 10001;
 }
 
 .menu-icon::before,
@@ -297,13 +319,22 @@ p {
   background-color: var(--color-white);
   transition: background-color 0.3s;
 }
-.menu-icon::before { top: 0; width: 100%; }
-.menu-icon::after { top: 16px; width: 60%; }
+.menu-icon::before {
+  top: 0;
+  width: 100%;
+}
+.menu-icon::after {
+  top: 16px;
+  width: 60%;
+}
 
-.menu-icon.active { color: var(--color-black); }
+.menu-icon.active {
+  color: var(--color-black);
+}
 .menu-icon.open::before,
-.menu-icon.open::after { background-color: var(--color-black); }
-
+.menu-icon.open::after {
+  background-color: var(--color-black);
+}
 
 /* --- Other Header Icons --- */
 .name-icon {
@@ -324,7 +355,9 @@ p {
   user-select: none;
 }
 
-.language-container { position: relative; }
+.language-container {
+  position: relative;
+}
 .language-selector {
   position: fixed;
   right: 23px;
@@ -388,12 +421,28 @@ p {
   text-decoration: none;
   transition: background-color 0.3s;
 }
-.side-menu .chat-link:hover { background-color: var(--color-grey-border); }
-.side-menu hr { width: 100%; border: 1px solid #ddd; margin: 5px 0; }
-.menu-link { text-decoration: none; }
-.menu-row { display: flex; margin-bottom: 10px; align-items: center; }
-.menu-row .button { margin-right: 10px; }
-.menu-row .button:last-child { margin-right: 0; }
+.side-menu .chat-link:hover {
+  background-color: var(--color-grey-border);
+}
+.side-menu hr {
+  width: 100%;
+  border: 1px solid #ddd;
+  margin: 5px 0;
+}
+.menu-link {
+  text-decoration: none;
+}
+.menu-row {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.menu-row .button {
+  margin-right: 10px;
+}
+.menu-row .button:last-child {
+  margin-right: 0;
+}
 
 /* --- Chat History (in Side Menu) --- */
 #chatHistorySidebar {
@@ -417,7 +466,9 @@ p {
   border-radius: 5px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   display: block;
-  transition: background-color 0.2s, box-shadow 0.2s;
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s;
 }
 .session-content {
   padding: 8px 10px;
@@ -465,7 +516,10 @@ p {
   opacity: 0.55;
   transition: opacity 0.2s;
 }
-.copy-btn:hover { opacity: 1; color: var(--color-grey-dark); }
+.copy-btn:hover {
+  opacity: 1;
+  color: var(--color-grey-dark);
+}
 
 /* --- Generic Sidebar (Overlay Style) --- */
 .sidebar {
@@ -488,7 +542,9 @@ p {
   display: block;
   transition: 0.3s;
 }
-.sidebar a:hover { color: #f1f1f1; }
+.sidebar a:hover {
+  color: #f1f1f1;
+}
 .sidebar .closebtn {
   position: absolute;
   top: 0;
@@ -511,14 +567,21 @@ p {
   display: flex;
   align-items: center;
 }
-.openbtn:hover { background-color: #f1f1f1; }
-.openbtn .icon { font-size: 20px; margin-right: 10px; color: #464646; }
+.openbtn:hover {
+  background-color: #f1f1f1;
+}
+.openbtn .icon {
+  font-size: 20px;
+  margin-right: 10px;
+  color: #464646;
+}
 
 /* =====================================================================
    7. MODALS, POPUPS & DROPDOWNS
 ===================================================================== */
 /* --- Generic Modal --- */
-#modal-overlay, .mini-modal {
+#modal-overlay,
+.mini-modal {
   position: fixed;
   z-index: 9998;
   top: 0;
@@ -529,8 +592,10 @@ p {
 }
 .modal {
   position: fixed;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
   justify-content: center;
@@ -546,13 +611,16 @@ p {
   max-width: 400px;
   max-height: 90vh;
   border-radius: 6px;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  box-shadow:
+    0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
   position: relative;
   box-sizing: border-box;
   text-align: center;
   overflow-y: auto;
 }
-.close-button, .close {
+.close-button,
+.close {
   float: right;
   font-weight: bold;
   font-size: 28px;
@@ -560,8 +628,10 @@ p {
   cursor: pointer;
   text-decoration: none;
 }
-.close-button:hover, .close-button:focus,
-.close:hover, .close:focus {
+.close-button:hover,
+.close-button:focus,
+.close:hover,
+.close:focus {
   color: var(--color-black);
 }
 
@@ -603,7 +673,9 @@ p {
   background: transparent;
   color: #666;
 }
-#popup .popup-close:hover { color: var(--color-black); }
+#popup .popup-close:hover {
+  color: var(--color-black);
+}
 
 /* --- Dropdowns --- */
 .dropdown-content {
@@ -620,12 +692,15 @@ p {
   text-decoration: none;
   display: block;
 }
-.dropdown-content a:hover { background-color: #f1f1f1; }
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
 
 /* =====================================================================
    8. BUTTONS & FORMS
 ===================================================================== */
-input, button {
+input,
+button {
   margin: 10px;
   padding: 8px;
   border-radius: 4px;
@@ -648,8 +723,12 @@ button {
   color: var(--color-white);
   background-color: var(--color-secondary-blue);
 }
-.button.green { background-color: var(--color-green); }
-.button.grey { background-color: rgb(181, 181, 181); }
+.button.green {
+  background-color: var(--color-green);
+}
+.button.grey {
+  background-color: rgb(181, 181, 181);
+}
 .button.red {
   background-color: var(--color-red);
   border: 2px solid var(--color-black);
@@ -680,10 +759,19 @@ button {
   text-align: center;
   cursor: pointer;
 }
-.side-menu .btn-colored { border: 2px solid var(--color-black); color: var(--color-black); }
-.side-menu .btn-eye { background-color: rgb(134, 162, 255); }
-.side-menu .btn-ear { background-color: rgb(133, 255, 133); }
-.side-menu .btn-skin { background-color: #efafff; }
+.side-menu .btn-colored {
+  border: 2px solid var(--color-black);
+  color: var(--color-black);
+}
+.side-menu .btn-eye {
+  background-color: rgb(134, 162, 255);
+}
+.side-menu .btn-ear {
+  background-color: rgb(133, 255, 133);
+}
+.side-menu .btn-skin {
+  background-color: #efafff;
+}
 .side-menu .btn-lang {
   background: url('../images/lang.jpg') no-repeat center center;
   background-size: cover;
@@ -710,10 +798,18 @@ button {
   flex-direction: column !important;
   flex-shrink: 0 !important;
 }
-.top-input-group.id-group { flex: 0 0 46px !important; }
-.top-input-group.tel-group { flex: 0 0 120px !important; }
-.top-input-group.age-group { flex: 0 0 50px !important; }
-.top-input-group.sex-group { flex: 0 0 60px !important; }
+.top-input-group.id-group {
+  flex: 0 0 46px !important;
+}
+.top-input-group.tel-group {
+  flex: 0 0 120px !important;
+}
+.top-input-group.age-group {
+  flex: 0 0 50px !important;
+}
+.top-input-group.sex-group {
+  flex: 0 0 60px !important;
+}
 
 .top-input-group label {
   font-size: 11px !important;
@@ -737,13 +833,17 @@ button {
   box-sizing: border-box !important;
   min-width: 0 !important;
 }
-.top-input-group.id-group input { padding-left: 4px !important; padding-right: 4px !important; }
+.top-input-group.id-group input {
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+}
 
 /* =====================================================================
    9. MISCELLANEOUS COMPONENTS
 ===================================================================== */
 .chatbot-container {
-  margin: 0; padding: 0;
+  margin: 0;
+  padding: 0;
   flex-grow: 1;
   display: flex;
   justify-content: center;
@@ -763,19 +863,22 @@ flowise-fullchatbot {
   background-color: var(--color-white) !important;
 }
 
-.access-screen, #registrationSection {
+.access-screen,
+#registrationSection {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.register-link, .login-link {
+.register-link,
+.login-link {
   cursor: pointer;
   color: blue;
   text-decoration: underline;
   font-size: 0.9em;
   margin-top: 20px;
 }
-.detected-condition, #condition-description {
+.detected-condition,
+#condition-description {
   color: var(--color-black);
   text-align: center;
   padding: 0 40px;
@@ -787,13 +890,16 @@ flowise-fullchatbot {
   flex-grow: 1;
 }
 #boxesFrame {
-  width: 100%; height: 100px;
+  width: 100%;
+  height: 100px;
   border: 0;
   overflow: hidden;
   background-color: transparent;
 }
-.object-container, .object-container iframe {
-  width: 100%; height: 100%;
+.object-container,
+.object-container iframe {
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   border: none;
   display: block;
@@ -862,7 +968,8 @@ flowise-fullchatbot {
   margin-bottom: 16px;
 }
 
-.date-spacing { /* New class for the inline style from aboutalan.html */
+.date-spacing {
+  /* New class for the inline style from aboutalan.html */
   display: block;
   margin-top: 24px;
 }
@@ -872,17 +979,20 @@ flowise-fullchatbot {
   margin-bottom: 16px;
 }
 
-.bullet-point { /* Could be a global utility if used elsewhere */
+.bullet-point {
+  /* Could be a global utility if used elsewhere */
   list-style-type: disc;
 }
 
 /* --- Home Page Specific Styles --- */
-.side-menu-top-row { /* Replaces inline style on divs in side-menu */
+.side-menu-top-row {
+  /* Replaces inline style on divs in side-menu */
   display: flex;
   margin-bottom: 10px;
 }
 
-#instructions-button { /* Style for the 'How to use' button */
+#instructions-button {
+  /* Style for the 'How to use' button */
   background-color: yellow;
   color: black;
   /* border: 1px solid black; /* Optional: if a border is desired */
@@ -924,7 +1034,8 @@ flowise-fullchatbot {
 }
 
 /* Styles for elements within the #popup aside */
-.popup-button-container { /* Replaces inline style on div around geolocation button */
+.popup-button-container {
+  /* Replaces inline style on div around geolocation button */
   text-align: center;
   margin-top: 10px;
   position: relative;
@@ -962,13 +1073,15 @@ flowise-fullchatbot {
   z-index: 10; /* Ensure it's above other popup content */
 }
 
-#geoInfoText { /* Or #geo-info-popup p */
+#geoInfoText {
+  /* Or #geo-info-popup p */
   font-size: 14px;
   margin: 0;
 }
 
 /* --- Atoms Page Styles --- */
-#imageContainer { /* Specific to atoms.html */
+#imageContainer {
+  /* Specific to atoms.html */
   flex-grow: 1;
   display: flex;
   justify-content: center;
@@ -976,7 +1089,8 @@ flowise-fullchatbot {
   overflow: hidden;
 }
 
-#imageContainer img { /* Styles for the image within atoms.html's container */
+#imageContainer img {
+  /* Styles for the image within atoms.html's container */
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
@@ -1008,7 +1122,8 @@ flowise-fullchatbot {
   font-weight: bold; /* Default h3 weight, explicit */
 }
 
-.exam-content-container p { /* Overrides global p margin for this specific section */
+.exam-content-container p {
+  /* Overrides global p margin for this specific section */
   margin-top: 0; /* Reset top margin from global p */
   margin-bottom: 8px;
 }
@@ -1042,14 +1157,15 @@ flowise-fullchatbot {
   text-decoration: underline;
 }
 
-
 /* --- Instructions Page Styles (instructions.html) --- */
-.instructions-page { /* Applied to body of instructions.html */
+.instructions-page {
+  /* Applied to body of instructions.html */
   font-size: 15px;
   background-color: white;
 }
 
-#content { /* Assuming this ID is unique to instructions.html or scoped by .instructions-page if not */
+#content {
+  /* Assuming this ID is unique to instructions.html or scoped by .instructions-page if not */
   padding: 8px 20px 20px 20px;
   min-height: 100vh;
   box-sizing: border-box;
@@ -1074,7 +1190,8 @@ flowise-fullchatbot {
   margin-top: -10px;
 }
 
-.switch { /* Specific to instructions.html switch component */
+.switch {
+  /* Specific to instructions.html switch component */
   position: relative;
   display: inline-block;
   width: 60px;
@@ -1118,7 +1235,8 @@ flowise-fullchatbot {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-#additionalExamples p { /* Scoped to #additionalExamples on instructions.html */
+#additionalExamples p {
+  /* Scoped to #additionalExamples on instructions.html */
   margin-top: 0; /* Overriding global p */
   margin-bottom: 10px;
   font-size: 13px;
@@ -1132,14 +1250,16 @@ flowise-fullchatbot {
   line-height: 1.2;
 }
 
-#additionalExamples span { /* This is quite generic, might need more specific selector if conflicts arise */
+#additionalExamples span {
+  /* This is quite generic, might need more specific selector if conflicts arise */
   display: block;
   margin-left: 10px;
   margin-top: 0;
   line-height: 1.2;
 }
 
-.infoText { /* Specific to instructions.html */
+.infoText {
+  /* Specific to instructions.html */
   padding-left: 60px;
   color: black;
   margin-top: 5px;
@@ -1154,43 +1274,54 @@ flowise-fullchatbot {
 
 /* .listText moved to Utility Color Classes section */
 
-.instructions-page hr { /* Scoped to instructions.html */
+.instructions-page hr {
+  /* Scoped to instructions.html */
   border: none;
   height: 2px;
   background-color: #ccc;
   margin: 20px 0;
 }
 
-#useArclight { /* Specific to instructions.html */
+#useArclight {
+  /* Specific to instructions.html */
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-#additionalQuery { /* Specific to instructions.html */
+#additionalQuery {
+  /* Specific to instructions.html */
   padding-top: 5px;
   color: blue; /* Consider a theme variable e.g. var(--color-link-accent) */
   font-size: 15px;
 }
 
 @media (max-width: 600px) {
-  .instructions-page #switchContainer { /* Scoped to instructions.html */
+  .instructions-page #switchContainer {
+    /* Scoped to instructions.html */
     width: 80px;
     margin-left: 0;
     margin-right: 0;
     margin-top: -10px;
   }
-  .instructions-page .infoText { /* Scoped to instructions.html */
+  .instructions-page .infoText {
+    /* Scoped to instructions.html */
     padding-left: 20px;
   }
 }
 
-
 /* =====================================================================
    10. ANIMATIONS & KEYFRAMES
 ===================================================================== */
-.flip-horizontally { animation: smoothFlip360 1.5s ease-out forwards; }
-.pulse { animation: pulse 1s infinite; }
-.flash-blue { background-color: #cde8ff; transition: background-color 1s ease-out; }
+.flip-horizontally {
+  animation: smoothFlip360 1.5s ease-out forwards;
+}
+.pulse {
+  animation: pulse 1s infinite;
+}
+.flash-blue {
+  background-color: #cde8ff;
+  transition: background-color 1s ease-out;
+}
 
 .animation-container {
   display: none;
@@ -1198,12 +1329,48 @@ flowise-fullchatbot {
   align-items: center;
   padding-top: 10px;
 }
-.animation-container img { width: 70px; height: auto; }
-.animation-container img.fade-in-out { opacity: 0; transition: opacity 2s; }
+.animation-container img {
+  width: 70px;
+  height: auto;
+}
+.animation-container img.fade-in-out {
+  opacity: 0;
+  transition: opacity 2s;
+}
 
-@keyframes smoothFlip360 { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
-@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-@keyframes fadeinout { 0% { opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes smoothFlip360 {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes fadeinout {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 
 /* =====================================================================
    11. SCROLLING BOXES MARQUEE
@@ -1216,16 +1383,39 @@ flowise-fullchatbot {
   width: 100vw;
   margin-bottom: 15px;
 }
-.marquee:last-child { margin-bottom: 0; }
-.marquee-content, .marquee-content-reverse { display: flex; }
-
-@media (prefers-reduced-motion: no-preference) {
-  .marquee-content { animation: scroll-left 60s linear infinite; }
-  .marquee-content-reverse { animation: scroll-right 60s linear infinite; }
+.marquee:last-child {
+  margin-bottom: 0;
+}
+.marquee-content,
+.marquee-content-reverse {
+  display: flex;
 }
 
-@keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-@keyframes scroll-right { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-content {
+    animation: scroll-left 60s linear infinite;
+  }
+  .marquee-content-reverse {
+    animation: scroll-right 60s linear infinite;
+  }
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
 
 .box {
   flex-shrink: 0;

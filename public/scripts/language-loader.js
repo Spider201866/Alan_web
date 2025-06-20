@@ -30,11 +30,11 @@ export async function loadLanguage(langCode = 'en') {
     console.warn(error.message);
     // 3. If it fails, try to fetch the English fallback (if we're not already trying to load English).
     if (langCode !== 'en') {
-      console.log("Falling back to English translation.");
+      console.log('Falling back to English translation.');
       return await loadLanguage('en'); // This will use the cache if 'en' is already loaded.
     } else {
       // If even English fails, return an empty object to prevent total app failure.
-      console.error("Critical: Could not load the English fallback translation file.");
+      console.error('Critical: Could not load the English fallback translation file.');
       return {};
     }
   }

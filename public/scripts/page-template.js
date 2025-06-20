@@ -65,7 +65,9 @@ export function initPage(pageTitleKey, applyPageSpecificTranslations) {
 
     // 3. Listen for the custom 'languageChanged' event
     document.addEventListener('languageChanged', () => {
-      console.log(`page-template.js: Detected languageChanged event for page with title key: ${pageTitleKey}`);
+      console.log(
+        `page-template.js: Detected languageChanged event for page with title key: ${pageTitleKey}`
+      );
       updatePageTranslations();
     });
 
@@ -74,7 +76,9 @@ export function initPage(pageTitleKey, applyPageSpecificTranslations) {
       if (e.key === 'preferredLanguage') {
         // The 'languageChanged' event should ideally handle this,
         // but as a fallback or for immediate cross-tab UI update:
-        console.log(`page-template.js: Detected storage event for preferredLanguage on page: ${pageTitleKey}`);
+        console.log(
+          `page-template.js: Detected storage event for preferredLanguage on page: ${pageTitleKey}`
+        );
         // Note: setLanguage in language.js already re-fetches and dispatches 'languageChanged'.
         // Calling updatePageTranslations() here might be redundant if 'languageChanged' is robustly handled,
         // or could be useful if 'languageChanged' isn't caught for some reason from another tab.
