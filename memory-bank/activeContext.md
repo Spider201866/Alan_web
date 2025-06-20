@@ -3,12 +3,13 @@
 # Active Context
 
 ## Current Work Focus
-The dynamic language loading system has been implemented, CSS refactoring (centralization of styles) is largely complete, and the build/linting process is stable. Several HTML hygiene, accessibility, and performance improvements have been made (verified meta descriptions, ensured consistent script deferral). All translation keys are now correctly populated in the JSON files, and thorough testing of the internationalization features has been performed. Upcoming tasks include PWA service worker implementation and implementing a conditional logging wrapper.
+The dynamic language loading system has been implemented, CSS refactoring (centralization of styles) is largely complete, and the build/linting process is stable. Several HTML hygiene, accessibility, and performance improvements have been made (verified meta descriptions, ensured consistent script deferral). All translation keys are now correctly populated in the JSON files, and thorough testing and verification of the internationalization features have been performed. Upcoming tasks include PWA service worker implementation and implementing a conditional logging wrapper.
 
 ## Recent Changes
-- **Translation Task Completed (June 20, 2025):**
-    *   All placeholder/untranslated text in the 22 JSON language files in `public/translations/` has been replaced with accurate translations.
-    *   Thorough testing of all pages in various languages has been performed.
+- **Translation Consistency Verified (June 20, 2025):**
+    *   The `scripts/check-translations.cjs` script was created and executed.
+    *   The script confirmed that all language files (`public/translations/*.json`) have no missing keys, no extra keys, and no placeholder values when compared against `en.json`. This verifies the completion of the translation task.
+    *   The `test` script in `package.json` was updated to include `npm run check-translations`, ensuring translation consistency is checked automatically with `npm test`.
 - **Script Loading Optimization (June 20, 2025):**
     - Reviewed all HTML files in `public/` to ensure external JavaScripts consistently use the `defer` attribute to avoid render-blocking.
     - Added `defer` to `scripts/faviconAndMeta.js` in `aboutalan.html`, `atoms.html`, `ear.html`, `eye.html`, `instructions.html`, `skin.html`, `weblinks.html`, `triangle.html`, and `view-records.html`.

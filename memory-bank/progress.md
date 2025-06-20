@@ -11,7 +11,7 @@
     - ESLint configuration migrated to `eslint.config.js` for ESLint v9+.
     - `package.json` updated with `"type": "module"`; `server.js` and `generate-hash.js` renamed to `.cjs` extensions.
     - `npm run lint` passes with 0 errors (minor acceptable warnings for prefixed unused variables).
-    - `npm test` (including Prettier checks) passes successfully.
+    - `npm test` (including Prettier checks and translation consistency check) passes successfully.
     - Old `.eslintrc.js` file deleted.
 - **HTML Accessibility & Cleanup (June 20, 2025):**
     - Deleted the `img#condition-image` element from `public/home.html` as it was deemed unnecessary.
@@ -85,9 +85,9 @@ The AlanUI Web Chatbot is functional and stable. Recent work focused on:
 - Achieving visual consistency in header/appbar heights.
 - Implementing a new dynamic language loading system using external JSON files.
 - Centralizing all page-specific CSS into `public/styles/styles.css` and making targeted consolidations.
-- **Fixing the build and linting pipeline**: Migrated to ESLint v9+ with `eslint.config.js`, updated `package.json` for ES modules, renamed CommonJS files to `.cjs`, and resolved all linting errors. `npm test` and `npm run lint` now pass.
+- **Fixing the build and linting pipeline**: Migrated to ESLint v9+ with `eslint.config.js`, updated `package.json` for ES modules, renamed CommonJS files to `.cjs`, and resolved all linting errors. `npm test` (now including translation consistency check) and `npm run lint` now pass.
 - **Minor HTML hygiene, accessibility, and performance improvements** (image deletion, removed inline styles, removed stale comment, verified meta descriptions, ensured consistent script deferral).
-Core scripts and HTML pages have been refactored to support these enhancements. Documentation and memory bank files are updated. The project is now poised for translation key completion/verification and PWA capabilities.
+Core scripts and HTML pages have been refactored to support these enhancements. Documentation and memory bank files are updated. The project is now poised for PWA capabilities and conditional logging.
 
 ## Known Issues
 - All server logic is in a single `server.cjs` file (formerly `server.js`), which could become unwieldy for larger projects.
