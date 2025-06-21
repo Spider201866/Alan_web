@@ -22,7 +22,7 @@ jobs:
       run: npm install
 
     - name: Run tests
-      run: npm test
+      run: npm run test:ci
       env:
         # Mock environment variables needed for tests
         MASTER_PASSWORD_HASH: ${{ secrets.TEST_MASTER_PASSWORD_HASH }}
