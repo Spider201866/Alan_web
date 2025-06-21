@@ -1,49 +1,28 @@
-name: AlanUI CI/CD
+name: Continuous Integration
 
 on:
   push:
-    branches: [ main ] # Or your default branch
+    branches: [ main ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version-file: '.nvmrc' # Use the version from .nvmrc
-        cache: 'npm'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Run tests
-      run: npm run test:ci
-      env:
-        # Mock environment variables needed for tests
-        MASTER_PASSWORD_HASH: ${{ secrets.TEST_MASTER_PASSWORD_HASH }}
-        PASSWORD_SALT: ${{ secrets.TEST_PASSWORD_SALT }}
-        ONE_TIME_PASSWORD_HASHES: ${{ secrets.TEST_ONE_TIME_PASSWORD_HASHES }}
-
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' # Only deploy from the main branch
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0 # Fetch all history for the git context
-
-    - name: Set up Railway CLI
-      run: curl -fsSL https://railway.app/install.sh | sh
-
-    - name: Deploy to Railway
-      run: railway up --service "Alan_web" --detach
-      env:
-        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      - name: Run tests
+        run: npm run test:ci
+        env:
+          MASTER_PASSWORD_HASH: ${{ secrets.TEST_MASTER_PASSWORD_HASH }}
+          PASSWORD_SALT: ${{ secrets.TEST_PASSWORD_SALT }}
+          ONE_TIME_PASSWORD_HASHES: ${{ secrets.TEST_ONE_TIME_PASSWORD_HASHES }}
