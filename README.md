@@ -73,7 +73,7 @@ Example `.env.example`:
 MASTER_PASSWORD_HASH=your_master_password_hash_here
 PASSWORD_SALT=your_password_salt_here
 ONE_TIME_PASSWORD_HASHES=
-PORT=3000
+PORT=3000 
 ```
 
 **Important:** Do not commit your `.env` file to version control. It is already included in `.gitignore`.
