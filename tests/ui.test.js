@@ -382,8 +382,7 @@ describe('Alan Webapp UI/UX', () => {
       locationInfo.style.display = 'none'; // Ensure it's hidden initially
 
       // Simulate the relevant part of fetchIPBasedLocation
-      await global.fetch('https://ipapi.co/json/').catch((_error) => {
-        // Prefix unused variable
+      await global.fetch('https://ipapi.co/json/').catch(() => {
         locationInfo.textContent = 'Could not determine your location due to an error.';
         locationInfo.style.display = 'block';
         locationInfo.style.color = 'red';

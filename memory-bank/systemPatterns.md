@@ -146,10 +146,14 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. The s
     3. Tab/Shift+Tab keys cycle focus within the trapped area.
     4. Escape key closes the modal/menu and returns focus to the trigger.
 - **Automated Testing & Code Quality Execution**:
-    1. `npm test` command is run.
+    1. `npm test` command is run locally.
     2. `npm run format:check` is executed first to ensure code formatting.
-    3. `jest` executes test files, including accessibility checks for UI elements and API tests for rate limiting, JSON file integrity, and environment variable validation (now handled in `config/index.js`, `process.exit` behavior still needs manual/specific test verification if critical).
+    3. `jest` executes test files.
     4. `npm run lint` can be run separately to check code quality with ESLint.
+- **CI/CD Pipeline (GitHub Actions)**:
+    1. On push to the `main` branch, a GitHub Actions workflow is triggered.
+    2. A `build-and-test` job checks out the code, installs dependencies, and runs `npm test`.
+    3. If the tests pass, a `deploy` job checks out the code, installs the Railway CLI, and deploys the application to the `mucho-spoon` service on Railway.
 - **Automated Testing & Code Quality**: Comprehensive test suite covering UI and accessibility, with pre-test formatting and linting hooks. ESLint is configured for code quality.
 - **API Error Handling**: Frontend API calls include graceful error handling to provide user feedback.
 - **Custom 404 Page**: A dedicated 404 route and page are implemented for unhandled paths.

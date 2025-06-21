@@ -1,0 +1,49 @@
+name: AlanUI CI/CD
+
+on:
+  push:
+    branches: [ main ] # Or your default branch
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version-file: '.nvmrc' # Use the version from .nvmrc
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm test
+      env:
+        # Mock environment variables needed for tests
+        MASTER_PASSWORD_HASH: ${{ secrets.TEST_MASTER_PASSWORD_HASH }}
+        PASSWORD_SALT: ${{ secrets.TEST_PASSWORD_SALT }}
+        ONE_TIME_PASSWORD_HASHES: ${{ secrets.TEST_ONE_TIME_PASSWORD_HASHES }}
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' # Only deploy from the main branch
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Railway CLI
+      run: |
+        curl -fsSL https://railway.app/install.sh | sh
+        
+    - name: Deploy to Railway
+      run: |
+        railway up --service "mucho-spoon"
+      env:
+        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}

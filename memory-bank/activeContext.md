@@ -3,9 +3,15 @@
 # Active Context
 
 ## Current Work Focus
-Persistent data storage using SQLite has been implemented and tested. API tests (`tests/api.test.js`) have been refactored for the new database backend and are passing. The test suite now uses a centralized server management pattern, and the global `afterAll` reliably cleans up the test database file. All documentation (README, Memory Bank files) has been updated to reflect these significant changes. PWA service worker implementation is the next primary focus.
+The CI/CD pipeline has been set up and documented. The next step is to ensure all memory bank files are updated to reflect this change.
 
 ## Recent Changes
+- **CI/CD Pipeline Setup (June 21, 2025):**
+    *   Created a GitHub Actions workflow at `.github/workflows/ci-cd.yml`.
+    *   The pipeline automatically runs tests on every push to the `main` branch.
+    *   If tests pass, it deploys the application to the `mucho-spoon` service on Railway.
+    *   Updated `README.md` with a "Contributing" section, a troubleshooting guide for Railway deployment, and documentation for the new CI/CD pipeline.
+    *   Fixed a minor ESLint error in `tests/ui.test.js`.
 - **Test Server Lifecycle Management & EBUSY Solution (June 20, 2025):**
     *   The test suite now uses a centralized server management pattern for all API, Rate Limiting, and 404 tests, with a single server instance shared across these suites.
     *   The OTP logic tests use a separate, isolated server instance to ensure a clean environment for sensitive tests.
@@ -88,7 +94,9 @@ Persistent data storage using SQLite has been implemented and tested. API tests 
     - Resolved various CSP issues.
 
 ## Next Steps (New Tasks for "Tomorrow")
-1.  **Implement PWA Service Worker for Install Prompt:**
+1.  **Update Memory Bank:**
+    *   **Goal**: Ensure all memory bank files (`progress.md`, `systemPatterns.md`, `techContext.md`) are updated to reflect the new CI/CD pipeline.
+2.  **Implement PWA Service Worker for Install Prompt:**
     *   **Goal**: Enable PWA features, primarily allowing users to "install" the web app on desktop and mobile.
     *   **Details**:
         *   Create/correct `public/service-worker.js`.
@@ -97,9 +105,9 @@ Persistent data storage using SQLite has been implemented and tested. API tests 
         *   Register the service worker.
         *   Verify `public/favicons/manifest.json` is PWA-ready.
     *   **Considerations**: Test install prompt; ensure offline capabilities.
-2.  **Refine API Test Cleanup (Future Consideration):**
+3.  **Refine API Test Cleanup (Future Consideration):**
     *   Investigate and resolve the `EBUSY` error during the deletion of `test-alan-data.db` in the global `afterAll` hook of `tests/api.test.js`. This likely involves ensuring all `supertest` server instances are properly closed.
-3.  **Explore Component-Based Architecture (Future Consideration):**
+4.  **Explore Component-Based Architecture (Future Consideration):**
     *   **Goal**: Improve modularity, reusability, and maintainability of frontend code.
     *   **Options to Consider**: Native Web Components or a lightweight framework like Svelte.
 

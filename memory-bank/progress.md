@@ -3,6 +3,11 @@
 # Progress
 
 ## What Works
+- **CI/CD Pipeline (June 21, 2025):**
+    - A GitHub Actions workflow is configured at `.github/workflows/ci-cd.yml`.
+    - The pipeline automatically runs `npm test` on every push to the `main` branch.
+    - On successful test completion, it deploys the application to Railway.
+    - Documentation for contributing and the CI/CD pipeline has been added to `README.md`.
 - **Server Refactor (June 20, 2025):**
     - The server has been successfully refactored from a monolithic `server.cjs` into a modular ES Module structure.
     - The new main entry point is `server.js`.

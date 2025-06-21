@@ -195,6 +195,77 @@ The project is organized as follows. For a complete list of all files, see `fold
 
 ---
 
+## Contributing
+
+We welcome contributions to improve the AlanUI Web Chatbot. Please follow these guidelines to ensure a smooth process.
+
+### Running the Project Locally
+
+1.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
+2.  **Set Up Environment Variables:**
+    - Copy the `.env.example` file to a new file named `.env`.
+    - Fill in the required variables, such as `MASTER_PASSWORD_HASH` and `PASSWORD_SALT`. You can generate a new hash using the provided script:
+      ```bash
+      node generate-hash.cjs your_password_here
+      ```
+3.  **Start the Server:**
+    ```bash
+    node server.js
+    ```
+    The application will be available at `http://localhost:3000` (or the port specified in your `.env` file).
+
+### Running Tests
+
+To ensure your changes haven't broken existing functionality, please run the full test suite:
+```bash
+npm test
+```
+This command will also check for code formatting and linting issues.
+
+### Submitting Improvements
+
+1.  **Fork the Repository:** Create your own fork of the project on GitHub.
+2.  **Create a Branch:** Create a new branch for your feature or bug fix.
+3.  **Make Your Changes:** Implement your changes, ensuring you follow the existing code style and patterns.
+4.  **Test Your Changes:** Run `npm test` to ensure all tests pass.
+5.  **Submit a Pull Request:** Push your changes to your fork and submit a pull request to the main repository. Please provide a clear description of the changes you have made.
+
+---
+
+## CI/CD with GitHub Actions
+
+This project uses GitHub Actions for Continuous Integration and Continuous Deployment (CI/CD). The workflow is defined in `.github/workflows/ci-cd.yml`.
+
+### Workflow Overview
+
+The pipeline automates the testing and deployment process:
+1.  **Trigger:** The workflow runs automatically on every `push` to the `main` branch.
+2.  **Build and Test:**
+    - The code is checked out on an `ubuntu-latest` runner.
+    - Node.js is set up using the version specified in the `.nvmrc` file.
+    - Dependencies are installed with `npm install`.
+    - The full test suite is run with `npm test`. This step requires test-specific environment variables to be set as GitHub secrets.
+3.  **Deploy to Railway:**
+    - This job only runs if the `build-and-test` job succeeds.
+    - It installs the Railway CLI.
+    - It deploys the latest version of the application to the `mucho-spoon` service on Railway.
+
+### Required GitHub Secrets
+
+To enable the CI/CD pipeline, you must configure the following secrets in your GitHub repository settings under **Settings > Secrets and variables > Actions**:
+
+-   `RAILWAY_TOKEN`: Your Railway API token, required for deployment. You can generate this from your Railway account settings.
+-   `TEST_MASTER_PASSWORD_HASH`: A mock password hash for running the test suite.
+-   `TEST_PASSWORD_SALT`: A mock salt for running the test suite.
+-   `TEST_ONE_TIME_PASSWORD_HASHES`: A comma-separated list of mock OTP hashes for the test suite.
+
+These secrets ensure that sensitive information is not hardcoded in the repository and is securely accessed by the GitHub Actions runner.
+
+---
+
 ## Appbar and Page Layout Consistency (June 2025)
 
 ### Shared Appbar Pattern
@@ -415,6 +486,27 @@ If the browser *still* reports an outdated CSP in the console logs, it points to
     - **Final CSP configuration is in `config/index.js` (as of June 20, 2025)**.
 
 This combination of server-side CSP configuration (now in `config/index.js`), HTML refactoring, and client-side cache clearing ultimately resolved the issues.
+
+### Deployment: SQLite Path on Railway
+
+**Symptom:**
+- The application fails to start or crashes on Railway with an error related to `better-sqlite3` and being unable to open the database file, often mentioning a path like `/app/alan-data.db`.
+
+**Diagnosis & Resolution:**
+- Railway uses ephemeral filesystems. Any files written to the standard project directory (`/app`) will be lost on restart or redeployment. For persistent data like an SQLite database, you must use a **persistent volume**.
+- The application is configured in `services/data-service.js` to use `/data/alan-data.db` when `NODE_ENV` is set to `production`.
+
+**Steps to Fix:**
+1.  **Add a Volume in Railway:**
+    - In your Railway project settings, go to the "Volumes" tab.
+    - Add a new volume and set the "Mount Path" to `/data`.
+2.  **Set `NODE_ENV`:**
+    - In your Railway service settings, go to the "Variables" tab.
+    - Ensure you have a variable named `NODE_ENV` with the value `production`.
+3.  **Redeploy:**
+    - Trigger a new deployment.
+
+With these settings, `data-service.js` will correctly point to the persistent volume at `/data/alan-data.db`, and the database will persist across deployments.
 
 ---
 
