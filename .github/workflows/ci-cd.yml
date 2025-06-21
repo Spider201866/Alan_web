@@ -37,9 +37,13 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0 # Fetch all history for the git context
+
+    - name: Set up Railway CLI
+      run: curl -fsSL https://railway.app/install.sh | sh
 
     - name: Deploy to Railway
-      uses: railwayapp/github-action@v2.1.0
-      with:
-        railway_token: ${{ secrets.RAILWAY_TOKEN }}
-        railway_service: "Alan_web"
+      run: railway up --service "Alan_web" --detach
+      env:
+        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
