@@ -44,6 +44,6 @@ jobs:
         
     - name: Deploy to Railway
       run: |
-        railway up --service "mucho-spoon"
+        railway up --service "Alan_web"
       env:
         RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
