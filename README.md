@@ -68,7 +68,7 @@ To set up your environment variables:
 2. Copy the contents of `.env.example` into your new `.env` file.
 3. Replace the placeholder values with your actual credentials and configurations.
 
-Example `.env.example`:   
+Example `.env.example`:    
 ```
 MASTER_PASSWORD_HASH=your_master_password_hash_here
 PASSWORD_SALT=your_password_salt_here
