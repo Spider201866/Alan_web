@@ -1,5 +1,5 @@
 import sharp from 'sharp';
-import { readdir, mkdir, stat } from 'fs/promises';
+import { readdir, mkdir } from 'fs/promises';
 import path from 'path';
 
 const inputDir = 'public/images';
@@ -40,16 +40,13 @@ const processImages = async () => {
         const outputPath = path.join(outputDir, `${baseName}.webp`);
         // Sharp can handle animated gifs when you specify animated: true
         await sharp(inputPath, { animated: true })
-            .toFormat('webp', { quality: 80 })
-            .toFile(outputPath);
-        console.log(`  -> Created ${outputPath}`);
-      }
-      else {
-        // For other images, just convert to a single WebP
-        const outputPath = path.join(outputDir, `${baseName}.webp`);
-        await sharp(inputPath)
           .toFormat('webp', { quality: 80 })
           .toFile(outputPath);
+        console.log(`  -> Created ${outputPath}`);
+      } else {
+        // For other images, just convert to a single WebP
+        const outputPath = path.join(outputDir, `${baseName}.webp`);
+        await sharp(inputPath).toFormat('webp', { quality: 80 }).toFile(outputPath);
         console.log(`  -> Created ${outputPath}`);
       }
     }

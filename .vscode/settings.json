@@ -1,6 +1,6 @@
 {
     "liveServer.settings.port": 5501,
     "git.ignoreLimitWarning": true,
-    "github-actions.use-enterprise": true
-
+    "github-actions.use-enterprise": true,
+    "github-actions.validation.enabled": false
 }

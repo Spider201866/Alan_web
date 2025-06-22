@@ -1,101 +1,69 @@
-<!-- Alan UI - techContext.md | 19th June 2025, WJW -->
+<!-- Alan UI - techContext.md | 22nd June 2025, WJW -->
 
-# Tech Context
+# Tech Stack & Tooling
 
-## Technologies Used
-- **Backend**: Node.js, Express.js, SQLite (via `better-sqlite3`)
-- **Frontend**: HTML, CSS, JavaScript (vanilla JS)
-- **Chatbot Integration**: Flowise (for managing chatbot agents)
-- **Large Language Model (LLM)**: Google Gemini 2.5 Flash (30k token agent, static)
-- **Chatbot Agent**: "Alan" (managed via Flowise, incorporates role, logic, memory, and security in its prompt)
-- **Environment Variables**: `dotenv` package for loading `.env` files.
-- **Rate Limiting**: `express-rate-limit`
-- **Security Headers**: `helmet` is used for setting various HTTP security headers. Its Content Security Policy (CSP) is configured in `config/index.js` (and applied in `server.js`) to specify allowed sources for scripts (`scriptSrc`), styles (`styleSrc`), fonts (`fontSrc`), connections (`connectSrc`), images (`imgSrc`), and to manage inline event handlers (`scriptSrcAttr`).
-- **Code Formatting**: Prettier (config in `.prettierrc`), EditorConfig (config in `.editorconfig`).
-- **Code Quality**: ESLint (v9+ using flat config `eslint.config.js`). Project `package.json` has `"type": "module"`.
-- **Testing**: Jest, JSDOM, `eslint-plugin-jest`.
-- **CI/CD**: GitHub Actions for Continuous Integration (testing) and Railway's native GitHub integration for Continuous Deployment.
-- **Performance**:
-    - Deferred script loading (`defer` attribute). Problematic/unnecessary preload links for fonts and favicons were removed from HTML.
-    - Consistent viewport meta tags across HTML files (e.g., `user-scalable=no` removed from `home.html` for consistent rendering).
-- **UI Consistency**:
-    - Centralized CSS (`public/styles/styles.css`) for all shared elements, page-specific layouts, and utility classes. Local styles from HTML pages have been moved here. Common patterns like exam page content use shared classes (e.g., `.exam-content-container`).
-    - Fine-tuned padding (e.g., `.chatbot-subtitle`) and font properties (e.g., `.back-arrow` with `!important`) to achieve visually consistent rendered heights in specific emulation environments.
-    - **Dynamic Language Loading**: Translations are stored in individual JSON files (`public/translations/`) and loaded on demand, with caching.
-- **Error Handling**: Custom 404 page, graceful API error handling.
-- **Event Handling**: Refactoring inline event handlers (e.g., `onclick`) to use `element.addEventListener()` in JavaScript for improved CSP compatibility and modern practices (e.g., in `public/home.html`).
+This document provides a high-level overview of the technologies, dependencies, and tools used in this project.
 
-## Development Setup
-- **Node.js**: Version specified in `package.json` (`engines`) and `.nvmrc` (e.g., `>=20.0.0`).
-- **npm**: Package manager for installing dependencies.
-- **Environment Variables**: `.env` file for configuration, with critical variables validated at startup. Instructions for setup are in `README.md`.
-- **Project Structure**:
-    - `server.js`: Main server application (ES Module), orchestrates middleware and routes.
-    - `config/index.js`: Centralized configuration (paths, port, security, CSP).
-    - `routes/`: Contains `api.js` for API routes (e.g., `/api/record-info`, `/api/fetch-records`, `/api/fetch-history`) and `web.js` for frontend page routes.
-    - `middleware/`: Contains `auth.js`, `validation.js`, and `error.js` for various middleware functions.
-    - `services/`: Contains `data-service.js` for SQLite database interaction logic (using `better-sqlite3`).
-    - `generate-hash.cjs`: Script to generate password hashes (CommonJS module).
-    - `eslint.config.js`: ESLint flat configuration file.
-    - `public/`: Static assets (HTML, CSS, JS, images, favicons).
-        - `public/home.html`, `public/index.html`: Main pages with deferred scripts and consistent viewport meta tags. `home.html` now uses `addEventListener` for navigation button event handling. Preload links removed.
-        - `public/referral.html`: Example of a sub-page that correctly links to `styles/styles.css` and relies on it for appbar styling.
-        - `public/404.html`: Custom 404 page.
-        - `public/page-template.js`: Shared appbar logic and coordinates page-level translation updates.
-        - `public/focus-trap.js`: Focus trap system for accessibility.
-        - `public/scripts/agent1-chatbot-module.js`: Core chatbot logic, integrating with Flowise/Gemini.
-        - `public/scripts/log.js`: Provides conditional client-side logging utilities.
-        - `public/scripts/index.js`: Orchestrator for `index.html`. Initializes modules for location services, authentication flow, onboarding form validation, and page-specific language controls.
-        - `public/scripts/home.js`: Orchestrator for `home.html`. Initializes modules for UI management, data operations, and translations.
-        - `public/scripts/home-ui.js`: Manages UI elements, interactions, and popups for `home.html`.
-        - `public/scripts/home-data.js`: Handles data fetching and server communication for `home.html`.
-        - `public/scripts/home-translator.js`: Manages UI text updates based on language changes for `home.html`.
-        - `public/scripts/location-service.js`: Fetches IP-based location and determines classification for `index.html`.
-        - `public/scripts/auth-flow.js`: Manages splash screen, password verification, and final "Accept" flow for `index.html`.
-        - `public/scripts/onboarding-form.js`: Manages interactive state and validation of the onboarding form for `index.html`.
-        - `public/scripts/language.js`: Manages current language, uses loader, provides translation functions.
-        - `public/scripts/language-loader.js`: Fetches individual language JSON files.
-        - `public/translations/`: Directory containing `{langCode}.json` translation files.
-        - `public/styles/styles.css`: Main centralized stylesheet for all global, component, page-specific, and utility styles.
-        - `public/styles/styles_index.css`: Legacy styles primarily for `index.html` (role may diminish).
-    - `alan-data.db`: SQLite database file (local development, in `.gitignore`).
-    - `package.json`: Defines project metadata, dependencies, and scripts (including `"type": "module"`).
-    - `.prettierrc`: Prettier configuration file.
-    - `.editorconfig`: EditorConfig configuration file.
-    - `.eslintrc.js`: (Deleted, replaced by `eslint.config.js`).
-    - `.nvmrc`: Node Version Manager configuration.
-    - `tests/`: Contains automated test files.
+---
 
-## Technical Constraints
-- **Backend Data Storage**: User session and history data are now stored in a persistent SQLite database using `better-sqlite3`. This replaces the previous JSON file-based storage and "No Backend Data Storage" constraint. The database is `alan-data.db` locally (gitignored) and `/data/alan-data.db` in production on Railway (persistent volume).
-- **Modular Server Structure**: Server logic has been refactored from a single `server.cjs` file into a modular structure (`server.js` as entry point, with `config/`, `routes/`, `middleware/`, `services/` directories). This addresses the previous concern about a single server file.
-- **No Frontend Framework**: Frontend is intentionally built with vanilla HTML, CSS, and JavaScript. This decision aligns with the project's goal of simplicity and democratizing access, as the system is designed to remain small (one main page and a few sidebar pages) and will not grow significantly in complexity.
-- **External Chatbot Agent Dependency**: Reliance on an external Flowise agent (powered by Gemini 2.5 Flash) means the chatbot's performance and availability are dependent on these external services. The prompt engineering and maintenance for the "Alan" agent are handled within Flowise, external to this codebase.
+## Core Technologies
 
-## Dependencies
-- `express`: Web framework for Node.js.
-- `dotenv`: Loads environment variables from a `.env` file.
-- `express-rate-limit`: Middleware for rate limiting.
-- `helmet`: Security middleware for setting HTTP headers.
-- `better-sqlite3`: Library for SQLite database interaction.
-- `eslint`: JavaScript linter for code quality (v9+).
-- `@eslint/js`: Official ESLint JavaScript plugin.
-- `globals`: For defining global variables in ESLint flat config.
-- `eslint-plugin-jest`: ESLint plugin for Jest.
-- `jest`: JavaScript testing framework.
-- `jsdom`: JavaScript implementation of the DOM and HTML standards.
-- `prettier`: Code formatter.
-- (Implicit) Flowise client-side integration or API calls from `agent1-chatbot-module.js`.
+- **Backend**: Node.js (`20.x`), Express.js
+- **Frontend**: Vanilla HTML, CSS, and JavaScript (ES Modules)
+- **Database**: SQLite (via `better-sqlite3`)
+- **Chatbot Integration**: Flowise (external)
 
-## Tool Usage Patterns
-- **`npm install`**: To set up project dependencies.
-- **`node server.js`**: To start the server (updated from `server.cjs`).
-- **`npm run format`**: To automatically format code using Prettier.
-- **`npm run format:check`**: To check code formatting without writing changes (used in CI/CD).
-- **`npm run lint`**: To run ESLint for code quality checks.
-- **`npm test`**: To run the full test suite locally (includes `format:check`).
-- **GitHub Actions**: The workflow in `.github/workflows/ci-cd.yml` runs `npm test` on every push to `main` to act as a CI gate.
-- **Railway**: The native GitHub integration is used for CD, configured to wait for the CI check to pass before deploying.
-- **`npx jest tests/ui.test.js`**: To run specific UI/accessibility tests.
-- **Flowise UI/API**: For configuring and managing the "Alan" chatbot agent (external to this project's codebase).
-- **Cleanup Procedures**: Documented in `README.md` for resetting local data (deleting `alan-data.db`) and test artifacts.
+---
+
+## Build & Optimization
+
+- **Image Processing**: `sharp`
+- **JS/CSS Minification**: `terser`, `css-minify`
+- **Gzip Compression**: `compression` (Express middleware)
+
+---
+
+## Development Tools
+
+- **Package Manager**: npm
+- **Testing**: Jest, JSDOM
+- **Code Quality**: ESLint, Prettier
+- **CI/CD**: GitHub Actions
+- **Deployment**: Railway
+- **Cross-Platform Scripts**: `cross-env`
+
+---
+
+## Key Dependencies
+
+### Production Dependencies
+- `better-sqlite3`
+- `compression`
+- `cors`
+- `dotenv`
+- `express`
+- `express-rate-limit`
+- `helmet`
+- `nodemailer`
+
+### Development Dependencies
+- `cross-env`
+- `css-minify`
+- `eslint`
+- `jest`
+- `jsdom`
+- `prettier`
+- `sharp`
+- `supertest`
+- `terser`
+
+---
+
+## NPM Scripts
+
+- `npm run dev`: Starts the local development server (serves from `public/`).
+- `npm test`: Runs the full test suite.
+- `npm run build`: Creates an optimized production build in `dist/`.
+- `npm start`: Starts the server in production mode (serves from `dist/`).
+- `npm run format`: Formats all code.
+- `npm run lint`: Lints the codebase.
