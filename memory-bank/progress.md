@@ -4,6 +4,9 @@
 
 ## What Works
 
+- **Full CSP Compliance and Bug Fixes (June 22, 2025):**
+    - Refactored all HTML pages to remove inline scripts, ensuring full Content Security Policy (CSP) compliance.
+    - Fixed a bug where non-numeric latitude and longitude values were sent to the backend, causing a 400 Bad Request error.
 - **Deployment 404 Error Fixed (June 22, 2025):**
     - Resolved a critical bug where the production server was not serving files from the `dist` directory by updating `routes/web.js` to be environment-aware.
 - **Accessibility Audit & Fixes (June 22, 2025):**

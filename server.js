@@ -33,7 +33,7 @@ export function createApp(configToUse) {
 
   // Pass the config to the route factories
   app.use('/api', apiRoutesFactory(limiter, configToUse));
-  app.use('/', webRoutesFactory(configToUse));
+  app.use('/', webRoutesFactory());
 
   app.use(notFound);
   app.use(globalErrorHandler);

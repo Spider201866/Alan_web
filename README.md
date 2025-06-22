@@ -40,6 +40,8 @@ npm run dev
 ```
 This will serve the original, un-minified files from the `public/` directory. The application will be available at `http://localhost:3000`.
 
+**Note:** Due to server-side caching, you may need to forcefully restart the server to see changes. On Windows, you can do this by running `taskkill /F /IM node.exe` before `npm run dev`.
+
 ### Running Tests
 To run the full test suite, including format and translation checks:
 ```bash

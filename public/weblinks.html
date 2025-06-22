@@ -13,8 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"></noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap">
     <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
     <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png" />
@@ -69,24 +68,6 @@
       </ol>
     </main>
 
-    <script type="module">
-      import { initPage } from './scripts/page-template.js';
-      import { getTranslation } from './scripts/language.js';
-
-      function applyPageSpecificTranslations() {
-        const introParagraph = document.getElementById('weblinksIntroParagraph');
-        if (introParagraph) {
-          introParagraph.textContent = getTranslation(
-            'weblinksIntro',
-            'Here are some interesting links...'
-          );
-        }
-        // Link texts themselves are not translated in this pass, as they are mostly titles/proper nouns.
-      }
-
-      // Using 'linksButton' key which should resolve to "Links" or "Web Links"
-      // If a different title is needed, a new key like 'pageTitle_weblinks' can be added to JSON files.
-      initPage('linksButton', applyPageSpecificTranslations);
-    </script>
+    <script type="module" src="scripts/weblinks.js" defer></script>
   </body>
 </html>

@@ -59,6 +59,10 @@ graph TD
 
 -   **Development**: A developer runs `npm run dev` to start a local server that serves the raw, un-optimized files from the `public` directory for easy debugging.
 
+-   **Server Restart Procedure (Development)**: Due to caching issues, the Node.js server may need to be forcefully restarted to see changes.
+    1.  Kill all running Node.js processes: `taskkill /F /IM node.exe`
+    2.  Restart the development server: `npm run dev`
+
 -   **Production Deployment**:
     1.  A push to the `main` branch triggers the GitHub Actions workflow.
     2.  The workflow installs dependencies (`npm ci`), runs tests (`npm test`), and creates a production build (`npm run build`).

@@ -6,6 +6,15 @@
 All known issues have been resolved. The project is now stable, accessible, optimized, and ready for the next phase of development.
 
 ## Recent Changes
+- **Full CSP Compliance and Bug Fixes (June 22, 2025):**
+    - Refactored all HTML pages to remove inline scripts, ensuring full Content Security Policy (CSP) compliance.
+    - Created individual JavaScript files for each page to handle its specific logic.
+    - Fixed a bug where non-numeric latitude and longitude values were sent to the backend, causing a 400 Bad Request error.
+    - Updated backend validation to gracefully handle null values for geolocation data.
+- **CSP and Favicon Errors Fixed (June 22, 2025):**
+    - Resolved a Content Security Policy violation by removing inline `onload` event handlers from 13 HTML files.
+    - Fixed `net::ERR_CONNECTION_REFUSED` errors for favicons by simplifying `routes/web.js` to prevent conflicts with the `express.static` middleware.
+    - Documented the server restart procedure (`taskkill /F /IM node.exe`) in `systemPatterns.md` to address development server caching issues.
 - **Deployment 404 Error Fixed (June 22, 2025):**
     - Resolved a critical bug where the production server was not serving files from the `dist` directory.
     - The `routes/web.js` file was updated to correctly determine the base path for assets based on the `NODE_ENV`, ensuring the `dist` directory is used in production.

@@ -13,8 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"></noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap">
     <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
     <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png" />
@@ -68,45 +67,6 @@
       </div>
     </div>
 
-    <script type="module">
-      import { initPage } from './scripts/page-template.js';
-      import { getTranslation } from './scripts/language.js';
-
-      // This is the function that knows how to translate THIS specific page
-      function applyPageSpecificTranslations() {
-        document.getElementById('generalObservationHeading').textContent = getTranslation(
-          'generalObservationHeading',
-          'General observation'
-        );
-        document.getElementById('generalObservationText').innerHTML = getTranslation(
-          'generalObservationText',
-          'Default general observation text.'
-        );
-        document.getElementById('uvLightHeading').textContent = getTranslation(
-          'uvLightHeading',
-          'UV (Wood’s) light'
-        );
-        document.getElementById('uvLightText').innerHTML = getTranslation(
-          'uvLightText',
-          'Default UV light text.'
-        );
-        document.getElementById('dermoscopyHeading').textContent = getTranslation(
-          'dermoscopyHeading',
-          'Dermoscopy'
-        );
-        document.getElementById('dermoscopyText').innerHTML = getTranslation(
-          'dermoscopyText',
-          'Default dermoscopy text.'
-        );
-        // Assuming "additionalText" should be "additionalText_skin" for consistency
-        document.getElementById('additionalText').innerHTML = getTranslation(
-          'additionalText_skin',
-          'Default additional skin text.'
-        );
-      }
-
-      // Initialize the page with its title key and its specific translation function
-      initPage('pageTitle_howToExamineSkin', applyPageSpecificTranslations);
-    </script>
+    <script type="module" src="scripts/skin.js" defer></script>
   </body>
 </html>
