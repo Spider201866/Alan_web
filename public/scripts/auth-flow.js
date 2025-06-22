@@ -88,6 +88,7 @@ function verifyPassword() {
         ? getTranslation('passwordErrorMsg', 'Incorrect password. Please try again.')
         : getTranslation('serverErrorMsg', 'Server error. Please try again later.');
       passwordErrorEl.style.display = 'block';
+      passwordErrorEl.focus();
       passwordInputEl.value = '';
       // Re-enable submit button on error, but it will be disabled by input listener if field is empty
       passwordSubmitBtnEl.disabled = passwordInputEl.value.trim() === '';

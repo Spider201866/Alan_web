@@ -77,8 +77,9 @@ export function initOnboardingForm(elements) {
 
   jobSelectElementEl.addEventListener('click', (e) => {
     e.stopPropagation(); // Prevent click from bubbling to document listener immediately
-    checkboxesContainerEl.style.display = aimsDropdownExpanded ? 'none' : 'block';
     aimsDropdownExpanded = !aimsDropdownExpanded;
+    checkboxesContainerEl.style.display = aimsDropdownExpanded ? 'block' : 'none';
+    jobSelectElementEl.setAttribute('aria-expanded', aimsDropdownExpanded);
   });
 
   // Global click listener to close aims dropdown if open
@@ -86,6 +87,7 @@ export function initOnboardingForm(elements) {
     if (aimsDropdownExpanded) {
       checkboxesContainerEl.style.display = 'none';
       aimsDropdownExpanded = false;
+      jobSelectElementEl.setAttribute('aria-expanded', 'false');
     }
   });
 

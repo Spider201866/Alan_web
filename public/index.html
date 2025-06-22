@@ -109,6 +109,10 @@
         color: blue;
         border-color: blue;
       }
+      .onboarding-field::placeholder {
+        color: #6c757d;
+        opacity: 1; /* Firefox adds a lower opacity by default */
+      }
     </style>
   </head>
 
@@ -119,7 +123,7 @@
       <!-- ===================================================================== -->
       <section class="password-screen hidden" id="passwordScreen" style="position: relative">
         <div style="text-align: center; margin-bottom: 60px">
-          <div
+          <button
             id="language-selector-text"
             style="
               margin-bottom: 6px;
@@ -127,17 +131,22 @@
               color: #000;
               text-align: center;
               cursor: pointer;
+              background: none;
+              border: none;
+              padding: 0;
+              font: inherit;
             "
             aria-label="Open language selector"
-            onclick="document.getElementById('index-language-button').click()"
           >
             中文, हिन्दी, Español, العربية, Français...
-          </div>
+          </button>
           <div style="display: flex; justify-content: center">
             <button
               id="index-language-button"
               title="Choose language"
               aria-label="Change language"
+              aria-haspopup="true"
+              aria-expanded="false"
               style="
                 background: url('images/lang.webp') no-repeat center center;
                 background-size: cover;
@@ -167,8 +176,8 @@
               line-height: 1.2;
             "
           >
-            <ul style="margin: 0; padding: 0; list-style: none">
-              <li data-value="en" style="padding: 6px; cursor: pointer">
+            <ul role="listbox" style="margin: 0; padding: 0; list-style: none">
+              <li role="option" data-value="en" style="padding: 6px; cursor: pointer">
                 <strong>English</strong> (English)
               </li>
               <li data-value="zh" style="padding: 6px; cursor: pointer">
@@ -245,9 +254,7 @@
           Enter your Alan password
         </h2>
 
-        <form
-          onsubmit="event.preventDefault(); document.getElementById('passwordSubmitBtn').click();"
-        >
+        <form id="passwordForm">
           <div
             style="
               position: absolute;
@@ -277,18 +284,11 @@
                 inputmode="numeric"
                 pattern="[0-9]*"
                 autocomplete="new-password"
-                style="
-                  color: grey;
-                  padding: 12px;
-                  width: 150px;
-                  font-size: 16px;
-                  border-radius: 14px;
-                  border: 2px solid #ccc;
-                  margin-bottom: 20px;
-                "
+                class="onboarding-field"
               />
               <p
                 id="passwordError"
+                tabindex="-1"
                 style="
                   color: red;
                   display: none;
@@ -327,13 +327,13 @@
             text-align: center;
           "
         >
-          No or incorrect code? Contact us
+          No or incorrect code? 
           <a
             href="https://medicine.st-andrews.ac.uk/arclight/contact/"
             style="color: blue"
             target="_blank"
             rel="noopener"
-            >here</a
+            >Contact us on the Arclight Project website</a
           >
         </p>
       </section>
@@ -343,14 +343,12 @@
       <!-- ===================================================================== -->
       <section class="splash-screen hidden">
         <picture>
-          <source type="image/webp" media="(max-width: 600px)" srcset="images/Q-100w.webp">
-          <source type="image/webp" srcset="images/Q.webp">
-          <img id="logo1" src="images/Q.png" alt="Q Logo" width="100" height="100">
+          <source type="image/webp" srcset="images/Q-100w.webp 100w, images/Q-200w.webp 200w, images/Q-300w.webp 300w, images/Q.webp 500w" sizes="(max-width: 600px) 100px, 200px">
+          <img id="logo1" src="images/Q.png" alt="Q Logo" width="200" height="62">
         </picture>
         <picture>
-          <source type="image/webp" media="(max-width: 600px)" srcset="images/AP-100w.webp">
-          <source type="image/webp" srcset="images/AP.webp">
-          <img id="logo2" src="images/AP.png" alt="AP Logo" width="100" height="100">
+          <source type="image/webp" srcset="images/AP-100w.webp 100w, images/AP-200w.webp 200w, images/AP-300w.webp 300w, images/AP.webp 500w" sizes="(max-width: 600px) 100px, 200px">
+          <img id="logo2" src="images/AP.png" alt="AP Logo" width="200" height="122">
         </picture>
         <p>Eye, Ear, Skin AI Assistant</p>
       </section>
@@ -382,9 +380,9 @@
             title="2-20 letters, spaces, apostrophes or hyphens only"
             autocomplete="name"
           />
-          <div id="job-role-select" class="onboarding-field custom-multiselect-container">
-            <div class="select-box"><span id="aims-select-text">Aims</span></div>
-            <div class="checkboxes" id="aims-checkboxes">
+          <div id="job-role-select" class="onboarding-field custom-multiselect-container" role="combobox" aria-haspopup="listbox" aria-expanded="false" tabindex="0">
+            <div class="select-box" id="aims-select-box"><span id="aims-select-text">Aims</span></div>
+            <div class="checkboxes" id="aims-checkboxes" role="listbox">
               <label><input type="checkbox" value="Eyes" /> Eyes</label>
               <label><input type="checkbox" value="Ears" /> Ears</label>
               <label><input type="checkbox" value="Skin" /> Skin</label>

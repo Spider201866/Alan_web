@@ -51,12 +51,15 @@ const processImages = async () => {
           .toFile(standardPath);
         console.log(`  -> Created ${standardPath}`);
 
-        const mobilePath = path.join(outputDir, `${baseName}-100w.webp`);
-        await sharp(inputPath)
-          .resize({ width: 100 })
-          .toFormat('webp', { quality: 80 })
-          .toFile(mobilePath);
-        console.log(`  -> Created ${mobilePath}`);
+        const sizes = [300, 200, 100];
+        for (const size of sizes) {
+          const outputPath = path.join(outputDir, `${baseName}-${size}w.webp`);
+          await sharp(inputPath)
+            .resize({ width: size })
+            .toFormat('webp', { quality: 80 })
+            .toFile(outputPath);
+          console.log(`  -> Created ${outputPath}`);
+        }
       } else {
         // For other images, just convert to a single WebP
         const outputPath = path.join(outputDir, `${baseName}.webp`);

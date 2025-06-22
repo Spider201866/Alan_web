@@ -1,7 +1,6 @@
 // public/scripts/index.js (New Orchestrator Version)
 // Orchestrates location, auth, form, and language modules for the index page.
 
-import log from './log.js';
 import { setLanguage, getTranslation } from './language.js';
 import { initializeLocation } from './location-service.js';
 import { initAuthFlow } from './auth-flow.js';
@@ -36,6 +35,21 @@ function main() {
   acceptButton = document.getElementById('acceptButton');
   indexLangButton = document.getElementById('index-language-button');
   indexLangDropdown = document.getElementById('index-language-dropdown');
+  const langSelectorText = document.getElementById('language-selector-text');
+  const passwordForm = document.getElementById('passwordForm');
+
+  // Add event listeners to replace inline handlers
+  if (langSelectorText) {
+    langSelectorText.addEventListener('click', () => {
+      indexLangButton.click();
+    });
+  }
+  if (passwordForm) {
+    passwordForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      passwordSubmitBtn.click();
+    });
+  }
 
   // 1. Start fetching location data in the background.
   initializeLocation();
@@ -81,25 +95,38 @@ function initLanguageControls() {
 
   indexLangButton.addEventListener('click', (e) => {
     e.stopPropagation();
-    indexLangDropdown.style.display =
-      indexLangDropdown.style.display === 'none' || indexLangDropdown.style.display === ''
-        ? 'block'
-        : 'none';
+    const isExpanded = indexLangButton.getAttribute('aria-expanded') === 'true';
+    indexLangDropdown.style.display = isExpanded ? 'none' : 'block';
+    indexLangButton.setAttribute('aria-expanded', !isExpanded);
   });
   document.addEventListener('click', () => {
     // Close dropdown on click outside
     if (indexLangDropdown.style.display === 'block') {
       indexLangDropdown.style.display = 'none';
+      indexLangButton.setAttribute('aria-expanded', 'false');
     }
   });
   indexLangDropdown.querySelectorAll('li').forEach((item) => {
+    item.setAttribute('tabindex', '0'); // Make it focusable
     item.addEventListener('click', async () => {
-      const chosenLang = item.getAttribute('data-value');
-      localStorage.setItem('preferredLanguage', chosenLang);
-      await setLanguage(chosenLang); // Triggers 'languageChanged' event
-      indexLangDropdown.style.display = 'none';
+      selectLanguage(item);
+    });
+    item.addEventListener('keydown', async (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selectLanguage(item);
+      }
     });
   });
+
+  async function selectLanguage(item) {
+    const chosenLang = item.getAttribute('data-value');
+    localStorage.setItem('preferredLanguage', chosenLang);
+    await setLanguage(chosenLang); // Triggers 'languageChanged' event
+    indexLangDropdown.style.display = 'none';
+    indexLangButton.setAttribute('aria-expanded', 'false');
+    indexLangButton.focus(); // Return focus to the button
+  }
 }
 
 function applyIndexTranslations() {

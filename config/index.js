@@ -29,7 +29,6 @@ const cspOptions = {
         "'self'",
         'https://cdn.jsdelivr.net',
         'https://alan.up.railway.app',
-        'https://ipapi.co',
         'https://cdnjs.cloudflare.com',
         'https://unpkg.com', // Added for Leaflet
         "'unsafe-inline'", // For inline <script> tags and older browser compatibility for event handlers
@@ -52,7 +51,7 @@ const cspOptions = {
       connectSrc: [
         "'self'",
         'https://alan.up.railway.app',
-        'https://ipapi.co', // Corrected typo from server.cjs
+        'https://ipinfo.io', // Geolocation service
         'https://unpkg.com', // Added for Leaflet (though not strictly connect, good to have if it makes other sub-requests)
         'https://cdn.jsdelivr.net',
         'https://cdnjs.cloudflare.com',
