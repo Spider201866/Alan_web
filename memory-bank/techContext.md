@@ -12,6 +12,7 @@ This document provides a high-level overview of the technologies, dependencies, 
 - **Frontend**: Vanilla HTML, CSS, and JavaScript (ES Modules)
 - **Database**: SQLite (via `better-sqlite3`)
 - **Chatbot Integration**: Flowise (external)
+- **Geolocation**: `ipinfo.io`
 
 ---
 

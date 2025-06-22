@@ -220,7 +220,7 @@ function storeClassifications(iso2) {
 
 async function fetchIPBasedLocation() {
   try {
-    const response = await fetch('https://ipapi.co/json/');
+    const response = await fetch('https://ipinfo.io/json');
     if (!response.ok) {
       throw new Error(`IP API request failed with status ${response.status}`);
     }
@@ -230,7 +230,7 @@ async function fetchIPBasedLocation() {
       localStorage.setItem('longitude', data.longitude?.toString() || 'Not set');
       localStorage.setItem('country', data.country_name || 'Not set');
       localStorage.setItem('area', data.city || 'Not set'); // 'area' often refers to city in this context
-      const iso2 = data.country || 'Not set'; // ipapi.co uses 'country' for ISO2 code
+      const iso2 = data.country || 'Not set';
       localStorage.setItem('iso2', iso2);
       storeClassifications(iso2);
     } else {

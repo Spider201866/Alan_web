@@ -51,9 +51,9 @@ const processImages = async () => {
           .toFile(standardPath);
         console.log(`  -> Created ${standardPath}`);
 
-        const mobilePath = path.join(outputDir, `${baseName}-150w.webp`);
+        const mobilePath = path.join(outputDir, `${baseName}-100w.webp`);
         await sharp(inputPath)
-          .resize({ width: 150 })
+          .resize({ width: 100 })
           .toFormat('webp', { quality: 80 })
           .toFile(mobilePath);
         console.log(`  -> Created ${mobilePath}`);
