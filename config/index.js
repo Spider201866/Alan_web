@@ -18,17 +18,42 @@ function envVar(name) {
   return v;
 }
 
-// A very permissive CSP for debugging purposes.
-// This is NOT secure and should be rebuilt carefully.
 const cspOptions = {
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: [
+      defaultSrc: ["'self'"],
+      scriptSrc: [
         "'self'",
+        'https://cdn.jsdelivr.net',
+        'https://alan.up.railway.app',
+        'https://cdnjs.cloudflare.com',
+        'https://unpkg.com',
+      ],
+      styleSrc: [
+        "'self'",
+        'https://cdnjs.cloudflare.com',
+        'https://fonts.googleapis.com',
+        'https://unpkg.com',
         "'unsafe-inline'",
-        "'unsafe-eval'",
+      ],
+      fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
+      imgSrc: [
+        "'self'",
         'data:',
-        'https://*',
+        'https://*.tile.openstreetmap.org',
+        'https://unpkg.com',
+        'https://raw.githubusercontent.com',
+      ],
+      connectSrc: [
+        "'self'",
+        'https://alan.up.railway.app',
+        'https://ipinfo.io',
+        'https://unpkg.com',
+        'https://cdn.jsdelivr.net',
+        'https://cdnjs.cloudflare.com',
+        'https://fonts.googleapis.com',
+        'https://flowiseai-railway-production-fecf.up.railway.app',
+        'https://api.bigdatacloud.net',
       ],
     },
   },

@@ -14,7 +14,6 @@ export function createApp(configToUse) {
 
   // global middleware
   app.use(compression());
-  console.log('Using CSP options:', JSON.stringify(configToUse.cspOptions, null, 2));
   app.use(helmet(configToUse.cspOptions));
   app.use(cors());
   app.use(express.json());

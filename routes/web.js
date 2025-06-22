@@ -4,15 +4,15 @@ import path from 'path';
 // import configFromFile from '../config/index.js';
 
 export default function webRoutes(config) {
-  // Added config parameter
   const router = express.Router();
+  const basePath = process.env.NODE_ENV === 'production' ? path.join(config.paths.public, '..', 'dist') : config.paths.public;
 
   router.get('/', (req, res) => {
-    res.sendFile(path.join(config.paths.public, 'index.html')); // Use passed config
+    res.sendFile(path.join(basePath, 'index.html'));
   });
 
   router.get('/view-records', (req, res) => {
-    res.sendFile(path.join(config.paths.public, 'view-records.html')); // Use passed config
+    res.sendFile(path.join(basePath, 'view-records.html'));
   });
 
   return router;
