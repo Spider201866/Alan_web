@@ -30,7 +30,7 @@ This document provides a high-level overview of the technologies, dependencies, 
 - **Testing**: Jest, JSDOM
 - **Code Quality**: ESLint, Prettier
 - **CI/CD**: GitHub Actions
-- **Deployment**: Railway
+- **Deployment**: Railway (build environment configured via `nixpacks.toml`)
 - **Cross-Platform Scripts**: `cross-env`
 
 ---
