@@ -2,26 +2,7 @@
 
 [phases.build]
 # Install system dependencies required by Puppeteer (used by the 'critical' package)
+# We install the full chromium package which should include all necessary libraries.
 pkgs = [
-  "libx11",
-  "libxrandr",
-  "libxinerama",
-  "libxcursor",
-  "libxfixes",
-  "libxi",
-  "libxext",
-  "libxrender",
-  "libxtst",
-  "libxscrnsaver",
-  "libxcomposite",
-  "libxdamage",
-  "libxkbcommon",
-  "nss",
-  "alsa-lib",
-  "cups",
-  "at-spi2-atk",
-  "atk",
-  "gdk-pixbuf",
-  "gtk3",
-  "pango"
+  "chromium"
 ]
