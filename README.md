@@ -76,5 +76,3 @@ This project uses GitHub Actions for Continuous Integration and Deployment. On e
 3.  The application is deployed to Railway.
 
 For more details, see `.github/workflows/ci-cd.yml`.
-
-**Note on Railway Build Environment:** The `npm run build` command uses the `critical` package, which requires certain system-level dependencies to run its headless browser. These dependencies are specified in the `nixpacks.toml` file to ensure the Railway build environment has everything it needs.

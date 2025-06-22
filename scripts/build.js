@@ -2,7 +2,6 @@ import { minify } from 'terser';
 import cssmin from 'css-minify';
 import { promises as fs } from 'fs';
 import path from 'path';
-import * as critical from 'critical';
 
 const publicDir = 'public';
 const distDir = 'dist';
@@ -71,34 +70,6 @@ async function build() {
         console.log(`  - Minified CSS: ${file}`);
       }
     }
-
-    // 4. Generate and inline critical CSS
-    console.log('Generating and inlining critical CSS...');
-    const htmlFiles = ['index.html', 'home.html'];
-    for (const htmlFile of htmlFiles) {
-      const filePath = path.join(distDir, htmlFile);
-      console.log(`  - Processing ${htmlFile}...`);
-      await critical.generate({
-        base: distDir,
-        src: htmlFile,
-        target: {
-          html: htmlFile,
-        },
-        inline: true,
-        dimensions: [
-          {
-            height: 800,
-            width: 400,
-          },
-          {
-            height: 900,
-            width: 1200,
-          },
-        ],
-        // We don't need to extract here as we are inlining
-      });
-    }
-
 
     console.log('\nBuild process complete! Optimized files are in the dist directory.');
   } catch (error) {

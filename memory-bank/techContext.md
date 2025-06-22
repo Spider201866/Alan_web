@@ -17,7 +17,6 @@ This document provides a high-level overview of the technologies, dependencies, 
 
 ## Build & Optimization
 
-- **Critical CSS**: `critical` for extracting and inlining above-the-fold CSS.
 - **Image Processing**: `sharp` for converting and resizing images.
 - **JS/CSS Minification**: `terser`, `css-minify`.
 - **Gzip Compression**: `compression` (Express middleware).
@@ -30,7 +29,7 @@ This document provides a high-level overview of the technologies, dependencies, 
 - **Testing**: Jest, JSDOM
 - **Code Quality**: ESLint, Prettier
 - **CI/CD**: GitHub Actions
-- **Deployment**: Railway (build environment configured via `nixpacks.toml`)
+- **Deployment**: Railway
 - **Cross-Platform Scripts**: `cross-env`
 
 ---
@@ -48,7 +47,6 @@ This document provides a high-level overview of the technologies, dependencies, 
 - `nodemailer`
 
 ### Development Dependencies
-- `critical`
 - `cross-env`
 - `css-minify`
 - `eslint`
@@ -65,7 +63,7 @@ This document provides a high-level overview of the technologies, dependencies, 
 
 - `npm run dev`: Starts the local development server (serves from `public/`).
 - `npm test`: Runs the full test suite.
-- `npm run build`: Creates a fully optimized production build in `dist/`, including critical CSS.
+- `npm run build`: Creates an optimized production build in `dist/`.
 - `npm start`: Starts the server in production mode (serves from `dist/`).
 - `npm run format`: Formats all code.
 - `npm run lint`: Lints the codebase.

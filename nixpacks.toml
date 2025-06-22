@@ -1,8 +1,0 @@
-# nixpacks.toml
-
-[phases.build]
-# Install system dependencies required by Puppeteer (used by the 'critical' package)
-# We install the full chromium package which should include all necessary libraries.
-pkgs = [
-  "chromium"
-]

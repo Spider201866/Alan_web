@@ -3,33 +3,25 @@
 # Active Context
 
 ## Current Work Focus
-All code health, performance, and documentation tasks are complete. The project is stable and ready for the next phase of development.
+The build failure on Railway has been resolved by removing the `critical` CSS package. All documentation has been updated to reflect this change. The project is now stable and deployable.
 
 ## Recent Changes
-- **Jest Deprecation Warnings Fixed (June 22, 2025):** Refactored `tests/ui.test.js` to correctly manage the JSDOM lifecycle, resolving the `_document` property access warnings.
-- **Deprecated Dependencies Investigated (June 22, 2025):** Confirmed that remaining deprecation warnings stem from sub-dependencies of already-updated packages (`jest`, `css-minify`) and are not actionable at this level.
-- **Documentation Refactor (June 22, 2025):** Pruned and refactored all documentation for clarity and conciseness, including the creation of `.clinerules/reminders.md`.
-
-<details>
-<summary>Archived Changes (pre-refactor)</summary>
-
-- **Code Health and Stability (June 22, 2025):**
-    - Aligned Node.js versions, updated all dependencies, and fixed the test suite.
-- **Performance Optimization (June 22, 2025):**
-    - Implemented a full build and optimization pipeline.
-
-</details>
+- **Build Fix (June 22, 2025):**
+    - Removed the `critical` package and its associated logic from the build script to resolve persistent build failures in the Railway deployment environment.
+    - Removed the `nixpacks.toml` configuration file as it was no longer needed.
+    - Updated all documentation to reflect the removal of the critical CSS optimization.
+- **Jest Deprecation Warnings Fixed (June 22, 2025):** Refactored UI tests to correctly manage the JSDOM lifecycle.
+- **Deprecated Dependencies Investigated (June 22, 2025):** Confirmed that remaining deprecation warnings stem from sub-dependencies.
+- **Documentation Refactor (June 22, 2025):** Pruned and refactored all documentation for clarity.
 
 ## Next Steps
 1.  **Implement PWA Service Worker for Install Prompt.**
 2.  **Address `EBUSY` error in test cleanup.** (Lower priority)
+3.  **Re-evaluate Critical CSS implementation.** (Future task)
 
 ## Active Decisions and Considerations
-- The project is stable. The remaining `EBUSY` error and sub-dependency deprecation warnings are accepted, known issues that do not block development.
-
-## Important Patterns and Preferences
-- **JSDOM Test Cleanup**: UI tests must properly tear down the JSDOM environment (e.g., `window.close()`) in an `afterEach` block to prevent memory leaks and deprecation warnings.
-- **Sub-dependency Investigation**: When deprecation warnings persist after updating top-level packages, use `npm ls <package-name>` to trace the dependency chain and confirm the source.
+- The decision to remove the `critical` CSS optimization was a pragmatic choice to ensure the application is deployable. The benefits of the other optimizations (image processing, minification, Gzip) are still in place.
 
 ## Learnings and Project Insights
-- **Test Environment Management**: Seemingly minor issues in test setup (like not closing a JSDOM window) can lead to deprecation warnings that signal future breaking changes. Proper setup and teardown are critical for long-term test suite stability.
+- **Deployment Environment Parity**: A build process that works locally may fail in a CI/CD environment if the underlying system dependencies are not identical. Debugging these issues can be complex.
+- **Pragmatic Retreat**: When a specific optimization causes significant deployment issues, it's sometimes better to remove it and ensure the application is stable, rather than continuing to debug a complex environmental issue.
