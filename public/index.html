@@ -343,8 +343,14 @@
       <!-- SPLASH SCREEN (initially visible only via JS) -->
       <!-- ===================================================================== -->
       <section class="splash-screen hidden">
-        <img id="logo1" src="images/Q-200w.webp" alt="Q Logo" width="200" height="62">
-        <img id="logo2" src="images/AP-200w.webp" alt="AP Logo" width="200" height="122">
+        <picture>
+          <source type="image/webp" srcset="images/Q-100w.webp 100w, images/Q-200w.webp 200w, images/Q-300w.webp 300w, images/Q.webp 500w" sizes="(max-width: 600px) 100vw, 200px">
+          <img id="logo1" src="images/Q.png" alt="Q Logo" width="200" height="62">
+        </picture>
+        <picture>
+          <source type="image/webp" srcset="images/AP-100w.webp 100w, images/AP-200w.webp 200w, images/AP-300w.webp 300w, images/AP.webp 500w" sizes="(max-width: 600px) 100vw, 200px">
+          <img id="logo2" src="images/AP.png" alt="AP Logo" width="200" height="122">
+        </picture>
         <p>Eye, Ear, Skin AI Assistant</p>
       </section>
 
