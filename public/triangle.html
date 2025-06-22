@@ -1,69 +1,16 @@
-<!-- Alan UI - triangle.html | 19th June 2025, WJW -->
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Animated triangle with 8 equal segments. Visual resource for Alan's AI assistant."
-    />
-    <title>8 Equal Segments Triangle</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"></noscript>
-    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
-    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png" />
-    <link rel="manifest" href="favicons/manifest.json" />
-    <script type="module" src="scripts/faviconAndMeta.js" defer></script>
+    <title>Triangle</title>
     <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        background: #000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-      }
-      .animation-wrapper {
-        width: clamp(300px, 80vmin, 600px);
-        height: clamp(300px, 80vmin, 600px);
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /* Nudge the animation up slightly for better visual centering */
-        transform: translateY(-30px);
-      }
-      .triangle-animation {
-        width: 100%;
-        height: 100%;
-        position: relative;
-      }
-      .triangle path {
-        backface-visibility: hidden;
-      }
+      html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+      svg { width: 80vmin; height: 80vmin; }
     </style>
   </head>
   <body>
-    <div class="animation-wrapper">
-      <div class="triangle-animation">
-        <!-- FIX: Added aria-hidden="true" to hide decorative SVG from screen readers -->
-        <svg class="triangle" viewBox="0 0 440 440" aria-hidden="true">
-          <g id="triangleGroup"></g>
-        </svg>
-      </div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" defer></script>
-    <script src="scripts/triangle.js" defer></script>
+    <svg viewBox="0 0 440 440" aria-hidden="true">
+      <path d="M 220,220 L 0,440 L 440,440 Z" fill="#FF0000" stroke="none"></path>
+    </svg>
   </body>
 </html>
