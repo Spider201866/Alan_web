@@ -43,6 +43,20 @@ const processImages = async () => {
           .toFormat('webp', { quality: 80 })
           .toFile(outputPath);
         console.log(`  -> Created ${outputPath}`);
+      } else if (baseName === 'Q' || baseName === 'AP') {
+        // Create a standard and a smaller mobile version for logos
+        const standardPath = path.join(outputDir, `${baseName}.webp`);
+        await sharp(inputPath)
+          .toFormat('webp', { quality: 80 })
+          .toFile(standardPath);
+        console.log(`  -> Created ${standardPath}`);
+
+        const mobilePath = path.join(outputDir, `${baseName}-150w.webp`);
+        await sharp(inputPath)
+          .resize({ width: 150 })
+          .toFormat('webp', { quality: 80 })
+          .toFile(mobilePath);
+        console.log(`  -> Created ${mobilePath}`);
       } else {
         // For other images, just convert to a single WebP
         const outputPath = path.join(outputDir, `${baseName}.webp`);

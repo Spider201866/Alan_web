@@ -39,6 +39,8 @@ graph TD
 
 -   **Build/Deployment Pattern**: Source code lives in `public/`, and the `npm run build` script generates an optimized version in `dist/`. The CI/CD pipeline automates this process for production deployments.
 
+-   **Critical CSS Pattern**: To eliminate render-blocking resources, the build process uses the `critical` package to identify above-the-fold CSS, inline it directly into the HTML `<head>`, and load the full stylesheet asynchronously.
+
 -   **App Factory Pattern (Backend)**: `server.js` exports a `createApp(config)` function. This allows for the creation of configurable Express app instances, which is essential for creating isolated environments for testing.
 
 -   **Modular Backend**: The backend code is organized into distinct modules with clear responsibilities:

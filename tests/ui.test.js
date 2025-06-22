@@ -58,7 +58,7 @@ describe('Alan Webapp UI/UX', () => {
   describe('Accessibility: Marquee duplication in boxes.html', () => {
     it('should set aria-hidden="true" on all duplicated marquee elements (IDs ending in "b")', () => {
       // Simulate the DOM structure of boxes.html
-      const dom = new JSDOM(`
+      document.body.innerHTML = `
       <section class="marquee">
         <div class="marquee-content-reverse">
           <div class="box" id="eyeMarqueeLine1a">What is glaucoma?</div>
@@ -75,8 +75,7 @@ describe('Alan Webapp UI/UX', () => {
           <div class="box" id="earMarqueeLine2b" aria-hidden="true">Can I see the tympanic membrane with my Arclight?</div>
         </div>
       </section>
-    `);
-      const document = dom.window.document;
+    `;
       // Select all elements with id ending in "b"
       const duplicatedBoxes = Array.from(document.querySelectorAll('.box[id$="b"]'));
       duplicatedBoxes.forEach((box) => {
@@ -88,42 +87,38 @@ describe('Alan Webapp UI/UX', () => {
   // Accessibility tests for icon-only buttons
   describe('Accessibility: Icon-only buttons have aria-labels', () => {
     it('should have aria-label on icon-only language button in home.html', () => {
-      const dom = new JSDOM(`
+      document.body.innerHTML = `
       <button class="button btn-lang" id="language-button" aria-label="Change language"></button>
-    `);
-      const document = dom.window.document;
+    `;
       const btn = document.getElementById('language-button');
       expect(btn).not.toBeNull();
       expect(btn.getAttribute('aria-label')).toBe('Change language');
     });
 
     it('should have aria-label on icon-only language button in index.html', () => {
-      const dom = new JSDOM(`
+      document.body.innerHTML = `
       <button id="index-language-button" title="Choose language" aria-label="Change language"></button>
-    `);
-      const document = dom.window.document;
+    `;
       const btn = document.getElementById('index-language-button');
       expect(btn).not.toBeNull();
       expect(btn.getAttribute('aria-label')).toBe('Change language');
     });
 
     it('should have aria-label on icon-only clear history button in home.html', () => {
-      const dom = new JSDOM(`
+      document.body.innerHTML = `
       <button id="clearHistoryBtn" title="Delete all chat history" aria-label="Delete all chat history">
         <svg></svg>
       </button>
-    `);
-      const document = dom.window.document;
+    `;
       const btn = document.getElementById('clearHistoryBtn');
       expect(btn).not.toBeNull();
       expect(btn.getAttribute('aria-label')).toBe('Delete all chat history');
     });
 
     it('should have aria-label on icon-only geo-info button in home.html', () => {
-      const dom = new JSDOM(`
+      document.body.innerHTML = `
       <button id="geo-info-button" aria-label="Show location info">i</button>
-    `);
-      const document = dom.window.document;
+    `;
       const btn = document.getElementById('geo-info-button');
       expect(btn).not.toBeNull();
       expect(btn.getAttribute('aria-label')).toBe('Show location info');
@@ -132,6 +127,9 @@ describe('Alan Webapp UI/UX', () => {
 
   afterEach(() => {
     jest.resetAllMocks();
+    if (dom) {
+      dom.window.close();
+    }
   });
 
   describe('Accessibility: "Skip to content" link', () => {
@@ -398,11 +396,7 @@ describe('Alan Webapp UI/UX', () => {
 
   it('should show the sliding boxes iframe', () => {
     // Simulate the boxes iframe in the DOM
-    const boxesFrame = document.createElement('object');
-    boxesFrame.id = 'boxesFrame';
-    boxesFrame.type = 'text/html';
-    boxesFrame.setAttribute('data', 'boxes.html');
-    document.body.appendChild(boxesFrame);
+    document.body.innerHTML = `<object id="boxesFrame" type="text/html" data="boxes.html"></object>`;
     // Check that the iframe exists and is visible
     expect(document.getElementById('boxesFrame')).not.toBeNull();
     expect(document.getElementById('boxesFrame').style.display).not.toBe('none');
@@ -410,15 +404,14 @@ describe('Alan Webapp UI/UX', () => {
 
   it('should show buttons below the chatbox entry', () => {
     // Simulate the muted buttons container and buttons
-    const mutedButtons = document.createElement('div');
-    mutedButtons.id = 'muted-buttons';
-    mutedButtons.innerHTML = `
-      <button id="images" class="button">Images</button>
-      <button id="help" class="button">Help</button>
-      <button id="screenshot" class="button">Screenshot</button>
-      <button id="refer" class="button">Refer</button>
+    document.body.innerHTML = `
+      <div id="muted-buttons">
+        <button id="images" class="button">Images</button>
+        <button id="help" class="button">Help</button>
+        <button id="screenshot" class="button">Screenshot</button>
+        <button id="refer" class="button">Refer</button>
+      </div>
     `;
-    document.body.appendChild(mutedButtons);
     expect(document.getElementById('images')).not.toBeNull();
     expect(document.getElementById('help')).not.toBeNull();
     expect(document.getElementById('screenshot')).not.toBeNull();
@@ -443,23 +436,22 @@ describe('Alan Webapp UI/UX', () => {
 
   it('should show sidebar and all navigation buttons, and simulate back arrow/page navigation', () => {
     // Simulate sidebar and navigation buttons
-    const sideMenu = document.createElement('nav');
-    sideMenu.className = 'side-menu';
-    sideMenu.innerHTML = `
-      <button id="instructions-button" class="button">How to use</button>
-      <button id="eye-button" class="button">Eye</button>
-      <button id="ear-button" class="button">Ear</button>
-      <button id="skin-button" class="button">Skin</button>
-      <button id="videos-button" class="button">Videos</button>
-      <button id="atoms-button" class="button">Atoms</button>
-      <button id="tools-button" class="button">Tools</button>
-      <button id="links-button" class="button">Links</button>
-      <button id="about-button" class="button">About</button>
-      <button id="arclight-project-button" class="button">Arclight Project</button>
-      <button id="language-button" class="button">Language</button>
-      <button class="back-arrow button">Back</button>
+    document.body.innerHTML = `
+      <nav class="side-menu">
+        <button id="instructions-button" class="button">How to use</button>
+        <button id="eye-button" class="button">Eye</button>
+        <button id="ear-button" class="button">Ear</button>
+        <button id="skin-button" class="button">Skin</button>
+        <button id="videos-button" class="button">Videos</button>
+        <button id="atoms-button" class="button">Atoms</button>
+        <button id="tools-button" class="button">Tools</button>
+        <button id="links-button" class="button">Links</button>
+        <button id="about-button" class="button">About</button>
+        <button id="arclight-project-button" class="button">Arclight Project</button>
+        <button id="language-button" class="button">Language</button>
+        <button class="back-arrow button">Back</button>
+      </nav>
     `;
-    document.body.appendChild(sideMenu);
     // Check all buttons exist
     [
       'instructions-button',
@@ -488,22 +480,21 @@ describe('Alan Webapp UI/UX', () => {
 
   it('should show all navigation and language links/buttons', () => {
     // Simulate navigation and language links/buttons
-    const nav = document.createElement('nav');
-    nav.className = 'side-menu';
-    nav.innerHTML = `
-      <button id="instructions-button" class="button">How to use</button>
-      <button id="eye-button" class="button">Eye</button>
-      <button id="ear-button" class="button">Ear</button>
-      <button id="skin-button" class="button">Skin</button>
-      <button id="videos-button" class="button">Videos</button>
-      <button id="atoms-button" class="button">Atoms</button>
-      <button id="tools-button" class="button">Tools</button>
-      <button id="links-button" class="button">Links</button>
-      <button id="about-button" class="button">About</button>
-      <button id="arclight-project-button" class="button">Arclight Project</button>
-      <button id="language-button" class="button">Language</button>
+    document.body.innerHTML = `
+      <nav class="side-menu">
+        <button id="instructions-button" class="button">How to use</button>
+        <button id="eye-button" class="button">Eye</button>
+        <button id="ear-button" class="button">Ear</button>
+        <button id="skin-button" class="button">Skin</button>
+        <button id="videos-button" class="button">Videos</button>
+        <button id="atoms-button" class="button">Atoms</button>
+        <button id="tools-button" class="button">Tools</button>
+        <button id="links-button" class="button">Links</button>
+        <button id="about-button" class="button">About</button>
+        <button id="arclight-project-button" class="button">Arclight Project</button>
+        <button id="language-button" class="button">Language</button>
+      </nav>
     `;
-    document.body.appendChild(nav);
     [
       'instructions-button',
       'eye-button',
@@ -545,10 +536,8 @@ describe('Alan Webapp UI/UX', () => {
 
   it('should show splash screen on load', async () => {
     // Simulate splash screen element
-    const splash = document.createElement('div');
-    splash.id = 'splash-screen';
-    splash.style.display = 'block';
-    document.body.appendChild(splash);
+    document.body.innerHTML = `<div id="splash-screen" style="display: block;"></div>`;
+    const splash = document.getElementById('splash-screen');
     expect(document.getElementById('splash-screen').style.display).toBe('block');
     // Simulate hiding splash after load (e.g., after timeout)
     await new Promise((resolve) => {
@@ -562,24 +551,18 @@ describe('Alan Webapp UI/UX', () => {
 
   it('should show the logo and footer', () => {
     // Simulate logo and footer
-    const logo = document.createElement('div');
-    logo.className = 'chatbot-title';
-    logo.textContent = 'Alan';
-    document.body.appendChild(logo);
-    const footer = document.createElement('footer');
-    footer.className = 'chatbot-version';
-    footer.textContent = 'Alan can make mistakes, double check everything';
-    document.body.appendChild(footer);
+    document.body.innerHTML = `
+      <div class="chatbot-title">Alan</div>
+      <footer class="chatbot-version">Alan can make mistakes, double check everything</footer>
+    `;
     expect(document.querySelector('.chatbot-title').textContent).toMatch(/Alan/);
     expect(document.querySelector('.chatbot-version').textContent).toMatch(/double check/);
   });
 
   it('should animate Alan logo spin on greeting', () => {
     // Simulate Alan logo and greeting logic
-    const logo = document.createElement('div');
-    logo.className = 'chatbot-title';
-    logo.textContent = 'Alan';
-    document.body.appendChild(logo);
+    document.body.innerHTML = `<div class="chatbot-title">Alan</div>`;
+    const logo = document.querySelector('.chatbot-title');
     // Simulate class toggle for spin animation
     logo.classList.remove('flip-horizontally');
     void logo.offsetWidth; // force reflow
@@ -589,14 +572,10 @@ describe('Alan Webapp UI/UX', () => {
 
   it('should show Good History and Examine Well text', () => {
     // Simulate the text elements
-    const goodHistory = document.createElement('span');
-    goodHistory.id = 'good-history';
-    goodHistory.textContent = 'Good History';
-    document.body.appendChild(goodHistory);
-    const examineWell = document.createElement('span');
-    examineWell.id = 'examine-well';
-    examineWell.textContent = 'Examine Well';
-    document.body.appendChild(examineWell);
+    document.body.innerHTML = `
+      <span id="good-history">Good History</span>
+      <span id="examine-well">Examine Well</span>
+    `;
     expect(document.getElementById('good-history').textContent).toMatch(/Good History/);
     expect(document.getElementById('examine-well').textContent).toMatch(/Examine Well/);
   });
@@ -623,22 +602,16 @@ describe('Alan Webapp UI/UX', () => {
 
   it('should trigger Images, Help, Screenshot, and Refer button actions', () => {
     // Simulate buttons
-    const imagesBtn = document.createElement('button');
-    imagesBtn.id = 'images';
-    imagesBtn.className = 'button';
-    document.body.appendChild(imagesBtn);
-    const helpBtn = document.createElement('button');
-    helpBtn.id = 'help';
-    helpBtn.className = 'button';
-    document.body.appendChild(helpBtn);
-    const screenshotBtn = document.createElement('button');
-    screenshotBtn.id = 'screenshot';
-    screenshotBtn.className = 'button';
-    document.body.appendChild(screenshotBtn);
-    const referBtn = document.createElement('button');
-    referBtn.id = 'refer';
-    referBtn.className = 'button';
-    document.body.appendChild(referBtn);
+    document.body.innerHTML = `
+      <button id="images" class="button"></button>
+      <button id="help" class="button"></button>
+      <button id="screenshot" class="button"></button>
+      <button id="refer" class="button"></button>
+    `;
+    const imagesBtn = document.getElementById('images');
+    const helpBtn = document.getElementById('help');
+    const screenshotBtn = document.getElementById('screenshot');
+    const referBtn = document.getElementById('refer');
 
     // Mock window.open and screenshot function
     window.open = jest.fn();
@@ -665,13 +638,12 @@ describe('Alan Webapp UI/UX', () => {
 
   it('should show password entry UI and accept input', () => {
     // Simulate password entry form
-    const form = document.createElement('form');
-    form.id = 'password-form';
-    form.innerHTML = `
-      <input type="password" id="password-input" />
-      <button id="password-submit">Submit</button>
+    document.body.innerHTML = `
+      <form id="password-form">
+        <input type="password" id="password-input" />
+        <button id="password-submit">Submit</button>
+      </form>
     `;
-    document.body.appendChild(form);
     const input = document.getElementById('password-input');
     input.value = '662023';
     expect(input.value).toBe('662023');
@@ -688,14 +660,13 @@ describe('Alan Webapp UI/UX', () => {
 
   it('should show onboarding screen and accept user details', () => {
     // Simulate onboarding form
-    const form = document.createElement('form');
-    form.id = 'onboarding-form';
-    form.innerHTML = `
-      <input type="text" id="name-input" value="Test User" />
-      <input type="text" id="area-input" value="Test Area" />
-      <button id="onboarding-submit">Continue</button>
+    document.body.innerHTML = `
+      <form id="onboarding-form">
+        <input type="text" id="name-input" value="Test User" />
+        <input type="text" id="area-input" value="Test Area" />
+        <button id="onboarding-submit">Continue</button>
+      </form>
     `;
-    document.body.appendChild(form);
     const nameInput = document.getElementById('name-input');
     const areaInput = document.getElementById('area-input');
     expect(nameInput.value).toBe('Test User');

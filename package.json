@@ -30,6 +30,7 @@
   "main": "server.js",
   "devDependencies": {
     "@eslint/js": "^9.29.0",
+    "critical": "^7.2.1",
     "cross-env": "^7.0.3",
     "css-minify": "^2.1.0",
     "eslint": "^9.29.0",
