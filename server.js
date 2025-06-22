@@ -14,9 +14,7 @@ export function createApp(configToUse) {
 
   // global middleware
   app.use(compression());
-  // Temporarily using default helmet policy for debugging CSP issues
-  app.use(helmet());
-  // app.use(helmet(configToUse.cspOptions)); 
+  app.use(helmet(configToUse.cspOptions));
   app.use(cors());
   app.use(express.json());
   if (process.env.NODE_ENV === 'production') {

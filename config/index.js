@@ -31,7 +31,6 @@ const cspOptions = {
         'https://alan.up.railway.app',
         'https://cdnjs.cloudflare.com',
         'https://unpkg.com', // Added for Leaflet
-        "'unsafe-inline'", // For inline <script> tags and older browser compatibility for event handlers
       ],
       styleSrc: [
         "'self'",
@@ -61,7 +60,6 @@ const cspOptions = {
       ],
     },
   },
-  scriptSrcAttr: ["'unsafe-inline'"], // For inline event attributes if any are missed in refactoring
   noSniff: true, // From original helmet config in server.cjs
 };
 
