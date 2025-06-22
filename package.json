@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
+    "start": "NODE_ENV=production node server.js",
+    "dev": "node server.js",
+    "build": "node scripts/build.js",
     "test": "npm run format:check && npm run check-translations && jest --verbose",
     "test:ci": "NODE_OPTIONS=--experimental-vm-modules jest --verbose",
     "format": "prettier --write \"**/*.{js,json,css,html}\"",
@@ -16,6 +18,7 @@
     "async-mutex": "^0.5.0",
     "better-sqlite3": "^11.10.0",
     "body-parser": "^1.20.2",
+    "compression": "^1.8.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.19.2",
@@ -27,13 +30,16 @@
   "main": "server.js",
   "devDependencies": {
     "@eslint/js": "^9.29.0",
+    "css-minify": "^2.1.0",
     "eslint": "^9.29.0",
     "eslint-plugin-jest": "^29.0.1",
     "globals": "^16.2.0",
     "jest": "^30.0.0",
     "jsdom": "^26.1.0",
     "prettier": "^3.4.2",
-    "supertest": "^7.1.1"
+    "sharp": "^0.34.2",
+    "supertest": "^7.1.1",
+    "terser": "^5.43.1"
   },
   "keywords": [],
   "author": "",

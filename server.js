@@ -1,5 +1,6 @@
 import express from 'express';
 import helmet from 'helmet';
+import compression from 'compression';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 // path is not directly used here anymore for express.static, config handles it.
@@ -12,10 +13,16 @@ export function createApp(configToUse) {
   const app = express();
 
   // global middleware
+  app.use(compression());
   app.use(helmet(configToUse.cspOptions));
   app.use(cors());
   app.use(express.json());
-  app.use(express.static(configToUse.paths.public));
+  if (process.env.NODE_ENV === 'production') {
+    console.log('Serving from dist directory');
+    app.use(express.static('dist'));
+  } else {
+    app.use(express.static(configToUse.paths.public));
+  }
   app.options('*', cors());
 
   const limiter = rateLimit({

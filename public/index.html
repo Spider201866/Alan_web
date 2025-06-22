@@ -141,7 +141,7 @@
               title="Choose language"
               aria-label="Change language"
               style="
-                background: url('images/lang.jpg') no-repeat center center;
+                background: url('images/lang.webp') no-repeat center center;
                 background-size: cover;
                 width: 64px;
                 height: 64px;
@@ -344,8 +344,14 @@
       <!-- SPLASH SCREEN (initially visible only via JS) -->
       <!-- ===================================================================== -->
       <section class="splash-screen hidden">
-        <img id="logo1" src="images/Q.png" alt="Q Logo" loading="lazy" />
-        <img id="logo2" src="images/AP.png" alt="AP Logo" loading="lazy" />
+        <picture>
+          <source type="image/webp" srcset="images/Q.webp">
+          <img id="logo1" src="images/Q.png" alt="Q Logo" loading="lazy" width="100" height="100" />
+        </picture>
+        <picture>
+          <source type="image/webp" srcset="images/AP.webp">
+          <img id="logo2" src="images/AP.png" alt="AP Logo" loading="lazy" width="100" height="100" />
+        </picture>
         <p>Eye, Ear, Skin AI Assistant</p>
       </section>
 
@@ -354,7 +360,7 @@
       <!-- ===================================================================== -->
       <section class="instruction-screen hidden">
         <img
-          src="images/bigredt.png"
+          src="images/bigredt.webp"
           alt="Big Red T Logo"
           class="instruction-screen-logo"
           loading="lazy"

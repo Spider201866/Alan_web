@@ -150,10 +150,12 @@ The AlanUI Web Chatbot is built as a Node.js application using Express.js. The s
     2. `npm run format:check` is executed first to ensure code formatting.
     3. `jest` executes test files.
     4. `npm run lint` can be run separately to check code quality with ESLint.
-- **CI/CD Pipeline (GitHub Actions)**:
-    1. On push to the `main` branch, a GitHub Actions workflow is triggered.
-    2. A `build-and-test` job checks out the code, installs dependencies, and runs `npm test`.
-    3. If the tests pass, a `deploy` job checks out the code, installs the Railway CLI, and deploys the application to the `mucho-spoon` service on Railway.
+- **CI/CD Pipeline (GitHub Actions & Railway)**:
+    1. On push to the `main` branch, a GitHub Actions workflow is triggered to run the `build-and-test` job. This acts as the Continuous Integration (CI) gate.
+    2. Simultaneously, Railway's native GitHub integration sees the push.
+    3. Railway is configured to "Wait for CI", so it pauses its deployment process until the GitHub Actions job completes.
+    4. If the tests fail in the GitHub Action, Railway cancels the deployment.
+    5. If the tests pass, Railway proceeds with its own build and deployment process, correctly using the commit message for the deployment name. This is the Continuous Deployment (CD) part of the pipeline.
 - **Automated Testing & Code Quality**: Comprehensive test suite covering UI and accessibility, with pre-test formatting and linting hooks. ESLint is configured for code quality.
 - **API Error Handling**: Frontend API calls include graceful error handling to provide user feedback.
 - **Custom 404 Page**: A dedicated 404 route and page are implemented for unhandled paths.

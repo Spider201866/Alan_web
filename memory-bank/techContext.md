@@ -14,7 +14,7 @@
 - **Code Formatting**: Prettier (config in `.prettierrc`), EditorConfig (config in `.editorconfig`).
 - **Code Quality**: ESLint (v9+ using flat config `eslint.config.js`). Project `package.json` has `"type": "module"`.
 - **Testing**: Jest, JSDOM, `eslint-plugin-jest`.
-- **CI/CD**: GitHub Actions.
+- **CI/CD**: GitHub Actions for Continuous Integration (testing) and Railway's native GitHub integration for Continuous Deployment.
 - **Performance**:
     - Deferred script loading (`defer` attribute). Problematic/unnecessary preload links for fonts and favicons were removed from HTML.
     - Consistent viewport meta tags across HTML files (e.g., `user-scalable=no` removed from `home.html` for consistent rendering).
@@ -94,7 +94,8 @@
 - **`npm run format:check`**: To check code formatting without writing changes (used in CI/CD).
 - **`npm run lint`**: To run ESLint for code quality checks.
 - **`npm test`**: To run the full test suite locally (includes `format:check`).
-- **GitHub Actions**: The workflow in `.github/workflows/ci-cd.yml` automates the `npm test` and deployment process on every push to the `main` branch.
+- **GitHub Actions**: The workflow in `.github/workflows/ci-cd.yml` runs `npm test` on every push to `main` to act as a CI gate.
+- **Railway**: The native GitHub integration is used for CD, configured to wait for the CI check to pass before deploying.
 - **`npx jest tests/ui.test.js`**: To run specific UI/accessibility tests.
 - **Flowise UI/API**: For configuring and managing the "Alan" chatbot agent (external to this project's codebase).
 - **Cleanup Procedures**: Documented in `README.md` for resetting local data (deleting `alan-data.db`) and test artifacts.

@@ -4,10 +4,11 @@
 
 ## What Works
 - **CI/CD Pipeline (June 21, 2025):**
-    - A GitHub Actions workflow is configured at `.github/workflows/ci-cd.yml`.
-    - The pipeline automatically runs `npm test` on every push to the `main` branch.
-    - On successful test completion, it deploys the application to Railway.
-    - Documentation for contributing and the CI/CD pipeline has been added to `README.md`.
+    - A hybrid CI/CD system is fully functional.
+    - **CI:** A GitHub Actions workflow (`.github/workflows/ci-cd.yml`) runs `npm test` on every push to `main` to act as a quality gate.
+    - **CD:** Railway's native GitHub integration handles the deployment.
+    - Railway is configured to "Wait for CI", meaning it will only deploy a commit after the corresponding GitHub Actions test job passes.
+    - This setup ensures automated testing and correctly named deployments in the Railway UI.
 - **Server Refactor (June 20, 2025):**
     - The server has been successfully refactored from a monolithic `server.cjs` into a modular ES Module structure.
     - The new main entry point is `server.js`.

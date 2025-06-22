@@ -235,34 +235,40 @@ This command will also check for code formatting and linting issues.
 
 ---
 
-## CI/CD with GitHub Actions
+## CI/CD with GitHub Actions and Railway
 
-This project uses GitHub Actions for Continuous Integration and Continuous Deployment (CI/CD). The workflow is defined in `.github/workflows/ci-cd.yml`.
+This project uses a modern CI/CD setup where GitHub Actions and Railway's native deployment work together.
 
 ### Workflow Overview
 
-The pipeline automates the testing and deployment process:
-1.  **Trigger:** The workflow runs automatically on every `push` to the `main` branch.
-2.  **Build and Test:**
-    - The code is checked out on an `ubuntu-latest` runner.
-    - Node.js is set up using the version specified in the `.nvmrc` file.
-    - Dependencies are installed with `npm install`.
-    - The full test suite is run with `npm test`. This step requires test-specific environment variables to be set as GitHub secrets.
-3.  **Deploy to Railway:**
-    - This job only runs if the `build-and-test` job succeeds.
-    - It installs the Railway CLI.
-    - It deploys the latest version of the application to the `mucho-spoon` service on Railway.
+The process ensures that code is automatically tested before it is deployed:
+1.  **Push to GitHub:** When you push a commit to the `main` branch, two things happen simultaneously.
+2.  **GitHub Actions (CI):**
+    - A workflow defined in `.github/workflows/ci-cd.yml` starts running.
+    - Its only job is to run all the tests (`npm test`) in a clean environment.
+    - It reports a "pass" (green check) or "fail" (red X) status back to GitHub.
+3.  **Railway (CD):**
+    - Railway's native GitHub integration sees the new commit.
+    - It is configured to **"Wait for CI"**. It will wait until the GitHub Actions test job reports its status.
+    - If the test fails, Railway cancels the deployment.
+    - If the test passes, Railway begins its own build and deployment process, using your commit message as the deployment name.
 
-### Required GitHub Secrets
+This setup provides the best of both worlds: the safety of automated testing from GitHub Actions and the efficient, correctly-named deployments from Railway's native integration.
 
-To enable the CI/CD pipeline, you must configure the following secrets in your GitHub repository settings under **Settings > Secrets and variables > Actions**:
+### Railway Configuration
 
--   `RAILWAY_TOKEN`: Your Railway API token, required for deployment. You can generate this from your Railway account settings.
--   `TEST_MASTER_PASSWORD_HASH`: A mock password hash for running the test suite.
--   `TEST_PASSWORD_SALT`: A mock salt for running the test suite.
--   `TEST_ONE_TIME_PASSWORD_HASHES`: A comma-separated list of mock OTP hashes for the test suite.
+For this process to work, your Railway service must be configured correctly:
+1.  In your Railway service settings, go to the **"Source"** tab.
+2.  Connect your GitHub repository and select the `main` branch.
+3.  Ensure the **"Wait for CI"** toggle is enabled. This tells Railway to wait for the green check from GitHub Actions before deploying.
 
-These secrets ensure that sensitive information is not hardcoded in the repository and is securely accessed by the GitHub Actions runner.
+### Required GitHub Secrets for Testing
+
+For the GitHub Actions test job to run, you must configure the following secrets in your repository settings under **Settings > Secrets and variables > Actions**:
+
+-   `TEST_MASTER_PASSWORD_HASH`: A mock password hash for the test suite.
+-   `TEST_PASSWORD_SALT`: A mock salt for the test suite.
+-   `TEST_ONE_TIME_PASSWORD_HASHES`: Mock OTP hashes for the test suite.
 
 ---
 

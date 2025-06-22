@@ -6,12 +6,13 @@
 The CI/CD pipeline has been set up and documented. The next step is to ensure all memory bank files are updated to reflect this change.
 
 ## Recent Changes
-- **CI/CD Pipeline Setup (June 21, 2025):**
-    *   Created a GitHub Actions workflow at `.github/workflows/ci-cd.yml`.
-    *   The pipeline automatically runs tests on every push to the `main` branch.
-    *   If tests pass, it deploys the application to the `mucho-spoon` service on Railway.
-    *   Updated `README.md` with a "Contributing" section, a troubleshooting guide for Railway deployment, and documentation for the new CI/CD pipeline.
-    *   Fixed a minor ESLint error in `tests/ui.test.js`.
+- **CI/CD Pipeline Finalized (June 21, 2025):**
+    *   Refined the CI/CD process to use a hybrid approach.
+    *   The GitHub Actions workflow at `.github/workflows/ci-cd.yml` is now responsible only for running tests (Continuous Integration).
+    *   Deployment is handled by Railway's native GitHub integration (Continuous Deployment).
+    *   Railway is configured with "Wait for CI" to ensure it only deploys after the GitHub Actions test job passes.
+    *   This setup provides automated testing and correctly names deployments on Railway based on the Git commit message.
+    *   All related documentation has been updated to reflect this final, correct workflow.
 - **Test Server Lifecycle Management & EBUSY Solution (June 20, 2025):**
     *   The test suite now uses a centralized server management pattern for all API, Rate Limiting, and 404 tests, with a single server instance shared across these suites.
     *   The OTP logic tests use a separate, isolated server instance to ensure a clean environment for sensitive tests.
@@ -94,8 +95,11 @@ The CI/CD pipeline has been set up and documented. The next step is to ensure al
     - Resolved various CSP issues.
 
 ## Next Steps (New Tasks for "Tomorrow")
-1.  **Update Memory Bank:**
-    *   **Goal**: Ensure all memory bank files (`progress.md`, `systemPatterns.md`, `techContext.md`) are updated to reflect the new CI/CD pipeline.
+1.  **Improve Test Suite Coverage:**
+    *   **Goal**: Enhance the existing test suite based on the recent review.
+    *   **Details**:
+        *   Implement tests for UI interactions that are currently placeholders (e.g., menu toggles, popups).
+        *   Refactor tests that use simulated functions to import and test the real application code.
 2.  **Implement PWA Service Worker for Install Prompt:**
     *   **Goal**: Enable PWA features, primarily allowing users to "install" the web app on desktop and mobile.
     *   **Details**:
