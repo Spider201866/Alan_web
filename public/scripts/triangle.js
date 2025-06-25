@@ -69,8 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       update: (ins) => {
         animations.forEach((animation, i) => {
-          const percent =
-            (1 + Math.sin(i * PHASE_OFFSET + PULSE_SPEED * ins.currentTime)) / 2;
+          const percent = (1 + Math.sin(i * PHASE_OFFSET + PULSE_SPEED * ins.currentTime)) / 2;
           animation.seek(animation.duration * percent);
         });
       },
@@ -93,9 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
     );
 
     function init() {
-      const prefersReducedMotion = window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-      ).matches;
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       if (!prefersReducedMotion) {
         introAnimation.play();

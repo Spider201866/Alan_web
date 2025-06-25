@@ -32,7 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const storedPassword = localStorage.getItem('alanRecordsPassword');
   if (storedPassword) {
     currentPassword = storedPassword;
-    console.log('Loaded password from localStorage:', currentPassword ? 'exists' : 'does not exist');
+    console.log(
+      'Loaded password from localStorage:',
+      currentPassword ? 'exists' : 'does not exist'
+    );
     passwordScreen.classList.add('hidden');
     refreshContainer.classList.remove('hidden');
     fetchActiveRecord(currentPassword);
@@ -298,9 +301,14 @@ function attachDeleteButtonListeners() {
   deleteButtons.forEach((button) => {
     button.addEventListener('click', async () => {
       const sessionIdToDelete = button.dataset.sessionId;
-      if (confirm(`Are you sure you want to delete record with Session ID: ${sessionIdToDelete}?`)) {
+      if (
+        confirm(`Are you sure you want to delete record with Session ID: ${sessionIdToDelete}?`)
+      ) {
         try {
-          console.log('Attempting to delete record. currentPassword:', currentPassword ? 'exists' : 'does not exist');
+          console.log(
+            'Attempting to delete record. currentPassword:',
+            currentPassword ? 'exists' : 'does not exist'
+          );
           console.log('Sending Authorization header:', `Bearer ${currentPassword}`);
           const response = await fetch('/api/delete-record', {
             method: 'DELETE',

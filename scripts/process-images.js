@@ -46,9 +46,7 @@ const processImages = async () => {
       } else if (baseName === 'Q' || baseName === 'AP') {
         // Create a standard and a smaller mobile version for logos
         const standardPath = path.join(outputDir, `${baseName}.webp`);
-        await sharp(inputPath)
-          .toFormat('webp', { quality: 80 })
-          .toFile(standardPath);
+        await sharp(inputPath).toFormat('webp', { quality: 80 }).toFile(standardPath);
         console.log(`  -> Created ${standardPath}`);
 
         const sizes = [300, 200, 100];

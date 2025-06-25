@@ -3,22 +3,13 @@ import { getTranslation } from './language.js';
 
 function applyPageSpecificTranslations() {
   // Labels for top input group
-  document.querySelector('label[for="ref-id"]').textContent = getTranslation(
-    'refIdLabel',
-    'ID'
-  );
+  document.querySelector('label[for="ref-id"]').textContent = getTranslation('refIdLabel', 'ID');
   document.querySelector('label[for="ref-tel"]').textContent = getTranslation(
     'refTelLabel',
     'Telephone'
   );
-  document.querySelector('label[for="ref-age"]').textContent = getTranslation(
-    'refAgeLabel',
-    'Age'
-  );
-  document.querySelector('label[for="ref-sex"]').textContent = getTranslation(
-    'refSexLabel',
-    'M/F'
-  );
+  document.querySelector('label[for="ref-age"]').textContent = getTranslation('refAgeLabel', 'Age');
+  document.querySelector('label[for="ref-sex"]').textContent = getTranslation('refSexLabel', 'M/F');
 
   // Screening switch label
   // Note: The text "Screening: No problems" or "Screening: Fail" is dynamically set by initializeForm's updateScreeningLabel.
@@ -112,10 +103,7 @@ function initializeForm() {
     const screeningValue = screenSwitch.checked ? 'Fail' : 'Pass';
 
     let priorityDisplay = 'N/A';
-    if (
-      refPrioritySelect.value &&
-      refPrioritySelect.options[refPrioritySelect.selectedIndex]
-    ) {
+    if (refPrioritySelect.value && refPrioritySelect.options[refPrioritySelect.selectedIndex]) {
       const selectedOption = refPrioritySelect.options[refPrioritySelect.selectedIndex];
       if (selectedOption.value) {
         let fullText = selectedOption.text.trim();

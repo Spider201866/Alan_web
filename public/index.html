@@ -13,7 +13,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"
+    />
     <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
     <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png" />
@@ -269,14 +272,9 @@
             <input type="text" id="username" name="username" autocomplete="username" />
           </div>
           <div
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              margin-bottom: 20px;
-            "
+            style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px"
           >
-            <div style="display: flex; flex-direction: column;">
+            <div style="display: flex; flex-direction: column">
               <input
                 type="password"
                 id="passwordInput"
@@ -285,7 +283,7 @@
                 pattern="[0-9]*"
                 autocomplete="new-password"
                 class="onboarding-field"
-                style="width: 147px;"
+                style="width: 147px"
               />
               <p
                 id="passwordError"
@@ -329,7 +327,7 @@
             text-align: center;
           "
         >
-          No or incorrect code? 
+          No or incorrect code?
           <a
             href="https://medicine.st-andrews.ac.uk/arclight/contact/"
             style="color: blue"
@@ -345,12 +343,30 @@
       <!-- ===================================================================== -->
       <section class="splash-screen hidden">
         <picture>
-          <source type="image/webp" srcset="images/Q-100w.webp 100w, images/Q-200w.webp 200w, images/Q-300w.webp 300w, images/Q.webp 500w" sizes="(max-width: 600px) 100vw, 200px">
-          <img id="logo1" src="images/Q.png" alt="Q Logo" width="200" height="62">
+          <source
+            type="image/webp"
+            srcset="
+              images/Q-100w.webp 100w,
+              images/Q-200w.webp 200w,
+              images/Q-300w.webp 300w,
+              images/Q.webp      500w
+            "
+            sizes="(max-width: 600px) 100vw, 200px"
+          />
+          <img id="logo1" src="images/Q.png" alt="Q Logo" width="200" height="62" />
         </picture>
         <picture>
-          <source type="image/webp" srcset="images/AP-100w.webp 100w, images/AP-200w.webp 200w, images/AP-300w.webp 300w, images/AP.webp 500w" sizes="(max-width: 600px) 100vw, 200px">
-          <img id="logo2" src="images/AP.png" alt="AP Logo" width="200" height="122">
+          <source
+            type="image/webp"
+            srcset="
+              images/AP-100w.webp 100w,
+              images/AP-200w.webp 200w,
+              images/AP-300w.webp 300w,
+              images/AP.webp      500w
+            "
+            sizes="(max-width: 600px) 100vw, 200px"
+          />
+          <img id="logo2" src="images/AP.png" alt="AP Logo" width="200" height="122" />
         </picture>
         <p>Eye, Ear, Skin AI Assistant</p>
       </section>
@@ -382,8 +398,17 @@
             title="2-20 letters, spaces, apostrophes or hyphens only"
             autocomplete="name"
           />
-          <div id="job-role-select" class="onboarding-field custom-multiselect-container" role="combobox" aria-haspopup="listbox" aria-expanded="false" tabindex="0">
-            <div class="select-box" id="aims-select-box"><span id="aims-select-text">Aims</span></div>
+          <div
+            id="job-role-select"
+            class="onboarding-field custom-multiselect-container"
+            role="combobox"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            tabindex="0"
+          >
+            <div class="select-box" id="aims-select-box">
+              <span id="aims-select-text">Aims</span>
+            </div>
             <div class="checkboxes" id="aims-checkboxes" role="listbox">
               <label><input type="checkbox" value="Eyes" /> Eyes</label>
               <label><input type="checkbox" value="Ears" /> Ears</label>
