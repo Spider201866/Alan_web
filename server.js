@@ -38,6 +38,20 @@ export function createApp(configToUse) {
   app.use('/api', apiRoutesFactory(limiter, configToUse));
   app.use('/', webRoutesFactory());
 
+  // DEBUG ROUTE: List all files in dist/ to verify deployment contents
+  if (process.env.NODE_ENV === 'production') {
+    app.get('/__debug-list-dist', async (req, res) => {
+      try {
+        const fs = await import('fs/promises');
+        const path = await import('path');
+        const files = await fs.readdir('dist');
+        res.json({ files });
+      } catch (err) {
+        res.status(500).json({ error: err.message });
+      }
+    });
+  }
+
   app.use(notFound);
   app.use(globalErrorHandler);
 
