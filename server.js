@@ -18,6 +18,7 @@ export function createApp(configToUse) {
   // global middleware
   app.use(compression());
   app.use(helmet(configToUse.cspOptions));
+  app.use(helmet.hsts({ maxAge: 31536000, includeSubDomains: true }));
   app.use(
     cors({
       origin: (origin, callback) => {

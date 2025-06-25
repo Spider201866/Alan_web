@@ -27,8 +27,7 @@ describe('API Server Tests (Standard Config)', () => {
   let server;
   let app;
 
-  beforeAll((done) => {
-    // Removed async
+  beforeAll(async () => {
     const password = 'testpass';
     const salt = 'testsalt';
     process.env.PASSWORD_SALT = salt;
@@ -40,33 +39,34 @@ describe('API Server Tests (Standard Config)', () => {
       .createHash('sha256')
       .update('onetimetest' + salt)
       .digest('hex');
+    process.env.CORS_ALLOWED_ORIGINS = 'http://localhost:3000'; // Add a default allowed origin for tests
 
     jest.resetModules();
-    import('../config/index.js').then((module) => {
-      const baseConfig = module.default;
-      const testConfig = deepCopyConfig(baseConfig);
-      delete testConfig.paths.userInfo;
-      delete testConfig.paths.userHistory;
-      testConfig.security.otpHashes = new Set(
-        (process.env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean)
-      );
+    const { default: baseConfig } = await import('../config/index.js');
+    const testConfig = deepCopyConfig(baseConfig);
+    delete testConfig.paths.userInfo;
+    delete testConfig.paths.userHistory;
+    testConfig.security.otpHashes = new Set(
+      (process.env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean)
+    );
+    testConfig.allowedOrigins = (process.env.CORS_ALLOWED_ORIGINS || '').split(',').filter(Boolean);
 
-      if (testDb && testDb.open) {
-        testDb.prepare('DELETE FROM history').run();
-        testDb.prepare('DELETE FROM active_record').run();
-      } else {
-        console.error('API Endpoints beforeAll: testDb is not open or undefined.');
-      }
+    if (testDb && testDb.open) {
+      testDb.prepare('DELETE FROM history').run();
+      testDb.prepare('DELETE FROM active_record').run();
+    } else {
+      console.error('API Endpoints beforeAll: testDb is not open or undefined.');
+    }
 
-      import('../server.js').then((serverModule) => {
-        app = serverModule.createApp(testConfig);
-        server = app.listen(0, done); // Start server on an ephemeral port
-      });
+    const { createApp } = await import('../server.js');
+    app = createApp(testConfig);
+    await new Promise((resolve) => {
+      server = app.listen(0, resolve); // Start server on an ephemeral port
     });
   });
 
-  afterAll((done) => {
-    server.close(done); // Gracefully shut down the server
+  afterAll(async () => {
+    await new Promise((resolve) => server.close(resolve)); // Gracefully shut down the server
   });
 
   beforeEach(() => {
@@ -123,6 +123,13 @@ describe('API Server Tests (Standard Config)', () => {
     });
   });
 
+  describe('Security Headers', () => {
+    it('should include the Strict-Transport-Security header', async () => {
+      const res = await request(app).get('/'); // Request any route to get headers
+      expect(res.headers['strict-transport-security']).toBe('max-age=31536000; includeSubDomains');
+    });
+  });
+
   describe('Rate Limiting', () => {
     it('should return 429 Too Many Requests after exceeding the rate limit', async () => {
       const record = {
@@ -150,16 +157,9 @@ describe('API Server Tests (Standard Config)', () => {
       // This assertion depends on the test environment being able to hit the limit.
       // In some fast environments or if previous tests affected the global limiter state (unlikely with new server per suite),
       // it might not hit 429. The key is that it doesn't error out unexpectedly.
-      if (rateLimitHit) {
-        expect(lastRes.statusCode).toBe(429);
-        expect(lastRes.text).toMatch(/Too many requests/i);
-      } else {
-        // If the limit wasn't hit, all requests should have been 200 OK.
-        expect(lastRes.statusCode).toBe(200);
-        console.log(
-          'Rate limit was not triggered in 101 requests. This might be okay depending on test environment setup.'
-        );
-      }
+      expect(rateLimitHit).toBe(true);
+      expect(lastRes.statusCode).toBe(429);
+      expect(lastRes.text).toMatch(/Too many requests/i);
     }, 15000); // Increase timeout for this test if needed
   });
 
@@ -179,8 +179,7 @@ describe('One-Time Password Logic', () => {
   const otpForThisTest = 'specific-otp-for-test';
   const saltForThisTest = 'specific-salt-for-otp-test';
 
-  beforeAll((done) => {
-    // Removed async
+  beforeAll(async () => {
     process.env.PASSWORD_SALT = saltForThisTest;
     process.env.MASTER_PASSWORD_HASH = crypto
       .createHash('sha256')
@@ -191,31 +190,34 @@ describe('One-Time Password Logic', () => {
       .update(otpForThisTest + saltForThisTest)
       .digest('hex');
     process.env.ONE_TIME_PASSWORD_HASHES = otpHash;
+    process.env.CORS_ALLOWED_ORIGINS = 'http://localhost:3000'; // Add a default allowed origin for tests
 
     jest.resetModules(); // Important to re-import config with new env vars
-    import('../config/index.js').then((module) => {
-      const baseConfig = module.default;
-      const otpTestConfig = deepCopyConfig(baseConfig);
-      // Ensure OTP hashes are correctly set from the modified environment variable
-      otpTestConfig.security.otpHashes = new Set(
-        (process.env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean)
-      );
+    const { default: baseConfig } = await import('../config/index.js');
+    const otpTestConfig = deepCopyConfig(baseConfig);
+    // Ensure OTP hashes are correctly set from the modified environment variable
+    otpTestConfig.security.otpHashes = new Set(
+      (process.env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean)
+    );
+    otpTestConfig.allowedOrigins = (process.env.CORS_ALLOWED_ORIGINS || '')
+      .split(',')
+      .filter(Boolean);
 
-      // Clear DB for this specific suite to ensure isolation for OTP tests
-      if (testDb && testDb.open) {
-        testDb.prepare('DELETE FROM history').run();
-        testDb.prepare('DELETE FROM active_record').run();
-      }
+    // Clear DB for this specific suite to ensure isolation for OTP tests
+    if (testDb && testDb.open) {
+      testDb.prepare('DELETE FROM history').run();
+      testDb.prepare('DELETE FROM active_record').run();
+    }
 
-      import('../server.js').then((serverModule) => {
-        app = serverModule.createApp(otpTestConfig);
-        server = app.listen(0, done);
-      });
+    const { createApp } = await import('../server.js');
+    app = createApp(otpTestConfig);
+    await new Promise((resolve) => {
+      server = app.listen(0, resolve);
     });
   });
 
-  afterAll((done) => {
-    server.close(done);
+  afterAll(async () => {
+    await new Promise((resolve) => server.close(resolve));
   });
 
   it('should accept a valid one-time password', async () => {
