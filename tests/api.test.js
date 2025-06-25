@@ -13,6 +13,8 @@ import fs from 'fs/promises';
 import crypto from 'crypto';
 import { jest } from '@jest/globals';
 import dataService from '../services/data-service.js';
+// Removed dotenv import and mock from here, as env.test.js handles it
+// import dotenv from 'dotenv';
 
 const testDb = dataService.db;
 
@@ -259,6 +261,11 @@ afterAll(async () => {
   process.env.MASTER_PASSWORD_HASH = originalMasterPasswordHashAtStart;
   process.env.PASSWORD_SALT = originalPasswordSaltAtStart;
   process.env.ONE_TIME_PASSWORD_HASHES = originalOneTimePasswordHashesAtStart;
+  // Restore CORS_ALLOWED_ORIGINS if it was set globally for tests
+  if (process.env.CORS_ALLOWED_ORIGINS_ORIGINAL) {
+    process.env.CORS_ALLOWED_ORIGINS = process.env.CORS_ALLOWED_ORIGINS_ORIGINAL;
+    delete process.env.CORS_ALLOWED_ORIGINS_ORIGINAL;
+  }
 
   // Close the main database connection used by the test file itself
   if (testDb && testDb.open) {
