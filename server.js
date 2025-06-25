@@ -19,6 +19,9 @@ export function createApp(configToUse) {
   app.use(compression());
   app.use(helmet(configToUse.cspOptions));
   app.use(helmet.hsts({ maxAge: 31536000, includeSubDomains: true }));
+  app.use(helmet.referrerPolicy({ policy: 'no-referrer' }));
+  app.use(helmet.frameguard({ action: 'deny' }));
+  app.use(helmet.noSniff());
   app.use(
     cors({
       origin: (origin, callback) => {

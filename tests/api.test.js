@@ -128,6 +128,21 @@ describe('API Server Tests (Standard Config)', () => {
       const res = await request(app).get('/'); // Request any route to get headers
       expect(res.headers['strict-transport-security']).toBe('max-age=31536000; includeSubDomains');
     });
+
+    it('should include the Referrer-Policy header', async () => {
+      const res = await request(app).get('/');
+      expect(res.headers['referrer-policy']).toBe('no-referrer');
+    });
+
+    it('should include the X-Frame-Options header', async () => {
+      const res = await request(app).get('/');
+      expect(res.headers['x-frame-options']).toBe('DENY');
+    });
+
+    it('should include the X-Content-Type-Options header', async () => {
+      const res = await request(app).get('/');
+      expect(res.headers['x-content-type-options']).toBe('nosniff');
+    });
   });
 
   describe('Rate Limiting', () => {
