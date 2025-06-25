@@ -27,7 +27,7 @@
       .onboarding-field {
         display: flex;
         align-items: center;
-        width: 220px;
+        width: 220px; /* Reverted to original width */
         height: 50px;
         margin: 10px auto;
         padding: 0 15px;
@@ -272,11 +272,11 @@
             style="
               display: flex;
               justify-content: center;
-              align-items: flex-start;
+              align-items: center;
               margin-bottom: 20px;
             "
           >
-            <div style="display: flex; flex-direction: column; margin-right: 30px">
+            <div style="display: flex; flex-direction: column;">
               <input
                 type="password"
                 id="passwordInput"
@@ -285,6 +285,7 @@
                 pattern="[0-9]*"
                 autocomplete="new-password"
                 class="onboarding-field"
+                style="width: 147px;"
               />
               <p
                 id="passwordError"
@@ -292,7 +293,7 @@
                 style="
                   color: red;
                   display: none;
-                  width: 220px;
+                  width: 147px;
                   text-align: center;
                   margin: 6px auto 0;
                 "
@@ -310,6 +311,7 @@
                 border-radius: 12px;
                 border: 1px solid #ccc;
                 cursor: pointer;
+                margin-left: 10px; /* Added margin for spacing */
               "
             >
               Submit

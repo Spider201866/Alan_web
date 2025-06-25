@@ -6,6 +6,9 @@
 All known issues have been resolved. The project is now stable, accessible, optimized, and ready for the next phase of development.
 
 ## Recent Changes
+- **UI Improvements (June 25, 2025):**
+    - All table cell content in the "View Records" page is now centered both vertically and horizontally for improved readability.
+    - The delete (trash can) icon in the records table is now red for better visibility and user experience.
 - **Full CSP Compliance and Bug Fixes (June 22, 2025):**
     - Refactored all HTML pages to remove inline scripts, ensuring full Content Security Policy (CSP) compliance.
     - Created individual JavaScript files for each page to handle its specific logic.

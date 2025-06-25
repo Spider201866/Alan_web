@@ -4,6 +4,9 @@
 
 ## What Works
 
+- **UI Improvements (June 25, 2025):**
+    - All table cell content in the "View Records" page is now centered both vertically and horizontally for improved readability.
+    - The delete (trash can) icon in the records table is now red for better visibility and user experience.
 - **Full CSP Compliance and Bug Fixes (June 22, 2025):**
     - Refactored all HTML pages to remove inline scripts, ensuring full Content Security Policy (CSP) compliance.
     - Fixed a bug where non-numeric latitude and longitude values were sent to the backend, causing a 400 Bad Request error.

@@ -53,6 +53,8 @@ graph TD
 
 -   **Conditional Logging**: A custom logging module (`public/scripts/log.js`) wraps `console` methods to provide environment-aware logging (e.g., silencing debug messages in production).
 
+-   **UI Table Consistency**: All table cell content in the "View Records" page is centered both vertically and horizontally for readability. The delete (trash can) icon is always red to clearly indicate destructive actions.
+
 ---
 
 ## Critical Workflows

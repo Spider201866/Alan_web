@@ -51,12 +51,12 @@
       .password-column {
         display: flex;
         flex-direction: column;
-        margin-right: 30px;
+        /* Removed margin-right for alignment */
       }
       #passwordError {
         color: red;
         display: none;
-        width: 220px;
+        width: 147px; /* Adjusted to match input width */
         text-align: center;
         margin-top: 6px;
         margin-bottom: 0;
@@ -80,8 +80,8 @@
       .records-table td {
         border: 1px solid black;
         padding: 10px;
-        text-align: left;
-        vertical-align: top;
+        text-align: center;
+        vertical-align: middle;
       }
       .records-table th {
         background-color: #f2f2f2;
@@ -136,11 +136,11 @@
               style="
                 color: grey;
                 padding: 12px;
-                width: 220px;
+                width: 147px; /* 1/3 shorter */
                 font-size: 16px;
                 border-radius: 12px;
                 border: 1px solid #ccc;
-                margin-bottom: 20px;
+                /* Removed margin-bottom for vertical alignment */
               "
             />
             <p id="passwordError">Invalid password</p>
@@ -154,7 +154,8 @@
               border-radius: 12px;
               border: 1px solid #ccc;
               cursor: pointer;
-              margin-top: -15px;
+              margin-left: 10px; /* Added margin for spacing */
+              /* Removed margin-top for vertical alignment */
             "
           >
             Submit

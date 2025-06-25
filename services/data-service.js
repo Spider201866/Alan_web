@@ -157,8 +157,26 @@ const dataService = {
   getActiveRecord,
   getFullHistory,
   upsertRecord,
+  deleteRecord, // Add new function
   initDatabase,
   db,
 };
 
 export default dataService;
+
+function deleteRecord(sessionId) {
+  const transaction = db.transaction(() => {
+    // Delete from history table
+    const deleteHistoryStmt = db.prepare('DELETE FROM history WHERE sessionId = ?');
+    deleteHistoryStmt.run(sessionId);
+
+    // If the deleted record was the active record, clear the active_record table
+    const getActiveSessionIdStmt = db.prepare('SELECT sessionId FROM active_record WHERE id = 1');
+    const activeSession = getActiveSessionIdStmt.get();
+    if (activeSession && activeSession.sessionId === sessionId) {
+      const clearActiveRecordStmt = db.prepare('DELETE FROM active_record WHERE id = 1');
+      clearActiveRecordStmt.run();
+    }
+  });
+  transaction();
+}

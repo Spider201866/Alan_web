@@ -28,6 +28,19 @@ document.addEventListener('DOMContentLoaded', () => {
     shadowSize: [41, 41],
   });
 
+  // Try to retrieve password from localStorage on load
+  const storedPassword = localStorage.getItem('alanRecordsPassword');
+  if (storedPassword) {
+    currentPassword = storedPassword;
+    console.log('Loaded password from localStorage:', currentPassword ? 'exists' : 'does not exist');
+    passwordScreen.classList.add('hidden');
+    refreshContainer.classList.remove('hidden');
+    fetchActiveRecord(currentPassword);
+    fetchHistory(currentPassword);
+  } else {
+    console.log('No password found in localStorage on load.');
+  }
+
   passwordInput.addEventListener('input', handlePasswordInput);
   passwordInput.addEventListener('keypress', (evt) => {
     if (evt.key === 'Enter') handleSubmit();
@@ -66,6 +79,7 @@ function handleSubmit() {
     .then((response) => {
       if (!response.ok) throw new Error('Invalid password');
       currentPassword = entered;
+      localStorage.setItem('alanRecordsPassword', currentPassword); // Store password
       passwordScreen.classList.add('hidden');
       return response.json();
     })
@@ -157,9 +171,8 @@ function showActiveRecord(data) {
         <th>No.</th>
         <th>Session ID</th>
         <th>Name</th>
-        <th>Role</th>
+        <th>Aims</th>
         <th>Experience</th>
-        <th>Focus</th>
         <th>Contact</th>
         <th>Latitude</th>
         <th>Longitude</th>
@@ -169,6 +182,7 @@ function showActiveRecord(data) {
         <th>Version & Agent</th>
         <th>Refresh Count</th>
         <th>Map</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -178,7 +192,6 @@ function showActiveRecord(data) {
         <td>${record.name || ''}</td>
         <td>${record.role || ''}</td>
         <td>${record.experience || ''}</td>
-        <td>${Array.isArray(record.focus) ? record.focus.join(', ') : record.focus || ''}</td>
         <td>${record.contactInfo || ''}</td>
         <td>${record.latitude || ''}</td>
         <td>${record.longitude || ''}</td>
@@ -191,8 +204,13 @@ function showActiveRecord(data) {
         <td>${record.version || ''}, ${record.selectedAgent || ''}</td>
         <td>${record.refreshCount || 1}</td>
         <td>
-          <button class="show-map-btn" data-lat="${parseFloat(record.latitude) || 0}" data-lng="${parseFloat(record.longitude) || 0}">
+          <button class="show-map-btn" data-lat="${parseFloat(record.latitude) || 0}" data-lng="${parseFloat(record.longitude) || 0}" style="display: flex; justify-content: center; align-items: center; padding: 5px 10px; min-width: 80px;">
             Show Map
+          </button>
+        </td>
+        <td>
+          <button class="delete-record-btn" data-session-id="${record.sessionId}" style="display: flex; justify-content: center; align-items: center; padding: 5px 10px; color: #ff0000; font-size: 20px; min-width: 40px;">
+            &#x1F5D1; <!-- Bin/Trash Can Icon -->
           </button>
         </td>
       </tr>
@@ -220,9 +238,8 @@ function showHistory(historyArray) {
         <th>No.</th>
         <th>Session ID</th>
         <th>Name</th>
-        <th>Role</th>
+        <th>Aims</th>
         <th>Experience</th>
-        <th>Focus</th>
         <th>Contact</th>
         <th>Latitude</th>
         <th>Longitude</th>
@@ -232,6 +249,7 @@ function showHistory(historyArray) {
         <th>Version & Agent</th>
         <th>Refresh Count</th>
         <th>Map</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -245,7 +263,6 @@ function showHistory(historyArray) {
       <td>${rec.name || ''}</td>
       <td>${rec.role || ''}</td>
       <td>${rec.experience || ''}</td>
-      <td>${Array.isArray(rec.focus) ? rec.focus.join(', ') : rec.focus || ''}</td>
       <td>${rec.contactInfo || ''}</td>
       <td>${rec.latitude || ''}</td>
       <td>${rec.longitude || ''}</td>
@@ -258,8 +275,13 @@ function showHistory(historyArray) {
       <td>${rec.version || ''}, ${rec.selectedAgent || ''}</td>
         <td>${rec.refreshCount || 1}</td>
         <td>
-          <button class="show-map-btn" data-lat="${parseFloat(rec.latitude) || 0}" data-lng="${parseFloat(rec.longitude) || 0}">
+          <button class="show-map-btn" data-lat="${parseFloat(rec.latitude) || 0}" data-lng="${parseFloat(rec.longitude) || 0}" style="display: flex; justify-content: center; align-items: center; padding: 5px 10px; min-width: 80px;">
             Show Map
+          </button>
+        </td>
+        <td>
+          <button class="delete-record-btn" data-session-id="${rec.sessionId}" style="display: flex; justify-content: center; align-items: center; padding: 5px 10px; color: #ff0000; font-size: 20px; min-width: 40px;">
+            &#x1F5D1; <!-- Bin/Trash Can Icon -->
           </button>
         </td>
       </tr>
@@ -268,6 +290,41 @@ function showHistory(historyArray) {
 
   html += '</tbody></table>';
   historyDiv.innerHTML = html;
+  attachDeleteButtonListeners(); // Attach listeners after history is rendered
+}
+
+function attachDeleteButtonListeners() {
+  const deleteButtons = document.querySelectorAll('.delete-record-btn');
+  deleteButtons.forEach((button) => {
+    button.addEventListener('click', async () => {
+      const sessionIdToDelete = button.dataset.sessionId;
+      if (confirm(`Are you sure you want to delete record with Session ID: ${sessionIdToDelete}?`)) {
+        try {
+          console.log('Attempting to delete record. currentPassword:', currentPassword ? 'exists' : 'does not exist');
+          console.log('Sending Authorization header:', `Bearer ${currentPassword}`);
+          const response = await fetch('/api/delete-record', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ sessionId: sessionIdToDelete, password: currentPassword }), // Send password in body
+          });
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Delete response not OK:', response.status, errorText);
+            throw new Error(`Failed to delete record: ${errorText}`);
+          }
+
+          alert('Record deleted successfully!');
+          handleRefresh(); // Refresh records after deletion
+        } catch (error) {
+          console.error('Error deleting record:', error);
+          alert(`Error deleting record: ${error.message}`);
+        }
+      }
+    });
+  });
 }
 
 function showMap(lat, lng) {

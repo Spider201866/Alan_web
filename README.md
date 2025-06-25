@@ -80,3 +80,10 @@ This project uses GitHub Actions for Continuous Integration and Deployment. On e
 3.  The application is deployed to Railway.
 
 For more details, see `.github/workflows/ci-cd.yml`.
+
+---
+
+## Recent UI Improvements
+
+- **Centered Table Content:** All table cell content in the "View Records" page is now centered both vertically and horizontally for improved readability.
+- **Red Delete Icon:** The delete (trash can) icon in the records table is now red for better visibility and user experience.

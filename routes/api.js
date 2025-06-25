@@ -52,5 +52,20 @@ export default function apiRoutes(rateLimiter, config) {
     }
   });
 
+  // Route: Delete a record by sessionId.
+  router.delete('/delete-record', rateLimiter, validatePassword, (req, res, next) => {
+    try {
+      const { sessionId } = req.body;
+      if (!sessionId) {
+        return res.status(400).send('Session ID is required.');
+      }
+      dataService.deleteRecord(sessionId);
+      res.send('OK');
+    } catch (err) {
+      console.error('Error in /delete-record:', err);
+      next(err);
+    }
+  });
+
   return router;
 }

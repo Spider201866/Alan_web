@@ -226,9 +226,10 @@ async function fetchIPBasedLocation() {
     }
     const data = await response.json();
     if (data) {
-      localStorage.setItem('latitude', data.latitude?.toString() || 'Not set');
-      localStorage.setItem('longitude', data.longitude?.toString() || 'Not set');
-      localStorage.setItem('country', data.country_name || 'Not set');
+      const [latitude, longitude] = data.loc ? data.loc.split(',') : ['Not set', 'Not set'];
+      localStorage.setItem('latitude', latitude || 'Not set');
+      localStorage.setItem('longitude', longitude || 'Not set');
+      localStorage.setItem('country', data.country || 'Not set'); // ipinfo.io returns country code in 'country' field
       localStorage.setItem('area', data.city || 'Not set'); // 'area' often refers to city in this context
       const iso2 = data.country || 'Not set';
       localStorage.setItem('iso2', iso2);
