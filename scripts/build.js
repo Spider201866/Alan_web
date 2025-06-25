@@ -2,6 +2,7 @@ import { minify } from 'terser';
 import cssmin from 'css-minify';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { minify as minifyHtml } from 'html-minifier-terser';
 
 const publicDir = 'public';
 const distDir = 'dist';
@@ -34,7 +35,7 @@ async function build() {
     console.log('Finished copying files.');
 
     // 3. Find and minify JS and CSS files in dist
-    console.log('Minifying JS and CSS files...');
+    console.log('Minifying JS, CSS, and HTML files...');
     const filesToProcess = [];
     async function findFiles(dir) {
       const entries = await fs.readdir(dir, { withFileTypes: true });
@@ -42,7 +43,11 @@ async function build() {
         const fullPath = path.join(dir, entry.name);
         if (entry.isDirectory()) {
           await findFiles(fullPath);
-        } else if (entry.name.endsWith('.js') || entry.name.endsWith('.css')) {
+        } else if (
+          entry.name.endsWith('.js') ||
+          entry.name.endsWith('.css') ||
+          entry.name.endsWith('.html')
+        ) {
           filesToProcess.push(fullPath);
         }
       }
@@ -68,6 +73,20 @@ async function build() {
         const minifiedCss = await cssmin(css);
         await fs.writeFile(file, minifiedCss);
         console.log(`  - Minified CSS: ${file}`);
+      } else if (file.endsWith('.html')) {
+        const html = await fs.readFile(file, 'utf8');
+        const minifiedHtml = await minifyHtml(html, {
+          collapseWhitespace: true,
+          removeComments: true,
+          removeRedundantAttributes: true,
+          removeScriptTypeAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          useShortDoctype: true,
+          minifyCSS: false,
+          minifyJS: false,
+        });
+        await fs.writeFile(file, minifiedHtml);
+        console.log(`  - Minified HTML: ${file}`);
       }
     }
 

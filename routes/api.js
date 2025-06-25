@@ -7,9 +7,7 @@ import { validatePassword } from '../middleware/auth.js'; // This will use its o
 // import { readJsonFile, appendToHistory } from '../services/records.js'; // Old service
 import dataService from '../services/data-service.js'; // New service
 
-export default function apiRoutes(rateLimiter, config) {
-  // config parameter might not be needed by these routes anymore
-  // Added config parameter
+export default function apiRoutes(rateLimiter) {
   const router = express.Router();
 
   // Route: Overwrite the active record and append/update the history.
