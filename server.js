@@ -12,6 +12,9 @@ import { globalErrorHandler, notFound } from './middleware/error.js';
 export function createApp(configToUse) {
   const app = express();
 
+  // Enable trust proxy for Railway/production reverse proxy environments
+  app.set('trust proxy', 1);
+
   // global middleware
   app.use(compression());
   app.use(helmet(configToUse.cspOptions));
