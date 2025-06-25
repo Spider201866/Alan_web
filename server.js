@@ -18,7 +18,18 @@ export function createApp(configToUse) {
   // global middleware
   app.use(compression());
   app.use(helmet(configToUse.cspOptions));
-  app.use(cors());
+  app.use(
+    cors({
+      origin: (origin, callback) => {
+        if (!origin || configToUse.allowedOrigins.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+      credentials: true,
+    })
+  );
   app.use(express.json());
   if (process.env.NODE_ENV === 'production') {
     console.log('Serving from dist directory');

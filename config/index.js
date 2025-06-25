@@ -71,6 +71,7 @@ const config = {
     masterHash: envVar('MASTER_PASSWORD_HASH'),
     otpHashes: new Set((process.env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean)),
   },
+  allowedOrigins: (process.env.CORS_ALLOWED_ORIGINS || '').split(',').filter(Boolean),
   cspOptions: cspOptions,
 };
 
