@@ -2,6 +2,8 @@
 
 This project is a web-based chatbot for users, especially in Low and Middle-Income Countries (LMICs), focusing on eye, skin, and ear health information.
 
+<!-- Updated for green8 commit -->
+
 For detailed architectural information, technical context, and project history, please refer to the **[Memory Bank](memory-bank/)**.
 
 ---
