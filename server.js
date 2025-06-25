@@ -58,7 +58,6 @@ export function createApp(configToUse) {
     app.get('/__debug-list-dist', async (req, res) => {
       try {
         const fs = await import('fs/promises');
-        const path = await import('path');
         const files = await fs.readdir('dist');
         res.json({ files });
       } catch (err) {
