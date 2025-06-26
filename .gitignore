@@ -27,3 +27,5 @@ Thumbs.db
 # Database files
 *.db
 *.db-journal
+.env
+.env.example
