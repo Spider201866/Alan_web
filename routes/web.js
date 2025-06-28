@@ -1,3 +1,6 @@
+// routes/web.js
+// Defines the web routes for the application. Currently, this is minimal as static file serving is handled in server.js.
+
 import express from 'express';
 // import path from 'path'; // No longer needed
 // Config is now passed as a parameter, so remove direct import

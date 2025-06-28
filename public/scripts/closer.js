@@ -1,6 +1,5 @@
-// Alan UI - closer.js | 19th June 2025, WJW
-
-// closer.js
+// public/scripts/closer.js
+// Handles the animations for the 'closer' page, including fading elements and highlighting text.
 
 /**
  * A helper function that creates a delay using a Promise.

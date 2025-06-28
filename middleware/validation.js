@@ -42,6 +42,14 @@ export const recordValidationRules = [
     .withMessage('password must be between 6 and 100 characters'),
 ];
 
+/**
+ * Express middleware that checks the result of the validation rules.
+ * If there are validation errors, it sends a 400 response with the error messages.
+ * Otherwise, it passes control to the next middleware.
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ * @param {Function} next - The next middleware function.
+ */
 export function validateRecord(req, res, next) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

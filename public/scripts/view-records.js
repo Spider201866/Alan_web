@@ -54,6 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
   attachMapButtonListeners(); // Call new function to attach listeners
 });
 
+/**
+ * Attaches click event listeners to all 'Show Map' buttons.
+ */
 function attachMapButtonListeners() {
   const mapButtons = document.querySelectorAll('.show-map-btn');
   mapButtons.forEach((button) => {
@@ -65,12 +68,17 @@ function attachMapButtonListeners() {
   });
 }
 
+/**
+ * Handles user input in the password field, hiding the error message and enabling the submit button.
+ */
 function handlePasswordInput() {
   passwordError.style.display = 'none';
   passwordSubmitBtn.disabled = passwordInput.value.trim() === '';
 }
 
-// Called when user clicks "Submit" on password screen
+/**
+ * Handles the password submission, fetching records on success or showing an error on failure.
+ */
 function handleSubmit() {
   const entered = passwordInput.value.trim();
   // 1) Validate + fetch the single active record from /api/fetch-records
@@ -100,6 +108,9 @@ function handleSubmit() {
     });
 }
 
+/**
+ * Displays an error message for an invalid password and clears the input field.
+ */
 function showInvalidPassword() {
   passwordError.style.display = 'block';
   passwordInput.value = '';
@@ -109,6 +120,9 @@ function showInvalidPassword() {
   }, 3000);
 }
 
+/**
+ * Handles the refresh button click, re-fetching both the active record and the full history.
+ */
 function handleRefresh() {
   if (!currentPassword) {
     alert('No valid password found.');
@@ -120,6 +134,10 @@ function handleRefresh() {
   fetchHistory(currentPassword);
 }
 
+/**
+ * Fetches the single active record from the server.
+ * @param {string} password - The password to authenticate the request.
+ */
 function fetchActiveRecord(password) {
   fetch('/api/fetch-records', {
     method: 'POST',
@@ -139,6 +157,10 @@ function fetchActiveRecord(password) {
     });
 }
 
+/**
+ * Fetches the full history of records from the server.
+ * @param {string} password - The password to authenticate the request.
+ */
 function fetchHistory(password) {
   fetch('/api/fetch-history', {
     method: 'POST',
@@ -158,7 +180,10 @@ function fetchHistory(password) {
     });
 }
 
-// Display the single active record
+/**
+ * Renders the single active record into its designated table.
+ * @param {Array<Object>} data - An array containing the single active record.
+ */
 function showActiveRecord(data) {
   if (!Array.isArray(data) || data.length === 0) {
     activeRecordDiv.innerHTML = '<p>No active record found.</p>';
@@ -222,7 +247,10 @@ function showActiveRecord(data) {
 `;
 }
 
-// Display the full history array
+/**
+ * Renders the full history of records into its designated table.
+ * @param {Array<Object>} historyArray - An array of all historical records.
+ */
 function showHistory(historyArray) {
   if (!Array.isArray(historyArray) || historyArray.length === 0) {
     historyTitle.style.display = 'none';
@@ -296,6 +324,9 @@ function showHistory(historyArray) {
   attachDeleteButtonListeners(); // Attach listeners after history is rendered
 }
 
+/**
+ * Attaches click event listeners to all 'Delete' buttons in the history table.
+ */
 function attachDeleteButtonListeners() {
   const deleteButtons = document.querySelectorAll('.delete-record-btn');
   deleteButtons.forEach((button) => {
@@ -335,6 +366,11 @@ function attachDeleteButtonListeners() {
   });
 }
 
+/**
+ * Displays a Leaflet map with a marker at the specified coordinates.
+ * @param {number} lat - The latitude for the map marker.
+ * @param {number} lng - The longitude for the map marker.
+ */
 function showMap(lat, lng) {
   mapContainer.style.display = 'block';
   mapContainer.innerHTML = '';

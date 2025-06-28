@@ -1,6 +1,10 @@
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
 
+/**
+ * Applies all necessary static translations to the elements on the referral page.
+ * This function is passed to the page template initializer to be called at the right time.
+ */
 function applyPageSpecificTranslations() {
   // Labels for top input group
   document.querySelector('label[for="ref-id"]').textContent = getTranslation('refIdLabel', 'ID');
@@ -69,6 +73,9 @@ document.addEventListener('DOMContentLoaded', function () {
   initializeForm();
 });
 
+/**
+ * Initializes the referral form, setting up all event listeners and dynamic behaviors.
+ */
 function initializeForm() {
   const refIdInput = document.getElementById('ref-id');
   const refTelInput = document.getElementById('ref-tel');
@@ -83,6 +90,9 @@ function initializeForm() {
   const copyPreviewTextBtn = document.getElementById('copyPreviewText');
   const btnLoadExample = document.getElementById('btnLoadExample');
 
+  /**
+   * Updates the background color of the priority dropdown based on the selected value.
+   */
   function updateReferralPriorityColor() {
     const selectedValue = refPrioritySelect.value;
     refPrioritySelect.classList.remove('priority-green', 'priority-orange', 'priority-red');
@@ -95,6 +105,10 @@ function initializeForm() {
     }
   }
 
+  /**
+   * Generates a compact, single-line text representation of the referral form's data.
+   * @returns {string} The compacted referral text.
+   */
   function generateCompactReferralText() {
     const idVal = refIdInput.value.trim() || 'N/A';
     let telVal = refTelInput.value.trim().replace(/\s+/g, '') || 'N/A';
@@ -130,6 +144,9 @@ function initializeForm() {
     ].join('; ');
   }
 
+  /**
+   * Updates the text preview area with the compacted referral text and provides feedback on its length.
+   */
   function updateTextPreview() {
     const compactText = generateCompactReferralText();
     textPreviewContentEl.textContent = compactText;
@@ -148,6 +165,10 @@ function initializeForm() {
     textPreviewCharCountInfoEl.textContent = message;
   }
 
+  /**
+   * Provides visual feedback when the 'copy' button is clicked by changing the icon.
+   * @param {HTMLElement} element - The icon element to provide feedback on.
+   */
   function showCopyFeedback(element) {
     if (!element) return;
     element.classList.remove('fa-copy');
@@ -160,10 +181,16 @@ function initializeForm() {
     }, 1500);
   }
 
+  /**
+   * Updates the label for the screening switch based on its checked state.
+   */
   function updateScreeningLabel() {
     screenLabel.textContent = 'Screening: ' + (screenSwitch.checked ? 'Fail' : 'Pass');
   }
 
+  /**
+   * Populates the form with example data to demonstrate its usage.
+   */
   function loadExampleData() {
     refIdInput.value = '2772';
     refTelInput.value = '07445 667 2111';

@@ -1,6 +1,12 @@
+// middleware/rateLimiters.js
+// This file defines rate-limiting middleware for various parts of the application.
+
 import rateLimit from 'express-rate-limit';
 
-// General API rate limiter (already in use globally)
+/**
+ * A general rate limiter for most API endpoints.
+ * Limits each IP to 100 requests per 15 minutes.
+ */
 export const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100,
@@ -8,7 +14,10 @@ export const generalLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// Stricter rate limiter for sensitive endpoints (e.g., login, password reset, fetch-records)
+/**
+ * A stricter rate limiter for sensitive endpoints like authentication.
+ * Limits each IP to 10 requests per 15 minutes.
+ */
 export const sensitiveLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 10, // Much stricter: 10 requests per 15 minutes per IP

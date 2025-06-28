@@ -7,6 +7,11 @@ import { minify as minifyHtml } from 'html-minifier-terser';
 const publicDir = 'public';
 const distDir = 'dist';
 
+/**
+ * Recursively copies files and directories from a source to a destination.
+ * @param {string} src - The source path.
+ * @param {string} dest - The destination path.
+ */
 async function copyRecursive(src, dest) {
   const stats = await fs.stat(src);
   const isDirectory = stats.isDirectory();
@@ -20,6 +25,10 @@ async function copyRecursive(src, dest) {
   }
 }
 
+/**
+ * The main build function. It cleans the output directory, copies all public files,
+ * and then minifies the JS, CSS, and HTML files in the output directory.
+ */
 async function build() {
   try {
     console.log('Starting build process...');

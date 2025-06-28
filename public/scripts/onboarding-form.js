@@ -9,6 +9,10 @@ let checkboxesContainerEl, aimsSelectTextEl; // Specific to jobSelectElementEl i
 // State for aims dropdown
 let aimsDropdownExpanded = false;
 
+/**
+ * Checks the state of all form inputs and enables or disables the accept button based on validation rules.
+ * It also toggles the 'is-active' class on inputs to provide visual feedback.
+ */
 function checkSelections() {
   if (
     !nameInputEl ||
@@ -39,6 +43,10 @@ function checkSelections() {
   acceptButtonEl.disabled = !(nameEntered && anyAimChecked && experienceSelected && contactEntered);
 }
 
+/**
+ * Initializes the onboarding form by setting up DOM element references and attaching all necessary event listeners.
+ * @param {Object} elements - An object containing references to the form's DOM elements.
+ */
 export function initOnboardingForm(elements) {
   // Store references to DOM elements
   nameInputEl = elements.nameInput;

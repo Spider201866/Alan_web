@@ -1,4 +1,5 @@
-/* Alan UI - chatbot.test.js | 19th June 2025, WJW */
+// tests/chatbot.test.js
+// This file contains unit tests for the frontend chatbot and sidebar functionality.
 
 /* eslint-env jest */
 /**
@@ -8,7 +9,6 @@
  */
 
 import { JSDOM } from 'jsdom';
-import { jest } from '@jest/globals'; // Import jest
 
 // Import the modules to test
 // Note: You may need to adjust import paths and use dynamic import for ES modules

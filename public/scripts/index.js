@@ -14,6 +14,10 @@ let indexLangButton, indexLangDropdown, aimsSelectText, checkboxesContainer; // 
 
 document.addEventListener('DOMContentLoaded', main);
 
+/**
+ * The main entry point for the index page, executed when the DOM is fully loaded.
+ * It queries all necessary DOM elements and orchestrates the initialization of various modules.
+ */
 function main() {
   // --- Query all necessary DOM Elements ---
   passwordScreen = document.getElementById('passwordScreen');
@@ -89,7 +93,9 @@ function main() {
   }
 }
 
-// --- Language and Translation Functions specific to index.html ---
+/**
+ * Initializes the language selection controls, including the dropdown menu and its event listeners.
+ */
 function initLanguageControls() {
   if (!indexLangButton || !indexLangDropdown) return;
 
@@ -129,6 +135,10 @@ function initLanguageControls() {
   }
 }
 
+/**
+ * Applies all necessary translations to the elements on the index page.
+ * This function is called initially and whenever the language is changed.
+ */
 function applyIndexTranslations() {
   // console.log('index.js orchestrator: Applying translations.');
   const elementTranslations = {

@@ -7,6 +7,15 @@ let passwordScreenEl, passwordInputEl, passwordSubmitBtnEl, passwordErrorEl;
 let splashScreenRefEl, instructionRefEl, blackScreenEl;
 let nameInputEl, jobSelectElementEl, experienceSelectEl, contactInputEl, acceptButtonEl; // For handleAccept
 
+/**
+ * Sends user information to the server to be recorded.
+ * @param {string} name - The user's name.
+ * @param {Array<string>} aims - The user's selected job roles/aims.
+ * @param {string} roleClass - The classification of the user's role (e.g., '(M)' for Medical).
+ * @param {string} experience - The user's selected experience level.
+ * @param {string} contact - The user's contact information.
+ * @returns {Promise<void>} A promise that resolves when the data is successfully sent.
+ */
 function pushDataToServer(name, aims, roleClass, experience, contact) {
   const userInfo = {
     sessionId: localStorage.getItem('sessionId') || `user-${Date.now()}`, // Ensure sessionID exists
@@ -46,6 +55,11 @@ function pushDataToServer(name, aims, roleClass, experience, contact) {
     });
 }
 
+/**
+ * Verifies the entered password with the server.
+ * On success, it sets a 'verified' flag in local storage and transitions to the instruction screen.
+ * On failure, it displays an error message.
+ */
 function verifyPassword() {
   if (
     !passwordInputEl ||
@@ -98,6 +112,11 @@ function verifyPassword() {
     });
 }
 
+/**
+ * Handles the submission of the onboarding form.
+ * It gathers user input, saves it to local storage, pushes the data to the server,
+ * and initiates the transition to the main application.
+ */
 function handleAccept() {
   if (
     !nameInputEl ||
@@ -144,6 +163,10 @@ function handleAccept() {
   }, 6250); // Duration for black screen fade and transition
 }
 
+/**
+ * Manages the display of the initial splash screen and then transitions
+ * to the appropriate next screen based on the user's verification status.
+ */
 function showSplashScreenAndThen() {
   if (!splashScreenRefEl || !instructionRefEl || !passwordScreenEl) return;
 
@@ -174,6 +197,11 @@ function showSplashScreenAndThen() {
   }, 4000); // Splash screen duration
 }
 
+/**
+ * Initializes the entire authentication and onboarding flow.
+ * It sets up references to all necessary DOM elements and attaches event listeners.
+ * @param {Object} elements - An object containing references to all required DOM elements.
+ */
 export function initAuthFlow(elements) {
   // Store references to DOM elements passed from the orchestrator
   passwordScreenEl = elements.passwordScreen;

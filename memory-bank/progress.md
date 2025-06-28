@@ -4,6 +4,10 @@
 
 ## What Works
 
+- **Comprehensive Code Documentation (June 28, 2025):**
+    - All logical JavaScript files across the project have been documented with JSDoc comments and file-level overviews, significantly improving code clarity and maintainability.
+- **Repository Reset (June 28, 2025):**
+    - The local and remote repositories were reset to a clean, stable baseline (`fish15-dep`), and the `README.md` was updated to reflect the current project state.
 - **UI Improvements (June 25, 2025):**
     - All table cell content in the "View Records" page is now centered both vertically and horizontally for improved readability.
     - The delete (trash can) icon in the records table is now red for better visibility and user experience.
@@ -32,11 +36,11 @@
 </details>
 
 ## What's Left to Build
-1.  **Implement PWA Service Worker for Install Prompt.**
-2.  **Re-evaluate Critical CSS implementation.** (Future task)
+1.  **Implement PWA Service Worker:** The immediate next step is to add a service worker to enable Progressive Web App features, including the ability to install the application.
+2.  **Re-evaluate Critical CSS:** A future task is to revisit the implementation of critical CSS to improve the initial page load performance.
 
 ## Current Status
-The AlanUI Web Chatbot is functional, stable, accessible, and optimized. All known issues have been resolved.
+The AlanUI Web Chatbot is functional, stable, accessible, and now comprehensively documented. All known issues have been resolved.
 
 ## Known Issues
 - The `EBUSY` error during test database cleanup still occurs intermittently but does not affect test outcomes.

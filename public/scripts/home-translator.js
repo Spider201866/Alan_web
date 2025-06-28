@@ -1,9 +1,12 @@
 // public/scripts/home-translator.js
 // Manages UI text updates based on language changes for the home page.
 
-import log from './log.js';
 import { getTranslation } from './language.js';
 
+/**
+ * Applies all necessary translations to the elements on the home page.
+ * This function is called initially and whenever the language is changed.
+ */
 function applyHomeTranslations() {
   // log.info('home-translator.js: Applying translations.');
   const elementTranslations = {
@@ -82,6 +85,9 @@ function applyHomeTranslations() {
   });
 }
 
+/**
+ * Displays a personalized greeting message to the user based on the name stored in local storage.
+ */
 function showGreeting() {
   const name = localStorage.getItem('name');
   const subTextEl = document.getElementById('sub-text');
@@ -97,6 +103,10 @@ function showGreeting() {
   }
 }
 
+/**
+ * Initializes the translator for the home page.
+ * It applies the initial translations and sets up a listener for language changes.
+ */
 export function initTranslator() {
   // Apply translations immediately on initialization
   applyHomeTranslations();

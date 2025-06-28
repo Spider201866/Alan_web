@@ -1,4 +1,6 @@
-// Alan UI - page-template.js | 20th June 2025, WJW (Refactored for new language system)
+// public/scripts/page-template.js
+// Provides a standardized template for creating and initializing sub-pages.
+
 import { getTranslation } from './language.js'; // Assuming language.js auto-initializes
 import log from './log.js';
 

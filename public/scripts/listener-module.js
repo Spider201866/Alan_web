@@ -19,7 +19,11 @@ const normalise = (s) =>
     .trim()
     .toLowerCase();
 
-/* add copy button inside a session container */
+/**
+ * Creates and appends a 'copy' button to a session container in the sidebar.
+ * @param {HTMLElement} container - The DOM element to which the button will be appended.
+ * @param {Object} sess - The session object, used to access messages for copying.
+ */
 function makeCopyButton(container, sess) {
   const btn = document.createElement('i');
   btn.className = 'fa-regular fa-copy copy-btn'; // Font Awesome icon
@@ -65,7 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
   attachFlowiseObservers();
 });
 
-/* ── observe Flowise chatbot for messages and reset actions ───────────── */
+/**
+ * Attaches MutationObservers to the Flowise chatbot component to detect new messages and UI changes.
+ * This is the primary mechanism for capturing chat interactions.
+ */
 function attachFlowiseObservers() {
   const host = document.querySelector('flowise-fullchatbot');
   if (!host) {
@@ -105,7 +112,10 @@ function attachFlowiseObservers() {
   }, 100);
 }
 
-/* ── scan Flowise for new message bubbles ─────────────────────────────── */
+/**
+ * Callback function for the MutationObserver that handles changes in the chatbot's message bubbles.
+ * It scans for new user or bot messages and saves them.
+ */
 function handleBubbleChanges() {
   const host = document.querySelector('flowise-fullchatbot');
   if (!host || !host.shadowRoot) return;
@@ -121,7 +131,10 @@ function handleBubbleChanges() {
     });
 }
 
-/* ── start a new chat session ─────────────────────────────────────────── */
+/**
+ * Starts a new chat session by incrementing the session counter, updating local storage,
+ * and rendering a new session container in the sidebar.
+ */
 function startNewSession() {
   // This function is called by Flowise "Reset Chat" or potentially other triggers
   // It ensures a new session is correctly set up in 'history' and the sidebar
@@ -159,7 +172,11 @@ function startNewSession() {
   headerElement.scrollIntoView({ behavior: 'auto', block: 'nearest' });
 }
 
-/* ── save message, merge streaming bot chunks, de-duplicate ─────────── */
+/**
+ * Saves a message to the current session, handling streaming bot messages and de-duplication.
+ * @param {string} role - The role of the message sender ('user' or 'bot').
+ * @param {string} text - The content of the message.
+ */
 function saveMessage(role, text) {
   const currentSession = history.sessions.find((s) => s.id === CURRENT_ID);
   if (!currentSession) {
@@ -214,7 +231,10 @@ function saveMessage(role, text) {
   appendLineToSidebar(CURRENT_ID, role, text);
 }
 
-/* ── render all sessions to the sidebar ───────────────────────────────── */
+/**
+ * Renders the entire chat history from local storage into the sidebar UI.
+ * It creates collapsible sections for each session.
+ */
 function renderSidebar() {
   const sidebar = document.getElementById('chatHistorySidebar');
   if (!sidebar) {
@@ -267,7 +287,12 @@ function renderSidebar() {
   }
 }
 
-/* ── append a new message line to a specific session in the sidebar ───── */
+/**
+ * Appends a new message line to a specific session container in the sidebar.
+ * @param {number} sessionId - The ID of the session to which the message should be added.
+ * @param {string} role - The role of the message sender ('user' or 'bot').
+ * @param {string} text - The content of the message.
+ */
 function appendLineToSidebar(sessionId, role, text) {
   const sessionContentDiv = document.getElementById(`session-${sessionId}`);
   if (sessionContentDiv) {
@@ -276,7 +301,12 @@ function appendLineToSidebar(sessionId, role, text) {
   }
 }
 
-/* ── create and append a DOM element for a message line ──────────────── */
+/**
+ * Creates and appends a new message line element to a given session container.
+ * @param {HTMLElement} sessionContentDiv - The DOM element for the session's content.
+ * @param {string} role - The role of the message sender ('user' or 'bot').
+ * @param {string} text - The content of the message.
+ */
 function appendLine(sessionContentDiv, role, text) {
   const lineElement = document.createElement('div');
   lineElement.className = `history-message ${role}`;
@@ -296,6 +326,10 @@ export function attachImagesButton() {
   // To be implemented if needed
 }
 
+/**
+ * Resets the in-memory history state of the module.
+ * This is typically called when the user clears the chat history.
+ */
 export function resetSidebarHistory() {
   log.info('%c[History] Resetting in-memory sidebar history state.', 'color:#ff0000');
   history = { sessionCounter: 0, sessions: [] };

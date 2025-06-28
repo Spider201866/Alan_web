@@ -1,3 +1,6 @@
+// public/scripts/triangle.js
+// Handles the creation and animation of the SVG triangle graphic.
+
 document.addEventListener('DOMContentLoaded', function () {
   // --- SVG Creation ---
   (function createTriangles() {

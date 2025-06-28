@@ -1,3 +1,6 @@
+// public/scripts/home-navigation.js
+// Sets up event listeners for the main navigation buttons on the home page.
+
 document.addEventListener('DOMContentLoaded', () => {
   const eyeButton = document.getElementById('eye-button');
   if (eyeButton) {

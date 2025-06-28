@@ -1,6 +1,5 @@
-// Alan UI - focus-trap.js | 19th June 2025, WJW
-
-// --- START OF FILE focus-trap.js ---
+// public/scripts/focus-trap.js
+// A reusable class for managing focus within a modal or popup, ensuring accessibility.
 
 export class FocusTrap {
   constructor(modalElement) {

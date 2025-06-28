@@ -37,7 +37,7 @@ export function initMutedButtons() {
 }
 
 /**
- * Capture the screen using html2canvas then trigger a download
+ * Captures the current screen using html2canvas and triggers a download of the resulting image.
  */
 /* global html2canvas */
 function takeScreenshot() {
@@ -55,15 +55,15 @@ function takeScreenshot() {
 }
 
 /**
- * Remove any existing sub-image button container
+ * Removes the container for the sub-image buttons if it exists.
  */
 function removeChatEndButtons() {
   document.getElementById('chat-end-buttons')?.remove();
 }
 
 /**
- * Create and insert the sub-image button container
- * @param {string} condition
+ * Creates and displays the sub-image buttons with a conditional text line.
+ * @param {string} [condition=''] - An optional condition to be displayed in the text line.
  */
 function createButtonsWithText(condition = '') {
   if (document.getElementById('chat-end-buttons')) return;
@@ -111,7 +111,11 @@ function createButtonsWithText(condition = '') {
 }
 
 /**
- * Helper to build a styled site button
+ * A helper function to create a styled button that links to an external site.
+ * @param {string} label - The text to be displayed on the button.
+ * @param {string} background - The background color of the button.
+ * @param {string} url - The URL to open when the button is clicked.
+ * @returns {HTMLButtonElement} The created button element.
  */
 function createSiteButton(label, background, url) {
   const button = document.createElement('button');

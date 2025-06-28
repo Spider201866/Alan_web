@@ -83,7 +83,21 @@ For more details, see `.github/workflows/ci-cd.yml`.
 
 ---
 
-## Recent UI Improvements
+## Project Documentation
 
-- **Centered Table Content:** All table cell content in the "View Records" page is now centered both vertically and horizontally for improved readability.
-- **Red Delete Icon:** The delete (trash can) icon in the records table is now red for better visibility and user experience.
+The project's JavaScript files have been thoroughly documented to improve code clarity and maintainability.
+
+- **JSDoc Comments:** All logical functions and classes now include JSDoc blocks describing their purpose, parameters, and return values.
+- **File-level Overviews:** Each documented file includes a comment at the top providing a high-level overview of its role.
+
+### Documented Directories
+The following directories have been fully documented:
+- `config/`
+- `middleware/`
+- `public/scripts/`
+- `routes/`
+- `scripts/`
+- `services/`
+- `tests/`
+
+Key root-level files such as `server.js` and `eslint.config.js` have also been documented.

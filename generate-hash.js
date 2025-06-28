@@ -1,5 +1,6 @@
-// Alan UI - generate-hash.js | 19th June 2025, WJW
 // generate-hash.js
+// A utility script to generate a salted SHA-256 hash for a given password.
+// This is used to create the MASTER_PASSWORD_HASH for the .env file.
 const crypto = require('crypto');
 require('dotenv').config();
 

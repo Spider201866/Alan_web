@@ -1,4 +1,5 @@
 // public/scripts/log.js
+// A simple logging utility that silences info and debug messages in production.
 
 // Determine if we are in the production environment by checking the hostname.
 const isProduction = window.location.hostname === 'alan.up.railway.app';

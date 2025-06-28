@@ -9,6 +9,12 @@ import apiRoutesFactory from './routes/api.js';
 import webRoutesFactory from './routes/web.js';
 import { globalErrorHandler, notFound } from './middleware/error.js';
 
+/**
+ * Creates and configures the Express application.
+ * This function sets up all global middleware, routes, and error handlers.
+ * @param {Object} configToUse - The application configuration object.
+ * @returns {import('express').Application} The configured Express application instance.
+ */
 export function createApp(configToUse) {
   const app = express();
 

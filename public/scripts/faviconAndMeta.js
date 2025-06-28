@@ -1,4 +1,5 @@
-// Alan UI - faviconAndMeta.js | 19th June 2025, WJW
+// public/scripts/faviconAndMeta.js
+// Dynamically adds favicon and meta tags to the document head.
 
 /**
  * ******************************************************

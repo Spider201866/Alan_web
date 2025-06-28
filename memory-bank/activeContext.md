@@ -3,9 +3,16 @@
 # Active Context
 
 ## Current Work Focus
-All known issues have been resolved. The project is now stable, accessible, optimized, and ready for the next phase of development.
+The project has been thoroughly documented with JSDoc comments, and the codebase is clean and stable. The next focus is on implementing PWA features.
 
 ## Recent Changes
+- **Comprehensive Code Documentation (June 28, 2025):**
+    - Added JSDoc comments and file-level overviews to all logical JavaScript files across the project, including server-side code, client-side scripts, and tests.
+    - Updated the main `README.md` to reflect the new documentation standards.
+    - Fixed several minor ESLint errors that were identified during the documentation process.
+- **Repository Reset (June 28, 2025):**
+    - The local and remote repositories were reset to the `fish15-dep` commit to establish a clean, stable baseline.
+    - This involved a force push to the `main` branch on GitHub, which permanently removed several non-functional commits.
 - **UI Improvements (June 25, 2025):**
     - All table cell content in the "View Records" page is now centered both vertically and horizontally for improved readability.
     - The delete (trash can) icon in the records table is now red for better visibility and user experience.
@@ -42,5 +49,5 @@ All known issues have been resolved. The project is now stable, accessible, opti
 </details>
 
 ## Next Steps
-1.  **Implement PWA Service Worker for Install Prompt.**
-2.  **Re-evaluate Critical CSS implementation.** (Future task)
+1.  **Implement PWA Service Worker:** The immediate next step is to add a service worker to enable Progressive Web App features, including the ability to install the application.
+2.  **Re-evaluate Critical CSS:** A future task is to revisit the implementation of critical CSS to improve the initial page load performance.

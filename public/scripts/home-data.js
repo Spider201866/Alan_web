@@ -3,6 +3,11 @@
 
 import log from './log.js';
 import { initMutedButtons } from './muted.js';
+
+/**
+ * Fetches the HTML snippet for the muted buttons, injects it into the DOM, and initializes the buttons.
+ * @returns {Promise<void>} A promise that resolves when the snippet is fetched and initialized.
+ */
 export function fetchMutedSnippet() {
   return fetch('muted.html') // Return the promise
     .then((res) => (res.ok ? res.text() : Promise.reject('File not found')))
@@ -19,6 +24,12 @@ export function fetchMutedSnippet() {
     });
 }
 
+/**
+ * Fetches a human-readable area name (e.g., city) from latitude and longitude coordinates using the BigDataCloud API.
+ * @param {number} lat - The latitude.
+ * @param {number} lng - The longitude.
+ * @returns {Promise<string>} A promise that resolves with the area name or 'Unknown' if an error occurs.
+ */
 export async function fetchAreaFromLatLong(lat, lng) {
   try {
     const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`;
@@ -38,6 +49,11 @@ export async function fetchAreaFromLatLong(lat, lng) {
   }
 }
 
+/**
+ * Gathers user data from local storage and pushes it to the server.
+ * This is typically called when new information (like geolocation) is available.
+ * @returns {Promise<string>} A promise that resolves with the server's response text on success.
+ */
 export function pushLocalStorageToServer() {
   const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
 

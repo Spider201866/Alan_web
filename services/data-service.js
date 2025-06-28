@@ -42,6 +42,10 @@ if (process.env.NODE_ENV === 'production') {
 const db = new Database(dbPath);
 log(`Database connected successfully at: ${dbPath}`);
 
+/**
+ * Initializes the database by creating the necessary tables if they don't already exist.
+ * This function is executed automatically when the module is first loaded.
+ */
 function initDatabase() {
   log('Initializing database schema...');
   const historyTableStmt = `
@@ -80,6 +84,11 @@ initDatabase(); // Run this setup once when the module is loaded.
 
 // --- Service Functions ---
 
+/**
+ * Retrieves the currently active record from the history table.
+ * The active record is identified by the sessionId stored in the active_record table.
+ * @returns {Array<Object>} An array containing the active record, or an empty array if no active record is found.
+ */
 function getActiveRecord() {
   const getSessionIdStmt = db.prepare('SELECT sessionId FROM active_record WHERE id = 1');
   const activeSession = getSessionIdStmt.get();
@@ -94,11 +103,20 @@ function getActiveRecord() {
   return record ? [record] : []; // Return as an array to match old API behavior
 }
 
+/**
+ * Retrieves all records from the history table, sorted in descending order by dateTime.
+ * @returns {Array<Object>} An array of all history records.
+ */
 function getFullHistory() {
   const records = db.prepare('SELECT * FROM history ORDER BY dateTime DESC').all();
   return records;
 }
 
+/**
+ * Inserts a new record into the history table or updates an existing one if the sessionId already exists.
+ * It also sets the given record as the currently active record.
+ * @param {Object} inputRecord - The record object to be upserted. Must contain a `sessionId`.
+ */
 function upsertRecord(inputRecord) {
   // Ensure all fields expected by the SQL query are present, defaulting if necessary.
   const recordForDb = {
@@ -164,6 +182,11 @@ const dataService = {
 
 export default dataService;
 
+/**
+ * Deletes a record from the history table based on its sessionId.
+ * If the deleted record was the active record, it also clears the active record entry.
+ * @param {string} sessionId - The unique identifier of the record to be deleted.
+ */
 function deleteRecord(sessionId) {
   const transaction = db.transaction(() => {
     // Delete from history table

@@ -14,6 +14,10 @@ import { initTranslator } from './home-translator.js';
 
 document.addEventListener('DOMContentLoaded', main);
 
+/**
+ * The main entry point for the home page, executed when the DOM is fully loaded.
+ * It orchestrates the initialization of UI components, data fetching, and other modules.
+ */
 function main() {
   // 1. Initialize all UI components.
   // Pass the orchestrator's data-handling function to the UI module.
@@ -42,7 +46,12 @@ function main() {
   // Other global initializations if any.
 }
 
-// Orchestrator function to handle data fetching when geolocation is triggered by the UI module.
+/**
+ * Orchestrates the process of fetching location data and updating the server.
+ * This function is passed as a callback to the UI module to be triggered on geolocation events.
+ * @param {number} latitude - The user's latitude.
+ * @param {number} longitude - The user's longitude.
+ */
 async function fetchAndDisplayLocation(latitude, longitude) {
   try {
     // home-ui.js has already stored latitude and longitude in localStorage.

@@ -1,6 +1,10 @@
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
 
+/**
+ * Applies initial translations to the page and then calls toggleContent to set the
+ * dynamic content based on the default selected radio button.
+ */
 function applyTranslationsAndToggle() {
   // Page title is handled by initPage using getTranslation('instructionsPageTitle')
   document.getElementById('introText').innerHTML = getTranslation(
@@ -22,6 +26,10 @@ function applyTranslationsAndToggle() {
   toggleContent(); // Initial call to set content based on default checked radio
 }
 
+/**
+ * Toggles the displayed content based on the selected radio button (Eye, Ear, or Skin).
+ * It updates the text and background color to match the selected option.
+ */
 function toggleContent() {
   var option = document.querySelector('input[name="option"]:checked').value;
 

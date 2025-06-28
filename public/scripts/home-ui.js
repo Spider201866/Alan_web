@@ -21,7 +21,10 @@ let chatbotContainer, boxesFrame, chatbotTitle; // Elements for chatbot interact
 let popupFocusTrap;
 let sideMenuFocusTrap;
 
-// Helper function to query DOM elements once
+/**
+ * Queries and assigns all necessary DOM elements to module-level variables.
+ * This avoids repeated DOM queries and centralizes element selection.
+ */
 function queryDOMElements() {
   menuIcon = document.querySelector('.menu-icon');
   sideMenu = document.querySelector('.side-menu');
@@ -47,7 +50,8 @@ function queryDOMElements() {
 }
 
 /**
- * Closes all active popups and the overlay.
+ * Closes all popups, side menus, and the modal overlay to ensure a clean UI state.
+ * It also deactivates any active focus traps.
  */
 function closeAllPopups() {
   if (sideMenu && sideMenu.style.left === '0px') {
@@ -64,6 +68,10 @@ function closeAllPopups() {
   if (overlay) overlay.style.display = 'none';
 }
 
+/**
+ * Opens the main user information popup.
+ * It ensures all other popups are closed first, builds the content, and activates the focus trap.
+ */
 function openPopup() {
   closeAllPopups(); // Close any other popups first
 
@@ -74,16 +82,26 @@ function openPopup() {
   if (popupFocusTrap) popupFocusTrap.activate();
 }
 
+/**
+ * Closes the main user information popup by calling the general close function.
+ */
 function closePopup() {
   closeAllPopups();
 }
 
+/**
+ * Toggles the visibility of the main user information popup.
+ */
 function togglePopup() {
   if (popup) {
     popup.style.right === '0px' ? closePopup() : openPopup();
   }
 }
 
+/**
+ * Builds the HTML content for the user information popup by retrieving data from local storage.
+ * @returns {string} The HTML string to be injected into the popup.
+ */
 function buildPopupContent() {
   const name = localStorage.getItem('name') || 'Not set';
   const role = localStorage.getItem('selectedJobRole') || 'Not set';
@@ -117,6 +135,9 @@ function buildPopupContent() {
 <p style="color: grey;"><em><strong>${getTranslation('userDateTime', 'Date/Time')}:</strong> ${currDT}</em></p>`;
 }
 
+/**
+ * Sets up the event listener for the main menu icon to toggle the side menu.
+ */
 function setupMenuIcon() {
   if (!menuIcon || !sideMenu || !overlay || !sideMenuFocusTrap) return;
   menuIcon.addEventListener('click', function () {
@@ -131,6 +152,10 @@ function setupMenuIcon() {
   });
 }
 
+/**
+ * Updates the style of a button after it has been clicked, typically to indicate a completed action.
+ * @param {HTMLElement} button - The button element to be styled.
+ */
 function updateButtonStyle(button) {
   if (!button) return;
   button.classList.remove('pulse');
@@ -138,6 +163,9 @@ function updateButtonStyle(button) {
   button.style.color = 'white';
 }
 
+/**
+ * Sets up the event listener for the instructions button to navigate to the instructions page.
+ */
 function setupInstructionsButton() {
   if (!instructionsButton) return;
   instructionsButton.addEventListener('click', function (e) {
@@ -148,6 +176,9 @@ function setupInstructionsButton() {
   });
 }
 
+/**
+ * Creates and sets up the user's name icon in the header, which toggles the user info popup.
+ */
 function setupNameIcon() {
   const storedName = localStorage.getItem('name') || 'User';
   const nameIconElement = document.createElement('div');
@@ -159,6 +190,9 @@ function setupNameIcon() {
   if (popupClose) popupClose.addEventListener('click', closePopup);
 }
 
+/**
+ * Sets up the event listener for the geolocation info button to toggle the visibility of the info popup.
+ */
 function setupGeoInfoButton() {
   if (!geoInfoButton || !geoInfoPopup) return;
   geoInfoButton.addEventListener('click', (event) => {
@@ -177,6 +211,9 @@ function setupGeoInfoButton() {
   });
 }
 
+/**
+ * Flashes the background of specific UI elements to indicate that they have been updated.
+ */
 function flashBlueOnUpdate() {
   ['latLongSection', 'areaSection', 'countrySection'].forEach((id) => {
     const el = document.getElementById(id);
@@ -188,6 +225,10 @@ function flashBlueOnUpdate() {
 }
 
 // The onGeolocationClick callback will be passed from the orchestrator (home.js)
+/**
+ * Sets up the geolocation button, including the click handler to fetch and process the user's location.
+ * @param {Function} onGeolocationClick - A callback function to be executed with the latitude and longitude when the location is successfully retrieved.
+ */
 function setupGeolocationButton(onGeolocationClick) {
   if (!geolocationButton || !locationInfo) return;
   geolocationButton.addEventListener('click', async () => {
@@ -243,6 +284,9 @@ function setupGeolocationButton(onGeolocationClick) {
   });
 }
 
+/**
+ * Sets up the language selection dropdown and its event listeners.
+ */
 function setupLanguageControls() {
   if (!languageButton || !languageDropdown) return;
   languageButton.addEventListener('click', (e) => {
@@ -260,6 +304,9 @@ function setupLanguageControls() {
   });
 }
 
+/**
+ * Sets up interactions related to the chatbot container, such as hiding other elements on click.
+ */
 function setupChatbotInteraction() {
   if (chatbotContainer && boxesFrame) {
     chatbotContainer.addEventListener('click', () => {
@@ -273,7 +320,12 @@ function setupChatbotInteraction() {
   }
 }
 
-// Exported init function
+/**
+ * Initializes all UI components and event listeners for the home page.
+ * This is the main entry point for this module.
+ * @param {Object} [options={}] - An options object.
+ * @param {Function} [options.onGeolocationClick] - A callback function to handle geolocation data.
+ */
 export function initUI(options = {}) {
   queryDOMElements(); // Ensure all DOM elements are queried
 

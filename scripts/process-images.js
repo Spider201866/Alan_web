@@ -5,6 +5,10 @@ import path from 'path';
 const inputDir = 'public/images';
 const outputDir = 'public/images'; // We'll save them in the same directory for simplicity
 
+/**
+ * Processes all images in the input directory, converting them to WebP format
+ * and creating responsive versions for specific images.
+ */
 const processImages = async () => {
   try {
     // Ensure output directory exists (it should, but good practice)

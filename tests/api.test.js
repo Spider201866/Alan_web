@@ -1,4 +1,5 @@
-/* Alan UI - api.test.js | 20th June 2025, WJW */
+// tests/api.test.js
+// This file contains integration tests for the API server, covering endpoints, security, and other backend logic.
 
 /* eslint-env jest */
 /**

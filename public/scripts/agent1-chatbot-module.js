@@ -5,7 +5,11 @@
 import Chatbot from 'https://cdn.jsdelivr.net/npm/flowise-embed@latest/dist/web.js';
 import log from './log.js';
 
-// MODIFICATION 1: The function now accepts a 'sessionId' from the outside.
+/**
+ * Initializes the Flowise chatbot, creating the necessary DOM element if it doesn't exist
+ * and configuring it with the provided session ID and theme options.
+ * @param {string} sessionId - The session ID to be used for the chat history.
+ */
 export function initChatbot(sessionId) {
   // MODIFICATION 2: Use the provided sessionId first, with fallbacks.
   const sessionToUse = sessionId || localStorage.getItem('sessionId') || `fallback-${Date.now()}`;

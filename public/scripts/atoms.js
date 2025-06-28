@@ -1,3 +1,6 @@
+// public/scripts/atoms.js
+// Initializes the 'Atoms' page using the standard page template.
+
 import { initPage } from './page-template.js';
 // This page has no specific text content to translate beyond the title.
 // Using 'atomsButton' key which should resolve to "Atoms".

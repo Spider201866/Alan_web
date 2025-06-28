@@ -1,4 +1,5 @@
-/* Alan UI - ui.test.js | 19th June 2025, WJW */
+// tests/ui.test.js
+// This file contains UI/UX integration tests for the Alan webapp, including accessibility checks.
 
 /* eslint-env jest */
 /**

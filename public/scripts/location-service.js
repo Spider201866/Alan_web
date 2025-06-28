@@ -204,6 +204,10 @@ const classificationLookup = {
   ],
 };
 
+/**
+ * Determines and stores the user's location classification based on their country's ISO code.
+ * @param {string} iso2 - The two-letter ISO country code.
+ */
 function storeClassifications(iso2) {
   let classification = 'Unknown';
   if (iso2 && typeof iso2 === 'string') {
@@ -218,6 +222,10 @@ function storeClassifications(iso2) {
   localStorage.setItem('classification', classification);
 }
 
+/**
+ * Fetches the user's approximate location based on their IP address using the ipinfo.io service.
+ * It stores the location data and classification in local storage.
+ */
 async function fetchIPBasedLocation() {
   try {
     const response = await fetch('https://ipinfo.io/json');
@@ -258,6 +266,9 @@ async function fetchIPBasedLocation() {
   }
 }
 
+/**
+ * Initializes the location service by triggering the IP-based location fetch.
+ */
 export function initializeLocation() {
   fetchIPBasedLocation(); // Fire and forget, no need to await in the orchestrator for this.
 }

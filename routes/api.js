@@ -12,7 +12,11 @@ import { sensitiveLimiter } from '../middleware/rateLimiters.js';
 export default function apiRoutes(rateLimiter) {
   const router = express.Router();
 
-  // Route: Overwrite the active record and append/update the history.
+  /**
+   * @route POST /api/record-info
+   * @description Overwrites the active record and appends or updates the history with the provided data.
+   * @access public
+   */
   router.post(
     '/record-info',
     rateLimiter,
@@ -32,7 +36,11 @@ export default function apiRoutes(rateLimiter) {
     }
   );
 
-  // Route: Fetch the single active record.
+  /**
+   * @route POST /api/fetch-records
+   * @description Fetches the single active record. Requires a valid password.
+   * @access private
+   */
   router.post('/fetch-records', sensitiveLimiter, validatePassword, (req, res, next) => {
     // The original plan had a console.log here for non-production, can be added if needed
     // if (process.env.NODE_ENV !== 'production') {
@@ -48,7 +56,11 @@ export default function apiRoutes(rateLimiter) {
     }
   });
 
-  // Route: Fetch the full user history.
+  /**
+   * @route POST /api/fetch-history
+   * @description Fetches the full user history, sorted by date. Requires a valid password.
+   * @access private
+   */
   router.post('/fetch-history', sensitiveLimiter, validatePassword, (req, res, next) => {
     try {
       const history = dataService.getFullHistory();
@@ -58,7 +70,11 @@ export default function apiRoutes(rateLimiter) {
     }
   });
 
-  // Route: Delete a record by sessionId.
+  /**
+   * @route DELETE /api/delete-record
+   * @description Deletes a record from the history by its sessionId. Requires a valid password.
+   * @access private
+   */
   router.delete('/delete-record', sensitiveLimiter, validatePassword, (req, res, next) => {
     try {
       const { sessionId } = req.body;

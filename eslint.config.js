@@ -1,4 +1,6 @@
 // eslint.config.js
+// Configuration file for ESLint, defining the linting rules for the project.
+
 import globals from 'globals';
 import js from '@eslint/js';
 import eslintPluginJest from 'eslint-plugin-jest';

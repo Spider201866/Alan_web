@@ -1,3 +1,6 @@
+// public/scripts/language-loader.js
+// Handles the dynamic loading and caching of translation files.
+
 import log from './log.js';
 
 // A simple in-memory cache to avoid re-fetching languages.

@@ -66,7 +66,8 @@ export function getTranslation(key, fallbackText = '') {
 
 /**
  * Initializes the language system on application startup.
- * Tries to load the preferred language from localStorage, or defaults to English.
+ * It retrieves the preferred language from local storage or defaults to English,
+ * then calls setLanguage to load the appropriate translations.
  */
 async function initializeLanguage() {
   const preferredLanguage = localStorage.getItem('preferredLanguage') || 'en';

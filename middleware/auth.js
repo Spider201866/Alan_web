@@ -14,7 +14,11 @@ function hashPassword(str = '') {
 }
 
 /**
- * Middleware: Validates master or one-time password.
+ * Express middleware to validate a password against the master password or a one-time password.
+ * If a one-time password is used, it is invalidated after its first use.
+ * @param {Object} req - The Express request object, expected to contain a `password` in the body.
+ * @param {Object} res - The Express response object.
+ * @param {Function} next - The next middleware function in the stack.
  */
 export function validatePassword(req, res, next) {
   const { password } = req.body;

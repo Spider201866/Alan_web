@@ -1,7 +1,10 @@
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
 
-// This is the function that knows how to translate THIS specific page
+/**
+ * Applies all necessary translations to the elements on the 'How to Examine Ear' page.
+ * This function is passed to the page template initializer to be called at the right time.
+ */
 function applyPageSpecificTranslations() {
   document.getElementById('allAroundEarHeading').textContent = getTranslation(
     'allAroundEarHeading',

@@ -1,6 +1,10 @@
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
 
+/**
+ * Applies all necessary translations to the elements on the 'Web Links' page.
+ * This function is passed to the page template initializer to be called at the right time.
+ */
 function applyPageSpecificTranslations() {
   const introParagraph = document.getElementById('weblinksIntroParagraph');
   if (introParagraph) {

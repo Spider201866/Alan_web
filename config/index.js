@@ -1,3 +1,6 @@
+// config/index.js
+// Central configuration file for the application. It validates and exports all environment variables and constants.
+
 import { fileURLToPath } from 'url';
 import path from 'path';
 import validateEnv from './validateEnv.js'; // Import the validation function

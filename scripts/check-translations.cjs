@@ -4,7 +4,12 @@ const path = require('path');
 const translationsDir = path.join(__dirname, '../public/translations');
 const englishFilePath = path.join(translationsDir, 'en.json');
 
-// Function to flatten a JSON object into dot-notation keys
+/**
+ * Flattens a nested JSON object into a single-level object with dot-notation keys.
+ * @param {Object} obj - The object to flatten.
+ * @param {string} [parentKey=''] - The base key for recursive calls.
+ * @returns {Object} The flattened object.
+ */
 function flattenObject(obj, parentKey = '') {
     let flattened = {};
     for (const key in obj) {
@@ -20,13 +25,21 @@ function flattenObject(obj, parentKey = '') {
     return flattened;
 }
 
-// Function to check for placeholder values
+/**
+ * Checks if a string value contains a placeholder pattern (e.g., "(LANG: ...)")
+ * @param {string} value - The string to check.
+ * @returns {boolean} True if a placeholder is found, false otherwise.
+ */
 function hasPlaceholder(value) {
     // Generic regex for patterns like "(LANG: ...)", "(ARABIC: ...)", etc.
     // It looks for text enclosed in parentheses, starting with word characters and a colon.
     return typeof value === 'string' && /\(\w+:\s*.*\)/.test(value);
 }
 
+/**
+ * The main function to check translation consistency. It reads all translation files,
+ * compares them against the English source, and reports any discrepancies.
+ */
 async function checkTranslations() {
     console.log('Starting translation consistency check...\n');
 
