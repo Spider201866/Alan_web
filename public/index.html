@@ -116,6 +116,17 @@
         color: #6c757d;
         opacity: 1; /* Firefox adds a lower opacity by default */
       }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
     </style>
   </head>
 
@@ -391,6 +402,7 @@
         <p id="good-luck" class="good-luck" style="text-align: center">Good luck!</p>
 
         <form id="onboardingForm" onsubmit="event.preventDefault();">
+          <label for="nameInput" class="sr-only">Name</label>
           <input
             type="text"
             id="nameInput"
@@ -418,6 +430,7 @@
               <label><input type="checkbox" value="Child/Maternal" /> Child/Maternal</label>
             </div>
           </div>
+          <label for="experience-select" class="sr-only">Experience</label>
           <select id="experience-select" class="onboarding-field experience-dropdown">
             <option value="" disabled selected hidden>Experience</option>
             <option value="Student / refresher">Student / Refresher</option>
