@@ -16,7 +16,9 @@ export default function simpleCors(options = {}) {
 
   const corsOptions = {
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      // and requests from origins in the allowlist.
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
