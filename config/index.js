@@ -67,6 +67,7 @@ const config = {
     otpHashes: new Set((env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean)),
   },
   allowedOrigins: (env.CORS_ALLOWED_ORIGINS || '').split(',').filter(Boolean),
+  enableCsrf: env.ENABLE_CSRF === 'true',
   cspOptions: cspOptions,
 };
 

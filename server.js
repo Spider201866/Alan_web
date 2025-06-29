@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
+import csrfProtection from './middleware/csrf.js';
 // path is not directly used here anymore for express.static, config handles it.
 import defaultConfig from './config/index.js'; // Renamed for clarity
 import apiRoutesFactory from './routes/api.js';
@@ -44,6 +45,12 @@ export function createApp(configToUse) {
     })
   );
   app.use(express.json());
+  app.use(
+    csrfProtection({
+      enable: Boolean(configToUse.enableCsrf),
+      skipPaths: ['/api/fetch-records'],
+    })
+  );
   if (process.env.NODE_ENV === 'production') {
     console.log('Serving from dist directory');
     app.use(express.static('dist'));
