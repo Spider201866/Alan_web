@@ -23,6 +23,7 @@ const originalMasterPasswordHashAtStart = process.env.MASTER_PASSWORD_HASH;
 const originalPasswordSaltAtStart = process.env.PASSWORD_SALT;
 const originalOneTimePasswordHashesAtStart = process.env.ONE_TIME_PASSWORD_HASHES;
 const originalEnableCsrfAtStart = process.env.ENABLE_CSRF;
+const originalEnableCorsAtStart = process.env.ENABLE_CORS;
 
 const deepCopyConfig = (config) => JSON.parse(JSON.stringify(config));
 
@@ -45,6 +46,7 @@ describe('API Server Tests (Standard Config)', () => {
       .digest('hex');
     process.env.CORS_ALLOWED_ORIGINS = 'http://localhost:3000'; // Add a default allowed origin for tests
     process.env.ENABLE_CSRF = 'false';
+    process.env.ENABLE_CORS = 'false';
 
     jest.resetModules();
     const { default: baseConfig } = await import('../../config/index.js');
@@ -222,6 +224,7 @@ describe('One-Time Password Logic', () => {
     process.env.ONE_TIME_PASSWORD_HASHES = otpHash;
     process.env.CORS_ALLOWED_ORIGINS = 'http://localhost:3000'; // Add a default allowed origin for tests
     process.env.ENABLE_CSRF = 'false';
+    process.env.ENABLE_CORS = 'false';
 
     jest.resetModules(); // Important to re-import config with new env vars
     const { default: baseConfig } = await import('../../config/index.js');
@@ -276,6 +279,7 @@ afterAll(async () => {
   process.env.PASSWORD_SALT = originalPasswordSaltAtStart;
   process.env.ONE_TIME_PASSWORD_HASHES = originalOneTimePasswordHashesAtStart;
   process.env.ENABLE_CSRF = originalEnableCsrfAtStart;
+  process.env.ENABLE_CORS = originalEnableCorsAtStart;
   // Restore CORS_ALLOWED_ORIGINS if it was set globally for tests
   if (process.env.CORS_ALLOWED_ORIGINS_ORIGINAL) {
     process.env.CORS_ALLOWED_ORIGINS = process.env.CORS_ALLOWED_ORIGINS_ORIGINAL;

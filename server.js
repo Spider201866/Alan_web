@@ -1,7 +1,7 @@
 import express from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
-import cors from 'cors';
+import simpleCors from './middleware/cors.js';
 import rateLimit from 'express-rate-limit';
 import csrfProtection from './middleware/csrf.js';
 // path is not directly used here anymore for express.static, config handles it.
@@ -33,15 +33,9 @@ export function createApp(configToUse) {
   app.use(helmet.frameguard({ action: 'deny' }));
   app.use(helmet.noSniff());
   app.use(
-    cors({
-      origin: (origin, callback) => {
-        if (!origin || configToUse.allowedOrigins.indexOf(origin) !== -1) {
-          callback(null, true);
-        } else {
-          callback(new Error('Not allowed by CORS'));
-        }
-      },
-      credentials: true,
+    simpleCors({
+      enable: Boolean(configToUse.enableCors),
+      allowedOrigins: configToUse.allowedOrigins,
     })
   );
   app.use(express.json());
