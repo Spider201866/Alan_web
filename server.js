@@ -18,6 +18,9 @@ import { globalErrorHandler, notFound } from './middleware/error.js';
 export function createApp(configToUse) {
   const app = express();
 
+  // Disable the X-Powered-By header for security
+  app.disable('x-powered-by');
+
   // Enable trust proxy for Railway/production reverse proxy environments
   app.set('trust proxy', 1);
 

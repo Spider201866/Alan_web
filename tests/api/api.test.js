@@ -127,8 +127,13 @@ describe('API Server Tests (Standard Config)', () => {
   });
 
   describe('Security Headers', () => {
+    it('should not include the X-Powered-By header', async () => {
+      const res = await request(app).get('/');
+      expect(res.headers['x-powered-by']).toBeUndefined();
+    });
+
     it('should include the Strict-Transport-Security header', async () => {
-      const res = await request(app).get('/'); // Request any route to get headers
+      const res = await request(app).get('/');
       expect(res.headers['strict-transport-security']).toBe('max-age=31536000; includeSubDomains');
     });
 
@@ -145,6 +150,11 @@ describe('API Server Tests (Standard Config)', () => {
     it('should include the X-Content-Type-Options header', async () => {
       const res = await request(app).get('/');
       expect(res.headers['x-content-type-options']).toBe('nosniff');
+    });
+
+    it('should include the Content-Security-Policy header', async () => {
+      const res = await request(app).get('/');
+      expect(res.headers['content-security-policy']).toBeDefined();
     });
   });
 
