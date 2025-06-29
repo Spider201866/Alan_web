@@ -1,3 +1,22 @@
+/**
+ * @typedef {object} Record
+ * @property {string} sessionId - The unique session identifier.
+ * @property {string} [name] - The user's name.
+ * @property {string} [role] - The user's stated aims or role.
+ * @property {string} [experience] - The user's described experience.
+ * @property {string} [contactInfo] - The user's contact information.
+ * @property {number} [latitude] - The user's latitude.
+ * @property {number} [longitude] - The user's longitude.
+ * @property {string} [country] - The user's country name.
+ * @property {string} [iso2] - The user's country ISO2 code.
+ * @property {string} [classification] - The income classification of the country.
+ * @property {string} [area] - The geographical area.
+ * @property {string} [dateTime] - The timestamp of the record.
+ * @property {string} [version] - The application version.
+ * @property {string} [selectedAgent] - The agent used for the session.
+ * @property {number} [refreshCount] - The number of times the record has been refreshed.
+ */
+
 /* DOM References */
 const passwordScreen = document.getElementById('passwordScreen');
 const passwordInput = document.getElementById('passwordInput');
@@ -15,8 +34,54 @@ let currentPassword = '';
 let map; // Leaflet map instance
 let redIcon; // Declare redIcon here
 
+// --- Event Handlers ---
+
+/**
+ * Handles the click event for the 'Show Map' button.
+ * @param {MouseEvent} event - The click event.
+ */
+function handleShowMapClick(event) {
+  const button = event.currentTarget;
+  const lat = parseFloat(button.dataset.lat);
+  const lng = parseFloat(button.dataset.lng);
+  showMap(lat, lng);
+}
+
+/**
+ * Handles the click event for the 'Delete' button.
+ * @param {MouseEvent} event - The click event.
+ */
+async function handleDeleteClick(event) {
+  const button = event.currentTarget;
+  const sessionIdToDelete = button.dataset.sessionId;
+  if (confirm(`Are you sure you want to delete record with Session ID: ${sessionIdToDelete}?`)) {
+    try {
+      const response = await fetch('/api/delete-record', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sessionId: sessionIdToDelete, password: currentPassword }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to delete record: ${errorText}`);
+      }
+
+      alert('Record deleted successfully!');
+      handleRefresh(); // Refresh records after deletion
+    } catch (error) {
+      console.error('Error deleting record:', error);
+      alert(`Error deleting record: ${error.message}`);
+    }
+  }
+}
+
+// --- Initialization ---
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Define redIcon after DOM is ready, ensuring L (Leaflet) should be available
+  // Define redIcon after DOM is ready
   redIcon = new L.Icon({
     iconUrl:
       'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
@@ -28,20 +93,13 @@ document.addEventListener('DOMContentLoaded', () => {
     shadowSize: [41, 41],
   });
 
-  // Try to retrieve password from localStorage on load
   const storedPassword = localStorage.getItem('alanRecordsPassword');
   if (storedPassword) {
     currentPassword = storedPassword;
-    console.log(
-      'Loaded password from localStorage:',
-      currentPassword ? 'exists' : 'does not exist'
-    );
     passwordScreen.classList.add('hidden');
     refreshContainer.classList.remove('hidden');
     fetchActiveRecord(currentPassword);
     fetchHistory(currentPassword);
-  } else {
-    console.log('No password found in localStorage on load.');
   }
 
   passwordInput.addEventListener('input', handlePasswordInput);
@@ -49,39 +107,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (evt.key === 'Enter') handleSubmit();
   });
   passwordSubmitBtn.addEventListener('click', handleSubmit);
-
   refreshIcon.addEventListener('click', handleRefresh);
-  attachMapButtonListeners(); // Call new function to attach listeners
 });
 
-/**
- * Attaches click event listeners to all 'Show Map' buttons.
- */
-function attachMapButtonListeners() {
-  const mapButtons = document.querySelectorAll('.show-map-btn');
-  mapButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const lat = parseFloat(button.dataset.lat);
-      const lng = parseFloat(button.dataset.lng);
-      showMap(lat, lng);
-    });
-  });
-}
+// --- Core Logic ---
 
-/**
- * Handles user input in the password field, hiding the error message and enabling the submit button.
- */
 function handlePasswordInput() {
   passwordError.style.display = 'none';
   passwordSubmitBtn.disabled = passwordInput.value.trim() === '';
 }
 
-/**
- * Handles the password submission, fetching records on success or showing an error on failure.
- */
 function handleSubmit() {
   const entered = passwordInput.value.trim();
-  // 1) Validate + fetch the single active record from /api/fetch-records
   fetch('/api/fetch-records', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -90,27 +127,20 @@ function handleSubmit() {
     .then((response) => {
       if (!response.ok) throw new Error('Invalid password');
       currentPassword = entered;
-      localStorage.setItem('alanRecordsPassword', currentPassword); // Store password
+      localStorage.setItem('alanRecordsPassword', currentPassword);
       passwordScreen.classList.add('hidden');
+      refreshContainer.classList.remove('hidden');
       return response.json();
     })
     .then((data) => {
-      // data => single-element array
       showActiveRecord(data);
-      refreshContainer.classList.remove('hidden');
-      attachMapButtonListeners(); // Re-attach listeners after DOM update
-
-      // 2) Also fetch full history from /fetch-history
-      fetchHistory(currentPassword); // This will also call attachMapButtonListeners via showHistory
+      fetchHistory(currentPassword);
     })
     .catch(() => {
       showInvalidPassword();
     });
 }
 
-/**
- * Displays an error message for an invalid password and clears the input field.
- */
 function showInvalidPassword() {
   passwordError.style.display = 'block';
   passwordInput.value = '';
@@ -120,24 +150,15 @@ function showInvalidPassword() {
   }, 3000);
 }
 
-/**
- * Handles the refresh button click, re-fetching both the active record and the full history.
- */
 function handleRefresh() {
   if (!currentPassword) {
     alert('No valid password found.');
     return;
   }
-  // Re-fetch single active record
   fetchActiveRecord(currentPassword);
-  // Re-fetch entire history
   fetchHistory(currentPassword);
 }
 
-/**
- * Fetches the single active record from the server.
- * @param {string} password - The password to authenticate the request.
- */
 function fetchActiveRecord(password) {
   fetch('/api/fetch-records', {
     method: 'POST',
@@ -148,19 +169,13 @@ function fetchActiveRecord(password) {
       if (!response.ok) throw new Error('Invalid password');
       return response.json();
     })
-    .then((data) => {
-      showActiveRecord(data);
-      attachMapButtonListeners(); // Re-attach listeners after DOM update
-    })
+    .then(showActiveRecord)
     .catch((err) => {
       console.error('Error fetching single record:', err);
+      renderEmptyMessage(activeRecordDiv, 'Error fetching active record.');
     });
 }
 
-/**
- * Fetches the full history of records from the server.
- * @param {string} password - The password to authenticate the request.
- */
 function fetchHistory(password) {
   fetch('/api/fetch-history', {
     method: 'POST',
@@ -171,199 +186,191 @@ function fetchHistory(password) {
       if (!response.ok) throw new Error('Invalid password');
       return response.json();
     })
-    .then((data) => {
-      showHistory(data);
-      attachMapButtonListeners(); // Re-attach listeners after DOM update
-    })
+    .then(showHistory)
     .catch((err) => {
       console.error('Error fetching history:', err);
+      renderEmptyMessage(historyDiv, 'Error fetching history.');
     });
+}
+
+// --- DOM Rendering Factories ---
+
+/**
+ * Renders a standard message in a container.
+ * @param {HTMLElement} container - The container element.
+ * @param {string} text - The message to display.
+ */
+function renderEmptyMessage(container, text) {
+  container.innerHTML = ''; // Clear previous content
+  const p = document.createElement('p');
+  p.textContent = text;
+  container.appendChild(p);
+}
+
+/**
+ * Creates and returns the table header element.
+ * @returns {HTMLTableSectionElement} The fully constructed thead element.
+ */
+function createRecordsTableHeader() {
+  const thead = document.createElement('thead');
+  const headerRow = document.createElement('tr');
+  const headers = [
+    'No.',
+    'Session ID',
+    'Name',
+    'Aims',
+    'Experience',
+    'Contact',
+    'Latitude',
+    'Longitude',
+    'Country (ISO2) [Classification]',
+    'Area',
+    'Date & Time',
+    'Version & Agent',
+    'Refresh Count',
+    'Map',
+    'Delete',
+  ];
+
+  headers.forEach((text) => {
+    const th = document.createElement('th');
+    th.scope = 'col';
+    th.textContent = text;
+    headerRow.appendChild(th);
+  });
+
+  thead.appendChild(headerRow);
+  return thead;
+}
+
+/**
+ * Creates and returns a table row element for a given record.
+ * @param {Record} record - The record object.
+ * @param {number} index - The display index of the record.
+ * @param {boolean} [isActive=false] - Whether the record is the active one.
+ * @returns {HTMLTableRowElement} The fully constructed tr element.
+ */
+function createRecordRow(record, index, isActive = false) {
+  const tr = document.createElement('tr');
+  if (isActive) {
+    tr.classList.add('active-record');
+  }
+
+  const cells = [
+    index,
+    record.sessionId,
+    record.name,
+    record.role,
+    record.experience,
+    record.contactInfo,
+    record.latitude,
+    record.longitude,
+    `${record.country || ''} (${record.iso2 || ''}) [${record.classification || ''}]`,
+    record.area,
+    record.dateTime,
+    `${record.version || ''}, ${record.selectedAgent || ''}`,
+    record.refreshCount || 1,
+  ];
+
+  cells.forEach((cellData) => {
+    const td = document.createElement('td');
+    td.textContent = cellData || '';
+    tr.appendChild(td);
+  });
+
+  // Map button cell
+  const mapTd = document.createElement('td');
+  const mapButton = document.createElement('button');
+  mapButton.className = 'show-map-btn';
+  mapButton.textContent = 'Show Map';
+  mapButton.dataset.lat = parseFloat(record.latitude) || 0;
+  mapButton.dataset.lng = parseFloat(record.longitude) || 0;
+  mapButton.setAttribute('aria-label', `Show map for record ${record.sessionId}`);
+  mapButton.style.cssText =
+    'display: flex; justify-content: center; align-items: center; padding: 5px 10px; min-width: 80px;';
+  mapButton.addEventListener('click', handleShowMapClick);
+  mapTd.appendChild(mapButton);
+  tr.appendChild(mapTd);
+
+  // Delete button cell
+  const deleteTd = document.createElement('td');
+  const deleteButton = document.createElement('button');
+  deleteButton.className = 'delete-record-btn';
+  deleteButton.innerHTML = '&#x1F5D1;'; // Bin/Trash Can Icon
+  deleteButton.dataset.sessionId = record.sessionId;
+  deleteButton.setAttribute('aria-label', `Delete record with session ID ${record.sessionId}`);
+  deleteButton.style.cssText =
+    'display: flex; justify-content: center; align-items: center; padding: 5px 10px; color: #ff0000; font-size: 20px; min-width: 40px;';
+  deleteButton.addEventListener('click', handleDeleteClick);
+  deleteTd.appendChild(deleteButton);
+  tr.appendChild(deleteTd);
+
+  return tr;
 }
 
 /**
  * Renders the single active record into its designated table.
- * @param {Array<Object>} data - An array containing the single active record.
+ * @param {Array<Record>} data - An array containing the single active record.
  */
 function showActiveRecord(data) {
-  if (!Array.isArray(data) || data.length === 0) {
-    activeRecordDiv.innerHTML = '<p>No active record found.</p>';
-    return;
-  }
-  const record = data[0];
+  activeRecordDiv.innerHTML = ''; // Clear previous content
+  try {
+    if (!Array.isArray(data) || data.length === 0) {
+      renderEmptyMessage(activeRecordDiv, 'No active record found.');
+      return;
+    }
+    const record = data[0];
+    const table = document.createElement('table');
+    table.className = 'records-table';
+    table.setAttribute('role', 'table');
 
-  // Build the single-record table with a red border row
-  activeRecordDiv.innerHTML = `
-  <table class="records-table">
-    <thead>
-      <tr>
-        <th>No.</th>
-        <th>Session ID</th>
-        <th>Name</th>
-        <th>Aims</th>
-        <th>Experience</th>
-        <th>Contact</th>
-        <th>Latitude</th>
-        <th>Longitude</th>
-        <th>Country (ISO2) [Classification]</th>
-        <th>Area</th>
-        <th>Date & Time</th>
-        <th>Version & Agent</th>
-        <th>Refresh Count</th>
-        <th>Map</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="active-record">
-        <td>1</td>
-        <td>${record.sessionId || ''}</td>
-        <td>${record.name || ''}</td>
-        <td>${record.role || ''}</td>
-        <td>${record.experience || ''}</td>
-        <td>${record.contactInfo || ''}</td>
-        <td>${record.latitude || ''}</td>
-        <td>${record.longitude || ''}</td>
-        <td>
-          ${record.country || ''} (${record.iso2 || ''})
-          [${record.classification || ''}]
-        </td>
-        <td>${record.area || ''}</td>
-        <td>${record.dateTime || ''}</td>
-        <td>${record.version || ''}, ${record.selectedAgent || ''}</td>
-        <td>${record.refreshCount || 1}</td>
-        <td>
-          <button class="show-map-btn" data-lat="${parseFloat(record.latitude) || 0}" data-lng="${parseFloat(record.longitude) || 0}" style="display: flex; justify-content: center; align-items: center; padding: 5px 10px; min-width: 80px;">
-            Show Map
-          </button>
-        </td>
-        <td>
-          <button class="delete-record-btn" data-session-id="${record.sessionId}" style="display: flex; justify-content: center; align-items: center; padding: 5px 10px; color: #ff0000; font-size: 20px; min-width: 40px;">
-            &#x1F5D1; <!-- Bin/Trash Can Icon -->
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-`;
+    const tbody = document.createElement('tbody');
+    const row = createRecordRow(record, 1, true);
+
+    table.appendChild(createRecordsTableHeader());
+    tbody.appendChild(row);
+    table.appendChild(tbody);
+    activeRecordDiv.appendChild(table);
+  } catch (error) {
+    console.error('Failed to render active record:', error);
+    renderEmptyMessage(activeRecordDiv, 'Could not display active record due to an error.');
+  }
 }
 
 /**
  * Renders the full history of records into its designated table.
- * @param {Array<Object>} historyArray - An array of all historical records.
+ * @param {Array<Record>} historyArray - An array of all historical records.
  */
 function showHistory(historyArray) {
-  if (!Array.isArray(historyArray) || historyArray.length === 0) {
-    historyTitle.style.display = 'none';
-    historyDiv.innerHTML = '<p>No historical records found.</p>';
-    return;
-  }
+  historyDiv.innerHTML = ''; // Clear previous content
+  try {
+    if (!Array.isArray(historyArray) || historyArray.length === 0) {
+      historyTitle.style.display = 'none';
+      renderEmptyMessage(historyDiv, 'No historical records found.');
+      return;
+    }
 
-  // Show the heading
-  historyTitle.style.display = 'block';
+    historyTitle.style.display = 'block';
+    const table = document.createElement('table');
+    table.className = 'records-table';
+    table.setAttribute('role', 'table');
+    const tbody = document.createElement('tbody');
+    const fragment = document.createDocumentFragment();
 
-  // Build a table listing all records from user-history.json
-  let html = `
-  <table class="records-table">
-    <thead>
-      <tr>
-        <th>No.</th>
-        <th>Session ID</th>
-        <th>Name</th>
-        <th>Aims</th>
-        <th>Experience</th>
-        <th>Contact</th>
-        <th>Latitude</th>
-        <th>Longitude</th>
-        <th>Country (ISO2) [Classification]</th>
-        <th>Area</th>
-        <th>Date & Time</th>
-        <th>Version & Agent</th>
-        <th>Refresh Count</th>
-        <th>Map</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-`;
-
-  historyArray.forEach((rec, idx) => {
-    html += `
-    <tr>
-      <td>${idx + 1}</td>
-      <td>${rec.sessionId || ''}</td>
-      <td>${rec.name || ''}</td>
-      <td>${rec.role || ''}</td>
-      <td>${rec.experience || ''}</td>
-      <td>${rec.contactInfo || ''}</td>
-      <td>${rec.latitude || ''}</td>
-      <td>${rec.longitude || ''}</td>
-      <td>
-        ${rec.country || ''} (${rec.iso2 || ''})
-        [${rec.classification || ''}]
-      </td>
-      <td>${rec.area || ''}</td>
-      <td>${rec.dateTime || ''}</td>
-      <td>${rec.version || ''}, ${rec.selectedAgent || ''}</td>
-        <td>${rec.refreshCount || 1}</td>
-        <td>
-          <button class="show-map-btn" data-lat="${parseFloat(rec.latitude) || 0}" data-lng="${parseFloat(rec.longitude) || 0}" style="display: flex; justify-content: center; align-items: center; padding: 5px 10px; min-width: 80px;">
-            Show Map
-          </button>
-        </td>
-        <td>
-          <button class="delete-record-btn" data-session-id="${rec.sessionId}" style="display: flex; justify-content: center; align-items: center; padding: 5px 10px; color: #ff0000; font-size: 20px; min-width: 40px;">
-            &#x1F5D1; <!-- Bin/Trash Can Icon -->
-          </button>
-        </td>
-      </tr>
-  `;
-  });
-
-  html += '</tbody></table>';
-  historyDiv.innerHTML = html;
-  attachDeleteButtonListeners(); // Attach listeners after history is rendered
-}
-
-/**
- * Attaches click event listeners to all 'Delete' buttons in the history table.
- */
-function attachDeleteButtonListeners() {
-  const deleteButtons = document.querySelectorAll('.delete-record-btn');
-  deleteButtons.forEach((button) => {
-    button.addEventListener('click', async () => {
-      const sessionIdToDelete = button.dataset.sessionId;
-      if (
-        confirm(`Are you sure you want to delete record with Session ID: ${sessionIdToDelete}?`)
-      ) {
-        try {
-          console.log(
-            'Attempting to delete record. currentPassword:',
-            currentPassword ? 'exists' : 'does not exist'
-          );
-          console.log('Sending Authorization header:', `Bearer ${currentPassword}`);
-          const response = await fetch('/api/delete-record', {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ sessionId: sessionIdToDelete, password: currentPassword }), // Send password in body
-          });
-
-          if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Delete response not OK:', response.status, errorText);
-            throw new Error(`Failed to delete record: ${errorText}`);
-          }
-
-          alert('Record deleted successfully!');
-          handleRefresh(); // Refresh records after deletion
-        } catch (error) {
-          console.error('Error deleting record:', error);
-          alert(`Error deleting record: ${error.message}`);
-        }
-      }
+    historyArray.forEach((rec, idx) => {
+      const row = createRecordRow(rec, idx + 1);
+      fragment.appendChild(row);
     });
-  });
+
+    table.appendChild(createRecordsTableHeader());
+    tbody.appendChild(fragment);
+    table.appendChild(tbody);
+    historyDiv.appendChild(table);
+  } catch (error) {
+    console.error('Failed to render history:', error);
+    historyTitle.style.display = 'block';
+    renderEmptyMessage(historyDiv, 'Could not display history due to an error.');
+  }
 }
 
 /**

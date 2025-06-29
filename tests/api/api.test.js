@@ -4,7 +4,7 @@
 /* eslint-env jest */
 /**
  * API and backend helper tests for Alan webapp.
- * Run with: npx jest tests/api.test.js
+ * Run with: npx jest tests/api/api.test.js
  */
 
 process.env.NODE_ENV = 'test';
@@ -13,7 +13,7 @@ import path from 'path';
 import fs from 'fs/promises';
 import crypto from 'crypto';
 import { jest } from '@jest/globals';
-import dataService from '../services/data-service.js';
+import dataService from '../../services/data-service.js';
 // Removed dotenv import and mock from here, as env.test.js handles it
 // import dotenv from 'dotenv';
 
@@ -45,7 +45,7 @@ describe('API Server Tests (Standard Config)', () => {
     process.env.CORS_ALLOWED_ORIGINS = 'http://localhost:3000'; // Add a default allowed origin for tests
 
     jest.resetModules();
-    const { default: baseConfig } = await import('../config/index.js');
+    const { default: baseConfig } = await import('../../config/index.js');
     const testConfig = deepCopyConfig(baseConfig);
     delete testConfig.paths.userInfo;
     delete testConfig.paths.userHistory;
@@ -61,7 +61,7 @@ describe('API Server Tests (Standard Config)', () => {
       console.error('API Endpoints beforeAll: testDb is not open or undefined.');
     }
 
-    const { createApp } = await import('../server.js');
+    const { createApp } = await import('../../server.js');
     app = createApp(testConfig);
     await new Promise((resolve) => {
       server = app.listen(0, resolve); // Start server on an ephemeral port
@@ -211,7 +211,7 @@ describe('One-Time Password Logic', () => {
     process.env.CORS_ALLOWED_ORIGINS = 'http://localhost:3000'; // Add a default allowed origin for tests
 
     jest.resetModules(); // Important to re-import config with new env vars
-    const { default: baseConfig } = await import('../config/index.js');
+    const { default: baseConfig } = await import('../../config/index.js');
     const otpTestConfig = deepCopyConfig(baseConfig);
     // Ensure OTP hashes are correctly set from the modified environment variable
     otpTestConfig.security.otpHashes = new Set(
@@ -227,7 +227,7 @@ describe('One-Time Password Logic', () => {
       testDb.prepare('DELETE FROM active_record').run();
     }
 
-    const { createApp } = await import('../server.js');
+    const { createApp } = await import('../../server.js');
     app = createApp(otpTestConfig);
     await new Promise((resolve) => {
       server = app.listen(0, resolve);

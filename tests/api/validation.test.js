@@ -4,8 +4,8 @@
  */
 
 import request from 'supertest';
-import { createApp } from '../server.js';
-import config from '../config/index.js';
+import { createApp } from '../../server.js';
+import config from '../../config/index.js';
 
 let app;
 let server;

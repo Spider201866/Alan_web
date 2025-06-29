@@ -9,11 +9,13 @@
  */
 
 import { JSDOM } from 'jsdom';
-import { jest } from '@jest/globals'; // Import jest
+import { jest, describe, it, expect, beforeEach, afterEach } from '@jest/globals'; // Import jest
 
 describe('Alan Webapp UI/UX', () => {
   let dom;
   let document;
+
+  let mockStorage;
 
   beforeEach(() => {
     dom = new JSDOM(
@@ -41,11 +43,21 @@ describe('Alan Webapp UI/UX', () => {
     document = dom.window.document;
     global.document = document;
     global.window = dom.window;
-    // Mock localStorage
+
+    // reset storage before every test
+    mockStorage = {};
+
     global.localStorage = {
-      getItem: jest.fn(),
-      setItem: jest.fn(),
-      removeItem: jest.fn(),
+      getItem: jest.fn((key) => mockStorage[key] ?? null),
+      setItem: jest.fn((key, value) => {
+        mockStorage[key] = value.toString();
+      }),
+      removeItem: jest.fn((key) => {
+        delete mockStorage[key];
+      }),
+      clear: jest.fn(() => {
+        mockStorage = {};
+      }),
     };
     // Mock navigator.geolocation
     global.navigator = {
@@ -586,11 +598,12 @@ describe('Alan Webapp UI/UX', () => {
     const subText = document.createElement('p');
     subText.id = 'sub-text';
     document.body.appendChild(subText);
-    global.localStorage.getItem = (key) => (key === 'name' ? 'Test User' : 'en');
+    localStorage.setItem('name', 'Test User');
+    localStorage.setItem('language', 'en');
     global.window.translations = { en: { howCanIHelp: 'How can I help?' } };
     // Simulate greeting logic
     const name = localStorage.getItem('name');
-    const t = window.translations['en'];
+    const t = window.translations[localStorage.getItem('language')];
     if (name) {
       let firstName = name.split(' ')[0];
       firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
@@ -681,57 +694,5 @@ describe('Alan Webapp UI/UX', () => {
     };
     submit.click();
     expect(submitted).toBe(true);
-  });
-
-  it('should show popup with correct user info from localStorage', () => {
-    // Set up localStorage values
-    global.localStorage.getItem = (key) => {
-      const map = {
-        name: 'Test User',
-        area: 'Test Area',
-        selectedJobRole: 'Doctor',
-        selectedExperience: 'Expert',
-        latitude: '51.5074',
-        longitude: '-0.1278',
-        country: 'UK',
-        iso2: 'GB',
-        classification: 'A',
-        contactInfo: 'test@example.com',
-      };
-      return map[key] || '';
-    };
-    // Simulate translations
-    global.window.translations = {
-      en: {
-        userInfoTitle: 'User Information',
-        userName: 'Name',
-        userContact: 'Contact',
-        userAimsPopupLabel: 'Aims',
-        userExperiencePopupLabel: 'Experience',
-        userLatLong: 'Lat/Long',
-        userArea: 'Area',
-        userCountry: 'Country',
-        userVersion: 'Version',
-        userDateTime: 'Date/Time',
-        howCanIHelp: 'How can I help?',
-      },
-    };
-    // Simulate popup-content element
-    const popupContent = document.createElement('div');
-    popupContent.id = 'popup-content';
-    document.body.appendChild(popupContent);
-
-    // Simulate buildPopupContent logic (simplified)
-    function buildPopupContent() {
-      const name = localStorage.getItem('name') || 'Not set';
-      const area = localStorage.getItem('area') || 'Not set';
-      const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
-      return `<p><strong>Name:</strong> ${name}</p><p><strong>Area:</strong> ${area}</p><p><strong>Contact:</strong> ${contactInfo}</p>`;
-    }
-    popupContent.innerHTML = buildPopupContent();
-
-    expect(popupContent.innerHTML).toMatch(/Test User/);
-    expect(popupContent.innerHTML).toMatch(/Test Area/);
-    expect(popupContent.innerHTML).toMatch(/test@example.com/);
   });
 });

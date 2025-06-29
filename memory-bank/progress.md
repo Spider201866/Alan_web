@@ -4,6 +4,8 @@
 
 ## What Works
 
+- **Security Hardening (June 29, 2025):**
+    - Removed a vulnerable debug route (`/__debug-list-dist`) that was exposed in the production environment, enhancing the application's security posture.
 - **Comprehensive Code Documentation (June 28, 2025):**
     - All logical JavaScript files across the project have been documented with JSDoc comments and file-level overviews, significantly improving code clarity and maintainability.
 - **Repository Reset (June 28, 2025):**

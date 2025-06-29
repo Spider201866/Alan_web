@@ -6,6 +6,8 @@
 The project has been thoroughly documented with JSDoc comments, and the codebase is clean and stable. The next focus is on implementing PWA features.
 
 ## Recent Changes
+- **Security Hardening (June 29, 2025):**
+    - Removed the `/__debug-list-dist` route from `server.js`. This route was previously exposed in production and posed a security risk by revealing the contents of the `dist` directory.
 - **Comprehensive Code Documentation (June 28, 2025):**
     - Added JSDoc comments and file-level overviews to all logical JavaScript files across the project, including server-side code, client-side scripts, and tests.
     - Updated the main `README.md` to reflect the new documentation standards.
