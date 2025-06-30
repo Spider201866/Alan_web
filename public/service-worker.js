@@ -44,7 +44,6 @@ self.addEventListener('install', (event) => {
         return cache.addAll(CORE_ASSETS);
       })
       .then(() => {
-        // Force the waiting service worker to become the active service worker.
         self.skipWaiting();
       })
   );
@@ -59,7 +58,6 @@ self.addEventListener('activate', (event) => {
       .then((cacheNames) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
-            // If a cache's name is not the current one, delete it.
             if (cacheName !== CACHE_NAME) {
               console.log(`Service Worker: Deleting old cache: ${cacheName}`);
               return caches.delete(cacheName);
@@ -69,7 +67,6 @@ self.addEventListener('activate', (event) => {
       })
       .then(() => {
         console.log('Service Worker: Activated and ready to control clients.');
-        // Take control of all open clients immediately.
         return self.clients.claim();
       })
   );
@@ -77,15 +74,25 @@ self.addEventListener('activate', (event) => {
 
 // 3. Fetch Event: Intercept network requests.
 self.addEventListener('fetch', (event) => {
+  // --- START OF FIX ---
+  // If the request is for the admin page or any asset on it, do nothing.
+  // This lets the browser handle the request normally, bypassing the service worker.
+  if (
+    event.request.url.includes('/view-records.html') ||
+    (event.request.referrer && event.request.referrer.includes('/view-records.html'))
+  ) {
+    console.log('Service Worker: Bypassing for admin page request:', event.request.url);
+    return;
+  }
+  // --- END OF FIX ---
+
   const { request } = event;
 
   // --- Caching Strategy for Navigation (HTML) ---
-  // Network-first, falling back to cache, then to offline page.
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          // If the network request is successful, cache the response for future offline use.
           const responseToCache = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(request, responseToCache);
@@ -93,9 +100,7 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => {
-          // If the network fails, try to get the response from the cache.
           return caches.match(request).then((cachedResponse) => {
-            // If it's in the cache, serve it. Otherwise, serve the offline page.
             return cachedResponse || caches.match(OFFLINE_URL);
           });
         })
@@ -104,17 +109,12 @@ self.addEventListener('fetch', (event) => {
   }
 
   // --- Caching Strategy for Static Assets (CSS, JS, Images) ---
-  // Cache-first, falling back to network.
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
-      // If the asset is in the cache, return it.
       if (cachedResponse) {
         return cachedResponse;
       }
-
-      // If the asset is not in the cache, fetch it from the network.
       return fetch(request).then((networkResponse) => {
-        // Cache the newly fetched asset for future use.
         const responseToCache = networkResponse.clone();
         caches.open(CACHE_NAME).then((cache) => {
           cache.put(request, responseToCache);
