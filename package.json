@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node -r dotenv/config server.js",
+    "start": "npm run build && cross-env NODE_ENV=production node -r dotenv/config server.js",
     "dev": "node -r dotenv/config server.js",
     "build": "node scripts/build.js",
     "test:a11y": "node scripts/test-a11y.mjs",

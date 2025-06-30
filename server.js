@@ -114,13 +114,6 @@ export function createApp(configToUse) {
 }
 
 if (process.env.NODE_ENV !== 'test') {
-  // --- DEBUGGING LOGIC ---
-  console.log('--- Server Starting ---');
-  console.log('NODE_ENV:', process.env.NODE_ENV);
-  console.log('PASSWORD_SALT (from defaultConfig):', defaultConfig.security.salt);
-  console.log('MASTER_PASSWORD_HASH (from defaultConfig):', defaultConfig.security.masterHash);
-  console.log('------------------------------------');
-  // --- END DEBUGGING LOGIC ---
   const app = createApp(defaultConfig);
   app.listen(defaultConfig.port, () => {
     console.log(`Listening on http://localhost:${defaultConfig.port}`);
