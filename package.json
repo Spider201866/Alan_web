@@ -2,9 +2,9 @@
   "name": "your-project-name",
   "version": "1.0.0",
   "type": "module",
-  "scripts": {
-    "start": "npm run build && cross-env NODE_ENV=production node -r dotenv/config server.js",
-    "dev": "node -r dotenv/config server.js",
+"scripts": {
+  "start": "npm run build && cross-env NODE_ENV=production node server.js",
+  "dev": "node -r dotenv/config server.js",
     "build": "node scripts/build.js",
     "test:a11y": "node scripts/test-a11y.mjs",
     "test": "npm run build && npm run format:check && npm run check-translations && npm run test:a11y && cross-env NODE_OPTIONS=--experimental-vm-modules jest --verbose",
