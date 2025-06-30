@@ -14,6 +14,7 @@ To provide a web-based chatbot for users, especially in Low and Middle-Income Co
 - Ensure accessibility for users, including keyboard navigation and screen reader compatibility.
 - Maintain a consistent and intuitive user interface across all pages.
 - Implement robust security measures, including Content Security Policy (CSP) and rate limiting.
+- Enhanced with PWA capabilities, allowing offline use and installability.
 
 ## Goals
 - Deliver accurate and helpful information to users regarding eye, skin, and ear health.

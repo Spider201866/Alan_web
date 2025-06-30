@@ -29,6 +29,7 @@ The AlanUI Web Chatbot was created to provide accessible and relevant health inf
 - Enhanced keyboard accessibility for all interactive elements, including modals and menus.
 - Page load performance is optimized through deferred script loading; problematic favicon preload links were removed, relying on standard browser mechanisms for favicon fetching.
 - Minimal configuration required for deployment and operation, with clear environment variable setup instructions.
+- **Offline Accessibility**: As a Progressive Web App (PWA), the application is installable and key features are available offline. Field users accessing the app in low-connectivity regions can now load patient data and use core features even when offline.
 
 ## Security and Privacy
 - The project focuses on providing information. While it does not handle user authentication or highly sensitive Personal Identifiable Information (PII), it now stores user interaction/session data (like name, role, experience, location if provided, and interaction metadata) in a persistent SQLite database for history and context purposes.

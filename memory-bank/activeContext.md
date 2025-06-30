@@ -3,9 +3,14 @@
 # Active Context
 
 ## Current Work Focus
-The project has been thoroughly documented with JSDoc comments, and the codebase is clean and stable. The next focus is on implementing PWA features.
+The application is now a fully functional Progressive Web App (PWA). The immediate focus is on ensuring all documentation is updated to reflect this major enhancement.
 
 ## Recent Changes
+- **PWA Implementation and Documentation (June 30, 2025):**
+    - Implemented a service worker (`public/service-worker.js`) and web app manifest (`public/favicons/manifest.json`) to make the application installable and offline-capable (commit `[commit_hash]`).
+    - Updated all relevant documentation, including `README.md` and the memory bank, to reflect the new PWA features and system patterns.
+- **Documentation Update (June 30, 2025):**
+    - Updated `README.md`, `techContext.md`, and `systemPatterns.md` with best practices for handling environment variables and secrets. This was prompted by a debugging session related to special characters in secrets causing deployment issues.
 - **Security Hardening (June 29, 2025):**
     - Removed the `/__debug-list-dist` route from `server.js`. This route was previously exposed in production and posed a security risk by revealing the contents of the `dist` directory.
 - **Comprehensive Code Documentation (June 28, 2025):**
@@ -51,5 +56,4 @@ The project has been thoroughly documented with JSDoc comments, and the codebase
 </details>
 
 ## Next Steps
-1.  **Implement PWA Service Worker:** The immediate next step is to add a service worker to enable Progressive Web App features, including the ability to install the application.
-2.  **Re-evaluate Critical CSS:** A future task is to revisit the implementation of critical CSS to improve the initial page load performance.
+1.  **Re-evaluate Critical CSS:** A future task is to revisit the implementation of critical CSS to improve the initial page load performance.

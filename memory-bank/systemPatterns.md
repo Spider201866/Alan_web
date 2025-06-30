@@ -56,6 +56,13 @@ graph TD
 -   **UI Table Consistency**: All table cell content in the "View Records" page is centered both vertically and horizontally for readability. The delete (trash can) icon is always red to clearly indicate destructive actions.
 -   **Comprehensive Documentation**: All logical JavaScript files are documented with JSDoc comments for functions and file-level overviews to explain the purpose of each module.
 
+-   **Secure Secret Handling**: To prevent environment-specific parsing issues with special characters, all secrets (API keys, salts) must be generated using only alphanumeric characters. This is the simplest and most robust way to ensure they are handled correctly across different platforms (e.g., local `dotenv` vs. production shell).
+
+-   **PWA Implementation**: The application functions as a Progressive Web App, enabled by a service worker (`public/service-worker.js`).
+    -   **Caching Strategy**: It uses a network-first strategy for navigation requests (HTML pages) to ensure users get the latest content when online. For static assets (CSS, JS, images), it employs a cache-first strategy for optimal performance.
+    -   **Offline Fallback**: If a network request for a page fails and the page is not in the cache, the service worker serves a dedicated `offline.html` page to gracefully handle the lack of connectivity.
+    -   **Cache Management**: The service worker manages cache versions, automatically deleting old caches upon activation to ensure users receive updated assets.
+
 ---
 
 ## Critical Workflows
