@@ -10,18 +10,17 @@
       content="Muted Buttons: Quick access to images, help, screenshot, and refer features in Alan's AI assistant."
     />
     <title>Muted Buttons</title>
-    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="/styles/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"
     />
-    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
-    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png" />
-    <link rel="manifest" href="favicons/manifest.json" />
-    <script type="module" src="scripts/faviconAndMeta.js"></script>
+    <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicons/manifest.json" />
     <style>
       /* Style for the main container */
       .main-container {
@@ -95,7 +94,7 @@
         </button>
 
         <!-- HELP IS NOW AN ANCHOR (LINK) for navigation, styled as a button -->
-        <a href="instructions.html" id="help" class="btn">
+        <a href="/instructions.html" id="help" class="btn">
           <span class="icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#CC6666">
               <path
@@ -135,5 +134,19 @@
       </nav>
     </main>
     <script src="scripts/muted.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('/service-worker.js')
+            .then((registration) => {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch((error) => {
+              console.log('ServiceWorker registration failed: ', error);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

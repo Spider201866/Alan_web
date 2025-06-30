@@ -2,7 +2,7 @@
 // Orchestrates UI, data, and translation modules for the home page.
 
 import log from './log.js';
-import { faviconAndMetaSetup } from './faviconAndMeta.js';
+
 import { initChatbot } from './agent1-chatbot-module.js';
 // import { setLanguage, getTranslation } from './language.js'; // No longer directly used here, handled by translator or UI
 import './closer.js'; // Handles generic click-outside-to-close behaviors
@@ -40,8 +40,30 @@ function main() {
   }
   initChatbot(sessionId);
 
-  // 5. Setup favicon and meta tags.
-  faviconAndMetaSetup();
+
+  // 6. PWA Install prompt handling
+  let deferredPrompt;
+  const installBtn = document.getElementById('install-btn');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (installBtn) {
+      installBtn.style.display = 'block';
+    }
+  });
+
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        log.info('Install outcome:', outcome);
+        deferredPrompt = null;
+        installBtn.style.display = 'none';
+      }
+    });
+  }
 
   // Other global initializations if any.
 }

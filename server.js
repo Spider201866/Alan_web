@@ -4,78 +4,100 @@ import compression from 'compression';
 import simpleCors from './middleware/cors.js';
 import rateLimit from 'express-rate-limit';
 import csrfProtection from './middleware/csrf.js';
-// path is not directly used here anymore for express.static, config handles it.
-import defaultConfig from './config/index.js'; // Renamed for clarity
+import defaultConfig from './config/index.js';
 import apiRoutesFactory from './routes/api.js';
 import webRoutesFactory from './routes/web.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { globalErrorHandler, notFound } from './middleware/error.js';
 
-/**
- * Creates and configures the Express application.
- * This function sets up all global middleware, routes, and error handlers.
- * @param {Object} configToUse - The application configuration object.
- * @returns {import('express').Application} The configured Express application instance.
- */
+const __filename = fileURLToPath(import.meta.url);
+const __dirname  = path.dirname(__filename);
+
 export function createApp(configToUse) {
   const app = express();
 
-  // Disable the X-Powered-By header for security
+  // Security headers & compression
   app.disable('x-powered-by');
-
-  // Enable trust proxy for Railway/production reverse proxy environments
   app.set('trust proxy', 1);
-
-  // global middleware
   app.use(compression());
-  app.use(helmet(configToUse.cspOptions));
+
+  // A corrected Content Security Policy that allows all necessary resources.
+  app.use(
+    helmet.contentSecurityPolicy({
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        'default-src': ["'self'"],
+        'img-src': ["'self'", 'data:'],
+        'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://cdnjs.cloudflare.com', 'https://unpkg.com'],
+        'font-src': ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
+        'script-src': ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net', 'https://cdnjs.cloudflare.com', 'https://unpkg.com'],
+        // --- THIS IS THE FINAL FIX ---
+        // Add ipinfo.io to the list of allowed connection sources
+        'connect-src': ["'self'", 'https://flowiseai-railway-production-fecf.up.railway.app', 'https://api.bigdatacloud.net', 'https://ipinfo.io'],
+      },
+    })
+  );
+  // --- END OF FIX ---
+
   app.use(helmet.hsts({ maxAge: 31536000, includeSubDomains: true }));
   app.use(helmet.referrerPolicy({ policy: 'no-referrer' }));
   app.use(helmet.frameguard({ action: 'deny' }));
   app.use(helmet.noSniff());
-  app.use(
-    simpleCors({
-      enable: Boolean(configToUse.enableCors),
-      allowedOrigins: configToUse.allowedOrigins,
-    })
-  );
+
+  // CORS, JSON bodies & CSRF
+  const corsOrigins = [
+    'http://localhost:3000',
+    ...(configToUse.allowedOrigins || [])
+  ];
+  app.use(simpleCors({
+    enable: Boolean(configToUse.enableCors),
+    allowedOrigins: corsOrigins
+  }));
+
   app.use(express.json());
-  app.use(
-    csrfProtection({
-      enable: Boolean(configToUse.enableCsrf),
-      skipPaths: ['/api/fetch-records'],
-    })
-  );
+  app.use(csrfProtection({
+    enable: Boolean(configToUse.enableCsrf),
+    skipPaths: ['/api/fetch-records']
+  }));
+
   if (process.env.NODE_ENV === 'production') {
+    // Production serving logic...
     console.log('Serving from dist directory');
-    app.use(express.static('dist'));
+    const distDir = path.join(__dirname, 'dist');
+    app.get('/', (req, res) => {
+      res.sendFile(path.join(distDir, 'index.html'));
+    });
+    app.use(express.static(distDir));
   } else {
-    app.use(express.static(configToUse.paths.public));
+    // Development serving logic...
+    console.log('Serving from public directory');
+    const publicDir = path.join(__dirname, 'public');
+    app.use(express.static(publicDir));
   }
 
+  // Rate limiting for API
   const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 100,
     standardHeaders: true,
-    legacyHeaders: false,
+    legacyHeaders: false
   });
 
-  // Pass the config to the route factories
+  // Mount routes
   app.use('/api', apiRoutesFactory(limiter, configToUse));
   app.use('/', webRoutesFactory());
 
+  // 404 & error handlers
   app.use(notFound);
   app.use(globalErrorHandler);
 
   return app;
 }
 
-// Start the server only if not in test environment
 if (process.env.NODE_ENV !== 'test') {
-  const app = createApp(defaultConfig); // Use default config for normal run
-  app.listen(defaultConfig.port, () =>
-    console.log(`Listening on http://localhost:${defaultConfig.port}`)
-  );
+  const app = createApp(defaultConfig);
+  app.listen(defaultConfig.port, () => {
+    console.log(`Listening on http://localhost:${defaultConfig.port}`);
+  });
 }
-
-// For testing, we export createApp so tests can pass their own config
-// The direct export of 'app' is removed as it's created by createApp

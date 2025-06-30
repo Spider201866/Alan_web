@@ -2,23 +2,19 @@
 // Manages the user authentication and onboarding flow.
 
 import log from './log.js';
+import { getTranslation } from './language.js';
+
 // DOM element references will be passed to initAuthFlow
 let passwordScreenEl, passwordInputEl, passwordSubmitBtnEl, passwordErrorEl;
 let splashScreenRefEl, instructionRefEl, blackScreenEl;
-let nameInputEl, jobSelectElementEl, experienceSelectEl, contactInputEl, acceptButtonEl; // For handleAccept
+let nameInputEl, jobSelectElementEl, experienceSelectEl, contactInputEl, acceptButtonEl;
 
 /**
  * Sends user information to the server to be recorded.
- * @param {string} name - The user's name.
- * @param {Array<string>} aims - The user's selected job roles/aims.
- * @param {string} roleClass - The classification of the user's role (e.g., '(M)' for Medical).
- * @param {string} experience - The user's selected experience level.
- * @param {string} contact - The user's contact information.
- * @returns {Promise<void>} A promise that resolves when the data is successfully sent.
  */
 function pushDataToServer(name, aims, roleClass, experience, contact) {
   const userInfo = {
-    sessionId: localStorage.getItem('sessionId') || `user-${Date.now()}`, // Ensure sessionID exists
+    sessionId: localStorage.getItem('sessionId') || `user-${Date.now()}`,
     name: name,
     role: aims.join(', '),
     experience: experience,
@@ -35,7 +31,6 @@ function pushDataToServer(name, aims, roleClass, experience, contact) {
   };
 
   return fetch('/api/record-info', {
-    // Changed to local API endpoint
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userInfo),
@@ -51,45 +46,32 @@ function pushDataToServer(name, aims, roleClass, experience, contact) {
     .then((data) => log.info('Record saved:', data))
     .catch((error) => {
       log.error('Error pushing data to server:', error);
-      // Potentially re-throw or handle more gracefully if needed by the caller
     });
 }
 
 /**
  * Verifies the entered password with the server.
- * On success, it sets a 'verified' flag in local storage and transitions to the instruction screen.
- * On failure, it displays an error message.
  */
 function verifyPassword() {
-  if (
-    !passwordInputEl ||
-    !passwordSubmitBtnEl ||
-    !passwordErrorEl ||
-    !passwordScreenEl ||
-    !instructionRefEl
-  )
-    return;
+  if (!passwordInputEl || !passwordSubmitBtnEl || !passwordErrorEl || !passwordScreenEl || !instructionRefEl) return;
 
   const enteredPassword = passwordInputEl.value.trim();
-  passwordSubmitBtnEl.disabled = true; // Disable button during verification
+  passwordSubmitBtnEl.disabled = true;
 
   fetch('/api/fetch-records', {
-    // Added /api prefix
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ password: enteredPassword }),
   })
     .then((response) => {
       if (!response.ok) {
-        // Use response.text() to get more detailed error message if available
         return response.text().then((text) => {
           throw new Error(text || 'Invalid password');
         });
       }
-      return response.json(); // Or response.text() if not expecting JSON
+      return response.json();
     })
     .then(() => {
-      // Assuming success if no error was thrown
       localStorage.setItem('verified', 'true');
       passwordScreenEl.classList.add('hidden');
       passwordScreenEl.classList.remove('visible');
@@ -104,8 +86,7 @@ function verifyPassword() {
       passwordErrorEl.style.display = 'block';
       passwordErrorEl.focus();
       passwordInputEl.value = '';
-      // Re-enable submit button on error, but it will be disabled by input listener if field is empty
-      passwordSubmitBtnEl.disabled = passwordInputEl.value.trim() === '';
+      passwordSubmitBtnEl.disabled = true; // Keep it disabled until user types again
       setTimeout(() => {
         passwordErrorEl.style.display = 'none';
       }, 3000);
@@ -114,17 +95,9 @@ function verifyPassword() {
 
 /**
  * Handles the submission of the onboarding form.
- * It gathers user input, saves it to local storage, pushes the data to the server,
- * and initiates the transition to the main application.
  */
 function handleAccept() {
-  if (
-    !nameInputEl ||
-    !jobSelectElementEl ||
-    !experienceSelectEl ||
-    !contactInputEl ||
-    !blackScreenEl
-  ) {
+  if (!nameInputEl || !jobSelectElementEl || !experienceSelectEl || !contactInputEl || !blackScreenEl) {
     log.error('Missing DOM elements for handleAccept');
     return;
   }
@@ -138,9 +111,9 @@ function handleAccept() {
   const checkedAims = Array.from(checkboxesContainer.querySelectorAll('input:checked')).map(
     (cb) => cb.value
   );
-  let roleClass = '(P)'; // Default to Paramedic/Professional
+  let roleClass = '(P)';
   if (checkedAims.length > 0 && !checkedAims.includes('Veterinary')) {
-    roleClass = '(M)'; // Medical if not Veterinary
+    roleClass = '(M)';
   }
 
   localStorage.setItem('name', rawName);
@@ -160,19 +133,18 @@ function handleAccept() {
   }
   setTimeout(() => {
     window.location.href = 'home.html';
-  }, 6250); // Duration for black screen fade and transition
+  }, 6250);
 }
 
 /**
- * Manages the display of the initial splash screen and then transitions
- * to the appropriate next screen based on the user's verification status.
+ * Manages the display of the initial splash screen and then transitions.
  */
 function showSplashScreenAndThen() {
   if (!splashScreenRefEl || !instructionRefEl || !passwordScreenEl) return;
 
   splashScreenRefEl.classList.remove('hidden');
   splashScreenRefEl.classList.add('visible');
-  const logo1 = document.getElementById('logo1'); // These are specific IDs, query directly
+  const logo1 = document.getElementById('logo1');
   const logo2 = document.getElementById('logo2');
 
   if (logo1) logo1.style.transform = 'scale(0.8)';
@@ -181,7 +153,7 @@ function showSplashScreenAndThen() {
   setTimeout(() => {
     if (logo1) logo1.style.transform = 'scale(1)';
     if (logo2) logo2.style.transform = 'rotateX(0deg)';
-  }, 100); // Short delay for initial animation
+  }, 100);
 
   setTimeout(() => {
     splashScreenRefEl.classList.remove('visible');
@@ -192,18 +164,16 @@ function showSplashScreenAndThen() {
     } else {
       passwordScreenEl.classList.remove('hidden');
       passwordScreenEl.classList.add('visible');
-      if (passwordInputEl) passwordInputEl.focus(); // Focus password input
+      if (passwordInputEl) passwordInputEl.focus();
     }
-  }, 4000); // Splash screen duration
+  }, 4000);
 }
 
 /**
  * Initializes the entire authentication and onboarding flow.
- * It sets up references to all necessary DOM elements and attaches event listeners.
- * @param {Object} elements - An object containing references to all required DOM elements.
  */
 export function initAuthFlow(elements) {
-  // Store references to DOM elements passed from the orchestrator
+  // Store references to DOM elements
   passwordScreenEl = elements.passwordScreen;
   passwordInputEl = elements.passwordInput;
   passwordSubmitBtnEl = elements.passwordSubmitBtn;
@@ -211,34 +181,37 @@ export function initAuthFlow(elements) {
   splashScreenRefEl = elements.splashScreen;
   instructionRefEl = elements.instructionScreen;
   blackScreenEl = elements.blackScreen;
-
-  // Elements needed for handleAccept, passed from orchestrator
   nameInputEl = elements.nameInput;
-  jobSelectElementEl = elements.jobSelectElement; // The main container for aims
+  jobSelectElementEl = elements.jobSelectElement;
   experienceSelectEl = elements.experienceSelect;
   contactInputEl = elements.contactInput;
-  acceptButtonEl = elements.acceptButton; // Passed for attaching event listener
+  acceptButtonEl = elements.acceptButton;
 
   // Initial screen display logic
   showSplashScreenAndThen();
 
-  // Event listeners
+  // --- THIS IS THE FIX ---
+  // Get the form element and listen for its 'submit' event.
+  // This handles both button clicks and pressing Enter.
+  const passwordForm = document.getElementById('passwordForm');
+  if (passwordForm) {
+    passwordForm.addEventListener('submit', (event) => {
+      event.preventDefault(); // Stop the page from reloading
+      verifyPassword(); // Call the password verification logic
+    });
+  }
+  // --- END OF FIX ---
+
+  // Add listener to enable/disable submit button based on input
   if (passwordInputEl && passwordSubmitBtnEl) {
     passwordInputEl.addEventListener('input', () => {
       passwordSubmitBtnEl.disabled = passwordInputEl.value.trim() === '';
       if (passwordErrorEl) passwordErrorEl.style.display = 'none';
     });
   }
-  if (passwordSubmitBtnEl) {
-    passwordSubmitBtnEl.addEventListener('click', verifyPassword);
-  }
+
+  // Add listener for the 'Accept' button on the next screen
   if (acceptButtonEl) {
-    // Accept button is part of the onboarding form, but its action is part of auth flow
     acceptButtonEl.addEventListener('click', handleAccept);
   }
 }
-
-// Helper for translations, if needed directly within this module (e.g., for passwordErrorEl.textContent)
-// This assumes language.js is available and getTranslation works globally or is passed in.
-// For simplicity, direct text is used now, but can be refactored.
-import { getTranslation } from './language.js';

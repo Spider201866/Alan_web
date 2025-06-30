@@ -17,12 +17,11 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"
     />
-    <link rel="icon" type="image/png" href="favicons/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="favicons/favicon-16x16.png" sizes="16x16" />
-    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png" />
-    <link rel="manifest" href="favicons/manifest.json" />
-    <link rel="stylesheet" href="styles/styles.css" />
-    <script type="module" src="scripts/faviconAndMeta.js" defer></script>
+    <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicons/manifest.json" />
+    <link rel="stylesheet" href="/styles/styles.css" />
     <!-- Translations will be loaded dynamically by language.js and page-template.js -->
     <!-- Styles moved to public/styles/styles.css -->
   </head>
@@ -79,5 +78,19 @@
     </main>
 
     <script type="module" src="scripts/eye.js" defer></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('/service-worker.js')
+            .then((registration) => {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch((error) => {
+              console.log('ServiceWorker registration failed: ', error);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

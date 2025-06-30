@@ -1,6 +1,12 @@
 {
-  "name": "Alan",
+  "name": "Alan AI Assistant",
   "short_name": "Alan",
+  "description": "An AI-powered assistant for your daily tasks",
+  "start_url": "/home.html",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#004578",
+  "background_color": "#ffffff",
   "icons": [
     {
       "src": "/favicons/android-chrome-192x192.png",
@@ -10,10 +16,34 @@
     {
       "src": "/favicons/android-chrome-512x512.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicons/apple-icon-60x60.png",
+      "sizes": "60x60",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicons/favicon-32x32.png",
+      "sizes": "32x32",
       "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
+  "screenshots": [
+    {
+      "src": "/images/AP.png",
+      "sizes": "500x306",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Arclight Project Logo - Desktop View"
+    },
+    {
+      "src": "/images/Q.png",
+      "sizes": "500x156",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Q Logo - Mobile View"
+    }
+  ]
 }

@@ -103,10 +103,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   passwordInput.addEventListener('input', handlePasswordInput);
-  passwordInput.addEventListener('keypress', (evt) => {
-    if (evt.key === 'Enter') handleSubmit();
-  });
-  passwordSubmitBtn.addEventListener('click', handleSubmit);
+  const passwordForm = document.getElementById('passwordForm');
+  if (passwordForm) {
+    passwordForm.addEventListener('submit', (event) => {
+      event.preventDefault(); // Stop the page from reloading
+      handleSubmit();
+    });
+  }
   refreshIcon.addEventListener('click', handleRefresh);
 });
 
