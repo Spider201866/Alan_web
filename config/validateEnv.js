@@ -23,5 +23,13 @@ export default function validateEnv(processEnv = process.env, dotenvConfig = dot
     SENTRY_FRONTEND_DSN: str({ default: '' }), // Assuming this might be used elsewhere
   });
 
+  // --- DEBUGGING LOGIC ---
+  console.log('--- Environment Variables Loaded ---');
+  console.log('PORT:', env.PORT);
+  console.log('PASSWORD_SALT (from env):', process.env.PASSWORD_SALT);
+  console.log('MASTER_PASSWORD_HASH (from env):', process.env.MASTER_PASSWORD_HASH);
+  console.log('------------------------------------');
+  // --- END DEBUGGING LOGIC ---
+
   return env;
 }
