@@ -12,7 +12,7 @@ import { fileURLToPath } from 'url';
 import { globalErrorHandler, notFound } from './middleware/error.js';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname  = path.dirname(__filename);
+const __dirname = path.dirname(__filename);
 
 export function createApp(configToUse) {
   const app = express();
@@ -29,12 +29,29 @@ export function createApp(configToUse) {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
         'default-src': ["'self'"],
         'img-src': ["'self'", 'data:'],
-        'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://cdnjs.cloudflare.com', 'https://unpkg.com'],
+        'style-src': [
+          "'self'",
+          "'unsafe-inline'",
+          'https://fonts.googleapis.com',
+          'https://cdnjs.cloudflare.com',
+          'https://unpkg.com',
+        ],
         'font-src': ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
-        'script-src': ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net', 'https://cdnjs.cloudflare.com', 'https://unpkg.com'],
+        'script-src': [
+          "'self'",
+          "'unsafe-inline'",
+          'https://cdn.jsdelivr.net',
+          'https://cdnjs.cloudflare.com',
+          'https://unpkg.com',
+        ],
         // --- THIS IS THE FINAL FIX ---
         // Add ipinfo.io to the list of allowed connection sources
-        'connect-src': ["'self'", 'https://flowiseai-railway-production-fecf.up.railway.app', 'https://api.bigdatacloud.net', 'https://ipinfo.io'],
+        'connect-src': [
+          "'self'",
+          'https://flowiseai-railway-production-fecf.up.railway.app',
+          'https://api.bigdatacloud.net',
+          'https://ipinfo.io',
+        ],
       },
     })
   );
@@ -46,20 +63,21 @@ export function createApp(configToUse) {
   app.use(helmet.noSniff());
 
   // CORS, JSON bodies & CSRF
-  const corsOrigins = [
-    'http://localhost:3000',
-    ...(configToUse.allowedOrigins || [])
-  ];
-  app.use(simpleCors({
-    enable: Boolean(configToUse.enableCors),
-    allowedOrigins: corsOrigins
-  }));
+  const corsOrigins = ['http://localhost:3000', ...(configToUse.allowedOrigins || [])];
+  app.use(
+    simpleCors({
+      enable: Boolean(configToUse.enableCors),
+      allowedOrigins: corsOrigins,
+    })
+  );
 
   app.use(express.json());
-  app.use(csrfProtection({
-    enable: Boolean(configToUse.enableCsrf),
-    skipPaths: ['/api/fetch-records']
-  }));
+  app.use(
+    csrfProtection({
+      enable: Boolean(configToUse.enableCsrf),
+      skipPaths: ['/api/fetch-records'],
+    })
+  );
 
   if (process.env.NODE_ENV === 'production') {
     // Production serving logic...
@@ -81,7 +99,7 @@ export function createApp(configToUse) {
     windowMs: 15 * 60 * 1000,
     max: 100,
     standardHeaders: true,
-    legacyHeaders: false
+    legacyHeaders: false,
   });
 
   // Mount routes

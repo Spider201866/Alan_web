@@ -97,17 +97,17 @@ async function runBuild() {
 
     // Minify HTML (after patching)
     for (const file of htmlFiles) {
-        const content = await fs.readFile(file, 'utf8');
-        const minifiedHtml = await htmlMinify(content, {
-            collapseWhitespace: true,
-            removeComments: false, // Keep the timestamp comment for debugging!
-            minifyCSS: true,
-            minifyJS: true,
-            removeRedundantAttributes: true,
-            useShortDoctype: true,
-        });
-        await fs.writeFile(file, minifiedHtml, 'utf8');
-        console.log(`   - Minified HTML: ${file}`);
+      const content = await fs.readFile(file, 'utf8');
+      const minifiedHtml = await htmlMinify(content, {
+        collapseWhitespace: true,
+        removeComments: true,
+        minifyCSS: true,
+        minifyJS: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+      });
+      await fs.writeFile(file, minifiedHtml, 'utf8');
+      console.log(`   - Minified HTML: ${file}`);
     }
 
     console.log('\n✨ Build complete! The `dist` directory is ready for production.');

@@ -53,7 +53,14 @@ function pushDataToServer(name, aims, roleClass, experience, contact) {
  * Verifies the entered password with the server.
  */
 function verifyPassword() {
-  if (!passwordInputEl || !passwordSubmitBtnEl || !passwordErrorEl || !passwordScreenEl || !instructionRefEl) return;
+  if (
+    !passwordInputEl ||
+    !passwordSubmitBtnEl ||
+    !passwordErrorEl ||
+    !passwordScreenEl ||
+    !instructionRefEl
+  )
+    return;
 
   const enteredPassword = passwordInputEl.value.trim();
   passwordSubmitBtnEl.disabled = true;
@@ -97,7 +104,13 @@ function verifyPassword() {
  * Handles the submission of the onboarding form.
  */
 function handleAccept() {
-  if (!nameInputEl || !jobSelectElementEl || !experienceSelectEl || !contactInputEl || !blackScreenEl) {
+  if (
+    !nameInputEl ||
+    !jobSelectElementEl ||
+    !experienceSelectEl ||
+    !contactInputEl ||
+    !blackScreenEl
+  ) {
     log.error('Missing DOM elements for handleAccept');
     return;
   }

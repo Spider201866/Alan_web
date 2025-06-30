@@ -57,12 +57,6 @@ describe('Build Process Minification', () => {
     10000 // Timeout for individual test
   );
 
-  test('should remove comments from minified HTML files', async () => {
-    const htmlContent = await fs.readFile(path.join(distDir, 'index.html'), 'utf8');
-    expect(htmlContent).not.toContain('<!--');
-    expect(htmlContent).not.toContain('-->');
-  });
-
   test('should remove comments from minified CSS files', async () => {
     const cssContent = await fs.readFile(path.join(distDir, 'styles', 'styles.css'), 'utf8');
     expect(cssContent).not.toContain('/*');

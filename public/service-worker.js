@@ -67,11 +67,11 @@ self.addEventListener('activate', (event) => {
           })
         );
       })
-            .then(() => {
-                console.log('Service Worker: Activated and ready to control clients.');
-                // Take control of all open clients immediately.
-                return self.clients.claim();
-            })
+      .then(() => {
+        console.log('Service Worker: Activated and ready to control clients.');
+        // Take control of all open clients immediately.
+        return self.clients.claim();
+      })
   );
 });
 

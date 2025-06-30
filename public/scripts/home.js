@@ -40,7 +40,6 @@ function main() {
   }
   initChatbot(sessionId);
 
-
   // 6. PWA Install prompt handling
   let deferredPrompt;
   const installBtn = document.getElementById('install-btn');
