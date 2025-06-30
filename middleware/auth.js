@@ -10,11 +10,11 @@ import config from '../config/index.js'; // Import the centralized config
  * @returns {string} The PBKDF2 hash as a hex string.
  */
 function hashWithPBKDF2(password) {
-  // These parameters (iterations, keylen, digest) must match the generation script.
-  // These are common, secure defaults.
-  const iterations = 100000;
-  const keylen = 64;
-  const digest = 'sha512';
+  // --- FINAL FIX ---
+  // These parameters now match the expected 64-character hash length (32 bytes * 2 = 64).
+  const iterations = 100000; // This is a common default, likely what was used.
+  const keylen = 32;         // 32 bytes produces a 64-character hex string.
+  const digest = 'sha256';     // SHA-256 is the corresponding algorithm for this length.
 
   return crypto
     .pbkdf2Sync(password, config.security.salt, iterations, keylen, digest)
@@ -31,32 +31,29 @@ function hashWithPBKDF2(password) {
 export function validatePassword(req, res, next) {
   const { password } = req.body;
 
-  // --- Start of Detailed Debug Logging ---
+  // Logging for debugging
   console.log('--- VALIDATE PASSWORD MIDDLEWARE TRIGGERED ---');
   console.log(`Received password from form: [${password}] (Type: ${typeof password})`);
   
   if (!password) {
-    console.log('Authentication failed: No password provided in request body.');
+    console.log('Authentication failed: No password provided.');
     return res.status(400).send('Password is required');
   }
 
-  // Use the CORRECT hashing function
   const generatedHash = hashWithPBKDF2(password);
 
   console.log('Generated Hash:  ', generatedHash);
   console.log('Expected Hash:   ', config.security.masterHash);
   const areHashesEqual = (generatedHash === config.security.masterHash);
   console.log('ARE HASHES EQUAL? --->', areHashesEqual);
-  // --- End of Detailed Debug Logging ---
 
-  // Check against master hash and OTPs
   if (areHashesEqual || config.security.otpHashes.has(generatedHash)) {
     console.log('Authentication SUCCEEDED.');
     if (config.security.otpHashes.has(generatedHash)) {
       config.security.otpHashes.delete(generatedHash);
       console.log('Used and deleted an OTP.');
     }
-    return next(); // Password is valid, proceed to the next handler
+    return next();
   }
 
   console.log('Authentication FAILED: Hashes do not match.');
