@@ -38,4 +38,16 @@ function applyPageSpecificTranslations() {
 }
 
 // Initialize the page with its title key and its specific translation function
-initPage('pageTitle_howToExamineSkin', applyPageSpecificTranslations);
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SW_READY') {
+      initPage('pageTitle_howToExamineSkin', applyPageSpecificTranslations);
+    }
+  });
+
+  if (navigator.serviceWorker.controller) {
+    initPage('pageTitle_howToExamineSkin', applyPageSpecificTranslations);
+  }
+} else {
+  initPage('pageTitle_howToExamineSkin', applyPageSpecificTranslations);
+}

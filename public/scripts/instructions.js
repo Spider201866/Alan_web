@@ -108,4 +108,16 @@ document.querySelectorAll('input[name="option"]').forEach(function (radio) {
 });
 
 // Initialize the page with its title key and its specific translation/toggle function
-initPage('instructionsPageTitle', applyTranslationsAndToggle);
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SW_READY') {
+      initPage('instructionsPageTitle', applyTranslationsAndToggle);
+    }
+  });
+
+  if (navigator.serviceWorker.controller) {
+    initPage('instructionsPageTitle', applyTranslationsAndToggle);
+  }
+} else {
+  initPage('instructionsPageTitle', applyTranslationsAndToggle);
+}

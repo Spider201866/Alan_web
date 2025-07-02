@@ -62,7 +62,19 @@ function applyPageSpecificTranslations() {
   // The char count info is dynamically generated, its template string in JS will need translation.
 }
 
-initPage('refer', applyPageSpecificTranslations); // Using 'refer' key for page title
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SW_READY') {
+      initPage('refer', applyPageSpecificTranslations);
+    }
+  });
+
+  if (navigator.serviceWorker.controller) {
+    initPage('refer', applyPageSpecificTranslations);
+  }
+} else {
+  initPage('refer', applyPageSpecificTranslations);
+}
 
 // initializeForm will need to be refactored to use getTranslation for its dynamic text.
 // For now, the static HTML text is handled by applyPageSpecificTranslations.

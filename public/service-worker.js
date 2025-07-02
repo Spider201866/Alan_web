@@ -59,7 +59,12 @@ self.addEventListener('install', (event) => {
       .open(CACHE_NAME)
       .then((cache) => {
         console.log('Service Worker: Caching core assets');
-        return cache.addAll(CORE_ASSETS);
+        return cache.addAll(CORE_ASSETS).then(() => {
+          console.log('Service Worker: Core assets cached successfully.');
+          return cache.keys().then((keys) => {
+            console.log('Service Worker: Cached assets:', keys.map(k => k.url));
+          });
+        });
       })
       .then(() => {
         self.skipWaiting();
@@ -85,7 +90,11 @@ self.addEventListener('activate', (event) => {
       })
       .then(() => {
         console.log('Service Worker: Activated and ready to control clients.');
-        return self.clients.claim();
+        return self.clients.claim().then(() => {
+          self.clients.matchAll().then((clients) => {
+            clients.forEach((client) => client.postMessage({ type: 'SW_READY' }));
+          });
+        });
       })
   );
 });
@@ -138,13 +147,22 @@ self.addEventListener('fetch', (event) => {
       if (cachedResponse) {
         return cachedResponse;
       }
-      return fetch(request).then((networkResponse) => {
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(request, responseToCache);
+      return fetch(request)
+        .then((networkResponse) => {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseToCache);
+          });
+          return networkResponse;
+        })
+        .catch(() => {
+          // For static assets, we don't want to return the offline page.
+          // We'll just return a simple error response.
+          return new Response('Network error', {
+            status: 408,
+            headers: { 'Content-Type': 'text/plain' },
+          });
         });
-        return networkResponse;
-      });
     })
   );
 });

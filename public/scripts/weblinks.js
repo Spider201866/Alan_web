@@ -18,4 +18,16 @@ function applyPageSpecificTranslations() {
 
 // Using 'linksButton' key which should resolve to "Links" or "Web Links"
 // If a different title is needed, a new key like 'pageTitle_weblinks' can be added to JSON files.
-initPage('linksButton', applyPageSpecificTranslations);
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SW_READY') {
+      initPage('linksButton', applyPageSpecificTranslations);
+    }
+  });
+
+  if (navigator.serviceWorker.controller) {
+    initPage('linksButton', applyPageSpecificTranslations);
+  }
+} else {
+  initPage('linksButton', applyPageSpecificTranslations);
+}

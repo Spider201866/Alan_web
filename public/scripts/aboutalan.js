@@ -44,7 +44,19 @@ function applyPageSpecificTranslations() {
 }
 
 // Initialize the page with its title key and its specific translation function
-initPage('pageTitle_aboutAlan', applyPageSpecificTranslations);
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SW_READY') {
+      initPage('pageTitle_aboutAlan', applyPageSpecificTranslations);
+    }
+  });
+
+  if (navigator.serviceWorker.controller) {
+    initPage('pageTitle_aboutAlan', applyPageSpecificTranslations);
+  }
+} else {
+  initPage('pageTitle_aboutAlan', applyPageSpecificTranslations);
+}
 
 // Logo animation logic is preserved
 document.addEventListener('DOMContentLoaded', function () {

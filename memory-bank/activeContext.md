@@ -7,6 +7,8 @@ The application is now a fully functional Progressive Web App (PWA). The immedia
 
 ## Recent Changes
 - **Offline Experience Improvements (July 2, 2025):**
+    - Refactored all page initialization scripts to wait for a "ready" message from the service worker, ensuring that all assets are cached before the page attempts to render. This resolves the issue of the missing app bar on offline pages.
+    - Added a `.catch()` block to the service worker's static asset fetch handler to prevent "Failed to fetch" errors in offline mode.
     - Fixed a bug where the app bar was missing on the offline referral page by adding the `page-template.js` script to `referral.html`.
     - Updated the service worker cache name to `alanui-v2` to ensure all offline assets are updated correctly.
     - Added "Retry" and "Go Back" buttons to the offline page to improve usability.

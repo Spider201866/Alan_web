@@ -12,7 +12,21 @@ import { initUI } from './home-ui.js';
 import { fetchMutedSnippet, fetchAreaFromLatLong, pushLocalStorageToServer } from './home-data.js';
 import { initTranslator } from './home-translator.js';
 
-document.addEventListener('DOMContentLoaded', main);
+document.addEventListener('DOMContentLoaded', () => {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'SW_READY') {
+        main();
+      }
+    });
+
+    if (navigator.serviceWorker.controller) {
+      main();
+    }
+  } else {
+    main();
+  }
+});
 
 /**
  * The main entry point for the home page, executed when the DOM is fully loaded.
