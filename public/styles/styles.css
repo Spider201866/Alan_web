@@ -349,7 +349,7 @@ p {
   font-size: 14px;
   font-weight: bold;
   position: absolute;
-  top: 50%; 
+  top: 50%;
   transform: translateY(-50%);
   right: 23px;
   z-index: 1000;
@@ -1037,11 +1037,11 @@ flowise-fullchatbot {
 /* Replace it with this: */
 #install-btn {
   position: absolute;
-  right: 65px;             
-  top: 50%;               
-  transform: translateY(-50%); 
+  right: 65px;
+  top: 50%;
+  transform: translateY(-50%);
   padding: 5px 10px;
-  margin: 0; 
+  margin: 0;
 }
 
 #geo-info-button {

@@ -12,11 +12,13 @@ The application is now a fully functional Progressive Web App (PWA). The immedia
     - Added "Retry" and "Go Back" buttons to the offline page to improve usability.
     - Updated the service worker to cache all side menu pages, the referral page, and their associated scripts, including the shared `page-template.js` and its dependencies (`language.js`, `log.js`) for the app bar, making the app much more functional offline.
 - **PWA Install and Notification Flow (July 2, 2025):**
+    - Refactored the PWA installation flow to prevent a `NotAllowedError` by ensuring the `prompt()` method is called directly within a user gesture.
+    - The notification permission is now requested in the background after the install prompt is shown.
     - Implemented a robust, single-click flow for the "Install" button that correctly handles both notification permission and app installation prompts.
     - The event listener is now attached with the `{ once: true }` option to prevent multiple clicks and ensure a clean user experience.
     - The "Install" button is now correctly hidden after the app is installed or if it's already running in standalone mode.
 - **Content Security Policy Update (July 2, 2025):**
-    - Updated the Content Security Policy to allow connections to `cdn.jsdelivr.net`, `cdnjs.cloudflare.com`, `fonts.googleapis.com`, and `fonts.gstatic.com`. This resolves errors related to fetching resources from these domains.
+    - Updated the Content Security Policy to allow connections to `cdn.jsdelivr.net`, `cdnjs.cloudflare.com`, `fonts.googleapis.com`, `fonts.gstatic.com`, and `unpkg.com`. This resolves errors related to fetching resources from these domains.
 - **Service Worker POST Request Bug (July 2, 2025):**
     - Fixed a bug in the service worker that caused an error when trying to cache POST requests. The service worker now only caches GET requests.
 - **Install Button Styling (June 30, 2025):**

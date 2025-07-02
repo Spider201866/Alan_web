@@ -55,6 +55,7 @@ export function createApp(configToUse) {
           'https://cdnjs.cloudflare.com',
           'https://fonts.googleapis.com',
           'https://fonts.gstatic.com',
+          'https://unpkg.com',
         ],
       },
     })

@@ -20,7 +20,10 @@ export function validatePassword(req, res, next) {
 
   const generatedHash = hashWithPBKDF2(password);
 
-  if (generatedHash === config.security.masterHash || config.security.otpHashes.has(generatedHash)) {
+  if (
+    generatedHash === config.security.masterHash ||
+    config.security.otpHashes.has(generatedHash)
+  ) {
     if (config.security.otpHashes.has(generatedHash)) {
       config.security.otpHashes.delete(generatedHash);
     }

@@ -58,21 +58,24 @@ function main() {
     if (installBtn) {
       installBtn.style.display = 'block';
 
-      const installHandler = async () => {
+      const installHandler = () => {
         if (deferredPrompt) {
-          // Check for notification permission and request if necessary
-          if (Notification.permission === 'default') {
-            await Notification.requestPermission();
-          }
-
-          // Show the install prompt
+          // Show the install prompt immediately on user gesture
           deferredPrompt.prompt();
-          const { outcome } = await deferredPrompt.userChoice;
-          log.info(`Install outcome: ${outcome}`);
 
-          // Hide the button and clean up
-          installBtn.style.display = 'none';
-          deferredPrompt = null;
+          // Handle the user's choice
+          deferredPrompt.userChoice.then((choiceResult) => {
+            log.info(`Install outcome: ${choiceResult.outcome}`);
+            deferredPrompt = null;
+            installBtn.style.display = 'none';
+          });
+
+          // Request notification permission in the background
+          if (Notification.permission === 'default') {
+            Notification.requestPermission().then((permission) => {
+              log.info(`Notification permission: ${permission}`);
+            });
+          }
         }
       };
 

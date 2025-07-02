@@ -121,7 +121,6 @@ self.addEventListener('fetch', (event) => {
             cache.put(request, responseToCache);
           });
 
-          
           return response;
         })
         .catch(() => {
@@ -151,7 +150,7 @@ self.addEventListener('fetch', (event) => {
 });
 
 // Listen for push events
-self.addEventListener('push', function(event) {
+self.addEventListener('push', function (event) {
   // Define the notification's appearance
   const options = {
     body: 'This test message came from your browser DevTools!',
@@ -160,7 +159,5 @@ self.addEventListener('push', function(event) {
   };
 
   // Tell the service worker to keep running until the notification is shown
-  event.waitUntil(
-    self.registration.showNotification('PWA Test Push!', options)
-  );
+  event.waitUntil(self.registration.showNotification('PWA Test Push!', options));
 });
