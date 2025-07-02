@@ -59,12 +59,16 @@ self.addEventListener('install', (event) => {
       .open(CACHE_NAME)
       .then((cache) => {
         console.log('Service Worker: Caching core assets');
-        return cache.addAll(CORE_ASSETS).then(() => {
-          console.log('Service Worker: Core assets cached successfully.');
-          return cache.keys().then((keys) => {
-            console.log('Service Worker: Cached assets:', keys.map(k => k.url));
+        return cache.addAll(CORE_ASSETS)
+          .then(() => {
+            console.log('Service Worker: Core assets cached successfully.');
+            return cache.keys().then((keys) => {
+              console.log('Service Worker: Cached assets:', keys.map(k => k.url));
+            });
+          })
+          .catch((error) => {
+            console.error('Service Worker: Failed to cache core assets:', error);
           });
-        });
       })
       .then(() => {
         self.skipWaiting();
@@ -101,6 +105,7 @@ self.addEventListener('activate', (event) => {
 
 // 3. Fetch Event: Intercept network requests.
 self.addEventListener('fetch', (event) => {
+  console.log('Service Worker: Fetching', event.request.url);
   // Only process GET requests.
   if (event.request.method !== 'GET') {
     return;
