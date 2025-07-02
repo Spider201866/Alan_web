@@ -37,6 +37,31 @@
         font-size: 1rem;
         color: #606770;
       }
+      .button-container {
+        margin-top: 1.5rem;
+      }
+      button {
+        background-color: #1877f2;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin: 0 0.5rem;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #166fe5;
+      }
+      button.secondary {
+        background-color: #e4e6eb;
+        color: #1c1e21;
+      }
+      button.secondary:hover {
+        background-color: #d8dadf;
+      }
     </style>
   </head>
   <body>
@@ -48,6 +73,10 @@
           again.
         </p>
         <p>Some content may be available if it was cached previously.</p>
+        <div class="button-container">
+          <button onclick="location.reload()">Retry</button>
+          <button class="secondary" onclick="history.back()">Go Back</button>
+        </div>
       </div>
     </main>
   </body>

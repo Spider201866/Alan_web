@@ -12,7 +12,7 @@
  *   - Cache-First for Static Assets: Serves static assets from the cache for speed.
  */
 
-const CACHE_NAME = 'alanui-v1';
+const CACHE_NAME = 'alanui-v2';
 const OFFLINE_URL = 'offline.html';
 
 // A list of essential assets to cache on installation.
@@ -21,12 +21,30 @@ const CORE_ASSETS = [
   '/index.html',
   '/home.html',
   '/offline.html',
+  '/referral.html',
+  '/aboutalan.html',
+  '/atoms.html',
+  '/ear.html',
+  '/eye.html',
+  '/instructions.html',
+  '/skin.html',
+  '/weblinks.html',
   '/styles/styles.css',
   '/styles/styles_index.css',
   '/scripts/index.js',
   '/scripts/home.js',
   '/scripts/agent1-chatbot-module.js',
-
+  '/scripts/page-template.js',
+  '/scripts/language.js',
+  '/scripts/log.js',
+  '/scripts/aboutalan.js',
+  '/scripts/atoms.js',
+  '/scripts/ear.js',
+  '/scripts/eye.js',
+  '/scripts/instructions.js',
+  '/scripts/skin.js',
+  '/scripts/weblinks.js',
+  '/scripts/referral.js',
   '/favicons/manifest.json',
   '/favicons/favicon-32x32.png',
   '/favicons/apple-touch-icon.png',
@@ -74,6 +92,11 @@ self.addEventListener('activate', (event) => {
 
 // 3. Fetch Event: Intercept network requests.
 self.addEventListener('fetch', (event) => {
+  // Only process GET requests.
+  if (event.request.method !== 'GET') {
+    return;
+  }
+
   // --- START OF FIX ---
   // If the request is for the admin page or any asset on it, do nothing.
   // This lets the browser handle the request normally, bypassing the service worker.
@@ -97,6 +120,8 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(request, responseToCache);
           });
+
+          
           return response;
         })
         .catch(() => {
@@ -122,5 +147,20 @@ self.addEventListener('fetch', (event) => {
         return networkResponse;
       });
     })
+  );
+});
+
+// Listen for push events
+self.addEventListener('push', function(event) {
+  // Define the notification's appearance
+  const options = {
+    body: 'This test message came from your browser DevTools!',
+    icon: '/images/icons/icon-192x192.png', // Optional: path to an icon
+    vibrate: [100, 50, 100], // Optional: vibration pattern
+  };
+
+  // Tell the service worker to keep running until the notification is shown
+  event.waitUntil(
+    self.registration.showNotification('PWA Test Push!', options)
   );
 });

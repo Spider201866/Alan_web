@@ -349,7 +349,8 @@ p {
   font-size: 14px;
   font-weight: bold;
   position: absolute;
-  top: 22px;
+  top: 50%; 
+  transform: translateY(-50%);
   right: 23px;
   z-index: 1000;
   user-select: none;
@@ -1033,12 +1034,14 @@ flowise-fullchatbot {
   padding: 0 0 4px 0;
 }
 
-/* Styles for elements within the #popup aside */
-.popup-button-container {
-  /* Replaces inline style on div around geolocation button */
-  text-align: center;
-  margin-top: 10px;
-  position: relative;
+/* Replace it with this: */
+#install-btn {
+  position: absolute;
+  right: 65px;             
+  top: 50%;               
+  transform: translateY(-50%); 
+  padding: 5px 10px;
+  margin: 0; 
 }
 
 #geo-info-button {

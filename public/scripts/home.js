@@ -44,25 +44,47 @@ function main() {
   let deferredPrompt;
   const installBtn = document.getElementById('install-btn');
 
+  // Hide install button if app is already installed
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    if (installBtn) {
+      installBtn.style.display = 'none';
+    }
+  }
+
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
+    log.info('beforeinstallprompt event fired. deferredPrompt is set.');
     if (installBtn) {
       installBtn.style.display = 'block';
+
+      const installHandler = async () => {
+        if (deferredPrompt) {
+          // Check for notification permission and request if necessary
+          if (Notification.permission === 'default') {
+            await Notification.requestPermission();
+          }
+
+          // Show the install prompt
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          log.info(`Install outcome: ${outcome}`);
+
+          // Hide the button and clean up
+          installBtn.style.display = 'none';
+          deferredPrompt = null;
+        }
+      };
+
+      installBtn.addEventListener('click', installHandler, { once: true });
     }
   });
 
-  if (installBtn) {
-    installBtn.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        log.info('Install outcome:', outcome);
-        deferredPrompt = null;
-        installBtn.style.display = 'none';
-      }
-    });
-  }
+  window.addEventListener('appinstalled', () => {
+    if (installBtn) {
+      installBtn.style.display = 'none';
+    }
+  });
 
   // Other global initializations if any.
 }

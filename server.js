@@ -51,6 +51,10 @@ export function createApp(configToUse) {
           'https://flowiseai-railway-production-fecf.up.railway.app',
           'https://api.bigdatacloud.net',
           'https://ipinfo.io',
+          'https://cdn.jsdelivr.net',
+          'https://cdnjs.cloudflare.com',
+          'https://fonts.googleapis.com',
+          'https://fonts.gstatic.com',
         ],
       },
     })

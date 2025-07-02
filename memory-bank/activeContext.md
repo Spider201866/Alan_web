@@ -6,6 +6,22 @@
 The application is now a fully functional Progressive Web App (PWA). The immediate focus is on ensuring all documentation is updated to reflect this major enhancement.
 
 ## Recent Changes
+- **Offline Experience Improvements (July 2, 2025):**
+    - Fixed a bug where the app bar was missing on the offline referral page by adding the `page-template.js` script to `referral.html`.
+    - Updated the service worker cache name to `alanui-v2` to ensure all offline assets are updated correctly.
+    - Added "Retry" and "Go Back" buttons to the offline page to improve usability.
+    - Updated the service worker to cache all side menu pages, the referral page, and their associated scripts, including the shared `page-template.js` and its dependencies (`language.js`, `log.js`) for the app bar, making the app much more functional offline.
+- **PWA Install and Notification Flow (July 2, 2025):**
+    - Implemented a robust, single-click flow for the "Install" button that correctly handles both notification permission and app installation prompts.
+    - The event listener is now attached with the `{ once: true }` option to prevent multiple clicks and ensure a clean user experience.
+    - The "Install" button is now correctly hidden after the app is installed or if it's already running in standalone mode.
+- **Content Security Policy Update (July 2, 2025):**
+    - Updated the Content Security Policy to allow connections to `cdn.jsdelivr.net`, `cdnjs.cloudflare.com`, `fonts.googleapis.com`, and `fonts.gstatic.com`. This resolves errors related to fetching resources from these domains.
+- **Service Worker POST Request Bug (July 2, 2025):**
+    - Fixed a bug in the service worker that caused an error when trying to cache POST requests. The service worker now only caches GET requests.
+- **Install Button Styling (June 30, 2025):**
+    - Created a dedicated CSS rule for the `#install-btn` to allow for independent styling.
+    - Removed inline styles from the button in `home.html` and moved them to `styles.css` for better maintainability.
 - **PWA Implementation and Documentation (June 30, 2025):**
     - Implemented a service worker (`public/service-worker.js`) and web app manifest (`public/favicons/manifest.json`) to make the application installable and offline-capable (commit `[commit_hash]`).
     - Updated all relevant documentation, including `README.md` and the memory bank, to reflect the new PWA features and system patterns.
