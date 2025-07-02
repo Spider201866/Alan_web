@@ -13,18 +13,26 @@ import { fetchMutedSnippet, fetchAreaFromLatLong, pushLocalStorageToServer } fro
 import { initTranslator } from './home-translator.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  let mainHasRun = false;
+  const runMain = () => {
+    if (!mainHasRun) {
+      main();
+      mainHasRun = true;
+    }
+  };
+
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('message', (event) => {
       if (event.data && event.data.type === 'SW_READY') {
-        main();
+        runMain();
       }
     });
 
     if (navigator.serviceWorker.controller) {
-      main();
+      runMain();
     }
   } else {
-    main();
+    runMain();
   }
 });
 

@@ -38,16 +38,24 @@ function applyPageSpecificTranslations() {
 }
 
 // Initialize the page with its title key and its specific translation function
+let pageHasInitialized = false;
+const runInitPage = () => {
+  if (!pageHasInitialized) {
+    initPage('pageTitle_howToExamineSkin', applyPageSpecificTranslations);
+    pageHasInitialized = true;
+  }
+};
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'SW_READY') {
-      initPage('pageTitle_howToExamineSkin', applyPageSpecificTranslations);
+      runInitPage();
     }
   });
 
   if (navigator.serviceWorker.controller) {
-    initPage('pageTitle_howToExamineSkin', applyPageSpecificTranslations);
+    runInitPage();
   }
 } else {
-  initPage('pageTitle_howToExamineSkin', applyPageSpecificTranslations);
+  runInitPage();
 }

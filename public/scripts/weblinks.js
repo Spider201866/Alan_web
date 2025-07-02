@@ -18,16 +18,24 @@ function applyPageSpecificTranslations() {
 
 // Using 'linksButton' key which should resolve to "Links" or "Web Links"
 // If a different title is needed, a new key like 'pageTitle_weblinks' can be added to JSON files.
+let pageHasInitialized = false;
+const runInitPage = () => {
+  if (!pageHasInitialized) {
+    initPage('linksButton', applyPageSpecificTranslations);
+    pageHasInitialized = true;
+  }
+};
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'SW_READY') {
-      initPage('linksButton', applyPageSpecificTranslations);
+      runInitPage();
     }
   });
 
   if (navigator.serviceWorker.controller) {
-    initPage('linksButton', applyPageSpecificTranslations);
+    runInitPage();
   }
 } else {
-  initPage('linksButton', applyPageSpecificTranslations);
+  runInitPage();
 }

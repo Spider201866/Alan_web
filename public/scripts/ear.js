@@ -38,16 +38,24 @@ function applyPageSpecificTranslations() {
 }
 
 // Initialize the page with its title key and its specific translation function
+let pageHasInitialized = false;
+const runInitPage = () => {
+  if (!pageHasInitialized) {
+    initPage('pageTitle_howToExamineEar', applyPageSpecificTranslations);
+    pageHasInitialized = true;
+  }
+};
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'SW_READY') {
-      initPage('pageTitle_howToExamineEar', applyPageSpecificTranslations);
+      runInitPage();
     }
   });
 
   if (navigator.serviceWorker.controller) {
-    initPage('pageTitle_howToExamineEar', applyPageSpecificTranslations);
+    runInitPage();
   }
 } else {
-  initPage('pageTitle_howToExamineEar', applyPageSpecificTranslations);
+  runInitPage();
 }

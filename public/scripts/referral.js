@@ -62,18 +62,26 @@ function applyPageSpecificTranslations() {
   // The char count info is dynamically generated, its template string in JS will need translation.
 }
 
+let pageHasInitialized = false;
+const runInitPage = () => {
+  if (!pageHasInitialized) {
+    initPage('refer', applyPageSpecificTranslations);
+    pageHasInitialized = true;
+  }
+};
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'SW_READY') {
-      initPage('refer', applyPageSpecificTranslations);
+      runInitPage();
     }
   });
 
   if (navigator.serviceWorker.controller) {
-    initPage('refer', applyPageSpecificTranslations);
+    runInitPage();
   }
 } else {
-  initPage('refer', applyPageSpecificTranslations);
+  runInitPage();
 }
 
 // initializeForm will need to be refactored to use getTranslation for its dynamic text.
