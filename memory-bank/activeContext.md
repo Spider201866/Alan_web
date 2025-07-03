@@ -6,6 +6,10 @@
 The application is now a fully functional Progressive Web App (PWA). The immediate focus is on ensuring all documentation is updated to reflect this major enhancement.
 
 ## Recent Changes
+- **Performance Optimizations (July 3, 2025):**
+    - Replaced all `.jpg`, `.gif`, and `.png` images with their existing `.webp` counterparts to reduce file sizes.
+    - Refactored the chatbot initialization to prevent a triple fetch of the same data packet.
+    - Refactored the screenshot functionality to load the `html2canvas.js` library on demand, instead of on every page load.
 - **Offline Experience Improvements (July 2, 2025):**
     - Refactored all page initialization scripts to use a flag to prevent multiple initializations, and to wait for a "ready" message from the service worker, ensuring that all assets are cached before the page attempts to render. This resolves the issue of the missing app bar on offline pages.
     - Added a `.catch()` block to the service worker's static asset fetch handler to prevent "Failed to fetch" errors in offline mode.
@@ -76,4 +80,4 @@ The application is now a fully functional Progressive Web App (PWA). The immedia
 </details>
 
 ## Next Steps
-1.  **Re-evaluate Critical CSS:** A future task is to revisit the implementation of critical CSS to improve the initial page load performance.
+- There are no major features left to build. The focus is now on maintenance and incremental improvements.

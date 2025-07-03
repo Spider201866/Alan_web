@@ -7,7 +7,7 @@
    ----------------------------------------------------------------------- */
 
 import log from './log.js';
-export let imagesButtonClicked = false;
+export const imagesButtonClicked = false;
 
 /* ── constants & helpers ──────────────────────────────────────────────── */
 const STORAGE_KEY = 'alan-chat-history-v2';
@@ -61,7 +61,7 @@ history.sessions.push({ id: CURRENT_ID, messages: [] });
 localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
 log.info('%c[History] Ready. Current Session ID:', 'color:#008000', CURRENT_ID, history);
 
-let storedKeys = new Set(); // For de-duplication within the CURRENT_ID session
+const storedKeys = new Set(); // For de-duplication within the CURRENT_ID session
 
 /* ── bootstrap when DOM loaded ─────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {

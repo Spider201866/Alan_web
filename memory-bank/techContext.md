@@ -30,6 +30,7 @@ The application's Progressive Web App functionality is enabled by the following 
 
 - **Image Processing**: `sharp` for converting and resizing images.
 - **JS/CSS Minification**: `terser`, `css-minify`.
+- **On-Demand Script Loading**: Heavy libraries like `html2canvas.js` are loaded dynamically using `import()` to improve initial page load times.
 - **Gzip Compression**: `compression` (Express middleware).
 
 ---

@@ -5,10 +5,9 @@ import { setupUI, teardownUI } from './helpers/setup.js';
 describe('General UI Interactions', () => {
   let dom;
   let document;
-  let window;
 
   beforeEach(() => {
-    ({ dom, document, window } = setupUI());
+    ({ dom, document } = setupUI());
   });
 
   afterEach(() => {

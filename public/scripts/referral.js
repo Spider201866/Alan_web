@@ -131,7 +131,7 @@ function initializeForm() {
    */
   function generateCompactReferralText() {
     const idVal = refIdInput.value.trim() || 'N/A';
-    let telVal = refTelInput.value.trim().replace(/\s+/g, '') || 'N/A';
+    const telVal = refTelInput.value.trim().replace(/\s+/g, '') || 'N/A';
     const ageVal = refAgeInput.value.trim() || 'N/A';
     const sexVal = refSexSelect.value || '';
     const screeningValue = screenSwitch.checked ? 'Fail' : 'Pass';
@@ -140,7 +140,7 @@ function initializeForm() {
     if (refPrioritySelect.value && refPrioritySelect.options[refPrioritySelect.selectedIndex]) {
       const selectedOption = refPrioritySelect.options[refPrioritySelect.selectedIndex];
       if (selectedOption.value) {
-        let fullText = selectedOption.text.trim();
+        const fullText = selectedOption.text.trim();
         const timeframeMatch = fullText.match(/\((weeks|days|today)\)/i);
         priorityDisplay = timeframeMatch
           ? fullText.replace(timeframeMatch[0], `(${timeframeMatch[1].toUpperCase()})`)
@@ -148,7 +148,7 @@ function initializeForm() {
       }
     }
 
-    let dxVal =
+    const dxVal =
       refDxTextarea.value
         .trim()
         .replace(/(\r\n|\n|\r)+/g, ' ')

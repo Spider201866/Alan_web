@@ -32,16 +32,16 @@
   ],
   "screenshots": [
     {
-      "src": "/images/AP.png",
+      "src": "/images/AP.webp",
       "sizes": "500x306",
-      "type": "image/png",
+      "type": "image/webp",
       "form_factor": "wide",
       "label": "Arclight Project Logo - Desktop View"
     },
     {
-      "src": "/images/Q.png",
+      "src": "/images/Q.webp",
       "sizes": "500x156",
-      "type": "image/png",
+      "type": "image/webp",
       "form_factor": "narrow",
       "label": "Q Logo - Mobile View"
     }

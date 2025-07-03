@@ -48,7 +48,9 @@ const CORE_ASSETS = [
   '/favicons/manifest.json',
   '/favicons/favicon-32x32.png',
   '/favicons/apple-touch-icon.png',
-  '/images/AP.png',
+  '/images/AP.webp',
+  '/images/lang.webp',
+  '/images/eyeor.webp',
 ];
 
 // 1. Install Event: Cache core assets.
@@ -59,11 +61,15 @@ self.addEventListener('install', (event) => {
       .open(CACHE_NAME)
       .then((cache) => {
         console.log('Service Worker: Caching core assets');
-        return cache.addAll(CORE_ASSETS)
+        return cache
+          .addAll(CORE_ASSETS)
           .then(() => {
             console.log('Service Worker: Core assets cached successfully.');
             return cache.keys().then((keys) => {
-              console.log('Service Worker: Cached assets:', keys.map(k => k.url));
+              console.log(
+                'Service Worker: Cached assets:',
+                keys.map((k) => k.url)
+              );
             });
           })
           .catch((error) => {

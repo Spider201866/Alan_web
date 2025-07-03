@@ -89,7 +89,7 @@ This application is a Progressive Web App, providing a more reliable and engagin
 
 -   **Installable**: Can be added to your device's home screen for quick and easy access, just like a native app.
 -   **Offline Capable**: The core application and previously accessed data are available even without an internet connection, which is crucial for users in low-connectivity areas.
--   **Enhanced Performance**: Assets are cached locally, leading to faster load times and a smoother experience on subsequent visits.
+-   **Enhanced Performance**: Assets are cached locally, leading to faster load times and a smoother experience on subsequent visits. The application also uses modern image formats like WebP and loads heavy scripts on demand to further improve performance.
 
 This is made possible by a `service-worker.js` that manages caching and a `manifest.json` file that defines the app's appearance and behavior.
 

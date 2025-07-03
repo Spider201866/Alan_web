@@ -28,19 +28,4 @@ To provide a web-based chatbot for users, especially in Low and Middle-Income Co
 - The development of the core AI/LLM model itself is out of scope; the project integrates with an existing advanced LLM (Google Gemini 2.5 Flash via Flowise).
 
 ## Current Status
-- User session and history data are now stored in a persistent SQLite database using `better-sqlite3`. This replaces the previous file-based storage.
-- Static frontend files are served.
-- Frontend pages utilize a shared appbar pattern for consistent navigation and layout.
-- A reusable focus trap system is implemented for modals and side menus, enhancing keyboard accessibility.
-- Accessibility requirements for marquee content, icon-only buttons, and "skip to content" links are enforced.
-- Server endpoints are protected by `express-rate-limit`.
-- Content Security Policy (CSP) is configured using Helmet for enhanced security.
-- Automated tests cover UI, accessibility, and backend aspects.
-- The test suite uses a centralized server management pattern for all API, Rate Limiting, and 404 tests, with a single server instance shared across these suites. The OTP logic tests use a separate, isolated server instance. All server instances are gracefully shut down in their respective `afterAll` hooks, and the global `afterAll` reliably closes the database connection and deletes the test database file. All tests (API, UI, and chatbot) are now passing.
-- Code formatting is enforced using Prettier, with check and write scripts.
-- ESLint is configured for code quality checks.
-- Node.js version is specified for consistent development environments.
-- API error handling has been improved for user-facing feedback.
-- A custom 404 page is implemented for unknown routes.
-- Favicons are implemented; problematic preload links were removed to resolve browser errors, standard browser loading mechanisms for favicons are in effect.
-- The application now features a dynamic language loading system, with translations stored in external JSON files and loaded on demand.
+The application is a stable, functional, and well-documented Progressive Web App. It features a robust offline experience, a comprehensive test suite, and a secure, performant backend. For a detailed breakdown of features and recent changes, see the [Progress](progress.md) document.

@@ -59,9 +59,15 @@ graph TD
 -   **Secure Secret Handling**: To prevent environment-specific parsing issues with special characters, all secrets (API keys, salts) must be generated using only alphanumeric characters. This is the simplest and most robust way to ensure they are handled correctly across different platforms (e.g., local `dotenv` vs. production shell).
 
 -   **PWA Implementation**: The application functions as a Progressive Web App, enabled by a service worker (`public/service-worker.js`).
-    -   **Caching Strategy**: It uses a network-first strategy for navigation requests (HTML pages) to ensure users get the latest content when online. For static assets (CSS, JS, images), it employs a cache-first strategy for optimal performance.
-    -   **Offline Fallback**: If a network request for a page fails and the page is not in the cache, the service worker serves a dedicated `offline.html` page to gracefully handle the lack of connectivity.
-    -   **Cache Management**: The service worker manages cache versions, automatically deleting old caches upon activation to ensure users receive updated assets.
+    -   **Caching Strategy**: It uses a network-first strategy for navigation requests (HTML pages) to ensure users get the latest content when online. For static assets (CSS, JS, images), it employs a cache-first strategy for optimal performance. All core application pages and their assets are pre-cached on installation.
+    -   **Offline Fallback**: If a network request for a page fails and the page is not in the cache, the service worker serves a dedicated `offline.html` page, which now includes "Retry" and "Go Back" buttons for a better user experience.
+    -   **Cache Management**: The service worker manages cache versions by name (e.g., `alanui-v1`, `alanui-v2`). When the service worker activates, it deletes any caches that do not match the current `CACHE_NAME`, ensuring that old assets are purged.
+    -   **Reliable Initialization**: Page scripts now wait for a `SW_READY` message from the service worker before initializing. This prevents race conditions and ensures that all assets are cached and ready before the page attempts to render, which is crucial for a reliable offline experience.
+
+-   **Performance Patterns**:
+    -   **Image Optimization**: The application prioritizes the use of modern, compressed image formats like WebP over older formats like PNG and JPG to reduce file sizes and improve load times.
+    -   **On-Demand Script Loading**: Heavy JavaScript libraries that are not essential for the initial page load, such as `html2canvas.js`, are loaded dynamically only when the user interacts with a feature that requires them. This is achieved using dynamic `import()` statements.
+    -   **Singleton Pattern for Modules**: Modules that should only be initialized once, like the chatbot, use a flag (e.g., `isChatbotInitialized`) to prevent redundant initializations and network requests.
 
 ---
 

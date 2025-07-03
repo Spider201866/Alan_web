@@ -20,7 +20,8 @@ export default [
       },
     },
     rules: {
-      'no-unused-vars': 'warn',
+      'no-unused-vars': 'error',
+      'prefer-const': 'error',
       'no-console': 'off', // Keep console logs for this project
     },
   },
@@ -36,7 +37,8 @@ export default [
       },
     },
     rules: {
-      'no-unused-vars': 'warn',
+      'no-unused-vars': 'error',
+      'prefer-const': 'error',
       'no-console': 'off',
     },
   },
@@ -51,7 +53,8 @@ export default [
     },
     rules: {
       ...eslintPluginJest.configs['flat/recommended'].rules, // Include Jest plugin rules
-      'no-unused-vars': 'warn', // Maintain project's preference for no-unused-vars
+      'no-unused-vars': 'error', // Maintain project's preference for no-unused-vars
+      'prefer-const': 'error',
       'no-console': 'off', // Maintain project's preference for no-console
       // Add any specific Jest rule overrides here if needed
     },

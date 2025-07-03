@@ -5,12 +5,18 @@
 import Chatbot from 'https://cdn.jsdelivr.net/npm/flowise-embed@latest/dist/web.js';
 import log from './log.js';
 
+let isChatbotInitialized = false;
+
 /**
  * Initializes the Flowise chatbot, creating the necessary DOM element if it doesn't exist
  * and configuring it with the provided session ID and theme options.
  * @param {string} sessionId - The session ID to be used for the chat history.
  */
 export function initChatbot(sessionId) {
+  if (isChatbotInitialized) {
+    log.info('Chatbot already initialized. Skipping.');
+    return;
+  }
   // MODIFICATION 2: Use the provided sessionId first, with fallbacks.
   const sessionToUse = sessionId || localStorage.getItem('sessionId') || `fallback-${Date.now()}`;
 
@@ -126,4 +132,5 @@ export function initChatbot(sessionId) {
       `,
     },
   });
+  isChatbotInitialized = true;
 }

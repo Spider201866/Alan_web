@@ -39,19 +39,20 @@ export function initMutedButtons() {
 /**
  * Captures the current screen using html2canvas and triggers a download of the resulting image.
  */
-/* global html2canvas */
-function takeScreenshot() {
-  if (typeof html2canvas === 'undefined') return log.error('html2canvas is not loaded.');
-
-  html2canvas(document.body)
-    .then((canvas) => {
-      const link = document.createElement('a');
-      link.href = canvas.toDataURL('image/png');
-      link.download = 'screenshot.png';
-      link.click();
-      link.remove();
-    })
-    .catch((err) => log.error('Screenshot capture failed:', err));
+async function takeScreenshot() {
+  try {
+    const html2canvas = (
+      await import('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js')
+    ).default;
+    const canvas = await html2canvas(document.body);
+    const link = document.createElement('a');
+    link.href = canvas.toDataURL('image/png');
+    link.download = 'screenshot.png';
+    link.click();
+    link.remove();
+  } catch (err) {
+    log.error('Screenshot capture failed:', err);
+  }
 }
 
 /**

@@ -368,7 +368,7 @@ p {
 }
 .language-dropdown {
   appearance: none;
-  background: url('../images/lang.jpg') no-repeat right -1px center;
+  background: url('../images/lang.webp') no-repeat right -1px center;
   background-size: 25px 25px;
   color: transparent;
   font-size: 12px;
@@ -774,7 +774,7 @@ button {
   background-color: #efafff;
 }
 .side-menu .btn-lang {
-  background: url('../images/lang.jpg') no-repeat center center;
+  background: url('../images/lang.webp') no-repeat center center;
   background-size: cover;
   border: 2px solid #3e3e3e;
   width: 32px;
