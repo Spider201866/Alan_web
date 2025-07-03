@@ -6,7 +6,7 @@ import rateLimit from 'express-rate-limit';
 import csrfProtection from './middleware/csrf.js';
 import defaultConfig from './config/index.js';
 import apiRoutesFactory from './routes/api.js';
-import webRoutesFactory from './routes/web.js';
+// import webRoutesFactory from './routes/web.js'; // No longer needed
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { globalErrorHandler, notFound } from './middleware/error.js';
@@ -109,7 +109,7 @@ export function createApp(configToUse) {
 
   // Mount routes
   app.use('/api', apiRoutesFactory(limiter, configToUse));
-  app.use('/', webRoutesFactory());
+  // app.use('/', webRoutesFactory()); // This is not needed and was causing issues with asset loading.
 
   // 404 & error handlers
   app.use(notFound);
