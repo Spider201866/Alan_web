@@ -38,7 +38,7 @@ export function initChatbot(sessionId) {
 
   // Now initialise the chatbot using Flowise embed API
   Chatbot.initFull({
-    chatflowid: '094d6797-5b02-4f13-862a-418cd7755cf9',
+    chatflowid: 'e38db4f2-edab-4e2f-88db-f2e33e25c4f2',
     apiHost: 'https://flowiseai-railway-production-fecf.up.railway.app',
     // MODIFICATION 3: Use our new variable for the sessionId.
     // The property name is `sessionId` for chat history persistence.
