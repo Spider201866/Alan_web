@@ -61,6 +61,36 @@ function main() {
     localStorage.setItem('sessionId', sessionId);
   }
   initChatbot(sessionId);
+    // --- START: Robust Marquee Hiding Logic ---
+  // Implements a two-layer strategy to hide the marquee:
+  // 1. (Fast Path) Hides instantly when the user focuses on the chatbot.
+  // 2. (Safety Net) Hides after 5 seconds if no interaction occurs.
+
+  const marqueeSection = document.getElementById('boxes-marquee-section');
+  const chatbotContainer = document.querySelector('.chatbot-container');
+
+  if (marqueeSection && chatbotContainer) {
+    const hideMarquee = () => {
+      // Add the 'hidden' class to hide the marquee via CSS.
+      if (!marqueeSection.classList.contains('hidden')) {
+        marqueeSection.classList.add('hidden');
+        log.info('Marquee hidden.');
+      }
+    };
+
+    const onChatbotFocus = () => {
+      log.info('Chatbot focused, hiding marquee and canceling fallback timer.');
+      clearTimeout(fallbackTimer); // Cancel the safety net
+      hideMarquee();             // Hide the marquee immediately
+    };
+
+    // Layer 2: The Fallback Timer (Safety Net)
+    const fallbackTimer = setTimeout(hideMarquee, 5000);
+
+    // Layer 1: The Primary Event Listener (Fast Path)
+    chatbotContainer.addEventListener('focusin', onChatbotFocus, { once: true });
+  }
+  // --- END: Robust Marquee Hiding Logic ---
 
   // 6. PWA Install prompt handling
   let deferredPrompt;

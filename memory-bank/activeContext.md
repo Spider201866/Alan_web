@@ -6,6 +6,10 @@
 The application is now a fully functional Progressive Web App (PWA). The immediate focus is on ensuring all documentation is updated to reflect this major enhancement.
 
 ## Recent Changes
+- **UI Fix (July 6, 2025):**
+    - Fixed a bug where the scrolling marquee of example prompts was not disappearing when the user clicked into the chatbot input field.
+    - The issue was that the event listener was not being attached reliably due to a race condition with the chatbot's Shadow DOM initialization.
+    - The fix was applied in `agent1-chatbot-module.js` by replacing an unreliable `setTimeout` with a robust `MutationObserver`. This ensures the `focus` event listener is attached to the chatbot's input field only after the element is guaranteed to exist in the DOM.
 - **Screenshot Functionality Fix (July 6, 2025):**
     - Repaired the screenshot button, which had stopped working after a recent refactoring.
     - The issue was caused by an incorrect attempt to use dynamic `import()` on the `html2canvas` library, which is not an ES module.
