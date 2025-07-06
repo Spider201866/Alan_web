@@ -37,14 +37,39 @@ export function initMutedButtons() {
 }
 
 /**
+ * Dynamically loads a script from a given URL and returns a promise that resolves when the script is loaded.
+ * @param {string} url - The URL of the script to load.
+ * @returns {Promise<void>}
+ */
+function loadScript(url) {
+  return new Promise((resolve, reject) => {
+    // Check if the script is already loaded
+    if (document.querySelector(`script[src="${url}"]`)) {
+      resolve();
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = url;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error(`Failed to load script: ${url}`));
+    document.head.appendChild(script);
+  });
+}
+
+/**
  * Captures the current screen using html2canvas and triggers a download of the resulting image.
  */
 async function takeScreenshot() {
   try {
-    const html2canvas = (
-      await import('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js')
-    ).default;
-    const canvas = await html2canvas(document.body);
+    // Load the html2canvas script from the CDN.
+    await loadScript('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js');
+
+    // Now that the script is loaded, the html2canvas function is available on the window object.
+    if (typeof window.html2canvas !== 'function') {
+      throw new Error('html2canvas is not loaded correctly.');
+    }
+
+    const canvas = await window.html2canvas(document.body);
     const link = document.createElement('a');
     link.href = canvas.toDataURL('image/png');
     link.download = 'screenshot.png';

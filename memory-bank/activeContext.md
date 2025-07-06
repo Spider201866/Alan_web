@@ -6,6 +6,10 @@
 The application is now a fully functional Progressive Web App (PWA). The immediate focus is on ensuring all documentation is updated to reflect this major enhancement.
 
 ## Recent Changes
+- **Screenshot Functionality Fix (July 6, 2025):**
+    - Repaired the screenshot button, which had stopped working after a recent refactoring.
+    - The issue was caused by an incorrect attempt to use dynamic `import()` on the `html2canvas` library, which is not an ES module.
+    - The fix involved replacing the dynamic import with a robust, promise-based script loading function that dynamically creates a `<script>` tag. This ensures the `html2canvas` library is loaded correctly from the CDN before it is called.
 - **Authentication Fix (July 6, 2025):**
     - Diagnosed and fixed a critical authentication bug where password verification always failed.
     - The root cause was a mismatch between the hashing algorithm used to generate the stored `MASTER_PASSWORD_HASH` (simple SHA256) and the algorithm used to verify it in the `auth` middleware (`pbkdf2Sync`).
