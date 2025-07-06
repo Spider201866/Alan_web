@@ -1,22 +1,31 @@
-// Alan UI - generate-hash.js | 19th June 2025, WJW
-// generate-hash.js
+// Alan UI - generate-hash.cjs | 6th July 2025, Cline
+// This script now uses pbkdf2Sync to match the authentication middleware.
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 
 const SALT = process.env.PASSWORD_SALT;
-const passwordToHash = '662023'; // <-- Put your desired password here
+const passwordToHash = process.argv[2]; // Get password from command line argument
+
+if (!passwordToHash) {
+  console.error('Please provide the password as a command-line argument.');
+  console.error('Usage: node generate-hash.cjs <password>');
+  process.exit(1);
+}
 
 if (!SALT) {
   console.error('Please define PASSWORD_SALT in your .env file first.');
 } else {
-  const hash = crypto
-    .createHash('sha256')
-    .update(passwordToHash + SALT)
-    .digest('hex');
+  const iterations = 100000;
+  const keylen = 32;
+  const digest = 'sha256';
 
-  console.log('Your new salted hash is:');
+  const hash = crypto
+    .pbkdf2Sync(passwordToHash, SALT, iterations, keylen, digest)
+    .toString('hex');
+
+  console.log('Your new PBKDF2 hash is:');
   console.log(hash);
 
   const envPath = path.resolve(__dirname, '.env');
@@ -32,5 +41,5 @@ if (!SALT) {
   }
 
   fs.writeFileSync(envPath, envContent);
-  console.log('.env file updated successfully.');
+  console.log('.env file updated successfully with the new hash.');
 }

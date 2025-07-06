@@ -58,6 +58,15 @@ graph TD
 
 -   **Secure Secret Handling**: To prevent environment-specific parsing issues with special characters, all secrets (API keys, salts) must be generated using only alphanumeric characters. This is the simplest and most robust way to ensure they are handled correctly across different platforms (e.g., local `dotenv` vs. production shell).
 
+-   **Authentication & Hashing**: The application uses a salted hash for the master password, which is required to view historical records.
+    -   **Hashing Algorithm**: The hashing algorithm is `pbkdf2Sync` with 100,000 iterations and a SHA256 digest, as defined in `middleware/auth.js`.
+    -   **Hash Generation**: It is critical that the stored `MASTER_PASSWORD_HASH` in the `.env` file is generated using the **exact same algorithm**. The `generate-hash.cjs` script is provided for this purpose.
+    -   **Updating the Password**: To update the master password, run the following command, replacing `<new_password>` with the desired password:
+        ```bash
+        node generate-hash.cjs <new_password>
+        ```
+        This script will automatically use the `PASSWORD_SALT` from the `.env` file and update the `MASTER_PASSWORD_HASH` with the new, correctly generated hash.
+
 -   **PWA Implementation**: The application functions as a Progressive Web App, enabled by a service worker (`public/service-worker.js`).
     -   **Caching Strategy**: It uses a network-first strategy for navigation requests (HTML pages) to ensure users get the latest content when online. For static assets (CSS, JS, images), it employs a cache-first strategy for optimal performance. All core application pages and their assets are pre-cached on installation.
     -   **Offline Fallback**: If a network request for a page fails and the page is not in the cache, the service worker serves a dedicated `offline.html` page, which now includes "Retry" and "Go Back" buttons for a better user experience.

@@ -6,6 +6,11 @@
 The application is now a fully functional Progressive Web App (PWA). The immediate focus is on ensuring all documentation is updated to reflect this major enhancement.
 
 ## Recent Changes
+- **Authentication Fix (July 6, 2025):**
+    - Diagnosed and fixed a critical authentication bug where password verification always failed.
+    - The root cause was a mismatch between the hashing algorithm used to generate the stored `MASTER_PASSWORD_HASH` (simple SHA256) and the algorithm used to verify it in the `auth` middleware (`pbkdf2Sync`).
+    - The `generate-hash.cjs` script was updated to use `pbkdf2Sync`, aligning it with the verification logic.
+    - A new alphanumeric salt and a new master hash were generated and updated in the `.env` file to resolve the issue permanently.
 - **Performance Optimizations (July 3, 2025):**
     - Replaced all `.jpg`, `.gif`, and `.png` images with their existing `.webp` counterparts to reduce file sizes.
     - Refactored the chatbot initialization to prevent a triple fetch of the same data packet.
