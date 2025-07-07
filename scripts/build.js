@@ -61,7 +61,7 @@ async function runBuild() {
       html = html.replace('</head>', `  ${timestamp}\n</head>`);
 
       // THE CRITICAL FIX: Find all relative asset links and make them absolute.
-      const assetRegex = /(href|src)="(?!\/|https?:\/\/)(favicons|styles|scripts|images)\//g;
+      const assetRegex = /(href|src)="(?!\/|https?:\/\/)(favicons|styles|scripts|images)/g;
       html = html.replace(assetRegex, '$1="/$2/');
 
       await fs.writeFile(file, html, 'utf8');
