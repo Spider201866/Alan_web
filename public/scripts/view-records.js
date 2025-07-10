@@ -275,9 +275,14 @@ function createRecordRow(record, index, isActive = false) {
     record.refreshCount || 1,
   ];
 
-  cells.forEach((cellData) => {
+  cells.forEach((cellData, i) => {
     const td = document.createElement('td');
-    td.textContent = cellData || '';
+    // The dateTime field is at index 10
+    if (i === 10) {
+      td.innerHTML = cellData || ''; // Use innerHTML to render HTML entities like &#x2F;
+    } else {
+      td.textContent = cellData || '';
+    }
     tr.appendChild(td);
   });
 

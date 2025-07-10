@@ -1,54 +1,64 @@
-<!-- Alan UI - progress.md | 22nd June 2025, WJW -->
+<!-- Alan UI - progress.md | 10th July 2025, WJW -->
 
 # Progress
+
+## Recent Improvements (July 2025)
+- **Records Page Fixes (July 10):** Repaired the "View Records" page by fixing the date display format and updating the Content Security Policy to allow map tiles and markers to be loaded correctly.
+- **UI Fix (July 6):** Fixed a bug where the scrolling marquee of example prompts was not disappearing when the user clicked into the chatbot input field by replacing an unreliable `setTimeout` with a robust `MutationObserver`.
+- **Screenshot Functionality Fix (July 6):** Repaired the screenshot button by replacing a faulty dynamic import of `html2canvas` with a promise-based script loading function.
+- **Authentication Fix (July 6):** Resolved a critical authentication bug by aligning the hashing algorithm in `generate-hash.cjs` (`pbkdf2Sync`) with the verification logic in the `auth` middleware.
+- **Performance Optimisations (July 3):** Replaced all remaining `.jpg` `.gif` and `.png` images with `.webp` prevented a triple-fetch of data on chatbot initialisation and implemented on-demand loading for the `html2canvas` library.
+- **Offline Experience Improvements (July 2):** Enhanced the PWA's offline reliability by ensuring assets are cached before page rendering adding "Retry" and "Go Back" buttons to the offline page and expanding the cache to include all side menu pages.
+
+---
 
 ## What Works
 
 - **PWA & Performance:**
-    - The application is a fully functional Progressive Web App with a robust offline experience. All pages and necessary assets are pre-cached for offline use, and the offline page provides clear user controls.
-    - Page load performance has been significantly improved by replacing large images with optimized WebP versions, preventing redundant data fetches, and loading heavy libraries on demand.
+    - The application is a fully functional Progressive Web App with a robust offline experience. All pages and necessary assets are pre-cached for offline use and the offline page provides clear user controls.
+    - Page load performance has been significantly improved by replacing large images with optimised WebP versions preventing redundant data fetches and loading heavy libraries on demand.
 - **Core Functionality:**
     - User session and history data are stored in a persistent SQLite database.
-    - Static frontend files are served, with a shared appbar pattern for consistent navigation.
+    - Static frontend files are served with a shared appbar pattern for consistent navigation.
     - A reusable focus trap system is implemented for modals and side menus.
     - The application features a dynamic language loading system for 22 languages.
 - **Security:**
     - Server endpoints are protected by `express-rate-limit`.
     - Content Security Policy (CSP) is configured using Helmet.
 - **Development & Testing:**
-    - Automated tests cover UI, accessibility, and backend aspects.
-    - Code formatting is enforced using Prettier, and code quality is checked with ESLint.
+    - Automated tests cover UI accessibility and backend aspects.
+    - Code formatting is enforced using Prettier and code quality is checked with ESLint.
     - The project has a clear build process and is set up for CI/CD with GitHub Actions.
 - **Security Hardening (June 29, 2025):**
-    - Removed a vulnerable debug route (`/__debug-list-dist`) that was exposed in the production environment, enhancing the application's security posture.
+    - Removed a vulnerable debug route (`/__debug-list-dist`) that was exposed in the production environment enhancing the application's security posture.
 - **Comprehensive Code Documentation (June 28, 2025):**
-    - All logical JavaScript files across the project have been documented with JSDoc comments and file-level overviews, significantly improving code clarity and maintainability.
+    - All logical JavaScript files across the project have been documented with JSDoc comments and file-level overviews significantly improving code clarity and maintainability.
 - **Repository Reset (June 28, 2025):**
-    - The local and remote repositories were reset to a clean, stable baseline (`fish15-dep`), and the `README.md` was updated to reflect the current project state.
+    - The local and remote repositories were reset to a clean stable baseline (`fish15-dep`) and the `README.md` was updated to reflect the current project state.
 - **UI Improvements (June 25, 2025):**
-    - All table cell content in the "View Records" page is now centered both vertically and horizontally for improved readability.
+    - All table cell content in the "View Records" page is now centred both vertically and horizontally for improved readability.
     - The delete (trash can) icon in the records table is now red for better visibility and user experience.
 - **Full CSP Compliance and Bug Fixes (June 22, 2025):**
-    - Refactored all HTML pages to remove inline scripts, ensuring full Content Security Policy (CSP) compliance.
-    - Fixed a bug where non-numeric latitude and longitude values were sent to the backend, causing a 400 Bad Request error.
+    - Refactored all HTML pages to remove inline scripts ensuring full Content Security Policy (CSP) compliance.
+    - Fixed a bug where non-numeric latitude and longitude values were sent to the backend causing a 400 Bad Request error.
 - **Deployment 404 Error Fixed (June 22, 2025):**
     - Resolved a critical bug where the production server was not serving files from the `dist` directory by updating `routes/web.js` to be environment-aware.
 - **Accessibility Audit & Fixes (June 22, 2025):**
     - A full accessibility audit was performed and all identified issues were resolved.
 - **Code Health and Stability (June 22, 2025):**
-    - All dependencies were updated and the test suite was stabilized.
+    - All dependencies were updated and the test suite was stabilised.
 
 <details>
 <summary>Archived Progress (pre-June 22, 2025)</summary>
 
 - **Deployment Issue Diagnosed (June 22, 2025):**
-    - After extensive debugging, confirmed that the live deployment on Railway was serving a stale version of the application.
-- **Performance Optimization (June 22, 2025):**
-    - Implemented a build pipeline for image optimization, asset minification, and Gzip compression. The "Critical CSS" optimization was removed due to build failures.
+    - After extensive debugging confirmed that the live deployment on Railway was serving a stale version of the application.
+- **Performance Optimisation (June 22, 2025):**
+    - Implemented a build pipeline for image optimisation asset minification and Gzip compression. The "Critical CSS" optimisation was removed due to build failures.
 - **CI/CD Pipeline (June 21, 2025):**
     - The CI/CD pipeline is fully functional and includes an automated build step.
 - **Server Refactor & Data Persistence (June 20, 2025):**
-    - The server is modular, and data is stored in a persistent SQLite database.
+    - The server is modular and data is stored in a persistent SQLite database.
 
 </details>
 
@@ -56,7 +66,7 @@
 - There are no major features left to build. The focus is now on maintenance and incremental improvements.
 
 ## Current Status
-The AlanUI Web Chatbot is functional, stable, accessible, and now comprehensively documented as a Progressive Web App. All known issues have been resolved.
+The AlanUI Web Chatbot is functional stable accessible and now comprehensively documented as a Progressive Web App. All known issues have been resolved.
 
 ## Known Issues
 - The `EBUSY` error during test database cleanup still occurs intermittently but does not affect test outcomes.
@@ -65,4 +75,4 @@ The AlanUI Web Chatbot is functional, stable, accessible, and now comprehensivel
 ## Evolution of Project Decisions
 - **Route vs. Static Middleware Precedence (June 22, 2025)**: The root cause of the production 404 error was identified as a route handler taking precedence over the `express.static` middleware. The routing logic was updated to be environment-aware.
 - **Accessibility First (June 22, 2025)**: A manual audit was performed to ensure the application meets a high standard of accessibility.
-- **Pragmatic Retreat on Critical CSS (June 22, 2025)**: The critical CSS optimization was removed to ensure the application could be successfully deployed.
+- **Pragmatic Retreat on Critical CSS (June 22, 2025)**: The critical CSS optimisation was removed to ensure the application could be successfully deployed.

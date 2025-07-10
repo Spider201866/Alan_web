@@ -28,7 +28,7 @@ export function createApp(configToUse) {
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
         'default-src': ["'self'"],
-        'img-src': ["'self'", 'data:'],
+        'img-src': ["'self'", 'data:', '*.tile.openstreetmap.org', 'raw.githubusercontent.com'],
         'style-src': [
           "'self'",
           "'unsafe-inline'",
