@@ -100,6 +100,10 @@ function getActiveRecord() {
   const recordStmt = db.prepare('SELECT * FROM history WHERE sessionId = ?');
   const record = recordStmt.get(activeSession.sessionId);
 
+  if (record && record.dateTime) {
+    record.dateTime = record.dateTime.replace(/&#x2F;/g, '/');
+  }
+
   return record ? [record] : []; // Return as an array to match old API behavior
 }
 
@@ -109,6 +113,11 @@ function getActiveRecord() {
  */
 function getFullHistory() {
   const records = db.prepare('SELECT * FROM history ORDER BY dateTime DESC').all();
+  records.forEach(record => {
+    if (record.dateTime) {
+      record.dateTime = record.dateTime.replace(/&#x2F;/g, '/');
+    }
+  });
   return records;
 }
 
