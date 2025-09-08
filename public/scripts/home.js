@@ -61,7 +61,7 @@ function main() {
     localStorage.setItem('sessionId', sessionId);
   }
   initChatbot(sessionId);
-    // --- START: Marquee Hiding Logic (Corrected) ---
+  // --- START: Marquee Hiding Logic (Corrected) ---
   // Hides the marquee section only when the user focuses on the chatbot.
 
   const marqueeSection = document.getElementById('boxes-marquee-section');

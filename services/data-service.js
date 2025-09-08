@@ -113,7 +113,7 @@ function getActiveRecord() {
  */
 function getFullHistory() {
   const records = db.prepare('SELECT * FROM history ORDER BY dateTime DESC').all();
-  records.forEach(record => {
+  records.forEach((record) => {
     if (record.dateTime) {
       record.dateTime = record.dateTime.replace(/&#x2F;/g, '/');
     }
