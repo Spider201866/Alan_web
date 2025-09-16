@@ -1,100 +1,206 @@
-<!-- Alan UI - techContext.md | 10th July 2025, WJW -->
+<!-- Alan UI - techContext.md | Updated 15th September 2025, Cline -->
 
 # Technology Stack and Tooling
 
-This document provides a detailed overview of the technologies dependencies and tools used in this project.
+This document provides a detailed overview of the technologies, dependencies, configuration, and operational constraints used in this project. Updated after a full codebase review on 15 Sep 2025.
 
 ---
 
 ## Core Technologies
 
--   **Backend**: Node.js (`20.x`) with the Express.js framework for routing and middleware.
--   **Frontend**: Vanilla HTML CSS and JavaScript (ES Modules). No frontend frameworks are used to ensure maximum performance and simplicity.
--   **Database**: SQLite, accessed via the `better-sqlite3` library for synchronous and straightforward database operations.
--   **Chatbot Integration**: The application communicates with an external Flowise instance which orchestrates a Google Gemini 2.5 Flash Large Language Model.
--   **Geolocation**: User location data is gathered using the `ipinfo.io` service.
--   **Mapping**: Interactive maps are rendered using the Leaflet.js library with map tiles provided by OpenStreetMap.
+- Backend
+  - Node.js 20.x (ESM) with Express 5.x for routing and middleware.
+  - Security: Helmet 8.x for CSP and security headers; express-rate-limit 7.x.
+  - Validation: express-validator 7.x for input validation and sanitization.
+  - Persistence: SQLite via better-sqlite3 (synchronous and simple).
+  - Compression: compression middleware for gzip responses.
+  - CORS: cors with allowlist and credentials support.
+  - CSRF: custom, simple token middleware (optional, env-controlled).
+- Frontend
+  - Vanilla HTML/CSS/JS (ES modules). No SPA framework.
+  - Flowise chat via jsdelivr Flowise Embed web component.
+  - Leaflet.js mapping (OSM tiles).
+  - Dynamic translation via JSON files (22 languages).
+  - Accessibility-first with focus-trap, skip links, ARIA labels.
+- PWA
+  - Service Worker with pre-cache and runtime caching.
+  - Web App Manifest for installability.
 
 ---
 
-## PWA Components
+## Network, Security, and CSP
 
-The application's Progressive Web App functionality is enabled by the following key components:
+- Helmet CSP (server.js)
+  - default-src: 'self'
+  - script-src: 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://unpkg.com
+  - style-src: 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://unpkg.com
+  - font-src: 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com
+  - img-src: 'self' data: *.tile.openstreetmap.org raw.githubusercontent.com
+  - connect-src: 'self' https://flowiseai-railway-production-fecf.up.railway.app https://api.bigdatacloud.net https://ipinfo.io https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com
+- Note on duplication
+  - There is a similar CSP structure defined in config/index.js (cspOptions) that appears unused. Consolidate to single source to prevent configuration drift.
+- Additional headers: HSTS (1y, includeSubDomains), Referrer-Policy no-referrer, X-Frame-Options deny, X-Content-Type-Options nosniff.
 
--   **Service Worker (`public/service-worker.js`)**: Manages caching offline functionality and network request interception.
--   **Web App Manifest (`public/favicons/manifest.json`)**: Provides metadata for the PWA such as its name icons and display mode making it installable.
--   **Registration Script (`public/index.html`)**: A script within the main HTML file that registers the service worker with the browser.
+---
+
+## Environment Configuration
+
+- Validation via envalid (config/validateEnv.js)
+  - PORT (default 3000)
+  - PASSWORD_SALT (required)
+  - MASTER_PASSWORD_HASH (required)
+  - ONE_TIME_PASSWORD_HASHES (comma-separated, optional)
+  - CORS_ALLOWED_ORIGINS (comma-separated, default empty)
+  - ENABLE_CORS ('true'|'false', default 'true')
+  - ENABLE_CSRF ('true'|'false', default 'false')
+  - Optional placeholders: API_BASE_URL, SENTRY_DSN, SENTRY_FRONTEND_DSN (currently unused)
+- CORS
+  - Allowlist is read from env; credentials enabled; null-origin allowed for apps/tools.
+- CSRF
+  - Simple per-process token; GET/HEAD/OPTIONS returns X-CSRF-Token header; mutating requests must send x-csrf-token unless on skipPaths; disabled by default.
+
+---
+
+## Persistence and Data Paths
+
+- Database (better-sqlite3)
+  - dev: <project-root>/alan-data.db
+  - test: <project-root>/test-alan-data.db
+  - prod: /data/alan-data.db (Railway volume; directory auto-created if missing)
+- Tables initialized at module load (services/data-service.js):
+  - history (sessionId PK, user and meta fields, refreshCount)
+  - active_record (id=1, sessionId pointer)
+- Transactions used for upsert and delete; active_record updated atomically.
+- Sanitization/validation enforced at route layer (express-validator).
+
+---
+
+## Authentication and Secrets
+
+- Password verification
+  - PBKDF2-SHA256 with 100,000 iterations and 32-byte keylen; salt from PASSWORD_SALT.
+  - MASTER_PASSWORD_HASH is compared to generatedHash; also supports one-time hashes (OTP set) that are consumed on first use.
+- Hash generation
+  - script: generate-hash.cjs; uses dotenv and updates .env MASTER_PASSWORD_HASH in place.
+  - Usage: node generate-hash.cjs <new_password>
+- Secret handling best practices
+  - Prefer alphanumeric secrets (hex-64) to avoid shell parsing issues.
+  - If special characters are needed, store Base64 and decode at runtime.
+
+---
+
+## External Integrations
+
+- Flowise Embed (Chat)
+  - CDN: jsdelivr; chatflowid is configured; apiHost points to Railway Flowise deployment.
+  - Session management: sessionId persisted in localStorage; passed to Flowise for history.
+- Geolocation and reverse geocoding
+  - ipinfo.io for IP-derived country/city and approximate lat/long.
+  - api.bigdatacloud.net reverse-geocode-client for human-readable area from lat/long.
+- Mapping
+  - Leaflet.js with OSM tiles at https://{s}.tile.openstreetmap.org; CSP permits this.
+
+---
+
+## Frontend Architecture
+
+- Orchestrators
+  - index.js: onboarding, password gate (fetch-records), language init, form validations.
+  - home.js: UI wiring, translator, muted snippet, chatbot init; SW_READY handshake to avoid races.
+- Modules
+  - home-ui.js: side menu, popup, focus traps, geolocation UI driver, language dropdown, history clear.
+  - home-translator.js: applies home page translations; uses getTranslation; updates marquee lines and buttons.
+  - home-data.js: fetch muted snippet; reverse geocoding; pushes localStorage to server only when meaningful (name present and geo info available).
+  - location-service.js: ipinfo lookup; LMIC classification via ISO2 code set.
+  - onboarding-form.js: input masks, aims multi-select toggling, validation enabling accept button.
+  - auth-flow.js: password verification flow, splash → password → instruction flow, accept button triggers record post and transition to home.
+  - agent1-chatbot-module.js: Flowise initialisation and theme; mutation observer to hide marquee on first input focus; one-time guard to avoid duplicates.
+  - listener-module.js: observes Flowise shadow DOM for messages; de-dup for streamed messages; persists sessions with copy/export affordances.
+  - page-template.js: app bar injected; back arrow; listens to languageChanged to update titles; cross-tab support via storage event.
+  - focus-trap.js: reusable accessibility utility.
+  - view-records.js: protected view; password gate; active record (highlighted) and history tables; “Show Map” (Leaflet marker); delete with confirmation.
+  - Various page scripts (instructions/about/weblinks/ear/eye/skin/atoms/triangle/referral) use page-template and translation helpers where applicable.
+
+---
+
+## PWA Architecture
+
+- Service Worker (public/service-worker.js)
+  - CACHE_NAME: alanui-v2 (manual bump); pre-caches core assets.
+  - on install: caches CORE_ASSETS with logging; skipWaiting.
+  - on activate: deletes non-matching caches, clients.claim, posts { type: 'SW_READY' } to all clients.
+  - on fetch:
+    - If navigate: network-first, fallback to cached or offline.html on error.
+    - For assets: cache-first; on network failure returns 408 text response (not offline page).
+    - Bypass: if request URL or referrer includes /view-records.html, do nothing to avoid SW interference on admin page.
+  - Push event: demo notification for debugging/lab use.
+- Install prompt handled in home.js with install button and Notification permission prompt as a secondary UX.
 
 ---
 
 ## Build and Optimisation
 
--   **Image Processing**: The `sharp` library is used in the build script to convert and resize images into the modern WebP format for better compression.
--   **JS/CSS Minification**: `terser` and `css-minify` are used to minify JavaScript and CSS files for the production build reducing file sizes.
--   **On-Demand Script Loading**: Heavy libraries like `html2canvas.js` are loaded dynamically using a promise-based script loader only when the user interacts with a feature that requires them.
--   **Gzip Compression**: The `compression` Express middleware is used to apply Gzip compression to server responses further reducing network payload size.
+- scripts/build.js
+  - Clears dist/, copies public → dist.
+  - Injects build timestamp comment into each HTML HEAD.
+  - Rewrites relative asset links to absolute (/styles, /scripts, /images, /favicons) to avoid path issues.
+  - Minifies JS with terser, CSS with clean-css (CLI via npx), HTML with html-minifier-terser.
+- scripts/process-images.js
+  - Sharp converts images to WebP; responsive variants for heavy assets (atomsblue, Q/AP logos) including animated GIF conversion to animated WebP.
+- scripts/test-a11y.mjs
+  - Runs axe-core on dist/*.html; reports violations with selectors and snippets; fails with non-zero exit if issues exist.
+- scripts/check-translations.cjs
+  - Flattens en.json and compares with other languages for missing/extra keys and placeholder values; emits reports.
 
 ---
 
-## Development Tools
+## Testing and QA
 
--   **Package Manager**: npm is used for managing all project dependencies.
--   **Testing**: The project uses Jest as its testing framework with JSDOM to simulate a browser environment for UI tests.
--   **Code Quality**: ESLint and Prettier are used to enforce a consistent code style and catch potential errors.
--   **CI/CD**: GitHub Actions automates the testing and build process on every push to the `main` branch.
--   **Deployment**: The application is deployed on the Railway platform.
--   **Cross-Platform Scripts**: `cross-env` is used in npm scripts to ensure compatibility between Windows and Linux/macOS environments.
-
----
-
-## Key Dependencies
-
-### Production Dependencies
-- `better-sqlite3`
-- `compression`
-- `cors`
-- `dotenv`
-- `express`
-- `express-rate-limit`
-- `helmet`
-- `nodemailer`
-
-### Development Dependencies
-- `cross-env`
-- `css-minify`
-- `eslint`
-- `jest`
-- `jsdom`
-- `prettier`
-- `sharp`
-- `supertest`
-- `terser`
+- Jest 30.x with ESM support (NODE_OPTIONS=--experimental-vm-modules).
+- jest-environment-jsdom, jsdom for UI tests; supertest for API tests (present in devDependencies).
+- UI and API tests under tests/ with helpers.
+- A11y checks run against built dist output via axe-core script.
+- Recommendation: Ensure CI pipeline calls build → test:a11y against dist artifacts and runs translation check.
 
 ---
 
-## NPM Scripts
+## NPM Scripts (package.json)
 
--   `npm run dev`: Starts the local development server serving un-optimised files from `public/`.
--   `npm test`: Runs the full test suite including formatting checks and accessibility tests.
--   `npm run build`: Creates an optimised production build in the `dist/` directory.
--   `npm start`: Starts the server in production mode serving optimised files from `dist/`.
--   `npm run format`: Formats all code according to Prettier rules.
--   `npm run lint`: Lints the codebase with ESLint.
+- dev: node -r dotenv/config server.js (serves public/ in dev mode).
+- build: node scripts/build.js (copy, patch, minify).
+- start: npm run build && cross-env NODE_ENV=production node server.js (serves dist/).
+- test: npm run build && prettier check && translations check && a11y && jest (vm-modules).
+- test:ci: jest with vm-modules (when build is provided by CI step).
+- format (write/check) via Prettier; lint via ESLint.
 
 ---
 
-## Environment Variable Handling
+## Constraints and Decisions
 
-A significant challenge encountered during development was the handling of special characters in environment variables which caused a "works on my machine" bug. The root cause was the different ways operating systems and libraries parse strings.
+- Performance and simplicity
+  - No frontend frameworks; small ES module files; defers heavy libs until needed.
+  - Images optimized to WebP; responsive variants for large assets.
+- Reliability and offline
+  - PWA approach optimized for low-connectivity regions; explicit offline fallback page.
+- Security posture
+  - Strict CSP with explicit sources; rate limiting; optional CSRF; PBKDF2-based auth; no user accounts.
+- Data handling
+  - Stores minimal session and user metadata in SQLite (name, aim(s), experience, location, contact, classification, agent, date/time, refresh count).
+  - UI clarifies responsibilities and avoids capturing sensitive PII beyond simple meta fields.
+- Logging
+  - Client-side logging is currently domain-gated (alan.up.railway.app). Prefer environment-driven silencing.
 
--   **On Railway (and most Linux shells)**: The `$` character is used for variable substitution. To treat it as a literal the value must be wrapped in single quotes (`'...'`).
--   **Locally (with `dotenv`)**: The `#` character is treated as a comment. To include it in a value the entire string must be wrapped in double quotes (`"..."`).
+---
 
-### Best Practices for Secrets
+## Operational Notes and Recommendations
 
-To prevent this issue in the future the following best practices have been adopted for handling secrets like API keys salts or other sensitive strings:
-
-1.  **The Simple Way (Highly Recommended)**: Generate secrets using only **alphanumeric characters** (a-z A-Z 0-9). A 64-character hex string is ideal because it has no special characters and is safe to use in any environment without quoting.
-    -   *Example Generation*: `crypto.randomBytes(32).toString('hex')`
-
-2.  **The Bulletproof Way (For Complex Secrets)**: If special characters are unavoidable **encode the secret in Base64**. The Base64 string is stored as the environment variable and the application decodes it at runtime. This is the industry-standard method for safely transmitting complex data through text-based systems.
+- CSP single source of truth
+  - Consolidate to one place (prefer config or server.js import from config) to avoid drift.
+- Client logging toggle
+  - Replace hostname check with environment-based flagging or an allowlist to ease domain changes.
+- Git ignore hygiene
+  - Ensure local DBs and dist/ are ignored.
+- CSRF
+  - Consider ENABLE_CSRF=true in production; add x-csrf-token header on state-changing requests (frontend call sites already centralized).
+- SW cache versioning
+  - Regularly bump CACHE_NAME or stamp version into SW at build time.
