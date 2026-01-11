@@ -37,6 +37,7 @@ const CORE_ASSETS = [
   '/scripts/home.js',
   '/scripts/home-ui.js',
   '/scripts/home-ui-core.js',
+  '/scripts/view-records-dom.js',
   '/scripts/home-ui-handlers.js',
   '/scripts/home-ui-popup.js',
   '/scripts/home-ui-state.js',

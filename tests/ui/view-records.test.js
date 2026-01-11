@@ -2,51 +2,18 @@
  * @jest-environment jsdom
  */
 
-import { jest, describe, it, expect, beforeAll } from '@jest/globals';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { describe, it, expect, beforeAll } from '@jest/globals';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Mock Leaflet
-global.L = {
-  Icon: jest.fn(() => ({})),
-};
-
-// Load the script content to be tested
-const scriptPath = path.resolve(__dirname, '../../public/scripts/view-records.js');
-const scriptContent = fs.readFileSync(scriptPath, 'utf8');
+import {
+  createRecordRow,
+  createRecordsTableHeader,
+  renderEmptyMessage,
+} from '../../public/scripts/view-records-dom.js';
 
 describe('View Records Script DOM Factories', () => {
-  let createRecordsTableHeader, createRecordRow, renderEmptyMessage;
-
   beforeAll(() => {
-    // Set up a basic DOM structure that the script expects
-    document.body.innerHTML = `
-      <div id="passwordScreen"></div>
-      <div id="activeRecordDiv"></div>
-      <div id="historyDiv"></div>
-      <div id="historyTitle"></div>
-      <div id="map"></div>
-    `;
-
-    // Evaluate the script within the JSDOM environment.
-    const scriptToEval = `
-      ${scriptContent}
-      window.createRecordsTableHeader = createRecordsTableHeader;
-      window.createRecordRow = createRecordRow;
-      window.renderEmptyMessage = renderEmptyMessage;
-    `;
-    const scriptEl = document.createElement('script');
-    scriptEl.textContent = scriptToEval;
-    document.body.appendChild(scriptEl);
-
-    // Assign the functions from the window to local variables
-    createRecordsTableHeader = window.createRecordsTableHeader;
-    createRecordRow = window.createRecordRow;
-    renderEmptyMessage = window.renderEmptyMessage;
+    // Set up a basic DOM structure for renderEmptyMessage to target.
+    document.body.innerHTML = `<div id="activeRecordDiv"></div>`;
   });
 
   describe('createRecordsTableHeader', () => {
