@@ -126,13 +126,14 @@ This document provides a detailed overview of the technologies, dependencies, co
 ## PWA Architecture
 
 - Service Worker (public/service-worker.js)
-  - CACHE_NAME: alanui-v2 (manual bump); pre-caches core assets.
+  - CACHE_NAME: alanui-v3 (manual bump); pre-caches core assets.
   - on install: caches CORE_ASSETS with logging; skipWaiting.
   - on activate: deletes non-matching caches, clients.claim, posts { type: 'SW_READY' } to all clients.
   - on fetch:
     - If navigate: network-first, fallback to cached or offline.html on error.
     - For assets: cache-first; on network failure returns 408 text response (not offline page).
     - Bypass: if request URL or referrer includes /view-records.html, do nothing to avoid SW interference on admin page.
+    - Bypass: if request URL includes /flowise/, do nothing to avoid caching/stream interference.
   - Push event: demo notification for debugging/lab use.
 - Install prompt handled in home.js with install button and Notification permission prompt as a secondary UX.
 

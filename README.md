@@ -2,7 +2,7 @@
 
 A web-based chatbot focused on Eye, Ear, and Skin health information, designed for users in Low- and Middle-Income Countries (LMICs). The app is performance-conscious, accessible, and fully offline-capable as a Progressive Web App (PWA).
 
-Updated: 15 Sep 2025
+Updated: 11 Jan 2026
 
 For deep architecture and context, see the Memory Bank:
 - memory-bank/projectbrief.md
@@ -271,9 +271,12 @@ CI/CD (overview)
 ## Operational Notes
 
 - Logging: public/scripts/log.js silences info/debug in production when hosted on alan.up.railway.app. Consider moving to an env-driven toggle if domains change.
-- Service Worker: increment CACHE_NAME (in public/service-worker.js) per release or adopt a build-stamped versioning strategy to avoid stale caches.
+- Service Worker: increment CACHE_NAME (in public/service-worker.js — currently `alanui-v3`) per release or adopt a build-stamped versioning strategy to avoid stale caches.
 - CSP: maintain a single authoritative definition to avoid drift.
 - Admin/records: SW bypass for /view-records.html is intentional to keep data fresh.
+
+Repo hygiene
+- One-off debug pages and vendored copies of third-party libraries are intentionally not kept in the repo. The app loads those libraries from CDNs where needed.
 
 ---
 

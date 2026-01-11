@@ -70,7 +70,7 @@ graph TD
 -   **PWA Implementation**: The application functions as a Progressive Web App enabled by a service worker (`public/service-worker.js`).
     -   Caching Strategy: Network-first for HTML navigations; cache-first for static assets.
     -   Offline Fallback: `offline.html` with “Retry” and “Go Back”.
-    -   Cache Management: Versioned by `CACHE_NAME` (e.g. `alanui-v2`) and cleans older caches on activate.
+    -   Cache Management: Versioned by `CACHE_NAME` (e.g. `alanui-v3`) and cleans older caches on activate.
     -   Reliable Initialisation: Page scripts can wait for a `SW_READY` message from the service worker before initialising to avoid races.
 
 -   **Performance Patterns**:

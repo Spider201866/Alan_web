@@ -94,7 +94,7 @@ The AlanUI Web Chatbot provides accessible, relevant health information focused 
 
 ## Known Constraints / Considerations
 - Client log silencing currently domain-based (`alan.up.railway.app`); fragile if domain changes. Prefer environment-driven approach.
-- Service worker cache name must be manually bumped on releases (`alanui-v2` currently).
+- Service worker cache name must be manually bumped on releases (`alanui-v3` currently).
 - CSRF disabled by default; can be enabled for production with coordinated header updates on client.
 
 ## Current Status

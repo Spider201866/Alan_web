@@ -37,10 +37,11 @@ A full read-through of backend, frontend, PWA, build tooling, tests setup, and M
   - Location: `location-service.js` uses ipinfo.io; LMIC classification via ISO2 lookup.
 - PWA
   - `public/service-worker.js`:
-    - Cache `alanui-v2`; pre-caches core assets.
+    - Cache `alanui-v3`; pre-caches core assets.
     - Network-first for navigations with offline fallback to `offline.html`.
     - Cache-first for static assets.
     - Bypass SW handling for `view-records.html` to avoid admin friction.
+    - Bypass `/flowise/` requests to avoid caching/stream interference.
     - On activate, posts `SW_READY`, clients claim, old caches deleted.
 - Build & Tooling
   - `scripts/build.js`: copies public → dist; injects build timestamp; rewrites relative asset URLs to root-absolute; minifies JS (terser), CSS (clean-css CLI via npx), HTML (html-minifier-terser).
@@ -74,7 +75,7 @@ A full read-through of backend, frontend, PWA, build tooling, tests setup, and M
 - Security and robustness
   4. Consider enabling CSRF in production (`ENABLE_CSRF=true`) and verify front-end includes `x-csrf-token` header for state-changing requests (already supported by `csrf.js`, skipPaths maintained for `/api/fetch-records`).
   5. Service worker cache versioning strategy.
-     - Current explicit `CACHE_NAME = 'alanui-v2'` is fine but requires manual bumps.
+     - Current explicit `CACHE_NAME = 'alanui-v3'` is fine but requires manual bumps.
      - Consider stamping a version/hash via build script and import into SW; or maintain a disciplined bump schedule per release.
 - Cleanup & dead code
   6. Remove or wire `config.cspOptions` to avoid config drift.
