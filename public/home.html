@@ -299,18 +299,6 @@
     <!-- SCRIPT BLOCK -->
     <script type="module" src="scripts/home.js" defer></script>
     <script type="module" src="scripts/home-navigation.js" defer></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', async () => {
-          try {
-            const reg = await navigator.serviceWorker.register('/service-worker.js');
-            console.log('✅ SW registered with scope', reg.scope);
-            console.log('Controller:', navigator.serviceWorker.controller);
-          } catch (err) {
-            console.error('❌ SW registration failed:', err);
-          }
-        });
-      }
-    </script>
+    <script type="module" src="/scripts/sw-register.js" defer></script>
   </body>
 </html>

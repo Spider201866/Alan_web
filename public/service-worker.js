@@ -46,6 +46,7 @@ const CORE_ASSETS = [
   '/scripts/skin.js',
   '/scripts/weblinks.js',
   '/scripts/referral.js',
+  '/scripts/sw-register.js',
   '/favicons/manifest.json',
   '/favicons/favicon-32x32.png',
   '/favicons/apple-touch-icon.png',
