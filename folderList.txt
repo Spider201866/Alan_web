@@ -98,6 +98,7 @@ public/scripts/onboarding-form.js
 public/scripts/page-template.js
 public/scripts/referral.js
 public/scripts/skin.js
+public/scripts/sw-register.js
 public/scripts/triangle.js
 public/scripts/view-records.js
 public/scripts/weblinks.js
