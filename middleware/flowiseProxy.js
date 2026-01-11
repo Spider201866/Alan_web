@@ -33,9 +33,22 @@ export default function flowiseProxy({ targetBaseUrl }) {
   return async function flowiseProxyMiddleware(req, res, next) {
     const controller = new AbortController();
 
+    const abortUpstream = () => {
+      try {
+        controller.abort();
+      } catch {
+        // ignore
+      }
+    };
+
     // If the client disconnects, abort the upstream request.
-    req.on('aborted', () => controller.abort());
-    req.on('close', () => controller.abort());
+    req.on('aborted', abortUpstream);
+    // IMPORTANT: do not use req.on('close') here.
+    // `close` can fire on normal request completion, which would abort upstream
+    // and leave the client hanging. `res.close` reliably indicates client disconnect.
+    res.on('close', () => {
+      if (!res.writableEnded) abortUpstream();
+    });
 
     try {
       const targetUrl = new URL(req.url, targetBaseUrl);
@@ -90,7 +103,14 @@ export default function flowiseProxy({ targetBaseUrl }) {
       Readable.fromWeb(upstreamResponse.body).pipe(res);
     } catch (err) {
       // AbortError is expected on client disconnect.
-      if (err?.name === 'AbortError') return;
+      if (err?.name === 'AbortError') {
+        if (!res.headersSent) {
+          // Non-standard but commonly used “Client Closed Request” code.
+          res.statusCode = 499;
+          res.end();
+        }
+        return;
+      }
       next(err);
     }
   };

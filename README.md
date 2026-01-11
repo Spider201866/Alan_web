@@ -145,6 +145,9 @@ Backend (Node/Express)
 - Static serving:
   - Development: public/
   - Production: dist/ (after npm run build)
+- Flowise proxy:
+  - The server mounts a same-origin proxy at `/flowise` which forwards to the Railway Flowise deployment.
+  - This avoids browser CORS issues. Frontend Flowise embed should use `apiHost: '/flowise'`.
 - Security:
   - Helmet CSP + security headers (HSTS, Referrer-Policy no-referrer, Frameguard deny, noSniff)
   - express-rate-limit (general 100/15m; sensitive 10/15m)
@@ -198,6 +201,7 @@ Build and Optimization
 
 External services/CDNs
 - Flowise (chat) via jsdelivr (apiHost points to Railway Flowise deployment)
+- Flowise API calls are proxied through the app at `/flowise` (recommended) to avoid CORS.
 - ipinfo.io (IP-derived location)
 - api.bigdatacloud.net (reverse geocoding)
 - Leaflet.js with OSM tiles (https://{s}.tile.openstreetmap.org)

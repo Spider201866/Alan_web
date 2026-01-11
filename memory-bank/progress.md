@@ -122,6 +122,24 @@ The AlanUI Web Chatbot remains stable, accessible, and well-documented as a PWA.
 
 ---
 
+## January 2026 Maintenance (11 Jan 2026)
+
+### Fixed
+- `npm audit --audit-level=moderate` now passes (0 vulnerabilities). The previously reported advisory for `qs < 6.14.1` is resolved with `qs@6.14.1` in the dependency tree.
+- Flowise proxy reliability:
+  - `/flowise` is mounted **before** `express.json()` and CSRF so the proxy can forward request streams.
+  - Proxy abort logic fixed: abort upstream fetch only on genuine client disconnect (`req.aborted` or `res.close` when response not finished).
+
+### PWA
+- Service worker cache name bumped to `alanui-v3`.
+- Service worker bypasses `/flowise/` GET requests to avoid caching/stream interference.
+
+### Verification
+- Local verification: POST to `/flowise/api/v1/prediction/<chatflowid>` returns HTTP 200 and valid JSON response.
+- Test suite: `npm test` passes (build + format check + translations + a11y + jest).
+
+---
+
 ## Recent Improvements (July 2025)
 - **Records Page Fixes (July 10):** Repaired the "View Records" page by fixing the date display format and updating the Content Security Policy to allow map tiles and markers to be loaded correctly.
 - **UI Fix (July 6):** Fixed a bug where the scrolling marquee of example prompts was not disappearing when the user clicked into the chatbot input field by replacing an unreliable `setTimeout` with a robust `MutationObserver`.

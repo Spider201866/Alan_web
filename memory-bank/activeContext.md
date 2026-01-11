@@ -5,6 +5,14 @@
 ## Current Work Focus
 The application remains stable, fully documented, and feature-complete as a Progressive Web App (PWA). The present focus is routine maintenance, minor enhancements, and documentation accuracy. On 15 Sep 2025, a comprehensive codebase review and mapping was completed to validate architecture, identify minor risks, and surface practical improvements that preserve existing patterns.
 
+## Latest Work (11 Jan 2026)
+- Fixed CI failure from `npm audit --audit-level=moderate` by ensuring dependencies resolve to `qs@6.14.1` and audit reports 0 vulnerabilities.
+- Stabilized Flowise proxying by proxying the Flowise API through the app at `/flowise`.
+  - `server.js` mounts `/flowise` **before** `express.json()` and CSRF so request streams remain readable.
+  - `middleware/flowiseProxy.js` now aborts upstream fetch only on genuine client disconnect (`req.aborted` or `res.close` while not ended). Previously, aborting on `req.close` could fire on normal completion and hang requests.
+- Confirmed local Flowise calls work: POST to `/flowise/api/v1/prediction/<chatflowid>` returns HTTP 200 with JSON content.
+- PWA: bumped service worker cache name to `alanui-v3` and bypassed `/flowise/` GET requests to avoid caching/stream interference.
+
 ## Recent Actions (15 Sep 2025)
 A full read-through of backend, frontend, PWA, build tooling, tests setup, and Memory Bank was performed. Key confirmations and findings:
 
@@ -53,6 +61,7 @@ A full read-through of backend, frontend, PWA, build tooling, tests setup, and M
 - CSRF: current simple token-in-memory approach is acceptable for single-process deployments; multi-process would require a shared store if enabled.
 
 ## Pending Tasks & Next Steps (Prioritized)
+- Deploy the latest changes to Railway and confirm clients refresh their service worker cache (CACHE_NAME bump should force refresh).
 - Configuration hygiene and consistency
   1. Consolidate CSP single source of truth.
      - Problem: There are two CSP definitions (inline in `server.js` and `config/index.js` `cspOptions` that appears unused).
