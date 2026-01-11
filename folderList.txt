@@ -104,6 +104,7 @@ public/scripts/referral.js
 public/scripts/skin.js
 public/scripts/sw-register.js
 public/scripts/triangle.js
+public/scripts/view-records-dom.js
 public/scripts/view-records.js
 public/scripts/weblinks.js
 public/service-worker.js
