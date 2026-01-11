@@ -4,6 +4,7 @@ import compression from 'compression';
 import simpleCors from './middleware/cors.js';
 import rateLimit from 'express-rate-limit';
 import csrfProtection from './middleware/csrf.js';
+import flowiseProxy from './middleware/flowiseProxy.js';
 import defaultConfig from './config/index.js';
 import apiRoutesFactory from './routes/api.js';
 // import webRoutesFactory from './routes/web.js'; // No longer needed
@@ -82,6 +83,13 @@ export function createApp(configToUse) {
       enable: Boolean(configToUse.enableCsrf),
       skipPaths: ['/api/fetch-records'],
     })
+  );
+
+  // Proxy Flowise API through our own server to avoid browser CORS issues.
+  // Frontend should use apiHost: '/flowise'.
+  app.use(
+    '/flowise',
+    flowiseProxy({ targetBaseUrl: 'https://flowiseai-railway-production-fecf.up.railway.app' })
   );
 
   if (process.env.NODE_ENV === 'production') {

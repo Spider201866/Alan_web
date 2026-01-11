@@ -21,7 +21,11 @@ export default function simpleCors(options = {}) {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        // IMPORTANT: do not hard-block the request.
+        // If an origin is not allowed, we simply omit CORS headers.
+        // Browsers will still block cross-origin access without ACAO,
+        // but same-origin requests won’t be rejected by the server.
+        callback(null, false);
       }
     },
     credentials: true,
