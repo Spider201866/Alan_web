@@ -77,19 +77,21 @@ export function createApp(configToUse) {
     })
   );
 
+  // Proxy Flowise API through our own server to avoid browser CORS issues.
+  // IMPORTANT: This must be mounted BEFORE body parsers / CSRF so the raw request
+  // stream is still available for forwarding (especially for streaming/EventSource).
+  // Frontend should use apiHost: '/flowise'.
+  app.use(
+    '/flowise',
+    flowiseProxy({ targetBaseUrl: 'https://flowiseai-railway-production-fecf.up.railway.app' })
+  );
+
   app.use(express.json());
   app.use(
     csrfProtection({
       enable: Boolean(configToUse.enableCsrf),
       skipPaths: ['/api/fetch-records'],
     })
-  );
-
-  // Proxy Flowise API through our own server to avoid browser CORS issues.
-  // Frontend should use apiHost: '/flowise'.
-  app.use(
-    '/flowise',
-    flowiseProxy({ targetBaseUrl: 'https://flowiseai-railway-production-fecf.up.railway.app' })
   );
 
   if (process.env.NODE_ENV === 'production') {

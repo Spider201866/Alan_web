@@ -47,15 +47,30 @@ export default function flowiseProxy({ targetBaseUrl }) {
       // the request as cross-origin and needing CORS headers.
       delete headers.origin;
 
-      const method = req.method || 'GET';
-      const hasBody = !['GET', 'HEAD'].includes(method.toUpperCase());
+      // If our server already parsed the body (express.json()), forward the parsed
+      // JSON instead of trying to re-stream the already-consumed request.
+      const method = (req.method || 'GET').toUpperCase();
+      const hasBody = !['GET', 'HEAD'].includes(method);
+
+      let body = undefined;
+      if (hasBody) {
+        if (req.body !== undefined && req.body !== null && Object.keys(req.body).length > 0) {
+          body = JSON.stringify(req.body);
+          // Ensure correct upstream content type.
+          headers['content-type'] = headers['content-type'] || 'application/json';
+          // Content-Length must match the new body.
+          delete headers['content-length'];
+        } else {
+          body = req;
+        }
+      }
 
       const upstreamResponse = await fetch(targetUrl, {
         method,
         headers,
-        body: hasBody ? req : undefined,
+        body,
         // Node/undici requires this when streaming a request body.
-        duplex: hasBody ? 'half' : undefined,
+        duplex: hasBody && body === req ? 'half' : undefined,
         signal: controller.signal,
       });
 
@@ -80,4 +95,3 @@ export default function flowiseProxy({ targetBaseUrl }) {
     }
   };
 }
-

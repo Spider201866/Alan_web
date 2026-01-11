@@ -12,7 +12,8 @@
  *   - Cache-First for Static Assets: Serves static assets from the cache for speed.
  */
 
-const CACHE_NAME = 'alanui-v2';
+// Bump this value whenever you need to force clients to refresh cached assets.
+const CACHE_NAME = 'alanui-v3';
 const OFFLINE_URL = 'offline.html';
 
 // A list of essential assets to cache on installation.
@@ -114,6 +115,14 @@ self.addEventListener('fetch', (event) => {
   console.log('Service Worker: Fetching', event.request.url);
   // Only process GET requests.
   if (event.request.method !== 'GET') {
+    return;
+  }
+
+  // Bypass Flowise proxy requests entirely.
+  // Flowise embed uses both POST (prediction) and GET (EventSource/streaming).
+  // The SW only handles GET, so this prevents caching/stream interference.
+  if (event.request.url.includes('/flowise/')) {
+    console.log('Service Worker: Bypassing for Flowise proxy request:', event.request.url);
     return;
   }
 
