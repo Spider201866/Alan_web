@@ -6,7 +6,7 @@ import log from './log.js';
 import { initChatbot } from './agent1-chatbot-module.js';
 // import { setLanguage, getTranslation } from './language.js'; // No longer directly used here, handled by translator or UI
 import './closer.js'; // Handles generic click-outside-to-close behaviors
-import './listener-module.js'; // Handles chat history sidebar and other listeners
+import { initChatHistory } from './listener-module.js'; // Handles chat history sidebar and other listeners
 
 import { initUI } from './home-ui.js';
 import { fetchMutedSnippet, fetchAreaFromLatLong, pushLocalStorageToServer } from './home-data.js';
@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
  * It orchestrates the initialization of UI components, data fetching, and other modules.
  */
 function main() {
+  initChatHistory();
+
   // 1. Initialize all UI components.
   // Pass the orchestrator's data-handling function to the UI module.
   initUI({

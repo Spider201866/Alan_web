@@ -33,6 +33,7 @@ const CORE_ASSETS = [
   '/styles/styles.css',
   '/styles/styles_index.css',
   '/scripts/index.js',
+  '/scripts/listener-module.js',
   '/scripts/home.js',
   '/scripts/home-ui.js',
   '/scripts/home-ui-core.js',

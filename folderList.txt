@@ -84,6 +84,10 @@ public/scripts/focus-trap.js
 public/scripts/home-data.js
 public/scripts/home-navigation.js
 public/scripts/home-translator.js
+public/scripts/home-ui-core.js
+public/scripts/home-ui-handlers.js
+public/scripts/home-ui-popup.js
+public/scripts/home-ui-state.js
 public/scripts/home-ui.js
 public/scripts/home.js
 public/scripts/index.js

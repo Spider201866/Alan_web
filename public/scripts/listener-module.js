@@ -45,29 +45,67 @@ function makeCopyButton(container, sess) {
   container.appendChild(btn);
 }
 
-/* ── initialise history (or seed if empty) ────────────────────────────── */
-let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-if (!history.sessions || !Array.isArray(history.sessions)) {
-  history = { sessionCounter: 0, sessions: [] };
+/* ── state (initialised by initChatHistory) ───────────────────────────── */
+let history;
+let CURRENT_ID = 0;
+const storedKeys = new Set(); // For de-duplication within the CURRENT_ID session
+let isInitialised = false;
+
+function loadHistoryFromStorage() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  let parsed;
+  try {
+    parsed = JSON.parse(raw || '{}');
+  } catch {
+    parsed = {};
+  }
+
+  if (!parsed.sessions || !Array.isArray(parsed.sessions)) {
+    return { sessionCounter: 0, sessions: [] };
+  }
+
+  if (typeof parsed.sessionCounter !== 'number') parsed.sessionCounter = parsed.sessions.length;
+  return parsed;
 }
 
-// Start a new session on page load if one doesn't exist for CURRENT_ID,
-// or continue the last one if page was reloaded.
-// The logic for incrementing sessionCounter was here in your provided code
-// and it's key for creating a new session each time.
-history.sessionCounter += 1;
-let CURRENT_ID = history.sessionCounter;
-history.sessions.push({ id: CURRENT_ID, messages: [] });
-localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
-log.info('%c[History] Ready. Current Session ID:', 'color:#008000', CURRENT_ID, history);
+function persistHistory() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+}
 
-const storedKeys = new Set(); // For de-duplication within the CURRENT_ID session
+function startNewEmptySession() {
+  history.sessionCounter += 1;
+  CURRENT_ID = history.sessionCounter;
+  history.sessions.push({ id: CURRENT_ID, messages: [] });
+  persistHistory();
+  storedKeys.clear();
+  log.info('%c[History] Ready. Current Session ID:', 'color:#008000', CURRENT_ID, history);
+}
 
-/* ── bootstrap when DOM loaded ─────────────────────────────────────────── */
-document.addEventListener('DOMContentLoaded', () => {
+function ensureHistoryReady() {
+  if (!history) history = loadHistoryFromStorage();
+  if (!history.sessions || !Array.isArray(history.sessions)) {
+    history = { sessionCounter: 0, sessions: [] };
+  }
+  if (!CURRENT_ID || !history.sessions.some((s) => s.id === CURRENT_ID)) {
+    startNewEmptySession();
+  }
+}
+
+/**
+ * Initialises chat history capture + sidebar rendering.
+ *
+ * IMPORTANT: Previously this module executed side effects on import.
+ * This function makes initialisation explicit to avoid double session creation.
+ */
+export function initChatHistory() {
+  if (isInitialised) return;
+  isInitialised = true;
+
+  history = loadHistoryFromStorage();
+  startNewEmptySession();
   renderSidebar();
   attachFlowiseObservers();
-});
+}
 
 /**
  * Attaches MutationObservers to the Flowise chatbot component to detect new messages and UI changes.
@@ -138,11 +176,12 @@ function handleBubbleChanges() {
 function startNewSession() {
   // This function is called by Flowise "Reset Chat" or potentially other triggers
   // It ensures a new session is correctly set up in 'history' and the sidebar
+  ensureHistoryReady();
   history.sessionCounter += 1;
   CURRENT_ID = history.sessionCounter;
   const newSession = { id: CURRENT_ID, messages: [] };
   history.sessions.push(newSession);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+  persistHistory();
 
   storedKeys.clear();
 
@@ -178,6 +217,7 @@ function startNewSession() {
  * @param {string} text - The content of the message.
  */
 function saveMessage(role, text) {
+  ensureHistoryReady();
   const currentSession = history.sessions.find((s) => s.id === CURRENT_ID);
   if (!currentSession) {
     // This could happen if a message arrives before startNewSession fully completes for CURRENT_ID
@@ -220,14 +260,14 @@ function saveMessage(role, text) {
           }
         }
       }
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+      persistHistory();
       return;
     }
   }
 
   currentSession.messages.push({ role, text });
   storedKeys.add(role + '|' + normalizedText);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+  persistHistory();
   appendLineToSidebar(CURRENT_ID, role, text);
 }
 
@@ -236,6 +276,7 @@ function saveMessage(role, text) {
  * It creates collapsible sections for each session.
  */
 function renderSidebar() {
+  ensureHistoryReady();
   const sidebar = document.getElementById('chatHistorySidebar');
   if (!sidebar) {
     log.error('[History] Sidebar element not found for rendering.');
@@ -332,12 +373,13 @@ export function attachImagesButton() {
  */
 export function resetSidebarHistory() {
   log.info('%c[History] Resetting in-memory sidebar history state.', 'color:#ff0000');
+  // Note: localStorage.removeItem(STORAGE_KEY) and DOM clearing are done by the caller.
+  // We reset in-memory state so future messages can start a fresh session.
   history = { sessionCounter: 0, sessions: [] };
   CURRENT_ID = 0;
   storedKeys.clear();
   // The actual localStorage.removeItem and DOM clearing (sidebar.innerHTML = '')
   // is handled by the clearHistoryBtn event listener in the main HTML/script.
   // This function is for resetting the module's internal variables.
-  // After this, the main script should ideally call startNewSession() or renderSidebar()
-  // if an immediate visual update of a new empty session is desired without a page reload.
+  // After this, the next captured message will create a new session.
 }
