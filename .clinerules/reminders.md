@@ -33,3 +33,12 @@ This file contains a checklist of important rules and common pitfalls to avoid d
 
 -   **Read the Memory Bank**: Always start by reviewing the memory bank files to understand the current project state, architecture, and context.
 -   **Update Documentation**: After completing any significant task, update all relevant documentation (`README.md`, `folderList.txt`, and the memory bank files) to reflect the changes.
+
+---
+
+## 5. Skills (on-demand instruction sets)
+
+-   **If a Skill exists for the task, use it**: Prefer the project Skills in `.clinerules/skills/` when troubleshooting recurring issues.
+-   **Git on Windows sanity checks**: If Git reports `fatal: not a git repository`, follow the `windows-git-sanity` Skill at:
+    -   `.clinerules/skills/windows-git-sanity/SKILL.md`
+    -   Avoid CMD-only syntax (e.g. `cd /d`, `dir /a`) in PowerShell. Always re-check `Get-Location` and `Test-Path .git` before retrying.
