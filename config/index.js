@@ -13,45 +13,38 @@ const __dirname = path.dirname(__filename);
 
 const root = path.resolve(__dirname, '..');
 
-const cspOptions = {
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: [
-        "'self'",
-        'https://cdn.jsdelivr.net',
-        'https://alan.up.railway.app',
-        'https://cdnjs.cloudflare.com',
-        'https://unpkg.com',
-      ],
-      styleSrc: [
-        "'self'",
-        'https://cdnjs.cloudflare.com',
-        'https://fonts.googleapis.com',
-        'https://unpkg.com',
-        "'unsafe-inline'",
-      ],
-      fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
-      imgSrc: [
-        "'self'",
-        'data:',
-        'https://*.tile.openstreetmap.org',
-        'https://unpkg.com',
-        'https://raw.githubusercontent.com',
-      ],
-      connectSrc: [
-        "'self'",
-        'https://alan.up.railway.app',
-        'https://ipinfo.io',
-        'https://unpkg.com',
-        'https://cdn.jsdelivr.net',
-        'https://cdnjs.cloudflare.com',
-        'https://fonts.googleapis.com',
-        'https://flowiseai-railway-production-fecf.up.railway.app',
-        'https://api.bigdatacloud.net',
-      ],
-    },
-  },
+// CSP directives (consumed by server.js). Keep this as the single source of truth.
+// NOTE: `server.js` will merge these into Helmet's default directives.
+// We use dashed directive names here to match Helmet.
+const cspDirectives = {
+  'default-src': ["'self'"],
+  'img-src': ["'self'", 'data:', '*.tile.openstreetmap.org', 'raw.githubusercontent.com'],
+  'style-src': [
+    "'self'",
+    "'unsafe-inline'",
+    'https://fonts.googleapis.com',
+    'https://cdnjs.cloudflare.com',
+    'https://unpkg.com',
+  ],
+  'font-src': ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
+  'script-src': [
+    "'self'",
+    "'unsafe-inline'",
+    'https://cdn.jsdelivr.net',
+    'https://cdnjs.cloudflare.com',
+    'https://unpkg.com',
+  ],
+  'connect-src': [
+    "'self'",
+    'https://flowiseai-railway-production-fecf.up.railway.app',
+    'https://api.bigdatacloud.net',
+    'https://ipinfo.io',
+    'https://cdn.jsdelivr.net',
+    'https://cdnjs.cloudflare.com',
+    'https://fonts.googleapis.com',
+    'https://fonts.gstatic.com',
+    'https://unpkg.com',
+  ],
 };
 
 const config = {
@@ -69,7 +62,7 @@ const config = {
   allowedOrigins: (env.CORS_ALLOWED_ORIGINS || '').split(',').filter(Boolean),
   enableCors: env.ENABLE_CORS !== 'false',
   enableCsrf: env.ENABLE_CSRF === 'true',
-  cspOptions: cspOptions,
+  cspDirectives,
 };
 
 export default config;

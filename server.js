@@ -23,45 +23,16 @@ export function createApp(configToUse) {
   app.set('trust proxy', 1);
   app.use(compression());
 
-  // A corrected Content Security Policy that allows all necessary resources.
+  // Content Security Policy
+  // Single source of truth: config/index.js -> config.cspDirectives
   app.use(
     helmet.contentSecurityPolicy({
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-        'default-src': ["'self'"],
-        'img-src': ["'self'", 'data:', '*.tile.openstreetmap.org', 'raw.githubusercontent.com'],
-        'style-src': [
-          "'self'",
-          "'unsafe-inline'",
-          'https://fonts.googleapis.com',
-          'https://cdnjs.cloudflare.com',
-          'https://unpkg.com',
-        ],
-        'font-src': ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
-        'script-src': [
-          "'self'",
-          "'unsafe-inline'",
-          'https://cdn.jsdelivr.net',
-          'https://cdnjs.cloudflare.com',
-          'https://unpkg.com',
-        ],
-        // --- THIS IS THE FINAL FIX ---
-        // Add ipinfo.io to the list of allowed connection sources
-        'connect-src': [
-          "'self'",
-          'https://flowiseai-railway-production-fecf.up.railway.app',
-          'https://api.bigdatacloud.net',
-          'https://ipinfo.io',
-          'https://cdn.jsdelivr.net',
-          'https://cdnjs.cloudflare.com',
-          'https://fonts.googleapis.com',
-          'https://fonts.gstatic.com',
-          'https://unpkg.com',
-        ],
+        ...(configToUse.cspDirectives || {}),
       },
     })
   );
-  // --- END OF FIX ---
 
   app.use(helmet.hsts({ maxAge: 31536000, includeSubDomains: true }));
   app.use(helmet.referrerPolicy({ policy: 'no-referrer' }));
