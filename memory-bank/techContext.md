@@ -53,7 +53,7 @@ This document provides a detailed overview of the technologies, dependencies, co
   - CORS_ALLOWED_ORIGINS (comma-separated, default empty)
   - ENABLE_CORS ('true'|'false', default 'true')
   - ENABLE_CSRF ('true'|'false', default 'false')
-  - Optional placeholders: API_BASE_URL, SENTRY_DSN, SENTRY_FRONTEND_DSN (currently unused)
+  - (Removed Jan 2026) Previously documented placeholders: API_BASE_URL, SENTRY_DSN, SENTRY_FRONTEND_DSN.
 - CORS
   - Allowlist is read from env; credentials enabled; null-origin allowed for apps/tools.
 - CSRF

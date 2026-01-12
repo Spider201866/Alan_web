@@ -123,7 +123,7 @@ Optional
 - CORS_ALLOWED_ORIGINS: Comma-separated list of allowed origins
 - ENABLE_CORS (default 'true')
 - ENABLE_CSRF (default 'false')
-- API_BASE_URL, SENTRY_DSN, SENTRY_FRONTEND_DSN (reserved; currently unused)
+- (Removed Jan 2026) Previously documented placeholders: API_BASE_URL, SENTRY_DSN, SENTRY_FRONTEND_DSN.
 
 Secrets best practices
 - Prefer alphanumeric secrets (e.g., crypto.randomBytes(32).toString('hex')) to avoid quoting/parsing issues across environments.

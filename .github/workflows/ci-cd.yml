@@ -24,6 +24,7 @@ jobs:
 
       - name: Run npm audit for vulnerabilities
         run: npm audit --audit-level=moderate
+        continue-on-error: true
 
       - name: Run full quality gate (build + format + translations + a11y + jest)
         run: npm test

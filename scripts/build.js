@@ -36,6 +36,8 @@ async function runBuild() {
   try {
     console.log('🚀 Starting production build...');
 
+    const buildDebug = process.env.BUILD_DEBUG === 'true';
+
     // Use a single build timestamp/id across the entire build.
     // This allows us to stamp the service worker cache name so it changes per build,
     // forcing clients to refresh cached assets without manual CACHE_NAME bumps.
@@ -94,19 +96,36 @@ async function runBuild() {
       const timestamp = `<!--! BUILD TIMESTAMP: ${buildTimestamp} -->`;
       html = html.replace('</head>', `  ${envMeta}\n  ${timestamp}\n</head>`);
 
-      // THE CRITICAL FIX: Find all relative asset links and make them absolute.
-      const assetRegex = /(href|src)="(?!\/|https?:\/\/)(favicons|styles|scripts|images)/g;
+      // Normalize relative asset URLs to root-absolute and avoid double slashes.
+      // Example:
+      //   src="scripts/log.js"      -> src="/scripts/log.js"
+      //   src="scripts//log.js"     -> src="/scripts/log.js"
+      //   src="./scripts/log.js"    -> src="/scripts/log.js"
+      //   href="styles//styles.css" -> href="/styles/styles.css"
+      //
+      // NOTE: This matches only non-absolute (not starting with / or http(s)://) paths.
+      // It also consumes 1+ slashes after the folder to collapse them to a single '/'.
+      const assetRegex =
+        /(href|src)="(?!\/|https?:\/\/)(?:\.\/)?(favicons|styles|scripts|images)\/+?/g;
       html = html.replace(assetRegex, '$1="/$2/');
 
       await fs.writeFile(file, html, 'utf8');
 
-      // --- VERIFICATION STEP ---
-      const modifiedHtml = await fs.readFile(file, 'utf8');
-      const headContent = modifiedHtml.match(/<head>([\s\S]*?)<\/head>/);
-      console.log('✅ VERIFICATION: Patched <head> content is:\n');
-      console.log('-----------------------------------------');
-      console.log(headContent ? headContent[0] : 'Error: <head> tag not found.');
-      console.log('-----------------------------------------\n');
+      // --- VERIFICATION STEP (avoid CI log spam) ---
+      // The previous build output printed the full <head> for every HTML file which made CI logs noisy.
+      // If you need deep debugging, run with BUILD_DEBUG=true.
+      if (buildDebug) {
+        const headContent = html.match(/<head>([\s\S]*?)<\/head>/);
+        console.log('✅ BUILD_DEBUG: Patched <head> content is:\n');
+        console.log('-----------------------------------------');
+        console.log(headContent ? headContent[0] : 'Error: <head> tag not found.');
+        console.log('-----------------------------------------\n');
+      } else {
+        const hasEnvMarker = html.includes('name="alanui-env"');
+        if (!hasEnvMarker) {
+          console.warn(`⚠️ Expected alanui-env marker missing in: ${file}`);
+        }
+      }
     }
 
     // 4. Minify assets

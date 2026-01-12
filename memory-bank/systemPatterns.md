@@ -140,13 +140,16 @@ graph TD
 ## Risks and Mitigations
 
 -   **Configuration Drift (CSP)**
-    -   Risk: Two CSP sources (inline vs config). Mitigation: Consolidate to one authoritative definition.
+    -   Risk: CSP can drift if updated ad-hoc in multiple places. Mitigation: keep `cspDirectives` in `config/index.js` as the single source of truth.
 
 -   **Domain-Coupled Logging**
     -   Risk: Production logging silencing tied to specific hostname. Mitigation: Use environment-driven toggle.
 
 -   **Service Worker Cache Versioning**
     -   Risk: Stale assets if `CACHE_NAME` doesn’t change. Mitigation: `scripts/build.js` stamps a unique `CACHE_NAME` into `dist/service-worker.js` per build.
+
+-   **Build Script Output Noise**
+    -   Risk: CI logs become noisy and failures are harder to diagnose. Mitigation: gate verbose build output behind `BUILD_DEBUG=true`.
 
 -   **Scaling CSRF**
     -   Risk: Simple CSRF token isn’t multi-process aware. Mitigation: Keep disabled or move to shared store if scaling.

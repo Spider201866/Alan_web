@@ -82,7 +82,7 @@ A full read-through of backend, frontend, PWA, build tooling, tests setup, and M
   6. Remove or wire CSP duplicate config (Completed Jan 2026)
      - No duplicate CSP config remains; CSP is centralized via `cspDirectives`.
   7. `scripts/resize-favicon.js` is referenced in editor tabs but not present; either restore (if needed) or remove stale references/documentation.
-  8. Validate if `API_BASE_URL`, `SENTRY_DSN`, `SENTRY_FRONTEND_DSN` are used; if not, prune to reduce environment noise.
+  8. (Completed Jan 2026) Removed unused env placeholders (`API_BASE_URL`, `SENTRY_DSN`, `SENTRY_FRONTEND_DSN`) to reduce environment noise.
 - UX and minor consistency
   9. Ensure no duplicate/conflicting handlers for `instructions-button` (home-ui vs home-navigation). Prefer one source.
   10. Verify all buttons/controls maintain clear or translated labels/aria-labels (most do).

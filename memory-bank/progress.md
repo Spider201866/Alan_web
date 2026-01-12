@@ -91,8 +91,8 @@ A comprehensive codebase review and mapping was completed to validate architectu
    - `scripts/build.js` stamps a unique cache name into `dist/service-worker.js` per build
 6. Remove or wire unused config (Completed Jan 2026)
    - CSP is centralized; no leftover duplicate CSP config remains
-7. Validate optional envs
-   - Evaluate removal of unused envs (`API_BASE_URL`, `SENTRY_DSN`, `SENTRY_FRONTEND_DSN`) to reduce noise
+7. Validate optional envs (Completed Jan 2026)
+   - Removed unused env placeholders (`API_BASE_URL`, `SENTRY_DSN`, `SENTRY_FRONTEND_DSN`) to reduce noise
 8. UX consistency
    - Ensure there is a single handler path for `instructions-button` (avoid duplication across modules)
 9. CI checks

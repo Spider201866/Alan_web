@@ -18,9 +18,6 @@ export default function validateEnv(processEnv = process.env, dotenvConfig = dot
     CORS_ALLOWED_ORIGINS: str({ default: '' }),
     ENABLE_CORS: str({ default: 'true' }),
     ENABLE_CSRF: str({ default: 'false' }),
-    API_BASE_URL: str({ default: '' }), // Assuming this might be used elsewhere
-    SENTRY_DSN: str({ default: '' }), // Assuming this might be used elsewhere
-    SENTRY_FRONTEND_DSN: str({ default: '' }), // Assuming this might be used elsewhere
   });
 
   return env;
