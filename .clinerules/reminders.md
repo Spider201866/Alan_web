@@ -51,6 +51,10 @@ This file contains a checklist of important rules and common pitfalls to avoid d
 -   **Read the Memory Bank**: Always start by reviewing the memory bank files to understand the current project state, architecture, and context.
 -   **Update Documentation**: After completing any significant task, update all relevant documentation (`README.md`, `folderList.txt`, and the memory bank files) to reflect the changes.
 
+-   **Cline terminal execution mode**:
+    - If command output capture becomes flaky in the VS Code integrated terminal, prefer Cline **Terminal Execution Mode → Background Exec**.
+    - This reduces interactive prompt issues (e.g. PowerShell `curl` alias asking for `Uri:`) and “output could not be captured” hiccups.
+
 -   **CI/build hygiene**:
     - Build transforms should be **idempotent** (re-running build shouldn’t introduce path bugs like `//`).
     - Avoid excessive CI log noise; gate verbose build output behind an env flag (e.g. `BUILD_DEBUG=true`).
