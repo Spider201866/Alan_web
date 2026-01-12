@@ -68,6 +68,17 @@ if ([string]::IsNullOrWhiteSpace($st)) {
 ### Interpret results
 - If `Has .git: False` → you are not in the repo root, or you are in a copied folder without git metadata.
 - If `Has .git: True` and `rev-parse` works → repo is fine; earlier errors were due to shell/working-directory confusion.
+
+## Repo-local gotcha: `.git_disabled`
+Some workflows temporarily rename `.git/` to `.git_disabled/`.
+If you see `.git_disabled` in the repo root and `.git` is missing, Git will always report:
+`fatal: not a git repository`.
+
+PowerShell check:
+
+```powershell
+Get-ChildItem -Force -Name | Where-Object { $_ -like '.git*' }
+```
 - If `.git` exists but `rev-parse` fails → check for overrides.
 
 ## Fix: Clear overriding env vars
@@ -76,6 +87,22 @@ If `GIT_DIR` or `GIT_WORK_TREE` are set:
 ```powershell
 Remove-Item Env:GIT_DIR -ErrorAction SilentlyContinue
 Remove-Item Env:GIT_WORK_TREE -ErrorAction SilentlyContinue
+```
+
+### Important: overrides can be garbage + can reappear
+Sometimes `GIT_DIR` is set to a **nonsense value** (e.g. `X`) which will make Git behave unpredictably and can produce false
+"not a git repository" errors even when `.git` exists.
+
+Also note: clearing env vars inside a single command/process (e.g. one-off PowerShell runs) only affects that process.
+If the value keeps coming back, it is likely set in one of:
+- User/System environment variables (Windows)
+- Your PowerShell profile ($PROFILE)
+
+### Safe wrapper (run git commands in a clean environment)
+If you suspect overrides, wrap your git command like this:
+
+```powershell
+pwsh -NoProfile -Command "Remove-Item Env:GIT_DIR -ErrorAction SilentlyContinue; Remove-Item Env:GIT_WORK_TREE -ErrorAction SilentlyContinue; git status -sb"
 ```
 
 Then run:
