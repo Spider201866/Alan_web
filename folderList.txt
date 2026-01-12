@@ -1,4 +1,5 @@
 .clinerules/reminders.md
+.clinerules/skills/windows-git-sanity/SKILL.md
 .editorconfig
 .github/workflows/ci-cd.yml
 .gitignore
