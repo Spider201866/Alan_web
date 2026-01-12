@@ -13,7 +13,7 @@
  */
 
 // Bump this value whenever you need to force clients to refresh cached assets.
-const CACHE_NAME = 'alanui-v3';
+const CACHE_NAME = 'alanui-v4';
 const OFFLINE_URL = 'offline.html';
 
 // A list of essential assets to cache on installation.

@@ -40,7 +40,13 @@ export function initChatbot(sessionId) {
   Chatbot.initFull({
     chatflowid: '87d45a25-213a-4cd3-b02f-cdf946b2d310',
     // Use same-origin proxy to avoid browser CORS issues when calling Flowise.
-    apiHost: '/flowise',
+    // IMPORTANT: Flowise embed defaults to http://localhost:3000 if apiHost is not recognized.
+    // Using an absolute URL based on the current page origin prevents accidental cross-origin
+    // calls to localhost (which will be blocked by CSP when browsing via a different host/IP).
+    apiHost:
+      typeof window !== 'undefined'
+        ? new URL('/flowise', window.location.origin).toString()
+        : '/flowise',
     // MODIFICATION 3: Use our new variable for the sessionId.
     // The property name is `sessionId` for chat history persistence.
     sessionId: sessionToUse,
