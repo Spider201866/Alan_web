@@ -17,7 +17,7 @@
 // - In production builds, `scripts/build.js` rewrites `dist/service-worker.js` to
 //   stamp a unique cache name per build (e.g. alanui-<buildId>) so clients always
 //   refresh cached assets without manual bumps.
-const CACHE_NAME = 'alanui-v4';
+const CACHE_NAME = 'alanui-v8';
 const OFFLINE_URL = 'offline.html';
 
 // A list of essential assets to cache on installation.

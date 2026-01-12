@@ -379,7 +379,7 @@
           />
           <img id="logo2" src="images/AP.webp" alt="AP Logo" width="200" height="122" />
         </picture>
-        <p>Eye, Ear, Skin AI Assistant</p>
+        <p>Eye, Ear, Skin AI</p>
       </section>
 
       <!-- ===================================================================== -->
@@ -395,8 +395,8 @@
           height="100"
         />
         <p id="instruction-text" style="text-align: justify">
-          Alan is an AI assistant for students and those who only occasionally see eye, ear or skin
-          cases. Write or speak clearly and avoid identifying names or details.
+          Alan is an AI learning tool for students and those who only occasionally see eye, ear or skin
+          cases. Write clearly and avoid identifying names or details.
         </p>
         <p id="good-luck" class="good-luck" style="text-align: center">Good luck!</p>
 
@@ -425,17 +425,45 @@
               <label><input type="checkbox" value="Eyes" /> Eyes</label>
               <label><input type="checkbox" value="Ears" /> Ears</label>
               <label><input type="checkbox" value="Skin" /> Skin</label>
-              <label><input type="checkbox" value="Veterinary" /> Veterinary</label>
-              <label><input type="checkbox" value="Child/Maternal" /> Child/Maternal</label>
+              <!-- <label><input type="checkbox" value="Veterinary" /> Veterinary</label> -->
+              <!-- <label><input type="checkbox" value="Child/Maternal" /> Child/Maternal</label> -->
             </div>
           </div>
-          <label for="experience-select" class="sr-only">Experience</label>
-          <select id="experience-select" class="onboarding-field experience-dropdown">
+          <label for="experience-select-ui" class="sr-only">Experience</label>
+
+          <!-- Custom (styled) Experience dropdown to match Aims dropdown UI -->
+          <div
+            id="experience-select-ui"
+            class="onboarding-field custom-multiselect-container"
+            role="combobox"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            tabindex="0"
+          >
+            <div class="select-box" id="experience-select-box">
+              <span id="experience-select-text">Experience</span>
+            </div>
+            <div class="checkboxes" id="experience-options" role="listbox">
+              <label role="option" data-value="Student / refresher" tabindex="-1">Student / Refresher</label>
+              <label role="option" data-value="Confident core knowledge" tabindex="-1">Basic knowledge</label>
+              <label role="option" data-value="Expert" tabindex="-1">Advanced</label>
+            </div>
+          </div>
+
+          <!-- Keep the native select as the single source of truth for value/storage/JS. Hidden from the user. -->
+          <select
+            id="experience-select"
+            class="sr-only"
+            aria-hidden="true"
+            tabindex="-1"
+            autocomplete="off"
+          >
             <option value="" disabled selected hidden>Experience</option>
             <option value="Student / refresher">Student / Refresher</option>
-            <option value="Confident core knowledge">Good core knowledge</option>
-            <option value="Expert">Expert</option>
+            <option value="Confident core knowledge">Basic knowledge</option>
+            <option value="Expert">Advanced</option>
           </select>
+          <!--
           <input
             type="text"
             id="contactInput"
@@ -443,6 +471,7 @@
             placeholder="Contact (email/phone)"
             autocomplete="email"
           />
+          -->
           <br /><br /><br />
           <button
             type="button"

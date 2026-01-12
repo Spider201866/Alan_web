@@ -108,7 +108,6 @@ function handleAccept() {
     !nameInputEl ||
     !jobSelectElementEl ||
     !experienceSelectEl ||
-    !contactInputEl ||
     !blackScreenEl
   ) {
     log.error('Missing DOM elements for handleAccept');
@@ -132,13 +131,19 @@ function handleAccept() {
   localStorage.setItem('name', rawName);
   localStorage.setItem('selectedJobRole', checkedAims.join(', '));
   localStorage.setItem('selectedExperience', experienceSelectEl.value);
-  localStorage.setItem('contactInfo', contactInputEl.value);
+  localStorage.setItem('contactInfo', contactInputEl ? contactInputEl.value : '');
   localStorage.setItem('roleClassification', roleClass);
   if (!localStorage.getItem('sessionId')) {
     localStorage.setItem('sessionId', `user-${Date.now()}`);
   }
 
-  pushDataToServer(rawName, checkedAims, roleClass, experienceSelectEl.value, contactInputEl.value);
+  pushDataToServer(
+    rawName,
+    checkedAims,
+    roleClass,
+    experienceSelectEl.value,
+    contactInputEl ? contactInputEl.value : ''
+  );
 
   if (blackScreenEl) {
     blackScreenEl.style.visibility = 'visible';

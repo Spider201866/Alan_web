@@ -9,7 +9,7 @@ import { initOnboardingForm } from './onboarding-form.js';
 // --- DOM Element References (Queried once in main) ---
 let passwordScreen, passwordInput, passwordSubmitBtn, passwordError;
 let splashScreen, instructionScreen, blackScreen;
-let nameInput, jobSelectElement, experienceSelect, contactInput, acceptButton;
+let nameInput, jobSelectElement, experienceSelect, experienceSelectUi, contactInput, acceptButton;
 let indexLangButton, indexLangDropdown, aimsSelectText, checkboxesContainer; // For language and form specifics
 
 document.addEventListener('DOMContentLoaded', main);
@@ -35,6 +35,7 @@ function main() {
     aimsSelectText = jobSelectElement.querySelector('#aims-select-text');
   }
   experienceSelect = document.getElementById('experience-select');
+  experienceSelectUi = document.getElementById('experience-select-ui');
   contactInput = document.getElementById('contactInput');
   acceptButton = document.getElementById('acceptButton');
   indexLangButton = document.getElementById('index-language-button');
@@ -79,6 +80,7 @@ function main() {
     nameInput,
     jobSelectElement,
     experienceSelect,
+    experienceSelectUi,
     contactInput,
     acceptButton,
   });
@@ -158,7 +160,7 @@ function applyIndexTranslations() {
   if (splashScreenTextElement) {
     splashScreenTextElement.textContent = getTranslation(
       'splashScreenText',
-      'Eye, Ear, Skin AI Assistant'
+      'Eye, Ear, Skin AI'
     );
   }
 
@@ -173,8 +175,9 @@ function applyIndexTranslations() {
   }
 
   if (nameInput) nameInput.placeholder = getTranslation('namePlaceholder', 'Name');
-  if (contactInput)
+  if (contactInput) {
     contactInput.placeholder = getTranslation('contactPlaceholder', 'Contact (email/phone)');
+  }
 
   // Update aims dropdown placeholder text if no aims are selected
   if (
@@ -227,6 +230,32 @@ function applyIndexTranslations() {
       option.textContent = getTranslation(translationKey, option.value);
     }
   });
+
+  // Sync the custom Experience dropdown UI (to match Aims styling)
+  const experienceSelectTextEl = document.getElementById('experience-select-text');
+  const experienceOptionEls = document.querySelectorAll('#experience-options [data-value]');
+  if (experienceSelect && (experienceSelectTextEl || experienceOptionEls.length > 0)) {
+    const optionTextByValue = {};
+    experienceSelect.querySelectorAll('option').forEach((opt) => {
+      if (opt.value) optionTextByValue[opt.value] = opt.textContent;
+    });
+
+    experienceOptionEls.forEach((labelEl) => {
+      const value = labelEl.getAttribute('data-value');
+      if (!value) return;
+      if (optionTextByValue[value]) {
+        labelEl.textContent = optionTextByValue[value];
+      }
+    });
+
+    if (experienceSelectTextEl) {
+      if (experienceSelect.value && optionTextByValue[experienceSelect.value]) {
+        experienceSelectTextEl.textContent = optionTextByValue[experienceSelect.value];
+      } else {
+        experienceSelectTextEl.textContent = getTranslation('experiencePlaceholder', 'Experience');
+      }
+    }
+  }
 
   const langSelectorText = document.getElementById('language-selector-text');
   if (langSelectorText) {

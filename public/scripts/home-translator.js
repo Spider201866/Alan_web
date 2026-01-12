@@ -14,7 +14,6 @@ function applyHomeTranslations() {
     '#good-history': 'goodHistory',
     '#examine-well': 'examineWell',
     '#use-arclight': 'useArclight',
-    '.chatbot-version': 'alanMistakes',
     '#instructions-button': 'instructionsButton',
     '#eye-button': 'eyeButton',
     '#ear-button': 'earButton',
@@ -29,6 +28,15 @@ function applyHomeTranslations() {
   for (const [selector, key] of Object.entries(elementTranslations)) {
     const el = document.querySelector(selector);
     if (el) el.textContent = getTranslation(key, el.textContent);
+  }
+
+  // Footer: append the current month/year (m/yy) automatically.
+  // We strip any existing trailing m/yy from the translation string so we can keep
+  // translations simple and avoid manual date updates.
+  const chatbotVersionEl = document.querySelector('.chatbot-version');
+  if (chatbotVersionEl) {
+    const translated = getTranslation('alanMistakes', chatbotVersionEl.textContent);
+    chatbotVersionEl.textContent = `${stripTrailingMonthYear(translated)} ${getCurrentMonthYear()}`;
   }
 
   const instructionsBtn = document.getElementById('instructions-button');
@@ -83,6 +91,20 @@ function applyHomeTranslations() {
     const elB = document.getElementById(`${lineKey}b`);
     if (elB) elB.textContent = getTranslation(lineKey, elB.textContent);
   });
+}
+
+function getCurrentMonthYear() {
+  const now = new Date();
+  const month = now.getMonth() + 1; // 1-12
+  const yy = String(now.getFullYear()).slice(-2);
+  return `${month}/${yy}`;
+}
+
+function stripTrailingMonthYear(text) {
+  // Matches trailing dates like "7/25" or "6/25," or "6/25،" with optional whitespace.
+  return String(text)
+    .replace(/\s*\d{1,2}\/\d{2}\s*[،,]?\s*$/u, '')
+    .trim();
 }
 
 /**
