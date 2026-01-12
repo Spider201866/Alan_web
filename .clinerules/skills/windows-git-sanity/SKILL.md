@@ -44,6 +44,27 @@ Write-Host '--- git rev-parse ---'
 git rev-parse --show-toplevel
 ```
 
+## Avoiding Cline output-capture “no output” hiccups
+Some commands (notably `git status --porcelain`) often produce **no output** when the repo is clean.
+In some chat/terminal capture environments, “no output” can show as “output could not be captured”.
+
+### Prefer a status command that always prints
+
+```powershell
+git status -sb
+```
+
+### Or wrap porcelain output with an explicit fallback
+
+```powershell
+$st = git status --porcelain
+if ([string]::IsNullOrWhiteSpace($st)) {
+  Write-Host "WORKTREE_CLEAN"
+} else {
+  $st
+}
+```
+
 ### Interpret results
 - If `Has .git: False` → you are not in the repo root, or you are in a copied folder without git metadata.
 - If `Has .git: True` and `rev-parse` works → repo is fine; earlier errors were due to shell/working-directory confusion.
@@ -72,4 +93,3 @@ git -C (Get-Location).Path status
 
 ## Known gotcha: line wrapping in logs
 If paths appear with broken lines (e.g. `Alan\nUI`), re-run the command with explicit quotes and `-LiteralPath`.
-
