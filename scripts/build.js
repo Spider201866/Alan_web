@@ -36,6 +36,12 @@ async function runBuild() {
   try {
     console.log('🚀 Starting production build...');
 
+    // Use a single build timestamp/id across the entire build.
+    // This allows us to stamp the service worker cache name so it changes per build,
+    // forcing clients to refresh cached assets without manual CACHE_NAME bumps.
+    const buildTimestamp = new Date().toISOString();
+    const buildId = buildTimestamp.replace(/[^0-9]/g, '');
+
     // 1. Clean up the old dist directory
     console.log(`🧹 Cleaning old directory: ${DIST_DIR}`);
     await fs.rm(DIST_DIR, { recursive: true, force: true });
@@ -44,6 +50,30 @@ async function runBuild() {
     // 2. Copy all files from public to dist
     console.log(`📄 Copying all assets from ${SOURCE_DIR}/ to ${DIST_DIR}/`);
     await fs.cp(SOURCE_DIR, DIST_DIR, { recursive: true });
+
+    // 2b. Stamp service worker cache name (dist only)
+    // This keeps the source SW maintainable while ensuring production updates
+    // always trigger a fresh cache.
+    const swPath = path.join(DIST_DIR, 'service-worker.js');
+    try {
+      const sw = await fs.readFile(swPath, 'utf8');
+      const newCacheName = `alanui-${buildId}`;
+      const updated = sw.replace(
+        /const\s+CACHE_NAME\s*=\s*['"][^'"]+['"];?/,
+        `const CACHE_NAME = '${newCacheName}';`
+      );
+
+      if (updated === sw) {
+        console.warn(
+          `⚠️ Could not stamp CACHE_NAME in service-worker.js (pattern not found). Leaving as-is: ${swPath}`
+        );
+      } else {
+        await fs.writeFile(swPath, updated, 'utf8');
+        console.log(`✅ Stamped service worker CACHE_NAME: ${newCacheName}`);
+      }
+    } catch {
+      console.warn(`⚠️ No service-worker.js found at ${swPath}; skipping SW cache stamping.`);
+    }
 
     // 3. Find and patch all HTML files
     console.log('\n🔧 Patching HTML files...');
@@ -56,9 +86,13 @@ async function runBuild() {
       console.log(`   - Patching: ${file}`);
       let html = await fs.readFile(file, 'utf8');
 
-      // INJECT A UNIQUE BUILD TIMESTAMP AS PROOF
-      const timestamp = `<!--! BUILD TIMESTAMP: ${new Date().toISOString()} -->`;
-      html = html.replace('</head>', `  ${timestamp}\n</head>`);
+      // Inject build markers.
+      // - `alanui-env`: allows client code (e.g. log.js) to behave differently in production
+      //   without relying on a specific hostname.
+      // - build timestamp: human-readable release tracing (may be removed by HTML minification).
+      const envMeta = '<meta name="alanui-env" content="production">';
+      const timestamp = `<!--! BUILD TIMESTAMP: ${buildTimestamp} -->`;
+      html = html.replace('</head>', `  ${envMeta}\n  ${timestamp}\n</head>`);
 
       // THE CRITICAL FIX: Find all relative asset links and make them absolute.
       const assetRegex = /(href|src)="(?!\/|https?:\/\/)(favicons|styles|scripts|images)/g;

@@ -1,4 +1,4 @@
-<!-- Alan UI - activeContext.md | Updated 15th September 2025, Cline -->
+<!-- Alan UI - activeContext.md | Updated 12th January 2026, Cline -->
 
 # Active Context
 
@@ -62,23 +62,25 @@ A full read-through of backend, frontend, PWA, build tooling, tests setup, and M
 - CSRF: current simple token-in-memory approach is acceptable for single-process deployments; multi-process would require a shared store if enabled.
 
 ## Pending Tasks & Next Steps (Prioritized)
-- Deploy the latest changes to Railway and confirm clients refresh their service worker cache (CACHE_NAME bump should force refresh).
+- Deploy the latest changes to Railway and confirm clients refresh their service worker cache (production builds stamp a unique cache name into `dist/service-worker.js`, which should force refresh).
 - Configuration hygiene and consistency
-  1. Consolidate CSP single source of truth.
-     - Problem: There are two CSP definitions (inline in `server.js` and `config/index.js` `cspOptions` that appears unused).
-     - Action: Choose one authoritative definition. Prefer centralizing in config and consuming in `server.js`, or remove dead config. Ensure connect-src/img-src/style-src/script-src/font-src sets match definitive list.
-  2. Client logging toggle strategy.
-     - Problem: `public/scripts/log.js` silences logs based on `window.location.hostname === 'alan.up.railway.app'`.
-     - Action: Make this environment-driven rather than domain-specific (e.g., inject a data attribute in HTML or serve a small config JSON; or use a hostname allowlist). Keep simple and CSP-compliant.
+  1. Consolidate CSP single source of truth. (Completed Jan 2026)
+     - CSP directives are defined in `config/index.js` as `cspDirectives` and consumed by `server.js`.
+  2. Client logging toggle strategy. (Completed Jan 2026)
+     - `public/scripts/log.js` now reads a build-injected meta tag (`<meta name="alanui-env" content="production">`) rather than checking a hostname.
+     - `scripts/build.js` injects this meta tag into `dist/*.html` during production builds.
+     - Optional debug override: `localStorage.setItem('alanui:debug', '1')` re-enables info/debug logging.
   3. .gitignore coverage for database and build outputs.
      - Ensure `alan-data.db`, `test-alan-data.db`, and `dist/` are ignored to prevent accidental commits.
 - Security and robustness
   4. Consider enabling CSRF in production (`ENABLE_CSRF=true`) and verify front-end includes `x-csrf-token` header for state-changing requests (already supported by `csrf.js`, skipPaths maintained for `/api/fetch-records`).
-  5. Service worker cache versioning strategy.
-     - Current explicit `CACHE_NAME = 'alanui-v3'` is fine but requires manual bumps.
-     - Consider stamping a version/hash via build script and import into SW; or maintain a disciplined bump schedule per release.
+  5. Service worker cache versioning strategy. (Completed Jan 2026)
+     - `scripts/build.js` now stamps a unique cache name into `dist/service-worker.js` per build.
+     - This removes the need for manual `CACHE_NAME` bumps for production releases.
+     - Source `public/service-worker.js` remains readable/maintainable; stamping only happens in `dist/`.
 - Cleanup & dead code
-  6. Remove or wire `config.cspOptions` to avoid config drift.
+  6. Remove or wire CSP duplicate config (Completed Jan 2026)
+     - No duplicate CSP config remains; CSP is centralized via `cspDirectives`.
   7. `scripts/resize-favicon.js` is referenced in editor tabs but not present; either restore (if needed) or remove stale references/documentation.
   8. Validate if `API_BASE_URL`, `SENTRY_DSN`, `SENTRY_FRONTEND_DSN` are used; if not, prune to reduce environment noise.
 - UX and minor consistency
@@ -86,7 +88,9 @@ A full read-through of backend, frontend, PWA, build tooling, tests setup, and M
   10. Verify all buttons/controls maintain clear or translated labels/aria-labels (most do).
 - Documentation & CI
   11. Update Memory Bank (this change) and keep Progress updated per changes shipped.
-  12. Ensure CI runs translation and a11y checks (the scripts exist; verify workflow uses them).
+  12. Ensure CI runs translation and a11y checks (Completed Jan 2026)
+      - `.github/workflows/ci-cd.yml` now runs `npm test` on push and pull_request to main.
+      - This enforces: build → Prettier check → translations check → a11y checks → Jest.
 
 ## Important Patterns & Preferences (affirmed)
 - Orchestrator pattern on each major page script delegating to small modules.
@@ -105,10 +109,10 @@ A full read-through of backend, frontend, PWA, build tooling, tests setup, and M
 
 ---
 
-## Condensed Roadmap (Sep 2025) — Prioritized
+## Condensed Roadmap — Historical Snapshot (Created Sep 2025, Updated Jan 2026)
 1) Production caching + SW versioning
 - Cache-Control: public, max-age=31536000, immutable for /dist assets; HTML no-cache.
-- Keep explicit SW CACHE_NAME bump (or inject build version in SW).
+- SW cache versioning is now build-stamped in `dist/service-worker.js`.
 
 2) Image stability + lazy load
 - Ensure width/height (or aspect-ratio) on all images; continue <picture>/srcset WebP.

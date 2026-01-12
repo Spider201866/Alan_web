@@ -3,6 +3,8 @@ name: Continuous Integration
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build-and-test:
@@ -23,16 +25,12 @@ jobs:
       - name: Run npm audit for vulnerabilities
         run: npm audit --audit-level=moderate
 
-      - name: Run tests
-        run: npm run test:ci
+      - name: Run full quality gate (build + format + translations + a11y + jest)
+        run: npm test
         env:
           MASTER_PASSWORD_HASH: ${{ secrets.TEST_MASTER_PASSWORD_HASH }}
           PASSWORD_SALT: ${{ secrets.TEST_PASSWORD_SALT }}
           ONE_TIME_PASSWORD_HASHES: ${{ secrets.TEST_ONE_TIME_PASSWORD_HASHES }}
-
-      - name: Build application
-        if: success()
-        run: npm run build
 
       - name: Upload build artifacts
         if: success()

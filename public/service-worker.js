@@ -12,7 +12,11 @@
  *   - Cache-First for Static Assets: Serves static assets from the cache for speed.
  */
 
-// Bump this value whenever you need to force clients to refresh cached assets.
+// Cache name versioning:
+// - In development we serve directly from `public/`, so this value is used as-is.
+// - In production builds, `scripts/build.js` rewrites `dist/service-worker.js` to
+//   stamp a unique cache name per build (e.g. alanui-<buildId>) so clients always
+//   refresh cached assets without manual bumps.
 const CACHE_NAME = 'alanui-v4';
 const OFFLINE_URL = 'offline.html';
 

@@ -1,8 +1,32 @@
 // public/scripts/log.js
 // A simple logging utility that silences info and debug messages in production.
+//
+// IMPORTANT:
+// - Do NOT rely on deployment hostnames (they can change).
+// - In production, `scripts/build.js` injects:
+//     <meta name="alanui-env" content="production">
+//   into each HTML file in `dist/`.
+// - In development, we serve directly from `public/`, so the meta tag will
+//   typically be missing and logs remain enabled.
 
-// Determine if we are in the production environment by checking the hostname.
-const isProduction = window.location.hostname === 'alan.up.railway.app';
+/**
+ * Returns true if this page was built for production.
+ *
+ * You can override this at runtime for debugging by setting:
+ *   localStorage.setItem('alanui:debug', '1')
+ */
+function isProductionBuild() {
+  try {
+    if (localStorage.getItem('alanui:debug') === '1') return false;
+  } catch {
+    // localStorage may be unavailable; ignore and continue.
+  }
+
+  const env = document.querySelector('meta[name="alanui-env"]')?.getAttribute('content');
+  return env === 'production';
+}
+
+const isProduction = isProductionBuild();
 
 // A "no-operation" function that does nothing. This will be used to silence logs.
 const noOp = () => {};

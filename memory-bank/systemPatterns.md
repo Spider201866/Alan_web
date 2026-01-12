@@ -1,4 +1,4 @@
-<!-- Alan UI - systemPatterns.md | Updated 15th September 2025, Cline -->
+<!-- Alan UI - systemPatterns.md | Updated 12th January 2026, Cline -->
 
 # System Architecture and Patterns
 
@@ -83,7 +83,7 @@ graph TD
 ## Additional Confirmed Patterns & Guardrails (Sep 2025)
 
 -   **CSP Configuration (Single Source of Truth)**
-    -   Helmet CSP is currently defined inline in `server.js`. A similar structure exists as `config.cspOptions` but appears unused. For long-term reliability, choose one authoritative CSP definition to avoid drift. Recommendation: centralise in `config/` and have `server.js` consume it, or remove the dead config.
+    -   CSP directives are defined in `config/index.js` as `cspDirectives` and consumed by `server.js` (merged into Helmet defaults). This is the single source of truth.
 
 -   **Service Worker Bypass for Admin**
     -   The SW `fetch` handler bypasses `view-records.html` and its assets to avoid caching-induced admin issues. This is a deliberate pattern to keep admin experience fresh and reliable.
@@ -92,7 +92,7 @@ graph TD
     -   Pages that depend on SW-managed asset availability listen for `SW_READY` from the service worker before initialising critical flows. This reduces first-load race conditions.
 
 -   **Client Logging Strategy**
-    -   `log.js` silences `info`/`debug` when `window.location.hostname === 'alan.up.railway.app'`. This works but is domain-coupled. Prefer an environment-driven approach (e.g. HTML data attribute, config endpoint, or a hostname allowlist) to avoid surprises if domains change.
+    -   `log.js` now silences `info`/`debug` based on a build-injected meta tag (`<meta name="alanui-env" content="production">`) rather than a hostname.
 
 -   **Database Path Strategy**
     -   DB location varies by environment:
@@ -146,7 +146,7 @@ graph TD
     -   Risk: Production logging silencing tied to specific hostname. Mitigation: Use environment-driven toggle.
 
 -   **Service Worker Cache Versioning**
-    -   Risk: Stale assets if `CACHE_NAME` not bumped. Mitigation: Bump per release or stamp from build.
+    -   Risk: Stale assets if `CACHE_NAME` doesn’t change. Mitigation: `scripts/build.js` stamps a unique `CACHE_NAME` into `dist/service-worker.js` per build.
 
 -   **Scaling CSRF**
     -   Risk: Simple CSRF token isn’t multi-process aware. Mitigation: Keep disabled or move to shared store if scaling.

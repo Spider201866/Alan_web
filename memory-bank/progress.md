@@ -1,4 +1,4 @@
-<!-- Alan UI - progress.md | Updated 15th September 2025, Cline -->
+<!-- Alan UI - progress.md | Updated 12th January 2026, Cline -->
 
 # Progress
 
@@ -65,7 +65,7 @@ A comprehensive codebase review and mapping was completed to validate architectu
   - `generate-hash.cjs` ensures hash derivation matches middleware
 - CSP:
   - Strict, explicit sources for scripts/styles/fonts/images/connect
-  - Two CSP definitions currently exist (server inline and config cspOptions); consolidation recommended to prevent drift
+  - Single source of truth: `config/index.js` (`cspDirectives`) consumed by `server.js`
 - CORS:
   - Allowlist-based; credentials enabled; null-origin requests are accepted
 - CSRF:
@@ -79,18 +79,18 @@ A comprehensive codebase review and mapping was completed to validate architectu
 - This progress entry records the completed review and the prioritized backlog (below).
 
 ### Backlog / Action Items (Prioritized)
-1. Consolidate CSP single source of truth
-   - Choose authoritative CSP (prefer config/index.js) and have server.js consume it, or remove dead config to avoid drift
-2. Client logging strategy
-   - Replace hostname-based silencing in `public/scripts/log.js` with environment-driven toggle or an allowlist
+1. Consolidate CSP single source of truth (Completed Jan 2026)
+   - CSP directives are centralized in `config/index.js` (`cspDirectives`) and consumed by `server.js`
+2. Client logging strategy (Completed Jan 2026)
+   - Logging is environment-driven via build-injected meta tag (`alanui-env=production`)
 3. .gitignore hygiene
    - Ensure local DBs (`alan-data.db`, `test-alan-data.db`) and `dist/` are excluded from version control
 4. Consider enabling CSRF in production
    - Set `ENABLE_CSRF=true` and add `x-csrf-token` to state-changing requests (skipPaths already in place for `/api/fetch-records`)
-5. Service worker cache versioning
-   - Adopt a build-stamped cache name or a disciplined bump schedule to avoid stale assets
-6. Remove or wire unused config
-   - `config.cspOptions` appears unused; either wire it or remove it
+5. Service worker cache versioning (Completed Jan 2026)
+   - `scripts/build.js` stamps a unique cache name into `dist/service-worker.js` per build
+6. Remove or wire unused config (Completed Jan 2026)
+   - CSP is centralized; no leftover duplicate CSP config remains
 7. Validate optional envs
    - Evaluate removal of unused envs (`API_BASE_URL`, `SENTRY_DSN`, `SENTRY_FRONTEND_DSN`) to reduce noise
 8. UX consistency
@@ -137,6 +137,28 @@ The AlanUI Web Chatbot remains stable, accessible, and well-documented as a PWA.
 ### Verification
 - Local verification: POST to `/flowise/api/v1/prediction/<chatflowid>` returns HTTP 200 and valid JSON response.
 - Test suite: `npm test` passes (build + format check + translations + a11y + jest).
+
+---
+
+## January 2026 Refactor (12 Jan 2026)
+
+### Completed: environment-driven client logging
+- Replaced hostname-coupled production logging gate in `public/scripts/log.js` with a build-injected environment marker.
+- `scripts/build.js` now injects `<meta name="alanui-env" content="production">` into each `dist/*.html` during `npm run build`.
+- `log.js` silences `info`/`debug` when the meta tag indicates production.
+- Debug override available: set `localStorage.setItem('alanui:debug', '1')` to re-enable logs (useful for troubleshooting production).
+
+### Verification
+- `npm test` passes with the new build injection.
+
+### Completed: build-stamped service worker cache name
+- `scripts/build.js` now rewrites `dist/service-worker.js` during production builds to set:
+  - `const CACHE_NAME = 'alanui-<buildId>'`
+  where `<buildId>` is derived from the build timestamp.
+- This removes the need to manually bump `CACHE_NAME` for production releases, helping avoid stale assets.
+
+### Verification
+- `npm test` passes with SW cache stamping enabled (build output logs show the stamped cache name).
 
 ---
 
@@ -197,10 +219,10 @@ The AlanUI Web Chatbot remains stable, accessible, and well-documented as a PWA.
 
 ---
 
-## Condensed Roadmap (Sep 2025) — Prioritized
+## Condensed Roadmap — Historical Snapshot (Created Sep 2025, Updated Jan 2026)
 1) Production caching + SW versioning
 - Cache-Control: public, max-age=31536000, immutable for /dist assets; HTML no-cache.
-- Keep explicit SW CACHE_NAME bump (or inject build version in SW).
+- SW cache versioning is now build-stamped in `dist/service-worker.js`.
 
 2) Image stability + lazy load
 - Ensure width/height (or aspect-ratio) on all images; continue <picture>/srcset WebP.

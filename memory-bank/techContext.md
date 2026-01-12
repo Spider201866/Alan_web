@@ -1,8 +1,8 @@
-<!-- Alan UI - techContext.md | Updated 15th September 2025, Cline -->
+<!-- Alan UI - techContext.md | Updated 12th January 2026, Cline -->
 
 # Technology Stack and Tooling
 
-This document provides a detailed overview of the technologies, dependencies, configuration, and operational constraints used in this project. Updated after a full codebase review on 15 Sep 2025.
+This document provides a detailed overview of the technologies, dependencies, configuration, and operational constraints used in this project. Originally expanded after a full codebase review on 15 Sep 2025; most recently updated Jan 2026.
 
 ---
 
@@ -37,8 +37,8 @@ This document provides a detailed overview of the technologies, dependencies, co
   - font-src: 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com
   - img-src: 'self' data: *.tile.openstreetmap.org raw.githubusercontent.com
   - connect-src: 'self' https://flowiseai-railway-production-fecf.up.railway.app https://api.bigdatacloud.net https://ipinfo.io https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com
-- Note on duplication
-  - There is a similar CSP structure defined in config/index.js (cspOptions) that appears unused. Consolidate to single source to prevent configuration drift.
+- CSP single source of truth
+  - CSP directives are defined in `config/index.js` as `cspDirectives` and consumed by `server.js` (merged into Helmet defaults).
 - Additional headers: HSTS (1y, includeSubDomains), Referrer-Policy no-referrer, X-Frame-Options deny, X-Content-Type-Options nosniff.
 
 ---
@@ -126,7 +126,7 @@ This document provides a detailed overview of the technologies, dependencies, co
 ## PWA Architecture
 
 - Service Worker (public/service-worker.js)
-  - CACHE_NAME: alanui-v3 (manual bump); pre-caches core assets.
+  - CACHE_NAME: source file uses a stable name for development; production builds stamp a unique cache name per build into `dist/service-worker.js`.
   - on install: caches CORE_ASSETS with logging; skipWaiting.
   - on activate: deletes non-matching caches, clients.claim, posts { type: 'SW_READY' } to all clients.
   - on fetch:
@@ -189,19 +189,20 @@ This document provides a detailed overview of the technologies, dependencies, co
   - Stores minimal session and user metadata in SQLite (name, aim(s), experience, location, contact, classification, agent, date/time, refresh count).
   - UI clarifies responsibilities and avoids capturing sensitive PII beyond simple meta fields.
 - Logging
-  - Client-side logging is currently domain-gated (alan.up.railway.app). Prefer environment-driven silencing.
+  - Client-side logging is environment-driven via a build-injected meta tag (`alanui-env=production`) rather than domain-gated.
 
 ---
 
 ## Operational Notes and Recommendations
 
 - CSP single source of truth
-  - Consolidate to one place (prefer config or server.js import from config) to avoid drift.
+  - CSP directives are centralized in `config/index.js` as `cspDirectives` and consumed by `server.js`.
 - Client logging toggle
-  - Replace hostname check with environment-based flagging or an allowlist to ease domain changes.
+  - Production logging is controlled via the build-injected `alanui-env` meta tag.
+  - Debug override: `localStorage.setItem('alanui:debug', '1')`.
 - Git ignore hygiene
   - Ensure local DBs and dist/ are ignored.
 - CSRF
   - Consider ENABLE_CSRF=true in production; add x-csrf-token header on state-changing requests (frontend call sites already centralized).
 - SW cache versioning
-  - Regularly bump CACHE_NAME or stamp version into SW at build time.
+  - Cache version is stamped into `dist/service-worker.js` at build time (no manual bump needed for production).

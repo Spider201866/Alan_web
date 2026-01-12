@@ -1,4 +1,4 @@
-<!-- Alan UI - productContext.md | Updated 15th September 2025, Cline -->
+<!-- Alan UI - productContext.md | Updated 12th January 2026, Cline -->
 
 # Product Context
 
@@ -93,8 +93,8 @@ The AlanUI Web Chatbot provides accessible, relevant health information focused 
 - “Images” quick-links present curated external sites (ophthalmology/ENT/dermatology) with consistent styling and target=_blank.
 
 ## Known Constraints / Considerations
-- Client log silencing currently domain-based (`alan.up.railway.app`); fragile if domain changes. Prefer environment-driven approach.
-- Service worker cache name must be manually bumped on releases (`alanui-v3` currently).
+- Client log silencing is environment-driven via a build-injected meta tag (`alanui-env=production`), not domain-based.
+- Service worker cache name for production is build-stamped (no manual bump needed).
 - CSRF disabled by default; can be enabled for production with coordinated header updates on client.
 
 ## Current Status

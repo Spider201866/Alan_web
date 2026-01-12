@@ -2,7 +2,7 @@
 
 A web-based chatbot focused on Eye, Ear, and Skin health information, designed for users in Low- and Middle-Income Countries (LMICs). The app is performance-conscious, accessible, and fully offline-capable as a Progressive Web App (PWA).
 
-Updated: 11 Jan 2026
+Updated: 12 Jan 2026
 
 For deep architecture and context, see the Memory Bank:
 - memory-bank/projectbrief.md
@@ -208,8 +208,8 @@ External services/CDNs
 - Google Fonts, jsdelivr/cdnjs/unpkg (CSP whitelisted)
 
 CSP notes
-- CSP is enforced by Helmet with an explicit allowlist (server.js).
-- A similar CSP definition exists in config/index.js (cspOptions) for centralization; ensure only a single source of truth is used to avoid drift.
+- CSP is enforced by Helmet in `server.js`.
+- **Single source of truth**: the directives live in `config/index.js` as `cspDirectives` and are merged into Helmet’s defaults in `server.js`.
 
 ---
 
@@ -264,15 +264,16 @@ What runs:
 
 CI/CD (overview)
 - On push to main: install, test, build, deploy (Railway)
-- Ensure your CI calls translation and a11y checks (dist-based) along with unit/integration tests
+- GitHub Actions runs the full quality gate via `npm test` (build + Prettier + translations + a11y + jest).
 
 ---
 
 ## Operational Notes
 
-- Logging: public/scripts/log.js silences info/debug in production when hosted on alan.up.railway.app. Consider moving to an env-driven toggle if domains change.
-- Service Worker: increment CACHE_NAME (in public/service-worker.js — currently `alanui-v3`) per release or adopt a build-stamped versioning strategy to avoid stale caches.
-- CSP: maintain a single authoritative definition to avoid drift.
+- Logging: `public/scripts/log.js` silences info/debug in production **based on a build-injected meta tag** (`<meta name="alanui-env" content="production">`).
+  - Debug override: `localStorage.setItem('alanui:debug', '1')` re-enables info/debug.
+- Service Worker: production builds stamp a unique `CACHE_NAME` into `dist/service-worker.js` per build (no manual version bump needed).
+- CSP: keep CSP directives centralized in `config/index.js` (`cspDirectives`).
 - Admin/records: SW bypass for /view-records.html is intentional to keep data fresh.
 
 Repo hygiene
