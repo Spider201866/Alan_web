@@ -104,12 +104,7 @@ function verifyPassword() {
  * Handles the submission of the onboarding form.
  */
 function handleAccept() {
-  if (
-    !nameInputEl ||
-    !jobSelectElementEl ||
-    !experienceSelectEl ||
-    !blackScreenEl
-  ) {
+  if (!nameInputEl || !jobSelectElementEl || !experienceSelectEl || !blackScreenEl) {
     log.error('Missing DOM elements for handleAccept');
     return;
   }

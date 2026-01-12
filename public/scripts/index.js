@@ -158,10 +158,7 @@ function applyIndexTranslations() {
 
   const splashScreenTextElement = splashScreen?.querySelector('p');
   if (splashScreenTextElement) {
-    splashScreenTextElement.textContent = getTranslation(
-      'splashScreenText',
-      'Eye, Ear, Skin AI'
-    );
+    splashScreenTextElement.textContent = getTranslation('splashScreenText', 'Eye, Ear, Skin AI');
   }
 
   if (passwordInput) passwordInput.placeholder = getTranslation('passwordPlaceholder', 'Password');
