@@ -129,6 +129,14 @@ graph TD
     1.  Kill all running Node.js processes: `taskkill /F /IM node.exe`
     2.  Restart the development server: `npm run dev`
 
+-   **PowerShell-first workflow (Windows)**
+    - The repo assumes PowerShell usage; avoid CMD-only syntax.
+    - If commands behave oddly, run the repo sanity skill:
+      - `.clinerules/skills/powershell-sanity-checklist/SKILL.md`
+    - If Git reports “not a git repository”, follow:
+      - `.clinerules/skills/windows-git-sanity/SKILL.md`
+    - Repo gotcha: `.git` can be temporarily renamed to `.git_disabled` which will break Git until restored.
+
 -   **Production Deployment**:
     1.  A push to the `main` branch triggers the GitHub Actions workflow.
     2.  The workflow installs dependencies (`npm ci`) runs tests (`npm test`) and creates a production build (`npm run build`).

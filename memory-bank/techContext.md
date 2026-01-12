@@ -206,3 +206,14 @@ This document provides a detailed overview of the technologies, dependencies, co
   - Consider ENABLE_CSRF=true in production; add x-csrf-token header on state-changing requests (frontend call sites already centralized).
 - SW cache versioning
   - Cache version is stamped into `dist/service-worker.js` at build time (no manual bump needed for production).
+
+## Windows / PowerShell Developer Workflow (Repo Guardrails)
+- Target shell: **PowerShell**.
+- Avoid CMD-only syntax and PowerShell alias pitfalls:
+  - `curl` is an alias for `Invoke-WebRequest` (can prompt for `Uri`). Prefer `curl.exe` or `Invoke-WebRequest -Method Head -Uri ...`.
+- Repo sanity skill:
+  - `.clinerules/skills/powershell-sanity-checklist/SKILL.md`
+    - Quick checks for PWD, curl alias, git metadata (`.git` vs `.git_disabled`).
+- If Git behaves oddly on Windows:
+  - Use `.clinerules/skills/windows-git-sanity/SKILL.md`.
+- If VS Code integrated terminal output capture is flaky in Cline, prefer **Background Exec** mode.
