@@ -47,7 +47,7 @@ export function createRecordsTableHeader() {
     'No.',
     'Session ID',
     'Name',
-    'Aims',
+    'Interests',
     'Experience',
     'Contact',
     'Latitude',

@@ -182,7 +182,7 @@ function applyIndexTranslations() {
     checkboxesContainer &&
     checkboxesContainer.querySelectorAll('input:checked').length === 0
   ) {
-    aimsSelectText.textContent = getTranslation('aimsPlaceholder', 'Aims');
+    aimsSelectText.textContent = getTranslation('aimsPlaceholder', 'Interests');
   }
 
   // Translate checkbox labels within job-role-select
@@ -217,6 +217,12 @@ function applyIndexTranslations() {
     );
   }
   const expOptionsMapping = {
+    // New canonical values
+    Primary: 'experienceStudentRefresher',
+    Intermediate: 'experienceConfidentCore',
+    Advanced: 'experienceExpert',
+
+    // Backward compat (older localStorage / older records)
     'Student / refresher': 'experienceStudentRefresher',
     'Confident core knowledge': 'experienceConfidentCore',
     Expert: 'experienceExpert',

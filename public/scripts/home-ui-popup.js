@@ -17,23 +17,45 @@ export function buildPopupContent() {
   const country = localStorage.getItem('country') || 'Not set';
   const iso2 = localStorage.getItem('iso2') || 'Not set';
   const classification = localStorage.getItem('classification') || 'Unknown';
-  const roleClass = localStorage.getItem('roleClassification') || '';
   const area = localStorage.getItem('area') || 'Not set';
-  const contactInfo = localStorage.getItem('contactInfo') || 'Not set';
   const experienceKeyMap = {
+    // New canonical values
+    Primary: 'experienceStudentRefresher',
+    Intermediate: 'experienceConfidentCore',
+    Advanced: 'experienceExpert',
+
+    // Backward compat (older localStorage / older records)
     'Student / refresher': 'experienceStudentRefresher',
     'Confident core knowledge': 'experienceConfidentCore',
     Expert: 'experienceExpert',
   };
   const translatedExperience = getTranslation(experienceKeyMap[experienceValue], experienceValue);
+
+  // Translate stored aims (we store canonical values like "Eyes"/"Ears"/"Skin" in localStorage)
+  // so the popup respects the currently selected UI language.
+  const aimsKeyMap = {
+    Eyes: 'aimsEyes',
+    Ears: 'aimsEars',
+    Skin: 'aimsSkin',
+    Veterinary: 'aimsVeterinary',
+    'Child/Maternal': 'aimsChildMaternal',
+  };
+  const translatedAims =
+    role && role !== 'Not set'
+      ? role
+          .split(',')
+          .map((s) => s.trim())
+          .filter(Boolean)
+          .map((aim) => getTranslation(aimsKeyMap[aim], aim))
+          .join(', ')
+      : role;
   const now = new Date();
   const currDT = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}, ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
 
   return `<h2>${getTranslation('userInfoTitle', 'User Information')}</h2>
 <p><strong>${getTranslation('userName', 'Name')}:</strong> ${name}</p>
-<p><strong>${getTranslation('userContact', 'Contact')}:</strong> ${contactInfo}</p>
-<p><strong>${getTranslation('userAimsPopupLabel', 'Aims')}:</strong> ${role}${roleClass ? ', ' + roleClass : ''}</p> 
-<p><strong>${getTranslation('userExperiencePopupLabel', 'Experience')}:</strong> ${translatedExperience}</p>
+<p><strong>${getTranslation('userAimsPopupLabel', 'Interests')}:</strong> ${translatedAims}</p> 
+<p><strong>${getTranslation('experiencePlaceholder', 'Experience')}:</strong> ${translatedExperience}</p>
 <p id="latLongSection" style="color: grey;"><strong>${getTranslation('userLatLong', 'Lat/Long')}:</strong> ${latitude}, ${longitude}</p>
 <p id="areaSection" style="color: grey;"><strong>${getTranslation('userArea', 'Area')}:</strong> ${area}</p>
 <p id="countrySection" style="color: grey;"><strong>${getTranslation('userCountry', 'Country')}:</strong> ${country}, ${iso2}, ${classification}</p>

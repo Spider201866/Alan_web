@@ -141,33 +141,5 @@ export function initChatbot(sessionId) {
   });
   isChatbotInitialized = true;
 
-  // --- START: New, more robust code to hide marquee on input focus ---
-  const observer = new MutationObserver((mutationsList, observer) => {
-    for (const mutation of mutationsList) {
-      if (mutation.type === 'childList') {
-        for (const node of mutation.addedNodes) {
-          if (node.tagName === 'FLOWISE-FULLCHATBOT' && node.shadowRoot) {
-            const inputElement = node.shadowRoot.querySelector('input');
-            if (inputElement) {
-              inputElement.addEventListener('focus', () => {
-                const marquee = document.getElementById('boxes-marquee-section');
-                if (marquee) {
-                  marquee.style.display = 'none';
-                }
-              });
-              // Once we've found and attached the listener, we don't need to observe anymore.
-              observer.disconnect();
-              return;
-            }
-          }
-        }
-      }
-    }
-  });
-
-  // Start observing the container for when the chatbot element is added.
-  if (container) {
-    observer.observe(container, { childList: true, subtree: true });
-  }
-  // --- END: New code ---
+  // Note: marquee hide behavior is handled in home.js.
 }

@@ -70,16 +70,33 @@ function main() {
   const chatbotContainer = document.querySelector('.chatbot-container');
 
   if (marqueeSection && chatbotContainer) {
-    const onChatbotFocus = () => {
-      log.info('Chatbot focused, hiding marquee.');
-      // Add the 'hidden' class to hide the marquee via CSS.
-      if (!marqueeSection.classList.contains('hidden')) {
-        marqueeSection.classList.add('hidden');
-      }
+    // Ensure the marquee is visible on initial load.
+    // (If a previous SW-cached JS run hid it via class or inline styles, undo that.)
+    marqueeSection.classList.remove('hidden');
+    marqueeSection.style.display = '';
+
+    // Hide the marquee only on *actual user interaction* with the chat UI.
+    // This avoids Flowise programmatic focus during init hiding the marquee.
+    const hideMarquee = () => {
+      log.info('Chatbot interacted with, hiding marquee.');
+      marqueeSection.classList.add('hidden');
     };
 
-    // Listen for the first focus event on the chatbot container.
-    chatbotContainer.addEventListener('focusin', onChatbotFocus, { once: true });
+    // Use click (not pointerdown): if we hide on pointerdown, the layout shift can
+    // cause the subsequent click to land on a different element (e.g. the Instructions
+    // button), triggering unwanted navigation.
+    chatbotContainer.addEventListener('click', hideMarquee, { once: true, capture: true });
+
+    // Keyboard users: hide once they start typing while focus is inside the chat area.
+    const onKeyDown = (event) => {
+      if (event && event.isTrusted === false) return;
+      const path = typeof event.composedPath === 'function' ? event.composedPath() : [];
+      const isWithinChat = path.includes(chatbotContainer);
+      if (!isWithinChat) return;
+      hideMarquee();
+      document.removeEventListener('keydown', onKeyDown, { capture: true });
+    };
+    document.addEventListener('keydown', onKeyDown, { capture: true });
   }
   // --- END: Marquee Hiding Logic (Corrected) ---
 

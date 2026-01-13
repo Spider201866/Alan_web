@@ -11,6 +11,7 @@ function applyHomeTranslations() {
   // log.info('home-translator.js: Applying translations.');
   const elementTranslations = {
     '.chatbot-subtitle': 'eyesEars',
+    '#install-btn': 'installButton',
     '#good-history': 'goodHistory',
     '#examine-well': 'examineWell',
     '#use-arclight': 'useArclight',
@@ -21,6 +22,7 @@ function applyHomeTranslations() {
     '#videos-button': 'videosButton',
     '#atoms-button': 'atomsButton',
     '#tools-button': 'toolsButton',
+    '#geolocation-button': 'geolocationButton',
     '#arclight-project-button': 'arclightProjectButton',
     '#links-button': 'linksButton',
     '#about-button': 'aboutButton',
@@ -46,9 +48,10 @@ function applyHomeTranslations() {
 
   const geoInfoTextEl = document.getElementById('geoInfoText');
   if (geoInfoTextEl) {
+    // Translation key is geoInfoText (matches en.json and other language files).
     geoInfoTextEl.textContent = getTranslation(
-      'geoInfoPopupText',
-      "Location data helps us understand usage and improve Alan. Your IP address provides an approximate country/city on first load. You can optionally provide more precise GPS data using the 'Check Location' button. This data is handled as per our privacy guidelines."
+      'geoInfoText',
+      'Clicking "Geolocation" will share a more accurate location (lat/long). This helps offer better guidance and choices.'
     );
   }
   showGreeting(); // This will now use getTranslation internally

@@ -70,7 +70,6 @@ export function pushLocalStorageToServer() {
     country: localStorage.getItem('country') || null,
     iso2: localStorage.getItem('iso2') || null,
     classification: localStorage.getItem('classification') || null,
-    roleClassification: localStorage.getItem('roleClassification') || null,
     contactInfo: localStorage.getItem('contactInfo') || null,
     version: '1.0',
     dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }),

@@ -130,6 +130,24 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // --- DEV BEHAVIOR: do not cache translation JSON files ---
+  // These change frequently during development and can otherwise appear "stuck"
+  // due to the SW cache-first strategy.
+  try {
+    const url = new URL(event.request.url);
+    const isLocalhost = url.hostname === 'localhost' || url.hostname === '127.0.0.1';
+    if (
+      isLocalhost &&
+      ((url.pathname.startsWith('/translations/') && url.pathname.endsWith('.json')) ||
+        url.pathname.startsWith('/scripts/') ||
+        url.pathname.startsWith('/styles/'))
+    ) {
+      return;
+    }
+  } catch {
+    // ignore URL parse errors and fall through to default behavior
+  }
+
   // Bypass Flowise proxy requests entirely.
   // Flowise embed uses both POST (prediction) and GET (EventSource/streaming).
   // The SW only handles GET, so this prevents caching/stream interference.

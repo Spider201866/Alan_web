@@ -12,7 +12,7 @@ let nameInputEl, jobSelectElementEl, experienceSelectEl, contactInputEl, acceptB
 /**
  * Sends user information to the server to be recorded.
  */
-function pushDataToServer(name, aims, roleClass, experience, contact) {
+function pushDataToServer(name, aims, experience, contact) {
   const userInfo = {
     sessionId: localStorage.getItem('sessionId') || `user-${Date.now()}`,
     name: name,
@@ -23,7 +23,6 @@ function pushDataToServer(name, aims, roleClass, experience, contact) {
     country: localStorage.getItem('country') || 'Not set',
     iso2: localStorage.getItem('iso2') || 'Not set',
     classification: localStorage.getItem('classification') || 'Not set',
-    roleClassification: roleClass,
     area: localStorage.getItem('area') || 'Not set',
     contactInfo: contact,
     version: '1.0',
@@ -118,16 +117,13 @@ function handleAccept() {
   const checkedAims = Array.from(checkboxesContainer.querySelectorAll('input:checked')).map(
     (cb) => cb.value
   );
-  let roleClass = '(P)';
-  if (checkedAims.length > 0 && !checkedAims.includes('Veterinary')) {
-    roleClass = '(M)';
-  }
 
   localStorage.setItem('name', rawName);
   localStorage.setItem('selectedJobRole', checkedAims.join(', '));
   localStorage.setItem('selectedExperience', experienceSelectEl.value);
   localStorage.setItem('contactInfo', contactInputEl ? contactInputEl.value : '');
-  localStorage.setItem('roleClassification', roleClass);
+  // roleClassification was a legacy marker (M)/(P) and is no longer used.
+  localStorage.removeItem('roleClassification');
   if (!localStorage.getItem('sessionId')) {
     localStorage.setItem('sessionId', `user-${Date.now()}`);
   }
@@ -135,7 +131,6 @@ function handleAccept() {
   pushDataToServer(
     rawName,
     checkedAims,
-    roleClass,
     experienceSelectEl.value,
     contactInputEl ? contactInputEl.value : ''
   );

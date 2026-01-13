@@ -1,5 +1,9 @@
 # Dependency directories
 node_modules/
+.DS_Store
+
+# Local translation review notes
+translation-reviews/
 vscode-alanui-launcher/node_modules/
 
 # Build output

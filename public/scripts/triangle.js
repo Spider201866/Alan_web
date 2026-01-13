@@ -2,6 +2,9 @@
 // Handles the creation and animation of the SVG triangle graphic.
 
 document.addEventListener('DOMContentLoaded', function () {
+  // If AnimeJS fails to load (offline/CDN/CSP), fail gracefully to a static triangle.
+  const hasAnime = typeof anime === 'function';
+
   // --- SVG Creation ---
   (function createTriangles() {
     const group = document.getElementById('triangleGroup');
@@ -18,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
       y: ay + (by - ay) * factor,
     });
 
+    const frag = document.createDocumentFragment();
+
     const mainFill = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     mainFill.setAttribute(
       'd',
@@ -25,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
     );
     mainFill.setAttribute('fill', '#FF0000');
     mainFill.setAttribute('stroke', 'none');
-    group.appendChild(mainFill);
+    frag.appendChild(mainFill);
 
     for (let i = 1; i <= 7; i++) {
       const factor = i / 8;
@@ -39,8 +44,10 @@ document.addEventListener('DOMContentLoaded', function () {
       outline.setAttribute('fill', 'none');
       outline.setAttribute('stroke', 'rgba(0,0,0,0.6)');
       outline.setAttribute('stroke-width', '3');
-      group.appendChild(outline);
+      frag.appendChild(outline);
     }
+
+    group.appendChild(frag);
   })();
 
   // --- Animation Logic ---
@@ -49,13 +56,22 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!triangleEl) return;
     const allPaths = triangleEl.querySelectorAll('.triangle path');
     const outlinePaths = Array.from(allPaths).slice(1);
+
+    // If AnimeJS isn't available, keep the static triangle without throwing.
+    if (!hasAnime) return;
+
     const animations = [];
 
     const PHASE_OFFSET = 0.35;
     const PULSE_SPEED = 0.0022;
 
+    let breathChildrenBuilt = false;
+
     const breathAnimation = anime({
       begin: () => {
+        if (breathChildrenBuilt) return;
+        breathChildrenBuilt = true;
+
         outlinePaths.forEach((path) => {
           animations.push(
             anime({
