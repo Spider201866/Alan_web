@@ -45,59 +45,36 @@ window.addEventListener('appinstalled', () => {
 document.addEventListener('DOMContentLoaded', () => {
   installBtn = document.getElementById('install-btn');
   if (installBtn) {
-    // Keep the button visible in the normal browser view.
-    // (If install isn’t currently available, we show a helpful message on click.)
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-    setInstallButtonVisible(!isStandalone);
+    // Hide by default.
+    // We only show when the browser explicitly tells us installation is possible
+    // via the `beforeinstallprompt` event.
+    setInstallButtonVisible(false);
+
+    // In the installed app window, never show Install.
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      setInstallButtonVisible(false);
+    }
 
     installBtn.addEventListener('click', async () => {
-      log.info('Install button clicked');
+      if (!deferredPrompt) return;
 
-      // If install is available, show the prompt.
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const choiceResult = await deferredPrompt.userChoice;
-        log.info(`Install outcome: ${choiceResult.outcome}`);
+      deferredPrompt.prompt();
+      const choiceResult = await deferredPrompt.userChoice;
+      log.info(`Install outcome: ${choiceResult.outcome}`);
 
-        // `beforeinstallprompt` can only be used once.
-        deferredPrompt = null;
-        setInstallButtonVisible(false);
+      // `beforeinstallprompt` can only be used once.
+      deferredPrompt = null;
+      setInstallButtonVisible(false);
 
-        // Request notification permission only after an explicit user gesture.
-        if (Notification?.permission === 'default') {
-          try {
-            const permission = await Notification.requestPermission();
-            log.info(`Notification permission: ${permission}`);
-          } catch {
-            // ignore
-          }
+      // Request notification permission only after an explicit user gesture.
+      if (Notification?.permission === 'default') {
+        try {
+          const permission = await Notification.requestPermission();
+          log.info(`Notification permission: ${permission}`);
+        } catch {
+          // ignore
         }
-        return;
       }
-
-      // If already installed, clicking "Install" can't open the installed app
-      // (browsers don't provide an API for that). Give the user a helpful hint.
-      const wasInstalled = localStorage.getItem('alanui:installed') === '1';
-      if (wasInstalled) {
-        // Avoid alert() so this remains non-blocking and test/dev friendly.
-        const oldText = installBtn.textContent;
-        installBtn.textContent = 'Installed (open from desktop)';
-        setTimeout(() => {
-          installBtn.textContent = oldText;
-        }, 2500);
-        return;
-      }
-
-      // Otherwise: not installable yet (no beforeinstallprompt). This can happen
-      // on first load before SW control, or in unsupported browsers.
-      const oldText = installBtn.textContent;
-      installBtn.textContent = 'Install not ready';
-      setTimeout(() => {
-        installBtn.textContent = oldText;
-      }, 2500);
-      log.info(
-        'Install not available yet. If supported, use your browser menu (⋮) → Install, and ensure you are online.'
-      );
     });
   }
 
