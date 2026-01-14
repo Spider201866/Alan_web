@@ -52,6 +52,9 @@ const cspDirectives = {
     "'self'",
     'https://flowiseai-railway-production-fecf.up.railway.app',
     'https://api.bigdatacloud.net',
+    // BigDataCloud sometimes redirects reverse-geocode requests to api-bdc.io
+    // (redirect targets must also be allowed by CSP).
+    'https://api-bdc.io',
     'https://ipinfo.io',
     'https://cdn.jsdelivr.net',
     'https://cdnjs.cloudflare.com',

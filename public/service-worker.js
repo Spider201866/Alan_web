@@ -138,6 +138,18 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Only handle same-origin requests.
+  // Cross-origin requests (e.g. BigDataCloud reverse geocoding, external CDNs)
+  // should be handled by the browser directly. This avoids:
+  // - returning our SW "Network error" 408 response for third-party outages
+  // - accidentally caching or interfering with third-party requests
+  try {
+    const url = new URL(event.request.url);
+    if (url.origin !== self.location.origin) return;
+  } catch {
+    // ignore URL parse errors and fall through to default behavior
+  }
+
   // Never cache API responses (they can contain sensitive/session-bound data).
   // Also avoids confusing “stale API” behavior.
   try {
