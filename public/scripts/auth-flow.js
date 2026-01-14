@@ -1,3 +1,4 @@
+// Alan UI - auth-flow.js | 14th January 2026, WJW
 // public/scripts/auth-flow.js
 // Manages the user authentication and onboarding flow.
 

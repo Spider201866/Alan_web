@@ -33,7 +33,7 @@ describe('Chatbot Frontend', () => {
     global.document = document;
     global.window = dom.window;
     // Mock localStorage
-    let store = {};
+    const store = {};
     global.localStorage = {
       getItem: (key) => store[key] || null,
       setItem: (key, value) => {

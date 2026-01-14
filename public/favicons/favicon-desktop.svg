@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- Desktop/tab favicon: transparent background, original proportions (from phone icon), centered -->
+  <polygon points="256,131 11,381 501,381" fill="#ff0000" stroke="#000000" stroke-width="18" stroke-linejoin="round" />
+</svg>

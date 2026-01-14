@@ -1,3 +1,4 @@
+// Alan UI - view-records.js | 14th January 2026, WJW
 /**
  * @typedef {object} Record
  * @property {string} sessionId - The unique session identifier.

@@ -1,3 +1,4 @@
+// Alan UI - log.js | 14th January 2026, WJW
 // public/scripts/log.js
 // A simple logging utility that silences info and debug messages in production.
 //

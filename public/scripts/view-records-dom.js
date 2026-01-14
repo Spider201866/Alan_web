@@ -1,3 +1,4 @@
+// Alan UI - view-records-dom.js | 14th January 2026, WJW
 /**
  * DOM factory helpers for the View Records page.
  *

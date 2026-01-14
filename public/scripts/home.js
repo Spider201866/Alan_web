@@ -1,3 +1,4 @@
+// Alan UI - home.js | 14th January 2026, WJW
 // public/scripts/home.js (New Orchestrator Version)
 // Orchestrates UI, data, and translation modules for the home page.
 

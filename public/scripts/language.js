@@ -1,4 +1,4 @@
-// Alan UI - language.js | 20th June 2025, WJW (Refactored for dynamic loading)
+// Alan UI - language.js | 14th January 2026, WJW (Refactored for dynamic loading)
 import { loadLanguage } from './language-loader.js';
 import log from './log.js';
 

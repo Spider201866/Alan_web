@@ -1,3 +1,4 @@
+// Alan UI - triangle.js | 14th January 2026, WJW
 // public/scripts/triangle.js
 // Handles the creation and animation of the SVG triangle graphic.
 

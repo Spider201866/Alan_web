@@ -1,3 +1,4 @@
+// Alan UI - home-ui-core.js | 14th January 2026, WJW
 // public/scripts/home-ui-core.js
 // Shared helpers for home UI behaviors.
 

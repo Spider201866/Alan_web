@@ -1,3 +1,4 @@
+// Alan UI - home-ui-popup.js | 14th January 2026, WJW
 // public/scripts/home-ui-popup.js
 // Popup-related behaviors (user info panel).
 

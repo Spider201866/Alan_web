@@ -1,3 +1,4 @@
+// Alan UI - aboutalan.js | 14th January 2026, WJW
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
 

@@ -1,3 +1,4 @@
+// Alan UI - home-data.js | 14th January 2026, WJW
 // public/scripts/home-data.js
 // Handles data fetching and server communication for the home page.
 

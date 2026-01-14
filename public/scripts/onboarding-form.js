@@ -1,3 +1,4 @@
+// Alan UI - onboarding-form.js | 14th January 2026, WJW
 // public/scripts/onboarding-form.js
 // Manages the interactive state and validation of the onboarding form fields.
 

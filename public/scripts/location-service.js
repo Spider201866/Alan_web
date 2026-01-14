@@ -1,3 +1,4 @@
+// Alan UI - location-service.js | 14th January 2026, WJW
 // public/scripts/location-service.js
 // Fetches IP-based location and determines user classification.
 
