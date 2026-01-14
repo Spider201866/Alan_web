@@ -109,16 +109,78 @@ function getActiveRecord() {
 
 /**
  * Retrieves all records from the history table, sorted in descending order by dateTime.
+ *
+ * Note: `dateTime` is stored as a string (often via `toLocaleString('en-GB')`), so
+ * a plain SQLite `ORDER BY dateTime` does not reliably return most-recent-first.
+ * We therefore sort in JS using a tolerant date parser.
  * @returns {Array<Object>} An array of all history records.
  */
 function getFullHistory() {
-  const records = db.prepare('SELECT * FROM history ORDER BY dateTime DESC').all();
+  const records = db.prepare('SELECT * FROM history').all();
+
   records.forEach((record) => {
     if (record.dateTime) {
       record.dateTime = record.dateTime.replace(/&#x2F;/g, '/');
     }
   });
+
+  records.sort((a, b) => parseDateTimeToEpochMs(b.dateTime) - parseDateTimeToEpochMs(a.dateTime));
   return records;
+}
+
+/**
+ * Best-effort parser for the various date formats present in the DB.
+ * Returns epoch ms (UTC). Unknown/invalid dates sort last.
+ *
+ * Supported:
+ * - ISO strings (new Date().toISOString())
+ * - en-GB locale strings (e.g. "14/01/2026, 14:52:20")
+ * - "YYYY-MM-DD HH:mm:ss" (legacy)
+ *
+ * @param {string | null | undefined} value
+ */
+function parseDateTimeToEpochMs(value) {
+  if (!value || typeof value !== 'string') return 0;
+  const trimmed = value.trim();
+  if (!trimmed) return 0;
+
+  // en-GB: dd/mm/yyyy, HH:MM(:SS)?
+  const gbMatch = trimmed.match(
+    /^(\d{1,2})\/(\d{1,2})\/(\d{4}),?\s+(\d{1,2}):(\d{2})(?::(\d{2}))?/
+  );
+  if (gbMatch) {
+    const [, dd, mm, yyyy, hh, min, ss] = gbMatch;
+    return Date.UTC(
+      Number(yyyy),
+      Number(mm) - 1,
+      Number(dd),
+      Number(hh),
+      Number(min),
+      Number(ss || 0)
+    );
+  }
+
+  // ISO 8601 (or anything Date.parse understands reliably).
+  // IMPORTANT: must come *after* the en-GB check above, because Date.parse("12/01/2026")
+  // is interpreted as mm/dd/yyyy in many JS engines.
+  const isoMs = Date.parse(trimmed);
+  if (!Number.isNaN(isoMs)) return isoMs;
+
+  // Legacy: YYYY-MM-DD HH:MM:SS
+  const legacyMatch = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})(?::(\d{2}))?/);
+  if (legacyMatch) {
+    const [, yyyy, mm, dd, hh, min, ss] = legacyMatch;
+    return Date.UTC(
+      Number(yyyy),
+      Number(mm) - 1,
+      Number(dd),
+      Number(hh),
+      Number(min),
+      Number(ss || 0)
+    );
+  }
+
+  return 0;
 }
 
 /**

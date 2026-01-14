@@ -25,3 +25,37 @@ export const sensitiveLimiter = rateLimit({
   legacyHeaders: false,
   message: 'Too many requests to this endpoint. Please try again later.',
 });
+
+/**
+ * Rate limiter for the public record ingestion endpoint.
+ * The site is public, so we can't require a secret here, but we can reduce abuse.
+ */
+export const recordInfoLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 60, // 60 requests per 15 min per IP (~4/min)
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: 'Too many submissions. Please try again later.',
+});
+
+/**
+ * Rate limiter for Flowise proxy endpoints.
+ */
+export const flowiseLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 60,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: 'Too many requests. Please try again later.',
+});
+
+/**
+ * Rate limiter for the OSM tile proxy.
+ */
+export const osmTilesLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 300,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: 'Too many tile requests. Please try again later.',
+});

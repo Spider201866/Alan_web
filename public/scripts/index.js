@@ -6,6 +6,7 @@ import { setLanguage, getTranslation } from './language.js';
 import { initializeLocation } from './location-service.js';
 import { initAuthFlow } from './auth-flow.js';
 import { initOnboardingForm } from './onboarding-form.js';
+import { setTrustedHtml } from './trusted-html.js';
 
 // --- DOM Element References (Queried once in main) ---
 let passwordScreen, passwordInput, passwordSubmitBtn, passwordError;
@@ -166,9 +167,12 @@ function applyIndexTranslations() {
 
   const noCodeLineEl = document.getElementById('noCodeLine');
   if (noCodeLineEl) {
-    noCodeLineEl.innerHTML = getTranslation(
-      'noCodeLine',
-      "No or incorrect code? Contact us <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>here</a>"
+    setTrustedHtml(
+      noCodeLineEl,
+      getTranslation(
+        'noCodeLine',
+        "No or incorrect code? Contact us <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>here</a>"
+      )
     );
   }
 

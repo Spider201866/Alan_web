@@ -1,4 +1,4 @@
-<!-- Alan UI - systemPatterns.md | Updated 12th January 2026, Cline -->
+<!-- Alan UI - systemPatterns.md | Updated 14th January 2026, Cline -->
 
 # System Architecture and Patterns
 
@@ -53,6 +53,11 @@ graph TD
 
 -   **Conditional Logging**: A custom logging module (`public/scripts/log.js`) wraps `console` methods to provide environment-aware logging (e.g. silencing debug messages in production). See “Client Logging Strategy” below.
 
+-   **Trusted HTML Insertion (Frontend)**
+    - Use `public/scripts/trusted-html.js` (`setTrustedHtml`) when the app must render *app-controlled* markup (e.g. translations containing `<strong>`, `<br>`, links).
+    - Prefer `textContent` for user-provided data and plain strings.
+    - The trusted HTML helper applies basic sanitization (removes scripts, inline events, and javascript: URLs) and adds `rel="noopener noreferrer"` to `<a target="_blank">`.
+
 -   **UI Table Consistency**: All table cell content in the "View Records" page is centred both vertically and horizontally for readability. The delete (trash can) icon is always red to clearly indicate destructive actions.
 -   **Comprehensive Documentation**: All logical JavaScript files are documented with JSDoc comments for functions and file-level overviews to explain the purpose of each module.
 
@@ -87,6 +92,9 @@ graph TD
 
 -   **Service Worker Bypass for Admin**
     -   The SW `fetch` handler bypasses `view-records.html` and its assets to avoid caching-induced admin issues. This is a deliberate pattern to keep admin experience fresh and reliable.
+
+-   **Service Worker Bypass for API Responses**
+    -   The SW `fetch` handler bypasses `/api/*` entirely to avoid caching sensitive/session-bound responses and to prevent stale API behavior.
 
 -   **SW_READY Handshake**
     -   Pages that depend on SW-managed asset availability listen for `SW_READY` from the service worker before initialising critical flows. This reduces first-load race conditions.

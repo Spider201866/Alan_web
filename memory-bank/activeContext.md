@@ -1,4 +1,4 @@
-<!-- Alan UI - activeContext.md | Updated 12th January 2026, Cline -->
+<!-- Alan UI - activeContext.md | Updated 14th January 2026, Cline -->
 
 # Active Context
 
@@ -12,6 +12,21 @@
 - Environment-driven client logging (build injects `<meta name="alanui-env" content="production">`).
 - Build-stamped service worker cache name (stamped into `dist/service-worker.js` during build).
 - Flowise proxy reliability improvements (`/flowise` proxy mounted early; safer abort behavior).
+
+## Recent Work (14 Jan 2026)
+- **Frontend injection hardening**
+  - Replaced unsafe `innerHTML` patterns across UI scripts.
+  - Added `public/scripts/trusted-html.js` (`setTrustedHtml`) for *app-controlled* markup (translations/templates) with basic sanitization.
+  - Enforced safer external links opened in a new tab (`rel="noopener noreferrer"`).
+- **Admin security + reliability**
+  - Admin session cookie hardened: 15 min TTL; production uses `__Host-alan_admin_session`.
+  - Service worker avoids caching `/api/*` and reduces console noise behind a DEBUG flag.
+- **Server hardening headers**
+  - Added Permissions-Policy and additional low-risk security headers (CORP/COOP/OAC, etc.).
+- **Test suite maintenance**
+  - Added `tests/api/security-headers.test.js` to prevent header regressions.
+  - Made `tests/api/build.test.js` less brittle.
+  - A11y runner no longer prints canvas warnings (JSDOM canvas stub).
 
 ## Developer Workflow Hygiene (12 Jan 2026)
 - Repo now enforces PowerShell-safe command patterns via `.clinerules/reminders.md`.
@@ -29,7 +44,7 @@
 ## Next Steps
 - Confirm Railway deployment is picking up latest builds and clients refresh caches as expected.
 - Ensure `.gitignore` covers local DBs and `dist/`.
-- Optional: clean up any legacy/stale docs references (e.g. missing scripts referenced in old notes).
+- Optional: reduce remaining test log noise (dotenv tips / experimental warnings) if desired.
 
 ## Where to Look for Details
 - Architecture & patterns: `systemPatterns.md`

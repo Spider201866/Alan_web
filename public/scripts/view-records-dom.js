@@ -50,7 +50,6 @@ export function createRecordsTableHeader() {
     'Name',
     'Interests',
     'Experience',
-    'Contact',
     'Latitude',
     'Longitude',
     'Country (ISO2) [Classification]',
@@ -93,41 +92,49 @@ export function createRecordRow(record, index, isActive = false, handlers = {}) 
     tr.classList.add('active-record');
   }
 
+  const version = (record.version || '').trim();
+  const agent = (record.selectedAgent || '').trim();
+  const versionAgentText = version && agent ? `${version} ${agent}` : version || agent || '';
+
   const cells = [
     index,
     record.sessionId,
     record.name,
     record.role,
     record.experience,
-    record.contactInfo,
     record.latitude,
     record.longitude,
     `${record.country || ''} (${record.iso2 || ''}) [${record.classification || ''}]`,
     record.area,
     record.dateTime,
-    `${record.version || ''}, ${record.selectedAgent || ''}`,
+    versionAgentText,
     record.refreshCount || 1,
   ];
 
-  cells.forEach((cellData, i) => {
+  cells.forEach((cellData) => {
     const td = document.createElement('td');
-    // The dateTime field is at index 10
-    if (i === 10) {
-      td.innerHTML = cellData || '';
-    } else {
-      td.textContent = cellData || '';
-    }
+    td.textContent = cellData || '';
     tr.appendChild(td);
   });
 
   // Map button cell
   const mapTd = document.createElement('td');
   const mapButton = document.createElement('button');
+
+  const lat = parseFloat(record.latitude);
+  const lng = parseFloat(record.longitude);
+  const hasCoords = Number.isFinite(lat) && Number.isFinite(lng) && !(lat === 0 && lng === 0);
+
   mapButton.className = 'show-map-btn';
-  mapButton.textContent = 'Show Map';
-  mapButton.dataset.lat = parseFloat(record.latitude) || 0;
-  mapButton.dataset.lng = parseFloat(record.longitude) || 0;
-  mapButton.setAttribute('aria-label', `Show map for record ${record.sessionId}`);
+  mapButton.textContent = hasCoords ? 'Show Map' : 'No location';
+  if (hasCoords) {
+    mapButton.dataset.lat = String(lat);
+    mapButton.dataset.lng = String(lng);
+    mapButton.setAttribute('aria-label', `Show map for record ${record.sessionId}`);
+  } else {
+    mapButton.disabled = true;
+    mapButton.setAttribute('aria-label', `No location available for record ${record.sessionId}`);
+  }
   mapButton.style.cssText =
     'display: flex; justify-content: center; align-items: center; padding: 5px 10px; min-width: 80px;';
   mapButton.addEventListener('click', handlers.onShowMapClick || (() => {}));
@@ -138,7 +145,7 @@ export function createRecordRow(record, index, isActive = false, handlers = {}) 
   const deleteTd = document.createElement('td');
   const deleteButton = document.createElement('button');
   deleteButton.className = 'delete-record-btn';
-  deleteButton.innerHTML = '&#x1F5D1;'; // Bin/Trash Can Icon
+  deleteButton.textContent = '🗑'; // Bin/Trash Can Icon
   deleteButton.dataset.sessionId = record.sessionId;
   deleteButton.setAttribute('aria-label', `Delete record with session ID ${record.sessionId}`);
   deleteButton.style.cssText =

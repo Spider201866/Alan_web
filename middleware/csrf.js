@@ -6,12 +6,17 @@ import crypto from 'crypto';
  * Token is shared globally and stored in memory.
  */
 export default function csrfProtection(options = {}) {
-  const { skipPaths = [], enable = true } = options;
+  const { skipPaths = [], includePathPrefixes = [], enable = true } = options;
   const token = crypto.randomBytes(16).toString('hex');
 
   return function csrfMiddleware(req, res, next) {
     if (!enable) return next();
     if (skipPaths.includes(req.path)) return next();
+
+    if (Array.isArray(includePathPrefixes) && includePathPrefixes.length > 0) {
+      const included = includePathPrefixes.some((prefix) => req.path.startsWith(prefix));
+      if (!included) return next();
+    }
 
     const method = req.method.toUpperCase();
     if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS') {

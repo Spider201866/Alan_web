@@ -22,6 +22,7 @@ memory-bank/projectbrief.md
 memory-bank/systemPatterns.md
 memory-bank/techContext.md
 middleware/auth.js
+middleware/admin-session.js
 middleware/cors.js
 middleware/csrf.js
 middleware/error.js
@@ -105,6 +106,7 @@ public/scripts/referral.js
 public/scripts/skin.js
 public/scripts/sw-register.js
 public/scripts/triangle.js
+public/scripts/trusted-html.js
 public/scripts/view-records-dom.js
 public/scripts/view-records.js
 public/scripts/weblinks.js
@@ -148,8 +150,11 @@ server.js
 services/data-service.js
 tests/.gitkeep
 tests/README.md
+tests/api/admin-csrf.test.js
+tests/api/admin-session.test.js
 tests/api/build.test.js
 tests/api/cors.test.js
+tests/api/security-headers.test.js
 tests/api/validation.test.js
 tests/setup-jsdom.js
 tests/setup-node.cjs

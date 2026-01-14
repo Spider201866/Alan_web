@@ -4,6 +4,16 @@
 
 import { getTranslation } from './language.js';
 import { closeAllPopups } from './home-ui-core.js';
+import { setTrustedHtml } from './trusted-html.js';
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 /**
  * Builds the HTML content for the user information popup by retrieving data from local storage.
@@ -53,15 +63,24 @@ export function buildPopupContent() {
   const now = new Date();
   const currDT = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}, ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
 
-  return `<h2>${getTranslation('userInfoTitle', 'User Information')}</h2>
-<p><strong>${getTranslation('userName', 'Name')}:</strong> ${name}</p>
-<p><strong>${getTranslation('userAimsPopupLabel', 'Interests')}:</strong> ${translatedAims}</p> 
-<p><strong>${getTranslation('experiencePlaceholder', 'Experience')}:</strong> ${translatedExperience}</p>
-<p id="latLongSection" style="color: grey;"><strong>${getTranslation('userLatLong', 'Lat/Long')}:</strong> ${latitude}, ${longitude}</p>
-<p id="areaSection" style="color: grey;"><strong>${getTranslation('userArea', 'Area')}:</strong> ${area}</p>
-<p id="countrySection" style="color: grey;"><strong>${getTranslation('userCountry', 'Country')}:</strong> ${country}, ${iso2}, ${classification}</p>
-<p style="color: grey;"><em><strong>${getTranslation('userVersion', 'Version')}:</strong> 1.0</em></p>
-<p style="color: grey;"><em><strong>${getTranslation('userDateTime', 'Date/Time')}:</strong> ${currDT}</em></p>`;
+  // Ensure that user-controlled values cannot inject markup.
+  const safeName = escapeHtml(name);
+  const safeAims = escapeHtml(translatedAims);
+  const safeExperience = escapeHtml(translatedExperience);
+  const safeLatLong = escapeHtml(`${latitude}, ${longitude}`);
+  const safeArea = escapeHtml(area);
+  const safeCountry = escapeHtml(`${country}, ${iso2}, ${classification}`);
+  const safeDateTime = escapeHtml(currDT);
+
+  return `<h2>${escapeHtml(getTranslation('userInfoTitle', 'User Information'))}</h2>
+<p><strong>${escapeHtml(getTranslation('userName', 'Name'))}:</strong> ${safeName}</p>
+<p><strong>${escapeHtml(getTranslation('userAimsPopupLabel', 'Interests'))}:</strong> ${safeAims}</p>
+<p><strong>${escapeHtml(getTranslation('experiencePlaceholder', 'Experience'))}:</strong> ${safeExperience}</p>
+<p id="latLongSection" style="color: grey;"><strong>${escapeHtml(getTranslation('userLatLong', 'Lat/Long'))}:</strong> ${safeLatLong}</p>
+<p id="areaSection" style="color: grey;"><strong>${escapeHtml(getTranslation('userArea', 'Area'))}:</strong> ${safeArea}</p>
+<p id="countrySection" style="color: grey;"><strong>${escapeHtml(getTranslation('userCountry', 'Country'))}:</strong> ${safeCountry}</p>
+<p style="color: grey;"><em><strong>${escapeHtml(getTranslation('userVersion', 'Version'))}:</strong> 1.0</em></p>
+<p style="color: grey;"><em><strong>${escapeHtml(getTranslation('userDateTime', 'Date/Time'))}:</strong> ${safeDateTime}</em></p>`;
 }
 
 /**
@@ -72,7 +91,7 @@ export function openPopup(state) {
   closeAllPopups(state);
 
   const popupContent = document.getElementById('popup-content');
-  if (popupContent) popupContent.innerHTML = buildPopupContent();
+  if (popupContent) setTrustedHtml(popupContent, buildPopupContent());
   if (state.popup) state.popup.classList.add('is-open');
   if (state.overlay) state.overlay.style.display = 'block';
   if (state.popupFocusTrap) state.popupFocusTrap.activate();

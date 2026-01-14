@@ -4,6 +4,7 @@
 
 import log from './log.js';
 import { initMutedButtons } from './muted.js';
+import { setTrustedHtml } from './trusted-html.js';
 
 /**
  * Fetches the HTML snippet for the muted buttons, injects it into the DOM, and initializes the buttons.
@@ -14,7 +15,7 @@ export function fetchMutedSnippet() {
     .then((res) => (res.ok ? res.text() : Promise.reject('File not found')))
     .then((html) => {
       const mutedContainer = document.getElementById('muted-buttons');
-      if (mutedContainer) mutedContainer.innerHTML = html;
+      if (mutedContainer) setTrustedHtml(mutedContainer, html);
       initMutedButtons();
     })
     .catch((err) => {

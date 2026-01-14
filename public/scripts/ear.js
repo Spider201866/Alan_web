@@ -1,40 +1,38 @@
 // Alan UI - ear.js | 14th January 2026, WJW
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
+import { setTrustedHtml } from './trusted-html.js';
+
+function setText(id, key, fallback) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = getTranslation(key, fallback);
+}
 
 /**
  * Applies all necessary translations to the elements on the 'How to Examine Ear' page.
  * This function is passed to the page template initializer to be called at the right time.
  */
 function applyPageSpecificTranslations() {
-  document.getElementById('allAroundEarHeading').textContent = getTranslation(
-    'allAroundEarHeading',
-    'All around ear'
+  setText('allAroundEarHeading', 'allAroundEarHeading', 'All around ear');
+  setTrustedHtml(
+    document.getElementById('allAroundEarText'),
+    getTranslation('allAroundEarText', 'Default all around ear text.')
   );
-  document.getElementById('allAroundEarText').innerHTML = getTranslation(
-    'allAroundEarText',
-    'Default all around ear text.'
+  setText('earCanalHeading', 'earCanalHeading', 'Ear canal');
+  setTrustedHtml(
+    document.getElementById('earCanalText'),
+    getTranslation('earCanalText', 'Default ear canal text.')
   );
-  document.getElementById('earCanalHeading').textContent = getTranslation(
-    'earCanalHeading',
-    'Ear canal'
-  );
-  document.getElementById('earCanalText').innerHTML = getTranslation(
-    'earCanalText',
-    'Default ear canal text.'
-  );
-  document.getElementById('tympanicMembraneHeading').textContent = getTranslation(
-    'tympanicMembraneHeading',
-    'Tympanic membrane'
-  );
-  document.getElementById('tympanicMembraneText').innerHTML = getTranslation(
-    'tympanicMembraneText',
-    'Default tympanic membrane text.'
+  setText('tympanicMembraneHeading', 'tympanicMembraneHeading', 'Tympanic membrane');
+  setTrustedHtml(
+    document.getElementById('tympanicMembraneText'),
+    getTranslation('tympanicMembraneText', 'Default tympanic membrane text.')
   );
   // Assuming "additionalText" should be "additionalText_ear" for consistency
-  document.getElementById('additionalText').innerHTML = getTranslation(
-    'additionalText_ear',
-    'Default additional ear text.'
+  setTrustedHtml(
+    document.getElementById('additionalText'),
+    getTranslation('additionalText_ear', 'Default additional ear text.')
   );
 }
 

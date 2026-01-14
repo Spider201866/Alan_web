@@ -1,6 +1,13 @@
 // Alan UI - aboutalan.js | 14th January 2026, WJW
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
+import { setTrustedHtml } from './trusted-html.js';
+
+function setText(id, key, fallback) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = getTranslation(key, fallback);
+}
 
 /**
  * Applies all necessary translations to the elements on the 'About Alan' page.
@@ -10,38 +17,32 @@ function applyPageSpecificTranslations() {
   // window.currentTranslations should be populated by language.js by the time this is called
   // or when languageChanged event fires.
 
-  document.getElementById('aboutAlanText').innerHTML = getTranslation(
-    'aboutAlanText',
-    'Default About Alan text if key is missing.'
+  // Translations contain intentional markup (<br>, <strong>), so use trusted HTML setter.
+  setTrustedHtml(
+    document.getElementById('aboutAlanText'),
+    getTranslation('aboutAlanText', 'Default About Alan text if key is missing.')
   );
-  document.getElementById('aboutAlanListItem1').textContent = getTranslation(
-    'aboutAlanListItem1',
-    'Default item 1'
+  setText('aboutAlanListItem1', 'aboutAlanListItem1', 'Default item 1');
+  setText('aboutAlanListItem2', 'aboutAlanListItem2', 'Default item 2');
+
+  setTrustedHtml(
+    document.getElementById('aboutAlanEfficient'),
+    getTranslation('aboutAlanEfficient', 'Default efficient text')
   );
-  document.getElementById('aboutAlanListItem2').textContent = getTranslation(
-    'aboutAlanListItem2',
-    'Default item 2'
+  setTrustedHtml(
+    document.getElementById('aboutAlanEasy'),
+    getTranslation('aboutAlanEasy', 'Default easy text')
   );
-  document.getElementById('aboutAlanEfficient').innerHTML = getTranslation(
-    'aboutAlanEfficient',
-    'Default efficient text'
+  setTrustedHtml(
+    document.getElementById('aboutAlanExplainable'),
+    getTranslation('aboutAlanExplainable', 'Default explainable text')
   );
-  document.getElementById('aboutAlanEasy').innerHTML = getTranslation(
-    'aboutAlanEasy',
-    'Default easy text'
+  setTrustedHtml(
+    document.getElementById('aboutAlanEncouraging'),
+    getTranslation('aboutAlanEncouraging', 'Default encouraging text')
   );
-  document.getElementById('aboutAlanExplainable').innerHTML = getTranslation(
-    'aboutAlanExplainable',
-    'Default explainable text'
-  );
-  document.getElementById('aboutAlanEncouraging').innerHTML = getTranslation(
-    'aboutAlanEncouraging',
-    'Default encouraging text'
-  );
-  document.getElementById('aboutAlanDate').innerHTML = getTranslation(
-    'aboutAlanDate',
-    'Default date text'
-  );
+
+  setText('aboutAlanDate', 'aboutAlanDate', 'Default date text');
 }
 
 // Initialize the page with its title key and its specific translation function

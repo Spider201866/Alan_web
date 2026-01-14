@@ -15,12 +15,21 @@ export function buildHeader(pageTitleKey) {
 
   const headerContainer = document.createElement('div');
   headerContainer.id = 'appBarContainer'; // Give it an ID for potential targeting
-  headerContainer.innerHTML = `
-    <header id="appBar">
-      <button class="back-arrow" aria-label="Go Back">←</button>
-      <h1 id="pageTitle">${translatedTitle}</h1>
-    </header>
-  `;
+  const header = document.createElement('header');
+  header.id = 'appBar';
+
+  const backButton = document.createElement('button');
+  backButton.className = 'back-arrow';
+  backButton.setAttribute('aria-label', 'Go Back');
+  backButton.textContent = '←';
+
+  const title = document.createElement('h1');
+  title.id = 'pageTitle';
+  title.textContent = translatedTitle;
+
+  header.appendChild(backButton);
+  header.appendChild(title);
+  headerContainer.appendChild(header);
   // Prepend as the first child of the body
   if (document.body.firstChild) {
     document.body.insertBefore(headerContainer, document.body.firstChild);
@@ -28,12 +37,9 @@ export function buildHeader(pageTitleKey) {
     document.body.appendChild(headerContainer);
   }
 
-  const backArrow = headerContainer.querySelector('.back-arrow');
-  if (backArrow) {
-    backArrow.addEventListener('click', () => {
-      history.back();
-    });
-  }
+  backButton.addEventListener('click', () => {
+    history.back();
+  });
 }
 
 /**

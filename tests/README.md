@@ -10,7 +10,7 @@ This directory contains all automated tests for the AlanUI project.
     ```
 -   **Run a specific test file or directory:**
     ```bash
-    npm test -- tests/api/auth.test.js
+    npm test -- tests/api/validation.test.js
     npm test -- tests/ui/
     ```
 
@@ -25,14 +25,12 @@ Tests are further broken down by function.
 
 ### API Tests (`tests/api/`)
 
--   **`auth.test.js`**: Tests authentication, including master password and One-Time Password (OTP) logic.
--   **`endpoints.test.js`**: Tests the functionality of core API endpoints like `/api/record-info` and `/api/fetch-history`.
--   **`security.test.js`**: Tests security features like headers and rate limiting.
--   **`cors.test.js`**: Contains specific tests for the CORS middleware.
--   **`validation.test.js`**: Tests the request body validation middleware.
--   **`build.test.js`**: Tests the production build process (`npm run build`).
--   **`helpers/test-server.js`**: A shared helper to create and tear down test server instances for API tests.
--   **`teardown.mjs`**: A global teardown script that runs once after all API tests to clean up the test database.
+-   **`cors.test.js`**: Tests the CORS middleware behavior.
+-   **`validation.test.js`**: Tests request body validation for `/api/record-info`.
+-   **`admin-session.test.js`**: Tests admin login cookie session behavior.
+-   **`admin-csrf.test.js`**: Tests CSRF protections for admin endpoints (when CSRF is enabled).
+-   **`security-headers.test.js`**: Regression test for key security headers.
+-   **`build.test.js`**: Smoke-checks the production build output.
 
 ### UI Tests (`tests/ui/`)
 
@@ -45,4 +43,4 @@ Tests are further broken down by function.
 
 ## Automated Accessibility Checks
 
-As part of the main `npm test` command, a script (`scripts/test-a11y.js`) runs `axe-core` on all built HTML files. This acts as a CI gate to prevent basic accessibility regressions from being merged.
+As part of the main `npm test` command, a script (`scripts/test-a11y.mjs`) runs `axe-core` on all built HTML files in `dist/`. This acts as a CI gate to prevent basic accessibility regressions from being merged.

@@ -1,4 +1,4 @@
-<!-- Alan UI - techContext.md | Updated 12th January 2026, Cline -->
+<!-- Alan UI - techContext.md | Updated 14th January 2026, Cline -->
 
 # Technology Stack and Tooling
 
@@ -40,6 +40,7 @@ This document provides a detailed overview of the technologies, dependencies, co
 - CSP single source of truth
   - CSP directives are defined in `config/index.js` as `cspDirectives` and consumed by `server.js` (merged into Helmet defaults).
 - Additional headers: HSTS (1y, includeSubDomains), Referrer-Policy no-referrer, X-Frame-Options deny, X-Content-Type-Options nosniff.
+- Additional headers (Jan 2026): Permissions-Policy, CORP/COOP/Origin-Agent-Cluster, X-DNS-Prefetch-Control, X-Permitted-Cross-Domain-Policies, X-Download-Options.
 
 ---
 
@@ -133,6 +134,7 @@ This document provides a detailed overview of the technologies, dependencies, co
     - If navigate: network-first, fallback to cached or offline.html on error.
     - For assets: cache-first; on network failure returns 408 text response (not offline page).
     - Bypass: if request URL or referrer includes /view-records.html, do nothing to avoid SW interference on admin page.
+    - Bypass: /api/* requests are not cached (avoid stale or sensitive API caching).
     - Bypass: if request URL includes /flowise/, do nothing to avoid caching/stream interference.
   - Push event: demo notification for debugging/lab use.
 - Install prompt handled in home.js with install button and Notification permission prompt as a secondary UX.

@@ -282,7 +282,7 @@ function renderSidebar() {
     log.error('[History] Sidebar element not found for rendering.');
     return;
   }
-  sidebar.innerHTML = '';
+  sidebar.textContent = '';
 
   history.sessions.forEach((session) => {
     const headerElement = document.createElement('div');

@@ -6,6 +6,7 @@ import log from './log.js';
 import { setLanguage } from './language.js';
 import { closeAllPopups, updateButtonStyle } from './home-ui-core.js';
 import { buildPopupContent } from './home-ui-popup.js';
+import { setTrustedHtml } from './trusted-html.js';
 
 function setupMenuIcon(state) {
   if (!state.menuIcon || !state.sideMenu || !state.overlay || !state.sideMenuFocusTrap) return;
@@ -81,7 +82,7 @@ function setupGeolocationButton(state, onGeolocationClick) {
           }
 
           const popupContent = document.getElementById('popup-content');
-          if (popupContent) popupContent.innerHTML = buildPopupContent();
+          if (popupContent) setTrustedHtml(popupContent, buildPopupContent());
           flashBlueOnUpdate();
 
           setTimeout(() => {
@@ -168,7 +169,7 @@ function setupClearHistoryButton() {
 
     localStorage.removeItem('alan-chat-history-v2');
     const side = document.getElementById('chatHistorySidebar');
-    if (side) side.innerHTML = '';
+    if (side) side.textContent = '';
 
     import('./listener-module.js')
       .then((mod) => {

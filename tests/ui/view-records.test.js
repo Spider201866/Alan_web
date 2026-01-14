@@ -21,9 +21,9 @@ describe('View Records Script DOM Factories', () => {
       const thead = createRecordsTableHeader();
       expect(thead.tagName).toBe('THEAD');
       const headers = thead.querySelectorAll('th');
-      expect(headers.length).toBe(15);
+      expect(headers.length).toBe(14);
       expect(headers[0].textContent).toBe('No.');
-      expect(headers[14].textContent).toBe('Delete');
+      expect(headers[13].textContent).toBe('Delete');
       headers.forEach((th) => {
         expect(th.getAttribute('scope')).toBe('col');
       });
@@ -52,7 +52,7 @@ describe('View Records Script DOM Factories', () => {
     it('should create a TR element with the correct data using textContent', () => {
       const tr = createRecordRow(mockRecord, 1);
       const cells = tr.querySelectorAll('td');
-      expect(cells.length).toBe(15);
+      expect(cells.length).toBe(14);
       expect(cells[0].textContent).toBe('1');
       expect(cells[1].textContent).toBe('sess_123');
       // Test a cell to ensure HTML is not rendered
@@ -60,7 +60,9 @@ describe('View Records Script DOM Factories', () => {
       const maliciousTr = createRecordRow(maliciousRecord, 1);
       const maliciousCell = maliciousTr.querySelectorAll('td')[2];
       expect(maliciousCell.textContent).toBe('<h1>Malicious</h1>');
-      expect(maliciousCell.innerHTML).not.toContain('<h1>');
+      // textContent results in the same literal string in innerHTML, but it should not
+      // create real HTML elements.
+      expect(maliciousCell.querySelector('h1')).toBeNull();
     });
 
     it('should add the active-record class if isActive is true', () => {
@@ -83,6 +85,28 @@ describe('View Records Script DOM Factories', () => {
       expect(deleteButton.getAttribute('aria-label')).toBe(
         'Delete record with session ID sess_123'
       );
+    });
+
+    it('should render Version & Agent without comma or trailing punctuation', () => {
+      const tr = createRecordRow(mockRecord, 1);
+      const cells = tr.querySelectorAll('td');
+      // Version & Agent column is the 11th cell (0-based index 10)
+      expect(cells[10].textContent).toBe('1.0.0 Agent1');
+
+      const versionOnly = createRecordRow({ ...mockRecord, selectedAgent: '' }, 1);
+      expect(versionOnly.querySelectorAll('td')[10].textContent).toBe('1.0.0');
+    });
+
+    it('should disable Show Map when coordinates are missing or 0,0', () => {
+      const noCoords = createRecordRow({ ...mockRecord, latitude: null, longitude: null }, 1);
+      const noCoordsBtn = noCoords.querySelector('.show-map-btn');
+      expect(noCoordsBtn.disabled).toBe(true);
+      expect(noCoordsBtn.textContent).toBe('No location');
+
+      const zeroCoords = createRecordRow({ ...mockRecord, latitude: 0, longitude: 0 }, 1);
+      const zeroCoordsBtn = zeroCoords.querySelector('.show-map-btn');
+      expect(zeroCoordsBtn.disabled).toBe(true);
+      expect(zeroCoordsBtn.textContent).toBe('No location');
     });
   });
 

@@ -2,7 +2,7 @@
 
 A web-based chatbot focused on Eye, Ear, and Skin health information, designed for users in Low- and Middle-Income Countries (LMICs). The app is performance-conscious, accessible, and fully offline-capable as a Progressive Web App (PWA).
 
-Updated: 12 Jan 2026
+Updated: 14 Jan 2026
 
 For deep architecture and context, see the Memory Bank:
 - memory-bank/projectbrief.md
@@ -243,6 +243,11 @@ Client-side (localStorage)
 - CORS allowlist
 - CSRF (optional) – enable with ENABLE_CSRF=true and add x-csrf-token to mutating requests
 
+Recent hardening (Jan 2026)
+- Trusted HTML helper for app-controlled markup: `public/scripts/trusted-html.js` (basic sanitization + safer external links)
+- Additional security headers: Permissions-Policy, CORP/COOP/Origin-Agent-Cluster, etc.
+- Admin session cookie hardened (shorter TTL; production cookie uses `__Host-` prefix)
+
 PII and scope
 - Minimal metadata is captured (name, aims/role, experience, contact, approximate location info) to aid UX and aggregated insights
 - No user accounts or detailed clinical records are stored; the app is not a medical record system
@@ -261,6 +266,11 @@ What runs:
 - Translation coverage check (scripts/check-translations.cjs)
 - Accessibility tests against dist/*.html (scripts/test-a11y.mjs with axe-core)
 - Jest tests (API/UI) with JSDOM and supertest
+
+Recent test maintenance (Jan 2026)
+- `scripts/test-a11y.mjs` stubs canvas context to avoid noisy warnings.
+- Added `tests/api/security-headers.test.js` to prevent security header regressions.
+- `tests/api/build.test.js` now checks for expected output files rather than brittle size comparisons.
 
 CI/CD (overview)
 - On push to main: install, test, build, deploy (Railway)

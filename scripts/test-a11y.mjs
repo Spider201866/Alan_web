@@ -20,6 +20,13 @@ async function runA11yTests() {
       userAgent: 'node.js',
     });
 
+    // JSDOM does not implement canvas. axe-core may attempt to call getContext()
+    // while evaluating rules (e.g., icon ligatures / contrast checks). We stub it
+    // to avoid noisy console errors while keeping the checks meaningful.
+    if (dom.window.HTMLCanvasElement?.prototype) {
+      dom.window.HTMLCanvasElement.prototype.getContext = () => null;
+    }
+
     const results = await axe.run(dom.window.document.documentElement);
 
     if (results.violations.length > 0) {

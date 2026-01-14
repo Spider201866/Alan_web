@@ -20,6 +20,13 @@
 const CACHE_NAME = 'alanui-v8';
 const OFFLINE_URL = 'offline.html';
 
+// Reduce console noise in production + tests.
+// Flip to true temporarily if you need to debug SW lifecycle.
+const DEBUG = false;
+const debugLog = (...args) => {
+  if (DEBUG) console.log(...args);
+};
+
 // A list of essential assets to cache on installation.
 const CORE_ASSETS = [
   '/',
@@ -58,6 +65,7 @@ const CORE_ASSETS = [
   '/scripts/weblinks.js',
   '/scripts/referral.js',
   '/scripts/sw-register.js',
+  '/scripts/trusted-html.js',
   '/favicons/manifest.json',
   '/favicons/favicon-32x32.png',
   '/favicons/apple-touch-icon.png',
@@ -68,18 +76,18 @@ const CORE_ASSETS = [
 
 // 1. Install Event: Cache core assets.
 self.addEventListener('install', (event) => {
-  console.log('Service Worker: Installing...');
+  debugLog('Service Worker: Installing...');
   event.waitUntil(
     caches
       .open(CACHE_NAME)
       .then((cache) => {
-        console.log('Service Worker: Caching core assets');
+        debugLog('Service Worker: Caching core assets');
         return cache
           .addAll(CORE_ASSETS)
           .then(() => {
-            console.log('Service Worker: Core assets cached successfully.');
+            debugLog('Service Worker: Core assets cached successfully.');
             return cache.keys().then((keys) => {
-              console.log(
+              debugLog(
                 'Service Worker: Cached assets:',
                 keys.map((k) => k.url)
               );
@@ -97,7 +105,7 @@ self.addEventListener('install', (event) => {
 
 // 2. Activate Event: Clean up old caches.
 self.addEventListener('activate', (event) => {
-  console.log('Service Worker: Activating...');
+  debugLog('Service Worker: Activating...');
   event.waitUntil(
     caches
       .keys()
@@ -105,14 +113,14 @@ self.addEventListener('activate', (event) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
             if (cacheName !== CACHE_NAME) {
-              console.log(`Service Worker: Deleting old cache: ${cacheName}`);
+              debugLog(`Service Worker: Deleting old cache: ${cacheName}`);
               return caches.delete(cacheName);
             }
           })
         );
       })
       .then(() => {
-        console.log('Service Worker: Activated and ready to control clients.');
+        debugLog('Service Worker: Activated and ready to control clients.');
         return self.clients.claim().then(() => {
           self.clients.matchAll().then((clients) => {
             clients.forEach((client) => client.postMessage({ type: 'SW_READY' }));
@@ -124,10 +132,19 @@ self.addEventListener('activate', (event) => {
 
 // 3. Fetch Event: Intercept network requests.
 self.addEventListener('fetch', (event) => {
-  console.log('Service Worker: Fetching', event.request.url);
+  debugLog('Service Worker: Fetching', event.request.url);
   // Only process GET requests.
   if (event.request.method !== 'GET') {
     return;
+  }
+
+  // Never cache API responses (they can contain sensitive/session-bound data).
+  // Also avoids confusing “stale API” behavior.
+  try {
+    const url = new URL(event.request.url);
+    if (url.pathname.startsWith('/api/')) return;
+  } catch {
+    // ignore URL parse errors and fall through to default behavior
   }
 
   // --- DEV BEHAVIOR: do not cache translation JSON files ---
@@ -152,7 +169,7 @@ self.addEventListener('fetch', (event) => {
   // Flowise embed uses both POST (prediction) and GET (EventSource/streaming).
   // The SW only handles GET, so this prevents caching/stream interference.
   if (event.request.url.includes('/flowise/')) {
-    console.log('Service Worker: Bypassing for Flowise proxy request:', event.request.url);
+    debugLog('Service Worker: Bypassing for Flowise proxy request:', event.request.url);
     return;
   }
 
@@ -163,7 +180,7 @@ self.addEventListener('fetch', (event) => {
     event.request.url.includes('/view-records.html') ||
     (event.request.referrer && event.request.referrer.includes('/view-records.html'))
   ) {
-    console.log('Service Worker: Bypassing for admin page request:', event.request.url);
+    debugLog('Service Worker: Bypassing for admin page request:', event.request.url);
     return;
   }
   // --- END OF FIX ---

@@ -18,7 +18,22 @@ const root = path.resolve(__dirname, '..');
 // We use dashed directive names here to match Helmet.
 const cspDirectives = {
   'default-src': ["'self'"],
-  'img-src': ["'self'", 'data:', '*.tile.openstreetmap.org', 'raw.githubusercontent.com'],
+  // Defense-in-depth: explicitly set a few restrictive directives.
+  'base-uri': ["'self'"],
+  'form-action': ["'self'"],
+  'object-src': ["'none'"],
+  'script-src-attr': ["'none'"],
+  // NOTE: When the app is served over http://localhost in dev, CSP host-sources without an
+  // explicit scheme only match http. Our map assets are loaded over https, so we must include
+  // explicit https sources here.
+  'img-src': [
+    "'self'",
+    'data:',
+    // Allow https images broadly (Leaflet tiles, marker icons, etc.)
+    'https:',
+    'https://*.tile.openstreetmap.org',
+    'https://raw.githubusercontent.com',
+  ],
   'style-src': [
     "'self'",
     "'unsafe-inline'",
@@ -29,7 +44,6 @@ const cspDirectives = {
   'font-src': ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
   'script-src': [
     "'self'",
-    "'unsafe-inline'",
     'https://cdn.jsdelivr.net',
     'https://cdnjs.cloudflare.com',
     'https://unpkg.com',
@@ -62,6 +76,10 @@ const config = {
   allowedOrigins: (env.CORS_ALLOWED_ORIGINS || '').split(',').filter(Boolean),
   enableCors: env.ENABLE_CORS !== 'false',
   enableCsrf: env.ENABLE_CSRF === 'true',
+  adminAllowedIps: (env.ADMIN_ALLOWED_IPS || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean),
   cspDirectives,
 };
 

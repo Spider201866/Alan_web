@@ -106,9 +106,15 @@ function createButtonsWithText(condition = '') {
   });
 
   const textLine = document.createElement('div');
-  textLine.innerHTML = condition
-    ? `Find <strong>${condition}</strong> images on these sites`
-    : 'Find images on these sites';
+  if (condition) {
+    textLine.appendChild(document.createTextNode('Find '));
+    const strong = document.createElement('strong');
+    strong.textContent = condition;
+    textLine.appendChild(strong);
+    textLine.appendChild(document.createTextNode(' images on these sites'));
+  } else {
+    textLine.textContent = 'Find images on these sites';
+  }
   textLine.style.cssText = 'font-size: 14px; margin-bottom: 10px;';
   container.appendChild(textLine);
 

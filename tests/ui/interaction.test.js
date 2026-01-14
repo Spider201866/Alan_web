@@ -39,23 +39,23 @@ describe('General UI Interactions', () => {
     expect(splash.style.display).toBe('none');
   });
 
-  it('should show password entry UI and accept input', () => {
+  it('should handle a basic form submit interaction', () => {
     document.body.innerHTML = `
-      <form id="password-form">
-        <input type="password" id="password-input" />
-        <button id="password-submit">Submit</button>
+      <form id="demo-form">
+        <input type="text" id="demo-input" />
+        <button id="demo-submit">Submit</button>
       </form>
     `;
-    const input = document.getElementById('password-input');
-    input.value = '662023';
-    expect(input.value).toBe('662023');
+    const input = document.getElementById('demo-input');
+    input.value = 'hello';
+    expect(input.value).toBe('hello');
 
-    const form = document.getElementById('password-form');
-    const submitButton = document.getElementById('password-submit');
+    const form = document.getElementById('demo-form');
+    const submitButton = document.getElementById('demo-submit');
     const submitHandler = jest.fn((e) => e.preventDefault());
 
     form.addEventListener('submit', submitHandler);
-    submitButton.click(); // Simulate a user click instead of form.submit()
+    submitButton.click();
 
     expect(submitHandler).toHaveBeenCalled();
   });

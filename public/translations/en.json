@@ -30,7 +30,7 @@
   "passwordPlaceholder": "Password",
   "passwordErrorMsg": "Invalid password. Please try again",
   "passwordSubmitBtn": "Submit",
-  "noCodeLine": "No or wrong code? <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank'>Contact</a>",
+  "noCodeLine": "No or wrong code? <a href='https://medicine.st-andrews.ac.uk/arclight/contact/' target='_blank' rel='noopener noreferrer'>Contact</a>",
   "eyeMarqueeLine1": "What is glaucoma?",
   "eyeMarqueeLine2": "How do I see the optic disc with the Arclight?",
   "eyeMarqueeLine3": "Man 25, red eye, 3 days, photophobia, VA down a little",

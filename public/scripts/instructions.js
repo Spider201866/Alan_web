@@ -1,6 +1,13 @@
 // Alan UI - instructions.js | 14th January 2026, WJW
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
+import { setTrustedHtml } from './trusted-html.js';
+
+function setText(id, key, fallback) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = getTranslation(key, fallback);
+}
 
 /**
  * Applies initial translations to the page and then calls toggleContent to set the
@@ -8,21 +15,11 @@ import { getTranslation } from './language.js';
  */
 function applyTranslationsAndToggle() {
   // Page title is handled by initPage using getTranslation('instructionsPageTitle')
-  document.getElementById('introText').innerHTML = getTranslation(
-    'instructionsIntro',
-    'Default intro text.'
-  );
-  document.getElementById('patientPrompt').textContent = getTranslation(
-    'instructionsPatientPrompt',
-    "Tell Alan about your patient's:"
-  );
-
-  document.getElementById('patientDetail1').innerHTML =
-    `<span class="listText">${getTranslation('instructionsPatientDetail1', 'problem & onset')}</span>`;
-  document.getElementById('patientDetail2').innerHTML =
-    `<span class="listText">${getTranslation('instructionsPatientDetail2', 'what you see')}</span>`;
-  document.getElementById('patientDetail4').innerHTML =
-    `<span class="listText">${getTranslation('instructionsPatientDetail4', 'age, sex, medication')}</span>`;
+  setText('introText', 'instructionsIntro', 'Default intro text.');
+  setText('patientPrompt', 'instructionsPatientPrompt', "Tell Alan about your patient's:");
+  setText('patientDetail1', 'instructionsPatientDetail1', 'problem & onset');
+  setText('patientDetail2', 'instructionsPatientDetail2', 'what you see');
+  setText('patientDetail4', 'instructionsPatientDetail4', 'age, sex, medication');
 
   toggleContent(); // Initial call to set content based on default checked radio
 }
@@ -34,18 +31,9 @@ function applyTranslationsAndToggle() {
 function toggleContent() {
   var option = document.querySelector('input[name="option"]:checked').value;
 
-  document.getElementById('labelTooLittle').textContent = getTranslation(
-    'instructionsLabelTooLittle',
-    'Too little'
-  );
-  document.getElementById('labelJustRight').textContent = getTranslation(
-    'instructionsLabelJustRight',
-    'Just right'
-  );
-  document.getElementById('labelTooMuch').textContent = getTranslation(
-    'instructionsLabelTooMuch',
-    'Too much'
-  );
+  setText('labelTooLittle', 'instructionsLabelTooLittle', 'Too little');
+  setText('labelJustRight', 'instructionsLabelJustRight', 'Just right');
+  setText('labelTooMuch', 'instructionsLabelTooMuch', 'Too much');
 
   let patientDetail3TextKey = 'instructionsPatientDetail3'; // Default for Eye
   let useArclightKey = 'instructionsUseArclight_eye';
@@ -79,29 +67,23 @@ function toggleContent() {
     backgroundColorKey,
     '#ffffff'
   ); // Default to white
-  document.getElementById('useArclight').innerHTML = getTranslation(
-    useArclightKey,
-    'Use Arclight.'
+
+  // NOTE: Some translation strings include markup (e.g. <strong>, <em>). Keep innerHTML
+  // for these specific fields, but they are NOT user-controlled.
+  setTrustedHtml(
+    document.getElementById('useArclight'),
+    getTranslation(useArclightKey, 'Use Arclight.')
   );
-  document.getElementById('tooLittle').textContent = getTranslation(
-    tooLittleKey,
-    'Default too little example.'
-  );
-  document.getElementById('justRight').textContent = getTranslation(
-    justRightKey,
-    'Default just right example.'
-  );
-  document.getElementById('tooMuch').textContent = getTranslation(
-    tooMuchKey,
-    'Default too much example.'
-  );
-  document.getElementById('additionalQuery').innerHTML = getTranslation(
-    additionalQueryKey,
-    'Default additional query.'
+  setTrustedHtml(
+    document.getElementById('additionalQuery'),
+    getTranslation(additionalQueryKey, 'Default additional query.')
   );
 
-  document.getElementById('patientDetail3').innerHTML =
-    `<span class="listText">${getTranslation(patientDetail3TextKey, 'vision & pupils')}</span>`;
+  setText('tooLittle', tooLittleKey, 'Default too little example.');
+  setText('justRight', justRightKey, 'Default just right example.');
+  setText('tooMuch', tooMuchKey, 'Default too much example.');
+
+  setText('patientDetail3', patientDetail3TextKey, 'vision & pupils');
 }
 
 document.querySelectorAll('input[name="option"]').forEach(function (radio) {
