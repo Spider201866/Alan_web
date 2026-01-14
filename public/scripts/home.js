@@ -13,7 +13,94 @@ import { initUI } from './home-ui.js';
 import { fetchMutedSnippet, fetchAreaFromLatLong, pushLocalStorageToServer } from './home-data.js';
 import { initTranslator } from './home-translator.js';
 
+// -----------------------------
+// PWA Install prompt handling
+// -----------------------------
+// NOTE:
+// - `beforeinstallprompt` can fire before our SW_READY gating runs.
+// - It also won’t fire if the app is already installed.
+// So we wire this up outside of `main()` and keep the button hidden unless
+// installation is actually available.
+let deferredPrompt = null;
+let installBtn = null;
+
+const setInstallButtonVisible = (visible) => {
+  if (!installBtn) return;
+  installBtn.style.display = visible ? 'block' : 'none';
+};
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  log.info('beforeinstallprompt event fired. deferredPrompt is set.');
+  setInstallButtonVisible(true);
+});
+
+window.addEventListener('appinstalled', () => {
+  localStorage.setItem('alanui:installed', '1');
+  deferredPrompt = null;
+  setInstallButtonVisible(false);
+});
+
 document.addEventListener('DOMContentLoaded', () => {
+  installBtn = document.getElementById('install-btn');
+  if (installBtn) {
+    // Keep the button visible in the normal browser view.
+    // (If install isn’t currently available, we show a helpful message on click.)
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    setInstallButtonVisible(!isStandalone);
+
+    installBtn.addEventListener('click', async () => {
+      log.info('Install button clicked');
+
+      // If install is available, show the prompt.
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const choiceResult = await deferredPrompt.userChoice;
+        log.info(`Install outcome: ${choiceResult.outcome}`);
+
+        // `beforeinstallprompt` can only be used once.
+        deferredPrompt = null;
+        setInstallButtonVisible(false);
+
+        // Request notification permission only after an explicit user gesture.
+        if (Notification?.permission === 'default') {
+          try {
+            const permission = await Notification.requestPermission();
+            log.info(`Notification permission: ${permission}`);
+          } catch {
+            // ignore
+          }
+        }
+        return;
+      }
+
+      // If already installed, clicking "Install" can't open the installed app
+      // (browsers don't provide an API for that). Give the user a helpful hint.
+      const wasInstalled = localStorage.getItem('alanui:installed') === '1';
+      if (wasInstalled) {
+        // Avoid alert() so this remains non-blocking and test/dev friendly.
+        const oldText = installBtn.textContent;
+        installBtn.textContent = 'Installed (open from desktop)';
+        setTimeout(() => {
+          installBtn.textContent = oldText;
+        }, 2500);
+        return;
+      }
+
+      // Otherwise: not installable yet (no beforeinstallprompt). This can happen
+      // on first load before SW control, or in unsupported browsers.
+      const oldText = installBtn.textContent;
+      installBtn.textContent = 'Install not ready';
+      setTimeout(() => {
+        installBtn.textContent = oldText;
+      }, 2500);
+      log.info(
+        'Install not available yet. If supported, use your browser menu (⋮) → Install, and ensure you are online.'
+      );
+    });
+  }
+
   let mainHasRun = false;
   const runMain = () => {
     if (!mainHasRun) {
@@ -100,55 +187,6 @@ function main() {
     document.addEventListener('keydown', onKeyDown, { capture: true });
   }
   // --- END: Marquee Hiding Logic (Corrected) ---
-
-  // 6. PWA Install prompt handling
-  let deferredPrompt;
-  const installBtn = document.getElementById('install-btn');
-
-  // Hide install button if app is already installed
-  if (window.matchMedia('(display-mode: standalone)').matches) {
-    if (installBtn) {
-      installBtn.style.display = 'none';
-    }
-  }
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    log.info('beforeinstallprompt event fired. deferredPrompt is set.');
-    if (installBtn) {
-      installBtn.style.display = 'block';
-
-      const installHandler = () => {
-        if (deferredPrompt) {
-          // Show the install prompt immediately on user gesture
-          deferredPrompt.prompt();
-
-          // Handle the user's choice
-          deferredPrompt.userChoice.then((choiceResult) => {
-            log.info(`Install outcome: ${choiceResult.outcome}`);
-            deferredPrompt = null;
-            installBtn.style.display = 'none';
-          });
-
-          // Request notification permission in the background
-          if (Notification.permission === 'default') {
-            Notification.requestPermission().then((permission) => {
-              log.info(`Notification permission: ${permission}`);
-            });
-          }
-        }
-      };
-
-      installBtn.addEventListener('click', installHandler, { once: true });
-    }
-  });
-
-  window.addEventListener('appinstalled', () => {
-    if (installBtn) {
-      installBtn.style.display = 'none';
-    }
-  });
 
   // Other global initializations if any.
 }

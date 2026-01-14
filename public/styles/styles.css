@@ -223,7 +223,10 @@ p {
   padding: 0 30px;
   background-color: var(--color-black);
   color: var(--color-white);
-  position: relative;
+  position: sticky;
+  top: 0;
+  /* Ensure header (and Install button) stays clickable above the Flowise embed */
+  z-index: 2147483640;
 }
 .chatbot-header .red {
   color: #f44336ff;
@@ -308,7 +311,7 @@ p {
   cursor: pointer;
   top: -45px;
   left: 20px;
-  z-index: 10001;
+  z-index: 2147483641;
 }
 
 .menu-icon::before,
@@ -410,7 +413,7 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 10000;
+  z-index: 2147483642;
 }
 
 /* Home side-menu open state

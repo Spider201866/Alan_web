@@ -251,7 +251,8 @@ self.addEventListener('push', function (event) {
   // Define the notification's appearance
   const options = {
     body: 'This test message came from your browser DevTools!',
-    icon: '/images/icons/icon-192x192.png', // Optional: path to an icon
+    // Use an existing PWA icon (avoid 404 noise in console).
+    icon: '/favicons/android-chrome-192x192.png',
     vibrate: [100, 50, 100], // Optional: vibration pattern
   };
 
