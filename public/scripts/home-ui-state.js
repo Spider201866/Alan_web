@@ -55,7 +55,7 @@ export function createHomeUIState() {
   if (state.sideMenu) {
     state.sideMenuFocusTrap = new FocusTrap(state.sideMenu);
     // Ensure it's hidden initially (consistent with closeAllPopups)
-    state.sideMenu.style.left = '-370px';
+    state.sideMenu.classList.remove('is-open');
   }
 
   return state;

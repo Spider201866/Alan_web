@@ -9,14 +9,14 @@
  * @param {import('./home-ui-state.js').HomeUIState} state
  */
 export function closeAllPopups(state) {
-  if (state.sideMenu && state.sideMenu.style.left === '0px') {
+  if (state.sideMenu && state.sideMenu.classList.contains('is-open')) {
     if (state.menuIcon) state.menuIcon.classList.remove('open');
-    state.sideMenu.style.left = '-370px';
+    state.sideMenu.classList.remove('is-open');
     if (state.sideMenuFocusTrap) state.sideMenuFocusTrap.deactivate();
   }
 
-  if (state.popup && state.popup.style.right === '0px') {
-    state.popup.style.right = '-350px';
+  if (state.popup && state.popup.classList.contains('is-open')) {
+    state.popup.classList.remove('is-open');
     if (state.popupFocusTrap) state.popupFocusTrap.deactivate();
   }
 

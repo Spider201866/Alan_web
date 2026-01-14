@@ -73,7 +73,7 @@ export function openPopup(state) {
 
   const popupContent = document.getElementById('popup-content');
   if (popupContent) popupContent.innerHTML = buildPopupContent();
-  if (state.popup) state.popup.style.right = '0';
+  if (state.popup) state.popup.classList.add('is-open');
   if (state.overlay) state.overlay.style.display = 'block';
   if (state.popupFocusTrap) state.popupFocusTrap.activate();
 }
@@ -92,7 +92,7 @@ export function closePopup(state) {
  */
 export function togglePopup(state) {
   if (!state.popup) return;
-  state.popup.style.right === '0px' ? closePopup(state) : openPopup(state);
+  state.popup.classList.contains('is-open') ? closePopup(state) : openPopup(state);
 }
 
 /**

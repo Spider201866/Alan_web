@@ -14,7 +14,7 @@ function setupMenuIcon(state) {
     closeAllPopups(state);
     if (!isCurrentlyOpen) {
       this.classList.add('open');
-      state.sideMenu.style.left = '0px';
+      state.sideMenu.classList.add('is-open');
       state.overlay.style.display = 'block';
       state.sideMenuFocusTrap.activate();
     }
