@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { parseCookies } from '../utils/cookies.js';
 
 // Use the __Host- prefix in production for best-practice cookie scoping.
 // Requirements: Secure + Path=/ + no Domain attribute (we satisfy these).
@@ -60,21 +61,6 @@ function createSessionToken({ ttlMs = DEFAULT_TTL_MS } = {}, secret) {
   const payloadB64 = base64UrlEncode(JSON.stringify(payload));
   const sig = signPayload(payloadB64, secret);
   return `${payloadB64}.${sig}`;
-}
-
-function parseCookies(cookieHeader) {
-  const result = {};
-  if (!cookieHeader) return result;
-
-  cookieHeader.split(';').forEach((part) => {
-    const [rawKey, ...rest] = part.trim().split('=');
-    if (!rawKey) return;
-    const key = rawKey.trim();
-    const value = rest.join('=');
-    result[key] = decodeURIComponent(value);
-  });
-
-  return result;
 }
 
 function buildSetCookieHeader(value, { maxAgeSeconds }, { secure }) {

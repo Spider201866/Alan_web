@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { parseCookies } from '../utils/cookies.js';
 
 /**
  * Simple CSRF protection middleware.
@@ -7,16 +8,6 @@ import crypto from 'crypto';
 export default function csrfProtection(options = {}) {
   const { skipPaths = [], includePathPrefixes = [], enable = true } = options;
   const cookieName = 'csrf_token';
-
-  const parseCookies = (cookieHeader) => {
-    if (!cookieHeader) return {};
-    return cookieHeader.split(';').reduce((acc, part) => {
-      const [key, ...rest] = part.trim().split('=');
-      if (!key) return acc;
-      acc[key] = decodeURIComponent(rest.join('='));
-      return acc;
-    }, {});
-  };
 
   const getCookieToken = (req) => {
     const cookies = parseCookies(req.headers.cookie);
@@ -41,7 +32,7 @@ export default function csrfProtection(options = {}) {
       const token = existingToken || crypto.randomBytes(16).toString('hex');
       const cookieParts = [`${cookieName}=${encodeURIComponent(token)}`, 'Path=/', 'SameSite=Lax'];
       if (shouldSetSecureCookie(req)) cookieParts.push('Secure');
-      res.setHeader('Set-Cookie', cookieParts.join('; '));
+      res.append('Set-Cookie', cookieParts.join('; '));
       res.setHeader('X-CSRF-Token', token);
       return next();
     }

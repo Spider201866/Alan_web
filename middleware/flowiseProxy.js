@@ -51,10 +51,25 @@ export default function flowiseProxy({ targetBaseUrl }) {
     });
 
     try {
+      if (/^https?:\/\//i.test(req.url) || req.url.startsWith('//')) {
+        res.statusCode = 400;
+        res.end('Invalid proxy target');
+        return;
+      }
+
       const targetUrl = new URL(req.url, targetBaseUrl);
+      if (targetUrl.origin !== new URL(targetBaseUrl).origin) {
+        res.statusCode = 400;
+        res.end('Invalid proxy target');
+        return;
+      }
 
       const headers = { ...req.headers };
       delete headers.host;
+      delete headers.cookie;
+      delete headers.authorization;
+      delete headers['proxy-authorization'];
+      delete headers['proxy-authenticate'];
 
       // Avoid sending an Origin header upstream. This prevents Flowise from treating
       // the request as cross-origin and needing CORS headers.
@@ -91,6 +106,7 @@ export default function flowiseProxy({ targetBaseUrl }) {
 
       upstreamResponse.headers.forEach((value, key) => {
         if (HOP_BY_HOP_HEADERS.has(key.toLowerCase())) return;
+        if (key.toLowerCase() === 'set-cookie') return;
         res.setHeader(key, value);
       });
 

@@ -1,7 +1,8 @@
-// Alan UI - aboutalan.js | 14th January 2026, WJW
+// Alan UI - aboutalan.js | 16th January 2026, WJW
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
 import { setTrustedHtml } from './trusted-html.js';
+import { whenSwReady } from './sw-ready.js';
 
 function setText(id, key, fallback) {
   const el = document.getElementById(id);
@@ -54,19 +55,7 @@ const runInitPage = () => {
   }
 };
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'SW_READY') {
-      runInitPage();
-    }
-  });
-
-  if (navigator.serviceWorker.controller) {
-    runInitPage();
-  }
-} else {
-  runInitPage();
-}
+whenSwReady(runInitPage);
 
 // Logo animation logic is preserved
 document.addEventListener('DOMContentLoaded', function () {

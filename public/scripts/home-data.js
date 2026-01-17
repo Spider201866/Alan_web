@@ -6,6 +6,7 @@ import log from './log.js';
 import { initMutedButtons } from './muted.js';
 import { setTrustedHtml } from './trusted-html.js';
 import { withCsrfHeaders } from './csrf.js';
+import { ensureSessionId, getStoredNumber } from './storage.js';
 
 /**
  * Fetches the HTML snippet for the muted buttons, injects it into the DOM, and initializes the buttons.
@@ -63,7 +64,7 @@ export function pushLocalStorageToServer() {
   }
   // --- END OF FIX ---
 
-  const sessionId = localStorage.getItem('sessionId') || `user-${Date.now()}`;
+  const sessionId = ensureSessionId();
 
   const payload = {
     sessionId,
@@ -78,14 +79,12 @@ export function pushLocalStorageToServer() {
     dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }),
   };
 
-  const lat = localStorage.getItem('latitude');
-  const lon = localStorage.getItem('longitude');
+  const latValue = getStoredNumber('latitude');
+  const lonValue = getStoredNumber('longitude');
   const area = localStorage.getItem('area');
 
-  const latValue = Number.parseFloat(lat);
-  const lonValue = Number.parseFloat(lon);
-  if (!Number.isNaN(latValue)) payload.latitude = latValue;
-  if (!Number.isNaN(lonValue)) payload.longitude = lonValue;
+  if (latValue !== null) payload.latitude = latValue;
+  if (lonValue !== null) payload.longitude = lonValue;
   if (area && area.trim() !== '') payload.area = area;
 
   // The original check for geo data is still useful.

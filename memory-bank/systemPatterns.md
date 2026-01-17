@@ -1,4 +1,4 @@
-<!-- Alan UI - systemPatterns.md | Updated 14th January 2026, Cline -->
+<!-- Alan UI - systemPatterns.md | Updated 16th January 2026, Cline -->
 
 # System Architecture and Patterns
 
@@ -114,7 +114,15 @@ graph TD
     -   `sensitiveLimiter`: 10/15m for protected routes like authentication and record retrieval/deletion.
 
 -   **CSRF (Optional)**
-    -   Simple per-process token model. Enabled via env (`ENABLE_CSRF=true`) and requires `x-csrf-token` on mutating requests; supports `skipPaths` (e.g. `/api/fetch-records`). Suitable for single-process deployments.
+    -   Simple per-process token model. Enabled via env (`ENABLE_CSRF=true`) and uses a **double-submit cookie**:
+        - `csrf_token` cookie is set on safe requests (GET/HEAD/OPTIONS), along with an `X-CSRF-Token` response header.
+        - Mutating requests must include `x-csrf-token` header matching the `csrf_token` cookie value.
+    -   Supports `skipPaths` and/or `includePathPrefixes`.
+    -   **Current enforcement pattern**:
+        - Global CSRF middleware is enabled/disabled at app level and can skip specific endpoints.
+        - `/api/record-info` is skipped globally and applies CSRF **per-route** (after validation) to ensure validation errors are returned as `400` even when CSRF is missing/invalid.
+        - Admin CSRF token can be fetched via `GET /api/admin/csrf` (requires valid admin session cookie).
+    -   Suitable for single-process deployments.
 
 -   **Build Pipeline Behavioral Patterns**
     -   Build timestamp is injected into each HTML head as a comment for release tracing.

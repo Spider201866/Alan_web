@@ -5,6 +5,7 @@
 import log from './log.js';
 import { getTranslation } from './language.js';
 import { withCsrfHeaders } from './csrf.js';
+import { ensureSessionId, getStoredNumber } from './storage.js';
 
 // DOM element references will be passed to initAuthFlow
 let passwordScreenEl, passwordInputEl, passwordSubmitBtnEl, passwordErrorEl;
@@ -15,16 +16,16 @@ let nameInputEl, jobSelectElementEl, experienceSelectEl, contactInputEl, acceptB
  * Sends user information to the server to be recorded.
  */
 function pushDataToServer(name, aims, experience, contact) {
-  const latitudeValue = parseFloat(localStorage.getItem('latitude'));
-  const longitudeValue = parseFloat(localStorage.getItem('longitude'));
+  const latitudeValue = getStoredNumber('latitude');
+  const longitudeValue = getStoredNumber('longitude');
 
   const userInfo = {
-    sessionId: localStorage.getItem('sessionId') || `user-${Date.now()}`,
+    sessionId: ensureSessionId(),
     name: name,
     role: aims.join(', '),
     experience: experience,
-    latitude: Number.isNaN(latitudeValue) ? null : latitudeValue,
-    longitude: Number.isNaN(longitudeValue) ? null : longitudeValue,
+    latitude: latitudeValue,
+    longitude: longitudeValue,
     country: localStorage.getItem('country') || 'Not set',
     iso2: localStorage.getItem('iso2') || 'Not set',
     classification: localStorage.getItem('classification') || 'Not set',
@@ -129,9 +130,7 @@ function handleAccept() {
   localStorage.setItem('contactInfo', contactInputEl ? contactInputEl.value : '');
   // roleClassification was a legacy marker (M)/(P) and is no longer used.
   localStorage.removeItem('roleClassification');
-  if (!localStorage.getItem('sessionId')) {
-    localStorage.setItem('sessionId', `user-${Date.now()}`);
-  }
+  ensureSessionId();
 
   pushDataToServer(
     rawName,

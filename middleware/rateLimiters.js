@@ -59,3 +59,14 @@ export const osmTilesLimiter = rateLimit({
   legacyHeaders: false,
   message: 'Too many tile requests. Please try again later.',
 });
+
+/**
+ * Rate limiter for admin CSRF token fetch.
+ */
+export const adminCsrfLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: 'Too many CSRF token requests. Please try again later.',
+});

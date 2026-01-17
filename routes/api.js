@@ -9,17 +9,12 @@ import {
   requireAdminSession,
   setAdminSessionCookie,
 } from '../middleware/admin-session.js';
+import { applyAdminNoStoreHeaders } from '../middleware/admin-no-store.js';
+import csrfProtection from '../middleware/csrf.js';
 // import { readJsonFile, appendToHistory } from '../services/records.js'; // Old service
 import dataService from '../services/data-service.js'; // New service
 
-import { sensitiveLimiter } from '../middleware/rateLimiters.js';
-
-function applyAdminNoStoreHeaders(res) {
-  res.setHeader('Cache-Control', 'no-store');
-  res.setHeader('Pragma', 'no-cache');
-  res.setHeader('Expires', '0');
-  res.setHeader('X-Robots-Tag', 'noindex, nofollow');
-}
+import { adminCsrfLimiter, sensitiveLimiter } from '../middleware/rateLimiters.js';
 
 function createAdminIpAllowlistMiddleware(adminAllowedIps = []) {
   const allowlist = Array.isArray(adminAllowedIps) ? adminAllowedIps : [];
@@ -52,19 +47,47 @@ export default function apiRoutes(rateLimiterOrLimiters, configToUse = {}) {
   const enforceAdminIpAllowlist = createAdminIpAllowlistMiddleware(configToUse.adminAllowedIps);
   const requireSession = requireAdminSession(configToUse);
   const validatePassword = validatePasswordWithConfig(configToUse);
+  const recordInfoCsrf = csrfProtection({ enable: Boolean(configToUse.enableCsrf) });
 
   const router = express.Router();
 
+  const createFetchRecordsHandler = (label) => (req, res, next) => {
+    try {
+      applyAdminNoStoreHeaders(res);
+      const records = dataService.getActiveRecord();
+      res.json(records);
+    } catch (err) {
+      console.error(`Error in ${label}:`, err);
+      next(err);
+    }
+  };
+
+  const handleFetchHistory = (req, res, next) => {
+    try {
+      applyAdminNoStoreHeaders(res);
+      const history = dataService.getFullHistory();
+      res.json(history);
+    } catch (err) {
+      next(err);
+    }
+  };
+
   // CSRF token fetch for admin pages (only relevant when ENABLE_CSRF=true).
   // Requires a valid admin session cookie.
-  router.get('/admin/csrf', enforceAdminIpAllowlist, requireSession, (req, res) => {
-    applyAdminNoStoreHeaders(res);
+  router.get(
+    '/admin/csrf',
+    adminCsrfLimiter,
+    enforceAdminIpAllowlist,
+    requireSession,
+    (req, res) => {
+      applyAdminNoStoreHeaders(res);
 
-    // CSRF middleware runs before routes and sets X-CSRF-Token on GET.
-    // Echo it back in JSON as well for convenience.
-    const token = res.getHeader?.('X-CSRF-Token') || null;
-    res.json({ csrfToken: token });
-  });
+      // CSRF middleware runs before routes and sets X-CSRF-Token on GET.
+      // Echo it back in JSON as well for convenience.
+      const token = res.getHeader?.('X-CSRF-Token') || null;
+      res.json({ csrfToken: token });
+    }
+  );
 
   /**
    * @route POST /api/record-info
@@ -76,6 +99,7 @@ export default function apiRoutes(rateLimiterOrLimiters, configToUse = {}) {
     recordInfoLimiter,
     recordValidationRules,
     validateRecord,
+    recordInfoCsrf,
     (req, res, next) => {
       try {
         const record = { ...req.body }; // refreshCount is handled by DB
@@ -122,21 +146,7 @@ export default function apiRoutes(rateLimiterOrLimiters, configToUse = {}) {
     sensitiveLimiter,
     enforceAdminIpAllowlist,
     validatePassword,
-    (req, res, next) => {
-      // The original plan had a console.log here for non-production, can be added if needed
-      // if (process.env.NODE_ENV !== 'production') {
-      //   console.log('FETCH-RECORDS BODY:', req.body);
-      // }
-      // next(); // This next() was part of a multi-handler setup, simplified here
-      try {
-        applyAdminNoStoreHeaders(res);
-        const records = dataService.getActiveRecord();
-        res.json(records);
-      } catch (err) {
-        console.error('Error in /fetch-records:', err);
-        next(err);
-      }
-    }
+    createFetchRecordsHandler('/fetch-records')
   );
 
   /**
@@ -147,16 +157,7 @@ export default function apiRoutes(rateLimiterOrLimiters, configToUse = {}) {
     sensitiveLimiter,
     enforceAdminIpAllowlist,
     requireSession,
-    (req, res, next) => {
-      try {
-        applyAdminNoStoreHeaders(res);
-        const records = dataService.getActiveRecord();
-        res.json(records);
-      } catch (err) {
-        console.error('Error in /admin/fetch-records:', err);
-        next(err);
-      }
-    }
+    createFetchRecordsHandler('/admin/fetch-records')
   );
 
   /**
@@ -169,15 +170,7 @@ export default function apiRoutes(rateLimiterOrLimiters, configToUse = {}) {
     sensitiveLimiter,
     enforceAdminIpAllowlist,
     validatePassword,
-    (req, res, next) => {
-      try {
-        applyAdminNoStoreHeaders(res);
-        const history = dataService.getFullHistory();
-        res.json(history);
-      } catch (err) {
-        next(err);
-      }
-    }
+    handleFetchHistory
   );
 
   router.post(
@@ -185,15 +178,7 @@ export default function apiRoutes(rateLimiterOrLimiters, configToUse = {}) {
     sensitiveLimiter,
     enforceAdminIpAllowlist,
     requireSession,
-    (req, res, next) => {
-      try {
-        applyAdminNoStoreHeaders(res);
-        const history = dataService.getFullHistory();
-        res.json(history);
-      } catch (err) {
-        next(err);
-      }
-    }
+    handleFetchHistory
   );
 
   /**

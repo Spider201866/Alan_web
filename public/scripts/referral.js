@@ -1,6 +1,7 @@
 // Alan UI - referral.js | 14th January 2026, WJW
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
+import { whenSwReady } from './sw-ready.js';
 
 /**
  * Applies all necessary static translations to the elements on the referral page.
@@ -71,19 +72,7 @@ const runInitPage = () => {
   }
 };
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'SW_READY') {
-      runInitPage();
-    }
-  });
-
-  if (navigator.serviceWorker.controller) {
-    runInitPage();
-  }
-} else {
-  runInitPage();
-}
+whenSwReady(runInitPage);
 
 // initializeForm will need to be refactored to use getTranslation for its dynamic text.
 // For now, the static HTML text is handled by applyPageSpecificTranslations.

@@ -1,4 +1,4 @@
-<!-- Alan UI - activeContext.md | Updated 14th January 2026, Cline -->
+<!-- Alan UI - activeContext.md | Updated 16th January 2026, Cline -->
 
 # Active Context
 
@@ -27,6 +27,12 @@
   - Added `tests/api/security-headers.test.js` to prevent header regressions.
   - Made `tests/api/build.test.js` less brittle.
   - A11y runner no longer prints canvas warnings (JSDOM canvas stub).
+
+## Recent Work (16 Jan 2026)
+- **CSRF handling refinements**
+  - Updated CSRF enforcement so `/api/record-info` performs validation **before** CSRF checks.
+  - Global CSRF middleware now skips `/api/record-info`, and the route applies CSRF **per-route** after validation.
+  - Tests updated to include `csrf_token` cookie + `x-csrf-token` header for `/api/record-info` and admin delete flows; test file formatted for Prettier.
 
 ## Developer Workflow Hygiene (12 Jan 2026)
 - Repo now enforces PowerShell-safe command patterns via `.clinerules/reminders.md`.

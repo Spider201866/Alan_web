@@ -12,6 +12,7 @@ import { initChatHistory } from './listener-module.js'; // Handles chat history 
 import { initUI } from './home-ui.js';
 import { fetchMutedSnippet, fetchAreaFromLatLong, pushLocalStorageToServer } from './home-data.js';
 import { initTranslator } from './home-translator.js';
+import { ensureSessionId } from './storage.js';
 
 // -----------------------------
 // PWA Install prompt handling
@@ -128,11 +129,7 @@ function main() {
 
   // 4. Initialize the chatbot.
   // Ensure sessionId is available or generated if not.
-  let sessionId = localStorage.getItem('sessionId');
-  if (!sessionId) {
-    sessionId = `user-${Date.now()}`;
-    localStorage.setItem('sessionId', sessionId);
-  }
+  const sessionId = ensureSessionId();
   initChatbot(sessionId);
   // --- START: Marquee Hiding Logic (Corrected) ---
   // Hides the marquee section only when the user focuses on the chatbot.

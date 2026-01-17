@@ -1,6 +1,7 @@
 // Alan UI - weblinks.js | 14th January 2026, WJW
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
+import { whenSwReady } from './sw-ready.js';
 
 /**
  * Applies all necessary translations to the elements on the 'Web Links' page.
@@ -27,16 +28,4 @@ const runInitPage = () => {
   }
 };
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'SW_READY') {
-      runInitPage();
-    }
-  });
-
-  if (navigator.serviceWorker.controller) {
-    runInitPage();
-  }
-} else {
-  runInitPage();
-}
+whenSwReady(runInitPage);

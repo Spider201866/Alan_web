@@ -8,6 +8,50 @@ import { closeAllPopups, updateButtonStyle } from './home-ui-core.js';
 import { buildPopupContent } from './home-ui-popup.js';
 import { setTrustedHtml } from './trusted-html.js';
 
+function attachSwipeToClose(element, { direction, isOpen, onClose }) {
+  if (!element) return;
+
+  const thresholdPx = 60;
+  const ratio = 1.2;
+  let startX = 0;
+  let startY = 0;
+  let active = false;
+
+  element.addEventListener(
+    'touchstart',
+    (event) => {
+      if (!event.touches || event.touches.length !== 1) return;
+      const touch = event.touches[0];
+      startX = touch.clientX;
+      startY = touch.clientY;
+      active = true;
+    },
+    { passive: true }
+  );
+
+  element.addEventListener(
+    'touchend',
+    (event) => {
+      if (!active) return;
+      active = false;
+      if (!isOpen()) return;
+      if (!event.changedTouches || event.changedTouches.length !== 1) return;
+
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - startX;
+      const dy = touch.clientY - startY;
+      const absDx = Math.abs(dx);
+      const absDy = Math.abs(dy);
+
+      if (absDx < thresholdPx || absDx < absDy * ratio) return;
+
+      if (direction === 'left' && dx < 0) onClose();
+      if (direction === 'right' && dx > 0) onClose();
+    },
+    { passive: true }
+  );
+}
+
 function setupMenuIcon(state) {
   if (!state.menuIcon || !state.sideMenu || !state.overlay || !state.sideMenuFocusTrap) return;
   state.menuIcon.addEventListener('click', function () {
@@ -161,6 +205,20 @@ function setupCloseHandlers(state) {
   });
 }
 
+function setupSwipeToClose(state) {
+  attachSwipeToClose(state.sideMenu, {
+    direction: 'left',
+    isOpen: () => Boolean(state.sideMenu?.classList.contains('is-open')),
+    onClose: () => closeAllPopups(state),
+  });
+
+  attachSwipeToClose(state.popup, {
+    direction: 'right',
+    isOpen: () => Boolean(state.popup?.classList.contains('is-open')),
+    onClose: () => closeAllPopups(state),
+  });
+}
+
 function setupClearHistoryButton() {
   const clearHistoryBtn = document.getElementById('clearHistoryBtn');
   if (!clearHistoryBtn) return;
@@ -202,5 +260,6 @@ export function wireHomeUIHandlers(state, options = {}) {
   setupLanguageControls(state);
   setupChatbotInteraction(state);
   setupCloseHandlers(state);
+  setupSwipeToClose(state);
   setupClearHistoryButton();
 }

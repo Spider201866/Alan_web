@@ -47,13 +47,13 @@ describe('Admin CSRF (when ENABLE_CSRF=true)', () => {
       .set('Content-Type', 'application/json');
 
     expect(loginRes.statusCode).toBe(200);
-    const cookie = loginRes.headers['set-cookie']?.[0];
-    expect(cookie).toBeTruthy();
+    const sessionCookie = loginRes.headers['set-cookie']?.[0]?.split(';')[0];
+    expect(sessionCookie).toBeTruthy();
 
     // 2) try delete without CSRF header
     const delRes = await request(server)
       .delete('/api/admin/delete-record')
-      .set('Cookie', cookie)
+      .set('Cookie', sessionCookie)
       .send({ sessionId: 'abc' });
 
     expect(delRes.statusCode).toBe(403);
@@ -68,18 +68,23 @@ describe('Admin CSRF (when ENABLE_CSRF=true)', () => {
       .set('Content-Type', 'application/json');
 
     expect(loginRes.statusCode).toBe(200);
-    const cookie = loginRes.headers['set-cookie']?.[0];
-    expect(cookie).toBeTruthy();
+    const sessionCookie = loginRes.headers['set-cookie']?.[0]?.split(';')[0];
+    expect(sessionCookie).toBeTruthy();
 
     // 2) fetch csrf token (requires cookie)
-    const csrfRes = await request(server).get('/api/admin/csrf').set('Cookie', cookie);
+    const csrfRes = await request(server).get('/api/admin/csrf').set('Cookie', sessionCookie);
     expect(csrfRes.statusCode).toBe(200);
     expect(csrfRes.body?.csrfToken).toBeTruthy();
+    const csrfCookie = csrfRes.headers['set-cookie']
+      ?.find((value) => value.startsWith('csrf_token='))
+      ?.split(';')[0];
+    expect(csrfCookie).toBeTruthy();
+    const cookieHeader = [sessionCookie, csrfCookie].join('; ');
 
     // 3) delete with token
     const delRes = await request(server)
       .delete('/api/admin/delete-record')
-      .set('Cookie', cookie)
+      .set('Cookie', cookieHeader)
       .set('x-csrf-token', csrfRes.body.csrfToken)
       .send({ sessionId: 'abc' });
 

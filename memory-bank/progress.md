@@ -1,4 +1,4 @@
-<!-- Alan UI - progress.md | Updated 14th January 2026, Cline -->
+<!-- Alan UI - progress.md | Updated 16th January 2026, Cline -->
 
 # Progress
 
@@ -19,6 +19,12 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
 ---
 
 ## Recent Changes
+
+### January 2026 Maintenance (16 Jan 2026)
+- **CSRF handling refinements + tests**
+  - `/api/record-info` now validates request body before CSRF enforcement.
+  - Global CSRF middleware skips `/api/record-info`; route applies CSRF per-route after validation.
+  - Updated API tests to include CSRF cookie/header for `/api/record-info` and admin delete flows; formatted test file for Prettier.
 
 ### January 2026 Maintenance (14 Jan 2026)
 - **Client-side injection hardening**

@@ -23,6 +23,7 @@ import {
   createRecordsTableHeader,
   renderEmptyMessage,
 } from './view-records-dom.js';
+import { getCsrfToken, withCsrfHeaders } from './csrf.js';
 
 /* DOM References */
 const passwordScreen = document.getElementById('passwordScreen');
@@ -39,12 +40,11 @@ const mapContainer = document.getElementById('map');
 
 let map; // Leaflet map instance
 
-let csrfToken = null;
-
 async function ensureCsrfToken() {
   // Only needed when ENABLE_CSRF=true on the server.
   // Safe to call regardless; if CSRF is disabled, this returns null.
-  if (csrfToken) return csrfToken;
+  const existingToken = getCsrfToken();
+  if (existingToken) return existingToken;
 
   const resp = await fetch('/api/admin/csrf', {
     method: 'GET',
@@ -54,20 +54,19 @@ async function ensureCsrfToken() {
   if (!resp.ok) return null;
 
   const data = await resp.json().catch(() => ({}));
-  csrfToken = data?.csrfToken || null;
-  return csrfToken;
+  return data?.csrfToken || getCsrfToken() || null;
 }
 
 async function adminFetch(url, options = {}) {
-  const headers = {
+  let headers = {
     'Content-Type': 'application/json',
     ...(options.headers || {}),
   };
 
   // Add CSRF token if server requires it.
   try {
-    const token = await ensureCsrfToken();
-    if (token) headers['x-csrf-token'] = token;
+    await ensureCsrfToken();
+    headers = withCsrfHeaders(headers);
   } catch (err) {
     if (err?.message === 'AUTH_REQUIRED') throw err;
   }

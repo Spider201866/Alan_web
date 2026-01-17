@@ -13,6 +13,7 @@ import { fileURLToPath } from 'url';
 import { Readable } from 'stream';
 import { globalErrorHandler, notFound } from './middleware/error.js';
 import { flowiseLimiter, osmTilesLimiter, recordInfoLimiter } from './middleware/rateLimiters.js';
+import { applyAdminNoStoreHeaders } from './middleware/admin-no-store.js';
 
 // Backward-compatible general limiter (100 requests / 15 min)
 // Also used as a fallback if a per-endpoint limiter isn't provided.
@@ -28,13 +29,6 @@ const __dirname = path.dirname(__filename);
 
 export function createApp(configToUse) {
   const app = express();
-
-  const applyAdminNoStoreHeaders = (res) => {
-    res.setHeader('Cache-Control', 'no-store');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
-    res.setHeader('X-Robots-Tag', 'noindex, nofollow');
-  };
 
   const adminAllowedIps = Array.isArray(configToUse.adminAllowedIps)
     ? configToUse.adminAllowedIps
@@ -137,7 +131,7 @@ export function createApp(configToUse) {
   app.use(
     csrfProtection({
       enable: Boolean(configToUse.enableCsrf),
-      skipPaths: ['/api/admin-login', '/api/admin-logout'],
+      skipPaths: ['/api/admin-login', '/api/admin-logout', '/api/record-info'],
     })
   );
 

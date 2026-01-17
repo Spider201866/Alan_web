@@ -1058,6 +1058,7 @@ flowise-fullchatbot {
 
 /* Replace it with this: */
 #install-btn {
+  display: none;
   position: absolute;
   right: 65px;
   top: 50%;

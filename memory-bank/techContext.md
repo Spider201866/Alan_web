@@ -1,4 +1,4 @@
-<!-- Alan UI - techContext.md | Updated 14th January 2026, Cline -->
+<!-- Alan UI - techContext.md | Updated 16th January 2026, Cline -->
 
 # Technology Stack and Tooling
 
@@ -58,7 +58,14 @@ This document provides a detailed overview of the technologies, dependencies, co
 - CORS
   - Allowlist is read from env; credentials enabled; null-origin allowed for apps/tools.
 - CSRF
-  - Simple per-process token; GET/HEAD/OPTIONS returns X-CSRF-Token header; mutating requests must send x-csrf-token unless on skipPaths; disabled by default.
+  - Simple per-process **double-submit cookie** token.
+  - On GET/HEAD/OPTIONS:
+    - sets `csrf_token` cookie (SameSite=Lax; Secure when https)
+    - returns `X-CSRF-Token` response header
+  - On mutating requests:
+    - requires `x-csrf-token` header to match the `csrf_token` cookie
+  - CSRF can be applied globally (app middleware) and/or per-route.
+    - Current pattern: global CSRF middleware skips `/api/record-info`, and `/api/record-info` applies CSRF per-route after validation.
 
 ---
 
