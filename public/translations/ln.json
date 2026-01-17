@@ -134,5 +134,11 @@
   "refer": "Kotinda",
   "comingSoon": "Eyakoya mosika te...",
   "splashScreenText": "AI ya misu, matoyi mpe pɔ̃",
-  "installButton": "Installer"
+  "installButton": "Installer",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

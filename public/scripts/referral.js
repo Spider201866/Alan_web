@@ -17,12 +17,6 @@ function applyPageSpecificTranslations() {
   document.querySelector('label[for="ref-age"]').textContent = getTranslation('refAgeLabel', 'Age');
   document.querySelector('label[for="ref-sex"]').textContent = getTranslation('refSexLabel', 'M/F');
 
-  // Screening switch label
-  // Note: The text "Screening: No problems" or "Screening: Fail" is dynamically set by initializeForm's updateScreeningLabel.
-  // We might need to translate "Screening: " part and then append "Pass" / "Fail" (which also might need translation).
-  // For now, let's assume updateScreeningLabel will be refactored to use getTranslation for "Screening: " and "Pass"/"Fail".
-  // So, no direct translation here for the dynamic part.
-
   // Priority label
   document.querySelector('label[for="ref-priority"]').textContent = getTranslation(
     'refPriorityLabel',
@@ -41,27 +35,11 @@ function applyPageSpecificTranslations() {
     'Example'
   );
 
-  // Textarea placeholder
-  const refDxTextarea = document.getElementById('ref-dx');
-  if (refDxTextarea) {
-    refDxTextarea.placeholder = getTranslation(
-      'refDxPlaceholder',
-      'eg SUB-CONJUNTIVAL HAEMORRHAGE – sudden, bright-red patch, no pain or vision change. {problem & onset; what you saw; vision & pupils/hearing/odour; medication} D Smith (Hightown Clinic)'
-    );
-  }
-
   // Preview section title
-  // Assuming the h3 element for "Text Preview:" can be targeted or given an ID if needed.
-  // For now, let's find it by its current text content if it's unique enough, or add an ID.
-  // This is brittle; adding an ID would be better.
-  const previewTitleElement = Array.from(document.querySelectorAll('h3')).find((h3) =>
-    h3.textContent.includes('Text Preview:')
-  );
+  const previewTitleElement = document.getElementById('textPreviewTitle');
   if (previewTitleElement) {
     previewTitleElement.textContent = getTranslation('refPreviewTitle', 'Text Preview:');
   }
-
-  // The char count info is dynamically generated, its template string in JS will need translation.
 }
 
 let pageHasInitialized = false;
@@ -74,9 +52,6 @@ const runInitPage = () => {
 
 whenSwReady(runInitPage);
 
-// initializeForm will need to be refactored to use getTranslation for its dynamic text.
-// For now, the static HTML text is handled by applyPageSpecificTranslations.
-// The dynamic parts within initializeForm (like screenLabel, char count messages) will be addressed later.
 document.addEventListener('DOMContentLoaded', function () {
   // applyPageSpecificTranslations is called by initPage after DOMContentLoaded and language init.
   // So, we only need to call initializeForm here.
@@ -99,6 +74,8 @@ function initializeForm() {
   const textPreviewCharCountInfoEl = document.getElementById('textPreviewCharCountInfo');
   const copyPreviewTextBtn = document.getElementById('copyPreviewText');
   const btnLoadExample = document.getElementById('btnLoadExample');
+  const SMS_SINGLE_SEGMENT_LIMIT_GSM = 160;
+  const SMS_SINGLE_SEGMENT_LIMIT_UCS2 = 70;
 
   /**
    * Updates the background color of the priority dropdown based on the selected value.
@@ -120,13 +97,15 @@ function initializeForm() {
    * @returns {string} The compacted referral text.
    */
   function generateCompactReferralText() {
-    const idVal = refIdInput.value.trim() || 'N/A';
-    const telVal = refTelInput.value.trim().replace(/\s+/g, '') || 'N/A';
-    const ageVal = refAgeInput.value.trim() || 'N/A';
+    const idVal = refIdInput.value.trim();
+    const telRaw = refTelInput.value.trim();
+    const telVal = telRaw ? telRaw.replace(/\s+/g, '') : '';
+    const ageVal = refAgeInput.value.trim();
     const sexVal = refSexSelect.value || '';
-    const screeningValue = screenSwitch.checked ? 'Fail' : 'Pass';
+    const screeningValue = getScreeningStatusLabel();
+    const ageSexVal = ageVal || sexVal ? `${ageVal}${sexVal}` : '';
 
-    let priorityDisplay = 'N/A';
+    let priorityDisplay = '';
     if (refPrioritySelect.value && refPrioritySelect.options[refPrioritySelect.selectedIndex]) {
       const selectedOption = refPrioritySelect.options[refPrioritySelect.selectedIndex];
       if (selectedOption.value) {
@@ -138,20 +117,129 @@ function initializeForm() {
       }
     }
 
-    const dxVal =
-      refDxTextarea.value
-        .trim()
-        .replace(/(\r\n|\n|\r)+/g, ' ')
-        .replace(/\s\s+/g, ' ') || 'N/A';
+    const dxRaw = refDxTextarea.value.trim();
+    const dxVal = dxRaw ? dxRaw.replace(/(\r\n|\n|\r)+/g, ' ').replace(/\s\s+/g, ' ') : '';
 
-    return [
-      `ID:${idVal}`,
-      `T:${telVal}`,
-      `A:${ageVal}${sexVal}`,
-      screeningValue,
-      priorityDisplay,
-      `Dx: ${dxVal}`,
-    ].join('; ');
+    const fields = [];
+    if (idVal) fields.push(idVal);
+    if (telVal) fields.push(telVal);
+    if (ageSexVal) fields.push(ageSexVal);
+    fields.push(screeningValue);
+    if (priorityDisplay) fields.push(priorityDisplay);
+    if (dxVal) fields.push(dxVal);
+
+    return fields.join('; ');
+  }
+
+  const GSM7_BASIC_CHARS =
+    '@\u00A3$\u00A5\u00E8\u00E9\u00F9\u00EC\u00F2\u00C7\n\u00D8\u00F8\r\u00C5\u00E5\u0394_\u03A6\u0393\u039B\u03A9\u03A0\u03A8\u03A3\u0398\u039E' +
+    ' !\"#\u00A4%&\'()*+,-./' +
+    '0123456789:;<=>?' +
+    '\u00A1' +
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+    '\u00C4\u00D6\u00D1\u00DC\u00A7' +
+    '\u00BF' +
+    'abcdefghijklmnopqrstuvwxyz' +
+    '\u00E4\u00F6\u00F1\u00FC\u00E0';
+  const GSM7_BASIC_SET = new Set(GSM7_BASIC_CHARS.split(''));
+  const GSM7_EXT_SET = new Set(['^', '{', '}', '\\', '[', ']', '~', '|', '\u20AC', '\f']);
+
+  function getGsmCharCost(char) {
+    if (GSM7_BASIC_SET.has(char)) return 1;
+    if (GSM7_EXT_SET.has(char)) return 2;
+    return null;
+  }
+
+  function getGsmLength(text) {
+    let gsmLength = 0;
+    for (const char of text) {
+      const cost = getGsmCharCost(char);
+      if (cost === null) return null;
+      gsmLength += cost;
+    }
+    return gsmLength;
+  }
+
+  function getSingleSegmentInfo(text) {
+    const gsmLength = getGsmLength(text);
+    if (gsmLength === null) {
+      return {
+        encoding: 'UCS-2',
+        length: text.length,
+        limit: SMS_SINGLE_SEGMENT_LIMIT_UCS2,
+      };
+    }
+
+    return {
+      encoding: 'GSM-7',
+      length: gsmLength,
+      limit: SMS_SINGLE_SEGMENT_LIMIT_GSM,
+    };
+  }
+
+  function formatTemplate(template, values) {
+    return template.replace(/\{(\w+)\}/g, (_, key) => values[key] ?? '');
+  }
+
+  function getScreeningStatusLabel() {
+    return screenSwitch.checked
+      ? getTranslation('refScreeningFail', 'Fail')
+      : getTranslation('refScreeningPass', 'Pass');
+  }
+
+  function truncateForSmsPreview(text, maxLength) {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    if (maxLength <= 3) {
+      return text.slice(0, maxLength);
+    }
+
+    const sliceLength = maxLength - 3;
+    let truncated = text.slice(0, sliceLength);
+    const lastSpace = truncated.lastIndexOf(' ');
+    if (lastSpace > 0) {
+      truncated = truncated.slice(0, lastSpace);
+    }
+    truncated = truncated.trimEnd();
+    if (!truncated) {
+      truncated = text.slice(0, sliceLength).trimEnd();
+    }
+    return `${truncated}...`;
+  }
+
+  function truncateGsmForSmsPreview(text, maxUnits) {
+    const ellipsis = '...';
+    const totalUnits = getGsmLength(text);
+    if (totalUnits !== null && totalUnits <= maxUnits) {
+      return text;
+    }
+    const ellipsisCost = getGsmLength(ellipsis) || ellipsis.length;
+    const truncatedLimit = maxUnits - ellipsisCost;
+
+    if (maxUnits <= ellipsisCost) {
+      return text.slice(0, maxUnits);
+    }
+
+    let units = 0;
+    let endIndex = 0;
+    for (let i = 0; i < text.length; i += 1) {
+      const cost = getGsmCharCost(text[i]) ?? 0;
+      if (units + cost > truncatedLimit) break;
+      units += cost;
+      endIndex = i + 1;
+    }
+
+    let truncated = text.slice(0, endIndex);
+    const lastSpace = truncated.lastIndexOf(' ');
+    if (lastSpace > 0) {
+      truncated = truncated.slice(0, lastSpace);
+    }
+    truncated = truncated.trimEnd();
+    if (!truncated) {
+      truncated = text.slice(0, endIndex).trimEnd();
+    }
+    return `${truncated}${ellipsis}`;
   }
 
   /**
@@ -159,19 +247,30 @@ function initializeForm() {
    */
   function updateTextPreview() {
     const compactText = generateCompactReferralText();
-    textPreviewContentEl.textContent = compactText;
+    const segmentInfo = getSingleSegmentInfo(compactText);
+    const previewText =
+      segmentInfo.encoding === 'GSM-7'
+        ? truncateGsmForSmsPreview(compactText, segmentInfo.limit)
+        : truncateForSmsPreview(compactText, segmentInfo.limit);
+    textPreviewContentEl.textContent = previewText;
 
-    const len = compactText.length;
-    const smsLimitSingle = 160;
-    let message = `[${len} character${len === 1 ? '' : 's'}`;
+    const previewLength =
+      segmentInfo.encoding === 'GSM-7' ? getGsmLength(previewText) || 0 : previewText.length;
+    const characterLabel =
+      previewLength === 1
+        ? getTranslation('refSmsCharacterSingle', 'character')
+        : getTranslation('refSmsCharacterPlural', 'characters');
+    const message = formatTemplate(
+      getTranslation('refSmsPreviewInfo', '[SMS preview: {length}/{max} {characterLabel}]'),
+      {
+        length: previewLength,
+        max: segmentInfo.limit,
+        characterLabel,
+      }
+    );
 
-    if (len <= smsLimitSingle) {
-      message += ` - fits in 1 text message]`;
-      textPreviewCharCountInfoEl.style.color = 'var(--green-dark)';
-    } else {
-      message += ` - exceeds ${smsLimitSingle} chars, may use multiple SMS]`;
-      textPreviewCharCountInfoEl.style.color = 'var(--red-dark)';
-    }
+    textPreviewCharCountInfoEl.style.color =
+      segmentInfo.length > segmentInfo.limit ? 'var(--red-dark)' : 'var(--green-dark)';
     textPreviewCharCountInfoEl.textContent = message;
   }
 
@@ -181,12 +280,14 @@ function initializeForm() {
    */
   function showCopyFeedback(element) {
     if (!element) return;
-    element.classList.remove('fa-copy');
-    element.classList.add('fa-check');
+    const icon = element.querySelector('i');
+    if (!icon) return;
+    icon.classList.remove('fa-copy');
+    icon.classList.add('fa-check');
     element.style.color = 'var(--green-dark)';
     setTimeout(() => {
-      element.classList.remove('fa-check');
-      element.classList.add('fa-copy');
+      icon.classList.remove('fa-check');
+      icon.classList.add('fa-copy');
       element.style.color = 'var(--primary)';
     }, 1500);
   }
@@ -195,7 +296,10 @@ function initializeForm() {
    * Updates the label for the screening switch based on its checked state.
    */
   function updateScreeningLabel() {
-    screenLabel.textContent = 'Screening: ' + (screenSwitch.checked ? 'Fail' : 'Pass');
+    const template = getTranslation('refScreeningLabel', 'Screening: {status}');
+    screenLabel.textContent = formatTemplate(template, {
+      status: getScreeningStatusLabel(),
+    });
   }
 
   /**
@@ -230,14 +334,46 @@ function initializeForm() {
   screenSwitch.addEventListener('change', updateScreeningLabel);
   refPrioritySelect.addEventListener('change', updateReferralPriorityColor);
   copyPreviewTextBtn.addEventListener('click', () => {
-    navigator.clipboard
-      .writeText(textPreviewContentEl.textContent)
+    copyTextToClipboard(textPreviewContentEl.textContent)
       .then(() => showCopyFeedback(copyPreviewTextBtn))
       .catch(() => alert('Failed to copy text.'));
   });
   btnLoadExample.addEventListener('click', loadExampleData);
+  document.addEventListener('languageChanged', () => {
+    updateScreeningLabel();
+    updateTextPreview();
+  });
 
   updateScreeningLabel();
   updateReferralPriorityColor();
   updateTextPreview();
+}
+
+function copyTextToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text);
+  }
+
+  return new Promise((resolve, reject) => {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.setAttribute('readonly', '');
+    textArea.style.position = 'absolute';
+    textArea.style.left = '-9999px';
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+      const succeeded = document.execCommand('copy');
+      document.body.removeChild(textArea);
+      if (succeeded) {
+        resolve();
+      } else {
+        reject(new Error('Copy failed'));
+      }
+    } catch (error) {
+      document.body.removeChild(textArea);
+      reject(error);
+    }
+  });
 }

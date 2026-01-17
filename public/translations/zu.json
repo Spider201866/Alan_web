@@ -134,5 +134,11 @@
   "refer": "Bhekisa",
   "comingSoon": "Kuze maduzane...",
   "splashScreenText": "I-AI yamehlo, izindlebe nesikhumba",
-  "installButton": "Faka"
+  "installButton": "Faka",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

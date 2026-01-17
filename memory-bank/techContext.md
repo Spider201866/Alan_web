@@ -1,4 +1,4 @@
-<!-- Alan UI - techContext.md | Updated 16th January 2026, Cline -->
+<!-- Alan UI - techContext.md | Updated 18th January 2026, Cline -->
 
 # Technology Stack and Tooling
 
@@ -67,6 +67,16 @@ This document provides a detailed overview of the technologies, dependencies, co
   - CSRF can be applied globally (app middleware) and/or per-route.
     - Current pattern: global CSRF middleware skips `/api/record-info`, and `/api/record-info` applies CSRF per-route after validation.
 
+## Shared Helpers (Backend)
+- `utils/cookies.js`: shared cookie parsing (`parseCookies`) with safe `decodeURIComponent` fallback.
+- `middleware/admin-no-store.js`: shared helper to apply admin no-store/noindex headers (used for admin endpoints and `/view-records.html`).
+
+## Shared Helpers (Frontend)
+- `public/scripts/sw-ready.js`: `whenSwReady(cb, { timeoutMs })` helper for gating initialisation on SW readiness with timeout fallback.
+- `public/scripts/storage.js`: localStorage helpers (`getStoredString`, `getStoredNumber`, `ensureSessionId`).
+- `public/scripts/csrf.js`: CSRF helpers (`getCsrfToken`, `withCsrfHeaders`) for attaching `x-csrf-token` when CSRF is enabled server-side.
+- `public/scripts/record-info.js`: shared builder/post helper for `/api/record-info` payloads.
+
 ---
 
 ## Persistence and Data Paths
@@ -78,6 +88,8 @@ This document provides a detailed overview of the technologies, dependencies, co
 - Tables initialized at module load (services/data-service.js):
   - history (sessionId PK, user and meta fields, refreshCount)
   - active_record (id=1, sessionId pointer)
+- `history` includes `dateTime` (string) plus `dateTimeEpoch` (INTEGER) for reliable ordering.
+- New writes normalize `dateTime` to ISO 8601 (UTC).
 - Transactions used for upsert and delete; active_record updated atomically.
 - Sanitization/validation enforced at route layer (express-validator).
 
@@ -145,6 +157,7 @@ This document provides a detailed overview of the technologies, dependencies, co
     - Bypass: if request URL includes /flowise/, do nothing to avoid caching/stream interference.
   - Push event: demo notification for debugging/lab use.
 - Install prompt handled in home.js with install button and Notification permission prompt as a secondary UX.
+  - Install button is hidden by default in CSS and only shown after `beforeinstallprompt` to prevent flashing.
 
 ---
 

@@ -134,5 +134,11 @@
   "refer": "রেফার",
   "comingSoon": "শীঘ্রই আসছে...",
   "splashScreenText": "চোখ, কান, ত্বক AI",
-  "installButton": "ইনস্টল করুন"
+  "installButton": "ইনস্টল করুন",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

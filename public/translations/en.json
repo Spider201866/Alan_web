@@ -134,5 +134,11 @@
   "refer": "Refer",
   "comingSoon": "Coming Soon...",
   "splashScreenText": "Eye, Ear, Skin AI",
-  "installButton": "Install"
+  "installButton": "Install",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

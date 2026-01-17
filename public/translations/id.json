@@ -134,5 +134,11 @@
   "refer": "Rujuk",
   "comingSoon": "Segera hadir...",
   "splashScreenText": "AI mata, telinga, dan kulit",
-  "installButton": "Instal"
+  "installButton": "Instal",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

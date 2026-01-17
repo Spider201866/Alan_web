@@ -134,5 +134,11 @@
   "refer": "Zipu",
   "comingSoon": "Na-abịa n’oge na-adịghị anya...",
   "splashScreenText": "Anya, Ntị, Akpụkpọ AI",
-  "installButton": "Wụnye"
+  "installButton": "Wụnye",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

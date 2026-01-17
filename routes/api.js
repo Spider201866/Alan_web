@@ -13,25 +13,9 @@ import { applyAdminNoStoreHeaders } from '../middleware/admin-no-store.js';
 import csrfProtection from '../middleware/csrf.js';
 // import { readJsonFile, appendToHistory } from '../services/records.js'; // Old service
 import dataService from '../services/data-service.js'; // New service
+import { createAdminIpAllowlistMiddleware } from '../middleware/admin-ip-allowlist.js';
 
 import { adminCsrfLimiter, sensitiveLimiter } from '../middleware/rateLimiters.js';
-
-function createAdminIpAllowlistMiddleware(adminAllowedIps = []) {
-  const allowlist = Array.isArray(adminAllowedIps) ? adminAllowedIps : [];
-  const enabled = allowlist.length > 0;
-
-  const isIpAllowed = (ip) => {
-    if (!ip) return false;
-    const normalized = ip.startsWith('::ffff:') ? ip.slice('::ffff:'.length) : ip;
-    return allowlist.includes(normalized);
-  };
-
-  return function enforceAdminIpAllowlist(req, res, next) {
-    if (!enabled) return next();
-    if (isIpAllowed(req.ip)) return next();
-    return res.status(403).send('Forbidden');
-  };
-}
 
 export default function apiRoutes(rateLimiterOrLimiters, configToUse = {}) {
   const generalLimiter =

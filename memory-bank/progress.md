@@ -1,4 +1,4 @@
-<!-- Alan UI - progress.md | Updated 16th January 2026, Cline -->
+<!-- Alan UI - progress.md | Updated 18th January 2026, Cline -->
 
 # Progress
 
@@ -19,6 +19,34 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
 ---
 
 ## Recent Changes
+
+### January 2026 Maintenance (18 Jan 2026)
+- **History ordering normalization**
+  - Added `dateTimeEpoch` column to `history` for reliable SQL ordering and backfilled existing rows.
+  - Client `record-info` payloads now send ISO timestamps; admin UI formats consistently.
+- **Admin allowlist middleware shared**
+  - Extracted IP allowlist middleware to `middleware/admin-ip-allowlist.js` and reused in server and API routes.
+- **Client record-info helper**
+  - Centralized payload assembly and posting in `public/scripts/record-info.js`.
+
+### January 2026 Maintenance (17 Jan 2026)
+- **Centralised admin no-store headers**
+  - Added `middleware/admin-no-store.js` and used it across admin endpoints and the admin page handler (`/view-records.html`).
+- **Shared cookie parsing**
+  - Added `utils/cookies.js` (`parseCookies`) and reused it for CSRF and admin session cookie handling.
+- **CSRF hardening (double-submit cookie)**
+  - CSRF middleware sets `csrf_token` cookie + `X-CSRF-Token` on safe methods and enforces `x-csrf-token` header match on mutating requests.
+  - Admin CSRF fetch endpoint (`GET /api/admin/csrf`) returns token in JSON (when CSRF enabled) and uses the same no-store headers.
+- **Flowise proxy hardening**
+  - Proxy rejects absolute/`//` targets, strips sensitive headers, avoids aborting on normal completion, and supports streaming/SSE responses.
+- **Frontend helpers + UX tweaks**
+  - Added `public/scripts/sw-ready.js` (`whenSwReady`) with timeout fallback.
+  - Added `public/scripts/storage.js` (standardised localStorage access + sessionId creation).
+  - Added `public/scripts/csrf.js` helper (`withCsrfHeaders`) and updated client calls.
+  - Mobile swipe-to-close for side menu + popup (touch gesture threshold) in `home-ui-handlers.js`.
+  - Install button is hidden by default in CSS and only shown after `beforeinstallprompt` to prevent flashing.
+- **Tests**
+  - Updated/added tests for CSRF flows (`tests/api/validation.test.js`, `tests/api/admin-csrf.test.js`).
 
 ### January 2026 Maintenance (16 Jan 2026)
 - **CSRF handling refinements + tests**
@@ -72,6 +100,9 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
    - Ensure a single handler path for the `instructions-button`.
 4) **Docs hygiene**
    - Remove stale references (e.g. scripts referenced in older notes that no longer exist).
+
+5) **(Optional) Consolidate SW_READY gating**
+   - Prefer using `public/scripts/sw-ready.js` helper across pages to keep the SW_READY handshake consistent.
 
 ---
 

@@ -185,7 +185,14 @@
         height: 22px;
       }
       .switch input {
-        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 44px;
+        height: 22px;
+        margin: 0;
+        opacity: 0;
+        cursor: pointer;
       }
       .slider {
         position: absolute;
@@ -214,6 +221,9 @@
       }
       input#screen-switch:checked + .slider:before {
         transform: translateX(22px);
+      }
+      input#screen-switch:focus-visible + .slider {
+        box-shadow: 0 0 0 2px var(--primary);
       }
 
       select#ref-priority {
@@ -307,12 +317,20 @@
         color: var(--primary);
         cursor: pointer;
         opacity: 0.75;
+        background: none;
+        border: none;
+        padding: 0;
+        line-height: 1;
         transition:
           opacity 0.2s,
           color 0.2s;
       }
       .copy-btn-preview:hover {
         opacity: 1;
+      }
+      .copy-btn-preview:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
       }
     </style>
 
@@ -352,9 +370,11 @@
 
         <div class="switch-wrap">
           <label class="switch"
-            ><input id="screen-switch" type="checkbox" /><span class="slider"></span
+            ><input id="screen-switch" type="checkbox" aria-labelledby="screen-label" /><span
+              class="slider"
+            ></span
           ></label>
-          <span id="screen-label">Screening: No problems</span>
+          <span id="screen-label">Screening: Pass</span>
         </div>
 
         <label for="ref-priority">Priority</label>
@@ -370,22 +390,23 @@
           <label for="ref-dx" class="dx-label">Provisional diagnosis (free text)</label>
           <button id="btnLoadExample" class="btn-example" type="button">Example</button>
         </div>
-        <textarea
-          id="ref-dx"
-          placeholder="eg SUB-CONJUNTIVAL HAEMORRHAGE – sudden, bright-red patch, no pain or vision change. {problem & onset; what you saw; vision & pupils/hearing/odour; medication} D Smith (Hightown Clinic)"
-        ></textarea>
+        <textarea id="ref-dx"></textarea>
       </div>
 
-      <h3 class="preview-section-title">Text Preview:</h3>
+      <h3 id="textPreviewTitle" class="preview-section-title">Text Preview:</h3>
       <p id="textPreviewCharCountInfo" class="char-count-info"></p>
 
       <div class="text-preview-container">
         <div id="textPreviewContent" class="text-preview-content"></div>
-        <i
-          class="fas fa-copy copy-btn-preview"
+        <button
+          class="copy-btn-preview"
           id="copyPreviewText"
-          title="Copy preview format"
-        ></i>
+          type="button"
+          title="Copy preview text"
+          aria-label="Copy preview text"
+        >
+          <i class="fas fa-copy" aria-hidden="true"></i>
+        </button>
       </div>
     </main>
 

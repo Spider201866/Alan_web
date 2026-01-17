@@ -134,5 +134,11 @@
   "refer": "Mika",
   "comingSoon": "Zuwa nan ba da jimawa ba...",
   "splashScreenText": "AI na ido, kunne da fata",
-  "installButton": "Shigar"
+  "installButton": "Shigar",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

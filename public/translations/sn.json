@@ -134,5 +134,11 @@
   "refer": "Tumira",
   "comingSoon": "Zviri kuuya nokukurumidza...",
   "splashScreenText": "AI yemaziso, nzeve neganda",
-  "installButton": "Isa"
+  "installButton": "Isa",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

@@ -5,7 +5,8 @@
 import log from './log.js';
 import { getTranslation } from './language.js';
 import { withCsrfHeaders } from './csrf.js';
-import { ensureSessionId, getStoredNumber } from './storage.js';
+import { ensureSessionId } from './storage.js';
+import { buildRecordInfoPayloadFromStorage, postRecordInfo } from './record-info.js';
 
 // DOM element references will be passed to initAuthFlow
 let passwordScreenEl, passwordInputEl, passwordSubmitBtnEl, passwordErrorEl;
@@ -15,39 +16,18 @@ let nameInputEl, jobSelectElementEl, experienceSelectEl, contactInputEl, acceptB
 /**
  * Sends user information to the server to be recorded.
  */
-function pushDataToServer(name, aims, experience, contact) {
-  const latitudeValue = getStoredNumber('latitude');
-  const longitudeValue = getStoredNumber('longitude');
+function pushDataToServer() {
+  const payload = buildRecordInfoPayloadFromStorage({
+    fallbackText: 'Not set',
+    requireName: true,
+  });
 
-  const userInfo = {
-    sessionId: ensureSessionId(),
-    name: name,
-    role: aims.join(', '),
-    experience: experience,
-    latitude: latitudeValue,
-    longitude: longitudeValue,
-    country: localStorage.getItem('country') || 'Not set',
-    iso2: localStorage.getItem('iso2') || 'Not set',
-    classification: localStorage.getItem('classification') || 'Not set',
-    area: localStorage.getItem('area') || 'Not set',
-    contactInfo: contact,
-    version: '1.0',
-    dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }),
-  };
+  if (!payload) {
+    log.error('Missing required name; record not saved.');
+    return Promise.resolve('Missing name.');
+  }
 
-  return fetch('/api/record-info', {
-    method: 'POST',
-    headers: withCsrfHeaders({ 'Content-Type': 'application/json' }),
-    body: JSON.stringify(userInfo),
-  })
-    .then((resp) => {
-      if (!resp.ok) {
-        return resp.text().then((text) => {
-          throw new Error(text || `Server error: ${resp.status}`);
-        });
-      }
-      return resp.text();
-    })
+  return postRecordInfo(payload)
     .then((data) => log.info('Record saved:', data))
     .catch((error) => {
       log.error('Error pushing data to server:', error);
@@ -132,12 +112,7 @@ function handleAccept() {
   localStorage.removeItem('roleClassification');
   ensureSessionId();
 
-  pushDataToServer(
-    rawName,
-    checkedAims,
-    experienceSelectEl.value,
-    contactInputEl ? contactInputEl.value : ''
-  );
+  pushDataToServer();
 
   if (blackScreenEl) {
     blackScreenEl.style.visibility = 'visible';

@@ -66,6 +66,7 @@ function initDatabase() {
             version TEXT,
             selectedAgent TEXT,
             dateTime TEXT,
+            dateTimeEpoch INTEGER,
             refreshCount INTEGER DEFAULT 1
         );
     `;
@@ -77,6 +78,7 @@ function initDatabase() {
     `;
   db.exec(historyTableStmt);
   db.exec(activeRecordTableStmt);
+  ensureHistoryEpochColumn();
   log('Database tables are ready.');
 }
 
@@ -101,31 +103,60 @@ function getActiveRecord() {
   const record = recordStmt.get(activeSession.sessionId);
 
   if (record && record.dateTime) {
-    record.dateTime = record.dateTime.replace(/&#x2F;/g, '/');
+    record.dateTime = normalizeDateTimeInput(record.dateTime);
   }
 
   return record ? [record] : []; // Return as an array to match old API behavior
 }
 
 /**
- * Retrieves all records from the history table, sorted in descending order by dateTime.
+ * Retrieves all records from the history table, sorted in descending order by dateTimeEpoch.
  *
- * Note: `dateTime` is stored as a string (often via `toLocaleString('en-GB')`), so
- * a plain SQLite `ORDER BY dateTime` does not reliably return most-recent-first.
- * We therefore sort in JS using a tolerant date parser.
+ * Note: `dateTime` remains a string for display, while `dateTimeEpoch` is a normalized
+ * epoch-ms column used for reliable ordering.
  * @returns {Array<Object>} An array of all history records.
  */
 function getFullHistory() {
-  const records = db.prepare('SELECT * FROM history').all();
+  const records = db.prepare('SELECT * FROM history ORDER BY dateTimeEpoch DESC').all();
 
   records.forEach((record) => {
     if (record.dateTime) {
-      record.dateTime = record.dateTime.replace(/&#x2F;/g, '/');
+      record.dateTime = normalizeDateTimeInput(record.dateTime);
     }
   });
 
-  records.sort((a, b) => parseDateTimeToEpochMs(b.dateTime) - parseDateTimeToEpochMs(a.dateTime));
   return records;
+}
+
+function ensureHistoryEpochColumn() {
+  const columns = db.prepare('PRAGMA table_info(history)').all();
+  const hasEpoch = columns.some((column) => column.name === 'dateTimeEpoch');
+  if (!hasEpoch) {
+    db.exec('ALTER TABLE history ADD COLUMN dateTimeEpoch INTEGER');
+    log('Added dateTimeEpoch column to history table.');
+  }
+
+  const missingEpochRows = db
+    .prepare('SELECT sessionId, dateTime FROM history WHERE dateTimeEpoch IS NULL')
+    .all();
+  if (missingEpochRows.length === 0) return;
+
+  const updateStmt = db.prepare('UPDATE history SET dateTimeEpoch = ? WHERE sessionId = ?');
+  const transaction = db.transaction((rows) => {
+    rows.forEach((row) => {
+      const normalized = normalizeDateTimeInput(row.dateTime);
+      const epoch = parseDateTimeToEpochMs(normalized);
+      updateStmt.run(epoch || 0, row.sessionId);
+    });
+  });
+
+  transaction(missingEpochRows);
+  log(`Backfilled dateTimeEpoch for ${missingEpochRows.length} records.`);
+}
+
+function normalizeDateTimeInput(value) {
+  if (!value || typeof value !== 'string') return value;
+  return value.replace(/&#x2F;/g, '/').trim();
 }
 
 /**
@@ -143,6 +174,12 @@ function parseDateTimeToEpochMs(value) {
   if (!value || typeof value !== 'string') return 0;
   const trimmed = value.trim();
   if (!trimmed) return 0;
+
+  // Numeric epoch (seconds or ms).
+  if (/^\d{10,13}$/.test(trimmed)) {
+    const asNumber = Number(trimmed);
+    return trimmed.length === 10 ? asNumber * 1000 : asNumber;
+  }
 
   // en-GB: dd/mm/yyyy, HH:MM(:SS)?
   const gbMatch = trimmed.match(
@@ -189,6 +226,13 @@ function parseDateTimeToEpochMs(value) {
  * @param {Object} inputRecord - The record object to be upserted. Must contain a `sessionId`.
  */
 function upsertRecord(inputRecord) {
+  const normalizedDateTime = normalizeDateTimeInput(inputRecord.dateTime);
+  const parsedEpoch = normalizedDateTime ? parseDateTimeToEpochMs(normalizedDateTime) : 0;
+  const epochMs = parsedEpoch || (normalizedDateTime ? 0 : Date.now());
+  const dateTimeIso = parsedEpoch
+    ? new Date(parsedEpoch).toISOString()
+    : normalizedDateTime || new Date(epochMs).toISOString();
+
   // Ensure all fields expected by the SQL query are present, defaulting if necessary.
   const recordForDb = {
     sessionId: inputRecord.sessionId,
@@ -206,13 +250,14 @@ function upsertRecord(inputRecord) {
     contactInfo: inputRecord.contactInfo || null,
     version: inputRecord.version || null,
     selectedAgent: inputRecord.selectedAgent || null,
-    dateTime: inputRecord.dateTime || new Date().toISOString(),
+    dateTime: dateTimeIso,
+    dateTimeEpoch: epochMs,
   };
 
   const transaction = db.transaction(() => {
     const upsertHistoryStmt = db.prepare(`
-            INSERT INTO history (sessionId, name, role, experience, focus, latitude, longitude, country, iso2, classification, roleClassification, area, contactInfo, version, selectedAgent, dateTime, refreshCount)
-            VALUES (@sessionId, @name, @role, @experience, @focus, @latitude, @longitude, @country, @iso2, @classification, @roleClassification, @area, @contactInfo, @version, @selectedAgent, @dateTime, 1)
+            INSERT INTO history (sessionId, name, role, experience, focus, latitude, longitude, country, iso2, classification, roleClassification, area, contactInfo, version, selectedAgent, dateTime, dateTimeEpoch, refreshCount)
+            VALUES (@sessionId, @name, @role, @experience, @focus, @latitude, @longitude, @country, @iso2, @classification, @roleClassification, @area, @contactInfo, @version, @selectedAgent, @dateTime, @dateTimeEpoch, 1)
             ON CONFLICT(sessionId) DO UPDATE SET
                 name = excluded.name,
                 role = excluded.role,
@@ -229,6 +274,7 @@ function upsertRecord(inputRecord) {
                 version = excluded.version,
                 selectedAgent = excluded.selectedAgent,
                 dateTime = excluded.dateTime,
+                dateTimeEpoch = excluded.dateTimeEpoch,
                 refreshCount = refreshCount + 1;
         `);
     upsertHistoryStmt.run(recordForDb);

@@ -134,5 +134,11 @@
   "refer": "Rejelea",
   "comingSoon": "Inakuja hivi karibuni...",
   "splashScreenText": "AI ya macho, masikio na ngozi",
-  "installButton": "Sakinisha"
+  "installButton": "Sakinisha",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

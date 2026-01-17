@@ -1,4 +1,4 @@
-<!-- Alan UI - systemPatterns.md | Updated 16th January 2026, Cline -->
+<!-- Alan UI - systemPatterns.md | Updated 18th January 2026, Cline -->
 
 # System Architecture and Patterns
 
@@ -49,6 +49,11 @@ graph TD
 
 -   **Frontend Orchestrator Pattern**: Main page scripts (`index.js`, `home.js`) act as orchestrators. They import and initialise specialised single-responsibility modules for tasks like UI management, data fetching, PWA concerns, and translation.
 
+-   **Shared Backend Helpers (Security/Consistency)**
+    -   Use small shared helpers for repetitive security concerns rather than duplicating per route:
+        -   `middleware/admin-no-store.js` centralises admin “no-store/no-cache/noindex” headers.
+        -   `utils/cookies.js` centralises cookie parsing (`parseCookies`) with safe decoding.
+
 -   **Event-Driven Frontend**: Custom DOM events (e.g. `languageChanged`) are used for decoupled communication between frontend modules.
 
 -   **Conditional Logging**: A custom logging module (`public/scripts/log.js`) wraps `console` methods to provide environment-aware logging (e.g. silencing debug messages in production). See “Client Logging Strategy” below.
@@ -77,6 +82,10 @@ graph TD
     -   Offline Fallback: `offline.html` with “Retry” and “Go Back”.
     -   Cache Management: Versioned by `CACHE_NAME` (e.g. `alanui-v3`) and cleans older caches on activate.
     -   Reliable Initialisation: Page scripts can wait for a `SW_READY` message from the service worker before initialising to avoid races.
+
+-   **SW_READY Helper (Frontend)**
+    -   Prefer `public/scripts/sw-ready.js` (`whenSwReady`) for gating initialisation on SW readiness.
+    -   Includes a small timeout fallback (defaults ~800ms) so initialisation proceeds even if SW messaging is delayed/unsupported.
 
 -   **Performance Patterns**:
     -   Image Optimisation: Prefer WebP; responsive variants for heavy assets via `sharp`.
@@ -108,6 +117,7 @@ graph TD
         -   test: `<project-root>/test-alan-data.db`
         -   prod: `/data/alan-data.db` (Railway volume); ensures `/data` exists.
       This is simple and predictable. Ensure `.gitignore` excludes dev/test DBs.
+    -   History records store `dateTime` (display string) alongside `dateTimeEpoch` (epoch ms) so ordering uses SQLite `ORDER BY dateTimeEpoch` reliably.
 
 -   **API Rate Limiting**
     -   `generalLimiter`: 100/15m.
@@ -123,6 +133,15 @@ graph TD
         - `/api/record-info` is skipped globally and applies CSRF **per-route** (after validation) to ensure validation errors are returned as `400` even when CSRF is missing/invalid.
         - Admin CSRF token can be fetched via `GET /api/admin/csrf` (requires valid admin session cookie).
     -   Suitable for single-process deployments.
+
+-   **Flowise Reverse Proxy Pattern**
+    -   The app proxies Flowise under `/flowise` to avoid browser CORS issues.
+    -   Proxy is mounted **before** JSON body parsing and CSRF middleware.
+    -   Proxy hardening guardrails:
+        - Reject absolute and protocol-relative upstream targets.
+        - Strip sensitive headers (cookie/authorization/origin).
+        - Abort upstream only when the client truly disconnects.
+        - Preserve streaming responses (text/event-stream).
 
 -   **Build Pipeline Behavioral Patterns**
     -   Build timestamp is injected into each HTML head as a comment for release tracing.

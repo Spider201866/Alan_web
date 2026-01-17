@@ -134,5 +134,11 @@
   "refer": "إحالة",
   "comingSoon": "قريبًا...",
   "splashScreenText": "ذكاء اصطناعي للعين والأذن والجلد",
-  "installButton": "تثبيت"
+  "installButton": "تثبيت",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

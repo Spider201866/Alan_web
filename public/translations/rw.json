@@ -134,5 +134,11 @@
   "refer": "Ohereza",
   "comingSoon": "Biraza vuba...",
   "splashScreenText": "AI y’amaso, amatwi n’uruhu",
-  "installButton": "Shyiramo"
+  "installButton": "Shyiramo",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

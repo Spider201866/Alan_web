@@ -68,8 +68,6 @@ const config = {
   port: env.PORT,
   paths: {
     public: path.join(root, 'public'),
-    userInfo: path.join(root, 'user-info.json'),
-    userHistory: path.join(root, 'user-history.json'),
   },
   security: {
     salt: env.PASSWORD_SALT,

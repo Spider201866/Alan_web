@@ -102,7 +102,15 @@ export function initChatHistory() {
   isInitialised = true;
 
   history = loadHistoryFromStorage();
-  startNewEmptySession();
+  if (!history.sessions || history.sessions.length === 0) {
+    startNewEmptySession();
+  } else {
+    const lastSession = history.sessions[history.sessions.length - 1];
+    CURRENT_ID = lastSession.id;
+    if (typeof history.sessionCounter !== 'number' || history.sessionCounter < CURRENT_ID) {
+      history.sessionCounter = CURRENT_ID;
+    }
+  }
   renderSidebar();
   attachFlowiseObservers();
 }

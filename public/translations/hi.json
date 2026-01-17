@@ -134,5 +134,11 @@
   "refer": "रेफ़र",
   "comingSoon": "शीघ्र आ रहा है...",
   "splashScreenText": "आँख, कान, त्वचा AI",
-  "installButton": "इंस्टॉल करें"
+  "installButton": "इंस्टॉल करें",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

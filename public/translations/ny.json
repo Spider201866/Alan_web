@@ -134,5 +134,11 @@
   "refer": "Tumizirani",
   "comingSoon": "Kubwera posachedwa...",
   "splashScreenText": "AI ya Maso, Makutu, Khungu",
-  "installButton": "Ikani"
+  "installButton": "Ikani",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

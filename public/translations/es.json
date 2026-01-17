@@ -134,5 +134,11 @@
   "refer": "Remitir",
   "comingSoon": "Próximamente...",
   "splashScreenText": "IA de ojo, oído y piel",
-  "installButton": "Instalar"
+  "installButton": "Instalar",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

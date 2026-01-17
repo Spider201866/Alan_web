@@ -134,5 +134,11 @@
   "refer": "ریفر",
   "comingSoon": "جلد آ رہا ہے...",
   "splashScreenText": "آنکھ، کان، جلد اے آئی",
-  "installButton": "انسٹال کریں"
+  "installButton": "انسٹال کریں",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

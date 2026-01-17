@@ -95,6 +95,7 @@ export function createRecordRow(record, index, isActive = false, handlers = {}) 
   const version = (record.version || '').trim();
   const agent = (record.selectedAgent || '').trim();
   const versionAgentText = version && agent ? `${version} ${agent}` : version || agent || '';
+  const displayDateTime = formatRecordDateTime(record.dateTime);
 
   const cells = [
     index,
@@ -106,7 +107,7 @@ export function createRecordRow(record, index, isActive = false, handlers = {}) 
     record.longitude,
     `${record.country || ''} (${record.iso2 || ''}) [${record.classification || ''}]`,
     record.area,
-    record.dateTime,
+    displayDateTime,
     versionAgentText,
     record.refreshCount || 1,
   ];
@@ -155,4 +156,48 @@ export function createRecordRow(record, index, isActive = false, handlers = {}) 
   tr.appendChild(deleteTd);
 
   return tr;
+}
+
+function formatRecordDateTime(value) {
+  if (value === null || value === undefined) return '';
+  const normalized = String(value)
+    .replace(/&#x2F;/g, '/')
+    .trim();
+  if (!normalized) return '';
+
+  // If already in en-GB style, preserve as-is.
+  if (/^\d{1,2}\/\d{1,2}\/\d{4},?\s+\d{1,2}:\d{2}/.test(normalized)) {
+    return normalized;
+  }
+
+  if (/^\d{10,13}$/.test(normalized)) {
+    const asNumber = Number(normalized);
+    const ms = normalized.length === 10 ? asNumber * 1000 : asNumber;
+    return formatUtcDateTime(ms);
+  }
+
+  const legacyMatch = normalized.match(/^(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})(?::(\d{2}))?/);
+  if (legacyMatch) {
+    const [, yyyy, mm, dd, hh, min, ss] = legacyMatch;
+    const ms = Date.UTC(
+      Number(yyyy),
+      Number(mm) - 1,
+      Number(dd),
+      Number(hh),
+      Number(min),
+      Number(ss || 0)
+    );
+    return formatUtcDateTime(ms);
+  }
+
+  const parsedMs = Date.parse(normalized);
+  if (!Number.isNaN(parsedMs)) {
+    return formatUtcDateTime(parsedMs);
+  }
+
+  return normalized;
+}
+
+function formatUtcDateTime(epochMs) {
+  return new Date(epochMs).toLocaleString('en-GB', { timeZone: 'UTC' });
 }

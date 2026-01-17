@@ -134,5 +134,11 @@
   "refer": "转诊",
   "comingSoon": "敬请期待...",
   "splashScreenText": "眼、耳、皮肤 AI",
-  "installButton": "安装"
+  "installButton": "安装",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

@@ -134,5 +134,11 @@
   "refer": "Cyfeirio",
   "comingSoon": "Ar ddod cyn bo hir...",
   "splashScreenText": "AI ar gyfer llygaid, clustiau a chroen",
-  "installButton": "Gosod"
+  "installButton": "Gosod",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

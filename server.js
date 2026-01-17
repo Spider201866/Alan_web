@@ -14,6 +14,7 @@ import { Readable } from 'stream';
 import { globalErrorHandler, notFound } from './middleware/error.js';
 import { flowiseLimiter, osmTilesLimiter, recordInfoLimiter } from './middleware/rateLimiters.js';
 import { applyAdminNoStoreHeaders } from './middleware/admin-no-store.js';
+import { createAdminIpAllowlistMiddleware } from './middleware/admin-ip-allowlist.js';
 
 // Backward-compatible general limiter (100 requests / 15 min)
 // Also used as a fallback if a per-endpoint limiter isn't provided.
@@ -30,25 +31,7 @@ const __dirname = path.dirname(__filename);
 export function createApp(configToUse) {
   const app = express();
 
-  const adminAllowedIps = Array.isArray(configToUse.adminAllowedIps)
-    ? configToUse.adminAllowedIps
-    : [];
-
-  const adminIpAllowlistEnabled = adminAllowedIps.length > 0;
-
-  const isIpAllowed = (ip) => {
-    if (!ip) return false;
-    // Express can provide IPv4 as ::ffff:1.2.3.4
-    const normalized = ip.startsWith('::ffff:') ? ip.slice('::ffff:'.length) : ip;
-    return adminAllowedIps.includes(normalized);
-  };
-
-  const enforceAdminIpAllowlist = (req, res, next) => {
-    if (!adminIpAllowlistEnabled) return next();
-    const ip = req.ip;
-    if (isIpAllowed(ip)) return next();
-    return res.status(403).send('Forbidden');
-  };
+  const enforceAdminIpAllowlist = createAdminIpAllowlistMiddleware(configToUse.adminAllowedIps);
 
   // Security headers & compression
   app.disable('x-powered-by');

@@ -1,4 +1,4 @@
-<!-- Alan UI - activeContext.md | Updated 16th January 2026, Cline -->
+<!-- Alan UI - activeContext.md | Updated 18th January 2026, Cline -->
 
 # Active Context
 
@@ -34,6 +34,40 @@
   - Global CSRF middleware now skips `/api/record-info`, and the route applies CSRF **per-route** after validation.
   - Tests updated to include `csrf_token` cookie + `x-csrf-token` header for `/api/record-info` and admin delete flows; test file formatted for Prettier.
 
+## Recent Work (17 Jan 2026)
+- **Backend refactor + admin caching hardening**
+  - Centralised admin “no-store” response headers in `middleware/admin-no-store.js` and applied them consistently (admin APIs + `/view-records.html`).
+  - Introduced shared cookie parsing helper `utils/cookies.js` (safe decode) and reused it in admin-session + CSRF middleware.
+- **CSRF + Flowise proxy hardening**
+  - CSRF middleware tightened (double-submit cookie; sets token on safe methods and enforces header/cookie match on mutating requests).
+  - Flowise proxy (`middleware/flowiseProxy.js`) hardened:
+    - aborts upstream only on real client disconnect (avoids `req.close` false positives)
+    - blocks absolute/`//` proxy targets + origin mismatch
+    - strips sensitive headers (cookie/authorization/origin/etc.)
+    - supports streaming responses (SSE) via `Readable.fromWeb()`
+- **Frontend reliability helpers**
+  - Added `public/scripts/sw-ready.js` (`whenSwReady`) with a timeout fallback to avoid first-load races.
+  - Added `public/scripts/storage.js` helpers (`getStoredString`, `getStoredNumber`, `ensureSessionId`) to standardise localStorage access.
+  - Added `public/scripts/csrf.js` helper to read `csrf_token` and attach `x-csrf-token` headers (`withCsrfHeaders`).
+- **UX tweaks (mobile + PWA install)**
+  - Added mobile swipe-to-close gestures for the side menu and popup (`home-ui-handlers.js`).
+  - Prevented install button flashing by default-hiding it (`#install-btn { display: none; }`) and only showing it after `beforeinstallprompt`.
+- **API route cleanup + tests**
+  - Reduced duplication in `routes/api.js` via shared handlers (fetch-records/history) and consistent admin no-store headers.
+  - Updated/added tests for CSRF flows (`tests/api/validation.test.js`, `tests/api/admin-csrf.test.js`).
+- **Repo process**
+  - Added/updated `AGENTS.md` with repo tool/workflow rules.
+  - Updated `public/scripts/aboutalan.js` header date.
+
+## Recent Work (18 Jan 2026)
+- **History ordering normalization**
+  - Added `dateTimeEpoch` column and backfill in `services/data-service.js` for reliable SQL ordering.
+  - Client record-info payloads now send ISO timestamps; admin UI formats date/time consistently.
+- **Shared admin IP allowlist**
+  - Extracted `middleware/admin-ip-allowlist.js` and reused it in `server.js` and `routes/api.js`.
+- **Client record-info helper**
+  - Centralized payload assembly and posting in `public/scripts/record-info.js` (used by auth/home data flows).
+
 ## Developer Workflow Hygiene (12 Jan 2026)
 - Repo now enforces PowerShell-safe command patterns via `.clinerules/reminders.md`.
 - New skill: `.clinerules/skills/powershell-sanity-checklist/SKILL.md`
@@ -50,7 +84,8 @@
 ## Next Steps
 - Confirm Railway deployment is picking up latest builds and clients refresh caches as expected.
 - Ensure `.gitignore` covers local DBs and `dist/`.
-- Optional: reduce remaining test log noise (dotenv tips / experimental warnings) if desired.
+- Optional: unify SW_READY gating usage across pages (prefer `whenSwReady` helper) where it reduces duplication.
+- Optional: keep monitoring Flowise proxy behaviour for streaming/SSE edge cases on Railway.
 
 ## Where to Look for Details
 - Architecture & patterns: `systemPatterns.md`

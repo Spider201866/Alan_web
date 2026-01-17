@@ -5,8 +5,7 @@
 import log from './log.js';
 import { initMutedButtons } from './muted.js';
 import { setTrustedHtml } from './trusted-html.js';
-import { withCsrfHeaders } from './csrf.js';
-import { ensureSessionId, getStoredNumber } from './storage.js';
+import { buildRecordInfoPayloadFromStorage, postRecordInfo } from './record-info.js';
 
 /**
  * Fetches the HTML snippet for the muted buttons, injects it into the DOM, and initializes the buttons.
@@ -57,35 +56,12 @@ export async function fetchAreaFromLatLong(lat, lng) {
 export function pushLocalStorageToServer() {
   // --- THIS IS THE FIX ---
   // If the user's name isn't set yet, don't try to send data to the server.
-  const name = localStorage.getItem('name');
-  if (!name) {
+  const payload = buildRecordInfoPayloadFromStorage({ requireName: true });
+  if (!payload) {
     log.info('Skipping push to server: name is not yet set in localStorage.');
     return Promise.resolve('No name to push.'); // Exit the function gracefully.
   }
   // --- END OF FIX ---
-
-  const sessionId = ensureSessionId();
-
-  const payload = {
-    sessionId,
-    name: name, // Use the name variable we just checked
-    role: localStorage.getItem('selectedJobRole') || null,
-    experience: localStorage.getItem('selectedExperience') || null,
-    country: localStorage.getItem('country') || null,
-    iso2: localStorage.getItem('iso2') || null,
-    classification: localStorage.getItem('classification') || null,
-    contactInfo: localStorage.getItem('contactInfo') || null,
-    version: '1.0',
-    dateTime: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }),
-  };
-
-  const latValue = getStoredNumber('latitude');
-  const lonValue = getStoredNumber('longitude');
-  const area = localStorage.getItem('area');
-
-  if (latValue !== null) payload.latitude = latValue;
-  if (lonValue !== null) payload.longitude = lonValue;
-  if (area && area.trim() !== '') payload.area = area;
 
   // The original check for geo data is still useful.
   if (
@@ -96,22 +72,8 @@ export function pushLocalStorageToServer() {
     return Promise.resolve('[Info] No new geo data – skipping server push.');
   }
 
-  return fetch('/api/record-info', {
-    method: 'POST',
-    headers: withCsrfHeaders({ 'Content-Type': 'application/json' }),
-    body: JSON.stringify(payload),
-  })
-    .then((res) =>
-      res.ok
-        ? res.text()
-        : res.text().then((t) => {
-            log.error('Server error response when pushing data:', t);
-            throw new Error(t || `Server responded with status ${res.status}`);
-          })
-    )
-    .then((data) => {
-      return data;
-    })
+  return postRecordInfo(payload)
+    .then((data) => data)
     .catch((err) => {
       log.error('Error pushing data to server:', err);
       throw err;

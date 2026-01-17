@@ -134,5 +134,11 @@
   "refer": "Ránfihàn",
   "comingSoon": "Ńbò láìpẹ́...",
   "splashScreenText": "AI Ojú, Etí, Awọ",
-  "installButton": "Fi sori ẹrọ"
+  "installButton": "Fi sori ẹrọ",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

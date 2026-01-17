@@ -134,5 +134,11 @@
   "refer": "አስተላልፍ",
   "comingSoon": "በቅርቡ...",
   "splashScreenText": "AI ለአይን፣ ጆሮ እና ቆዳ",
-  "installButton": "መጫን"
+  "installButton": "መጫን",
+  "refScreeningLabel": "Screening: {status}",
+  "refScreeningPass": "Pass",
+  "refScreeningFail": "Fail",
+  "refSmsCharacterSingle": "character",
+  "refSmsCharacterPlural": "characters",
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
 }

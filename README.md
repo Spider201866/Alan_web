@@ -2,7 +2,7 @@
 
 A web-based chatbot focused on Eye, Ear, and Skin health information, designed for users in Low- and Middle-Income Countries (LMICs). The app is performance-conscious, accessible, and fully offline-capable as a Progressive Web App (PWA).
 
-Updated: 14 Jan 2026
+Updated: 18 Jan 2026
 
 For deep architecture and context, see the Memory Bank:
 - memory-bank/projectbrief.md
@@ -121,6 +121,7 @@ Optional
 - PORT (default 3000)
 - ONE_TIME_PASSWORD_HASHES: Comma-separated list of OTP hashes (consumed once)
 - CORS_ALLOWED_ORIGINS: Comma-separated list of allowed origins
+- ADMIN_ALLOWED_IPS: Comma-separated list of allowed admin IPs (restricts /view-records.html and admin APIs when set)
 - ENABLE_CORS (default 'true')
 - ENABLE_CSRF (default 'false')
 - (Removed Jan 2026) Previously documented placeholders: API_BASE_URL, SENTRY_DSN, SENTRY_FRONTEND_DSN.
@@ -153,6 +154,7 @@ Backend (Node/Express)
   - express-rate-limit (general 100/15m; sensitive 10/15m)
   - CORS with allowlist, credentials true
   - CSRF (optional): simple per-process token; GET/HEAD/OPTIONS return X-CSRF-Token; mutating requests require x-csrf-token (skipPaths supported)
+  - Optional admin IP allowlist for /view-records.html and admin APIs (ADMIN_ALLOWED_IPS)
 - API routes (routes/api.js):
   - POST /api/record-info (validated, public) – upserts record and sets active
   - POST /api/fetch-records (protected) – returns active record as array
@@ -164,7 +166,7 @@ Backend (Node/Express)
     - test: <project-root>/test-alan-data.db
     - prod: /data/alan-data.db (Railway volume)
   - Schema:
-    - history(sessionId PK, user/meta fields, refreshCount)
+    - history(sessionId PK, user/meta fields, dateTime, dateTimeEpoch, refreshCount)
     - active_record(id=1, sessionId)
 
 Frontend (Vanilla JS ES modules)
@@ -174,6 +176,7 @@ Frontend (Vanilla JS ES modules)
 - Modules:
   - UI: home-ui.js (side menu, popup with focus trap, geolocation UI, language dropdown)
   - Data: home-data.js (push localStorage to server when meaningful; reverse geocoding via BigDataCloud)
+  - Record info: record-info.js (builds/posts /api/record-info payloads)
   - Location: location-service.js (ipinfo.io; LMIC classification)
   - Onboarding: onboarding-form.js (input masks, validation), auth-flow.js (password verify, transitions)
   - Chatbot: agent1-chatbot-module.js (Flowise embed via jsdelivr; sessionId; theme overrides)
@@ -219,7 +222,7 @@ history
 - sessionId (PK)
 - name, role, experience, contactInfo
 - latitude, longitude, country, iso2, classification, area
-- version, selectedAgent, dateTime
+- version, selectedAgent, dateTime (ISO 8601 UTC), dateTimeEpoch (epoch ms for ordering)
 - refreshCount (defaults 1; incremented on update)
 
 active_record
