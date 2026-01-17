@@ -4,6 +4,7 @@
 
 import log from './log.js';
 import { getTranslation } from './language.js';
+import { withCsrfHeaders } from './csrf.js';
 
 // DOM element references will be passed to initAuthFlow
 let passwordScreenEl, passwordInputEl, passwordSubmitBtnEl, passwordErrorEl;
@@ -14,13 +15,16 @@ let nameInputEl, jobSelectElementEl, experienceSelectEl, contactInputEl, acceptB
  * Sends user information to the server to be recorded.
  */
 function pushDataToServer(name, aims, experience, contact) {
+  const latitudeValue = parseFloat(localStorage.getItem('latitude'));
+  const longitudeValue = parseFloat(localStorage.getItem('longitude'));
+
   const userInfo = {
     sessionId: localStorage.getItem('sessionId') || `user-${Date.now()}`,
     name: name,
     role: aims.join(', '),
     experience: experience,
-    latitude: parseFloat(localStorage.getItem('latitude')) || null,
-    longitude: parseFloat(localStorage.getItem('longitude')) || null,
+    latitude: Number.isNaN(latitudeValue) ? null : latitudeValue,
+    longitude: Number.isNaN(longitudeValue) ? null : longitudeValue,
     country: localStorage.getItem('country') || 'Not set',
     iso2: localStorage.getItem('iso2') || 'Not set',
     classification: localStorage.getItem('classification') || 'Not set',
@@ -32,7 +36,7 @@ function pushDataToServer(name, aims, experience, contact) {
 
   return fetch('/api/record-info', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: withCsrfHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify(userInfo),
   })
     .then((resp) => {
@@ -67,7 +71,7 @@ function verifyPassword() {
 
   fetch('/api/fetch-records', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: withCsrfHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify({ password: enteredPassword }),
   })
     .then((response) => {

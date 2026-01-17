@@ -96,6 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (navigator.serviceWorker.controller) {
       runMain();
     }
+
+    navigator.serviceWorker.ready
+      .then(() => runMain())
+      .catch((err) => log.error('Service worker readiness failed:', err));
+
+    setTimeout(runMain, 3000);
   } else {
     runMain();
   }

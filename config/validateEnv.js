@@ -17,7 +17,7 @@ export default function validateEnv(processEnv = process.env, dotenvConfig = dot
     ONE_TIME_PASSWORD_HASHES: str({ default: '' }),
     CORS_ALLOWED_ORIGINS: str({ default: '' }),
     ENABLE_CORS: str({ default: 'true' }),
-    ENABLE_CSRF: str({ default: 'false' }),
+    ENABLE_CSRF: str({ default: 'true' }),
     ADMIN_ALLOWED_IPS: str({ default: '' }),
   });
 

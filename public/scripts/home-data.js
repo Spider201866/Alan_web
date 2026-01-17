@@ -5,6 +5,7 @@
 import log from './log.js';
 import { initMutedButtons } from './muted.js';
 import { setTrustedHtml } from './trusted-html.js';
+import { withCsrfHeaders } from './csrf.js';
 
 /**
  * Fetches the HTML snippet for the muted buttons, injects it into the DOM, and initializes the buttons.
@@ -81,18 +82,24 @@ export function pushLocalStorageToServer() {
   const lon = localStorage.getItem('longitude');
   const area = localStorage.getItem('area');
 
-  if (lat && !isNaN(parseFloat(lat))) payload.latitude = +lat;
-  if (lon && !isNaN(parseFloat(lon))) payload.longitude = +lon;
+  const latValue = Number.parseFloat(lat);
+  const lonValue = Number.parseFloat(lon);
+  if (!Number.isNaN(latValue)) payload.latitude = latValue;
+  if (!Number.isNaN(lonValue)) payload.longitude = lonValue;
   if (area && area.trim() !== '') payload.area = area;
 
   // The original check for geo data is still useful.
-  if (!payload.latitude && !payload.longitude && !payload.area) {
+  if (
+    payload.latitude === undefined &&
+    payload.longitude === undefined &&
+    (!payload.area || payload.area.trim() === '')
+  ) {
     return Promise.resolve('[Info] No new geo data – skipping server push.');
   }
 
   return fetch('/api/record-info', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: withCsrfHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify(payload),
   })
     .then((res) =>

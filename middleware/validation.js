@@ -34,6 +34,14 @@ export const recordValidationRules = [
     .escape()
     .isLength({ min: 3, max: 100 })
     .withMessage('contact must be between 3 and 100 characters'),
+  body('contactInfo')
+    .optional()
+    .isString()
+    .withMessage('contactInfo must be a string')
+    .trim()
+    .escape()
+    .isLength({ min: 3, max: 100 })
+    .withMessage('contactInfo must be between 3 and 100 characters'),
   body('password')
     .optional()
     .isString()

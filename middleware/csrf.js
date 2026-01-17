@@ -2,12 +2,29 @@ import crypto from 'crypto';
 
 /**
  * Simple CSRF protection middleware.
- * Generates a token on GET requests and validates it on state-changing requests.
- * Token is shared globally and stored in memory.
+ * Uses a double-submit cookie: token stored in a cookie and echoed in a header.
  */
 export default function csrfProtection(options = {}) {
   const { skipPaths = [], includePathPrefixes = [], enable = true } = options;
-  const token = crypto.randomBytes(16).toString('hex');
+  const cookieName = 'csrf_token';
+
+  const parseCookies = (cookieHeader) => {
+    if (!cookieHeader) return {};
+    return cookieHeader.split(';').reduce((acc, part) => {
+      const [key, ...rest] = part.trim().split('=');
+      if (!key) return acc;
+      acc[key] = decodeURIComponent(rest.join('='));
+      return acc;
+    }, {});
+  };
+
+  const getCookieToken = (req) => {
+    const cookies = parseCookies(req.headers.cookie);
+    return cookies[cookieName] || null;
+  };
+
+  const shouldSetSecureCookie = (req) =>
+    Boolean(req.secure) || req.headers['x-forwarded-proto'] === 'https';
 
   return function csrfMiddleware(req, res, next) {
     if (!enable) return next();
@@ -20,11 +37,17 @@ export default function csrfProtection(options = {}) {
 
     const method = req.method.toUpperCase();
     if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS') {
+      const existingToken = getCookieToken(req);
+      const token = existingToken || crypto.randomBytes(16).toString('hex');
+      const cookieParts = [`${cookieName}=${encodeURIComponent(token)}`, 'Path=/', 'SameSite=Lax'];
+      if (shouldSetSecureCookie(req)) cookieParts.push('Secure');
+      res.setHeader('Set-Cookie', cookieParts.join('; '));
       res.setHeader('X-CSRF-Token', token);
       return next();
     }
     const headerToken = req.get('x-csrf-token');
-    if (headerToken && headerToken === token) {
+    const cookieToken = getCookieToken(req);
+    if (headerToken && cookieToken && headerToken === cookieToken) {
       return next();
     }
     res.status(403).send('CSRF token mismatch');

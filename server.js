@@ -137,9 +137,6 @@ export function createApp(configToUse) {
   app.use(
     csrfProtection({
       enable: Boolean(configToUse.enableCsrf),
-      // CSRF is mostly relevant once we rely on httpOnly cookies.
-      // Limit CSRF checks to admin endpoints to avoid breaking public flows.
-      includePathPrefixes: ['/api/admin'],
       skipPaths: ['/api/admin-login', '/api/admin-logout'],
     })
   );
