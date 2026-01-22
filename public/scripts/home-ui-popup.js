@@ -37,7 +37,9 @@ function getMutedColorTheme(initial) {
     { bg: '#7e8f9a', text: '#ffffff' },
     { bg: '#9a8f7e', text: '#ffffff' },
   ];
-  const code = String(initial || 'U').toUpperCase().charCodeAt(0);
+  const code = String(initial || 'U')
+    .toUpperCase()
+    .charCodeAt(0);
   const index = Number.isFinite(code) ? (code - 65) % themes.length : 0;
   return themes[index < 0 ? 0 : index];
 }

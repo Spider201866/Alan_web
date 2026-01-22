@@ -11,8 +11,7 @@ export function buildRecordInfoPayloadFromStorage(options = {}) {
   if (requireName && !rawName) return null;
   const name = rawName ?? fallbackText;
   const rawContactInfo = getStoredString('contactInfo', null);
-  const contactInfo =
-    typeof rawContactInfo === 'string' ? rawContactInfo.trim() : rawContactInfo;
+  const contactInfo = typeof rawContactInfo === 'string' ? rawContactInfo.trim() : rawContactInfo;
 
   const payload = {
     sessionId: ensureSessionId(),

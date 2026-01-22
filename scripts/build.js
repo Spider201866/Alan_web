@@ -173,8 +173,7 @@ export async function runBuild() {
   }
 }
 
-const isDirectRun =
-  process.argv[1] && path.resolve(process.argv[1]) === path.resolve(__filename);
+const isDirectRun = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(__filename);
 
 if (isDirectRun) {
   runBuild().catch(() => {
