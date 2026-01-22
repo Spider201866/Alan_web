@@ -38,7 +38,7 @@ export function initChatbot(sessionId) {
 
   // Now initialise the chatbot using Flowise embed API
   Chatbot.initFull({
-    chatflowid: 'd82b97ce-f726-45b5-9974-2f66f0f9d020',
+    chatflowid: 'c3ff3bda-9945-4758-a6f6-84bcbd196e24',
     // Use same-origin proxy to avoid browser CORS issues when calling Flowise.
     // IMPORTANT: Flowise embed defaults to http://localhost:3000 if apiHost is not recognized.
     // Using an absolute URL based on the current page origin prevents accidental cross-origin
