@@ -197,9 +197,7 @@ export function initOnboardingForm(elements) {
     aimsSelectTextEl.textContent =
       selectedTexts.length > 0
         ? selectedTexts.join(', ')
-        : window.getTranslation
-          ? getTranslation('aimsPlaceholder', 'Interests')
-          : 'Interests';
+        : getTranslation('aimsPlaceholder', 'Interests');
     checkSelections();
 
     // Auto-close shortly after the last change to reduce “stuck open” feeling

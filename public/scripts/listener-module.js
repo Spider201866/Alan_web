@@ -19,18 +19,46 @@ const normalise = (s) =>
     .trim()
     .toLowerCase();
 
+function setCopyButtonState(btn, isEmpty) {
+  if (!btn) return;
+  const label = isEmpty ? 'Copy this session (empty)' : 'Copy this session';
+  btn.disabled = isEmpty;
+  btn.title = label;
+  btn.setAttribute('aria-label', label);
+}
+
+function appendEmptyState(container) {
+  if (container.querySelector('.empty-session-hint')) return;
+  const hint = document.createElement('div');
+  hint.className = 'empty-session-hint';
+  hint.textContent = 'No messages yet.';
+  container.appendChild(hint);
+}
+
+function clearEmptyState(container) {
+  const hint = container.querySelector('.empty-session-hint');
+  if (hint) hint.remove();
+}
+
 /**
  * Creates and appends a 'copy' button to a session container in the sidebar.
  * @param {HTMLElement} container - The DOM element to which the button will be appended.
  * @param {Object} sess - The session object, used to access messages for copying.
  */
 function makeCopyButton(container, sess) {
-  const btn = document.createElement('i');
-  btn.className = 'fa-regular fa-copy copy-btn'; // Font Awesome icon
-  btn.title = 'Copy this session';
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'copy-btn';
+
+  const icon = document.createElement('i');
+  icon.className = 'fa-regular fa-copy';
+  btn.appendChild(icon);
+
+  setCopyButtonState(btn, !sess.messages || sess.messages.length === 0);
 
   btn.addEventListener('click', (ev) => {
     ev.stopPropagation();
+    if (btn.disabled) return;
     const text = sess.messages.map((m) => m.text).join('\n');
     navigator.clipboard
       .writeText(text)
@@ -43,6 +71,32 @@ function makeCopyButton(container, sess) {
   });
 
   container.appendChild(btn);
+  return btn;
+}
+
+function setSessionExpanded(headerElement, contentContainer, isExpanded) {
+  contentContainer.style.display = isExpanded ? 'flex' : 'none';
+  headerElement.setAttribute('aria-expanded', String(isExpanded));
+}
+
+function setupSessionHeader(headerElement, contentContainer, { isExpanded, isCurrent }) {
+  headerElement.classList.toggle('is-current', Boolean(isCurrent));
+  headerElement.setAttribute('role', 'button');
+  headerElement.setAttribute('aria-controls', contentContainer.id);
+  headerElement.tabIndex = 0;
+  setSessionExpanded(headerElement, contentContainer, isExpanded);
+
+  const toggle = () => {
+    const nextState = contentContainer.style.display === 'none';
+    setSessionExpanded(headerElement, contentContainer, nextState);
+  };
+
+  headerElement.addEventListener('click', toggle);
+  headerElement.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    toggle();
+  });
 }
 
 /* ── state (initialised by initChatHistory) ───────────────────────────── */
@@ -208,11 +262,12 @@ function startNewSession() {
   const contentContainer = document.createElement('div');
   contentContainer.id = `session-${CURRENT_ID}`;
   contentContainer.className = 'session-content empty-session-content'; // Mark as empty
+  appendEmptyState(contentContainer);
   makeCopyButton(contentContainer, newSession);
 
-  headerElement.addEventListener('click', () => {
-    contentContainer.style.display = contentContainer.style.display === 'none' ? 'block' : 'none';
-  });
+  const existingCurrent = sidebar.querySelector('.session-header.is-current');
+  if (existingCurrent) existingCurrent.classList.remove('is-current');
+  setupSessionHeader(headerElement, contentContainer, { isExpanded: true, isCurrent: true });
 
   sidebar.appendChild(headerElement);
   sidebar.appendChild(contentContainer);
@@ -226,14 +281,14 @@ function startNewSession() {
  */
 function saveMessage(role, text) {
   ensureHistoryReady();
-  const currentSession = history.sessions.find((s) => s.id === CURRENT_ID);
+  let currentSession = history.sessions.find((s) => s.id === CURRENT_ID);
   if (!currentSession) {
     // This could happen if a message arrives before startNewSession fully completes for CURRENT_ID
     // Or if CURRENT_ID somehow gets out of sync.
     // Let's try to find the latest session as a fallback.
     const latestSession = history.sessions[history.sessions.length - 1];
     if (latestSession && latestSession.id === CURRENT_ID) {
-      // It was just a timing issue, proceed with latestSession as currentSession
+      currentSession = latestSession;
     } else {
       log.error(
         `[History] Critical: Current session ${CURRENT_ID} not found. Message "${text}" for role "${role}" cannot be saved.`
@@ -301,14 +356,13 @@ function renderSidebar() {
     contentContainer.id = `session-${session.id}`;
     contentContainer.className = 'session-content';
 
+    const isCurrent = session.id === CURRENT_ID;
     if (session.messages.length === 0) {
       contentContainer.classList.add('empty-session-content');
+      appendEmptyState(contentContainer);
     }
 
-    if (session.id !== CURRENT_ID) {
-      contentContainer.style.display = 'none'; // Collapse old sessions
-    } else {
-      contentContainer.style.display = 'block'; // Ensure current is open
+    if (isCurrent) {
       storedKeys.clear(); // Reset for current session on initial render
       session.messages.forEach((msg) => storedKeys.add(msg.role + '|' + normalise(msg.text)));
     }
@@ -316,13 +370,7 @@ function renderSidebar() {
     makeCopyButton(contentContainer, session);
     session.messages.forEach((message) => appendLine(contentContainer, message.role, message.text));
 
-    headerElement.addEventListener('click', () => {
-      // Toggle display of the associated content container
-      const targetContent = document.getElementById(`session-${session.id}`);
-      if (targetContent) {
-        targetContent.style.display = targetContent.style.display === 'none' ? 'block' : 'none';
-      }
-    });
+    setupSessionHeader(headerElement, contentContainer, { isExpanded: isCurrent, isCurrent });
 
     sidebar.appendChild(headerElement);
     sidebar.appendChild(contentContainer);
@@ -347,6 +395,8 @@ function appendLineToSidebar(sessionId, role, text) {
   if (sessionContentDiv) {
     appendLine(sessionContentDiv, role, text);
     sessionContentDiv.classList.remove('empty-session-content'); // Now has content
+    clearEmptyState(sessionContentDiv);
+    setCopyButtonState(sessionContentDiv.querySelector('.copy-btn'), false);
   }
 }
 
@@ -391,3 +441,13 @@ export function resetSidebarHistory() {
   // This function is for resetting the module's internal variables.
   // After this, the next captured message will create a new session.
 }
+
+// Exposed for tests.
+export const __testOnly = {
+  setState({ history: nextHistory, currentId } = {}) {
+    if (nextHistory) history = nextHistory;
+    if (typeof currentId === 'number') CURRENT_ID = currentId;
+    storedKeys.clear();
+  },
+  saveMessage,
+};

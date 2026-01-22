@@ -1,15 +1,13 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { fileURLToPath } from 'url';
+import CleanCSS from 'clean-css';
 import { minify as terserMinify } from 'terser';
 import { minify as htmlMinify } from 'html-minifier-terser';
 
-// Promisify the exec function to use it with async/await
-const execAsync = promisify(exec);
-
 const SOURCE_DIR = 'public';
 const DIST_DIR = 'dist';
+const __filename = fileURLToPath(import.meta.url);
 
 /**
  * A utility function to recursively find all files with a specific extension.
@@ -32,7 +30,7 @@ async function findFilesByExtension(startPath, extension) {
 /**
  * The main build function.
  */
-async function runBuild() {
+export async function runBuild() {
   try {
     console.log('🚀 Starting production build...');
 
@@ -140,11 +138,15 @@ async function runBuild() {
       console.log(`   - Minified JS: ${file}`);
     }
 
-    // Minify CSS (using the reliable clean-css-cli)
+    // Minify CSS (using clean-css to avoid shelling out).
     const cssFiles = await findFilesByExtension(DIST_DIR, '.css');
     for (const file of cssFiles) {
-      // Use the cleancss command-line tool to minify the file in place.
-      await execAsync(`npx cleancss -o ${file} ${file}`);
+      const content = await fs.readFile(file, 'utf8');
+      const result = new CleanCSS().minify(content);
+      if (result.errors && result.errors.length > 0) {
+        throw new Error(`CleanCSS failed for ${file}: ${result.errors.join('; ')}`);
+      }
+      await fs.writeFile(file, result.styles, 'utf8');
       console.log(`   - Minified CSS: ${file}`);
     }
 
@@ -167,8 +169,15 @@ async function runBuild() {
   } catch (error) {
     console.error('\n❌ Build failed!');
     console.error(error);
-    process.exit(1);
+    throw error;
   }
 }
 
-runBuild();
+const isDirectRun =
+  process.argv[1] && path.resolve(process.argv[1]) === path.resolve(__filename);
+
+if (isDirectRun) {
+  runBuild().catch(() => {
+    process.exit(1);
+  });
+}

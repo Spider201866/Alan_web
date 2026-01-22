@@ -15,12 +15,41 @@ function escapeHtml(value) {
     .replace(/'/g, '&#39;');
 }
 
+function getDisplayName() {
+  const stored = localStorage.getItem('name');
+  const trimmed = stored ? stored.trim() : '';
+  return trimmed || 'User';
+}
+
+function getInitialFromName(name) {
+  const trimmed = String(name || '').trim();
+  return trimmed ? trimmed.charAt(0).toUpperCase() : 'U';
+}
+
+function getMutedColorTheme(initial) {
+  const themes = [
+    { bg: '#9aa3ab', text: '#ffffff' },
+    { bg: '#7f9f8b', text: '#ffffff' },
+    { bg: '#7f93b5', text: '#ffffff' },
+    { bg: '#b08a8a', text: '#ffffff' },
+    { bg: '#a59b7a', text: '#ffffff' },
+    { bg: '#8a8f94', text: '#ffffff' },
+    { bg: '#7e8f9a', text: '#ffffff' },
+    { bg: '#9a8f7e', text: '#ffffff' },
+  ];
+  const code = String(initial || 'U').toUpperCase().charCodeAt(0);
+  const index = Number.isFinite(code) ? (code - 65) % themes.length : 0;
+  return themes[index < 0 ? 0 : index];
+}
+
 /**
  * Builds the HTML content for the user information popup by retrieving data from local storage.
  * @returns {string}
  */
 export function buildPopupContent() {
-  const name = localStorage.getItem('name') || 'Not set';
+  const name = getDisplayName();
+  const nameInitial = getInitialFromName(name);
+  const nameTheme = getMutedColorTheme(nameInitial);
   const role = localStorage.getItem('selectedJobRole') || 'Not set';
   const experienceValue = localStorage.getItem('selectedExperience') || 'Not set';
   const latitude = (parseFloat(localStorage.getItem('latitude')) || 0).toFixed(6);
@@ -65,6 +94,7 @@ export function buildPopupContent() {
 
   // Ensure that user-controlled values cannot inject markup.
   const safeName = escapeHtml(name);
+  const safeNameInitial = escapeHtml(nameInitial);
   const safeAims = escapeHtml(translatedAims);
   const safeExperience = escapeHtml(translatedExperience);
   const safeLatLong = escapeHtml(`${latitude}, ${longitude}`);
@@ -72,8 +102,7 @@ export function buildPopupContent() {
   const safeCountry = escapeHtml(`${country}, ${iso2}, ${classification}`);
   const safeDateTime = escapeHtml(currDT);
 
-  return `<h2>${escapeHtml(getTranslation('userInfoTitle', 'User Information'))}</h2>
-<p><strong>${escapeHtml(getTranslation('userName', 'Name'))}:</strong> ${safeName}</p>
+  return `<div class="user-banner" style="background-color: ${nameTheme.bg}; color: ${nameTheme.text};" title="${safeName}" aria-label="${safeName}">${safeNameInitial}</div>
 <p><strong>${escapeHtml(getTranslation('userAimsPopupLabel', 'Interests'))}:</strong> ${safeAims}</p>
 <p><strong>${escapeHtml(getTranslation('experiencePlaceholder', 'Experience'))}:</strong> ${safeExperience}</p>
 <p id="latLongSection" style="color: grey;"><strong>${escapeHtml(getTranslation('userLatLong', 'Lat/Long'))}:</strong> ${safeLatLong}</p>
@@ -119,10 +148,14 @@ export function togglePopup(state) {
  * @param {import('./home-ui-state.js').HomeUIState} state
  */
 export function setupNameIcon(state) {
-  const storedName = localStorage.getItem('name') || 'User';
+  const storedName = getDisplayName();
+  const nameInitial = getInitialFromName(storedName);
+  const nameTheme = getMutedColorTheme(nameInitial);
   const nameIconElement = document.createElement('div');
   nameIconElement.className = 'name-icon';
-  nameIconElement.textContent = storedName.charAt(0).toUpperCase();
+  nameIconElement.textContent = nameInitial;
+  nameIconElement.style.backgroundColor = nameTheme.bg;
+  nameIconElement.style.color = nameTheme.text;
 
   const header = document.querySelector('.chatbot-header');
   if (header) header.appendChild(nameIconElement);

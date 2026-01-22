@@ -3,37 +3,20 @@
 
 import { promises as fs } from 'fs';
 import path from 'path';
-import { exec } from 'child_process';
 import { fileURLToPath } from 'url';
+import { runBuild } from '../../scripts/build.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const projectRoot = path.resolve(__dirname, '../..'); // Adjusted path
 const distDir = path.join(projectRoot, 'dist');
-const buildScriptPath = path.join(projectRoot, 'scripts', 'build.js');
-
-// Helper to execute shell commands
-const execCommand = (command) => {
-  return new Promise((resolve, reject) => {
-    exec(command, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`exec error: ${error}`);
-        return reject(error);
-      }
-      if (stderr) {
-        console.error(`stderr: ${stderr}`);
-      }
-      resolve(stdout);
-    });
-  });
-};
 
 describe('Build Process Minification', () => {
   beforeAll(async () => {
     // Run the build script before any tests
     console.log('Running build script for tests...');
-    await execCommand(`node ${buildScriptPath}`);
+    await runBuild();
   }, 30000); // Increase timeout for build process
 
   const expectedOutputs = [

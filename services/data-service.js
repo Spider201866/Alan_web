@@ -197,12 +197,6 @@ function parseDateTimeToEpochMs(value) {
     );
   }
 
-  // ISO 8601 (or anything Date.parse understands reliably).
-  // IMPORTANT: must come *after* the en-GB check above, because Date.parse("12/01/2026")
-  // is interpreted as mm/dd/yyyy in many JS engines.
-  const isoMs = Date.parse(trimmed);
-  if (!Number.isNaN(isoMs)) return isoMs;
-
   // Legacy: YYYY-MM-DD HH:MM:SS
   const legacyMatch = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})(?::(\d{2}))?/);
   if (legacyMatch) {
@@ -216,6 +210,12 @@ function parseDateTimeToEpochMs(value) {
       Number(ss || 0)
     );
   }
+
+  // ISO 8601 (or anything Date.parse understands reliably).
+  // IMPORTANT: must come *after* the en-GB check above, because Date.parse("12/01/2026")
+  // is interpreted as mm/dd/yyyy in many JS engines.
+  const isoMs = Date.parse(trimmed);
+  if (!Number.isNaN(isoMs)) return isoMs;
 
   return 0;
 }

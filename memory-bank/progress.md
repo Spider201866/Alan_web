@@ -24,6 +24,9 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
 - **History ordering normalization**
   - Added `dateTimeEpoch` column to `history` for reliable SQL ordering and backfilled existing rows.
   - Client `record-info` payloads now send ISO timestamps; admin UI formats consistently.
+- **Build pipeline reliability**
+  - Build CSS minification now uses `clean-css` directly (no shell exec) and `scripts/build.js` exports `runBuild` for tests.
+  - Fixed invalid referral priority option markup to keep HTML minification stable.
 - **Admin allowlist middleware shared**
   - Extracted IP allowlist middleware to `middleware/admin-ip-allowlist.js` and reused in server and API routes.
 - **Client record-info helper**

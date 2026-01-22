@@ -39,6 +39,7 @@ A skill is a set of local instructions to follow that is stored in a `SKILL.md` 
 - CSP directives: single source in `config/index.js`.
 - Dev serves `public/`; prod serves `dist/` from `npm run build`.
 - Use PowerShell (avoid CMD-only syntax). If Git is odd, check `.clinerules/skills/windows-git-sanity/SKILL.md`.
+- Request validation lives in `middleware/validation.js`; keep client payloads aligned and omit empty optional fields (ex: `contactInfo`).
 
 ## Preferred helpers
 - `public/scripts/sw-ready.js` (`whenSwReady`) for SW gating.

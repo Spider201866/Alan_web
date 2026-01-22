@@ -10,6 +10,9 @@ export function buildRecordInfoPayloadFromStorage(options = {}) {
   const rawName = getStoredString('name', null);
   if (requireName && !rawName) return null;
   const name = rawName ?? fallbackText;
+  const rawContactInfo = getStoredString('contactInfo', null);
+  const contactInfo =
+    typeof rawContactInfo === 'string' ? rawContactInfo.trim() : rawContactInfo;
 
   const payload = {
     sessionId: ensureSessionId(),
@@ -19,10 +22,13 @@ export function buildRecordInfoPayloadFromStorage(options = {}) {
     country: getStoredString('country', fallbackText),
     iso2: getStoredString('iso2', fallbackText),
     classification: getStoredString('classification', fallbackText),
-    contactInfo: getStoredString('contactInfo', null),
     version: '1.0',
     dateTime: new Date().toISOString(),
   };
+
+  if (contactInfo && contactInfo.length >= 3 && contactInfo.length <= 100) {
+    payload.contactInfo = contactInfo;
+  }
 
   const area = getStoredString('area', fallbackText);
   if (area !== null) payload.area = area;

@@ -1,5 +1,6 @@
 /* eslint-env jest */
 
+import { jest } from '@jest/globals';
 import request from 'supertest';
 import crypto from 'crypto';
 import { createApp } from '../../server.js';
@@ -110,5 +111,36 @@ describe('History ordering and epoch normalization', () => {
 
     expect(row.dateTimeEpoch).toEqual(expect.any(Number));
     expect(row.dateTimeEpoch).toBeGreaterThan(0);
+  });
+
+  it('normalizes legacy date strings without Date.parse', () => {
+    const legacyValue = '2026-01-14 14:52:20';
+    const sessionId = `test-legacy-date-${Date.now()}`;
+    const originalParse = Date.parse;
+
+    Date.parse = jest.fn((value) => {
+      if (value === legacyValue) {
+        throw new Error('Date.parse should not be called for legacy dates');
+      }
+      return originalParse(value);
+    });
+
+    try {
+      dataService.upsertRecord({
+        sessionId,
+        name: 'Legacy User',
+        dateTime: legacyValue,
+      });
+    } finally {
+      Date.parse = originalParse;
+    }
+
+    const row = dataService.db
+      .prepare('SELECT dateTime, dateTimeEpoch FROM history WHERE sessionId = ?')
+      .get(sessionId);
+
+    const expectedEpoch = Date.UTC(2026, 0, 14, 14, 52, 20);
+    expect(row.dateTimeEpoch).toBe(expectedEpoch);
+    expect(row.dateTime).toBe(new Date(expectedEpoch).toISOString());
   });
 });
