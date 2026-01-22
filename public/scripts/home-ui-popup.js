@@ -104,7 +104,7 @@ export function buildPopupContent() {
   const safeCountry = escapeHtml(`${country}, ${iso2}, ${classification}`);
   const safeDateTime = escapeHtml(currDT);
 
-  return `<div class="user-banner" style="background-color: ${nameTheme.bg}; color: ${nameTheme.text};" title="${safeName}" aria-label="${safeName}">${safeNameInitial}</div>
+  return `<div class="user-banner" style="background-color: ${nameTheme.bg}; color: ${nameTheme.text};" title="${safeName}" aria-label="${safeName}">${safeName}</div>
 <p><strong>${escapeHtml(getTranslation('userAimsPopupLabel', 'Interests'))}:</strong> ${safeAims}</p>
 <p><strong>${escapeHtml(getTranslation('experiencePlaceholder', 'Experience'))}:</strong> ${safeExperience}</p>
 <p id="latLongSection" style="color: grey;"><strong>${escapeHtml(getTranslation('userLatLong', 'Lat/Long'))}:</strong> ${safeLatLong}</p>
