@@ -196,9 +196,9 @@ function main() {
       once: true,
       capture: true,
     });
-    // Keep an eventual fallback for non-interaction sessions, but delay it long enough
-    // that first-load rendering/LCP on slower networks is not gated on Flowise.
-    setTimeout(triggerChatbotBoot, 15000);
+    // Keep an eventual fallback for non-interaction sessions.
+    // 3s is a better UX/perf balance than the previous 15s.
+    setTimeout(triggerChatbotBoot, 3000);
 
     // Ensure the marquee is visible on initial load.
     // (If a previous SW-cached JS run hid it via class or inline styles, undo that.)
