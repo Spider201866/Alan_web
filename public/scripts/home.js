@@ -131,6 +131,9 @@ function main() {
   // Ensure sessionId is available or generated if not.
   const sessionId = ensureSessionId();
   initChatbot(sessionId);
+  // Flowise can autofocus its input after mount on some browsers, which may shift
+  // the document scroll and make the header appear offset on first paint.
+  normalizeInitialScrollPosition();
   // --- START: Marquee Hiding Logic (Corrected) ---
   // Hides the marquee section only when the user focuses on the chatbot.
 
@@ -169,6 +172,21 @@ function main() {
   // --- END: Marquee Hiding Logic (Corrected) ---
 
   // Other global initializations if any.
+}
+
+function normalizeInitialScrollPosition() {
+  const resetToTop = () => {
+    const bodyScrollTop = document.body?.scrollTop || 0;
+    const htmlScrollTop = document.documentElement?.scrollTop || 0;
+    if (window.scrollY === 0 && bodyScrollTop === 0 && htmlScrollTop === 0) return;
+    window.scrollTo(0, 0);
+    if (document.body) document.body.scrollTop = 0;
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+  };
+
+  requestAnimationFrame(resetToTop);
+  setTimeout(resetToTop, 300);
+  setTimeout(resetToTop, 900);
 }
 
 /**
