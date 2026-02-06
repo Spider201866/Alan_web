@@ -45,6 +45,12 @@ body {
   font-family: var(--font-family-main);
 }
 
+/* Home page only: avoid flex root layout so the first content container starts at y=0
+   on older Android Chrome builds (prevents the observed ~19px top offset). */
+body.home-page {
+  display: block;
+}
+
 p {
   margin: 20px 0;
 }
