@@ -196,11 +196,9 @@ function main() {
       once: true,
       capture: true,
     });
-    if (typeof window.requestIdleCallback === 'function') {
-      window.requestIdleCallback(triggerChatbotBoot, { timeout: 6000 });
-    } else {
-      setTimeout(triggerChatbotBoot, 6000);
-    }
+    // Keep an eventual fallback for non-interaction sessions, but delay it long enough
+    // that first-load rendering/LCP on slower networks is not gated on Flowise.
+    setTimeout(triggerChatbotBoot, 15000);
 
     // Ensure the marquee is visible on initial load.
     // (If a previous SW-cached JS run hid it via class or inline styles, undo that.)
@@ -283,7 +281,7 @@ window.addEventListener('pageshow', (event) => {
     importHomeData()
       .then((homeDataModule) => homeDataModule.pushLocalStorageToServer())
       .catch((err) => log.error('pushLocalStorageToServer on pageshow failed:', err));
-  }, 1200);
+  }, 5000);
 
   if (event.persisted) {
     // If the page is loaded from cache, re-fetch dynamic content.
