@@ -232,26 +232,11 @@ body.page-template-ready main {
   padding: 0 30px;
   background-color: var(--color-black);
   color: var(--color-white);
-  position: sticky;
-  top: 0;
+  position: relative;
   /* Ensure header (and Install button) stays clickable above the Flowise embed */
   z-index: 2147483640;
 }
 
-/* Home page safe-area handling:
-   Fill the top inset with header background (black) instead of showing a white strip. */
-body.home-page {
-  background-color: var(--color-black);
-}
-
-body.home-page .page-container {
-  min-height: 100%;
-  background-color: var(--color-white);
-}
-
-body.home-page .chatbot-header {
-  padding-top: env(safe-area-inset-top, 0px);
-}
 .chatbot-header .red {
   color: #f44336ff;
 }
