@@ -8,6 +8,7 @@ This directory contains all automated tests for the AlanUI project.
     ```bash
     npm test
     ```
+    This also runs `npm run check:docs` to catch documentation drift.
 -   **Run a specific test file or directory:**
     ```bash
     npm test -- tests/api/validation.test.js

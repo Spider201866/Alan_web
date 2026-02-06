@@ -38,6 +38,8 @@ graph TD
 ## Key Design Patterns
 
 -   **Build/Deployment Pattern**: Source code lives in `public/` and the `npm run build` script generates an optimised version in `dist/`. The CI/CD pipeline automates this process for production deployments.
+-   **Release Metadata Pattern**: `npm run sync:release-metadata` updates `public/sitemap.xml` `lastmod` values and regenerates `folderList.txt` before release pushes.
+-   **Documentation Drift Guard**: `npm run check:docs` validates key docs consistency and is included in `npm test` for CI enforcement.
 
 -   **App Factory Pattern (Backend)**: `server.js` exports a `createApp(config)` function. This allows for the creation of configurable Express app instances which is essential for creating isolated environments for testing.
 

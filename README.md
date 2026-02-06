@@ -97,9 +97,12 @@ Serves built files from dist/ with NODE_ENV=production.
 - dev: Start development server (serves public/)
 - build: Copy and optimize into dist/ (JS/CSS/HTML minified; asset URLs normalized; build timestamp injected)
 - start: Build then start production server (serves dist/)
+- sync:release-metadata: Refresh `public/sitemap.xml` `lastmod` values and regenerate `folderList.txt`
+- check:docs: Validate key docs remain synchronized (`README.md`, memory-bank headers, `tests/README.md`, `AGENTS.md`, `folderList.txt`)
 - test: Full suite
   - build
   - format:check (Prettier)
+  - check:docs (docs drift guard)
   - check-translations (translation coverage)
   - test:a11y (axe-core on dist/*.html)
   - jest (API/UI tests)

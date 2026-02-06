@@ -35,6 +35,11 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
   - Refreshed `README.md`, `tests/README.md`, `AGENTS.md`, and regenerated `folderList.txt`.
 - **Validation**
   - Full gate `npm test`: pass (build + lint + format + translations + a11y + jest).
+- **Docs/release workflow automation**
+  - Added `scripts/sync-release-metadata.cjs` and npm script `sync:release-metadata`.
+  - Added `scripts/check-docs-sync.cjs` and npm script `check:docs`.
+  - `npm test` now includes `check:docs` so CI fails on docs drift.
+  - Added `.gitattributes` for consistent line endings.
 
 ### February 2026 Maintenance (5 Feb 2026)
 - **Shared exam page initializer**

@@ -23,6 +23,10 @@
 - Documentation sync updates:
   - Updated `README.md`, `tests/README.md`, `AGENTS.md`, and regenerated `folderList.txt`.
   - Updated `public/sitemap.xml` `lastmod` values to `2026-02-06`.
+  - Added release/docs automation scripts:
+    - `scripts/sync-release-metadata.cjs`
+    - `scripts/check-docs-sync.cjs`
+  - Added `.gitattributes` for consistent line-ending normalization.
 
 ## Recent Work (5 Feb 2026)
 - Frontend duplication reduction:

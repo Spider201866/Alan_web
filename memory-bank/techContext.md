@@ -195,8 +195,10 @@ This document provides a detailed overview of the technologies, dependencies, co
 
 - dev: node -r dotenv/config server.js (serves public/ in dev mode).
 - build: node scripts/build.js (copy, patch, minify).
+- sync:release-metadata: node scripts/sync-release-metadata.cjs (refresh sitemap lastmod + folderList inventory).
+- check:docs: node scripts/check-docs-sync.cjs (docs drift guard).
 - start: npm run build && cross-env NODE_ENV=production node server.js (serves dist/).
-- test: npm run build && prettier check && translations check && a11y && jest (vm-modules).
+- test: npm run build && lint && prettier check && check:docs && translations check && a11y && jest (vm-modules).
 - test:ci: jest with vm-modules (when build is provided by CI step).
 - format (write/check) via Prettier; lint via ESLint.
 

@@ -51,4 +51,5 @@ A skill is a set of local instructions to follow that is stored in a `SKILL.md` 
 ## Docs updates
 - Update memory-bank files when changes affect architecture, workflows, or security patterns.
 - Keep `README.md`, `tests/README.md`, and `folderList.txt` in sync after significant code/test/documentation changes.
+- Use `npm run sync:release-metadata` before release pushes and keep `npm run check:docs` passing.
 </INSTRUCTIONS>
