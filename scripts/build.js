@@ -90,9 +90,12 @@ export async function runBuild() {
       // - `alanui-env`: allows client code (e.g. log.js) to behave differently in production
       //   without relying on a specific hostname.
       // - build timestamp: human-readable release tracing (may be removed by HTML minification).
-      const envMeta = '<meta name="alanui-env" content="production">';
-      const timestamp = `<!--! BUILD TIMESTAMP: ${buildTimestamp} -->`;
-      html = html.replace('</head>', `  ${envMeta}\n  ${timestamp}\n</head>`);
+      const hasHeadTag = /<\/head>/i.test(html);
+      if (hasHeadTag) {
+        const envMeta = '<meta name="alanui-env" content="production">';
+        const timestamp = `<!--! BUILD TIMESTAMP: ${buildTimestamp} -->`;
+        html = html.replace('</head>', `  ${envMeta}\n  ${timestamp}\n</head>`);
+      }
 
       // Normalize relative asset URLs to root-absolute and avoid double slashes.
       // Example:
@@ -120,7 +123,7 @@ export async function runBuild() {
         console.log('-----------------------------------------\n');
       } else {
         const hasEnvMarker = html.includes('name="alanui-env"');
-        if (!hasEnvMarker) {
+        if (hasHeadTag && !hasEnvMarker) {
           console.warn(`⚠️ Expected alanui-env marker missing in: ${file}`);
         }
       }

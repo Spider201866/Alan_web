@@ -1,4 +1,4 @@
-<!-- Alan UI - home.html | 14th January 2026, WJW -->
+﻿<!-- Alan UI - home.html | 14th January 2026, WJW -->
 <!-- public/home.html - The main application page, hosting the chatbot and navigation. -->
 <!doctype html>
 <html lang="en">
@@ -46,7 +46,7 @@
     <!-- Inline styles are being removed or refactored into styles.css -->
   </head>
   <body>
-    <a href="/#main-content" class="skip-to-content">Skip to main content</a>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
     <div class="page-container">
       <!-- HEADER -->
       <header class="chatbot-header">
@@ -93,9 +93,13 @@
           </button>
         </div>
         <div class="menu-row">
-          <a href="https://www.youtube.com/@arclightproject" class="menu-link">
-            <button id="videos-button" class="button grey" aria-label="View Videos">Videos</button>
-          </a>
+          <a
+            id="videos-button"
+            href="https://www.youtube.com/@arclightproject"
+            class="button grey menu-link"
+            aria-label="View Videos"
+            >Videos</a
+          >
           <button id="atoms-button" class="button grey" aria-label="Navigate to Atoms section">
             Atoms
           </button>
@@ -107,37 +111,17 @@
               aria-label="Change language"
             ></button>
             <div id="language-dropdown">
-              <ul>
-                <li data-value="en"><strong>English</strong> (English)</li>
-                <li data-value="zh"><strong>中文</strong> (Chinese)</li>
-                <li data-value="hi"><strong>हिन्दी</strong> (Hindi)</li>
-                <li data-value="es"><strong>Español</strong> (Spanish)</li>
-                <li data-value="ar"><strong>العربية</strong> (Arabic)</li>
-                <li data-value="fr"><strong>Français</strong> (French)</li>
-                <li data-value="bn"><strong>বাংলা</strong> (Bangla)</li>
-                <li data-value="pt"><strong>Português</strong> (Portuguese)</li>
-                <li data-value="id"><strong>Bahasa Indonesia</strong> (Indonesian)</li>
-                <li data-value="sw"><strong>Kiswahili</strong> (Swahili)</li>
-                <li data-value="ur"><strong>اردو</strong> (Urdu)</li>
-                <li data-value="fa"><strong>فارسی</strong> (Persian)</li>
-                <li data-value="ln"><strong>Lingala</strong> (Lingala)</li>
-                <li data-value="ha"><strong>Hausa</strong> (Hausa)</li>
-                <li data-value="yo"><strong>Yorùbá</strong> (Yoruba)</li>
-                <li data-value="ig"><strong>Igbo</strong> (Igbo)</li>
-                <li data-value="zu"><strong>Zulu</strong> (Zulu)</li>
-                <li data-value="am"><strong>አማርኛ</strong> (Amharic)</li>
-                <li data-value="sn"><strong>chiShona</strong> (Shona)</li>
-                <li data-value="rw"><strong>Ikinyarwanda</strong> (Kinyarwanda)</li>
-                <li data-value="ny"><strong>Chichewa</strong> (Chichewa)</li>
-                <li data-value="cy"><strong>Cymraeg</strong> (Welsh)</li>
-              </ul>
+              <ul id="home-language-options"></ul>
             </div>
           </div>
         </div>
         <div class="side-menu-top-row">
-          <a href="https://arclightprojectshop.co.uk/" style="text-decoration: none">
-            <button id="arclight-project-button" class="button grey">Arclight Project</button>
-          </a>
+          <a
+            id="arclight-project-button"
+            href="https://arclightprojectshop.co.uk/"
+            class="button grey menu-link"
+            >Arclight Project</a
+          >
           <button id="links-button" class="button grey">Links</button>
           <button id="about-button" class="button grey">About</button>
         </div>

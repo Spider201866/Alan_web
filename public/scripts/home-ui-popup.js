@@ -96,7 +96,6 @@ export function buildPopupContent() {
 
   // Ensure that user-controlled values cannot inject markup.
   const safeName = escapeHtml(name);
-  const safeNameInitial = escapeHtml(nameInitial);
   const safeAims = escapeHtml(translatedAims);
   const safeExperience = escapeHtml(translatedExperience);
   const safeLatLong = escapeHtml(`${latitude}, ${longitude}`);

@@ -43,9 +43,13 @@ describe('History ordering and epoch normalization', () => {
       .send({ password: 'correct-password' })
       .set('Content-Type', 'application/json');
 
-    expect(loginRes.statusCode).toBe(200);
+    if (loginRes.statusCode !== 200) {
+      throw new Error(`Admin login failed in test setup with status ${loginRes.statusCode}`);
+    }
     adminCookie = loginRes.headers['set-cookie']?.[0]?.split(';')[0];
-    expect(adminCookie).toBeTruthy();
+    if (!adminCookie) {
+      throw new Error('Admin login did not return a session cookie in test setup');
+    }
   });
 
   afterAll(async () => {

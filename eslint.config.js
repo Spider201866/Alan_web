@@ -6,6 +6,9 @@ import js from '@eslint/js';
 import eslintPluginJest from 'eslint-plugin-jest';
 
 export default [
+  {
+    ignores: ['dist/**'],
+  },
   // Global configuration for all .js files (ES modules by default due to package.json "type": "module")
   {
     files: ['**/*.js'], // Targets ES module .js files

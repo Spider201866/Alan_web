@@ -203,7 +203,8 @@ select.experience-dropdown {
   padding: 10px;
   text-align: left;
 }
-.custom-multiselect-container .checkboxes label {
+.custom-multiselect-container .checkboxes label,
+.custom-multiselect-container .checkboxes [role='option'] {
   display: flex;
   align-items: center;
   padding: 8px;
@@ -212,7 +213,8 @@ select.experience-dropdown {
   font-size: 16px;
   border-radius: 6px;
 }
-.custom-multiselect-container .checkboxes label:hover {
+.custom-multiselect-container .checkboxes label:hover,
+.custom-multiselect-container .checkboxes [role='option']:hover {
   background-color: var(--color-background-main);
 }
 .custom-multiselect-container .checkboxes input[type='checkbox'] {
@@ -251,3 +253,280 @@ button:disabled {
   Example of a specific override if you wanted it:
   font-weight: bold;
 } */
+
+/* =====================================================================
+   7. MIGRATED FROM index.html INLINE STYLES
+===================================================================== */
+
+/* Language controls */
+#language-selector-text {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #000;
+  text-align: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+}
+
+#index-language-button {
+  background: url('/images/lang.webp') no-repeat center center;
+  background-size: cover;
+  width: 64px;
+  height: 64px;
+  border: 3px solid #3e3e3e;
+  cursor: pointer;
+}
+
+#index-language-dropdown {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid #ccc;
+  z-index: 9999;
+  min-width: 220px;
+  white-space: nowrap;
+  max-height: 350px;
+  overflow-y: auto;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+#index-language-dropdown ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#index-language-dropdown li {
+  padding: 6px;
+  cursor: pointer;
+}
+
+/* Onboarding field normalization (migrated from inline <style>) */
+.onboarding-field {
+  display: flex;
+  align-items: center;
+  width: 220px;
+  height: 50px;
+  margin: 10px auto;
+  padding: 0 15px;
+  font-size: 16px;
+  color: grey;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 14px;
+  box-sizing: border-box;
+  position: relative;
+  -webkit-appearance: none;
+  appearance: none;
+  text-align: left;
+  font-family: sans-serif;
+}
+
+.custom-multiselect-container {
+  padding: 0;
+  cursor: pointer;
+}
+
+.custom-multiselect-container .select-box {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 0 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.experience-dropdown,
+.custom-multiselect-container {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%233e3e3e" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 24px;
+  padding-right: 40px;
+}
+
+select.experience-dropdown {
+  padding-left: 13px;
+  cursor: pointer;
+}
+
+.custom-multiselect-container .checkboxes {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 10px;
+  text-align: left;
+}
+
+.custom-multiselect-container .checkboxes label,
+.custom-multiselect-container .checkboxes [role='option'] {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  color: #333;
+  font-size: 16px;
+}
+
+.custom-multiselect-container .checkboxes label:hover,
+.custom-multiselect-container .checkboxes [role='option']:hover {
+  background-color: #f0f0f0;
+}
+
+.custom-multiselect-container .checkboxes input[type='checkbox'] {
+  margin-right: 10px;
+  transform: scale(1.2);
+}
+
+.onboarding-field.is-active {
+  color: blue;
+  border-color: blue;
+}
+
+.onboarding-field::placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* =====================================================================
+   8. STRUCTURAL STYLES MIGRATED FROM index.html
+===================================================================== */
+
+#passwordScreen {
+  position: relative;
+}
+
+.password-language-controls {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.password-language-button-row {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-username-hidden-field {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.password-input-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.password-input-column {
+  display: flex;
+  flex-direction: column;
+}
+
+#passwordInput {
+  width: 147px;
+}
+
+#passwordError {
+  color: red;
+  display: none;
+  width: 147px;
+  text-align: center;
+  margin: 6px auto 0;
+}
+
+#passwordSubmitBtn {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#noCodeLine {
+  margin-top: 50px;
+  font-style: italic;
+  font-size: 14px;
+  color: #000;
+  text-align: center;
+}
+
+#noCodeLine a {
+  color: blue;
+}
+
+.instruction-text {
+  text-align: justify;
+}
+
+.good-luck {
+  text-align: center;
+}
+
+#acceptButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#locationInfo {
+  display: none;
+}
+
+.black-screen {
+  z-index: 9999;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    visibility 0s,
+    opacity 1s ease;
+}
+
+#triangleFrame {
+  border: none;
+  width: clamp(180px, 50vw, 300px);
+  height: clamp(180px, 50vw, 300px);
+  transform: scale(1);
+  transition:
+    transform 4s ease-in-out,
+    filter 4s ease-in-out;
+  transform-origin: center center;
+}

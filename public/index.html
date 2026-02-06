@@ -1,4 +1,4 @@
-<!-- Alan UI - index.html | 14th January 2026, WJW -->
+﻿<!-- Alan UI - index.html | 14th January 2026, WJW -->
 <!-- public/index.html - The main landing page for the application, handling user onboarding and authentication. -->
 <!doctype html>
 <html lang="en">
@@ -29,109 +29,6 @@
     <link rel="manifest" href="/favicons/manifest.json" />
     <script type="module" src="scripts/log.js" defer></script>
     <!-- Language translations are now handled by scripts/language.js and scripts/index.js -->
-    <!-- Inline CSS for form fields (unchanged) -->
-    <style>
-      /* --- UNIFIED STYLE FOR ALL FORM FIELDS FOR CONSISTENT SPACING AND APPEARANCE --- */
-      .onboarding-field {
-        display: flex;
-        align-items: center;
-        width: 220px; /* Reverted to original width */
-        height: 50px;
-        margin: 10px auto;
-        padding: 0 15px;
-        font-size: 16px;
-        color: grey;
-        background-color: #fff;
-        border: 2px solid #ccc;
-        border-radius: 14px;
-        box-sizing: border-box;
-        position: relative;
-        -webkit-appearance: none;
-        appearance: none;
-        text-align: left;
-        font-family: sans-serif;
-      }
-      /* --- Style for the custom multi-select dropdown --- */
-      .custom-multiselect-container {
-        padding: 0;
-        cursor: pointer;
-      }
-      .custom-multiselect-container .select-box {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        width: 100%;
-        padding: 0 15px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-      /* --- Add identical dropdown arrow to select and custom div --- */
-      .experience-dropdown,
-      .custom-multiselect-container {
-        background-image: url('data:image/svg+xml;utf8,<svg fill="%233e3e3e" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-        background-repeat: no-repeat;
-        background-position: right 10px center;
-        background-size: 24px;
-        padding-right: 40px;
-      }
-      select.experience-dropdown {
-        padding-left: 13px;
-        cursor: pointer;
-      }
-      /* --- Checkbox dropdown panel --- */
-      .custom-multiselect-container .checkboxes {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: white;
-        border: 1px solid #ccc;
-        border-top: none;
-        border-radius: 0 0 14px 14px;
-        max-height: 200px;
-        overflow-y: auto;
-        z-index: 1000;
-        padding: 10px;
-        text-align: left;
-      }
-      .custom-multiselect-container .checkboxes label {
-        display: flex;
-        align-items: center;
-        padding: 8px;
-        cursor: pointer;
-        color: #333;
-        font-size: 16px;
-      }
-      .custom-multiselect-container .checkboxes label:hover {
-        background-color: #f0f0f0;
-      }
-      .custom-multiselect-container .checkboxes input[type='checkbox'] {
-        margin-right: 10px;
-        transform: scale(1.2);
-      }
-      /* --- Style for active/selected fields --- */
-      .onboarding-field.is-active {
-        color: blue;
-        border-color: blue;
-      }
-      .onboarding-field::placeholder {
-        color: #6c757d;
-        opacity: 1; /* Firefox adds a lower opacity by default */
-      }
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border-width: 0;
-      }
-    </style>
   </head>
 
   <body>
@@ -140,137 +37,27 @@
       <!-- ===================================================================== -->
       <!-- PASSWORD SCREEN (initially hidden) -->
       <!-- ===================================================================== -->
-      <section class="password-screen hidden" id="passwordScreen" style="position: relative">
-        <div style="text-align: center; margin-bottom: 60px">
-          <button
-            id="language-selector-text"
-            style="
-              margin-bottom: 6px;
-              font-size: 14px;
-              color: #000;
-              text-align: center;
-              cursor: pointer;
-              background: none;
-              border: none;
-              padding: 0;
-              font: inherit;
-            "
-            aria-label="Open language selector"
-          >
-            中文, हिन्दी, Español, العربية, Français...
+      <section class="password-screen hidden" id="passwordScreen">
+        <div class="password-language-controls">
+          <button id="language-selector-text" aria-label="Open language selector">
+            Select language...
           </button>
-          <div style="display: flex; justify-content: center">
+          <div class="password-language-button-row">
             <button
               id="index-language-button"
               title="Choose language"
               aria-label="Change language"
               aria-haspopup="true"
               aria-expanded="false"
-              style="
-                background: url('images/lang.webp') no-repeat center center;
-                background-size: cover;
-                width: 64px;
-                height: 64px;
-                border: 3px solid #3e3e3e;
-                cursor: pointer;
-              "
             ></button>
           </div>
-          <div
-            id="index-language-dropdown"
-            style="
-              display: none;
-              position: absolute;
-              top: 40px;
-              left: 50%;
-              transform: translateX(-50%);
-              background: #fff;
-              border: 1px solid #ccc;
-              z-index: 9999;
-              min-width: 220px;
-              white-space: nowrap;
-              max-height: 350px;
-              overflow-y: auto;
-              font-size: 14px;
-              line-height: 1.2;
-            "
-          >
-            <ul role="listbox" style="margin: 0; padding: 0; list-style: none">
-              <li role="option" data-value="en" style="padding: 6px; cursor: pointer">
-                <strong>English</strong> (English)
-              </li>
-              <li data-value="zh" style="padding: 6px; cursor: pointer">
-                <strong>中文</strong> (Chinese)
-              </li>
-              <li data-value="hi" style="padding: 6px; cursor: pointer">
-                <strong>हिन्दी</strong> (Hindi)
-              </li>
-              <li data-value="es" style="padding: 6px; cursor: pointer">
-                <strong>Español</strong> (Spanish)
-              </li>
-              <li data-value="ar" style="padding: 6px; cursor: pointer">
-                <strong>العربية</strong> (Arabic)
-              </li>
-              <li data-value="fr" style="padding: 6px; cursor: pointer">
-                <strong>Français</strong> (French)
-              </li>
-              <li data-value="bn" style="padding: 6px; cursor: pointer">
-                <strong>বাংলা</strong> (Bangla)
-              </li>
-              <li data-value="pt" style="padding: 6px; cursor: pointer">
-                <strong>Português</strong> (Portuguese)
-              </li>
-              <li data-value="id" style="padding: 6px; cursor: pointer">
-                <strong>Bahasa Indonesia</strong> (Indonesian)
-              </li>
-              <li data-value="sw" style="padding: 6px; cursor: pointer">
-                <strong>Kiswahili</strong> (Swahili)
-              </li>
-              <li data-value="ur" style="padding: 6px; cursor: pointer">
-                <strong>اردو</strong> (Urdu)
-              </li>
-              <li data-value="fa" style="padding: 6px; cursor: pointer">
-                <strong>فارسی</strong> (Persian)
-              </li>
-              <li data-value="ln" style="padding: 6px; cursor: pointer">
-                <strong>Lingala</strong> (Lingala)
-              </li>
-              <li data-value="ha" style="padding: 6px; cursor: pointer">
-                <strong>Hausa</strong> (Hausa)
-              </li>
-              <li data-value="yo" style="padding: 6px; cursor: pointer">
-                <strong>Yorùbá</strong> (Yoruba)
-              </li>
-              <li data-value="ig" style="padding: 6px; cursor: pointer">
-                <strong>Igbo</strong> (Igbo)
-              </li>
-              <li data-value="zu" style="padding: 6px; cursor: pointer">
-                <strong>Zulu</strong> (Zulu)
-              </li>
-              <li data-value="am" style="padding: 6px; cursor: pointer">
-                <strong>አማርኛ</strong> (Amharic)
-              </li>
-              <li data-value="sn" style="padding: 6px; cursor: pointer">
-                <strong>chiShona</strong> (Shona)
-              </li>
-              <li data-value="rw" style="padding: 6px; cursor: pointer">
-                <strong>Ikinyarwanda</strong> (Kinyarwanda)
-              </li>
-              <li data-value="ny" style="padding: 6px; cursor: pointer">
-                <strong>Chichewa</strong> (Chichewa)
-              </li>
-              <li data-value="cy" style="padding: 6px; cursor: pointer">
-                <strong>Cymraeg</strong> (Welsh)
-              </li>
-            </ul>
+          <div id="index-language-dropdown">
+            <ul role="listbox" aria-label="Select language"></ul>
           </div>
         </div>
 
         <!--
-          <h2
-            id="password-title"
-            style="margin-bottom: 40px; font-weight: normal; font-size: 17px; text-align: center"
-          >
+          <h2 id="password-title" class="password-title">
             Enter your Alan password
           </h2>
 
@@ -278,23 +65,12 @@
         -->
 
         <form id="passwordForm">
-          <div
-            style="
-              position: absolute;
-              left: -10000px;
-              top: auto;
-              width: 1px;
-              height: 1px;
-              overflow: hidden;
-            "
-          >
+          <div class="auth-username-hidden-field">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" autocomplete="username" />
           </div>
-          <div
-            style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px"
-          >
-            <div style="display: flex; flex-direction: column">
+          <div class="password-input-row">
+            <div class="password-input-column">
               <input
                 type="password"
                 id="passwordInput"
@@ -303,54 +79,17 @@
                 pattern="[0-9]*"
                 autocomplete="new-password"
                 class="onboarding-field"
-                style="width: 147px"
               />
-              <p
-                id="passwordError"
-                tabindex="-1"
-                style="
-                  color: red;
-                  display: none;
-                  width: 147px;
-                  text-align: center;
-                  margin: 6px auto 0;
-                "
-              >
-                Invalid password. Please try again
-              </p>
+              <p id="passwordError" tabindex="-1">Invalid password. Please try again</p>
             </div>
-            <button
-              type="submit"
-              id="passwordSubmitBtn"
-              disabled
-              style="
-                padding: 12px;
-                font-size: 16px;
-                border-radius: 12px;
-                border: 1px solid #ccc;
-                cursor: pointer;
-                margin-left: 10px; /* Added margin for spacing */
-              "
-            >
-              Submit
-            </button>
+            <button type="submit" id="passwordSubmitBtn" disabled>Submit</button>
           </div>
         </form>
 
-        <p
-          id="noCodeLine"
-          style="
-            margin-top: 50px;
-            font-style: italic;
-            font-size: 14px;
-            color: black;
-            text-align: center;
-          "
-        >
+        <p id="noCodeLine">
           No or incorrect code?
           <a
             href="https://medicine.st-andrews.ac.uk/arclight/contact/"
-            style="color: blue"
             target="_blank"
             rel="noopener"
             >Contact us on the Arclight Project website</a
@@ -403,11 +142,11 @@
           width="100"
           height="100"
         />
-        <p id="instruction-text" style="text-align: justify">
+        <p id="instruction-text" class="instruction-text">
           Alan is an AI learning tool for students and those who only occasionally see eye, ear or
           skin cases. Write clearly and avoid identifying names or details.
         </p>
-        <p id="good-luck" class="good-luck" style="text-align: center">Good luck!</p>
+        <p id="good-luck" class="good-luck">Good luck!</p>
 
         <form id="onboardingForm" onsubmit="event.preventDefault();">
           <label for="nameInput" class="sr-only">Name</label>
@@ -430,7 +169,7 @@
             <div class="select-box" id="aims-select-box">
               <span id="aims-select-text">Interests</span>
             </div>
-            <div class="checkboxes" id="aims-checkboxes" role="listbox">
+            <div class="checkboxes" id="aims-checkboxes" role="group" aria-label="Interests">
               <label><input type="checkbox" value="Eyes" /> Eyes</label>
               <label><input type="checkbox" value="Ears" /> Ears</label>
               <label><input type="checkbox" value="Skin" /> Skin</label>
@@ -453,12 +192,16 @@
             <div class="select-box" id="experience-select-box">
               <span id="experience-select-text">Experience</span>
             </div>
-            <div class="checkboxes" id="experience-options" role="listbox">
-              <label role="option" data-value="Primary" tabindex="-1"
-                >Primary (student/refresher)</label
-              >
-              <label role="option" data-value="Intermediate" tabindex="-1">Intermediate</label>
-              <label role="option" data-value="Advanced" tabindex="-1">Advanced</label>
+            <div class="checkboxes" id="experience-options" role="listbox" aria-label="Experience">
+              <div role="option" data-value="Primary" tabindex="-1" aria-selected="false">
+                Primary (student/refresher)
+              </div>
+              <div role="option" data-value="Intermediate" tabindex="-1" aria-selected="false">
+                Intermediate
+              </div>
+              <div role="option" data-value="Advanced" tabindex="-1" aria-selected="false">
+                Advanced
+              </div>
             </div>
           </div>
 
@@ -485,65 +228,18 @@
           />
           -->
           <br /><br /><br />
-          <button
-            type="button"
-            id="acceptButton"
-            disabled
-            style="
-              display: inline-flex;
-              align-items: center;
-              justify-content: flex-start;
-              text-align: left;
-              appearance: none;
-              -webkit-appearance: none;
-            "
-          >
-            Accept
-          </button>
+          <button type="button" id="acceptButton" disabled>Accept</button>
         </form>
         <br />
-        <div id="locationInfo" style="display: none"></div>
+        <div id="locationInfo"></div>
       </section>
     </main>
 
     <!-- ===================================================================== -->
     <!-- BLACK SCREEN OVERLAY (Transition to Home) -->
     <!-- ===================================================================== -->
-    <div
-      class="black-screen"
-      id="blackScreen"
-      style="
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: black;
-        z-index: 9999;
-        visibility: hidden;
-        opacity: 0;
-        transition:
-          visibility 0s,
-          opacity 1s ease;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      "
-    >
-      <iframe
-        id="triangleFrame"
-        src="triangle.html"
-        style="
-          border: none;
-          width: clamp(180px, 50vw, 300px);
-          height: clamp(180px, 50vw, 300px);
-          transform: scale(1);
-          transition:
-            transform 4s ease-in-out,
-            filter 4s ease-in-out;
-          transform-origin: center center;
-        "
-      ></iframe>
+    <div class="black-screen" id="blackScreen">
+      <iframe id="triangleFrame" src="triangle.html" title="Loading transition"></iframe>
     </div>
 
     <!-- ===================================================================== -->

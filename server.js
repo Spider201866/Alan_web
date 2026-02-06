@@ -7,12 +7,19 @@ import csrfProtection from './middleware/csrf.js';
 import flowiseProxy from './middleware/flowiseProxy.js';
 import defaultConfig from './config/index.js';
 import apiRoutesFactory from './routes/api.js';
+import { validatePasswordWithConfig } from './middleware/auth.js';
+import dataService from './services/data-service.js';
 // import webRoutesFactory from './routes/web.js'; // No longer needed
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Readable } from 'stream';
 import { globalErrorHandler, notFound } from './middleware/error.js';
-import { flowiseLimiter, osmTilesLimiter, recordInfoLimiter } from './middleware/rateLimiters.js';
+import {
+  flowiseLimiter,
+  osmTilesLimiter,
+  recordInfoLimiter,
+  sensitiveLimiter,
+} from './middleware/rateLimiters.js';
 import { applyAdminNoStoreHeaders } from './middleware/admin-no-store.js';
 import { createAdminIpAllowlistMiddleware } from './middleware/admin-ip-allowlist.js';
 
@@ -32,6 +39,7 @@ export function createApp(configToUse) {
   const app = express();
 
   const enforceAdminIpAllowlist = createAdminIpAllowlistMiddleware(configToUse.adminAllowedIps);
+  const validatePassword = validatePasswordWithConfig(configToUse);
 
   // Security headers & compression
   app.disable('x-powered-by');
@@ -111,6 +119,25 @@ export function createApp(configToUse) {
   );
 
   app.use(express.json());
+
+  // Backward-compatible legacy endpoint used by external tools (e.g., existing Flowise custom tools).
+  // Keep password validation + rate limiting + admin IP allowlist, but do not require CSRF token.
+  app.post(
+    '/fetch-records',
+    sensitiveLimiter,
+    enforceAdminIpAllowlist,
+    validatePassword,
+    (req, res, next) => {
+      try {
+        applyAdminNoStoreHeaders(res);
+        const records = dataService.getActiveRecord();
+        res.json(records);
+      } catch (err) {
+        next(err);
+      }
+    }
+  );
+
   app.use(
     csrfProtection({
       enable: Boolean(configToUse.enableCsrf),

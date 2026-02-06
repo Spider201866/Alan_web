@@ -1,4 +1,4 @@
-<!-- Alan UI - activeContext.md | Updated 18th January 2026, Cline -->
+<!-- Alan UI - activeContext.md | Updated 5th February 2026, Codex -->
 
 # Active Context
 
@@ -12,6 +12,19 @@
 - Environment-driven client logging (build injects `<meta name="alanui-env" content="production">`).
 - Build-stamped service worker cache name (stamped into `dist/service-worker.js` during build).
 - Flowise proxy reliability improvements (`/flowise` proxy mounted early; safer abort behavior).
+
+## Recent Work (5 Feb 2026)
+- Frontend duplication reduction:
+  - Added shared exam page initializer: `public/scripts/exam-page-init.js`.
+  - Refactored `public/scripts/eye.js`, `public/scripts/ear.js`, and `public/scripts/skin.js` to config-driven page translation setup.
+- Language menu consistency:
+  - Added canonical language source module: `public/scripts/language-options.js`.
+  - Home/index language menus now render from shared options.
+- Muted page fragment reuse:
+  - Added `public/partials/muted-buttons.html` plus `mountMutedButtons()` in `public/scripts/muted.js`.
+  - Home and muted pages now consume the same muted buttons fragment.
+- Index page style cleanup:
+  - Moved key inline styles from `public/index.html` into `public/styles/styles_index.css`.
 
 ## Recent Work (14 Jan 2026)
 - **Frontend injection hardening**

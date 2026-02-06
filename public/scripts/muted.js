@@ -2,6 +2,24 @@
 
 // muted.js
 import log from './log.js';
+import { setTrustedHtml } from './trusted-html.js';
+
+const MUTED_BUTTONS_FRAGMENT_PATH = '/partials/muted-buttons.html';
+
+/**
+ * Fetches and mounts the muted buttons fragment into a target element,
+ * then wires its interactive behavior.
+ * @param {HTMLElement|null} mountEl
+ * @returns {Promise<void>}
+ */
+export async function mountMutedButtons(mountEl) {
+  if (!mountEl) return;
+  const response = await fetch(MUTED_BUTTONS_FRAGMENT_PATH);
+  if (!response.ok) throw new Error(`Failed to fetch ${MUTED_BUTTONS_FRAGMENT_PATH}`);
+  const html = await response.text();
+  setTrustedHtml(mountEl, html);
+  initMutedButtons();
+}
 
 /**
  * Attach Refer, Screenshot and Images button events

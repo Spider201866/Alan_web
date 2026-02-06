@@ -4,6 +4,7 @@
 
 import log from './log.js';
 import { setLanguage } from './language.js';
+import { renderLanguageOptions } from './language-options.js';
 import { closeAllPopups, updateButtonStyle } from './home-ui-core.js';
 import { buildPopupContent } from './home-ui-popup.js';
 import { setTrustedHtml } from './trusted-html.js';
@@ -161,10 +162,15 @@ function setupGeolocationButton(state, onGeolocationClick) {
 
 function setupLanguageControls(state) {
   if (!state.languageButton || !state.languageDropdown) return;
+  const languageList = state.languageDropdown.querySelector('ul');
+  renderLanguageOptions(languageList);
+
   state.languageButton.addEventListener('click', (e) => {
     e.stopPropagation();
-    state.languageDropdown.style.display =
-      state.languageDropdown.style.display === 'none' ? 'block' : 'none';
+    const isHidden =
+      state.languageDropdown.style.display === 'none' ||
+      getComputedStyle(state.languageDropdown).display === 'none';
+    state.languageDropdown.style.display = isHidden ? 'block' : 'none';
   });
 
   document.addEventListener('click', () => (state.languageDropdown.style.display = 'none'));

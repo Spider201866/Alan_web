@@ -49,6 +49,12 @@ graph TD
 
 -   **Frontend Orchestrator Pattern**: Main page scripts (`index.js`, `home.js`) act as orchestrators. They import and initialise specialised single-responsibility modules for tasks like UI management, data fetching, PWA concerns, and translation.
 
+-   **Shared Frontend Content Modules**
+    -   Repeated UI content should be centralized into shared modules/partials where possible:
+        -   language options registry (`public/scripts/language-options.js`)
+        -   exam page translation initializer (`public/scripts/exam-page-init.js`)
+        -   reusable muted buttons partial (`public/partials/muted-buttons.html`) mounted via `public/scripts/muted.js`
+
 -   **Shared Backend Helpers (Security/Consistency)**
     -   Use small shared helpers for repetitive security concerns rather than duplicating per route:
         -   `middleware/admin-no-store.js` centralises admin “no-store/no-cache/noindex” headers.

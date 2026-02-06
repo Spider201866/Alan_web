@@ -3,26 +3,19 @@
 // Handles data fetching and server communication for the home page.
 
 import log from './log.js';
-import { initMutedButtons } from './muted.js';
-import { setTrustedHtml } from './trusted-html.js';
+import { mountMutedButtons } from './muted.js';
 import { buildRecordInfoPayloadFromStorage, postRecordInfo } from './record-info.js';
 
 /**
- * Fetches the HTML snippet for the muted buttons, injects it into the DOM, and initializes the buttons.
+ * Mounts the shared muted buttons fragment into the home page and initializes the buttons.
  * @returns {Promise<void>} A promise that resolves when the snippet is fetched and initialized.
  */
 export function fetchMutedSnippet() {
-  return fetch('muted.html')
-    .then((res) => (res.ok ? res.text() : Promise.reject('File not found')))
-    .then((html) => {
-      const mutedContainer = document.getElementById('muted-buttons');
-      if (mutedContainer) setTrustedHtml(mutedContainer, html);
-      initMutedButtons();
-    })
-    .catch((err) => {
-      log.error('Error fetching muted.html:', err);
-      throw err;
-    });
+  const mutedContainer = document.getElementById('muted-buttons');
+  return mountMutedButtons(mutedContainer).catch((err) => {
+    log.error('Error mounting muted buttons fragment:', err);
+    throw err;
+  });
 }
 
 /**

@@ -96,6 +96,11 @@ function syncExperienceUiFromSelect() {
   if (!experienceSelectUiEl || !experienceSelectEl || !experienceSelectTextEl) return;
 
   const selectedValue = experienceSelectEl.value;
+  experienceOptionsEl?.querySelectorAll('[data-value]').forEach((optionEl) => {
+    const value = optionEl.getAttribute('data-value');
+    optionEl.setAttribute('aria-selected', value === selectedValue ? 'true' : 'false');
+  });
+
   if (!selectedValue) return;
   const selectedOption = experienceSelectEl.querySelector(`option[value="${selectedValue}"]`);
   if (selectedOption) {

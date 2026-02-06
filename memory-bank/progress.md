@@ -1,4 +1,4 @@
-<!-- Alan UI - progress.md | Updated 18th January 2026, Cline -->
+<!-- Alan UI - progress.md | Updated 5th February 2026, Codex -->
 
 # Progress
 
@@ -19,6 +19,24 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
 ---
 
 ## Recent Changes
+
+### February 2026 Maintenance (5 Feb 2026)
+- **Shared exam page initializer**
+  - Added `public/scripts/exam-page-init.js` to centralize section heading/body translation wiring for exam pages.
+  - Refactored `public/scripts/eye.js`, `public/scripts/ear.js`, and `public/scripts/skin.js` to declarative config.
+- **Language dropdown consistency**
+  - Added `public/scripts/language-options.js` as canonical language option registry.
+  - Updated home/index language controls to render options from this shared source.
+- **Muted buttons fragment consolidation**
+  - Added reusable partial `public/partials/muted-buttons.html`.
+  - Added `mountMutedButtons()` in `public/scripts/muted.js`; updated home/muted page wiring to use the shared partial.
+- **Index inline-style cleanup**
+  - Removed multiple inline style attributes from `public/index.html`.
+  - Added equivalent selectors in `public/styles/styles_index.css` for parity.
+- **Validation**
+  - `npm run lint`: pass.
+  - `npm run check-translations`: pass.
+  - `npm run test:ci`: pass (all suites green).
 
 ### January 2026 Maintenance (18 Jan 2026)
 - **History ordering normalization**

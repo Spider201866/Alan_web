@@ -1,4 +1,4 @@
-// Alan UI - index.js | 14th January 2026, WJW
+﻿// Alan UI - index.js | 14th January 2026, WJW
 // public/scripts/index.js (New Orchestrator Version)
 // Orchestrates location, auth, form, and language modules for the index page.
 
@@ -6,6 +6,7 @@ import { setLanguage, getTranslation } from './language.js';
 import { initializeLocation } from './location-service.js';
 import { initAuthFlow } from './auth-flow.js';
 import { initOnboardingForm } from './onboarding-form.js';
+import { getLanguageSelectorPreview, renderLanguageOptions } from './language-options.js';
 import { setTrustedHtml } from './trusted-html.js';
 
 // --- DOM Element References (Queried once in main) ---
@@ -102,6 +103,8 @@ function main() {
  */
 function initLanguageControls() {
   if (!indexLangButton || !indexLangDropdown) return;
+  const languageList = indexLangDropdown.querySelector('ul');
+  renderLanguageOptions(languageList, { addRoleOption: true });
 
   indexLangButton.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -269,7 +272,7 @@ function applyIndexTranslations() {
   if (langSelectorText) {
     langSelectorText.textContent = getTranslation(
       'languageSelectorText',
-      '中文, हिन्दी, Español, العربية, Français...'
+      getLanguageSelectorPreview()
     );
   }
 }

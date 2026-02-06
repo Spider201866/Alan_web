@@ -1143,6 +1143,70 @@ flowise-fullchatbot {
   font-size: 12px;
 }
 
+/* --- Muted Buttons Fragment (shared by home and muted.html) --- */
+.muted-page-main {
+  text-align: center;
+}
+
+.muted-buttons-snippet {
+  text-align: center;
+}
+
+.muted-buttons-nav {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 5px;
+}
+
+.muted-btn {
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  font-size: 10pt;
+  font-family: inherit;
+  border: 1px solid rgb(225, 225, 225);
+  padding: 8px 10px;
+  cursor: pointer;
+  border-radius: 16px;
+  color: grey;
+  margin: 0;
+  text-decoration: none;
+}
+
+.muted-btn .icon {
+  margin-right: 6px;
+}
+
+.muted-btn .icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.muted-btn-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.muted-popup {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 75px;
+  padding: 4px 8px;
+  border: 1px solid rgb(215, 215, 215);
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: red;
+  font-size: 8pt;
+  text-align: center;
+  display: none;
+  z-index: 9999;
+}
+
 #geo-info-popup {
   display: none; /* JavaScript will toggle this */
   position: absolute;
