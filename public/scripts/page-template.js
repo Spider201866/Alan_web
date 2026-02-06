@@ -49,6 +49,14 @@ export function buildHeader(pageTitleKey) {
  * @param {function} [applyPageSpecificTranslations] - Optional function to apply translations specific to the page content.
  */
 export function initPage(pageTitleKey, applyPageSpecificTranslations) {
+  if (document.body && document.body.classList.contains('page-template-pending')) {
+    // Safety valve: don't keep content hidden indefinitely if initialization is interrupted.
+    setTimeout(() => {
+      document.body?.classList.remove('page-template-pending');
+      document.body?.classList.add('page-template-ready');
+    }, 1500);
+  }
+
   const updatePageTranslations = () => {
     const pageTitleElement = document.getElementById('pageTitle');
     if (pageTitleElement) {
@@ -63,6 +71,10 @@ export function initPage(pageTitleKey, applyPageSpecificTranslations) {
   const initializePageShell = () => {
     buildHeader(pageTitleKey);
     updatePageTranslations();
+    if (document.body) {
+      document.body.classList.remove('page-template-pending');
+      document.body.classList.add('page-template-ready');
+    }
 
     document.addEventListener('languageChanged', () => {
       log.info(

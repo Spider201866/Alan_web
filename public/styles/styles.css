@@ -85,6 +85,15 @@ p {
   display: block;
 }
 
+/* Keep page-template pages hidden until the app bar is injected, to avoid text/header flicker. */
+body.page-template-pending main {
+  visibility: hidden;
+}
+
+body.page-template-ready main {
+  visibility: visible;
+}
+
 .grey-text {
   color: var(--color-grey-medium);
   font-size: 14px;
@@ -700,7 +709,7 @@ p {
 /* --- Slide-out Popup --- */
 #popup {
   position: fixed !important;
-  top: calc(env(safe-area-inset-top, 0px) + 92px);
+  top: calc(env(safe-area-inset-top, 0px) + 108px);
   right: 0;
   width: 220px;
   max-width: calc(100vw - 40px);
