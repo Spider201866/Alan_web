@@ -19,6 +19,48 @@ const normalise = (s) =>
     .trim()
     .toLowerCase();
 
+function hasAccessibleName(el) {
+  if (!el) return false;
+  const ariaLabel = el.getAttribute('aria-label');
+  const ariaLabelledBy = el.getAttribute('aria-labelledby');
+  return Boolean((ariaLabel && ariaLabel.trim()) || (ariaLabelledBy && ariaLabelledBy.trim()));
+}
+
+function setAriaLabelIfMissing(el, label) {
+  if (!el || hasAccessibleName(el)) return;
+  el.setAttribute('aria-label', label);
+}
+
+function applyFlowiseAccessibilityLabels(root) {
+  if (!root) return;
+
+  root.querySelectorAll('button.py-2').forEach((button) => {
+    if (hasAccessibleName(button)) return;
+
+    if (button.hasAttribute('sendbuttoncolor')) {
+      setAriaLabelIfMissing(button, 'Send message');
+      return;
+    }
+
+    if (button.hasAttribute('buttoncolor')) {
+      setAriaLabelIfMissing(button, 'Attach file');
+      return;
+    }
+
+    if (button.title && button.title.trim()) {
+      setAriaLabelIfMissing(button, button.title.trim());
+    }
+  });
+
+  const liteBadge = root.querySelector('a#lite-badge.lite-badge');
+  if (liteBadge && !hasAccessibleName(liteBadge)) {
+    const linkText = liteBadge.textContent ? liteBadge.textContent.trim() : '';
+    if (!linkText) {
+      liteBadge.setAttribute('aria-label', 'Powered by Flowise');
+    }
+  }
+}
+
 function setCopyButtonState(btn, isEmpty) {
   if (!btn) return;
   const label = isEmpty ? 'Copy this session (empty)' : 'Copy this session';
@@ -50,8 +92,10 @@ function makeCopyButton(container, sess) {
   btn.type = 'button';
   btn.className = 'copy-btn';
 
-  const icon = document.createElement('i');
-  icon.className = 'fa-regular fa-copy';
+  const icon = document.createElement('span');
+  icon.className = 'copy-icon';
+  icon.setAttribute('aria-hidden', 'true');
+  icon.textContent = '⧉';
   btn.appendChild(icon);
 
   setCopyButtonState(btn, !sess.messages || sess.messages.length === 0);
@@ -181,7 +225,7 @@ function attachFlowiseObservers() {
   }
 
   let attempts = 0;
-  const maxAttempts = 20;
+  const maxAttempts = 80;
   const intervalId = setInterval(() => {
     attempts++;
     if (host.shadowRoot) {
@@ -219,6 +263,7 @@ function attachFlowiseObservers() {
 function handleBubbleChanges() {
   const host = document.querySelector('flowise-fullchatbot');
   if (!host || !host.shadowRoot) return;
+  applyFlowiseAccessibilityLabels(host.shadowRoot);
 
   host.shadowRoot
     .querySelectorAll('[class*="guest-container"],[class*="host-container"]')
@@ -449,5 +494,6 @@ export const __testOnly = {
     if (typeof currentId === 'number') CURRENT_ID = currentId;
     storedKeys.clear();
   },
+  applyFlowiseAccessibilityLabels,
   saveMessage,
 };

@@ -102,6 +102,8 @@ public/images/atomsblue-800w.webp
 public/images/atomsblue.jpg
 public/images/bigredt.png
 public/images/bigredt.webp
+public/images/eyeor-120w.webp
+public/images/eyeor-240w.webp
 public/images/eyeor.gif
 public/images/eyeor.webp
 public/images/lang.jpg

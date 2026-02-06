@@ -17,20 +17,7 @@
     <!-- External Dependencies -->
     <link rel="stylesheet" href="/styles/styles.css" />
     <link rel="prefetch" href="/images/atomsblue-480w.webp" as="image" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      integrity="sha384-5e2ESR8Ycmos6g3gAKr1Jvwye8sW4U1u/cAKulfVJnkakCcMqhOudbtPnvJ+nbv7"
-      crossorigin="anonymous"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap"
-    />
     <!-- External JS Modules -->
 
     <!-- Favicons (desktop tab) -->
@@ -41,11 +28,6 @@
     <!-- Favicons (mobile / install) -->
     <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
     <link rel="manifest" href="/favicons/manifest.json" />
-    <script type="module" src="scripts/log.js" defer></script>
-    <script type="module" src="scripts/closer.js" defer></script>
-    <script type="module" src="scripts/language.js" defer></script>
-    <script type="module" src="scripts/muted.js" defer></script>
-
     <!-- Inline styles are being removed or refactored into styles.css -->
   </head>
   <body class="home-page">
@@ -171,14 +153,22 @@
         </div>
         <div class="animation-container" id="animationContainer">
           <picture>
-            <source type="image/webp" srcset="images/eyeor.webp" />
+            <source
+              type="image/webp"
+              srcset="
+                images/eyeor-120w.webp 120w,
+                images/eyeor-240w.webp 240w,
+                images/eyeor.webp      426w
+              "
+              sizes="70px"
+            />
             <img
-              src="images/eyeor.webp"
+              src="images/eyeor-120w.webp"
               alt="Eyeor Animation"
               class="fade-in-out"
               loading="lazy"
-              width="100"
-              height="100"
+              width="426"
+              height="240"
             />
           </picture>
         </div>
@@ -292,7 +282,6 @@
 
     <!-- SCRIPT BLOCK -->
     <script type="module" src="scripts/home.js" defer></script>
-    <script type="module" src="scripts/home-navigation.js" defer></script>
     <script type="module" src="/scripts/sw-register.js" defer></script>
   </body>
 </html>

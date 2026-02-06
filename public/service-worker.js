@@ -71,6 +71,8 @@ const CORE_ASSETS = [
   '/favicons/apple-touch-icon.png',
   '/images/AP.webp',
   '/images/lang.webp',
+  '/images/eyeor-120w.webp',
+  '/images/eyeor-240w.webp',
   '/images/eyeor.webp',
 ];
 

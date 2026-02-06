@@ -4,15 +4,12 @@
 
 import log from './log.js';
 
-import { initChatbot } from './agent1-chatbot-module.js';
 // import { setLanguage, getTranslation } from './language.js'; // No longer directly used here, handled by translator or UI
 import './closer.js'; // Handles generic click-outside-to-close behaviors
-import { initChatHistory } from './listener-module.js'; // Handles chat history sidebar and other listeners
+import './home-navigation.js'; // Main home-page navigation button wiring
 
 import { initUI } from './home-ui.js';
-import { fetchMutedSnippet, fetchAreaFromLatLong, pushLocalStorageToServer } from './home-data.js';
 import { initTranslator } from './home-translator.js';
-import { ensureSessionId } from './storage.js';
 
 // -----------------------------
 // PWA Install prompt handling
@@ -24,11 +21,57 @@ import { ensureSessionId } from './storage.js';
 // installation is actually available.
 let deferredPrompt = null;
 let installBtn = null;
+let homeDataModulePromise = null;
+let chatbotModulePromise = null;
+let listenerModulePromise = null;
+let storageModulePromise = null;
+let chatbotBootPromise = null;
 
 const setInstallButtonVisible = (visible) => {
   if (!installBtn) return;
   installBtn.style.display = visible ? 'block' : 'none';
 };
+
+function importHomeData() {
+  if (!homeDataModulePromise) homeDataModulePromise = import('./home-data.js');
+  return homeDataModulePromise;
+}
+
+function importChatbotModule() {
+  if (!chatbotModulePromise) chatbotModulePromise = import('./agent1-chatbot-module.js');
+  return chatbotModulePromise;
+}
+
+function importListenerModule() {
+  if (!listenerModulePromise) listenerModulePromise = import('./listener-module.js');
+  return listenerModulePromise;
+}
+
+function importStorageModule() {
+  if (!storageModulePromise) storageModulePromise = import('./storage.js');
+  return storageModulePromise;
+}
+
+function bootChatbotOnce() {
+  if (chatbotBootPromise) return chatbotBootPromise;
+
+  chatbotBootPromise = Promise.all([
+    importChatbotModule(),
+    importListenerModule(),
+    importStorageModule(),
+  ])
+    .then(async ([chatbotModule, listenerModule, storageModule]) => {
+      listenerModule.initChatHistory();
+      const sessionId = storageModule.ensureSessionId();
+      await chatbotModule.initChatbot(sessionId);
+    })
+    .catch((error) => {
+      chatbotBootPromise = null;
+      throw error;
+    });
+
+  return chatbotBootPromise;
+}
 
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
@@ -113,8 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
  * It orchestrates the initialization of UI components, data fetching, and other modules.
  */
 function main() {
-  initChatHistory();
-
   // 1. Initialize all UI components.
   // Pass the orchestrator's data-handling function to the UI module.
   initUI({
@@ -125,12 +166,15 @@ function main() {
   initTranslator();
 
   // 3. Load initial data snippets (e.g., muted.html content).
-  fetchMutedSnippet().catch((err) => log.error('Initial fetchMutedSnippet failed:', err));
-
-  // 4. Initialize the chatbot.
-  // Ensure sessionId is available or generated if not.
-  const sessionId = ensureSessionId();
-  initChatbot(sessionId);
+  const mountMuted = () =>
+    importHomeData()
+      .then((homeDataModule) => homeDataModule.fetchMutedSnippet())
+      .catch((err) => log.error('Initial fetchMutedSnippet failed:', err));
+  if (typeof window.requestIdleCallback === 'function') {
+    window.requestIdleCallback(mountMuted, { timeout: 1800 });
+  } else {
+    setTimeout(mountMuted, 500);
+  }
   // Flowise can autofocus its input after mount on some browsers, which may shift
   // the document scroll and make the header appear offset on first paint.
   normalizeInitialScrollPosition();
@@ -141,6 +185,23 @@ function main() {
   const chatbotContainer = document.querySelector('.chatbot-container');
 
   if (marqueeSection && chatbotContainer) {
+    const triggerChatbotBoot = () =>
+      bootChatbotOnce().catch((error) => log.error('Chatbot initialization failed:', error));
+    chatbotContainer.addEventListener('pointerdown', triggerChatbotBoot, {
+      once: true,
+      capture: true,
+      passive: true,
+    });
+    chatbotContainer.addEventListener('focusin', triggerChatbotBoot, {
+      once: true,
+      capture: true,
+    });
+    if (typeof window.requestIdleCallback === 'function') {
+      window.requestIdleCallback(triggerChatbotBoot, { timeout: 6000 });
+    } else {
+      setTimeout(triggerChatbotBoot, 6000);
+    }
+
     // Ensure the marquee is visible on initial load.
     // (If a previous SW-cached JS run hid it via class or inline styles, undo that.)
     marqueeSection.classList.remove('hidden');
@@ -197,6 +258,7 @@ function normalizeInitialScrollPosition() {
  */
 async function fetchAndDisplayLocation(latitude, longitude) {
   try {
+    const { fetchAreaFromLatLong, pushLocalStorageToServer } = await importHomeData();
     // home-ui.js has already stored latitude and longitude in localStorage.
     const areaName = await fetchAreaFromLatLong(latitude, longitude);
     localStorage.setItem('area', areaName || 'Unknown'); // Ensure 'Unknown' if null/undefined
@@ -217,15 +279,17 @@ async function fetchAndDisplayLocation(latitude, longitude) {
 window.addEventListener('pageshow', (event) => {
   // Side menu should be closed by default on page show, handled by initUI's initial state.
   // Push data to server on page show.
-  pushLocalStorageToServer().catch((err) =>
-    log.error('pushLocalStorageToServer on pageshow failed:', err)
-  );
+  setTimeout(() => {
+    importHomeData()
+      .then((homeDataModule) => homeDataModule.pushLocalStorageToServer())
+      .catch((err) => log.error('pushLocalStorageToServer on pageshow failed:', err));
+  }, 1200);
 
   if (event.persisted) {
     // If the page is loaded from cache, re-fetch dynamic content.
-    fetchMutedSnippet().catch((err) =>
-      log.error('fetchMutedSnippet on pageshow (persisted) failed:', err)
-    );
+    importHomeData()
+      .then((homeDataModule) => homeDataModule.fetchMutedSnippet())
+      .catch((err) => log.error('fetchMutedSnippet on pageshow (persisted) failed:', err));
     // Consider if a full reload is always necessary or if targeted updates are better.
     // window.location.reload(); // This was in the original, evaluate if still needed.
   }
@@ -234,8 +298,8 @@ window.addEventListener('pageshow', (event) => {
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden) {
     // When the tab becomes visible again, push data.
-    pushLocalStorageToServer().catch((err) =>
-      log.error('pushLocalStorageToServer on visibilitychange failed:', err)
-    );
+    importHomeData()
+      .then((homeDataModule) => homeDataModule.pushLocalStorageToServer())
+      .catch((err) => log.error('pushLocalStorageToServer on visibilitychange failed:', err));
   }
 });
