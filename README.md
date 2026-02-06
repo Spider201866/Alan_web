@@ -98,7 +98,7 @@ Serves built files from dist/ with NODE_ENV=production.
 - build: Copy and optimize into dist/ (JS/CSS/HTML minified; asset URLs normalized; build timestamp injected)
 - start: Build then start production server (serves dist/)
 - sync:release-metadata: Refresh `public/sitemap.xml` `lastmod` values and regenerate `folderList.txt`
-- check:docs: Validate key docs remain synchronized (`README.md`, memory-bank headers, `tests/README.md`, `AGENTS.md`, `folderList.txt`)
+- check:docs: Validate key docs remain synchronized (`README.md`, memory-bank headers, `tests/README.md`, `AGENTS.md`, `folderList.txt`) and fail on encoding-corrupted source text (e.g., replacement-character mojibake)
 - test: Full suite
   - build
   - format:check (Prettier)

@@ -5,6 +5,7 @@ This directory contains all automated tests for the AlanUI project.
 ## Running Tests
 
 -   **Run all tests (including formatting, translation, and accessibility checks):**
+    (Includes docs-sync checks that now also guard against source-text encoding corruption.)
     ```bash
     npm test
     ```
@@ -46,6 +47,7 @@ Tests are further broken down by function.
 -   **`record-info.test.js`**: Tests payload-building and post helpers for `/api/record-info`.
 -   **`layout-regressions.test.js`**: Guards against home top-gap regressions and instructions mobile 3-button wrapping regressions.
 -   **`copy-regressions.test.js`**: Guards key copy invariants (`uvLightHeading` and corrected `instructionsIntro` spelling).
+    Also guards the home popup close markup against mojibake/encoding regression.
 -   **`view-records.test.js`**: Tests the functionality of the "View Records" page.
 -   **`helpers/setup.js`**: A shared helper that creates and tears down a JSDOM environment for all UI tests.
 

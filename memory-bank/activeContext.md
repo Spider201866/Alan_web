@@ -20,6 +20,9 @@
 - Added UI regression tests:
   - `tests/ui/layout-regressions.test.js` (home top-gap guardrails + instructions mobile 3-button single-row).
   - `tests/ui/copy-regressions.test.js` (`uvLightHeading` exact value + instructions intro typo guard).
+- Added encoding-regression guardrails for popup glyph corruption:
+  - `scripts/check-docs-sync.cjs` now fails CI if tracked text files contain `U+FFFD` replacement chars or the common mojibake byte-sequence form.
+  - `tests/ui/copy-regressions.test.js` now asserts home popup close markup remains `&times;` and free of replacement-char mojibake.
 - Documentation sync updates:
   - Updated `README.md`, `tests/README.md`, `AGENTS.md`, and regenerated `folderList.txt`.
   - Updated `public/sitemap.xml` `lastmod` values to `2026-02-06`.

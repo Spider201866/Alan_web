@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* Alan UI - check-docs-sync.cjs */
-/* CI guard for key documentation drift. */
+/* CI guard for key documentation drift and source-text encoding corruption. */
 
 const fs = require('fs');
 const path = require('path');
@@ -142,6 +142,69 @@ function listRepoFiles() {
   return files.sort();
 }
 
+const textFileExtensions = new Set([
+  '.cjs',
+  '.css',
+  '.html',
+  '.js',
+  '.json',
+  '.md',
+  '.mjs',
+  '.svg',
+  '.txt',
+  '.ts',
+  '.xml',
+  '.yaml',
+  '.yml',
+]);
+
+function findLinesContaining(content, needle) {
+  const lines = content.split(/\r?\n/);
+  const matches = [];
+  for (let i = 0; i < lines.length; i += 1) {
+    if (lines[i].includes(needle)) matches.push(i + 1);
+  }
+  return matches;
+}
+
+function findEncodingCorruption(files) {
+  const findings = [];
+  const mojibakeReplacement = String.fromCharCode(0x00ef, 0x00bf, 0x00bd);
+  const checks = [
+    {
+      label: 'U+FFFD replacement character',
+      needle: '\uFFFD',
+    },
+    {
+      label: 'mojibake sequence (U+00EF U+00BF U+00BD)',
+      needle: mojibakeReplacement,
+    },
+  ];
+
+  for (const file of files) {
+    const ext = path.extname(file).toLowerCase();
+    if (!textFileExtensions.has(ext)) continue;
+
+    const absPath = path.join(root, file);
+    const buffer = fs.readFileSync(absPath);
+    if (buffer.includes(0)) continue;
+
+    const content = buffer.toString('utf8');
+
+    for (const check of checks) {
+      if (!content.includes(check.needle)) continue;
+      const lines = findLinesContaining(content, check.needle).slice(0, 5);
+      findings.push({
+        file,
+        label: check.label,
+        lines,
+      });
+    }
+  }
+
+  return findings;
+}
+
 function diffSets(expected, actual) {
   const expectedSet = new Set(expected);
   const actualSet = new Set(actual);
@@ -198,6 +261,16 @@ function main() {
     failures.push(
       `folderList.txt is out of sync (missing: ${folderDiff.missing.length}, extra: ${folderDiff.extra.length}).`
     );
+  }
+
+  const encodingFindings = findEncodingCorruption(expectedFolderList);
+  if (encodingFindings.length) {
+    failures.push('Detected encoding-corrupted characters in tracked text files.');
+    for (const finding of encodingFindings) {
+      failures.push(
+        `Encoding issue (${finding.label}) at ${finding.file}:${finding.lines.join(', ')}.`
+      );
+    }
   }
 
   if (failures.length) {

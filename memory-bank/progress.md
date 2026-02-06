@@ -28,7 +28,9 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
 ### February 2026 Maintenance (6 Feb 2026)
 - **Regression tests added**
   - Added `tests/ui/layout-regressions.test.js` for home top-gap and instructions mobile button-row regressions.
-  - Added `tests/ui/copy-regressions.test.js` for `uvLightHeading` exact-value and instructions intro typo regressions.
+  - Added `tests/ui/copy-regressions.test.js` for `uvLightHeading` exact-value, instructions intro typo, and popup-close mojibake regressions.
+- **Encoding corruption guardrail**
+  - Extended `scripts/check-docs-sync.cjs` to fail on replacement-character corruption (`U+FFFD`) and common mojibake sequence bytes in tracked text files.
 - **Content/date consistency updates**
   - Fixed `instructionsIntro` typo in `public/translations/en.json` (`learning`).
   - Updated `public/sitemap.xml` `lastmod` entries to `2026-02-06`.
