@@ -700,7 +700,7 @@ p {
 /* --- Slide-out Popup --- */
 #popup {
   position: fixed !important;
-  top: 80px;
+  top: calc(env(safe-area-inset-top, 0px) + 92px);
   right: 0;
   width: 220px;
   max-width: calc(100vw - 40px);

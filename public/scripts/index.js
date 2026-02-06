@@ -30,6 +30,11 @@ function main() {
   splashScreen = document.querySelector('.splash-screen');
   instructionScreen = document.querySelector('.instruction-screen');
   blackScreen = document.getElementById('blackScreen');
+  if (blackScreen) {
+    // Defensive reset: prevents stale cached CSS from showing the transition overlay on initial load.
+    blackScreen.style.visibility = 'hidden';
+    blackScreen.style.opacity = '0';
+  }
   nameInput = document.getElementById('nameInput');
   jobSelectElement = document.getElementById('job-role-select'); // The container for aims dropdown
   if (jobSelectElement) {

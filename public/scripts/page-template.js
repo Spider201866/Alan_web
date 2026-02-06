@@ -2,7 +2,7 @@
 // public/scripts/page-template.js
 // Provides a standardized template for creating and initializing sub-pages.
 
-import { getTranslation } from './language.js'; // Assuming language.js auto-initializes
+import { getTranslation } from './language.js';
 import log from './log.js';
 
 /**
@@ -11,17 +11,17 @@ import log from './log.js';
  * @param {string} pageTitleKey - The translation key for the page title.
  */
 export function buildHeader(pageTitleKey) {
-  const translatedTitle = getTranslation(pageTitleKey, pageTitleKey); // Fallback to key if not found
+  const translatedTitle = getTranslation(pageTitleKey, pageTitleKey);
 
   const headerContainer = document.createElement('div');
-  headerContainer.id = 'appBarContainer'; // Give it an ID for potential targeting
+  headerContainer.id = 'appBarContainer';
   const header = document.createElement('header');
   header.id = 'appBar';
 
   const backButton = document.createElement('button');
   backButton.className = 'back-arrow';
   backButton.setAttribute('aria-label', 'Go Back');
-  backButton.textContent = '←';
+  backButton.textContent = '\u2190';
 
   const title = document.createElement('h1');
   title.id = 'pageTitle';
@@ -30,7 +30,7 @@ export function buildHeader(pageTitleKey) {
   header.appendChild(backButton);
   header.appendChild(title);
   headerContainer.appendChild(header);
-  // Prepend as the first child of the body
+
   if (document.body.firstChild) {
     document.body.insertBefore(headerContainer, document.body.firstChild);
   } else {
@@ -49,31 +49,21 @@ export function buildHeader(pageTitleKey) {
  * @param {function} [applyPageSpecificTranslations] - Optional function to apply translations specific to the page content.
  */
 export function initPage(pageTitleKey, applyPageSpecificTranslations) {
-  // This function will be called after language.js has initialized
-  // and potentially loaded the initial language.
-
   const updatePageTranslations = () => {
-    // Update the page title
     const pageTitleElement = document.getElementById('pageTitle');
     if (pageTitleElement) {
       pageTitleElement.textContent = getTranslation(pageTitleKey, pageTitleKey);
     }
 
-    // Apply page-specific translations
     if (typeof applyPageSpecificTranslations === 'function') {
       applyPageSpecificTranslations();
     }
   };
 
-  document.addEventListener('DOMContentLoaded', () => {
-    // 1. Build the common header (title will be translated by buildHeader using getTranslation)
+  const initializePageShell = () => {
     buildHeader(pageTitleKey);
-
-    // 2. Apply initial translations for the page content
-    // language.js should have loaded initial translations by now.
     updatePageTranslations();
 
-    // 3. Listen for the custom 'languageChanged' event
     document.addEventListener('languageChanged', () => {
       log.info(
         `page-template.js: Detected languageChanged event for page with title key: ${pageTitleKey}`
@@ -81,22 +71,18 @@ export function initPage(pageTitleKey, applyPageSpecificTranslations) {
       updatePageTranslations();
     });
 
-    // 4. Listen for storage events (for cross-tab sync, though 'languageChanged' is primary for current tab)
     window.addEventListener('storage', (e) => {
       if (e.key === 'preferredLanguage') {
-        // The 'languageChanged' event should ideally handle this,
-        // but as a fallback or for immediate cross-tab UI update:
         log.info(
           `page-template.js: Detected storage event for preferredLanguage on page: ${pageTitleKey}`
         );
-        // Note: setLanguage in language.js already re-fetches and dispatches 'languageChanged'.
-        // Calling updatePageTranslations() here might be redundant if 'languageChanged' is robustly handled,
-        // or could be useful if 'languageChanged' isn't caught for some reason from another tab.
-        // For now, let the 'languageChanged' event be the primary trigger.
-        // If direct re-translation is needed here without full setLanguage:
-        // window.currentTranslations = await loadLanguage(e.newValue); // Requires loadLanguage to be imported
-        // updatePageTranslations();
       }
     });
-  });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializePageShell, { once: true });
+  } else {
+    initializePageShell();
+  }
 }

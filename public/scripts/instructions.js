@@ -2,7 +2,6 @@
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
 import { setTrustedHtml } from './trusted-html.js';
-import { whenSwReady } from './sw-ready.js';
 
 function setText(id, key, fallback) {
   const el = document.getElementById(id);
@@ -100,4 +99,4 @@ const runInitPage = () => {
   }
 };
 
-whenSwReady(runInitPage);
+runInitPage();

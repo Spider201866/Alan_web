@@ -1,7 +1,6 @@
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
 import { setTrustedHtml } from './trusted-html.js';
-import { whenSwReady } from './sw-ready.js';
 
 function setText(id, key, fallback) {
   const el = document.getElementById(id);
@@ -50,12 +49,5 @@ export function initExamPage(config) {
     setHtml('additionalText', additionalTextKey, additionalTextFallback);
   };
 
-  let pageHasInitialized = false;
-  const runInitPage = () => {
-    if (pageHasInitialized) return;
-    initPage(pageTitleKey, applyPageSpecificTranslations);
-    pageHasInitialized = true;
-  };
-
-  whenSwReady(runInitPage);
+  initPage(pageTitleKey, applyPageSpecificTranslations);
 }
