@@ -1,4 +1,4 @@
-// Alan UI - home-ui.js | 14th January 2026, WJW
+// Alan UI - home-ui.js
 // public/scripts/home-ui.js
 // Manages UI elements, interactions, and popups for the home page.
 //

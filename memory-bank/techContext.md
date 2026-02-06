@@ -1,8 +1,8 @@
-<!-- Alan UI - techContext.md | Updated 18th January 2026, Cline -->
+<!-- Alan UI - techContext.md | Updated 6th February 2026, Codex -->
 
 # Technology Stack and Tooling
 
-This document provides a detailed overview of the technologies, dependencies, configuration, and operational constraints used in this project. Originally expanded after a full codebase review on 15 Sep 2025; most recently updated Jan 2026.
+This document provides a detailed overview of the technologies, dependencies, configuration, and operational constraints used in this project. Originally expanded after a full codebase review on 15 Sep 2025; most recently updated Feb 2026.
 
 ---
 
@@ -165,6 +165,7 @@ This document provides a detailed overview of the technologies, dependencies, co
 
 - scripts/build.js
   - Clears dist/, copies public → dist.
+  - Strips hidden `U+FEFF` characters from HTML content before patching and before/after minification writes.
   - Injects build timestamp comment into each HTML HEAD.
   - Rewrites relative asset links to absolute (/styles, /scripts, /images, /favicons) to avoid path issues.
   - Minifies JS with terser, CSS with clean-css (CLI via npx), HTML with html-minifier-terser.
@@ -183,6 +184,9 @@ This document provides a detailed overview of the technologies, dependencies, co
 - jest-environment-jsdom, jsdom for UI tests; supertest for API tests (present in devDependencies).
 - UI and API tests under tests/ with helpers.
 - A11y checks run against built dist output via axe-core script.
+- UI regression tests include:
+  - `tests/ui/layout-regressions.test.js` (home top-gap guardrails + mobile instruction switch row)
+  - `tests/ui/copy-regressions.test.js` (`uvLightHeading` invariants + content typo regression guard)
 - Recommendation: Ensure CI pipeline calls build → test:a11y against dist artifacts and runs translation check.
 
 ---
@@ -239,3 +243,4 @@ This document provides a detailed overview of the technologies, dependencies, co
 - If Git behaves oddly on Windows:
   - Use `.clinerules/skills/windows-git-sanity/SKILL.md`.
 - If VS Code integrated terminal output capture is flaky in Cline, prefer **Background Exec** mode.
+

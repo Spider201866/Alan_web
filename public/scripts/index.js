@@ -1,4 +1,4 @@
-﻿// Alan UI - index.js | 14th January 2026, WJW
+// Alan UI - index.js
 // public/scripts/index.js (New Orchestrator Version)
 // Orchestrates location, auth, form, and language modules for the index page.
 

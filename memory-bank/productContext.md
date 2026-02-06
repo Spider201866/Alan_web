@@ -1,4 +1,4 @@
-<!-- Alan UI - productContext.md | Updated 12th January 2026, Cline -->
+<!-- Alan UI - productContext.md | Updated 6th February 2026, Codex -->
 
 # Product Context
 

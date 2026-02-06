@@ -721,13 +721,13 @@ body.page-template-ready main {
   max-width: calc(100vw - 40px);
   background-color: #f1f1f1;
   border-radius: 30px 0 0 30px;
-  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.2);
+  box-shadow: none;
   padding: 20px;
   box-sizing: border-box;
   font-size: 12px;
   color: var(--color-black);
   z-index: 9999;
-  transform: translateX(calc(100% + 10px));
+  transform: translateX(calc(100% + 20px));
   transition: transform 0.4s ease;
   display: block !important;
   text-align: left;
@@ -738,6 +738,7 @@ body.page-template-ready main {
 */
 #popup.is-open {
   transform: translateX(0);
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.2);
 }
 #popup .popup-content {
   margin-top: 28px;
@@ -1293,6 +1294,26 @@ flowise-fullchatbot {
   margin-bottom: 8px;
 }
 
+/* Readable centered content on larger screens (exam + instructions pages). */
+@media (min-width: 900px) {
+  .exam-content-container {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .instructions-page #content {
+    max-width: 900px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
 /* --- Web Links Page Styles (weblinks.html) --- */
 .weblinks-page main {
   padding: 20px;
@@ -1339,28 +1360,29 @@ flowise-fullchatbot {
 }
 
 #wrapSection {
-  overflow: hidden;
+  overflow: visible;
   margin-bottom: 25px;
   padding-right: 0;
 }
 
 #switchContainer {
-  float: right;
-  width: 100px;
+  float: none;
+  width: 100%;
   text-align: center;
-  padding: 10px;
-  border-radius: 15px;
-  margin-left: 0;
-  margin-right: -25px;
-  margin-top: -10px;
+  padding: 0;
+  margin: 0 0 14px 0;
 }
 
 .switch {
   /* Specific to instructions.html switch component */
   position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 180px;
+  display: flex;
+  width: 100%;
+  height: auto;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
 }
 
 .switch input {
@@ -1372,17 +1394,20 @@ flowise-fullchatbot {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  width: 60px;
-  height: 60px;
+  width: calc((100% - 16px) / 3);
+  min-width: 0;
+  height: 38px;
   font-weight: bold;
   color: black;
   background-color: white;
   transition:
     background-color 0.3s,
     box-shadow 0.3s;
-  border-radius: 20px;
+  border-radius: 14px;
   border: 1px solid black;
-  margin-bottom: 10px;
+  margin-bottom: 0;
+  padding: 0 6px;
+  box-sizing: border-box;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1425,7 +1450,7 @@ flowise-fullchatbot {
 
 .infoText {
   /* Specific to instructions.html */
-  padding-left: 60px;
+  padding-left: 20px;
   color: black;
   margin-top: 5px;
   margin-bottom: 10px;
@@ -1462,14 +1487,22 @@ flowise-fullchatbot {
 
 @media (max-width: 600px) {
   .instructions-page #switchContainer {
-    /* Scoped to instructions.html */
-    width: 80px;
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: -10px;
+    margin-bottom: 12px;
   }
+
+  .instructions-page .switch {
+    gap: 6px;
+  }
+
+  .instructions-page .switch-label {
+    width: calc((100% - 12px) / 3);
+    height: 36px;
+    border-radius: 14px;
+    font-size: 13px;
+    padding: 0 4px;
+  }
+
   .instructions-page .infoText {
-    /* Scoped to instructions.html */
     padding-left: 20px;
   }
 }

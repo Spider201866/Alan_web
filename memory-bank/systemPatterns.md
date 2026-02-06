@@ -1,4 +1,4 @@
-<!-- Alan UI - systemPatterns.md | Updated 18th January 2026, Cline -->
+<!-- Alan UI - systemPatterns.md | Updated 6th February 2026, Codex -->
 
 # System Architecture and Patterns
 
@@ -54,6 +54,11 @@ graph TD
         -   language options registry (`public/scripts/language-options.js`)
         -   exam page translation initializer (`public/scripts/exam-page-init.js`)
         -   reusable muted buttons partial (`public/partials/muted-buttons.html`) mounted via `public/scripts/muted.js`
+
+-   **Regression Test Guardrails**
+    -   Keep focused regression tests for production incidents:
+        - `tests/ui/layout-regressions.test.js` for home top-gap and instructions mobile switch-row layout.
+        - `tests/ui/copy-regressions.test.js` for critical content invariants (e.g., `uvLightHeading` exact value).
 
 -   **Shared Backend Helpers (Security/Consistency)**
     -   Use small shared helpers for repetitive security concerns rather than duplicating per route:
@@ -152,6 +157,7 @@ graph TD
 -   **Build Pipeline Behavioral Patterns**
     -   Build timestamp is injected into each HTML head as a comment for release tracing.
     -   Relative asset links are rewritten to root-absolute to avoid pathing issues.
+    -   HTML outputs are sanitized for hidden `U+FEFF` characters before patching and before/after minification writes.
     -   Minification: JS via `terser`, CSS via `clean-css` CLI, HTML via `html-minifier-terser`.
 
 -   **Translations Consistency**
@@ -174,7 +180,7 @@ graph TD
     - The repo assumes PowerShell usage; avoid CMD-only syntax.
     - If commands behave oddly, run the repo sanity skill:
       - `.clinerules/skills/powershell-sanity-checklist/SKILL.md`
-    - If Git reports “not a git repository”, follow:
+    - If Git reports "not a git repository", follow:
       - `.clinerules/skills/windows-git-sanity/SKILL.md`
     - Repo gotcha: `.git` can be temporarily renamed to `.git_disabled` which will break Git until restored.
 
@@ -197,8 +203,13 @@ graph TD
 -   **Service Worker Cache Versioning**
     -   Risk: Stale assets if `CACHE_NAME` doesn’t change. Mitigation: `scripts/build.js` stamps a unique `CACHE_NAME` into `dist/service-worker.js` per build.
 
+-   **Hidden BOM in Built HTML**
+    -   Risk: A stray U+FEFF (especially between doctype and <html>) can render as a text node and create visible top spacing on some mobile browsers.
+    -   Mitigation: keep BOM stripping in scripts/build.js; if a top offset appears with zero margin/padding, inspect leading character codes in dist/*.html.
+
 -   **Build Script Output Noise**
     -   Risk: CI logs become noisy and failures are harder to diagnose. Mitigation: gate verbose build output behind `BUILD_DEBUG=true`.
 
 -   **Scaling CSRF**
     -   Risk: Simple CSRF token isn’t multi-process aware. Mitigation: Keep disabled or move to shared store if scaling.
+

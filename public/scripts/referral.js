@@ -1,4 +1,4 @@
-// Alan UI - referral.js | 14th January 2026, WJW
+// Alan UI - referral.js
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
 import { whenSwReady } from './sw-ready.js';

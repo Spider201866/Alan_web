@@ -1,4 +1,4 @@
-// Alan UI - sw-register.js | 14th January 2026, WJW
+// Alan UI - sw-register.js
 // public/scripts/sw-register.js
 // Centralized Service Worker registration.
 //

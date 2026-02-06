@@ -1,4 +1,4 @@
-<!-- Alan UI - activeContext.md | Updated 5th February 2026, Codex -->
+<!-- Alan UI - activeContext.md | Updated 6th February 2026, Codex -->
 
 # Active Context
 
@@ -12,6 +12,17 @@
 - Environment-driven client logging (build injects `<meta name="alanui-env" content="production">`).
 - Build-stamped service worker cache name (stamped into `dist/service-worker.js` during build).
 - Flowise proxy reliability improvements (`/flowise` proxy mounted early; safer abort behavior).
+
+## Recent Work (6 Feb 2026)
+- Production top-gap root cause was traced to a hidden `U+FEFF` character between `<!doctype html>` and `<html>` in built/minified HTML (`dist/home.html` observed).
+- `scripts/build.js` now strips `U+FEFF` from HTML content before patching and again before/after minification writes.
+- This prevents a phantom top line-box (~19px on affected mobile Chrome) from appearing above `.page-container`.
+- Added UI regression tests:
+  - `tests/ui/layout-regressions.test.js` (home top-gap guardrails + instructions mobile 3-button single-row).
+  - `tests/ui/copy-regressions.test.js` (`uvLightHeading` exact value + instructions intro typo guard).
+- Documentation sync updates:
+  - Updated `README.md`, `tests/README.md`, `AGENTS.md`, and regenerated `folderList.txt`.
+  - Updated `public/sitemap.xml` `lastmod` values to `2026-02-06`.
 
 ## Recent Work (5 Feb 2026)
 - Frontend duplication reduction:
@@ -49,7 +60,7 @@
 
 ## Recent Work (17 Jan 2026)
 - **Backend refactor + admin caching hardening**
-  - Centralised admin “no-store” response headers in `middleware/admin-no-store.js` and applied them consistently (admin APIs + `/view-records.html`).
+  - Centralised admin "no-store" response headers in `middleware/admin-no-store.js` and applied them consistently (admin APIs + `/view-records.html`).
   - Introduced shared cookie parsing helper `utils/cookies.js` (safe decode) and reused it in admin-session + CSRF middleware.
 - **CSRF + Flowise proxy hardening**
   - CSRF middleware tightened (double-submit cookie; sets token on safe methods and enforces header/cookie match on mutating requests).
@@ -87,12 +98,13 @@
   - Quick checks for PowerShell pitfalls (curl alias), Git metadata (`.git` vs `.git_disabled`), etc.
 - Updated Git troubleshooting skill: `.clinerules/skills/windows-git-sanity/SKILL.md`
   - Includes `.git_disabled` and env override (`GIT_DIR/GIT_WORK_TREE`) gotchas.
-- If terminal capture is flaky, prefer Cline **Terminal Execution Mode → Background Exec**.
+- If terminal capture is flaky, prefer Cline **Terminal Execution Mode -> Background Exec**.
 
 ## Current Decisions / Guardrails
 - Keep environment-aware static serving: `public/` in dev, `dist/` in production.
 - Keep admin SW bypass for `view-records.html`.
 - Keep CSP directives centralized in `config/index.js`.
+- Keep build-time BOM sanitization for HTML outputs in `scripts/build.js` (do not remove without replacing with equivalent sanitization).
 
 ## Next Steps
 - Confirm Railway deployment is picking up latest builds and clients refresh caches as expected.

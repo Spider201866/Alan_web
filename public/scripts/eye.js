@@ -1,4 +1,4 @@
-// Alan UI - eye.js | 14th January 2026, WJW
+// Alan UI - eye.js
 import { initExamPage } from './exam-page-init.js';
 
 initExamPage({

@@ -1,4 +1,4 @@
-// Alan UI - home-ui-handlers.js | 14th January 2026, WJW
+// Alan UI - home-ui-handlers.js
 // public/scripts/home-ui-handlers.js
 // Wires up event handlers for home page UI elements.
 

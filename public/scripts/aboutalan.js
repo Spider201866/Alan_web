@@ -1,4 +1,4 @@
-// Alan UI - aboutalan.js | 16th January 2026, WJW
+// Alan UI - aboutalan.js
 import { initPage } from './page-template.js';
 import { getTranslation } from './language.js';
 import { setTrustedHtml } from './trusted-html.js';

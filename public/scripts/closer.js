@@ -1,4 +1,4 @@
-// Alan UI - closer.js | 14th January 2026, WJW
+// Alan UI - closer.js
 // public/scripts/closer.js
 // Handles the animations for the 'closer' page, including fading elements and highlighting text.
 

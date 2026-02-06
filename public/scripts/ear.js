@@ -1,4 +1,4 @@
-// Alan UI - ear.js | 14th January 2026, WJW
+// Alan UI - ear.js
 import { initExamPage } from './exam-page-init.js';
 
 initExamPage({

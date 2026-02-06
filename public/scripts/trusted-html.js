@@ -1,4 +1,4 @@
-// Alan UI - trusted-html.js | 14th January 2026, WJW
+// Alan UI - trusted-html.js
 // Utilities for safely inserting *trusted* (app-controlled) HTML.
 // Use this ONLY for strings that come from our own translations/templates,
 // never user-provided input.

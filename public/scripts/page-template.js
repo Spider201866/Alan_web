@@ -1,4 +1,4 @@
-// Alan UI - page-template.js | 14th January 2026, WJW
+// Alan UI - page-template.js
 // public/scripts/page-template.js
 // Provides a standardized template for creating and initializing sub-pages.
 

@@ -1,4 +1,4 @@
-// Alan UI - home-ui-state.js | 14th January 2026, WJW
+// Alan UI - home-ui-state.js
 // public/scripts/home-ui-state.js
 // Queries and stores the DOM elements used by the home UI module.
 

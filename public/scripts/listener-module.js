@@ -1,4 +1,4 @@
-// Alan UI - listener-module.js | 14th January 2026, WJW
+// Alan UI - listener-module.js
 
 /* listener-module.js
    ─────────────────────────────────────────────────────────────────────────

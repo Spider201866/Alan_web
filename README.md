@@ -2,7 +2,7 @@
 
 A web-based chatbot focused on Eye, Ear, and Skin health information, designed for users in Low- and Middle-Income Countries (LMICs). The app is performance-conscious, accessible, and fully offline-capable as a Progressive Web App (PWA).
 
-Updated: 18 Jan 2026
+Updated: 6 Feb 2026
 
 For deep architecture and context, see the Memory Bank:
 - memory-bank/projectbrief.md
@@ -274,6 +274,11 @@ Recent test maintenance (Jan 2026)
 - `scripts/test-a11y.mjs` stubs canvas context to avoid noisy warnings.
 - Added `tests/api/security-headers.test.js` to prevent security header regressions.
 - `tests/api/build.test.js` now checks for expected output files rather than brittle size comparisons.
+
+Recent regression guards (Feb 2026)
+- Added `tests/ui/layout-regressions.test.js` to lock home top-gap guardrails and instructions mobile 3-button single-row behavior.
+- Added `tests/ui/copy-regressions.test.js` to enforce `uvLightHeading` = `Wood's lamp` across all locales and prevent regressions in the instructions intro spelling.
+- Pre-push is gated by `.husky/pre-push` running `npm test`.
 
 CI/CD (overview)
 - On push to main: install, test, build, deploy (Railway)

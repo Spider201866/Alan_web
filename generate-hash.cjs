@@ -1,4 +1,4 @@
-// Alan UI - generate-hash.cjs | 6th July 2025, Cline
+// Alan UI - generate-hash.cjs
 // This script now uses pbkdf2Sync to match the authentication middleware.
 const crypto = require('crypto');
 const fs = require('fs');

@@ -1,4 +1,4 @@
-// Alan UI - storage.js | 16th January 2026, WJW
+// Alan UI - storage.js
 // Shared localStorage helpers to keep key access consistent.
 
 export function getStoredString(key, fallback = null) {

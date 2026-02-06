@@ -1,4 +1,4 @@
-// Alan UI - sw-ready.js | 16th January 2026, WJW
+// Alan UI - sw-ready.js
 // Helper to run callbacks once the service worker is ready (or immediately if unsupported).
 
 export function whenSwReady(callback, options = {}) {

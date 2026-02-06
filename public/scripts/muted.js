@@ -1,4 +1,4 @@
-// Alan UI - muted.js | 14th January 2026, WJW
+// Alan UI - muted.js
 
 // muted.js
 import log from './log.js';

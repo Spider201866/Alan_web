@@ -29,7 +29,10 @@ Tests are further broken down by function.
 -   **`validation.test.js`**: Tests request body validation for `/api/record-info`.
 -   **`admin-session.test.js`**: Tests admin login cookie session behavior.
 -   **`admin-csrf.test.js`**: Tests CSRF protections for admin endpoints (when CSRF is enabled).
+-   **`admin-ip-allowlist.test.js`**: Tests admin IP allowlist middleware behavior.
 -   **`security-headers.test.js`**: Regression test for key security headers.
+-   **`history-ordering.test.js`**: Tests chat history ordering and legacy epoch normalization.
+-   **`legacy-fetch-records.test.js`**: Confirms legacy `/fetch-records` compatibility behavior.
 -   **`build.test.js`**: Smoke-checks the production build output.
 
 ### UI Tests (`tests/ui/`)
@@ -38,6 +41,10 @@ Tests are further broken down by function.
 -   **`i18n.test.js`**: Tests internationalization features, ensuring UI text is updated correctly on language change.
 -   **`interaction.test.js`**: Tests general user interactions like showing/hiding elements, form submissions, and error handling.
 -   **`chatbot.test.js`**: Contains tests related to the chatbot frontend module.
+-   **`listener-module.test.js`**: Tests listener-module session fallback behavior.
+-   **`record-info.test.js`**: Tests payload-building and post helpers for `/api/record-info`.
+-   **`layout-regressions.test.js`**: Guards against home top-gap regressions and instructions mobile 3-button wrapping regressions.
+-   **`copy-regressions.test.js`**: Guards key copy invariants (`uvLightHeading` and corrected `instructionsIntro` spelling).
 -   **`view-records.test.js`**: Tests the functionality of the "View Records" page.
 -   **`helpers/setup.js`**: A shared helper that creates and tears down a JSDOM environment for all UI tests.
 

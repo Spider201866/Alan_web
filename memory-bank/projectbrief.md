@@ -1,4 +1,4 @@
-<!-- Alan UI - projectbrief.md | 10th July 2025, WJW -->
+<!-- Alan UI - projectbrief.md | Updated 6th February 2026, Codex -->
 
 # Project Brief
 

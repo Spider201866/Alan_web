@@ -76,7 +76,7 @@
   "pageTitle_howToExamineSkin": "Comment examiner la peau",
   "generalObservationHeading": "Observation générale",
   "generalObservationText": "Inspectez les masses, <em>les changements de couleur</em> et la distribution<br>Palpez doucement pour évaluer la texture, la température ou la sensibilité",
-  "uvLightHeading": "Lumière UV (Wood’s)",
+  "uvLightHeading": "Wood's lamp",
   "uvLightText": "Dans une pièce plongée dans le noir, vérifiez la fluorescence caractéristique :<br><span style='color:teal;'>teigne (bleu-vert)</span>, <span style='color:#FF7F50;'>pityriasis versicolor (orange cuivré)</span>, <span style='color:#FF4040;'>érythrasma (rouge corail)</span>, <span style='color:blue;'>vitiligo (bleu-blanc)</span>, <span style='color:orange;'>acné (rouge orangé)</span>, <span style='color:#BFEFFF;'>poux de tête (bleu pâle)</span>",
   "dermoscopyHeading": "Dermoscopie",
   "dermoscopyText": "<strong><u>Tenez le polariseur Arclight comme un stylo</u></strong>, vérifiez : <strong>ABCDE</strong> (<em>Asymétrie</em>, <em>Bord</em>, <em>Couleur</em>, <em>Diamètre > 6 mm</em>, <em>Évolutif</em>)<br>Étudiez : PDSBV (<em>Réseau pigmentaire</em>, <em>Points</em>, <em>Rayures</em>, <em>Bleu-blanc</em>, <em>Vascularisé</em>)",

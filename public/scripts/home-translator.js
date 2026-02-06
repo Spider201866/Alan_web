@@ -1,4 +1,4 @@
-// Alan UI - home-translator.js | 14th January 2026, WJW
+// Alan UI - home-translator.js
 // public/scripts/home-translator.js
 // Manages UI text updates based on language changes for the home page.
 

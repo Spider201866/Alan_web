@@ -1,8 +1,8 @@
-<!-- Alan UI - progress.md | Updated 5th February 2026, Codex -->
+<!-- Alan UI - progress.md | Updated 6th February 2026, Codex -->
 
 # Progress
 
-This file tracks what works, what changed recently, and what’s next.
+This file tracks what works, what changed recently, and what's next.
 Deep architecture details live in `systemPatterns.md` / `techContext.md`.
 
 ---
@@ -16,9 +16,25 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
 - Security posture strengthened (client-side injection hardening, additional headers, safer admin session cookies).
 - Test suite expanded and made less noisy/brittle.
 
+## Current Status (as of 6 Feb 2026)
+- UI regression guardrails are now covered by dedicated tests (`layout-regressions` and `copy-regressions`).
+- Documentation inventory (`folderList.txt`) and readmes (`README.md`, `tests/README.md`, `AGENTS.md`) were refreshed for consistency.
+- Sitemap `lastmod` dates were updated to reflect current release timing.
+
 ---
 
 ## Recent Changes
+
+### February 2026 Maintenance (6 Feb 2026)
+- **Regression tests added**
+  - Added `tests/ui/layout-regressions.test.js` for home top-gap and instructions mobile button-row regressions.
+  - Added `tests/ui/copy-regressions.test.js` for `uvLightHeading` exact-value and instructions intro typo regressions.
+- **Content/date consistency updates**
+  - Fixed `instructionsIntro` typo in `public/translations/en.json` (`learning`).
+  - Updated `public/sitemap.xml` `lastmod` entries to `2026-02-06`.
+  - Refreshed `README.md`, `tests/README.md`, `AGENTS.md`, and regenerated `folderList.txt`.
+- **Validation**
+  - Full gate `npm test`: pass (build + lint + format + translations + a11y + jest).
 
 ### February 2026 Maintenance (5 Feb 2026)
 - **Shared exam page initializer**
@@ -77,7 +93,7 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
 
 ### January 2026 Maintenance (14 Jan 2026)
 - **Client-side injection hardening**
-  - Introduced `public/scripts/trusted-html.js` for *trusted* markup insertion (sanitizes scripts, inline events, javascript: URLs; adds rel for target=_blank).
+  - Introduced `public/scripts/trusted-html.js` for trusted markup insertion (sanitizes scripts, inline events, javascript: URLs; adds `rel` for `target=_blank`).
   - Replaced `innerHTML` usage for translations and UI injection where appropriate.
 - **Admin hardening**
   - Admin session cookie TTL reduced to 15 minutes; production cookie name uses `__Host-` prefix.
@@ -89,7 +105,7 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
   - `scripts/test-a11y.mjs` now stubs canvas context to avoid noisy warnings.
   - `tests/api/build.test.js` now checks for expected output files rather than brittle size comparisons.
 
-### January 2026 Maintenance (11–12 Jan 2026)
+### January 2026 Maintenance (11-12 Jan 2026)
 - **Flowise proxy reliability**
   - Proxy is mounted early so request streams are readable.
   - Abort logic avoids aborting on normal request completion.
@@ -121,7 +137,6 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
    - Ensure a single handler path for the `instructions-button`.
 4) **Docs hygiene**
    - Remove stale references (e.g. scripts referenced in older notes that no longer exist).
-
 5) **(Optional) Consolidate SW_READY gating**
    - Prefer using `public/scripts/sw-ready.js` helper across pages to keep the SW_READY handshake consistent.
 
@@ -157,6 +172,8 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
 - Verification:
   - Rebuilt `dist/` successfully (`npm run build`).
   - Confirmed `dist/home.html` and `dist/index.html` no longer contain `65279` between doctype and `<html>`.
+  - Add regression check when needed:
+    - Run character-code check at file start to ensure doctype is immediately followed by `<html>` with no `65279` in between.
 
 <details>
 <summary>July 2025 highlights</summary>

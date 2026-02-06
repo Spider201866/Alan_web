@@ -1,4 +1,4 @@
-// Alan UI - agent1-chatbot-module.js | 14th January 2026, WJW
+// Alan UI - agent1-chatbot-module.js
 
 // agent1-chatbot-module.js
 

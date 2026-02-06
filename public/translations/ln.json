@@ -76,7 +76,7 @@
   "pageTitle_howToExamineSkin": "Ndenge ya kotala nzoto",
   "generalObservationHeading": "Kotala ya ndenge nyonso",
   "generalObservationText": "Tala biloko ya mikuta, <em>mpayi ya lokota</em>, bipai na yango<br>Fina polele mpo na texture, molunge to mawa",
-  "uvLightHeading": "Lumière UV (Wood’s)",
+  "uvLightHeading": "Wood's lamp",
   "uvLightText": "Na ndako ya molili tala fluorescence ya biloko:<br><span style='color:teal;'>tinea (bluu-ya-mokili)</span>, <span style='color:#FF7F50;'>pityriasis versicolor (orange ya shaba)</span>, <span style='color:#FF4040;'>erythrasma (rouge ya korali)</span>, <span style='color:blue;'>vitiligo (bluu-myeupe)</span>, <span style='color:orange;'>acne (orange-rouge)</span>, <span style='color:#BFEFFF;'>head-lice nits (bluu-pɛlɛ)</span>",
   "dermoscopyHeading": "Dermoskopi",
   "dermoscopyText": "<strong><u>Kamata Arclight polariser lokola patano</u></strong>, tala: <strong>ABCDE</strong> (<em>Asymétrie</em>, <em>Limite</em>, <em>Lokota</em>, <em>Diamètre > 6 mm</em>, <em>Evolue</em>)<br>Tala lisusu: PDSBV (<em>Réseau ya pigment</em>, <em>Point</em>, <em>Ligne</em>, <em>Bluu-myeupe</em>, <em>Vascular</em>)",

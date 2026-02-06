@@ -1,4 +1,4 @@
-// Alan UI - atoms.js | 14th January 2026, WJW
+// Alan UI - atoms.js
 // public/scripts/atoms.js
 // Initializes the 'Atoms' page using the standard page template.
 

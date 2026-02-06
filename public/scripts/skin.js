@@ -1,4 +1,4 @@
-// Alan UI - skin.js | 14th January 2026, WJW
+// Alan UI - skin.js
 import { initExamPage } from './exam-page-init.js';
 
 initExamPage({
@@ -15,7 +15,7 @@ initExamPage({
     {
       headingId: 'uvLightHeading',
       headingKey: 'uvLightHeading',
-      headingFallback: 'UV (Wood\u2019s) light',
+      headingFallback: "Wood's lamp",
       bodyId: 'uvLightText',
       bodyKey: 'uvLightText',
       bodyFallback: 'Default UV light text.',

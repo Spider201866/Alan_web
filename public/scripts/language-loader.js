@@ -1,4 +1,4 @@
-// Alan UI - language-loader.js | 14th January 2026, WJW
+// Alan UI - language-loader.js
 // public/scripts/language-loader.js
 // Handles the dynamic loading and caching of translation files.
 

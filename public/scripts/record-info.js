@@ -1,4 +1,4 @@
-// Alan UI - record-info.js | 18th January 2026, WJW
+// Alan UI - record-info.js
 // Shared helpers for assembling and posting record-info payloads.
 
 import { withCsrfHeaders } from './csrf.js';
