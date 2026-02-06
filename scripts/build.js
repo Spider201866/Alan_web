@@ -82,9 +82,11 @@ export async function runBuild() {
       console.warn('⚠️ No HTML files found to patch.');
     }
 
+    const stripBomChars = (input) => input.replace(/\uFEFF/g, '');
+
     for (const file of htmlFiles) {
       console.log(`   - Patching: ${file}`);
-      let html = await fs.readFile(file, 'utf8');
+      let html = stripBomChars(await fs.readFile(file, 'utf8'));
 
       // Inject build markers.
       // - `alanui-env`: allows client code (e.g. log.js) to behave differently in production
@@ -110,7 +112,7 @@ export async function runBuild() {
         /(href|src)="(?!\/|https?:\/\/)(?:\.\/)?(favicons|styles|scripts|images)\/+?/g;
       html = html.replace(assetRegex, '$1="/$2/');
 
-      await fs.writeFile(file, html, 'utf8');
+      await fs.writeFile(file, stripBomChars(html), 'utf8');
 
       // --- VERIFICATION STEP (avoid CI log spam) ---
       // The previous build output printed the full <head> for every HTML file which made CI logs noisy.
@@ -155,7 +157,7 @@ export async function runBuild() {
 
     // Minify HTML (after patching)
     for (const file of htmlFiles) {
-      const content = await fs.readFile(file, 'utf8');
+      const content = stripBomChars(await fs.readFile(file, 'utf8'));
       const minifiedHtml = await htmlMinify(content, {
         collapseWhitespace: true,
         removeComments: true,
@@ -164,7 +166,7 @@ export async function runBuild() {
         removeRedundantAttributes: true,
         useShortDoctype: true,
       });
-      await fs.writeFile(file, minifiedHtml, 'utf8');
+      await fs.writeFile(file, stripBomChars(minifiedHtml), 'utf8');
       console.log(`   - Minified HTML: ${file}`);
     }
 

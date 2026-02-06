@@ -148,6 +148,16 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
 
 </details>
 
+## 6 Feb 2026 - Production Home Top Gap Root Cause + Fix
+- Root cause identified in production build output: minified HTML files contained `U+FEFF` between `<!doctype html>` and `<html>` (e.g., `dist/home.html`), which created a top line box (~19px) before `.page-container` on affected mobile Chrome.
+- Build pipeline hardening added in `scripts/build.js`:
+  - Strip `U+FEFF` when reading HTML files for patching.
+  - Strip `U+FEFF` before writing patched HTML.
+  - Strip `U+FEFF` before/after HTML minification writes.
+- Verification:
+  - Rebuilt `dist/` successfully (`npm run build`).
+  - Confirmed `dist/home.html` and `dist/index.html` no longer contain `65279` between doctype and `<html>`.
+
 <details>
 <summary>July 2025 highlights</summary>
 
