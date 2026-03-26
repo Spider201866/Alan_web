@@ -127,7 +127,7 @@ This document provides a detailed overview of the technologies, dependencies, co
 
 - Orchestrators
   - index.js: onboarding, password gate (fetch-records), language init, form validations.
-  - home.js: UI wiring, translator, first-use coaching card, muted snippet, chatbot init; uses `whenSwReady()` with a short fallback and an earlier idle chatbot boot to keep first-load latency down.
+  - home.js: UI wiring, translator, first-use coaching card, muted snippet, chatbot init; no longer blocks startup on service-worker readiness and now boots chat immediately for faster first load.
 - Modules
   - home-ui.js: side menu, popup, focus traps, geolocation UI driver, language dropdown, history clear.
   - home-translator.js: applies home page translations; uses getTranslation; updates marquee lines, quick-action labels, and coaching-card copy.

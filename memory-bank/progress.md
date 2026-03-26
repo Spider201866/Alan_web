@@ -41,7 +41,7 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
 - **Production deploy resilience**
   - Changed `npm start` to serve the existing production build immediately instead of rebuilding at runtime, which should reduce Railway cold-start/deploy `503` responses for static assets.
   - Hardened service-worker core caching so temporary asset fetch failures are logged per-URL without aborting the whole install.
-  - Reduced first-load home-page latency by replacing the manual 3-second SW gating in `public/scripts/home.js` with `whenSwReady(..., { timeoutMs: 800 })` and by starting idle chatbot boot earlier.
+  - Removed service-worker-gated home startup in `public/scripts/home.js` and restored immediate chatbot boot so the input can appear as early as possible again.
 
 ### February 2026 Maintenance (6 Feb 2026)
 - **Regression tests added**

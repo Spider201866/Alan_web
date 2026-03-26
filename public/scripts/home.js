@@ -3,6 +3,9 @@
 // Orchestrates UI, data, and translation modules for the home page.
 
 import log from './log.js';
+import { initChatbot } from './agent1-chatbot-module.js';
+import { initChatHistory } from './listener-module.js';
+import { ensureSessionId } from './storage.js';
 
 // import { setLanguage, getTranslation } from './language.js'; // No longer directly used here, handled by translator or UI
 import './closer.js'; // Handles generic click-outside-to-close behaviors
@@ -10,7 +13,6 @@ import './home-navigation.js'; // Main home-page navigation button wiring
 
 import { initUI } from './home-ui.js';
 import { initFirstUseTip } from './home-first-use-tip.js';
-import { whenSwReady } from './sw-ready.js';
 import { initTranslator } from './home-translator.js';
 
 // -----------------------------
@@ -24,10 +26,8 @@ import { initTranslator } from './home-translator.js';
 let deferredPrompt = null;
 let installBtn = null;
 let homeDataModulePromise = null;
-let chatbotModulePromise = null;
-let listenerModulePromise = null;
-let storageModulePromise = null;
 let chatbotBootPromise = null;
+let chatHistoryInitialized = false;
 
 const setInstallButtonVisible = (visible) => {
   if (!installBtn) return;
@@ -39,33 +39,20 @@ function importHomeData() {
   return homeDataModulePromise;
 }
 
-function importChatbotModule() {
-  if (!chatbotModulePromise) chatbotModulePromise = import('./agent1-chatbot-module.js');
-  return chatbotModulePromise;
-}
-
-function importListenerModule() {
-  if (!listenerModulePromise) listenerModulePromise = import('./listener-module.js');
-  return listenerModulePromise;
-}
-
-function importStorageModule() {
-  if (!storageModulePromise) storageModulePromise = import('./storage.js');
-  return storageModulePromise;
+function initChatHistoryOnce() {
+  if (chatHistoryInitialized) return;
+  initChatHistory();
+  chatHistoryInitialized = true;
 }
 
 function bootChatbotOnce() {
   if (chatbotBootPromise) return chatbotBootPromise;
 
-  chatbotBootPromise = Promise.all([
-    importChatbotModule(),
-    importListenerModule(),
-    importStorageModule(),
-  ])
-    .then(async ([chatbotModule, listenerModule, storageModule]) => {
-      listenerModule.initChatHistory();
-      const sessionId = storageModule.ensureSessionId();
-      await chatbotModule.initChatbot(sessionId);
+  chatbotBootPromise = Promise.resolve()
+    .then(() => {
+      initChatHistoryOnce();
+      const sessionId = ensureSessionId();
+      return initChatbot(sessionId);
     })
     .catch((error) => {
       chatbotBootPromise = null;
@@ -131,13 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mainHasRun = true;
     }
   };
-
-  try {
-    whenSwReady(runMain, { timeoutMs: 800 });
-  } catch (err) {
-    log.error('Service worker readiness helper failed:', err);
-    runMain();
-  }
+  runMain();
 });
 
 /**
@@ -155,7 +136,10 @@ function main() {
   initTranslator();
   initFirstUseTip();
 
-  // 3. Load initial data snippets (e.g., muted.html content).
+  // 3. Start the chatbot immediately so the input appears as quickly as possible.
+  bootChatbotOnce().catch((error) => log.error('Chatbot initialization failed:', error));
+
+  // 4. Load lower-priority data snippets (e.g., muted.html content).
   const mountMuted = () =>
     importHomeData()
       .then((homeDataModule) => homeDataModule.fetchMutedSnippet())
@@ -175,25 +159,6 @@ function main() {
   const chatbotContainer = document.querySelector('.chatbot-container');
 
   if (marqueeSection && chatbotContainer) {
-    const triggerChatbotBoot = () =>
-      bootChatbotOnce().catch((error) => log.error('Chatbot initialization failed:', error));
-    chatbotContainer.addEventListener('pointerdown', triggerChatbotBoot, {
-      once: true,
-      capture: true,
-      passive: true,
-    });
-    chatbotContainer.addEventListener('focusin', triggerChatbotBoot, {
-      once: true,
-      capture: true,
-    });
-    // Keep an eventual fallback for non-interaction sessions, but do not make
-    // the first-load chat feel unresponsive.
-    if (typeof window.requestIdleCallback === 'function') {
-      window.requestIdleCallback(triggerChatbotBoot, { timeout: 1200 });
-    } else {
-      setTimeout(triggerChatbotBoot, 1200);
-    }
-
     // Ensure the marquee is visible on initial load.
     // (If a previous SW-cached JS run hid it via class or inline styles, undo that.)
     marqueeSection.classList.remove('hidden');
