@@ -259,6 +259,9 @@ body.page-template-ready main {
 
 .title-and-subtitle {
   text-align: center;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .chatbot-title {
@@ -785,6 +788,113 @@ body.page-template-ready main {
   color: var(--color-black);
 }
 
+/* --- First-use coaching card --- */
+.first-use-tip[hidden] {
+  display: none !important;
+}
+
+.first-use-tip {
+  position: fixed;
+  top: var(--first-use-tip-top, calc(env(safe-area-inset-top, 0px) + 132px));
+  left: 10px;
+  width: var(--first-use-tip-width, min(300px, calc(58vw - 20px)));
+  height: var(--first-use-tip-height, 240px);
+  max-width: calc(100vw - 20px);
+  padding: 20px 22px 20px 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(246, 246, 246, 0.96) 100%);
+  color: var(--color-black);
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 24px;
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.12),
+    0 4px 14px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+  z-index: 2147483639;
+  transform: translateX(calc(-100% - 20px));
+  opacity: 0;
+  transition:
+    transform 0.45s ease,
+    opacity 0.3s ease;
+}
+
+.first-use-tip::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 0;
+  width: 6px;
+  height: calc(100% - 28px);
+  background: linear-gradient(180deg, #f44336 0%, #b7babd 100%);
+  border-radius: 0 10px 10px 0;
+}
+
+.first-use-tip.is-open {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.first-use-tip-title,
+.first-use-tip-copy {
+  margin: 0;
+}
+
+.first-use-tip-title {
+  padding-right: 34px;
+  font-size: 21px;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-family: var(--font-family-heading);
+  text-wrap: balance;
+}
+
+.first-use-tip-body {
+  display: grid;
+  gap: 12px;
+}
+
+.first-use-tip-copy {
+  padding-right: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.first-use-tip-note {
+  padding-top: 12px;
+  border-top: 1px solid rgba(17, 17, 17, 0.1);
+  color: rgba(17, 17, 17, 0.82);
+  font-style: italic;
+}
+
+.first-use-tip-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.94);
+  color: #5b5b5b;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.first-use-tip-close:hover,
+.first-use-tip-close:focus-visible {
+  color: var(--color-black);
+  outline: none;
+}
+
 /* --- Dropdowns --- */
 .dropdown-content {
   display: none;
@@ -1188,6 +1298,7 @@ flowise-fullchatbot {
 .muted-btn {
   display: inline-flex;
   align-items: center;
+  min-width: 0;
   background: #ffffff;
   font-size: 10pt;
   font-family: inherit;
@@ -1198,6 +1309,10 @@ flowise-fullchatbot {
   color: grey;
   margin: 0;
   text-decoration: none;
+}
+
+.muted-btn .text-part {
+  min-width: 0;
 }
 
 .muted-btn .icon {
@@ -1495,6 +1610,61 @@ flowise-fullchatbot {
 }
 
 @media (max-width: 600px) {
+  .chatbot-header {
+    min-height: 58px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .title-and-subtitle {
+    width: auto;
+  }
+
+  .chatbot-title {
+    padding-top: 6px;
+    font-size: 29px;
+  }
+
+  .chatbot-subtitle {
+    padding: 0 6px 11px;
+    font-size: 10px;
+  }
+
+  #install-btn {
+    right: 60px;
+    width: 56px;
+    min-height: 34px;
+    padding: 4px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 10px;
+    line-height: 1.05;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .first-use-tip {
+    left: 8px;
+    max-width: calc(100vw - 16px);
+    padding: 18px 18px 18px 28px;
+    border-radius: 22px;
+  }
+
+  .first-use-tip-title {
+    font-size: 19px;
+  }
+
+  .first-use-tip-copy {
+    padding-right: 6px;
+    font-size: 14px;
+  }
+
+  .first-use-tip-note {
+    padding-top: 10px;
+  }
+
   .instructions-page #switchContainer {
     margin-bottom: 12px;
   }
@@ -1509,6 +1679,60 @@ flowise-fullchatbot {
     border-radius: 14px;
     font-size: 13px;
     padding: 0 4px;
+  }
+
+  .muted-buttons-nav {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 2px;
+    padding: 0 6px 4px;
+  }
+
+  .muted-buttons-nav > .muted-btn,
+  .muted-buttons-nav > .muted-btn-wrapper {
+    min-width: 0;
+    max-width: none;
+  }
+
+  .muted-btn-wrapper {
+    display: flex;
+    height: 100%;
+  }
+
+  .muted-btn-wrapper > .muted-btn {
+    width: 100%;
+    height: 100%;
+  }
+
+  .muted-btn {
+    justify-content: center;
+    width: 100%;
+    min-height: 24px;
+    padding: 0;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 10.5px;
+  }
+
+  .muted-btn .text-part {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .muted-btn .icon {
+    margin-right: 2px;
+  }
+
+  .muted-btn .icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  #screenshot .icon {
+    margin-right: 1px;
   }
 
   .instructions-page .infoText {
@@ -1638,4 +1862,10 @@ flowise-fullchatbot {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .first-use-tip {
+    transition: none;
+  }
 }

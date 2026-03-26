@@ -1,4 +1,4 @@
-<!-- Alan UI - activeContext.md | Updated 6th February 2026, Codex -->
+<!-- Alan UI - activeContext.md | Updated 26th March 2026, Codex -->
 
 # Active Context
 
@@ -12,6 +12,16 @@
 - Environment-driven client logging (build injects `<meta name="alanui-env" content="production">`).
 - Build-stamped service worker cache name (stamped into `dist/service-worker.js` during build).
 - Flowise proxy reliability improvements (`/flowise` proxy mounted early; safer abort behavior).
+
+## Recent Work (26 Mar 2026)
+- Added a one-time delayed first-use coaching card on `home.html`.
+- The card appears after about 10 seconds on first visit, slides in from the left, and marks itself seen only when dismissed.
+- Guidance is intentionally brief: write clearly, include age/duration/findings, and refresh after a finished case for a fresh start.
+- Popup copy and dismiss label are now wired through the shared translation system for every shipped locale, with `?tip=1` available on localhost to force it open during UI tweaks.
+- Added `npm run audit-translations` (`scripts/audit-translations.cjs`) to spot exact English carryovers in non-English locale files.
+- Cleaned the shipped locale set against `en.json`, removing the remaining exact-English referral/SMS strings and the most obvious mixed-English labels in Igbo/Lingala.
+- Updated `public/scripts/muted.js` so shared quick-action labels translate immediately after the partial mounts on `home.html`.
+- Tightened narrow-screen home layouts so the translated quick-action strip stays on one compact row with equal-height buttons, centered `Alan` title, tuned icon gaps, and no popup internal scrollbars across locales.
 
 ## Recent Work (6 Feb 2026)
 - Production top-gap root cause was traced to a hidden `U+FEFF` character between `<!doctype html>` and `<html>` in built/minified HTML (`dist/home.html` observed).

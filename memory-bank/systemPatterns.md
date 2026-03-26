@@ -1,4 +1,4 @@
-<!-- Alan UI - systemPatterns.md | Updated 6th February 2026, Codex -->
+<!-- Alan UI - systemPatterns.md | Updated 26th March 2026, Codex -->
 
 # System Architecture and Patterns
 
@@ -56,6 +56,10 @@ graph TD
         -   language options registry (`public/scripts/language-options.js`)
         -   exam page translation initializer (`public/scripts/exam-page-init.js`)
         -   reusable muted buttons partial (`public/partials/muted-buttons.html`) mounted via `public/scripts/muted.js`
+
+-   **Translate-After-Mount Pattern**
+    -   When shared HTML fragments are injected at runtime, reapply page translations after mount so first paint is localized.
+    -   Current example: `public/scripts/muted.js` mounts `public/partials/muted-buttons.html` and then updates the quick-action labels on `home.html`.
 
 -   **Regression Test Guardrails**
     -   Keep focused regression tests for production incidents:

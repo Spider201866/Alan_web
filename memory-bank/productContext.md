@@ -1,4 +1,4 @@
-<!-- Alan UI - productContext.md | Updated 6th February 2026, Codex -->
+<!-- Alan UI - productContext.md | Updated 26th March 2026, Codex -->
 
 # Product Context
 
@@ -34,9 +34,10 @@ The AlanUI Web Chatbot provides accessible, relevant health information focused 
   - Language selection on landing via accessible dropdown; translations loaded dynamically and persisted in localStorage.
 - Home (`home.html`)
   - Chatbot container with Flowise embed (`flowise-fullchatbot`).
+  - A one-time delayed first-use coaching card can appear after roughly 10 seconds on first visit with brief tips on writing clearly, keeping prompts concise, and refreshing after a finished case; the card is translation-backed and supports localhost force-open via `?tip=1` during UI work.
   - Side menu: Navigation to Eye, Ear, Skin guides, Videos (YouTube), Atoms image page, Tools/Links, About; language dropdown; Clear chat history.
   - Marquee example prompts (eyes and ears) that auto-hide when the user engages with the chat input (robust focus listener).
-  - Muted buttons block for Screenshot, Refer, and Images quick-links; screenshot uses dynamic loading of html2canvas from CDN; Images button toggles curated links to external resources.
+  - Compact quick-action row for Images, Help, Screenshot, and Refer; labels are translation-backed via the shared muted-buttons partial, screenshot uses dynamic loading of html2canvas from CDN, and Images toggles curated external links.
   - Geolocation button (blue flash/feedback), info popup, and IP-based initial classification displayed in a popup with focus trap.
 - Admin/Records (`view-records.html`)
   - Password-protected page to fetch active and historical records from SQLite.
@@ -58,6 +59,7 @@ The AlanUI Web Chatbot provides accessible, relevant health information focused 
 - `language.js` loads JSON dynamically and dispatches `languageChanged`.
 - Page translators (e.g., `home-translator.js`) update UI text reactively; placeholders and page-specific translation keys are used consistently.
 - `scripts/check-translations.cjs` validates translation coverage against English (flags missing/extra/placeholder values).
+- `scripts/audit-translations.cjs` now complements that coverage check by flagging exact English carryovers in non-English locale files, so translation regressions can be caught before release.
 
 ## Data Handling & Privacy (Expanded)
 - No user accounts or sensitive medical records stored. Minimal session/user metadata persisted:
@@ -91,6 +93,7 @@ The AlanUI Web Chatbot provides accessible, relevant health information focused 
 - Clear chat history button purges localStorage history and resets sidebar (with dynamic import of the listener module).
 - Popup (user info) shows current captured metadata with visual “blue flash” updates when location info changes.
 - “Images” quick-links present curated external sites (ophthalmology/ENT/dermatology) with consistent styling and target=_blank.
+- On narrow screens, the four quick-action buttons stay on one compact translated row with equal heights; a few locale strings are shortened slightly to preserve fit without truncation.
 
 ## Known Constraints / Considerations
 - Client log silencing is environment-driven via a build-injected meta tag (`alanui-env=production`), not domain-based.

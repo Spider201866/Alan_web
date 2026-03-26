@@ -1,8 +1,8 @@
-<!-- Alan UI - techContext.md | Updated 6th February 2026, Codex -->
+<!-- Alan UI - techContext.md | Updated 26th March 2026, Codex -->
 
 # Technology Stack and Tooling
 
-This document provides a detailed overview of the technologies, dependencies, configuration, and operational constraints used in this project. Originally expanded after a full codebase review on 15 Sep 2025; most recently updated Feb 2026.
+This document provides a detailed overview of the technologies, dependencies, configuration, and operational constraints used in this project. Originally expanded after a full codebase review on 15 Sep 2025; most recently updated Mar 2026.
 
 ---
 
@@ -76,6 +76,7 @@ This document provides a detailed overview of the technologies, dependencies, co
 - `public/scripts/storage.js`: localStorage helpers (`getStoredString`, `getStoredNumber`, `ensureSessionId`).
 - `public/scripts/csrf.js`: CSRF helpers (`getCsrfToken`, `withCsrfHeaders`) for attaching `x-csrf-token` when CSRF is enabled server-side.
 - `public/scripts/record-info.js`: shared builder/post helper for `/api/record-info` payloads.
+- `public/scripts/muted.js`: mounts the shared quick-action partial and reapplies translations after injection.
 
 ---
 
@@ -126,10 +127,11 @@ This document provides a detailed overview of the technologies, dependencies, co
 
 - Orchestrators
   - index.js: onboarding, password gate (fetch-records), language init, form validations.
-  - home.js: UI wiring, translator, muted snippet, chatbot init; SW_READY handshake to avoid races.
+  - home.js: UI wiring, translator, first-use coaching card, muted snippet, chatbot init; SW_READY handshake to avoid races.
 - Modules
   - home-ui.js: side menu, popup, focus traps, geolocation UI driver, language dropdown, history clear.
-  - home-translator.js: applies home page translations; uses getTranslation; updates marquee lines and buttons.
+  - home-translator.js: applies home page translations; uses getTranslation; updates marquee lines, quick-action labels, and coaching-card copy.
+  - home-first-use-tip.js: manages the one-time delayed coaching card on `home.html`, including localhost `?tip=1` force-open support.
   - home-data.js: fetch muted snippet; reverse geocoding; pushes localStorage to server only when meaningful (name present and geo info available).
   - location-service.js: ipinfo lookup; LMIC classification via ISO2 code set.
   - onboarding-form.js: input masks, aims multi-select toggling, validation enabling accept button.

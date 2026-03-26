@@ -135,10 +135,15 @@
   "comingSoon": "በቅርቡ...",
   "splashScreenText": "AI ለአይን፣ ጆሮ እና ቆዳ",
   "installButton": "መጫን",
-  "refScreeningLabel": "Screening: {status}",
-  "refScreeningPass": "Pass",
-  "refScreeningFail": "Fail",
-  "refSmsCharacterSingle": "character",
-  "refSmsCharacterPlural": "characters",
-  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
+  "refScreeningLabel": "????: {status}",
+  "refScreeningPass": "????",
+  "refScreeningFail": "??????",
+  "refSmsCharacterSingle": "???",
+  "refSmsCharacterPlural": "?????",
+  "refSmsPreviewInfo": "[?SMS ??? ???: {length}/{max} {characterLabel}]",
+  "firstUseTipTitle": "Alanን በጥሩ ሁኔታ ይጠቀሙ",
+  "firstUseTipLine1": "ግልጽ ይጻፉ እና አጭር ያድርጉት።",
+  "firstUseTipLine2": "እድሜ፣ የቆየበትን ጊዜ እና የምታዩትን ይግለጹ።",
+  "firstUseTipLine3": "አንድ ኬስ ከተጠናቀቀ በኋላ Alan እንደገና ከአዲስ እንዲጀምር ገጹን ያድሱ።",
+  "firstUseTipDismiss": "ፈጣን ምክሮችን ዝጋ"
 }

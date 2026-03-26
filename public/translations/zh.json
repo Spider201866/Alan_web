@@ -135,10 +135,15 @@
   "comingSoon": "敬请期待...",
   "splashScreenText": "眼、耳、皮肤 AI",
   "installButton": "安装",
-  "refScreeningLabel": "Screening: {status}",
-  "refScreeningPass": "Pass",
-  "refScreeningFail": "Fail",
-  "refSmsCharacterSingle": "character",
-  "refSmsCharacterPlural": "characters",
-  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
+  "refScreeningLabel": "???{status}",
+  "refScreeningPass": "??",
+  "refScreeningFail": "???",
+  "refSmsCharacterSingle": "??",
+  "refSmsCharacterPlural": "??",
+  "refSmsPreviewInfo": "[?????{length}/{max} {characterLabel}]",
+  "firstUseTipTitle": "更好地使用 Alan",
+  "firstUseTipLine1": "请写清楚，并尽量简短。",
+  "firstUseTipLine2": "请提供年龄、持续时间和你看到的情况。",
+  "firstUseTipLine3": "完成一个病例后请刷新，让 Alan 重新开始。",
+  "firstUseTipDismiss": "关闭快速提示"
 }

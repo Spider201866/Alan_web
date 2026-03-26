@@ -1,4 +1,4 @@
-<!-- Alan UI - progress.md | Updated 6th February 2026, Codex -->
+<!-- Alan UI - progress.md | Updated 26th March 2026, Codex -->
 
 # Progress
 
@@ -24,6 +24,20 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
 ---
 
 ## Recent Changes
+
+### March 2026 Maintenance (26 Mar 2026)
+- **First-use home coaching card**
+  - Added a one-time delayed teaching card on `public/home.html`.
+  - It appears after about 10 seconds on first visit, slides in from the left, and persists a local seen flag when dismissed.
+  - Messaging is deliberately brief and workflow-oriented: write clearly, include age/duration/findings, and refresh after a finished case.
+  - Added localhost debug override `?tip=1` and wired the popup title/body/dismiss label through the shared translation files for all shipped locales.
+- **Translation quality sweep + locale UI verification**
+  - Added `scripts/audit-translations.cjs` and npm script `audit-translations` to flag exact English carryovers across non-English locale files.
+  - Cleaned the full shipped locale set against `public/translations/en.json`; the audit now reports zero exact-English carryovers.
+  - Improved obvious mixed-English copy in Igbo and Lingala, plus remaining untranslated referral/SMS strings and a few medical headings/buttons in the affected locales.
+  - Updated `public/scripts/muted.js` so shared quick-action labels translate immediately after the reused partial mounts.
+  - Updated home-page mobile quick actions into a compact single-row translated strip with equal-height buttons, centered title alignment, and shortened locale strings where needed instead of clipping/truncating.
+  - Browser-checked `home.html`, `index.html`, and `instructions.html` at narrow mobile width across all shipped locales for horizontal overflow and button/text clipping.
 
 ### February 2026 Maintenance (6 Feb 2026)
 - **Regression tests added**

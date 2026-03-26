@@ -128,6 +128,7 @@ public/scripts/exam-page-init.js
 public/scripts/eye.js
 public/scripts/focus-trap.js
 public/scripts/home-data.js
+public/scripts/home-first-use-tip.js
 public/scripts/home-navigation.js
 public/scripts/home-translator.js
 public/scripts/home-ui-core.js
@@ -191,6 +192,7 @@ public/view-records.html
 public/weblinks.html
 reset-locally-from-github.md
 routes/api.js
+scripts/audit-translations.cjs
 scripts/build.js
 scripts/check-docs-sync.cjs
 scripts/check-translations.cjs

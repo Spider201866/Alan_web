@@ -37,7 +37,7 @@
       <!-- HEADER -->
       <header class="chatbot-header">
         <div class="flex-spacer"></div>
-        <div>
+        <div class="title-and-subtitle">
           <div class="chatbot-title"><span class="red">Al</span><span class="white">an</span></div>
           <div class="chatbot-subtitle">Eyes, Ears, Skin</div>
         </div>
@@ -264,6 +264,27 @@
 
       <footer class="chatbot-version">Alan can make mistakes, double check everything</footer>
     </div>
+
+    <aside id="first-use-tip" class="first-use-tip" hidden aria-labelledby="first-use-tip-title">
+      <button
+        id="first-use-tip-close"
+        class="first-use-tip-close"
+        type="button"
+        aria-label="Dismiss quick tips"
+      >
+        &times;
+      </button>
+      <h2 id="first-use-tip-title" class="first-use-tip-title">Use Alan well</h2>
+      <div class="first-use-tip-body">
+        <p id="first-use-tip-line-1" class="first-use-tip-copy">Write clearly and keep it brief.</p>
+        <p id="first-use-tip-line-2" class="first-use-tip-copy">
+          Give age, duration and what you see.
+        </p>
+        <p id="first-use-tip-line-3" class="first-use-tip-copy first-use-tip-note">
+          Refresh after a finished case to give Alan a fresh start.
+        </p>
+      </div>
+    </aside>
 
     <!-- MODAL OVERLAY FOR POPUP ACCESSIBILITY -->
     <div id="modal-overlay" style="display: none"></div>

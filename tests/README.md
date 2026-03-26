@@ -10,6 +10,12 @@ This directory contains all automated tests for the AlanUI project.
     npm test
     ```
     This also runs `npm run check:docs` to catch documentation drift.
+-   **Run translation quality checks outside Jest:**
+    ```bash
+    npm run check-translations
+    npm run audit-translations
+    ```
+    `check-translations` validates key coverage/shape against English, while `audit-translations` flags exact English carryovers in non-English locale files.
 -   **Run a specific test file or directory:**
     ```bash
     npm test -- tests/api/validation.test.js

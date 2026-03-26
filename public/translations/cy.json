@@ -135,10 +135,15 @@
   "comingSoon": "Ar ddod cyn bo hir...",
   "splashScreenText": "AI ar gyfer llygaid, clustiau a chroen",
   "installButton": "Gosod",
-  "refScreeningLabel": "Screening: {status}",
-  "refScreeningPass": "Pass",
-  "refScreeningFail": "Fail",
-  "refSmsCharacterSingle": "character",
-  "refSmsCharacterPlural": "characters",
-  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
+  "refScreeningLabel": "Sgrinio: {status}",
+  "refScreeningPass": "Wedi pasio",
+  "refScreeningFail": "Wedi methu",
+  "refSmsCharacterSingle": "nod",
+  "refSmsCharacterPlural": "nod",
+  "refSmsPreviewInfo": "[Rhagolwg SMS: {length}/{max} {characterLabel}]",
+  "firstUseTipTitle": "Defnyddiwch Alan yn dda",
+  "firstUseTipLine1": "Ysgrifennwch yn glir a chadwch hi'n gryno.",
+  "firstUseTipLine2": "Rhowch oedran, hyd, a'r hyn rydych yn ei weld.",
+  "firstUseTipLine3": "Adnewyddwch ar ol gorffen achos i roi dechrau newydd i Alan.",
+  "firstUseTipDismiss": "Cau awgrymiadau cyflym"
 }

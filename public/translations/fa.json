@@ -135,10 +135,15 @@
   "comingSoon": "به‌زودی...",
   "splashScreenText": "هوش مصنوعی چشم، گوش و پوست",
   "installButton": "نصب",
-  "refScreeningLabel": "Screening: {status}",
-  "refScreeningPass": "Pass",
-  "refScreeningFail": "Fail",
-  "refSmsCharacterSingle": "character",
-  "refSmsCharacterPlural": "characters",
-  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
+  "refScreeningLabel": "????????: {status}",
+  "refScreeningPass": "????",
+  "refScreeningFail": "??",
+  "refSmsCharacterSingle": "?????",
+  "refSmsCharacterPlural": "?????",
+  "refSmsPreviewInfo": "[????????? ?????: {length}/{max} {characterLabel}]",
+  "firstUseTipTitle": "از آلن خوب استفاده کنید",
+  "firstUseTipLine1": "واضح بنویسید و کوتاه بنویسید.",
+  "firstUseTipLine2": "سن، مدت و آنچه می‌بینید را بگویید.",
+  "firstUseTipLine3": "بعد از پایان یک کیس صفحه را تازه‌سازی کنید تا آلن با ذهنی تازه شروع کند.",
+  "firstUseTipDismiss": "بستن نکته‌های سریع"
 }

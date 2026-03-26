@@ -140,5 +140,10 @@
   "refScreeningFail": "Fail",
   "refSmsCharacterSingle": "character",
   "refSmsCharacterPlural": "characters",
-  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
+  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]",
+  "firstUseTipTitle": "Use Alan well",
+  "firstUseTipLine1": "Write clearly and keep it brief.",
+  "firstUseTipLine2": "Give age, duration and what you see.",
+  "firstUseTipLine3": "Refresh after a finished case to give Alan a fresh start.",
+  "firstUseTipDismiss": "Dismiss quick tips"
 }

@@ -135,10 +135,15 @@
   "comingSoon": "शीघ्र आ रहा है...",
   "splashScreenText": "आँख, कान, त्वचा AI",
   "installButton": "इंस्टॉल करें",
-  "refScreeningLabel": "Screening: {status}",
-  "refScreeningPass": "Pass",
-  "refScreeningFail": "Fail",
-  "refSmsCharacterSingle": "character",
-  "refSmsCharacterPlural": "characters",
-  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
+  "refScreeningLabel": "??????????: {status}",
+  "refScreeningPass": "???",
+  "refScreeningFail": "???",
+  "refSmsCharacterSingle": "?????",
+  "refSmsCharacterPlural": "?????",
+  "refSmsPreviewInfo": "[?????? ???????????: {length}/{max} {characterLabel}]",
+  "firstUseTipTitle": "Alan का सही उपयोग करें",
+  "firstUseTipLine1": "स्पष्ट लिखें और संक्षेप में लिखें।",
+  "firstUseTipLine2": "उम्र, अवधि और जो आप देख रहे हैं वह बताएं।",
+  "firstUseTipLine3": "एक केस समाप्त होने पर रिफ्रेश करें ताकि Alan नई शुरुआत कर सके।",
+  "firstUseTipDismiss": "त्वरित सुझाव बंद करें"
 }

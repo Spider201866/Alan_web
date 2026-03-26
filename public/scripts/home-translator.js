@@ -55,6 +55,26 @@ function applyHomeTranslations() {
       'Clicking "Geolocation" will share a more accurate location (lat/long). This helps offer better guidance and choices.'
     );
   }
+
+  const firstUseTipTranslations = {
+    '#first-use-tip-title': 'firstUseTipTitle',
+    '#first-use-tip-line-1': 'firstUseTipLine1',
+    '#first-use-tip-line-2': 'firstUseTipLine2',
+    '#first-use-tip-line-3': 'firstUseTipLine3',
+  };
+  for (const [selector, key] of Object.entries(firstUseTipTranslations)) {
+    const el = document.querySelector(selector);
+    if (el) el.textContent = getTranslation(key, el.textContent);
+  }
+
+  const firstUseTipCloseButton = document.getElementById('first-use-tip-close');
+  if (firstUseTipCloseButton) {
+    firstUseTipCloseButton.setAttribute(
+      'aria-label',
+      getTranslation('firstUseTipDismiss', 'Dismiss quick tips')
+    );
+  }
+
   showGreeting(); // This will now use getTranslation internally
 
   const mutedButtonTranslations = {

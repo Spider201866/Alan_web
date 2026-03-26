@@ -135,10 +135,15 @@
   "comingSoon": "শীঘ্রই আসছে...",
   "splashScreenText": "চোখ, কান, ত্বক AI",
   "installButton": "ইনস্টল করুন",
-  "refScreeningLabel": "Screening: {status}",
-  "refScreeningPass": "Pass",
-  "refScreeningFail": "Fail",
-  "refSmsCharacterSingle": "character",
-  "refSmsCharacterPlural": "characters",
-  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
+  "refScreeningLabel": "?????????: {status}",
+  "refScreeningPass": "???",
+  "refScreeningFail": "???",
+  "refSmsCharacterSingle": "?????",
+  "refSmsCharacterPlural": "?????",
+  "refSmsPreviewInfo": "[?????? ???????: {length}/{max} {characterLabel}]",
+  "firstUseTipTitle": "Alan ভালোভাবে ব্যবহার করুন",
+  "firstUseTipLine1": "স্পষ্ট লিখুন এবং সংক্ষেপে লিখুন।",
+  "firstUseTipLine2": "বয়স, কতদিন হয়েছে এবং আপনি কী দেখছেন তা বলুন।",
+  "firstUseTipLine3": "একটি কেস শেষ হলে রিফ্রেশ করুন, যাতে Alan নতুনভাবে শুরু করতে পারে।",
+  "firstUseTipDismiss": "দ্রুত টিপস বন্ধ করুন"
 }

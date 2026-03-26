@@ -2,7 +2,7 @@
 
 A web-based chatbot focused on Eye, Ear, and Skin health information, designed for users in Low- and Middle-Income Countries (LMICs). The app is performance-conscious, accessible, and fully offline-capable as a Progressive Web App (PWA).
 
-Updated: 6 Feb 2026
+Updated: 26 Mar 2026
 
 For deep architecture and context, see the Memory Bank:
 - memory-bank/projectbrief.md
@@ -99,6 +99,7 @@ Serves built files from dist/ with NODE_ENV=production.
 - start: Build then start production server (serves dist/)
 - sync:release-metadata: Refresh `public/sitemap.xml` `lastmod` values and regenerate `folderList.txt`
 - check:docs: Validate key docs remain synchronized (`README.md`, memory-bank headers, `tests/README.md`, `AGENTS.md`, `folderList.txt`) and fail on encoding-corrupted source text (e.g., replacement-character mojibake)
+- audit-translations: Flag exact English carryovers in non-English locale files to catch translation-quality regressions before release
 - test: Full suite
   - build
   - format:check (Prettier)
@@ -175,7 +176,7 @@ Backend (Node/Express)
 Frontend (Vanilla JS ES modules)
 - Orchestrators:
   - public/scripts/index.js – onboarding, password gate, language init
-  - public/scripts/home.js – UI setup, translator, muted snippet, chatbot init; waits for SW_READY
+  - public/scripts/home.js – UI setup, translator, first-use coaching card, muted snippet, chatbot init; waits for SW_READY
 - Modules:
   - UI: home-ui.js (side menu, popup with focus trap, geolocation UI, language dropdown)
   - Data: home-data.js (push localStorage to server when meaningful; reverse geocoding via BigDataCloud)
@@ -185,6 +186,8 @@ Frontend (Vanilla JS ES modules)
   - Chatbot: agent1-chatbot-module.js (Flowise embed via jsdelivr; sessionId; theme overrides)
   - Chat history: listener-module.js (observes Flowise shadow DOM; dedupes streaming updates; localStorage sessions; copy support)
   - i18n: language.js + language-loader.js (dynamic JSON; 22 languages; languageChanged event)
+  - Home coaching: home-first-use-tip.js (one-time delayed teaching card; localhost `?tip=1` override for UI work)
+  - Shared quick actions: muted.js (mounts the shared quick-action partial and reapplies translations after mount)
   - Page template: page-template.js (app bar + back arrow; title translation updates)
   - Feature pages: instructions/aboutalan/weblinks/ear/eye/skin/atoms/triangle/referral with dedicated scripts
   - Records view: view-records.js (password gate, active record highlight, history table, Leaflet map, delete)
@@ -273,6 +276,9 @@ What runs:
 - Accessibility tests against dist/*.html (scripts/test-a11y.mjs with axe-core)
 - Jest tests (API/UI) with JSDOM and supertest
 
+Additional release check
+- `npm run audit-translations` flags exact English carryovers in non-English locale files; use it alongside `check-translations` before release-quality i18n changes.
+
 Recent test maintenance (Jan 2026)
 - `scripts/test-a11y.mjs` stubs canvas context to avoid noisy warnings.
 - Added `tests/api/security-headers.test.js` to prevent security header regressions.
@@ -282,6 +288,11 @@ Recent regression guards (Feb 2026)
 - Added `tests/ui/layout-regressions.test.js` to lock home top-gap guardrails and instructions mobile 3-button single-row behavior.
 - Added `tests/ui/copy-regressions.test.js` to enforce `uvLightHeading` = `Wood's lamp` across all locales and prevent regressions in the instructions intro spelling.
 - Pre-push is gated by `.husky/pre-push` running `npm test`.
+
+Recent i18n/UI maintenance (Mar 2026)
+- Added a one-time translated coaching card on `home.html` that appears after roughly 10 seconds on first visit and can be force-opened locally with `?tip=1`.
+- Home quick-action labels (`Images`, `Help`, `Screenshot`, `Refer`) now translate immediately after the shared fragment mounts.
+- Narrow-screen home quick actions are tuned to stay on one compact row across the shipped locales, with equal-height buttons and shortened locale strings where needed.
 
 CI/CD (overview)
 - On push to main: install, test, build, deploy (Railway)

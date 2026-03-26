@@ -9,6 +9,7 @@ import './closer.js'; // Handles generic click-outside-to-close behaviors
 import './home-navigation.js'; // Main home-page navigation button wiring
 
 import { initUI } from './home-ui.js';
+import { initFirstUseTip } from './home-first-use-tip.js';
 import { initTranslator } from './home-translator.js';
 
 // -----------------------------
@@ -29,7 +30,7 @@ let chatbotBootPromise = null;
 
 const setInstallButtonVisible = (visible) => {
   if (!installBtn) return;
-  installBtn.style.display = visible ? 'block' : 'none';
+  installBtn.style.display = visible ? 'flex' : 'none';
 };
 
 function importHomeData() {
@@ -164,6 +165,7 @@ function main() {
 
   // 2. Initialize the language system and apply initial translations.
   initTranslator();
+  initFirstUseTip();
 
   // 3. Load initial data snippets (e.g., muted.html content).
   const mountMuted = () =>

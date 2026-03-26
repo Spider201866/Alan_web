@@ -135,10 +135,15 @@
   "comingSoon": "Inakuja hivi karibuni...",
   "splashScreenText": "AI ya macho, masikio na ngozi",
   "installButton": "Sakinisha",
-  "refScreeningLabel": "Screening: {status}",
-  "refScreeningPass": "Pass",
-  "refScreeningFail": "Fail",
-  "refSmsCharacterSingle": "character",
-  "refSmsCharacterPlural": "characters",
-  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
+  "refScreeningLabel": "Uchunguzi: {status}",
+  "refScreeningPass": "Imepita",
+  "refScreeningFail": "Imeshindwa",
+  "refSmsCharacterSingle": "herufi",
+  "refSmsCharacterPlural": "herufi",
+  "refSmsPreviewInfo": "[Hakiki ya SMS: {length}/{max} {characterLabel}]",
+  "firstUseTipTitle": "Tumia Alan vizuri",
+  "firstUseTipLine1": "Andika kwa wazi na kwa ufupi.",
+  "firstUseTipLine2": "Toa umri, muda wa tatizo, na unachoona.",
+  "firstUseTipLine3": "Baada ya kumaliza kesi, boresha upya ukurasa ili Alan aanze tena upya.",
+  "firstUseTipDismiss": "Funga vidokezo vya haraka"
 }

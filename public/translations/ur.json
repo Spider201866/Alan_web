@@ -135,10 +135,15 @@
   "comingSoon": "جلد آ رہا ہے...",
   "splashScreenText": "آنکھ، کان، جلد اے آئی",
   "installButton": "انسٹال کریں",
-  "refScreeningLabel": "Screening: {status}",
-  "refScreeningPass": "Pass",
-  "refScreeningFail": "Fail",
-  "refSmsCharacterSingle": "character",
-  "refSmsCharacterPlural": "characters",
-  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
+  "refScreeningLabel": "????????: {status}",
+  "refScreeningPass": "???",
+  "refScreeningFail": "???",
+  "refSmsCharacterSingle": "???",
+  "refSmsCharacterPlural": "????",
+  "refSmsPreviewInfo": "[SMS ??? ????: {length}/{max} {characterLabel}]",
+  "firstUseTipTitle": "Alan کو بہتر طور پر استعمال کریں",
+  "firstUseTipLine1": "واضح لکھیں اور مختصر رہیں۔",
+  "firstUseTipLine2": "عمر، دورانیہ اور جو آپ دیکھ رہے ہیں وہ بتائیں۔",
+  "firstUseTipLine3": "ایک کیس ختم ہونے کے بعد ریفریش کریں تاکہ Alan نئی شروعات کر سکے۔",
+  "firstUseTipDismiss": "فوری ہدایات بند کریں"
 }

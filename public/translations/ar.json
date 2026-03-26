@@ -135,10 +135,15 @@
   "comingSoon": "قريبًا...",
   "splashScreenText": "ذكاء اصطناعي للعين والأذن والجلد",
   "installButton": "تثبيت",
-  "refScreeningLabel": "Screening: {status}",
-  "refScreeningPass": "Pass",
-  "refScreeningFail": "Fail",
-  "refSmsCharacterSingle": "character",
-  "refSmsCharacterPlural": "characters",
-  "refSmsPreviewInfo": "[SMS preview: {length}/{max} {characterLabel}]"
+  "refScreeningLabel": "?????: {status}",
+  "refScreeningPass": "????",
+  "refScreeningFail": "??? ????",
+  "refSmsCharacterSingle": "???",
+  "refSmsCharacterPlural": "????",
+  "refSmsPreviewInfo": "[?????? SMS: {length}/{max} {characterLabel}]",
+  "firstUseTipTitle": "استخدم آلان جيدًا",
+  "firstUseTipLine1": "اكتب بوضوح واختصر.",
+  "firstUseTipLine2": "اذكر العمر والمدة وما تراه.",
+  "firstUseTipLine3": "حدّث الصفحة بعد انتهاء الحالة ليبدأ آلان من جديد.",
+  "firstUseTipDismiss": "إغلاق النصائح السريعة"
 }

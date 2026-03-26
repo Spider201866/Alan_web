@@ -2,6 +2,7 @@
 
 // muted.js
 import log from './log.js';
+import { getTranslation } from './language.js';
 import { setTrustedHtml } from './trusted-html.js';
 
 const MUTED_BUTTONS_FRAGMENT_PATH = '/partials/muted-buttons.html';
@@ -18,7 +19,27 @@ export async function mountMutedButtons(mountEl) {
   if (!response.ok) throw new Error(`Failed to fetch ${MUTED_BUTTONS_FRAGMENT_PATH}`);
   const html = await response.text();
   setTrustedHtml(mountEl, html);
+  applyMutedButtonTranslations();
   initMutedButtons();
+}
+
+function applyMutedButtonTranslations() {
+  const mutedButtonTranslations = {
+    '#images .text-part': 'images',
+    '#help .text-part': 'help',
+    '#screenshot .text-part': 'screenshot',
+    '#refer .text-part': 'refer',
+  };
+
+  for (const [selector, key] of Object.entries(mutedButtonTranslations)) {
+    const el = document.querySelector(selector);
+    if (el) el.textContent = getTranslation(key, el.textContent);
+  }
+
+  const referPopupEl = document.getElementById('refer-popup');
+  if (referPopupEl) {
+    referPopupEl.textContent = getTranslation('comingSoon', 'Coming Soon...');
+  }
 }
 
 /**
