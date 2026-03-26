@@ -89,6 +89,7 @@ Start (production)
 npm start
 ```
 Serves built files from dist/ with NODE_ENV=production.
+Run `npm run build` first if `dist/` is stale or missing.
 
 ---
 
@@ -96,7 +97,7 @@ Serves built files from dist/ with NODE_ENV=production.
 
 - dev: Start development server (serves public/)
 - build: Copy and optimize into dist/ (JS/CSS/HTML minified; asset URLs normalized; build timestamp injected)
-- start: Build then start production server (serves dist/)
+- start: Start production server from the existing dist/ build (serves dist/)
 - sync:release-metadata: Refresh `public/sitemap.xml` `lastmod` values and regenerate `folderList.txt`
 - check:docs: Validate key docs remain synchronized (`README.md`, memory-bank headers, `tests/README.md`, `AGENTS.md`, `folderList.txt`) and fail on encoding-corrupted source text (e.g., replacement-character mojibake)
 - audit-translations: Flag exact English carryovers in non-English locale files to catch translation-quality regressions before release
@@ -293,6 +294,8 @@ Recent i18n/UI maintenance (Mar 2026)
 - Added a one-time translated coaching card on `home.html` that appears after roughly 10 seconds on first visit and can be force-opened locally with `?tip=1`.
 - Home quick-action labels (`Images`, `Help`, `Screenshot`, `Refer`) now translate immediately after the shared fragment mounts.
 - Narrow-screen home quick actions are tuned to stay on one compact row across the shipped locales, with equal-height buttons and shortened locale strings where needed.
+- Production startup no longer rebuilds on `npm start`; deploy targets should build during the platform build phase and start quickly from the existing `dist/` output.
+- Service worker core caching now tolerates temporary asset fetch failures and logs the failed asset list instead of aborting the entire precache step.
 
 CI/CD (overview)
 - On push to main: install, test, build, deploy (Railway)

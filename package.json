@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "npm run build && cross-env NODE_ENV=production node server.js",
+    "start": "cross-env NODE_ENV=production node server.js",
     "dev": "node -r dotenv/config server.js",
     "build": "node scripts/build.js",
     "sync:release-metadata": "node scripts/sync-release-metadata.cjs",

@@ -22,6 +22,9 @@
 - Cleaned the shipped locale set against `en.json`, removing the remaining exact-English referral/SMS strings and the most obvious mixed-English labels in Igbo/Lingala.
 - Updated `public/scripts/muted.js` so shared quick-action labels translate immediately after the partial mounts on `home.html`.
 - Tightened narrow-screen home layouts so the translated quick-action strip stays on one compact row with equal-height buttons, centered `Alan` title, tuned icon gaps, and no popup internal scrollbars across locales.
+- Production startup now serves the existing `dist/` build directly on `npm start` instead of rebuilding at runtime, reducing Railway startup/deploy `503` windows.
+- `public/service-worker.js` now caches core assets one-by-one and logs only the failed URLs, so temporary deployment-time `503`s do not abort the whole precache install.
+- `public/scripts/home.js` now uses the shared `whenSwReady()` helper with a short fallback and an earlier idle chatbot boot, reducing first-load home-page lag on production.
 
 ## Recent Work (6 Feb 2026)
 - Production top-gap root cause was traced to a hidden `U+FEFF` character between `<!doctype html>` and `<html>` in built/minified HTML (`dist/home.html` observed).

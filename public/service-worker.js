@@ -46,6 +46,10 @@ const CORE_ASSETS = [
   '/scripts/index.js',
   '/scripts/listener-module.js',
   '/scripts/home.js',
+  '/scripts/closer.js',
+  '/scripts/home-navigation.js',
+  '/scripts/home-translator.js',
+  '/scripts/home-first-use-tip.js',
   '/scripts/home-ui.js',
   '/scripts/home-ui-core.js',
   '/scripts/view-records-dom.js',
@@ -76,6 +80,33 @@ const CORE_ASSETS = [
   '/images/eyeor.webp',
 ];
 
+async function cacheCoreAssets(cache) {
+  const results = await Promise.allSettled(
+    CORE_ASSETS.map(async (assetUrl) => {
+      const request = new Request(assetUrl, { cache: 'reload' });
+      const response = await fetch(request);
+      if (!response.ok) {
+        throw new Error(`${assetUrl} returned ${response.status}`);
+      }
+      await cache.put(request, response);
+    })
+  );
+
+  const failures = results
+    .map((result, index) => {
+      if (result.status === 'rejected') {
+        const reason = result.reason?.message || String(result.reason);
+        return `${CORE_ASSETS[index]} (${reason})`;
+      }
+      return null;
+    })
+    .filter(Boolean);
+
+  if (failures.length > 0) {
+    console.warn('Service Worker: Some core assets failed to cache:', failures);
+  }
+}
+
 // 1. Install Event: Cache core assets.
 self.addEventListener('install', (event) => {
   debugLog('Service Worker: Installing...');
@@ -84,8 +115,7 @@ self.addEventListener('install', (event) => {
       .open(CACHE_NAME)
       .then((cache) => {
         debugLog('Service Worker: Caching core assets');
-        return cache
-          .addAll(CORE_ASSETS)
+        return cacheCoreAssets(cache)
           .then(() => {
             debugLog('Service Worker: Core assets cached successfully.');
             return cache.keys().then((keys) => {

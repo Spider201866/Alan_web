@@ -127,7 +127,7 @@ This document provides a detailed overview of the technologies, dependencies, co
 
 - Orchestrators
   - index.js: onboarding, password gate (fetch-records), language init, form validations.
-  - home.js: UI wiring, translator, first-use coaching card, muted snippet, chatbot init; SW_READY handshake to avoid races.
+  - home.js: UI wiring, translator, first-use coaching card, muted snippet, chatbot init; uses `whenSwReady()` with a short fallback and an earlier idle chatbot boot to keep first-load latency down.
 - Modules
   - home-ui.js: side menu, popup, focus traps, geolocation UI driver, language dropdown, history clear.
   - home-translator.js: applies home page translations; uses getTranslation; updates marquee lines, quick-action labels, and coaching-card copy.
@@ -150,6 +150,7 @@ This document provides a detailed overview of the technologies, dependencies, co
 - Service Worker (public/service-worker.js)
   - CACHE_NAME: source file uses a stable name for development; production builds stamp a unique cache name per build into `dist/service-worker.js`.
   - on install: caches CORE_ASSETS with logging; skipWaiting.
+    - Core assets are cached individually so temporary `503`/network failures log affected URLs without aborting the whole precache step.
   - on activate: deletes non-matching caches, clients.claim, posts { type: 'SW_READY' } to all clients.
   - on fetch:
     - If navigate: network-first, fallback to cached or offline.html on error.
@@ -199,7 +200,7 @@ This document provides a detailed overview of the technologies, dependencies, co
 - build: node scripts/build.js (copy, patch, minify).
 - sync:release-metadata: node scripts/sync-release-metadata.cjs (refresh sitemap lastmod + folderList inventory).
 - check:docs: node scripts/check-docs-sync.cjs (docs drift guard).
-- start: npm run build && cross-env NODE_ENV=production node server.js (serves dist/).
+- start: cross-env NODE_ENV=production node server.js (serves existing dist/ output).
 - test: npm run build && lint && prettier check && check:docs && translations check && a11y && jest (vm-modules).
 - test:ci: jest with vm-modules (when build is provided by CI step).
 - format (write/check) via Prettier; lint via ESLint.
@@ -220,6 +221,12 @@ This document provides a detailed overview of the technologies, dependencies, co
   - UI clarifies responsibilities and avoids capturing sensitive PII beyond simple meta fields.
 - Logging
   - Client-side logging is environment-driven via a build-injected meta tag (`alanui-env=production`) rather than domain-gated.
+
+## Production Runtime
+
+- `npm run build` prepares `dist/` for production deployments.
+- `npm start` serves the existing `dist/` output directly with `NODE_ENV=production`.
+- This avoids rebuilding during runtime startup, which is especially important on Railway-like platforms where long start commands can surface transient `503 Service Unavailable` responses during deploys or cold starts.
 
 ---
 

@@ -38,6 +38,10 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
   - Updated `public/scripts/muted.js` so shared quick-action labels translate immediately after the reused partial mounts.
   - Updated home-page mobile quick actions into a compact single-row translated strip with equal-height buttons, centered title alignment, and shortened locale strings where needed instead of clipping/truncating.
   - Browser-checked `home.html`, `index.html`, and `instructions.html` at narrow mobile width across all shipped locales for horizontal overflow and button/text clipping.
+- **Production deploy resilience**
+  - Changed `npm start` to serve the existing production build immediately instead of rebuilding at runtime, which should reduce Railway cold-start/deploy `503` responses for static assets.
+  - Hardened service-worker core caching so temporary asset fetch failures are logged per-URL without aborting the whole install.
+  - Reduced first-load home-page latency by replacing the manual 3-second SW gating in `public/scripts/home.js` with `whenSwReady(..., { timeoutMs: 800 })` and by starting idle chatbot boot earlier.
 
 ### February 2026 Maintenance (6 Feb 2026)
 - **Regression tests added**

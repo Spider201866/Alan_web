@@ -10,6 +10,7 @@ import './home-navigation.js'; // Main home-page navigation button wiring
 
 import { initUI } from './home-ui.js';
 import { initFirstUseTip } from './home-first-use-tip.js';
+import { whenSwReady } from './sw-ready.js';
 import { initTranslator } from './home-translator.js';
 
 // -----------------------------
@@ -131,23 +132,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.addEventListener('message', (event) => {
-      if (event.data && event.data.type === 'SW_READY') {
-        runMain();
-      }
-    });
-
-    if (navigator.serviceWorker.controller) {
-      runMain();
-    }
-
-    navigator.serviceWorker.ready
-      .then(() => runMain())
-      .catch((err) => log.error('Service worker readiness failed:', err));
-
-    setTimeout(runMain, 3000);
-  } else {
+  try {
+    whenSwReady(runMain, { timeoutMs: 800 });
+  } catch (err) {
+    log.error('Service worker readiness helper failed:', err);
     runMain();
   }
 });
@@ -198,9 +186,13 @@ function main() {
       once: true,
       capture: true,
     });
-    // Keep an eventual fallback for non-interaction sessions.
-    // 3s is a better UX/perf balance than the previous 15s.
-    setTimeout(triggerChatbotBoot, 3000);
+    // Keep an eventual fallback for non-interaction sessions, but do not make
+    // the first-load chat feel unresponsive.
+    if (typeof window.requestIdleCallback === 'function') {
+      window.requestIdleCallback(triggerChatbotBoot, { timeout: 1200 });
+    } else {
+      setTimeout(triggerChatbotBoot, 1200);
+    }
 
     // Ensure the marquee is visible on initial load.
     // (If a previous SW-cached JS run hid it via class or inline styles, undo that.)
