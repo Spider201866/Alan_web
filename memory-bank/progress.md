@@ -50,6 +50,9 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
   - Changed record-returning password routes (`/fetch-records`, `/api/fetch-records`, `/api/fetch-history`, `/api/delete-record`) to require the admin credential.
   - Updated admin session signing to derive from the admin hash.
   - Fixed public password precedence so `AUTH_PASSWORD` now overrides legacy `MASTER_PASSWORD_HASH` when both are present.
+- **Flowise embed compatibility**
+  - Fixed the app-side Flowise embed init so the persisted chat session is passed via `chatflowConfig.sessionId`.
+  - Added a focused UI regression test to prevent future `flowise-embed` session wiring regressions.
 - **Docs and tooling**
   - `generate-hash.cjs` now supports targeting `ADMIN_PASSWORD_HASH`.
   - Updated README and test docs to describe the public/admin credential split.

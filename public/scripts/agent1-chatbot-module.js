@@ -6,6 +6,7 @@ import log from './log.js';
 
 let isChatbotInitialized = false;
 let chatbotLoaderPromise = null;
+const CHATFLOW_ID = 'c3ff3bda-9945-4758-a6f6-84bcbd196e24';
 
 async function loadChatbotLibrary() {
   if (!chatbotLoaderPromise) {
@@ -19,39 +20,9 @@ async function loadChatbotLibrary() {
   return chatbotLoaderPromise;
 }
 
-/**
- * Initializes the Flowise chatbot, creating the necessary DOM element if it doesn't exist
- * and configuring it with the provided session ID and theme options.
- * @param {string} sessionId - The session ID to be used for the chat history.
- */
-export async function initChatbot(sessionId) {
-  if (isChatbotInitialized) {
-    log.info('Chatbot already initialized. Skipping.');
-    return;
-  }
-  const Chatbot = await loadChatbotLibrary();
-  // MODIFICATION 2: Use the provided sessionId first, with fallbacks.
-  const sessionToUse = sessionId || localStorage.getItem('sessionId') || `fallback-${Date.now()}`;
-
-  // Ensure a container exists – adjust the selector if needed
-  const container = document.querySelector('.chatbot-container');
-  if (!container) {
-    log.error('Chatbot container (.chatbot-container) not found in the DOM.');
-    return;
-  }
-
-  // Check if the <flowise-fullchatbot> element is already present;
-  // if not, create and append it.
-  let chatbotEl = document.querySelector('flowise-fullchatbot');
-  if (!chatbotEl) {
-    chatbotEl = document.createElement('flowise-fullchatbot');
-    container.appendChild(chatbotEl);
-    log.info('<flowise-fullchatbot> element created and appended to container.');
-  }
-
-  // Now initialise the chatbot using Flowise embed API
-  Chatbot.initFull({
-    chatflowid: 'c3ff3bda-9945-4758-a6f6-84bcbd196e24',
+export function buildChatbotInitConfig(sessionId) {
+  return {
+    chatflowid: CHATFLOW_ID,
     // Use same-origin proxy to avoid browser CORS issues when calling Flowise.
     // IMPORTANT: Flowise embed defaults to http://localhost:3000 if apiHost is not recognized.
     // Using an absolute URL based on the current page origin prevents accidental cross-origin
@@ -60,9 +31,11 @@ export async function initChatbot(sessionId) {
       typeof window !== 'undefined'
         ? new URL('/flowise', window.location.origin).toString()
         : '/flowise',
-    // MODIFICATION 3: Use our new variable for the sessionId.
-    // The property name is `sessionId` for chat history persistence.
-    sessionId: sessionToUse,
+    // flowise-embed expects runtime request overrides under chatflowConfig.
+    // Putting sessionId here ensures the proxy request carries overrideConfig.sessionId.
+    chatflowConfig: {
+      sessionId,
+    },
     theme: {
       button: {
         backgroundColor: '#ffffff',
@@ -151,7 +124,41 @@ export async function initChatbot(sessionId) {
         }
       `,
     },
-  });
+  };
+}
+
+/**
+ * Initializes the Flowise chatbot, creating the necessary DOM element if it doesn't exist
+ * and configuring it with the provided session ID and theme options.
+ * @param {string} sessionId - The session ID to be used for the chat history.
+ */
+export async function initChatbot(sessionId) {
+  if (isChatbotInitialized) {
+    log.info('Chatbot already initialized. Skipping.');
+    return;
+  }
+  const Chatbot = await loadChatbotLibrary();
+  // MODIFICATION 2: Use the provided sessionId first, with fallbacks.
+  const sessionToUse = sessionId || localStorage.getItem('sessionId') || `fallback-${Date.now()}`;
+
+  // Ensure a container exists – adjust the selector if needed
+  const container = document.querySelector('.chatbot-container');
+  if (!container) {
+    log.error('Chatbot container (.chatbot-container) not found in the DOM.');
+    return;
+  }
+
+  // Check if the <flowise-fullchatbot> element is already present;
+  // if not, create and append it.
+  let chatbotEl = document.querySelector('flowise-fullchatbot');
+  if (!chatbotEl) {
+    chatbotEl = document.createElement('flowise-fullchatbot');
+    container.appendChild(chatbotEl);
+    log.info('<flowise-fullchatbot> element created and appended to container.');
+  }
+
+  // Now initialise the chatbot using Flowise embed API
+  Chatbot.initFull(buildChatbotInitConfig(sessionToUse));
   isChatbotInitialized = true;
 
   // Note: marquee hide behavior is handled in home.js.

@@ -164,6 +164,7 @@ graph TD
 -   **Flowise Reverse Proxy Pattern**
     -   The app proxies Flowise under `/flowise` to avoid browser CORS issues.
     -   Proxy is mounted **before** JSON body parsing and CSRF middleware.
+    -   Current Flowise embed contract passes persisted session state via `chatflowConfig.sessionId`; do not rely on a top-level `sessionId` prop.
     -   Proxy hardening guardrails:
         - Reject absolute and protocol-relative upstream targets.
         - Strip sensitive headers (cookie/authorization/origin).

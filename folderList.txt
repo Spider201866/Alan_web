@@ -221,6 +221,7 @@ tests/api/validation.test.js
 tests/setup-jsdom.js
 tests/setup-node.cjs
 tests/ui/accessibility.test.js
+tests/ui/agent1-chatbot-module.test.js
 tests/ui/chatbot.test.js
 tests/ui/copy-regressions.test.js
 tests/ui/helpers/setup.js

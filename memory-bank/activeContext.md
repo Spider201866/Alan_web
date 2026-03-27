@@ -33,6 +33,9 @@
   - Record-returning password routes now require the admin credential.
   - Admin session signing now derives from the admin credential hash.
   - Public access-code resolution now prefers `AUTH_PASSWORD` over legacy `MASTER_PASSWORD_HASH` when both are set, avoiding Railway env precedence surprises.
+- Flowise embed compatibility:
+  - Updated `public/scripts/agent1-chatbot-module.js` so the persisted `sessionId` is passed via `chatflowConfig.sessionId`.
+  - Current `flowise-embed` ignores a top-level `sessionId`, which caused intermittent chat failures against memory-backed Flowise predictions.
 
 ## Recent Work (6 Feb 2026)
 - Production top-gap root cause was traced to a hidden `U+FEFF` character between `<!doctype html>` and `<html>` in built/minified HTML (`dist/home.html` observed).

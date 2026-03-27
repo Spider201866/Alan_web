@@ -118,6 +118,7 @@ This document provides a detailed overview of the technologies, dependencies, co
 - Flowise Embed (Chat)
   - CDN: jsdelivr; chatflowid is configured; apiHost points to Railway Flowise deployment.
   - Session management: sessionId persisted in localStorage; passed to Flowise for history.
+  - Current embed contract: pass session state under `chatflowConfig.sessionId`; top-level `sessionId` is ignored by the current `flowise-embed` API.
 - Geolocation and reverse geocoding
   - ipinfo.io for IP-derived country/city and approximate lat/long.
   - api.bigdatacloud.net reverse-geocode-client for human-readable area from lat/long.

@@ -49,6 +49,7 @@ Tests are further broken down by function.
 -   **`i18n.test.js`**: Tests internationalization features, ensuring UI text is updated correctly on language change.
 -   **`interaction.test.js`**: Tests general user interactions like showing/hiding elements, form submissions, and error handling.
 -   **`chatbot.test.js`**: Contains tests related to the chatbot frontend module.
+-   **`agent1-chatbot-module.test.js`**: Guards the Flowise embed init contract, including passing the persisted session id via `chatflowConfig.sessionId`.
 -   **`listener-module.test.js`**: Tests listener-module session fallback behavior.
 -   **`record-info.test.js`**: Tests payload-building and post helpers for `/api/record-info`.
 -   **`layout-regressions.test.js`**: Guards against home top-gap regressions and instructions mobile 3-button wrapping regressions.

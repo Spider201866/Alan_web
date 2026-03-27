@@ -158,6 +158,7 @@ Backend (Node/Express)
 - Flowise proxy:
   - The server mounts a same-origin proxy at `/flowise` which forwards to the Railway Flowise deployment.
   - This avoids browser CORS issues. Frontend Flowise embed should use `apiHost: '/flowise'`.
+  - Current `flowise-embed` expects session state under `chatflowConfig.sessionId`; a top-level `sessionId` is ignored.
 - Security:
   - Helmet CSP + security headers (HSTS, Referrer-Policy no-referrer, Frameguard deny, noSniff)
   - express-rate-limit (general 100/15m; sensitive 10/15m)
@@ -190,7 +191,7 @@ Frontend (Vanilla JS ES modules)
   - Record info: record-info.js (builds/posts /api/record-info payloads)
   - Location: location-service.js (ipinfo.io; LMIC classification)
   - Onboarding: onboarding-form.js (input masks, validation), auth-flow.js (password verify, transitions)
-  - Chatbot: agent1-chatbot-module.js (Flowise embed via jsdelivr; sessionId; theme overrides)
+  - Chatbot: agent1-chatbot-module.js (Flowise embed via jsdelivr; passes sessionId via `chatflowConfig`; theme overrides)
   - Chat history: listener-module.js (observes Flowise shadow DOM; dedupes streaming updates; localStorage sessions; copy support)
   - i18n: language.js + language-loader.js (dynamic JSON; 22 languages; languageChanged event)
   - Home coaching: home-first-use-tip.js (one-time delayed teaching card; localhost `?tip=1` override for UI work)
