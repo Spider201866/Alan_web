@@ -102,7 +102,7 @@ This document provides a detailed overview of the technologies, dependencies, co
 
 - Password verification
   - PBKDF2-SHA256 with 100,000 iterations and 32-byte keylen; salt from PASSWORD_SALT.
-  - Public access compares against `AUTH_PASSWORD`/`MASTER_PASSWORD_HASH` and also supports one-time hashes (OTP set) that are consumed on first use.
+  - Public access compares against `AUTH_PASSWORD`/`MASTER_PASSWORD_HASH`, with `AUTH_PASSWORD` taking precedence when both are set; one-time hashes (OTP set) are also supported and consumed on first use.
   - Admin access compares against `ADMIN_PASSWORD`/`ADMIN_PASSWORD_HASH`, falling back to the public credential when no admin-specific value is configured.
 - Hash generation
   - script: generate-hash.cjs; uses dotenv and updates `.env` hash keys in place.

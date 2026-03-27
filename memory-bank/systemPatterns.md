@@ -89,6 +89,7 @@ graph TD
     -   Hashing Algorithm: `pbkdf2Sync` with 100,000 iterations and a SHA256 digest as defined in `middleware/auth.js`.
     -   Public/Admin split:
         -   Public access uses `AUTH_PASSWORD` or `MASTER_PASSWORD_HASH`.
+        -   When both are present, `AUTH_PASSWORD` takes precedence and `MASTER_PASSWORD_HASH` is treated as the legacy fallback.
         -   Admin access uses `ADMIN_PASSWORD` or `ADMIN_PASSWORD_HASH`.
         -   If no admin-specific credential is configured, admin falls back to the public credential for backward compatibility.
     -   Hash Generation: Stored hash env vars must be generated using the exact same algorithm. The `generate-hash.cjs` script can update `MASTER_PASSWORD_HASH` or `ADMIN_PASSWORD_HASH`.

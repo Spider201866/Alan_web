@@ -49,6 +49,7 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
   - Added separate admin credential support via `ADMIN_PASSWORD` / `ADMIN_PASSWORD_HASH`, with fallback to the public credential when unset.
   - Changed record-returning password routes (`/fetch-records`, `/api/fetch-records`, `/api/fetch-history`, `/api/delete-record`) to require the admin credential.
   - Updated admin session signing to derive from the admin hash.
+  - Fixed public password precedence so `AUTH_PASSWORD` now overrides legacy `MASTER_PASSWORD_HASH` when both are present.
 - **Docs and tooling**
   - `generate-hash.cjs` now supports targeting `ADMIN_PASSWORD_HASH`.
   - Updated README and test docs to describe the public/admin credential split.

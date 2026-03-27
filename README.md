@@ -121,6 +121,7 @@ Validated via envalid (config/validateEnv.js):
 Required
 - PASSWORD_SALT: Salt for PBKDF2 hashing
 - Either AUTH_PASSWORD or MASTER_PASSWORD_HASH: Public access code (plain or PBKDF2 hash)
+  - If both are set, `AUTH_PASSWORD` takes precedence and `MASTER_PASSWORD_HASH` acts as the legacy fallback.
 
 Optional
 - PORT (default 3000)

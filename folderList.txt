@@ -43,6 +43,7 @@ artifacts/playwright-smoke/skin-mobile.png
 babel.config.cjs
 compress_and_convert_images_instructions.txt
 config/index.js
+config/password-security.js
 config/validateEnv.js
 eslint.config.js
 folderList.txt
@@ -214,6 +215,7 @@ tests/api/build.test.js
 tests/api/cors.test.js
 tests/api/history-ordering.test.js
 tests/api/legacy-fetch-records.test.js
+tests/api/password-security.test.js
 tests/api/security-headers.test.js
 tests/api/validation.test.js
 tests/setup-jsdom.js
