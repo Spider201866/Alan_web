@@ -40,6 +40,24 @@ function applyMutedButtonTranslations() {
   if (referPopupEl) {
     referPopupEl.textContent = getTranslation('comingSoon', 'Coming Soon...');
   }
+
+  const imagePopupText = document.querySelector('#chat-end-buttons [data-images-popup-text]');
+  if (imagePopupText) {
+    imagePopupText.textContent = getTranslation(
+      'findImagesOnTheseSites',
+      'Find images on these sites'
+    );
+  }
+
+  const imagePopupSiteButtons = {
+    '#chat-end-buttons [data-images-site="ophthalmology"]': 'ophthalmology',
+    '#chat-end-buttons [data-images-site="ent"]': 'ent',
+    '#chat-end-buttons [data-images-site="dermatology"]': 'dermatology',
+  };
+  for (const [selector, key] of Object.entries(imagePopupSiteButtons)) {
+    const el = document.querySelector(selector);
+    if (el) el.textContent = getTranslation(key, el.textContent);
+  }
 }
 
 /**
@@ -124,6 +142,7 @@ async function takeScreenshot() {
  */
 function removeChatEndButtons() {
   document.getElementById('chat-end-buttons')?.remove();
+  document.querySelector('.chat-actions-dock')?.classList.remove('has-images-popover');
 }
 
 /**
@@ -135,16 +154,11 @@ function createButtonsWithText(condition = '') {
 
   const container = document.createElement('div');
   container.id = 'chat-end-buttons';
-  Object.assign(container.style, {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: '-20px',
-    marginBottom: '35px',
-    transition: 'margin-top 0.3s',
-  });
+  container.className = 'chat-end-buttons-popover';
 
   const textLine = document.createElement('div');
+  textLine.dataset.imagesPopupText = 'true';
+  textLine.className = 'chat-end-buttons-text';
   if (condition) {
     textLine.appendChild(document.createTextNode('Find '));
     const strong = document.createElement('strong');
@@ -154,45 +168,58 @@ function createButtonsWithText(condition = '') {
   } else {
     textLine.textContent = 'Find images on these sites';
   }
-  textLine.style.cssText = 'font-size: 14px; margin-bottom: 10px;';
   container.appendChild(textLine);
 
   const buttonsRow = document.createElement('div');
-  buttonsRow.style.cssText = 'display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;';
+  buttonsRow.className = 'chat-end-buttons-row';
   buttonsRow.appendChild(
-    createSiteButton('Ophthalmology', 'rgb(134, 162, 255)', 'https://eyewiki.org/Main_Page')
+    createSiteButton(
+      'ophthalmology',
+      'Ophthalmology',
+      'rgb(134, 162, 255)',
+      'https://eyewiki.org/Main_Page'
+    )
   );
   buttonsRow.appendChild(
-    createSiteButton('ENT', 'rgb(133, 255, 133)', 'https://www.otoscape.com/image-atlas.html')
+    createSiteButton(
+      'ent',
+      'ENT',
+      'rgb(133, 255, 133)',
+      'https://www.otoscape.com/image-atlas.html'
+    )
   );
   buttonsRow.appendChild(
-    createSiteButton('Dermatology', '#efafff', 'https://dermnetnz.org/images')
+    createSiteButton('dermatology', 'Dermatology', '#efafff', 'https://dermnetnz.org/images')
   );
   container.appendChild(buttonsRow);
 
-  const footer = document.querySelector('footer.chatbot-version');
-  if (footer) footer.parentNode.insertBefore(container, footer);
-  else document.body.appendChild(container);
+  const actionsDock = document.querySelector('.chat-actions-dock');
+  const mountTarget = actionsDock || document.getElementById('muted-buttons') || document.body;
+  if (actionsDock) actionsDock.classList.add('has-images-popover');
+  mountTarget.appendChild(container);
 
-  setTimeout(() => {
-    // Adjust margin if container is off-screen
-    if (container.getBoundingClientRect().bottom > window.innerHeight)
-      container.style.marginTop = '0px';
-  });
+  if (!condition) {
+    textLine.textContent = getTranslation('findImagesOnTheseSites', textLine.textContent);
+  }
 }
 
 /**
  * A helper function to create a styled button that links to an external site.
- * @param {string} label - The text to be displayed on the button.
+ * @param {string} translationKey - The translation key for the button label.
+ * @param {string} fallbackLabel - The fallback text to be displayed on the button.
  * @param {string} background - The background color of the button.
  * @param {string} url - The URL to open when the button is clicked.
  * @returns {HTMLButtonElement} The created button element.
  */
-function createSiteButton(label, background, url) {
+function createSiteButton(translationKey, fallbackLabel, background, url) {
   const button = document.createElement('button');
-  button.className = 'button';
-  button.textContent = label;
-  button.style.cssText = `background-color: ${background}; color: black; font-size: 14px; border: 2px solid black; padding: 6px 10px; cursor: pointer;`;
-  button.addEventListener('click', () => window.open(url, '_blank'));
+  button.className = 'button chat-end-buttons-site';
+  button.dataset.imagesSite = translationKey;
+  button.textContent = getTranslation(translationKey, fallbackLabel);
+  button.style.backgroundColor = background;
+  button.addEventListener('click', () => {
+    window.open(url, '_blank');
+    removeChatEndButtons();
+  });
   return button;
 }

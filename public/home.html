@@ -254,10 +254,16 @@
       <!-- END: New marquee section -->
 
       <div class="main-wrapper">
-        <div class="chatbot-container">
-          <flowise-fullchatbot></flowise-fullchatbot>
+        <div class="chat-dock">
+          <div class="chatbot-container">
+            <div class="chatbot-shell">
+              <flowise-fullchatbot></flowise-fullchatbot>
+            </div>
+          </div>
+          <div class="chat-actions-dock">
+            <div id="muted-buttons"></div>
+          </div>
         </div>
-        <div id="muted-buttons"></div>
         <div class="detected-condition"></div>
         <p id="condition-description"></p>
       </div>

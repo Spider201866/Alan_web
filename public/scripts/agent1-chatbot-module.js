@@ -49,8 +49,8 @@ export function buildChatbotInitConfig(sessionId) {
       chatWindow: {
         welcomeMessage: false,
         backgroundColor: '#ffffff',
-        height: 'auto',
-        width: 'auto',
+        height: '100%',
+        width: '100%',
         botMessage: {
           backgroundColor: '#ffffff',
           textColor: '#000000',
@@ -75,14 +75,48 @@ export function buildChatbotInitConfig(sessionId) {
         },
       },
       customCSS: `
+        :host,
+        :host > div {
+          display: block !important;
+          width: 100% !important;
+          height: 100% !important;
+        }
+        .chatbot-container,
+        .relative.flex.flex-col.w-full.h-full.justify-start.z-0 {
+          height: 100% !important;
+          min-height: 0 !important;
+        }
+        .chatbot-container {
+          overflow: hidden !important;
+          background-color: #ffffff !important;
+        }
+        .chatbot-chat-view {
+          flex: 1 1 auto !important;
+          min-height: 0 !important;
+          overflow-y: auto !important;
+          padding-bottom: 8px !important;
+          overscroll-behavior: contain !important;
+        }
+        a#lite-badge,
+        a.lite-badge {
+          display: none !important;
+        }
         /* Rounded corners for user message bubble */
         .chatbot-guest-bubble {
           border-radius: 15px !important;
         }
         /* Rounded corners for the input container */
         .chatbot-input {
+          position: sticky !important;
+          bottom: 0 !important;
+          z-index: 3 !important;
+          margin-top: auto !important;
+          flex-shrink: 0 !important;
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, #ffffff 28%) !important;
+          backdrop-filter: blur(10px) !important;
           border-radius: 20px !important;
           border: 1px solid #999 !important;
+          box-shadow: 0 -10px 24px rgba(255, 255, 255, 0.96) !important;
         }
         /* Change clipboard, thumbs up, thumbs down icons to grey */
         svg[stroke="#3B81F6"] {

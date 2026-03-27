@@ -26,5 +26,10 @@ describe('agent1 chatbot module', () => {
     expect(config.apiHost).toBe(`${window.location.origin}/flowise`);
     expect(config.chatflowConfig).toEqual({ sessionId: 'session-123' });
     expect(config).not.toHaveProperty('sessionId');
+    expect(config.theme.chatWindow.height).toBe('100%');
+    expect(config.theme.chatWindow.width).toBe('100%');
+    expect(config.theme.customCSS).toContain('.chatbot-chat-view');
+    expect(config.theme.customCSS).toContain('a#lite-badge');
+    expect(config.theme.customCSS).toContain('position: sticky !important;');
   });
 });

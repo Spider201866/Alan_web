@@ -159,6 +159,8 @@ function main() {
   const chatbotContainer = document.querySelector('.chatbot-container');
 
   if (marqueeSection && chatbotContainer) {
+    document.body.classList.remove('chat-dock-expanded');
+
     // Ensure the marquee is visible on initial load.
     // (If a previous SW-cached JS run hid it via class or inline styles, undo that.)
     marqueeSection.classList.remove('hidden');
@@ -169,6 +171,7 @@ function main() {
     const hideMarquee = () => {
       log.info('Chatbot interacted with, hiding marquee.');
       marqueeSection.classList.add('hidden');
+      document.body.classList.add('chat-dock-expanded');
     };
 
     // Use click (not pointerdown): if we hide on pointerdown, the layout shift can
