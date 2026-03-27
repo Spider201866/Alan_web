@@ -7,10 +7,18 @@ require('dotenv').config();
 
 const SALT = process.env.PASSWORD_SALT;
 const passwordToHash = process.argv[2]; // Get password from command line argument
+const targetKey = process.argv[3] || 'MASTER_PASSWORD_HASH';
+const allowedKeys = new Set(['MASTER_PASSWORD_HASH', 'ADMIN_PASSWORD_HASH']);
 
 if (!passwordToHash) {
   console.error('Please provide the password as a command-line argument.');
-  console.error('Usage: node generate-hash.cjs <password>');
+  console.error('Usage: node generate-hash.cjs <password> [MASTER_PASSWORD_HASH|ADMIN_PASSWORD_HASH]');
+  process.exit(1);
+}
+
+if (!allowedKeys.has(targetKey)) {
+  console.error(`Unsupported target key: ${targetKey}`);
+  console.error('Use MASTER_PASSWORD_HASH or ADMIN_PASSWORD_HASH.');
   process.exit(1);
 }
 
@@ -31,15 +39,14 @@ if (!SALT) {
   const envPath = path.resolve(__dirname, '.env');
   let envContent = fs.readFileSync(envPath, 'utf8');
 
-  const hashKey = 'MASTER_PASSWORD_HASH';
-  const hashRegex = new RegExp(`^${hashKey}=.*$`, 'm');
+  const hashRegex = new RegExp(`^${targetKey}=.*$`, 'm');
 
   if (hashRegex.test(envContent)) {
-    envContent = envContent.replace(hashRegex, `${hashKey}=${hash}`);
+    envContent = envContent.replace(hashRegex, `${targetKey}=${hash}`);
   } else {
-    envContent += `\n${hashKey}=${hash}`;
+    envContent += `\n${targetKey}=${hash}`;
   }
 
   fs.writeFileSync(envPath, envContent);
-  console.log('.env file updated successfully with the new hash.');
+  console.log(`.env file updated successfully with ${targetKey}.`);
 }

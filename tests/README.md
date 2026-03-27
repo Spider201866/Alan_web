@@ -35,12 +35,12 @@ Tests are further broken down by function.
 
 -   **`cors.test.js`**: Tests the CORS middleware behavior.
 -   **`validation.test.js`**: Tests request body validation for `/api/record-info`.
--   **`admin-session.test.js`**: Tests admin login cookie session behavior.
+-   **`admin-session.test.js`**: Tests the public/admin password split and admin login cookie session behavior.
 -   **`admin-csrf.test.js`**: Tests CSRF protections for admin endpoints (when CSRF is enabled).
 -   **`admin-ip-allowlist.test.js`**: Tests admin IP allowlist middleware behavior.
 -   **`security-headers.test.js`**: Regression test for key security headers.
 -   **`history-ordering.test.js`**: Tests chat history ordering and legacy epoch normalization.
--   **`legacy-fetch-records.test.js`**: Confirms legacy `/fetch-records` compatibility behavior.
+-   **`legacy-fetch-records.test.js`**: Confirms legacy `/fetch-records` compatibility behavior with the admin credential.
 -   **`build.test.js`**: Smoke-checks the production build output.
 
 ### UI Tests (`tests/ui/`)

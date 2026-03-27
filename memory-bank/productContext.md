@@ -1,4 +1,4 @@
-<!-- Alan UI - productContext.md | Updated 26th March 2026, Codex -->
+<!-- Alan UI - productContext.md | Updated 27th March 2026, Codex -->
 
 # Product Context
 
@@ -13,6 +13,7 @@ The AlanUI Web Chatbot provides accessible, relevant health information focused 
 
 ## How It Should Work (Confirmed Sep 2025)
 - Users land on `index.html`, complete a password gate (for internal/demo use), then capture minimal onboarding info (name, aims, experience, contact). This data is stored locally and pushed to the server when meaningful.
+- Public onboarding verifies the access code via `POST /api/verify-access`; administrative record access uses a separate admin credential when configured.
 - Users are transitioned to `home.html` which hosts the Flowise chatbot (Google Gemini via Flowise), navigation side menu, language selector, and example prompts.
 - The Flowise chatbot persists per-user sessionId (localStorage), and embeds a themed chat UI loaded via jsdelivr CDN. A sidebar records chat history by observing the Flowise component (shadow DOM) and stores across sessions locally.
 - Pages use a shared app bar template (`page-template.js`) for title and back navigation; translations are applied on `languageChanged` events.
@@ -67,10 +68,10 @@ The AlanUI Web Chatbot provides accessible, relevant health information focused 
 - Data is pushed via POST `/api/record-info` only when meaningful:
   - Guard: name must exist; and either geo info or area must be present; else skip push.
 - `location-service.js` uses ipinfo.io to seed approximate location and classification; `home-data.js` can reverse geocode precise coordinates via BigDataCloud if user clicks “Check Location”.
-- Rate limiting protects all endpoints; sensitive endpoints (fetch-records, fetch-history, delete-record) are further limited and require PBKDF2-verified password.
+- Rate limiting protects all endpoints; sensitive endpoints are further limited, with public access verification separated from admin record access.
 
 ## Security and Privacy
-- PBKDF2-SHA256 (100k iterations) with salt for password; consistent generation script `generate-hash.cjs` updates `.env` MASTER_PASSWORD_HASH. OTP hash list supported (consumed upon use).
+- PBKDF2-SHA256 (100k iterations) with salt for password; public and admin credentials can be configured separately, and `generate-hash.cjs` can update either `MASTER_PASSWORD_HASH` or `ADMIN_PASSWORD_HASH`. OTP hash list is supported for the public access code (consumed upon use).
 - Helmet CSP tailored to external resources (Flowise, OSM tiles, ipinfo, BigDataCloud, CDNs, Google Fonts).
 - CORS allowlist enforced; CSRF middleware available (disabled by default) with header-based token validation and skip paths where needed.
 - No inline script dependencies in HTML (CSP-compliant); ES module scripts and external CDNs are whitelisted.

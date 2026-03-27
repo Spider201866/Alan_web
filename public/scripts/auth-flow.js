@@ -50,7 +50,7 @@ function verifyPassword() {
   const enteredPassword = passwordInputEl.value.trim();
   passwordSubmitBtnEl.disabled = true;
 
-  fetch('/api/fetch-records', {
+  fetch('/api/verify-access', {
     method: 'POST',
     headers: withCsrfHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify({ password: enteredPassword }),

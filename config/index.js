@@ -1,6 +1,7 @@
 // config/index.js
 // Central configuration file for the application. It validates and exports all environment variables and constants.
 
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import validateEnv from './validateEnv.js'; // Import the validation function
@@ -12,6 +13,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const root = path.resolve(__dirname, '..');
+
+function hashPassword(password, salt) {
+  return crypto.pbkdf2Sync(password, salt, 100000, 32, 'sha256').toString('hex');
+}
 
 // CSP directives (consumed by server.js). Keep this as the single source of truth.
 // NOTE: `server.js` will merge these into Helmet's default directives.
@@ -64,6 +69,11 @@ const cspDirectives = {
   ],
 };
 
+const publicHash = env.MASTER_PASSWORD_HASH || hashPassword(env.AUTH_PASSWORD, env.PASSWORD_SALT);
+const adminHash =
+  env.ADMIN_PASSWORD_HASH ||
+  (env.ADMIN_PASSWORD ? hashPassword(env.ADMIN_PASSWORD, env.PASSWORD_SALT) : publicHash);
+
 const config = {
   port: env.PORT,
   paths: {
@@ -71,7 +81,10 @@ const config = {
   },
   security: {
     salt: env.PASSWORD_SALT,
-    masterHash: env.MASTER_PASSWORD_HASH,
+    publicHash,
+    adminHash,
+    // Keep masterHash as a backward-compatible alias for the public access code hash.
+    masterHash: publicHash,
     otpHashes: new Set((env.ONE_TIME_PASSWORD_HASHES || '').split(',').filter(Boolean)),
   },
   allowedOrigins: (env.CORS_ALLOWED_ORIGINS || '').split(',').filter(Boolean),

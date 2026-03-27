@@ -11,8 +11,14 @@ function createTestConfig() {
   const keylen = 32;
   const digest = 'sha256';
   const salt = 'test-salt';
-  const password = 'correct-password';
-  const masterHash = crypto.pbkdf2Sync(password, salt, iterations, keylen, digest).toString('hex');
+  const publicPassword = 'public-password';
+  const adminPassword = 'correct-admin-password';
+  const publicHash = crypto
+    .pbkdf2Sync(publicPassword, salt, iterations, keylen, digest)
+    .toString('hex');
+  const adminHash = crypto
+    .pbkdf2Sync(adminPassword, salt, iterations, keylen, digest)
+    .toString('hex');
 
   return {
     port: 0,
@@ -23,7 +29,9 @@ function createTestConfig() {
     cspDirectives: {},
     security: {
       salt,
-      masterHash,
+      publicHash,
+      adminHash,
+      masterHash: publicHash,
       otpHashes: new Set(),
     },
   };
@@ -40,7 +48,7 @@ describe('History ordering and epoch normalization', () => {
 
     const loginRes = await request(server)
       .post('/api/admin-login')
-      .send({ password: 'correct-password' })
+      .send({ password: 'correct-admin-password' })
       .set('Content-Type', 'application/json');
 
     if (loginRes.statusCode !== 200) {

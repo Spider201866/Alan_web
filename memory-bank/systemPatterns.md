@@ -1,4 +1,4 @@
-<!-- Alan UI - systemPatterns.md | Updated 26th March 2026, Codex -->
+<!-- Alan UI - systemPatterns.md | Updated 27th March 2026, Codex -->
 
 # System Architecture and Patterns
 
@@ -87,12 +87,17 @@ graph TD
 
 -   **Authentication & Hashing**:
     -   Hashing Algorithm: `pbkdf2Sync` with 100,000 iterations and a SHA256 digest as defined in `middleware/auth.js`.
-    -   Hash Generation: The stored `MASTER_PASSWORD_HASH` in `.env` must be generated using the exact same algorithm. The `generate-hash.cjs` script is provided for this purpose.
+    -   Public/Admin split:
+        -   Public access uses `AUTH_PASSWORD` or `MASTER_PASSWORD_HASH`.
+        -   Admin access uses `ADMIN_PASSWORD` or `ADMIN_PASSWORD_HASH`.
+        -   If no admin-specific credential is configured, admin falls back to the public credential for backward compatibility.
+    -   Hash Generation: Stored hash env vars must be generated using the exact same algorithm. The `generate-hash.cjs` script can update `MASTER_PASSWORD_HASH` or `ADMIN_PASSWORD_HASH`.
     -   Updating the Password:
         ```bash
         node generate-hash.cjs <new_password>
+        node generate-hash.cjs <new_password> ADMIN_PASSWORD_HASH
         ```
-        This script uses `PASSWORD_SALT` from `.env` and updates `MASTER_PASSWORD_HASH` accordingly.
+        This script uses `PASSWORD_SALT` from `.env` and updates the chosen hash key accordingly.
 
 -   **PWA Implementation**: The application functions as a Progressive Web App enabled by a service worker (`public/service-worker.js`).
     -   Caching Strategy: Network-first for HTML navigations; cache-first for static assets.
@@ -150,6 +155,10 @@ graph TD
         - `/api/record-info` is skipped globally and applies CSRF **per-route** (after validation) to ensure validation errors are returned as `400` even when CSRF is missing/invalid.
         - Admin CSRF token can be fetched via `GET /api/admin/csrf` (requires valid admin session cookie).
     -   Suitable for single-process deployments.
+
+-   **Access Verification vs Record Access**
+    -   Public onboarding should verify the access code via `POST /api/verify-access`.
+    -   Routes that return or mutate stored records should require the admin credential (or admin cookie session), not the public access code.
 
 -   **Flowise Reverse Proxy Pattern**
     -   The app proxies Flowise under `/flowise` to avoid browser CORS issues.

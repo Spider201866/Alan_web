@@ -1,7 +1,11 @@
 import crypto from 'crypto';
 import config from '../config/index.js';
 
-export function validatePasswordWithConfig(configToUse) {
+function hashPassword(password, salt) {
+  return crypto.pbkdf2Sync(password, salt, 100000, 32, 'sha256').toString('hex');
+}
+
+function createPasswordValidatorWithConfig(configToUse, { hashSelector, allowOtp = false } = {}) {
   return function validatePassword(req, res, next) {
     const { password } = req.body;
 
@@ -9,21 +13,15 @@ export function validatePasswordWithConfig(configToUse) {
       return res.status(400).send('Password is required');
     }
 
-    const iterations = 100000;
-    const keylen = 32;
-    const digest = 'sha256';
+    const generatedHash = hashPassword(password, configToUse.security.salt);
+    const expectedHash = hashSelector(configToUse.security || {});
 
-    const generatedHash = crypto
-      .pbkdf2Sync(password, configToUse.security.salt, iterations, keylen, digest)
-      .toString('hex');
+    if (generatedHash === expectedHash) {
+      return next();
+    }
 
-    if (
-      generatedHash === configToUse.security.masterHash ||
-      configToUse.security.otpHashes.has(generatedHash)
-    ) {
-      if (configToUse.security.otpHashes.has(generatedHash)) {
-        configToUse.security.otpHashes.delete(generatedHash);
-      }
+    if (allowOtp && configToUse.security.otpHashes.has(generatedHash)) {
+      configToUse.security.otpHashes.delete(generatedHash);
       return next();
     }
 
@@ -31,6 +29,23 @@ export function validatePasswordWithConfig(configToUse) {
   };
 }
 
+export function validatePublicPasswordWithConfig(configToUse) {
+  return createPasswordValidatorWithConfig(configToUse, {
+    hashSelector: (security) => security.publicHash || security.masterHash,
+    allowOtp: true,
+  });
+}
+
+export function validateAdminPasswordWithConfig(configToUse) {
+  return createPasswordValidatorWithConfig(configToUse, {
+    hashSelector: (security) => security.adminHash || security.publicHash || security.masterHash,
+  });
+}
+
+export function validatePasswordWithConfig(configToUse) {
+  return validatePublicPasswordWithConfig(configToUse);
+}
+
 export function validatePassword(req, res, next) {
-  return validatePasswordWithConfig(config)(req, res, next);
+  return validatePublicPasswordWithConfig(config)(req, res, next);
 }

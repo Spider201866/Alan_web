@@ -1,4 +1,4 @@
-<!-- Alan UI - activeContext.md | Updated 26th March 2026, Codex -->
+<!-- Alan UI - activeContext.md | Updated 27th March 2026, Codex -->
 
 # Active Context
 
@@ -25,6 +25,13 @@
 - Production startup now serves the existing `dist/` build directly on `npm start` instead of rebuilding at runtime, reducing Railway startup/deploy `503` windows.
 - `public/service-worker.js` now caches core assets one-by-one and logs only the failed URLs, so temporary deployment-time `503`s do not abort the whole precache install.
 - `public/scripts/home.js` no longer blocks main-page startup on service-worker readiness and now boots the chatbot immediately again, restoring the faster/snappier pre-lazy-load behavior.
+
+## Recent Work (27 Mar 2026)
+- Split public access from admin auth:
+  - Added `POST /api/verify-access` so onboarding no longer verifies against a records endpoint.
+  - Added separate admin credential support via `ADMIN_PASSWORD` / `ADMIN_PASSWORD_HASH`, with fallback to the public credential when unset.
+  - Record-returning password routes now require the admin credential.
+  - Admin session signing now derives from the admin credential hash.
 
 ## Recent Work (6 Feb 2026)
 - Production top-gap root cause was traced to a hidden `U+FEFF` character between `<!doctype html>` and `<html>` in built/minified HTML (`dist/home.html` observed).
@@ -125,8 +132,10 @@
 - Keep admin SW bypass for `view-records.html`.
 - Keep CSP directives centralized in `config/index.js`.
 - Keep build-time BOM sanitization for HTML outputs in `scripts/build.js` (do not remove without replacing with equivalent sanitization).
+- Keep public access verification separate from record-returning admin routes.
 
 ## Next Steps
+- Set `ADMIN_PASSWORD` (or `ADMIN_PASSWORD_HASH`) on Railway so admin no longer falls back to the public access code.
 - Confirm Railway deployment is picking up latest builds and clients refresh caches as expected.
 - Ensure `.gitignore` covers local DBs and `dist/`.
 - Optional: unify SW_READY gating usage across pages (prefer `whenSwReady` helper) where it reduces duplication.

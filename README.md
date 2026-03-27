@@ -2,7 +2,7 @@
 
 A web-based chatbot focused on Eye, Ear, and Skin health information, designed for users in Low- and Middle-Income Countries (LMICs). The app is performance-conscious, accessible, and fully offline-capable as a Progressive Web App (PWA).
 
-Updated: 26 Mar 2026
+Updated: 27 Mar 2026
 
 For deep architecture and context, see the Memory Bank:
 - memory-bank/projectbrief.md
@@ -120,15 +120,17 @@ Validated via envalid (config/validateEnv.js):
 
 Required
 - PASSWORD_SALT: Salt for PBKDF2 hashing
-- MASTER_PASSWORD_HASH: Hash to validate admin password (generate via script below)
+- Either AUTH_PASSWORD or MASTER_PASSWORD_HASH: Public access code (plain or PBKDF2 hash)
 
 Optional
 - PORT (default 3000)
+- ADMIN_PASSWORD: Separate admin password (plain). If unset, admin falls back to the public access code.
+- ADMIN_PASSWORD_HASH: Separate admin password hash. Takes precedence over ADMIN_PASSWORD when set.
 - ONE_TIME_PASSWORD_HASHES: Comma-separated list of OTP hashes (consumed once)
 - CORS_ALLOWED_ORIGINS: Comma-separated list of allowed origins
 - ADMIN_ALLOWED_IPS: Comma-separated list of allowed admin IPs (restricts /view-records.html and admin APIs when set)
 - ENABLE_CORS (default 'true')
-- ENABLE_CSRF (default 'false')
+- ENABLE_CSRF (default 'true')
 - (Removed Jan 2026) Previously documented placeholders: API_BASE_URL, SENTRY_DSN, SENTRY_FRONTEND_DSN.
 
 Secrets best practices
@@ -138,9 +140,10 @@ Secrets best practices
 Generate/update password hash
 ```powershell
 node generate-hash.cjs <password>
+node generate-hash.cjs <password> ADMIN_PASSWORD_HASH
 ```
 - Uses PASSWORD_SALT from .env
-- Updates MASTER_PASSWORD_HASH in .env
+- Updates the chosen hash key in .env (`MASTER_PASSWORD_HASH` by default)
 
 ---
 
@@ -162,9 +165,11 @@ Backend (Node/Express)
   - Optional admin IP allowlist for /view-records.html and admin APIs (ADMIN_ALLOWED_IPS)
 - API routes (routes/api.js):
   - POST /api/record-info (validated, public) – upserts record and sets active
-  - POST /api/fetch-records (protected) – returns active record as array
-  - POST /api/fetch-history (protected) – returns full history
-  - DELETE /api/delete-record (protected) – deletes by sessionId, clears active pointer if needed
+  - POST /api/verify-access (protected by public access code) – verifies access without returning records
+  - POST /api/fetch-records (protected by admin password) – returns active record as array
+  - POST /api/fetch-history (protected by admin password) – returns full history
+  - DELETE /api/delete-record (protected by admin password) – deletes by sessionId, clears active pointer if needed
+  - POST /api/admin-login (protected by admin password) – issues admin session cookie
 - Persistence: better-sqlite3
   - DB paths:
     - dev: <project-root>/alan-data.db
@@ -246,7 +251,7 @@ Client-side (localStorage)
 
 ## Security and Privacy
 
-- Password auth via PBKDF2-SHA256(100k, 32 bytes) with env salt; hashes generated using generate-hash.cjs
+- Public access and admin access can use separate credentials; both support PBKDF2-SHA256(100k, 32 bytes) with env salt via generated hashes, and plain env passwords are also supported for Railway-style secret management
 - Optional one-time passwords (hashed) supported; consumed on first valid use
 - Rate limiting on all endpoints; stricter for sensitive endpoints
 - Strict CSP with explicit sources (Flowise, OSM tiles, ipinfo, BigDataCloud, CDNs, Google Fonts)

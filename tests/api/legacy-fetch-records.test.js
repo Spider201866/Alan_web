@@ -10,8 +10,14 @@ function createTestConfig() {
   const keylen = 32;
   const digest = 'sha256';
   const salt = 'test-salt';
-  const password = 'legacy-password';
-  const masterHash = crypto.pbkdf2Sync(password, salt, iterations, keylen, digest).toString('hex');
+  const publicPassword = 'public-password';
+  const adminPassword = 'legacy-admin-password';
+  const publicHash = crypto
+    .pbkdf2Sync(publicPassword, salt, iterations, keylen, digest)
+    .toString('hex');
+  const adminHash = crypto
+    .pbkdf2Sync(adminPassword, salt, iterations, keylen, digest)
+    .toString('hex');
 
   return {
     port: 0,
@@ -22,7 +28,9 @@ function createTestConfig() {
     cspDirectives: {},
     security: {
       salt,
-      masterHash,
+      publicHash,
+      adminHash,
+      masterHash: publicHash,
       otpHashes: new Set(),
     },
   };
@@ -53,7 +61,7 @@ describe('Legacy /fetch-records compatibility', () => {
     const res = await request(server)
       .post('/fetch-records')
       .set('Content-Type', 'application/json')
-      .send({ password: 'legacy-password' });
+      .send({ password: 'legacy-admin-password' });
 
     expect(res.statusCode).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
@@ -61,11 +69,11 @@ describe('Legacy /fetch-records compatibility', () => {
     expect(res.body[0].name).toBe('Legacy Tool User');
   });
 
-  it('still enforces password validation', async () => {
+  it('rejects the public access password for the legacy records route', async () => {
     const res = await request(server)
       .post('/fetch-records')
       .set('Content-Type', 'application/json')
-      .send({ password: 'wrong-password' });
+      .send({ password: 'public-password' });
 
     expect(res.statusCode).toBe(401);
   });

@@ -1,4 +1,4 @@
-<!-- Alan UI - progress.md | Updated 26th March 2026, Codex -->
+<!-- Alan UI - progress.md | Updated 27th March 2026, Codex -->
 
 # Progress
 
@@ -42,6 +42,18 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
   - Changed `npm start` to serve the existing production build immediately instead of rebuilding at runtime, which should reduce Railway cold-start/deploy `503` responses for static assets.
   - Hardened service-worker core caching so temporary asset fetch failures are logged per-URL without aborting the whole install.
   - Removed service-worker-gated home startup in `public/scripts/home.js` and restored immediate chatbot boot so the input can appear as early as possible again.
+
+### March 2026 Security Maintenance (27 Mar 2026)
+- **Public/admin auth split**
+  - Added `POST /api/verify-access` for the public access code so onboarding no longer verifies against `/api/fetch-records`.
+  - Added separate admin credential support via `ADMIN_PASSWORD` / `ADMIN_PASSWORD_HASH`, with fallback to the public credential when unset.
+  - Changed record-returning password routes (`/fetch-records`, `/api/fetch-records`, `/api/fetch-history`, `/api/delete-record`) to require the admin credential.
+  - Updated admin session signing to derive from the admin hash.
+- **Docs and tooling**
+  - `generate-hash.cjs` now supports targeting `ADMIN_PASSWORD_HASH`.
+  - Updated README and test docs to describe the public/admin credential split.
+- **Validation**
+  - `npm run check-translations`: pass.
 
 ### February 2026 Maintenance (6 Feb 2026)
 - **Regression tests added**

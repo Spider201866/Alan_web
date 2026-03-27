@@ -3,7 +3,10 @@ import express from 'express';
 // Config is now passed as a parameter, so remove direct import
 // import configFromFile from '../config/index.js';
 import { validateRecord, recordValidationRules } from '../middleware/validation.js';
-import { validatePasswordWithConfig } from '../middleware/auth.js';
+import {
+  validateAdminPasswordWithConfig,
+  validatePublicPasswordWithConfig,
+} from '../middleware/auth.js';
 import {
   clearAdminSessionCookie,
   requireAdminSession,
@@ -30,7 +33,8 @@ export default function apiRoutes(rateLimiterOrLimiters, configToUse = {}) {
 
   const enforceAdminIpAllowlist = createAdminIpAllowlistMiddleware(configToUse.adminAllowedIps);
   const requireSession = requireAdminSession(configToUse);
-  const validatePassword = validatePasswordWithConfig(configToUse);
+  const validatePublicPassword = validatePublicPasswordWithConfig(configToUse);
+  const validateAdminPassword = validateAdminPasswordWithConfig(configToUse);
   const recordInfoCsrf = csrfProtection({ enable: Boolean(configToUse.enableCsrf) });
 
   const router = express.Router();
@@ -74,6 +78,15 @@ export default function apiRoutes(rateLimiterOrLimiters, configToUse = {}) {
   );
 
   /**
+   * @route POST /api/verify-access
+   * @description Verifies the public access code without exposing stored records.
+   * @access public
+   */
+  router.post('/verify-access', sensitiveLimiter, validatePublicPassword, (req, res) => {
+    res.json({ ok: true });
+  });
+
+  /**
    * @route POST /api/record-info
    * @description Overwrites the active record and appends or updates the history with the provided data.
    * @access public
@@ -106,7 +119,7 @@ export default function apiRoutes(rateLimiterOrLimiters, configToUse = {}) {
     '/admin-login',
     sensitiveLimiter,
     enforceAdminIpAllowlist,
-    validatePassword,
+    validateAdminPassword,
     (req, res) => {
       applyAdminNoStoreHeaders(res);
       setAdminSessionCookie(res, configToUse);
@@ -122,14 +135,14 @@ export default function apiRoutes(rateLimiterOrLimiters, configToUse = {}) {
 
   /**
    * @route POST /api/fetch-records
-   * @description Fetches the single active record. Requires a valid password.
+   * @description Fetches the single active record. Requires the admin password.
    * @access private
    */
   router.post(
     '/fetch-records',
     sensitiveLimiter,
     enforceAdminIpAllowlist,
-    validatePassword,
+    validateAdminPassword,
     createFetchRecordsHandler('/fetch-records')
   );
 
@@ -146,14 +159,14 @@ export default function apiRoutes(rateLimiterOrLimiters, configToUse = {}) {
 
   /**
    * @route POST /api/fetch-history
-   * @description Fetches the full user history, sorted by date. Requires a valid password.
+   * @description Fetches the full user history, sorted by date. Requires the admin password.
    * @access private
    */
   router.post(
     '/fetch-history',
     sensitiveLimiter,
     enforceAdminIpAllowlist,
-    validatePassword,
+    validateAdminPassword,
     handleFetchHistory
   );
 
@@ -167,14 +180,14 @@ export default function apiRoutes(rateLimiterOrLimiters, configToUse = {}) {
 
   /**
    * @route DELETE /api/delete-record
-   * @description Deletes a record from the history by its sessionId. Requires a valid password.
+   * @description Deletes a record from the history by its sessionId. Requires the admin password.
    * @access private
    */
   router.delete(
     '/delete-record',
     sensitiveLimiter,
     enforceAdminIpAllowlist,
-    validatePassword,
+    validateAdminPassword,
     (req, res, next) => {
       try {
         applyAdminNoStoreHeaders(res);

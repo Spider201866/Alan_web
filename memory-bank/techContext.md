@@ -1,4 +1,4 @@
-<!-- Alan UI - techContext.md | Updated 26th March 2026, Codex -->
+<!-- Alan UI - techContext.md | Updated 27th March 2026, Codex -->
 
 # Technology Stack and Tooling
 
@@ -49,11 +49,13 @@ This document provides a detailed overview of the technologies, dependencies, co
 - Validation via envalid (config/validateEnv.js)
   - PORT (default 3000)
   - PASSWORD_SALT (required)
-  - MASTER_PASSWORD_HASH (required)
+  - `AUTH_PASSWORD` or `MASTER_PASSWORD_HASH` (one required for public access)
+  - `ADMIN_PASSWORD` or `ADMIN_PASSWORD_HASH` (optional for separate admin auth)
   - ONE_TIME_PASSWORD_HASHES (comma-separated, optional)
   - CORS_ALLOWED_ORIGINS (comma-separated, default empty)
   - ENABLE_CORS ('true'|'false', default 'true')
-  - ENABLE_CSRF ('true'|'false', default 'false')
+  - ENABLE_CSRF ('true'|'false', default 'true')
+  - ADMIN_ALLOWED_IPS (comma-separated, default '')
   - (Removed Jan 2026) Previously documented placeholders: API_BASE_URL, SENTRY_DSN, SENTRY_FRONTEND_DSN.
 - CORS
   - Allowlist is read from env; credentials enabled; null-origin allowed for apps/tools.
@@ -100,10 +102,11 @@ This document provides a detailed overview of the technologies, dependencies, co
 
 - Password verification
   - PBKDF2-SHA256 with 100,000 iterations and 32-byte keylen; salt from PASSWORD_SALT.
-  - MASTER_PASSWORD_HASH is compared to generatedHash; also supports one-time hashes (OTP set) that are consumed on first use.
+  - Public access compares against `AUTH_PASSWORD`/`MASTER_PASSWORD_HASH` and also supports one-time hashes (OTP set) that are consumed on first use.
+  - Admin access compares against `ADMIN_PASSWORD`/`ADMIN_PASSWORD_HASH`, falling back to the public credential when no admin-specific value is configured.
 - Hash generation
-  - script: generate-hash.cjs; uses dotenv and updates .env MASTER_PASSWORD_HASH in place.
-  - Usage: node generate-hash.cjs <new_password>
+  - script: generate-hash.cjs; uses dotenv and updates `.env` hash keys in place.
+  - Usage: `node generate-hash.cjs <new_password>` or `node generate-hash.cjs <new_password> ADMIN_PASSWORD_HASH`
 - Secret handling best practices
   - Prefer alphanumeric secrets (hex-64) to avoid shell parsing issues.
   - If special characters are needed, store Base64 and decode at runtime.
@@ -126,7 +129,7 @@ This document provides a detailed overview of the technologies, dependencies, co
 ## Frontend Architecture
 
 - Orchestrators
-  - index.js: onboarding, password gate (fetch-records), language init, form validations.
+  - index.js: onboarding, public access-code gate (`/api/verify-access`), language init, form validations.
   - home.js: UI wiring, translator, first-use coaching card, muted snippet, chatbot init; no longer blocks startup on service-worker readiness and now boots chat immediately for faster first load.
 - Modules
   - home-ui.js: side menu, popup, focus traps, geolocation UI driver, language dropdown, history clear.
@@ -135,7 +138,7 @@ This document provides a detailed overview of the technologies, dependencies, co
   - home-data.js: fetch muted snippet; reverse geocoding; pushes localStorage to server only when meaningful (name present and geo info available).
   - location-service.js: ipinfo lookup; LMIC classification via ISO2 code set.
   - onboarding-form.js: input masks, aims multi-select toggling, validation enabling accept button.
-  - auth-flow.js: password verification flow, splash → password → instruction flow, accept button triggers record post and transition to home.
+  - auth-flow.js: public access-code verification flow, splash → password → instruction flow, accept button triggers record post and transition to home.
   - agent1-chatbot-module.js: Flowise initialisation and theme; mutation observer to hide marquee on first input focus; one-time guard to avoid duplicates.
   - listener-module.js: observes Flowise shadow DOM for messages; de-dup for streamed messages; persists sessions with copy/export affordances.
   - page-template.js: app bar injected; back arrow; listens to languageChanged to update titles; cross-tab support via storage event.
@@ -215,7 +218,7 @@ This document provides a detailed overview of the technologies, dependencies, co
 - Reliability and offline
   - PWA approach optimized for low-connectivity regions; explicit offline fallback page.
 - Security posture
-  - Strict CSP with explicit sources; rate limiting; optional CSRF; PBKDF2-based auth; no user accounts.
+  - Strict CSP with explicit sources; rate limiting; optional CSRF; PBKDF2-based auth with separate public/admin credentials; no user accounts.
 - Data handling
   - Stores minimal session and user metadata in SQLite (name, aim(s), experience, location, contact, classification, agent, date/time, refresh count).
   - UI clarifies responsibilities and avoids capturing sensitive PII beyond simple meta fields.

@@ -35,15 +35,19 @@ function getSigningSecret(config) {
   // We avoid introducing a new required env var by deriving a stable secret
   // from existing server-side secrets.
   const salt = config?.security?.salt || '';
-  const masterHash = config?.security?.masterHash || '';
+  const adminHash =
+    config?.security?.adminHash ||
+    config?.security?.publicHash ||
+    config?.security?.masterHash ||
+    '';
 
-  if (!salt || !masterHash) {
+  if (!salt || !adminHash) {
     // Fallback: random secret per process (sessions invalidated on restart).
     // This is still better than failing hard in dev.
     return crypto.randomBytes(32);
   }
 
-  return crypto.createHash('sha256').update(`${salt}:${masterHash}`).digest();
+  return crypto.createHash('sha256').update(`${salt}:${adminHash}`).digest();
 }
 
 function signPayload(payloadB64, secret) {

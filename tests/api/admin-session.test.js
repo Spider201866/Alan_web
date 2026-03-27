@@ -10,8 +10,14 @@ function createTestConfig() {
   const keylen = 32;
   const digest = 'sha256';
   const salt = 'test-salt';
-  const password = 'correct-password';
-  const masterHash = crypto.pbkdf2Sync(password, salt, iterations, keylen, digest).toString('hex');
+  const publicPassword = 'public-password';
+  const adminPassword = 'correct-admin-password';
+  const publicHash = crypto
+    .pbkdf2Sync(publicPassword, salt, iterations, keylen, digest)
+    .toString('hex');
+  const adminHash = crypto
+    .pbkdf2Sync(adminPassword, salt, iterations, keylen, digest)
+    .toString('hex');
 
   return {
     port: 0,
@@ -22,7 +28,9 @@ function createTestConfig() {
     cspDirectives: {},
     security: {
       salt,
-      masterHash,
+      publicHash,
+      adminHash,
+      masterHash: publicHash,
       otpHashes: new Set(),
     },
   };
@@ -41,10 +49,29 @@ describe('Admin cookie session (View Records)', () => {
     if (server) server.close();
   });
 
+  it('should allow /api/verify-access with the public password', async () => {
+    const res = await request(server)
+      .post('/api/verify-access')
+      .send({ password: 'public-password' })
+      .set('Content-Type', 'application/json');
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toEqual({ ok: true });
+  });
+
+  it('should reject admin login with the public password', async () => {
+    const res = await request(server)
+      .post('/api/admin-login')
+      .send({ password: 'public-password' })
+      .set('Content-Type', 'application/json');
+
+    expect(res.statusCode).toBe(401);
+  });
+
   it('should set an httpOnly session cookie after /api/admin-login', async () => {
     const res = await request(server)
       .post('/api/admin-login')
-      .send({ password: 'correct-password' })
+      .send({ password: 'correct-admin-password' })
       .set('Content-Type', 'application/json');
 
     expect(res.statusCode).toBe(200);
