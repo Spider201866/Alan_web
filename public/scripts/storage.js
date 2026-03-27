@@ -13,11 +13,21 @@ export function getStoredNumber(key) {
   return Number.isNaN(value) ? null : value;
 }
 
+export function createSessionId() {
+  return `user-${Date.now()}`;
+}
+
 export function ensureSessionId() {
   let sessionId = getStoredString('sessionId');
   if (!sessionId) {
-    sessionId = `user-${Date.now()}`;
+    sessionId = createSessionId();
     localStorage.setItem('sessionId', sessionId);
   }
+  return sessionId;
+}
+
+export function replaceSessionId() {
+  const sessionId = createSessionId();
+  localStorage.setItem('sessionId', sessionId);
   return sessionId;
 }

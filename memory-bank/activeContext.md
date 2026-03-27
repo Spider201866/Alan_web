@@ -36,6 +36,7 @@
 - Flowise embed compatibility:
   - Updated `public/scripts/agent1-chatbot-module.js` so the persisted `sessionId` is passed via `chatflowConfig.sessionId`.
   - Current `flowise-embed` ignores a top-level `sessionId`, which caused intermittent chat failures against memory-backed Flowise predictions.
+  - Chat resets now rotate the stored `sessionId` and reload `home.html`, so Flowise starts a genuinely fresh backend session instead of only clearing the visible transcript.
 
 ## Recent Work (6 Feb 2026)
 - Production top-gap root cause was traced to a hidden `U+FEFF` character between `<!doctype html>` and `<html>` in built/minified HTML (`dist/home.html` observed).

@@ -7,6 +7,7 @@
    ----------------------------------------------------------------------- */
 
 import log from './log.js';
+import { replaceSessionId } from './storage.js';
 export const imagesButtonClicked = false;
 
 /* ── constants & helpers ──────────────────────────────────────────────── */
@@ -243,6 +244,10 @@ function attachFlowiseObservers() {
           resetButton.addEventListener('click', () => {
             log.info('%c[History] Flowise "Reset Chat" detected.', 'color:#ffa500');
             startNewSession();
+            replaceSessionId();
+            // Flowise keeps using the configured session id after a UI reset,
+            // so reload to re-bootstrap the widget against a fresh backend session.
+            window.setTimeout(() => window.location.reload(), 50);
           });
           log.info('%c[History] Flowise "Reset Chat" button hooked.', 'color:#00ced1');
         }

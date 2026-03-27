@@ -53,6 +53,7 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
 - **Flowise embed compatibility**
   - Fixed the app-side Flowise embed init so the persisted chat session is passed via `chatflowConfig.sessionId`.
   - Added a focused UI regression test to prevent future `flowise-embed` session wiring regressions.
+  - Updated chat reset flows so Flowise "Reset Chat" and the sidebar clear-history action rotate `sessionId` and reload, restoring true fresh-session behavior.
 - **Docs and tooling**
   - `generate-hash.cjs` now supports targeting `ADMIN_PASSWORD_HASH`.
   - Updated README and test docs to describe the public/admin credential split.

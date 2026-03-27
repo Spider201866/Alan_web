@@ -52,6 +52,7 @@ Tests are further broken down by function.
 -   **`agent1-chatbot-module.test.js`**: Guards the Flowise embed init contract, including passing the persisted session id via `chatflowConfig.sessionId`.
 -   **`listener-module.test.js`**: Tests listener-module session fallback behavior.
 -   **`record-info.test.js`**: Tests payload-building and post helpers for `/api/record-info`.
+-   **`storage.test.js`**: Tests session-id storage helpers used by chat startup and reset flows.
 -   **`layout-regressions.test.js`**: Guards against home top-gap regressions and instructions mobile 3-button wrapping regressions.
 -   **`copy-regressions.test.js`**: Guards key copy invariants (`uvLightHeading` and corrected `instructionsIntro` spelling).
     Also guards the home popup close markup against mojibake/encoding regression.

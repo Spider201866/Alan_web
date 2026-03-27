@@ -230,6 +230,7 @@ tests/ui/interaction.test.js
 tests/ui/layout-regressions.test.js
 tests/ui/listener-module.test.js
 tests/ui/record-info.test.js
+tests/ui/storage.test.js
 tests/ui/view-records.test.js
 utils/cookies.js
 vscode-alanui-launcher/.vscodeignore

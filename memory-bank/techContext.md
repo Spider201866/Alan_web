@@ -119,6 +119,7 @@ This document provides a detailed overview of the technologies, dependencies, co
   - CDN: jsdelivr; chatflowid is configured; apiHost points to Railway Flowise deployment.
   - Session management: sessionId persisted in localStorage; passed to Flowise for history.
   - Current embed contract: pass session state under `chatflowConfig.sessionId`; top-level `sessionId` is ignored by the current `flowise-embed` API.
+  - Reset behavior: when the user resets chat, the app rotates `sessionId` in localStorage and reloads the page so backend memory starts clean too.
 - Geolocation and reverse geocoding
   - ipinfo.io for IP-derived country/city and approximate lat/long.
   - api.bigdatacloud.net reverse-geocode-client for human-readable area from lat/long.

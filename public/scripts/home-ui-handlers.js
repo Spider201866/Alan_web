@@ -7,6 +7,7 @@ import { setLanguage } from './language.js';
 import { renderLanguageOptions } from './language-options.js';
 import { closeAllPopups, updateButtonStyle } from './home-ui-core.js';
 import { buildPopupContent } from './home-ui-popup.js';
+import { replaceSessionId } from './storage.js';
 import { setTrustedHtml } from './trusted-html.js';
 
 function attachSwipeToClose(element, { direction, isOpen, onClose }) {
@@ -240,6 +241,9 @@ function setupClearHistoryButton() {
         if (typeof mod.resetSidebarHistory === 'function') mod.resetSidebarHistory();
       })
       .catch((err) => log.error('Failed to load listener-module for history reset:', err));
+
+    replaceSessionId();
+    window.setTimeout(() => window.location.reload(), 50);
   });
 }
 
