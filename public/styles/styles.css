@@ -1737,10 +1737,16 @@ flowise-fullchatbot {
 
 @media (max-width: 600px) {
   body.home-page {
-    --home-chat-shell-height: 320px;
+    --home-chat-shell-height: clamp(260px, calc(100vh - 400px), 320px);
     --home-chat-shell-height-expanded: 520px;
     --home-chat-actions-height: 42px;
     --home-chat-dock-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+  }
+
+  @supports (height: 100dvh) {
+    body.home-page {
+      --home-chat-shell-height: clamp(260px, calc(100dvh - 400px), 320px);
+    }
   }
 
   .chatbot-header {
