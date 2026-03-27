@@ -23,6 +23,12 @@ export const LANGUAGE_OPTIONS = [
   { code: 'cy', nativeLabel: 'Cymraeg', englishLabel: 'Welsh' },
 ];
 
+const SUPPORTED_LANGUAGE_CODES = new Set(LANGUAGE_OPTIONS.map((lang) => lang.code));
+
+export function isSupportedLanguageCode(langCode) {
+  return typeof langCode === 'string' && SUPPORTED_LANGUAGE_CODES.has(langCode);
+}
+
 /**
  * Populates a language list container with canonical language options.
  * If the container is already populated, no changes are made.

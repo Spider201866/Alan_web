@@ -227,6 +227,7 @@ tests/ui/copy-regressions.test.js
 tests/ui/helpers/setup.js
 tests/ui/i18n.test.js
 tests/ui/interaction.test.js
+tests/ui/language.test.js
 tests/ui/layout-regressions.test.js
 tests/ui/listener-module.test.js
 tests/ui/record-info.test.js

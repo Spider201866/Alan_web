@@ -1,5 +1,6 @@
 // Alan UI - language.js
 import { loadLanguage } from './language-loader.js';
+import { isSupportedLanguageCode } from './language-options.js';
 import log from './log.js';
 
 // Holds the currently loaded translations
@@ -64,14 +65,39 @@ export function getTranslation(key, fallbackText = '') {
   return fallbackText || key; // Return the key itself if no fallback is provided
 }
 
+export function getUrlLanguageOverride(search = window.location.search) {
+  if (typeof search !== 'string' || search.trim() === '') {
+    return null;
+  }
+
+  const langParam = new URLSearchParams(search).get('lang');
+  if (!langParam) {
+    return null;
+  }
+
+  const normalizedLangCode = langParam.trim().toLowerCase();
+  if (!isSupportedLanguageCode(normalizedLangCode)) {
+    log.warn(`Ignoring unsupported lang query parameter: ${langParam}`);
+    return null;
+  }
+
+  return normalizedLangCode;
+}
+
+export function resolveInitialLanguage(
+  search = window.location.search,
+  storedLanguage = localStorage.getItem('preferredLanguage')
+) {
+  return getUrlLanguageOverride(search) || storedLanguage || 'en';
+}
+
 /**
  * Initializes the language system on application startup.
  * It retrieves the preferred language from local storage or defaults to English,
  * then calls setLanguage to load the appropriate translations.
  */
 async function initializeLanguage() {
-  const preferredLanguage = localStorage.getItem('preferredLanguage') || 'en';
-  await setLanguage(preferredLanguage);
+  await setLanguage(resolveInitialLanguage());
 }
 
 // Initialize the language as soon as the script is loaded.

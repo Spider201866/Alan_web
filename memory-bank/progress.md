@@ -54,6 +54,10 @@ Deep architecture details live in `systemPatterns.md` / `techContext.md`.
   - Fixed the app-side Flowise embed init so the persisted chat session is passed via `chatflowConfig.sessionId`.
   - Added a focused UI regression test to prevent future `flowise-embed` session wiring regressions.
   - Updated chat reset flows so Flowise "Reset Chat" and the sidebar clear-history action rotate `sessionId` and reload, restoring true fresh-session behavior.
+- **Sharable language deep links**
+  - Added a validated `?lang=<code>` override in `public/scripts/language.js` so supported locales can be forced on first open before falling back to `preferredLanguage`.
+  - The override reuses the canonical codes from `public/scripts/language-options.js`, so links like `/?lang=id` and `/?lang=ny` map directly to shipped locale files.
+  - Added `tests/ui/language.test.js` to cover supported-query override and unsupported-query fallback behavior.
 - **Docs and tooling**
   - `generate-hash.cjs` now supports targeting `ADMIN_PASSWORD_HASH`.
   - Updated README and test docs to describe the public/admin credential split.
