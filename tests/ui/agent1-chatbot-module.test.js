@@ -17,7 +17,9 @@ describe('agent1 chatbot module', () => {
   });
 
   it('passes the session id via chatflowConfig for flowise-embed', async () => {
-    const { buildChatbotInitConfig } = await import('../../public/scripts/agent1-chatbot-module.js');
+    const { buildChatbotInitConfig } = await import(
+      '../../public/scripts/agent1-chatbot-module.js'
+    );
 
     const config = buildChatbotInitConfig('session-123');
 
